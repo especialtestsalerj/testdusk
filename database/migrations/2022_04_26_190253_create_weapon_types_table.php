@@ -3,10 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\AmmunitionType;
+use App\Models\WeaponType;
 
-class CreateAmmunitionTypesTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,20 +13,19 @@ class CreateAmmunitionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ammunition_types', function (Blueprint $table) {
+        Schema::create('weapon_types', function (Blueprint $table) {
             $table->id();
-
             $table->string('name');
 
             $table->timestamps();
         });
 
-        $rows = ['fuzil', 'faca', 'revolver', 'pistola'];
+        $rows = ['pistola', 'revolver', 'faca', 'fuzil'];
 
         foreach ($rows as $name) {
-            dump($name);
+            //dump($name);
 
-            $row = new AmmunitionType();
+            $row = new WeaponType();
             $row->name = $name;
             $row->save();
         }
@@ -40,6 +38,6 @@ class CreateAmmunitionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ammunition_types');
+        Schema::dropIfExists('weapon_types');
     }
-}
+};
