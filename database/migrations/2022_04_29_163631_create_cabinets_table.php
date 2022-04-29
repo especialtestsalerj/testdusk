@@ -16,6 +16,16 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
         });
     }

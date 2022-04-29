@@ -22,6 +22,16 @@ return new class extends Migration {
             $table->date('exit_date')->nullable();
             $table->integer('exit_user_id')->nullable();
             $table->text('exit_obs')->nullable();
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
 
             $table
@@ -31,7 +41,7 @@ return new class extends Migration {
             $table
                 ->foreign('entrance_shift_id')
                 ->references('id')
-                ->on('shift');
+                ->on('shifts');
             $table
                 ->foreign('exit_user_id')
                 ->references('id')

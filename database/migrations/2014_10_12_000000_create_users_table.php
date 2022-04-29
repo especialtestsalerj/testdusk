@@ -22,8 +22,16 @@ return new class extends Migration {
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });
+
+        \App\Models\User::create([
+            'name' => 'Sistema',
+            'email' => ($email = 'system@docigp.alerj.rj.gov.br'),
+            'username' => $email,
+            'password' => Hash::make(Str::random(100)),
+        ]);
     }
 
     /**

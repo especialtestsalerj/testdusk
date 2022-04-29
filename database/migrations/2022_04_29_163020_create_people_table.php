@@ -19,6 +19,16 @@ return new class extends Migration {
             $table->string('origin');
             $table->string('photo')->nullable();
             $table->text('alert_obs')->nullable();
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
         });
     }
