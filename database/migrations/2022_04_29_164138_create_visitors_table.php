@@ -20,6 +20,16 @@ return new class extends Migration {
             $table->integer('duty_user_id');
             $table->integer('person_id');
             $table->text('description')->nullable();
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
 
             $table

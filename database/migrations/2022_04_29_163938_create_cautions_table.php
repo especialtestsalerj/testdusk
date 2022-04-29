@@ -20,6 +20,16 @@ return new class extends Migration {
             $table->integer('destiny_sector_id');
             $table->string('protocol_number');
             $table->timestamp('concluded_at');
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
 
             $table

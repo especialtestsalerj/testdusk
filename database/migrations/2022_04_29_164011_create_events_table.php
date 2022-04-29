@@ -19,6 +19,16 @@ return new class extends Migration {
             $table->time('time');
             $table->integer('duty_user_id');
             $table->text('description')->nullable();
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
             $table->timestamps();
 
             $table
