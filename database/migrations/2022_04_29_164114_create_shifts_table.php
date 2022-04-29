@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\WeaponType;
+use App\Models\Shift;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,18 +13,19 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('weapon_types', function (Blueprint $table) {
+        Schema::create('shifts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
 
-        $rows = ['Pistola', 'Revólver', 'Faca / Objeto cortante', 'Fuzil'];
+        $rows = ['06:00 - 20:00', '20:00 - 06:00'];
 
         foreach ($rows as $name) {
-            $row = new WeaponType();
+            $row = new Shift();
             $row->name = $name;
+            $row->status = $status;
             $row->save();
         }
     }
@@ -36,6 +37,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('weapon_types');
+        Schema::dropIfExists('shifts');
     }
 };
