@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->morphs('tokenable');
             $table->string('name');
             $table->string('token', 64)->unique();
@@ -32,4 +32,4 @@ return new class extends Migration {
     {
         Schema::dropIfExists('personal_access_tokens');
     }
-};
+}
