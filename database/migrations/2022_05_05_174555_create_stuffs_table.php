@@ -12,11 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('stuff', function (Blueprint $table) {
+        Schema::create('stuffs', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
-            $table->time('time_entrance');
-            $table->time('time_exit')->nullable();
+            $table->timestamp('entrance_date')->nullable();
+            $table->timestamp('exit_date')->nullable();
             $table->integer('duty_user_id');
             $table->text('description')->nullable();
 
@@ -49,6 +49,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('stuff');
+        Schema::dropIfExists('stuffs');
     }
 };

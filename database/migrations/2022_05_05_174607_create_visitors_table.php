@@ -15,8 +15,8 @@ return new class extends Migration {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
-            $table->time('time_entrance');
-            $table->time('time_exit')->nullable();
+            $table->timestamp('entrance_date')->nullable();
+            $table->timestamp('exit_date')->nullable();
             $table->integer('duty_user_id');
             $table->integer('person_id');
             $table->text('description')->nullable();

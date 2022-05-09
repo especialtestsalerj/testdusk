@@ -26,7 +26,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['name', 'email', 'password', 'username'];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -60,7 +60,7 @@ class User extends Authenticatable
     {
         $this->abilities()->sync([]);
 
-        collect($permissionsResponse)->each(function ($item)  {
+        collect($permissionsResponse)->each(function ($item) {
             Bouncer::allow($this)->to($item['evento']);
         });
         Bouncer::refresh();
@@ -70,7 +70,7 @@ class User extends Authenticatable
     {
         $this->roles()->sync([]);
 
-        collect($profileResponse)->each(function ($item)  {
+        collect($profileResponse)->each(function ($item) {
             Bouncer::assign($item['NOME_PERFIL'])->to($this);
         });
         Bouncer::refresh();

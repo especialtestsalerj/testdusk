@@ -6,8 +6,8 @@ class Visitor extends Model
 {
     protected $fillable = [
         'routine_id',
-        'time_entrance',
-        'time_exit',
+        'entrance_date',
+        'exit_date',
         'duty_user_id',
         'visitor_person_id',
         'description',

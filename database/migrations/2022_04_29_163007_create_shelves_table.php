@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Shelf;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +29,12 @@ return new class extends Migration {
                 ->nullable();
             $table->timestamps();
         });
+
+        for ($i = 1; $i <= 53; $i++) {
+            $row = new Shelf();
+            $row->name = str_pad(strval($i), 2, '0', STR_PAD_LEFT);
+            $row->save();
+        }
     }
 
     /**

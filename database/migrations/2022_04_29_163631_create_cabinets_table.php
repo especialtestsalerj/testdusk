@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cabinet;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +29,14 @@ return new class extends Migration {
                 ->nullable();
             $table->timestamps();
         });
+
+        $rows = ['Armário 1', 'Armário 2'];
+
+        foreach ($rows as $name) {
+            $row = new Cabinet();
+            $row->name = $name;
+            $row->save();
+        }
     }
 
     /**

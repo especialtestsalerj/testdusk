@@ -1,6 +1,8 @@
 <?php
 
-use illuminate\support\facades\route;
+use App\Http\Controllers\EventTypeController;
+use App\Http\Controllers\SectorController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(
+    function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    }
+);
+
+Route::resource('event_types', EventTypeController::class);
+Route::resource('sectors', SectorController::class);
