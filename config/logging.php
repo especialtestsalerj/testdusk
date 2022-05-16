@@ -46,12 +46,16 @@ return [
     |                    "custom", "stack"
     |
     */
-
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
-            'ignore_exceptions' => false,
+            // Add bugsnag to the stack:
+            'channels' => ['single', 'bugsnag'],
+        ],
+
+        // Create a bugsnag logging channel:
+        'bugsnag' => [
+            'driver' => 'bugsnag',
         ],
 
         'single' => [

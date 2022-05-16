@@ -95,6 +95,17 @@
       0 => 'OwenIt\\Auditing\\AuditingServiceProvider',
     ),
   ),
+  'silber/bouncer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Silber\\Bouncer\\BouncerServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Bouncer' => 'Silber\\Bouncer\\BouncerFacade',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 

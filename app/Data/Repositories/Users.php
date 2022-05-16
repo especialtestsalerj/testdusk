@@ -82,31 +82,6 @@ class Users extends Repository
         return User::where('all_notifications', true)->get();
     }
 
-    public function updatePerPage($user, $size)
-    {
-        $user->per_page = $size;
-
-        $user->save();
-
-        return $user;
-    }
-
-    public function associateCongressmanWithUser($congressman_id, $request)
-    {
-        $this->model = $this->findUserByEmail($request['email']);
-
-        $congressman = app(CongressmenRepository::class)->findById($congressman_id);
-
-        $this->model['congressman_id'] = $congressman_id;
-        $this->model['department_id'] = $congressman->department->id ?? null;
-
-        $this->model->save();
-
-        $this->model->assign(Constants::ROLE_CONGRESSMAN);
-
-        return $this->model;
-    }
-
     public function searchFromRequest($search = null)
     {
         $search = is_null($search)
@@ -150,5 +125,15 @@ class Users extends Repository
         if ($systemUser = $this->getSystemModel()) {
             auth()->login($systemUser);
         }
+    }
+
+    public function updatePermissions($permissionsResponse)
+    {
+
+    }
+
+    public function updateProfiles($profilesResponse)
+    {
+
     }
 }

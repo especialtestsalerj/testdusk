@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Silber\Bouncer\BouncerFacade as Bouncer;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
@@ -17,6 +19,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -52,4 +55,26 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = ['profile_photo_url'];
+
+    public function updatePermissions($permissionsResponse)
+    {
+       // dd($permissionsResponse);
+        $this->abilities()->sync([]);
+
+        collect($permissionsResponse)->each(function ($item)  {
+            Bouncer::allow($this)->to($item['evento']);
+        });
+        Bouncer::refresh();
+    }
+
+    public function updateProfiles($profileResponse)
+    {
+
+        $this->roles()->sync([]);
+
+        collect($profileResponse)->each(function ($item)  {
+            Bouncer::assign($item['NOME_PERFIL'])->to($this);
+        });
+        Bouncer::refresh();
+    }
 }
