@@ -16,16 +16,14 @@ return new class extends Migration {
             $table->id();
             $table->integer('routine_id');
             $table->integer('duty_user_id');
-            $table->integer('caution_person_id');
+            $table->integer('person_id');
             $table->integer('destiny_sector_id');
             $table->string('protocol_number');
             $table->timestamp('concluded_at');
-
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()
@@ -41,7 +39,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users');
             $table
-                ->foreign('caution_person_id')
+                ->foreign('person_id')
                 ->references('id')
                 ->on('people');
             $table

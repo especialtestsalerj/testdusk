@@ -15,16 +15,14 @@ return new class extends Migration {
         Schema::create('stuffs', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
-            $table->timestamp('entrance_date')->nullable();
-            $table->timestamp('exit_date')->nullable();
+            $table->timestamp('entranced_at')->nullable();
+            $table->timestamp('exited_at')->nullable();
             $table->integer('duty_user_id');
             $table->text('description')->nullable();
-
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()

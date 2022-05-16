@@ -12,15 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('caution_weapons', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->integer('caution_id');
-            $table->integer('weapon_type_id');
+            $table->integer('routine_id');
+            $table->integer('event_type_id');
+            $table->timestamp('occurred_at');
+            $table->integer('duty_user_id');
             $table->text('description')->nullable();
-            $table->string('weapon_number')->nullable();
-            $table->integer('cabinet_id')->nullable();
-            $table->integer('shelf_id')->nullable();
-            $table->timestamp('concluded_at');
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
@@ -32,21 +30,17 @@ return new class extends Migration {
             $table->timestamps();
 
             $table
-                ->foreign('caution_id')
+                ->foreign('routine_id')
                 ->references('id')
-                ->on('cautions');
+                ->on('routines');
             $table
-                ->foreign('weapon_type_id')
+                ->foreign('event_type_id')
                 ->references('id')
-                ->on('weapon_types');
+                ->on('event_types');
             $table
-                ->foreign('cabinet_id')
+                ->foreign('duty_user_id')
                 ->references('id')
-                ->on('cabinets');
-            $table
-                ->foreign('shelf_id')
-                ->references('id')
-                ->on('shelves');
+                ->on('users');
         });
     }
 
@@ -57,6 +51,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('caution_weapons');
+        Schema::dropIfExists('events');
     }
 };
