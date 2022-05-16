@@ -126,14 +126,4 @@ class Users extends Repository
             auth()->login($systemUser);
         }
     }
-
-    public function updatePermissions($permissionsResponse)
-    {
-
-    }
-
-    public function updateProfiles($profilesResponse)
-    {
-
-    }
 }

@@ -58,7 +58,6 @@ class User extends Authenticatable
 
     public function updatePermissions($permissionsResponse)
     {
-       // dd($permissionsResponse);
         $this->abilities()->sync([]);
 
         collect($permissionsResponse)->each(function ($item)  {
@@ -69,7 +68,6 @@ class User extends Authenticatable
 
     public function updateProfiles($profileResponse)
     {
-
         $this->roles()->sync([]);
 
         collect($profileResponse)->each(function ($item)  {
