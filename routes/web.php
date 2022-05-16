@@ -13,16 +13,16 @@ use illuminate\support\facades\route;
 |
 */
 
-route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
-route::middleware([
+Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    route::get('/dashboard', function () {
+    Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
