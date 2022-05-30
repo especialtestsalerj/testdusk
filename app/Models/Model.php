@@ -65,4 +65,9 @@ abstract class Model extends Eloquent implements AuditableContract
     public static function enableGlobalScopes()
     {
     }
+
+    public function getFilterableColumns()
+    {
+        return collect($this->filterableColumns ?? []);
+    }
 }

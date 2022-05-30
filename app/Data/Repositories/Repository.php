@@ -16,7 +16,8 @@ abstract class Repository
 {
     public function all()
     {
-        return $this->model::all();
+        //return $this->model::all();
+        return $this->applyFilter($this->newQuery());
     }
 
     /**
@@ -91,7 +92,7 @@ abstract class Repository
             return $result = $this->getByAnyColumnName($name, $arguments);
         }
 
-        throw new Exception('Method not found: ' . $name);
+        //throw new Exception('Method not found: ' . $name);
     }
 
     protected function findByAnyColumnName($name, $arguments)
@@ -132,5 +133,85 @@ abstract class Repository
     public function model()
     {
         return $this->new();
+    }
+
+    protected function applyFilter($query)
+    {
+        $queryFilter = $this->getQueryFilter();
+
+        $this->filterText($queryFilter, $query);
+
+        //$this->order($query);
+
+        //$this->processCustomQueries($query);
+
+        if (
+            isset($queryFilter->toArray()['pagination']['current_page']) &&
+            $queryFilter->toArray()['pagination']['current_page'] == 0
+        ) {
+            $queryFilter = $this->allElements($queryFilter);
+        }
+
+        return $query->paginate(
+            10,
+            ['*'],
+            'page',
+            $queryFilter->get('pagination') && $queryFilter->get('pagination')['current_page']
+                ? $queryFilter->get('pagination')['current_page']
+                : 1
+            /*$queryFilter->pagination && $queryFilter->pagination->currentPage
+                    ? $queryFilter->pagination->currentPage
+                    : 1*/
+        );
+    }
+
+    protected function getQueryFilter()
+    {
+        $queryFilter = is_array(request()->get('query'))
+            ? request()->get('query')
+            : json_decode(request()->get('query'), true);
+
+        $queryFilter['search'] = request()->get('search');
+
+        $queryFilter['pagination'] = $queryFilter['pagination'] ?? [];
+
+        $queryFilter['pagination']['current_page'] =
+            $queryFilter['pagination']['current_page'] ?? (request()->get('page') ?? 1);
+
+        $queryFilter['pagination']['per_page'] = $queryFilter['pagination']['per_page'] ?? 20;
+
+        return collect($queryFilter);
+    }
+
+    protected function filterText($filter, $query)
+    {
+        if ($text = $filter['filter']['text'] ?? null) {
+            $this->filterAllColumns($query, $text);
+        }
+
+        if ($text = $filter['search']) {
+            $this->filterAllColumns($query, $text);
+        }
+
+        return $query;
+    }
+
+    protected function filterAllColumns($query, $text)
+    {
+        if (
+            $this->model()
+                ->getFilterableColumns()
+                ->count() > 0
+        ) {
+            $query->where(function ($newQuery) use ($query, $text) {
+                $this->model()
+                    ->getFilterableColumns()
+                    ->each(function ($column) use ($newQuery, $text) {
+                        $newQuery->orWhere($column, 'ilike', "%{$text}%");
+                    });
+            });
+        }
+
+        return $query;
     }
 }

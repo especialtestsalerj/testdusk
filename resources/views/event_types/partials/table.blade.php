@@ -36,7 +36,9 @@
             </td>
         </tr>
     @empty
-        <p>Nenhum Tipo de Evento encontrado</p>
+        <div class="alert alert-warning">
+            Nenhum Tipo de Evento encontrado
+        </div>
     @endforelse
     </tbody>
 </table>

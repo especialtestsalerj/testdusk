@@ -36,7 +36,9 @@
             </td>
         </tr>
     @empty
-        <p>Nenhum Setor encontrado</p>
+        <div class="alert alert-warning">
+            Nenhum Setor encontrado
+        </div>
     @endforelse
     </tbody>
 </table>

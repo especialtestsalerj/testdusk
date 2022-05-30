@@ -113,3 +113,15 @@
     background-color: #142B53;
     color: white;
 }
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-check-input,.form-check-label {
+    cursor: pointer;
+}
+
+.table > :not(:first-child) {
+    border-top: 1px solid currentColor;
+}
