@@ -6,11 +6,11 @@
     </div>
 
 </div>
-<nav class="navbar navbar-expand-md navbar-light shadow bg-white">
+<nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
 
         <a class="py-1 navbar-brand" href="{{ url('/') }}" >
-            <img src="/img/logo-alerj-projeto.png" class="img-fluid logo-alerj " alt="">
+            <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="Alerj" alt="Alerj">
         </a>
 
         <div class="d-flex ml-auto">

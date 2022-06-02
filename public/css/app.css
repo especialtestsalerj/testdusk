@@ -33003,6 +33003,10 @@ textarea.form-control-lg {
   color: white;
 }
 
+.navbar .navbar-nav .nav-item.active .nav-link {
+  color: white;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
