@@ -21,8 +21,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.edit-button', ['model'=>$eventType])
-                        @include('partials.save-button', ['model'=>$eventType, 'backUrl' => 'event_types.index'])
+                        @include('partials.save-button', ['model'=>$eventType, 'backUrl' => 'event_types.index', 'permission'=>'event_types:store'])
                     </div>
                 </div>
             </div>
@@ -44,15 +43,15 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input class="form-control" name="name" id="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType])/>
+                            <input class="form-control" name="name" id="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])/>
                         </div>
 
                         <div class="form-group">
                             <label for="status">Status</label>
                              <div class="form-check">
                                  <input class="form-control" type="hidden" name="status" value="true">
-                                <input class="form-check-input" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? $eventType->status : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$eventType])>
-                                <label class="form-check-label" for="status">Ativo / Inativo</label>
+                                <input class="form-check-input" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? $eventType->status : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])>
+                                <label class="form-check-label" for="status">Ativo</label>
                             </div>
                         </div>
                     </div>

@@ -32977,7 +32977,9 @@ textarea.form-control-lg {
 
 .card {
   border-radius: 0.475rem;
-  border: 0;
+  border-color: #dee2e6;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .card-footer {
