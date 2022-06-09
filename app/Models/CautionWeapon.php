@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-class Caution_Weapon extends Model
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CautionWeapon extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'caution_id',
         'weapon_type_id',

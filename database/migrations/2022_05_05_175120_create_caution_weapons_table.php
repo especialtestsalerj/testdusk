@@ -21,12 +21,10 @@ return new class extends Migration {
             $table->integer('cabinet_id')->nullable();
             $table->integer('shelf_id')->nullable();
             $table->timestamp('concluded_at');
-
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()

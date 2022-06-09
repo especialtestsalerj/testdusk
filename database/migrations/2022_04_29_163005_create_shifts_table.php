@@ -17,12 +17,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
-
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()
@@ -30,7 +28,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        $rows = ['06:00 - 20:00', '20:00 - 06:00'];
+        $rows = ['08:00 - 20:00', '20:00 - 08:00'];
 
         foreach ($rows as $name) {
             $row = new Shift();

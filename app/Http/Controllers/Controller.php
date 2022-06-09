@@ -10,4 +10,21 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @param string $message
+     *
+     * @return array
+     */
+    public function getSuccessMessage($message = 'Gravado com sucesso')
+    {
+        return ['status' => $message];
+    }
+
+    public function view($name)
+    {
+        return view($name)
+            ->with('search', request('search'))
+            ->with('query', request()->get('query'));
+    }
 }

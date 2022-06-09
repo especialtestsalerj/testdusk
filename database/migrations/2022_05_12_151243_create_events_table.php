@@ -12,22 +12,17 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('routines', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->date('entrance_date');
-            $table->integer('entrance_user_id');
-            $table->integer('entrance_shift_id');
-            $table->text('entrance_obs')->nullable();
-            $table->text('checkpoint_obs')->nullable();
-            $table->date('exit_date')->nullable();
-            $table->integer('exit_user_id')->nullable();
-            $table->text('exit_obs')->nullable();
-
+            $table->integer('routine_id');
+            $table->integer('event_type_id');
+            $table->timestamp('occurred_at');
+            $table->integer('duty_user_id');
+            $table->text('description')->nullable();
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()
@@ -35,15 +30,15 @@ return new class extends Migration {
             $table->timestamps();
 
             $table
-                ->foreign('entrance_user_id')
+                ->foreign('routine_id')
                 ->references('id')
-                ->on('users');
+                ->on('routines');
             $table
-                ->foreign('entrance_shift_id')
+                ->foreign('event_type_id')
                 ->references('id')
-                ->on('shifts');
+                ->on('event_types');
             $table
-                ->foreign('exit_user_id')
+                ->foreign('duty_user_id')
                 ->references('id')
                 ->on('users');
         });
@@ -56,6 +51,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('routines');
+        Schema::dropIfExists('events');
     }
 };

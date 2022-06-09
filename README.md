@@ -1,64 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Ocorrências - Sistema de Gestão de Ocorrências (DEPS) 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## [https://ocorrencias.alerj.rj.gov.br/](https://ocorrencias.alerj.rj.gov.br/)
 
-## About Laravel
+## Regulamentos (regras de negócio)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Levantamento de informações junto ao gestor Nelson Moreno a partir de protocolo nº 3574/2022.   
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Características da aplicação
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Git](https://git-scm.com/docs/user-manual.html)
+- [PHP 8.1 ou superior](http://php.net/)
+- [Composer](https://getcomposer.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Pusher](https://pusher.com/)
 
-## Learning Laravel
+### Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Clonar o repositório (branch: staging [homologação] or production [produção])
+- Configurar servidor web para apontar para a **`<pasta-aonde-o-site-foi-instalado>`/public**
+- Instalar certificado SSL (precisamos que a página seja acessível **via https apenas**)
+- Criar o banco do dados.
+- Entrar na `<pasta-aonde-o-site-foi-instalado>`
+- Configurar o arquivo `.env`
+    - Copiar o arquivo `.env.example` para `.env`
+    - Configurar todos dados do sistema
+    - Alterar a variável `APP_ENV` para o ambiente correto (local, testing, staging, production)
+    - Configurar banco de dados
+    - Configurar o Pusher (criar uma conta, se necessário)
+    - Configurar o serviço de e-mail (Outlook, Mailtrap, ou MAIL_DRIVER=log)
+- Executar o comando `composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev` para instalar todas as dependências da aplicação.
+    - Caso estiver no ambiente de desenvolvimento, executar `composer install`
+- Executar o comando `php artisan migrate` para criar/atualizar a estrutura de Banco de dados
+- Linkar a pasta storage, executando o comando `php artisan storage:link`
+- Criar uma chave para a aplicação, executando o comando `php artisan key:generate`
+- Criar o primeiro usuário administrador
+```
+php artisan ocorrencias:users:create admin@alerj.rj.gov.br Admin
+php artisan ocorrencias:sync:roles
+php artisan ocorrencias:role:assign administrator admin@alerj.rj.gov.br
+```
+- Resetar a senha para o usuário administrador criado
+- Criar os usuários restantes e dar suas respectivas permissões através da sessão do usuário administrador
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Documentação
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Termo de abertura (https://alerj.sharepoint.com/:w:/s/arquivos/ET_KbA0R6ZFJhjQGnG_TFt8Br4qaORM89VIa6F743MhUBQ?e=rKxy3h)
+- Ata de reunião 07/04/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/ESw5td6F4AtBjnMWhxL76qoBAaIxpltbp5TtZHRSFM54MQ?e=x2afYM)
+- Ata de reunião 03/05/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/EWEkYHjL9jFKu6mcvway5AEBm9Lq6O2K5w8OJbmaUSWm8Q?e=02cccI)
+- Diagrama de classe Laravel (https://alerj.sharepoint.com/:b:/s/arquivos/ERBxip1lKVdMkJTKtkT9TWQBUOQPRTizWCuwd5gb0IsWVg?e=hvUQuZ)
+- Diagrama de classe Português (https://alerj.sharepoint.com/:b:/s/arquivos/EXy8Vp7yhqlKryVgW_59ltMBFoh88wK8quEYAyieUrOj3A?e=Vj2bY9)

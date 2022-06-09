@@ -12,20 +12,18 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('visitors', function (Blueprint $table) {
+        Schema::create('cautions', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
-            $table->time('time_entrance');
-            $table->time('time_exit')->nullable();
             $table->integer('duty_user_id');
             $table->integer('person_id');
-            $table->text('description')->nullable();
-
+            $table->integer('destiny_sector_id');
+            $table->string('protocol_number');
+            $table->timestamp('concluded_at');
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
-
             $table
                 ->bigInteger('updated_by_id')
                 ->unsigned()
@@ -36,11 +34,18 @@ return new class extends Migration {
                 ->foreign('routine_id')
                 ->references('id')
                 ->on('routines');
-
             $table
                 ->foreign('duty_user_id')
                 ->references('id')
                 ->on('users');
+            $table
+                ->foreign('person_id')
+                ->references('id')
+                ->on('people');
+            $table
+                ->foreign('destiny_sector_id')
+                ->references('id')
+                ->on('sectors');
         });
     }
 
@@ -51,6 +56,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('visitors');
+        Schema::dropIfExists('cautions');
     }
 };

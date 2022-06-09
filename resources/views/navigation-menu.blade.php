@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom sticky-top">
+<nav class="navbar navbar-expand-md navbar-light border-bottom sticky-top">
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand me-4" href="/">
-            <x-jet-application-mark width="36" />
+            <div class="logo-projeto"></div>
+            <img src="{{ url('/img/logo.png') }}" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
