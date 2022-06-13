@@ -10,7 +10,7 @@
     </div>
 @endif
 
-<table id="eventTypeTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="eventTypeTable" class="table table-striped table-bordered">
     <thead>
         <tr>
             <th class="col-md-1">#</th>

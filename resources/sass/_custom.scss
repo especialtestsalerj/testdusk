@@ -88,7 +88,9 @@
 
 .card {
   border-radius: 0.475rem;
-  border: 0;
+  border-color: #dee2e6;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .card-footer {
@@ -111,6 +113,10 @@
 
 .navbar {
     background-color: #142B53;
+    color: white;
+}
+
+.navbar .navbar-nav .nav-item.active .nav-link {
     color: white;
 }
 

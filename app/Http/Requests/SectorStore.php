@@ -11,7 +11,7 @@ class SectorStore extends Request
      */
     public function authorize()
     {
-        return allows('event_types:store');
+        return allows('sectors:store');
     }
 
     /**

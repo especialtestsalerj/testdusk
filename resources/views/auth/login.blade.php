@@ -49,7 +49,7 @@
                         @endif
 
                         <x-jet-button>
-                            {{ __('Log in') }}
+                            {{ __('Entrar') }}
                         </x-jet-button>
                     </div>
                 </div>
