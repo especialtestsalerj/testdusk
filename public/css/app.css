@@ -33021,6 +33021,14 @@ textarea.form-control-lg {
   border-top: 1px solid currentColor;
 }
 
+.btn-primary {
+  color: #FFF;
+}
+
+.form-control {
+  background-color: #FFF;
+}
+
 .logo-alerj {
   max-width: 275px;
   /*float: left;*/

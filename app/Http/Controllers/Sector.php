@@ -36,11 +36,6 @@ class Sector extends Controller
         ]);
     }
 
-    /**
-     * @param SectorUpdateRequest $request
-     * @param $id
-     * @return mixed
-     */
     public function update(SectorUpdateRequest $request, $id)
     {
         app(SectorsRepository::class)->update($id, $request->all());

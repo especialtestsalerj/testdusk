@@ -36,7 +36,7 @@
             </td>
         </tr>
     @empty
-        <div class="alert alert-warning">
+        <div class="alert alert-warning mt-2">
             Nenhum Setor encontrado
         </div>
     @endforelse

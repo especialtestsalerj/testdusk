@@ -6,10 +6,16 @@
 >
     <i class="fa fa-save"></i> Salvar
 </button>
-&nbsp;
-<a href="{{route($backUrl)}}"
+&nbsp;@if(isset($id))
+<a href="{{route($backUrl,$id)}}"
    id="cancelButton"
    class="btn btn-outline-danger ml-1"
 >
+    @else
+        <a href="{{route($backUrl)}}"
+           id="cancelButton"
+           class="btn btn-outline-danger ml-1"
+        >
+        @endif
     <i class="fas fa-ban"></i> Cancelar
 </a>

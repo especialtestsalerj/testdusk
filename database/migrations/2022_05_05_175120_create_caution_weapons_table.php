@@ -15,12 +15,13 @@ return new class extends Migration {
         Schema::create('caution_weapons', function (Blueprint $table) {
             $table->id();
             $table->integer('caution_id');
+            $table->timestamp('entranced_at');
+            $table->timestamp('exited_at');
             $table->integer('weapon_type_id');
             $table->text('description')->nullable();
             $table->string('weapon_number')->nullable();
             $table->integer('cabinet_id')->nullable();
             $table->integer('shelf_id')->nullable();
-            $table->timestamp('concluded_at');
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()

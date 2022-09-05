@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "alerj/alerj-auth": "^1.0",
         "bugsnag/bugsnag-laravel": "^2.23",
+        "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.7",

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default" id="vue-event_types">
+    <div class="card card-default">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('event_types.update', ['id' => $eventType->id]) }}" @else action="{{ route('event_types.store')}}" @endIf method="POST">
             {{ csrf_field() }}
             <input name="id" type="hidden" value="{{$eventType->id}}" id="id" >
@@ -9,15 +9,15 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h4 class="mb-0">
-                            <a href="{{ route('event_types.index') }}">Tipos de Evento</a>
+                        <h2 class="mb-0">
+                            <a href="{{ route('event_types.index') }}">Tipos de Ocorrência</a>
 
                             @if(is_null($eventType->id))
                                 > Novo
                             @else
                                 > {{ $eventType->id }} - {{ $eventType->name }}
                             @endif
-                        </h4>
+                        </h2>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">

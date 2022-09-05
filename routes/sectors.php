@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EventType;
 use App\Http\Controllers\Sector;
 
 Route::group(['prefix' => '/sectors'], function () {

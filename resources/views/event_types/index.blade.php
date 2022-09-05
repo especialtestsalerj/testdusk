@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-3">
-                    <h4 class="mb-0">Tipos de Evento</h4>
+                    <h2 class="mb-0">Tipos de Ocorrência</h2>
                 </div>
 
                 <div class="col-md-9">
