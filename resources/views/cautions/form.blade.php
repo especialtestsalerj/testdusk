@@ -19,7 +19,7 @@
                             @if(is_null($caution->id))
                                 > Novo/a
                             @else
-                                > {{ $caution->id }} - {{ $caution->started_at_formatted }}
+                                > {{ $caution->id }} - {{ $caution->started_at->format('d/m/Y \à\s H:i') }}
                             @endif
                         </h4>
                     </div>
@@ -46,11 +46,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="started_at">Entrada</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? $caution->started_at_formatted: old('started_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? $caution->started_at_formatted: old('started_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="person_id">Visitante</label>

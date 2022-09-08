@@ -31,13 +31,13 @@
                 {{ $routine?->shift?->name }}
             </td>
             <td>
-                {{ $routine?->entranced_at_formatted }}
+                {{ $routine?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
             </td>
             <td>
                 {{ $routine?->entrancedUser?->name }}
             </td>
             <td>
-                {{ $routine?->exited_at_formatted ?? '-' }}
+                {{ $routine?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
             </td>
             <td>
                 <a id="novo" href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" title="Gerenciar rotina">

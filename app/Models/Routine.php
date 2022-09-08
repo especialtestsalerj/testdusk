@@ -29,12 +29,12 @@ class Routine extends Model
 
     public function getEntrancedAtFormattedAttribute()
     {
-        return $this->entranced_at?->format('d/m/Y H:i');
+        return $this->entranced_at?->format('Y-m-d H:i');
     }
 
     public function getExitedAtFormattedAttribute()
     {
-        return $this->exited_at?->format('d/m/Y H:i');
+        return $this->exited_at?->format('Y-m-d H:i');
     }
 
     public function entrancedUser()

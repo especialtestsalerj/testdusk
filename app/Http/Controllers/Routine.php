@@ -7,6 +7,7 @@ use App\Http\Requests\RoutineStore as RoutineRequest;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Requests\RoutineUpdate as RoutineUpdateRequest;
 use App\Support\Constants;
+use function Sodium\add;
 
 class Routine extends Controller
 {
@@ -51,7 +52,7 @@ class Routine extends Controller
 
     public function update(RoutineUpdateRequest $request, $id)
     {
-        app(RoutinesRepository::class)->update($id, $request->all());
+        app(RoutinesRepository::class)->update($request->all());
 
         return redirect()->route('routines.index');
     }

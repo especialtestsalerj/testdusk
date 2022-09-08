@@ -33,6 +33,6 @@ class Event extends Model
 
     public function getOccurredAtFormattedAttribute()
     {
-        return $this->occurred_at?->format('d/m/Y H:i');
+        return $this->occurred_at?->format('Y-m-d H:i');
     }
 }

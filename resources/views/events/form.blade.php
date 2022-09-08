@@ -19,7 +19,7 @@
                             @if(is_null($event->id))
                                 > Nova
                             @else
-                                > {{ $event->id }} - {{ $event->occurred_at_formatted }}
+                                > {{ $event->id }} - {{ $event->occurred_at->format('d/m/Y \à\s H:i') }}
                             @endif
                         </h4>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group">
                             <label for="occurred_at">Data da Ocorrência</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="occurred_at" id="occurred_at" value="{{is_null(old('occurred_at')) ? $event->occurred_at_formatted: old('occurred_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="occurred_at" id="occurred_at" value="{{is_null(old('occurred_at')) ? $event->occurred_at_formatted: old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista</label>

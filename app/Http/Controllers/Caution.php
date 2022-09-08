@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Cautions as CautionsRepository;
+use App\Data\Repositories\Events as EventsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
@@ -63,8 +64,9 @@ class Caution extends Controller
 
     public function update(CautionUpdateRequest $request, $id)
     {
+        $caution = app(CautionsRepository::class)->create($request->all());
         app(CautionsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('cautions.index');
+        return redirect()->route('routines.show', $caution->routine_id);
     }
 }

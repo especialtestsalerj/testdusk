@@ -27,7 +27,7 @@
             @forelse ($events as $event)
                 <tr>
                     <td>
-                        {{ $event?->occurred_at_formatted ?? '-' }}
+                        {{ $event?->occurred_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $event->eventType->name }}

@@ -46,11 +46,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="entranced_at">Entrada</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $stuff->entranced_at_formatted: old('entranced_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $stuff->entranced_at_formatted: old('entranced_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $stuff->exited_at_formatted: old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $stuff->exited_at_formatted: old('exited_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista</label>

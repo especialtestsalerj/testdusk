@@ -27,10 +27,10 @@
             @forelse ($stuffs as $stuff)
                 <tr>
                     <td>
-                        {{ $stuff?->entranced_at_formatted ?? '-' }}
+                        {{ $stuff?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $stuff?->exited_at_formatted ?? '-' }}
+                        {{ $stuff?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $stuff->dutyUser->name }}
