@@ -39,11 +39,6 @@ class EventType extends Controller
         ]);
     }
 
-    /**
-     * @param EventTypeUpdateRequest $request
-     * @param $id
-     * @return mixed
-     */
     public function update(EventTypeUpdateRequest $request, $id)
     {
         app(EventTypesRepository::class)->update($id, $request->all());

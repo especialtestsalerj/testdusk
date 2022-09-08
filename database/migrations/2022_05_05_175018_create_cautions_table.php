@@ -15,11 +15,12 @@ return new class extends Migration {
         Schema::create('cautions', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('concluded_at')->nullable();
             $table->integer('duty_user_id');
             $table->integer('person_id');
             $table->integer('destiny_sector_id');
-            $table->string('protocol_number');
-            $table->timestamp('concluded_at');
+            $table->bigInteger('protocol_number');
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()

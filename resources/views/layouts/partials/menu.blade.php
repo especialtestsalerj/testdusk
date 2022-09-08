@@ -39,12 +39,11 @@
                                 <li><a class="dropdown-item" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan
                             @can('event_types:show')
-                                <li><a class="dropdown-item" href="{{ route('event_types.index') }}">Tipos de Evento</a></li>
+                                <li><a class="dropdown-item" href="{{ route('event_types.index') }}">Tipos de Ocorrência</a></li>
                             @endCan
-                            <li><a class="dropdown-item" href="{{ route('sectors.index') }}">Setores</a></li>
-                            <li><a class="dropdown-item" href="{{ route('event_types.index') }}">Tipos de Evento</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Ocorrências</a></li>
+                            @can('routines:show')
+                                <li><a class="dropdown-item" href="{{ route('routines.index') }}">Rotinas</a></li>
+                            @endCan
                         </ul>
                     </li>
 

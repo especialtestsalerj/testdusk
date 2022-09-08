@@ -12,8 +12,27 @@ class Event extends Model
     protected $fillable = [
         'routine_id',
         'event_type_id',
-        'event_date',
+        'occurred_at',
         'duty_user_id',
         'description',
     ];
+
+    protected $casts = [
+        'occurred_at' => 'datetime:Y-m-d H:i',
+    ];
+
+    public function eventType()
+    {
+        return $this->belongsTo(EventType::class, 'event_type_id');
+    }
+
+    public function dutyUser()
+    {
+        return $this->belongsTo(User::class, 'duty_user_id');
+    }
+
+    public function getOccurredAtFormattedAttribute()
+    {
+        return $this->occurred_at?->format('d/m/Y H:i');
+    }
 }

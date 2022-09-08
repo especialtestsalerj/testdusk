@@ -36,8 +36,8 @@
             </td>
         </tr>
     @empty
-        <div class="alert alert-warning">
-            Nenhum Tipo de Evento encontrado
+        <div class="alert alert-warning mt-2">
+            Nenhum Tipo de Ocorrência encontrado
         </div>
     @endforelse
     </tbody>

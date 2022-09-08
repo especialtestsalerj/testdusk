@@ -15,11 +15,11 @@ return new class extends Migration {
         Schema::create('routines', function (Blueprint $table) {
             $table->id();
             $table->integer('shift_id');
-            $table->date('entranced_at');
+            $table->timestamp('entranced_at');
             $table->integer('entranced_user_id');
             $table->text('entranced_obs')->nullable();
             $table->text('checkpoint_obs')->nullable();
-            $table->date('exited_at')->nullable();
+            $table->timestamp('exited_at')->nullable();
             $table->integer('exited_user_id')->nullable();
             $table->text('exited_obs')->nullable();
             $table
