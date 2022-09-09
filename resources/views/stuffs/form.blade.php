@@ -19,7 +19,7 @@
                             @if(is_null($stuff->id))
                                 > Novo
                             @else
-                                > {{ $stuff->id }} - {{ $stuff->entranced_at_formatted }}
+                                > {{ $stuff->id }} - {{ $stuff->entranced_at->format('d/m/Y \à\s H:i') }}
                             @endif
                         </h4>
                     </div>
