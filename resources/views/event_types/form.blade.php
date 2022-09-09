@@ -27,17 +27,7 @@
             </div>
 
             <div class="card-body">
-                @include('partials.alerts')
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                @if ($errors->has('status'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('status') }}
-                    </div>
-                @endif
+                @include('layouts.msg')
 
                 <div class="row">
                     <div class="col-md-12">
