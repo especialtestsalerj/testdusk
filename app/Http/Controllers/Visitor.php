@@ -34,11 +34,8 @@ class Visitor extends Controller
     public function store(VisitorRequest $request)
     {
         $visitor = app(VisitorsRepository::class)->create($request->all());
-        $routine = app(RoutinesRepository::class)->findById($visitor->routine_id);
 
-        return redirect()
-            ->route('routines.show', $visitor->routine_id)
-            ->with(['routine' => $routine]);
+        return redirect()->route('routines.show', $visitor->routine_id);
     }
 
     public function show($id)
@@ -54,8 +51,9 @@ class Visitor extends Controller
 
     public function update(VisitorUpdateRequest $request, $id)
     {
+        $visitor = app(VisitorsRepository::class)->create($request->all());
         app(VisitorsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('visitors.index');
+        return redirect()->route('routines.show', $visitor->routine_id);
     }
 }

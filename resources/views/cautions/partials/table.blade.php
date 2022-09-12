@@ -17,9 +17,9 @@
         <table id="cautionTable" class="table table-striped table-bordered mt-2">
             <thead>
             <tr>
-                <th class="col-md-2">Protocolo</th>
-                <th class="col-md-1">Abertura</th>
-                <th class="col-md-1">Fechamento</th>
+                <th class="col-md-1">Protocolo</th>
+                <th class="col-md-2">Abertura</th>
+                <th class="col-md-2">Fechamento</th>
                 <th class="col-md-2">Solicitante</th>
                 <th class="col-md-2">Destino</th>
                 <th class="col-md-2">Plantonista</th>
@@ -30,13 +30,13 @@
             @forelse ($cautions as $caution)
                 <tr>
                     <td>
-                        {{ $caution?->protocol_number ?? '-' }}
+                        {{ $caution?->protocol_number_formatted ?? '-' }}
                     </td>
                     <td>
-                        {{ $caution?->started_at_formatted ?? '-' }}
+                        {{ $caution?->started_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $caution?->concluded_at_formatted ?? '-' }}
+                        {{ $caution?->concluded_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $caution->person->full_name }}

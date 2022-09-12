@@ -28,10 +28,10 @@
             @forelse ($visitors as $visitor)
                 <tr>
                     <td>
-                        {{ $visitor?->entranced_at_formatted ?? '-' }}
+                        {{ $visitor?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $visitor?->exited_at_formatted ?? '-' }}
+                        {{ $visitor?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $visitor->person->full_name }}

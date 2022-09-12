@@ -31,11 +31,8 @@ class Event extends Controller
     public function store(EventRequest $request)
     {
         $event = app(EventsRepository::class)->create($request->all());
-        $routine = app(RoutinesRepository::class)->findById($event->routine_id);
 
-        return redirect()
-            ->route('routines.show', $event->routine_id)
-            ->with(['routine' => $routine]);
+        return redirect()->route('routines.show', $event->routine_id);
     }
 
     public function show($id)
@@ -51,8 +48,9 @@ class Event extends Controller
 
     public function update(EventUpdateRequest $request, $id)
     {
+        $event = app(EventsRepository::class)->create($request->all());
         app(EventsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('events.index');
+        return redirect()->route('routines.show', $event->routine_id);
     }
 }

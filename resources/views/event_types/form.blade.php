@@ -27,30 +27,20 @@
             </div>
 
             <div class="card-body">
-                @include('partials.alerts')
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                @if ($errors->has('status'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('status') }}
-                    </div>
-                @endif
+                @include('layouts.msg')
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input class="form-control" name="name" id="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])/>
+                            <input class="form-control" id="name" name="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])/>
                         </div>
 
                         <div class="form-group">
                             <label for="status">Status</label>
-                             <div class="form-check">
-                                 <input class="form-control" type="hidden" name="status" value="true">
-                                <input class="form-check-input" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? $eventType->status : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])>
+                            <div class="form-check">
+                                <input class="form-control" type="hidden" name="status" value="false">
+                                <input class="form-check-input" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $eventType->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event_types:store'])>
                                 <label class="form-check-label" for="status">Ativo</label>
                             </div>
                         </div>

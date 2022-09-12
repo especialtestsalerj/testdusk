@@ -36,11 +36,18 @@ class Caution extends Model
 
     public function getStartedAtFormattedAttribute()
     {
-        return $this->started_at?->format('d/m/Y H:i');
+        return $this->started_at?->format('Y-m-d H:i');
     }
 
     public function getConcludedAtFormattedAttribute()
     {
-        return $this->concluded_at?->format('d/m/Y H:i');
+        return $this->concluded_at?->format('Y-m-d H:i');
+    }
+
+    public function getProtocolNumberFormattedAttribute()
+    {
+        $ano = substr($this->protocol_number, 0, 4);
+        $codigo = substr($this->protocol_number, 4, 4);
+        return $codigo . '/' . $ano;
     }
 }

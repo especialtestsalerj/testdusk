@@ -18,13 +18,13 @@
                             @if(is_null($routine->id))
                                 > Nova
                             @else
-                                > {{ $routine->id }} - {{ $routine->entranced_at_formatted }}
+                                > {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y \à\s H:i') }}
                             @endif
                         </h2>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>'routines:edit'])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>'routines:update'])
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label for="entranced_at">Assunção</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted: old('entranced_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="entranced_user_id">Responsável (Assunção)</label>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Passagem</label>
-                            <input type="datetime-local" max="1900-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_user_id">Responsável (Passagem)</label>

@@ -27,22 +27,13 @@
             </div>
 
             <div class="card-body">
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                @if ($errors->has('status'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('status') }}
-                    </div>
-                @endif
+                @include('layouts.msg')
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input class="form-control" name="name" id="name" value="{{is_null(old('name')) ? $sector->name : old('name')}}" @include('partials.disabled', ['model'=>$sector, 'permission'=>'sectors:store'])/>
+                            <input class="form-control" id="name" name="name" value="{{is_null(old('name')) ? $sector->name : old('name')}}" @include('partials.disabled', ['model'=>$sector, 'permission'=>'sectors:store'])/>
                         </div>
 
                         <div class="form-group">
