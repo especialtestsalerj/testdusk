@@ -35,7 +35,7 @@ class Visitor extends Controller
     {
         $visitor = app(VisitorsRepository::class)->create($request->all());
 
-        return redirect()->route('routines.show', $visitor->routine_id);
+        return redirect()->route('routines.show', $visitor->routine_id)->with('status', 'Visitante adicionado com sucesso!');
     }
 
     public function show($id)
@@ -54,6 +54,6 @@ class Visitor extends Controller
         $visitor = app(VisitorsRepository::class)->create($request->all());
         app(VisitorsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.show', $visitor->routine_id);
+        return redirect()->route('routines.show', $visitor->routine_id)->with('status', 'Visitante alterado com sucesso!');
     }
 }

@@ -31,6 +31,7 @@
             </div>
 
             <div class="card-body">
+                @include('layouts.msg')
                 @if ($errors->has('name'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('name') }}

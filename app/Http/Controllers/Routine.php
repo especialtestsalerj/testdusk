@@ -37,7 +37,7 @@ class Routine extends Controller
 
         return redirect()
             ->route('routines.index')
-            ->with('status', 'Rotina criada com sucesso!');
+            ->with('status', 'Rotina adicionada com sucesso!');
     }
 
     public function show($id)
@@ -58,6 +58,6 @@ class Routine extends Controller
 
         return redirect()
             ->route('routines.index')
-            ->with('status', 'Rotina criada com sucesso!');
+            ->with('status', 'Rotina alterada com sucesso!');
     }
 }

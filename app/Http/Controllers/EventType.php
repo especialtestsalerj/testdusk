@@ -31,7 +31,7 @@ class EventType extends Controller
 
         return redirect()
             ->route('event_types.index')
-            ->with('status', 'Ocorrência criada com sucesso!');
+            ->with('status', 'Ocorrência adicionada com sucesso!');
     }
 
     public function show($id)
@@ -47,6 +47,6 @@ class EventType extends Controller
 
         return redirect()
             ->route('event_types.index')
-            ->with('status', 'Ocorrência modificada com sucesso!');
+            ->with('status', 'Ocorrência alterada com sucesso!');
     }
 }

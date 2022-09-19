@@ -32,7 +32,7 @@ class Event extends Controller
     {
         $event = app(EventsRepository::class)->create($request->all());
 
-        return redirect()->route('routines.show', $event->routine_id);
+        return redirect()->route('routines.show', $event->routine_id)->with('status', 'Ocorrência adicionada com sucesso!');
     }
 
     public function show($id)
@@ -51,6 +51,6 @@ class Event extends Controller
         $event = app(EventsRepository::class)->create($request->all());
         app(EventsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.show', $event->routine_id);
+        return redirect()->route('routines.show', $event->routine_id)->with('status', 'Ocorrência alterada com sucesso!');
     }
 }

@@ -14,6 +14,7 @@
             </div>
         </div>
 
+
         <table id="visitorTable" class="table table-striped table-bordered mt-2">
             <thead>
             <tr>

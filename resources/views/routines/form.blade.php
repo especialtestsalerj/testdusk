@@ -30,6 +30,7 @@
             </div>
 
             <div class="card-body">
+                @include('layouts.msg')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -50,8 +51,9 @@
 
                             <td class="text-center">
                                 @if (Route::is('routines.create') )
-                                    <input type="date" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="<?php echo date('Y-m-d');?>"/>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
+
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{date('Y-m-d H:i')}}"/>
+{{--                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>--}}
                                 @else
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
                                 @endif

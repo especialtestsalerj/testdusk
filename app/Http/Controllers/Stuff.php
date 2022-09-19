@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Data\Repositories\Stuffs as StuffsRepository;
 use App\Data\Repositories\Users as UsersRepository;
+use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Requests\StuffStore as StuffRequest;
 use App\Http\Requests\StuffUpdate as StuffUpdateRequest;
 use App\Data\Repositories\Routines as RoutinesRepository;
@@ -33,7 +34,8 @@ class Stuff extends Controller
 
         return redirect()
             ->route('routines.show', $stuff->routine_id)
-            ->with(['routine' => $routine]);
+            ->with(['routine' => $routine])
+            ->with('status', 'Material adicionado com sucesso!');
     }
 
     public function show($id)
@@ -48,8 +50,9 @@ class Stuff extends Controller
 
     public function update(StuffUpdateRequest $request, $id)
     {
+        $stuff = app(StuffsRepository::class)->create($request->all());
         app(StuffsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('stuffs.index');
+        return redirect()->route('routines.show', $stuff->routine_id)->with('status', 'Material alterado com sucesso!');
     }
 }

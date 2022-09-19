@@ -28,7 +28,7 @@ class Sector extends Controller
 
         return redirect()
             ->route('sectors.index')
-            ->with('status', 'Setor criado com sucesso!');
+            ->with('status', 'Setor adicionado com sucesso!');
     }
 
     public function show($id)
@@ -44,6 +44,6 @@ class Sector extends Controller
 
         return redirect()
             ->route('sectors.index')
-            ->with('status', 'Setor editado com sucesso!');
+            ->with('status', 'Setor alterado com sucesso!');
     }
 }
