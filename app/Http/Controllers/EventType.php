@@ -29,7 +29,9 @@ class EventType extends Controller
     {
         app(EventTypesRepository::class)->create($request->all());
 
-        return redirect()->route('event_types.index')->with('status', 'Ocorrência criada com sucesso!');
+        return redirect()
+            ->route('event_types.index')
+            ->with('status', 'Ocorrência criada com sucesso!');
     }
 
     public function show($id)
@@ -43,6 +45,8 @@ class EventType extends Controller
     {
         app(EventTypesRepository::class)->update($id, $request->all());
 
-        return redirect()->route('event_types.index')->with('status', 'Ocorrência modificada com sucesso!');
+        return redirect()
+            ->route('event_types.index')
+            ->with('status', 'Ocorrência modificada com sucesso!');
     }
 }
