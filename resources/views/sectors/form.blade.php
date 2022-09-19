@@ -41,7 +41,7 @@
                             <label for="status">Status*</label>
                             <div class="form-check">
                                 <input class="form-control" type="hidden" name="status" value="false">
-                                <input class="form-check-input" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $sector->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$sector, 'permission'=>'sectors:store'])>
+                                <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $sector->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model'=>$sector, 'permission'=>'sectors:store'])>
                                 <label class="form-check-label" for="status">Ativo</label>
                             </div>
                         </div>
