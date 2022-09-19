@@ -47,7 +47,18 @@
                         </div>
                         <div class="form-group">
                             <label for="entranced_at">Assunção</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
+
+                            <td class="text-center">
+                                @if (Route::is('routines.create') )
+                                    <input type="date" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="<?php echo date('Y-m-d');?>"/>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
+                                @else
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
+                                @endif
+                            </td>
+
+
+
                         </div>
                         <div class="form-group">
                             <label for="entranced_user_id">Responsável (Assunção)</label>
