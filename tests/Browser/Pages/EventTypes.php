@@ -11,6 +11,6 @@ use Livewire\Livewire;
 use Tests\DuskTestCase;
 
 class ProvidersTest extends DuskTestCase
-{
-
+{   
+    
 }

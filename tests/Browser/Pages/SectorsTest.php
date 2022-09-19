@@ -9,7 +9,7 @@ use App\Support\Constants;
 use Tests\DuskTestCase;
 
 class SectorsTest extends DuskTestCase
-{   
+{
      /*
      * @test
      * @group tests_createSectors
@@ -21,7 +21,7 @@ class SectorsTest extends DuskTestCase
     {
         $user = User::factory()->create();
         $generateSector = Sector::factory()->create()->toArray();
-    
+
         $this->browse(function ($browser) use ($user,$generateSector) {
           $browser
             ->loginAs($user->id)
@@ -46,10 +46,10 @@ class SectorsTest extends DuskTestCase
      * @group testSearch
      * @group link
      */
-    
+
      // Dusk - Procura um setor
      public function testSearch()
-    { 
+    {
         $user = User::factory()->create();
         $sector = Sector::all()->random(1)->toArray()[0];
 
@@ -63,7 +63,7 @@ class SectorsTest extends DuskTestCase
                 ->waitForText('Nenhum Setor encontrado',8)
                 ->assertSee('Nenhum Setor encontrado');
         });
-        
+
         //Right Search
         $this->browse(function ($browser) use ($user,$sector) {
           $browser
@@ -88,7 +88,7 @@ class SectorsTest extends DuskTestCase
         $randomSector = DB::table('sectors')
         ->inRandomOrder()
         ->first();
-    
+
         $this->browse(function ($browser) use ($user,$randomSector) {
           $browser
             ->loginAs($user->id)
