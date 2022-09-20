@@ -23,7 +23,7 @@ class SectorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => faker()->name,
+            'name' => faker()->company,
             'status' => (bool)rand(0,1),
         ];
     }
