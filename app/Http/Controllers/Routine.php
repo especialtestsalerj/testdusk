@@ -54,7 +54,7 @@ class Routine extends Controller
 
     public function update(RoutineUpdateRequest $request, $id)
     {
-        app(RoutinesRepository::class)->update($request->all());
+        app(RoutinesRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('routines.index')

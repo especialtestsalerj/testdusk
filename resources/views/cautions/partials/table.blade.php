@@ -33,10 +33,10 @@
                         {{ $caution?->protocol_number_formatted ?? '-' }}
                     </td>
                     <td>
-                        {{ $caution?->started_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $caution?->concluded_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $caution->person->full_name }}

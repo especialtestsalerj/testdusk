@@ -16,4 +16,24 @@ class EventTypeStore extends Request
             'status' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nome: preencha o campo corretamente.',
+            'name.unique' => 'Nome: tipo de ocorrência já existente.',
+            'status.required' => 'Status: preencha o campo corretamente.',
+        ];
+    }
+
+    public function sanitize(array $all)
+    {
+        if (!empty($this->get('name'))) {
+            $input = $all;
+            $input['name'] = mb_strtoupper($input['name']);
+            $this->replace($input);
+        }
+
+        return $all;
+    }
 }

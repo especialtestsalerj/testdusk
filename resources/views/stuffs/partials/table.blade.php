@@ -19,7 +19,8 @@
             <tr>
                 <th class="col-md-2">Entrada</th>
                 <th class="col-md-2">Saída</th>
-                <th class="col-md-6">Plantonista</th>
+                <th class="col-md-2">Setor</th>
+                <th class="col-md-4">Plantonista</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -27,10 +28,13 @@
             @forelse ($stuffs as $stuff)
                 <tr>
                     <td>
-                        {{ $stuff?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $stuff?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                    </td>
+                    <td>
+                        {{ $stuff?->sector?->name ?? '-' }}
                     </td>
                     <td>
                         {{ $stuff->dutyUser->name }}

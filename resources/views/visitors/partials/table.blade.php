@@ -20,8 +20,9 @@
             <tr>
                 <th class="col-md-2">Entrada</th>
                 <th class="col-md-2">Saída</th>
-                <th class="col-md-3">Visitante</th>
-                <th class="col-md-3">Plantonista</th>
+                <th class="col-md-2">Visitante</th>
+                <th class="col-md-2">Setor</th>
+                <th class="col-md-2">Plantonista</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -29,13 +30,16 @@
             @forelse ($visitors as $visitor)
                 <tr>
                     <td>
-                        {{ $visitor?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $visitor?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $visitor->person->full_name }}
+                    </td>
+                    <td>
+                        {{ $visitor?->sector?->name ?? '-' }}
                     </td>
                     <td>
                         {{ $visitor->dutyUser->name }}

@@ -13,6 +13,7 @@ class Event extends Model
         'routine_id',
         'event_type_id',
         'occurred_at',
+        'sector_id',
         'duty_user_id',
         'description',
     ];
@@ -24,6 +25,11 @@ class Event extends Model
     public function eventType()
     {
         return $this->belongsTo(EventType::class, 'event_type_id');
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class, 'sector_id');
     }
 
     public function dutyUser()

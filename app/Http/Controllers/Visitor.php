@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Visitors as VisitorsRepository;
+use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Http\Requests\VisitorStore as VisitorRequest;
 use App\Http\Requests\VisitorUpdate as VisitorUpdateRequest;
-use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Support\Constants;
 
 class Visitor extends Controller
@@ -26,8 +26,9 @@ class Visitor extends Controller
         return $this->view('visitors.form')->with([
             'routine_id' => $routine_id,
             'visitor' => app(VisitorsRepository::class)->new(),
-            'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
+            'sectors' => app(SectorsRepository::class)->all('name'),
+            'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
 
@@ -35,7 +36,9 @@ class Visitor extends Controller
     {
         $visitor = app(VisitorsRepository::class)->create($request->all());
 
-        return redirect()->route('routines.show', $visitor->routine_id)->with('status', 'Visitante adicionado com sucesso!');
+        return redirect()
+            ->route('routines.show', $visitor->routine_id)
+            ->with('status', 'Visitante adicionado com sucesso!');
     }
 
     public function show($id)
@@ -44,8 +47,9 @@ class Visitor extends Controller
         return $this->view('visitors.form')->with([
             'routine_id' => $visitor->routine_id,
             'visitor' => $visitor,
-            'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
+            'sectors' => app(SectorsRepository::class)->all('name'),
+            'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
 
@@ -54,6 +58,8 @@ class Visitor extends Controller
         $visitor = app(VisitorsRepository::class)->create($request->all());
         app(VisitorsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.show', $visitor->routine_id)->with('status', 'Visitante alterado com sucesso!');
+        return redirect()
+            ->route('routines.show', $visitor->routine_id)
+            ->with('status', 'Visitante alterado com sucesso!');
     }
 }

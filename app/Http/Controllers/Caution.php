@@ -68,6 +68,8 @@ class Caution extends Controller
         $caution = app(CautionsRepository::class)->create($request->all());
         app(CautionsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.show', $caution->routine_id)->with('status', 'Cautela alterada com sucesso!');;
+        return redirect()
+            ->route('routines.show', $caution->routine_id)
+            ->with('status', 'Cautela alterada com sucesso!');
     }
 }
