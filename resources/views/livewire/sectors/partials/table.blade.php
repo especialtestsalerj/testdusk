@@ -12,7 +12,7 @@
     @forelse ($sectors as $sector)
         <tr>
             <td>
-                <a href="{{ route('sectors.show', ['id' => $sector['id']]) }}" title="{{ $sector['name'] }}">{{ $sector['id'] }}</a>
+                <a href="{{ route('sectors.show', ['id' => $sector['id']]) }}" dusk="sector-{{ $sector['id'] }}" title="{{ $sector['name'] }}">{{ $sector['id'] }}</a>
             </td>
             <td>
                 {{ $sector['name'] }}

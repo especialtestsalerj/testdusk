@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Sector;
+use App\Models\EventType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class SectorFactory extends Factory
+class EventTYPEFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Sector::class;
+    protected $model = EventType::class;
 
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class SectorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => strtoupper(faker()->company),
+            'name' => strtoupper(faker()->name),
             'status' => (bool)rand(0,1),
         ];
     }
