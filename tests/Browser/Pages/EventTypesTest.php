@@ -3,24 +3,24 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Models\Sector;
+use App\Models\EventType;
 use Illuminate\Support\Facades\DB;
 use App\Support\Constants;
 use Tests\DuskTestCase;
 
-class SectorsTest extends DuskTestCase
+class EventTypesTest extends DuskTestCase
 {   
      /*
      * @test
-     * @group tests_createSectors
+     * @group tests_createEventTypes
      * @group link
      */
 
-    //Dusk - Criação de um novo Setor
+    //Dusk - Criação de um novo tipo de ocorrencia.
     public function tests_createSectors()
     {
         $user = User::factory()->create();
-        $generateSector = Sector::factory()->create()->toArray();
+        $generateSector = EventType::factory()->create()->toArray();
     
         $this->browse(function ($browser) use ($user,$generateSector) {
           $browser
