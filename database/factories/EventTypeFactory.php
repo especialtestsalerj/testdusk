@@ -6,7 +6,7 @@ use App\Models\EventType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class EventTYPEFactory extends Factory
+class EventTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
