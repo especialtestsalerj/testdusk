@@ -159,4 +159,39 @@ class SectorsTest extends DuskTestCase
               ->assertSee($sector['id']);
       });
     }
+
+    /*
+     * @test
+     * @group tests_editSectors
+     * @group link
+     */
+
+    //Dusk - Edição de um novo Setor
+    public function tests_editSectors()
+    {
+        $user = User::factory()->create();
+        $randomSector = app(Sectors::class)
+        ->randomElement()
+        ->toArray();
+
+        dd($randomSector);
+
+        $this->browse(function ($browser) use ($user) {
+          $browser
+            ->loginAs($user->id)
+            ->visit('/sectors')
+            ->assertSee('Nome')
+            ->click('#novo')
+            ->assertPathIs('/sectors/create')
+            ->type('#name',$generateSector['name'])
+            ->assertChecked('@checkboxSectors')
+            ->script('document.querySelectorAll("#submitButton")[0].click();');
+          $browser
+            ->assertPathIs('/sectors')
+            ->assertSee('Setor criado com sucesso!');
+        });
+        $this->assertDatabaseHas('sectors', [
+          'name' => $generateSector['name']
+      ]);
+    }
 }
