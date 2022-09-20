@@ -20,24 +20,24 @@ class EventTypesTest extends DuskTestCase
     public function tests_createSectors()
     {
         $user = User::factory()->create();
-        $generateSector = EventType::factory()->create()->toArray();
+        $generateEventType = EventType::factory()->create()->toArray();
     
-        $this->browse(function ($browser) use ($user,$generateSector) {
+        $this->browse(function ($browser) use ($user,$generateEventType) {
           $browser
             ->loginAs($user->id)
-            ->visit('/sectors')
+            ->visit('/event_types')
             ->assertSee('Nome')
             ->click('#novo')
-            ->assertPathIs('/sectors/create')
-            ->type('#name', $generateSector['name'])
-            ->assertChecked('@checkboxSectors')
+            ->assertPathIs('/event_types/create')
+            ->type('#name', $generateEventType['name'])
+            ->assertChecked('@checkboxEventTypes')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
-            ->assertPathIs('/sectors')
-            ->assertSee('Setor criado com sucesso!');
+            ->assertPathIs('/event_types')
+            ->assertSee('Tipo de ocorrência adicionada com sucesso!');
         });
-        $this->assertDatabaseHas('sectors', [
-          'name' => $generateSector['name']
+        $this->assertDatabaseHas('event_types', [
+          'name' => $generateEventType['name']
       ]);
     }
 
@@ -47,66 +47,66 @@ class EventTypesTest extends DuskTestCase
      * @group link
      */
     
-     // Dusk - Procura um setor
+     // Dusk - Procura um tipo de ocorrencia
      public function testSearch()
     { 
         $user = User::factory()->create();
-        $sector = Sector::all()->random(1)->toArray()[0];
+        $event_type = EventType::all()->random(1)->toArray()[0];
 
         //Wrong Search
         $this->browse(function ($browser) use ($user) {
             $browser
               ->loginAs($user->id)
-                ->visit('/sectors')
+                ->visit('/event_types')
                 ->type('@search-input', '132312312vcxvdsf413543445654')
                 ->click('@search-button')
-                ->waitForText('Nenhum Setor encontrado',8)
-                ->assertSee('Nenhum Setor encontrado');
+                ->waitForText('Nenhum Tipo de Ocorrência encontrado',8)
+                ->assertSee('Nenhum Tipo de Ocorrência encontrado');
         });
         
         //Right Search
-        $this->browse(function ($browser) use ($user,$sector) {
+        $this->browse(function ($browser) use ($user,$event_type) {
           $browser
             ->loginAs($user->id)
-              ->visit('/sectors')
-              ->type('@search-input', $sector['name'])
+              ->visit('/event_types')
+              ->type('@search-input', $event_type['name'])
               ->click('@search-button')
-              ->assertSee($sector['id']);
+              ->assertSee($event_type['id']);
       });
     }
 
     /*
      * @test
-     * @group tests_editSectors
+     * @group tests_editEventTypes
      * @group link
      */
 
-    //Dusk - Edição de um novo Setor
+    //Dusk - Edição de um novo tipo de ocorrencia
     public function tests_editSectors()
     {
         $user = User::factory()->create();
-        $randomSector = DB::table('sectors')
+        $randomEventType = DB::table('event_types')
         ->inRandomOrder()
         ->first();
     
-        $this->browse(function ($browser) use ($user,$randomSector) {
+        $this->browse(function ($browser) use ($user,$randomEventType) {
           $browser
             ->loginAs($user->id)
-            ->visit('/sectors')
-            ->type('@search-input', $randomSector->name)
+            ->visit('/event_types')
+            ->type('@search-input', $randomEventType->name)
             ->click('@search-button')
-            ->assertSee($randomSector->id)
-            ->press('@sector-'.$randomSector->id)
-            ->type('#name','**'.$randomSector->name.'**')
+            ->assertSee($randomEventType->id)
+            ->press('@event_type-'.$randomEventType->id)
+            ->type('#name','**'.$randomEventType->name.'**')
             ->checked('@checkboxSectors')
             ->assertChecked('@checkboxSectors')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
             ->assertPathIs('/sectors')
-            ->assertSee('Setor alterado com sucesso!');
+            ->assertSee('Tipo de ocorrência alterado com sucesso!');
         });
-        $this->assertDatabaseHas('sectors', [
-          'name' =>'**'.$randomSector->name.'**',
+        $this->assertDatabaseHas('event_types', [
+          'name' =>'**'.$randomEventType->name.'**',
       ]);
     }
 }
