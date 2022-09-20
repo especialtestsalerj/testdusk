@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
+use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Http\Requests\VisitorStore as VisitorRequest;
 use App\Http\Requests\VisitorUpdate as VisitorUpdateRequest;
@@ -23,8 +24,11 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
         return $this->view('visitors.form')->with([
             'routine_id' => $routine_id,
+            'routine' => $routine,
             'visitor' => app(VisitorsRepository::class)->new(),
             'people' => app(PeopleRepository::class)->all('name'),
             'sectors' => app(SectorsRepository::class)->all('name'),

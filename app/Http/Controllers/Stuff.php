@@ -20,8 +20,11 @@ class Stuff extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
         return $this->view('stuffs.form')->with([
             'routine_id' => $routine_id,
+            'routine' => $routine,
             'stuff' => app(StuffsRepository::class)->new(),
             'sectors' => app(SectorsRepository::class)->all('name'),
             'users' => app(UsersRepository::class)->all('name'),

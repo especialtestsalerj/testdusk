@@ -38,7 +38,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $stuff->entranced_at_formatted: old('entranced_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Saída</label>

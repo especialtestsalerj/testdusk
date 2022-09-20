@@ -47,7 +47,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="started_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? $caution->started_at_formatted: old('started_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>

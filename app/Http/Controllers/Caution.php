@@ -25,8 +25,11 @@ class Caution extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
         return $this->view('cautions.form')->with([
             'routine_id' => $routine_id,
+            'routine' => $routine,
             'caution' => app(CautionsRepository::class)->new(),
             'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
