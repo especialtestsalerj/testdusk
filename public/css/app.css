@@ -33029,6 +33029,11 @@ textarea.form-control-lg {
   background-color: #FFF;
 }
 
+.required-msg {
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
 .logo-alerj {
   max-width: 275px;
   /*float: left;*/
