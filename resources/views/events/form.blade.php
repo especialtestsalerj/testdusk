@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label for="occurred_at">Data da Ocorrência*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
