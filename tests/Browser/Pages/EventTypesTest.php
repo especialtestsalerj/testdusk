@@ -16,11 +16,15 @@ class EventTypesTest extends DuskTestCase
      * @group link
      */
 
-    //Dusk - Criação de um novo tipo de ocorrencia.
+    //Dusk - Criação de um novo EventTypes
     public function tests_createSectors()
     {
         $user = User::factory()->create();
-        $generateEventType = EventType::factory()->create()->toArray();
+        $user->assign(Constants::ROLE_ADMINISTRATOR);
+        $user->allow('*');
+        $user->save();
+        //dd($user->roles()->get());
+        $generateEventType = ['name'=>strtoupper(faker()->unique()->name)];
     
         $this->browse(function ($browser) use ($user,$generateEventType) {
           $browser
@@ -29,6 +33,9 @@ class EventTypesTest extends DuskTestCase
             ->assertSee('Nome')
             ->click('#novo')
             ->assertPathIs('/event_types/create')
+            ->script('document.querySelectorAll("#submitButton")[0].click();');
+          $browser
+            ->assertSee('Nome: preencha o campo corretamente.')
             ->type('#name', $generateEventType['name'])
             ->assertChecked('@checkboxEventTypes')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
@@ -43,15 +50,18 @@ class EventTypesTest extends DuskTestCase
 
      /**
      * @test
-     * @group testSearch
+     * @group testSearchEventTypes
      * @group link
      */
     
-     // Dusk - Procura um tipo de ocorrencia
-     public function testSearch()
+     // Dusk - Procura um Tipo de ocorrência
+     public function testSearchEventTypes()
     { 
-        $user = User::factory()->create();
-        $event_type = EventType::all()->random(1)->toArray()[0];
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $event_type = EventType::all()->random(1)->toArray()[0];
 
         //Wrong Search
         $this->browse(function ($browser) use ($user) {
@@ -69,7 +79,7 @@ class EventTypesTest extends DuskTestCase
           $browser
             ->loginAs($user->id)
               ->visit('/event_types')
-              ->type('@search-input', $event_type['name'])
+              ->type('@search-input',$event_type['name'])
               ->click('@search-button')
               ->assertSee($event_type['id']);
       });
@@ -81,11 +91,14 @@ class EventTypesTest extends DuskTestCase
      * @group link
      */
 
-    //Dusk - Edição de um novo tipo de ocorrencia
+    //Dusk - Edição de um novo Tipo de ocorrência
     public function tests_editSectors()
     {
-        $user = User::factory()->create();
-        $randomEventType = DB::table('event_types')
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $randomEventType = DB::table('event_types')
         ->inRandomOrder()
         ->first();
     
@@ -98,12 +111,12 @@ class EventTypesTest extends DuskTestCase
             ->assertSee($randomEventType->id)
             ->press('@event_type-'.$randomEventType->id)
             ->type('#name','**'.$randomEventType->name.'**')
-            ->checked('@checkboxSectors')
-            ->assertChecked('@checkboxSectors')
+            ->check('@checkboxEventTypes')
+            ->assertChecked('@checkboxEventTypes')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
-            ->assertPathIs('/sectors')
-            ->assertSee('Tipo de ocorrência alterado com sucesso!');
+            ->assertPathIs('/event_types')
+            ->assertSee('Tipo de ocorrência alterada com sucesso!');
         });
         $this->assertDatabaseHas('event_types', [
           'name' =>'**'.$randomEventType->name.'**',

@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SectorsTableSeeder::class);
 
         $this->call(EventTypesTableSeeder::class);
+
+        $this->call(BouncerSeeder::class);
     }
 }

@@ -20,7 +20,11 @@ class SectorsTest extends DuskTestCase
     public function tests_createSectors()
     {
         $user = User::factory()->create();
-        $generateSector = Sector::factory()->create()->toArray();
+        $user->assign(Constants::ROLE_ADMINISTRATOR);
+        $user->allow('*');
+        $user->save();
+        //dd($user->roles()->get());
+        $generateSector = ['name'=>strtoupper(faker()->unique()->company)];
 
         $this->browse(function ($browser) use ($user,$generateSector) {
           $browser
@@ -29,12 +33,15 @@ class SectorsTest extends DuskTestCase
             ->assertSee('Nome')
             ->click('#novo')
             ->assertPathIs('/sectors/create')
+            ->script('document.querySelectorAll("#submitButton")[0].click();');
+          $browser
+            ->assertSee('Nome: preencha o campo corretamente.')
             ->type('#name', $generateSector['name'])
             ->assertChecked('@checkboxSectors')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
             ->assertPathIs('/sectors')
-            ->assertSee('Setor criado com sucesso!');
+            ->assertSee('Setor adicionado com sucesso!');
         });
         $this->assertDatabaseHas('sectors', [
           'name' => $generateSector['name']
@@ -50,12 +57,13 @@ class SectorsTest extends DuskTestCase
      // Dusk - Procura um setor
      public function testSearch()
     {
-        $user = User::factory()->create();
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
         $sector = Sector::all()->random(1)->toArray()[0];
 
         //Wrong Search
-        $generateSector =
-
         $this->browse(function ($browser) use ($user) {
             $browser
               ->loginAs($user->id)
@@ -86,7 +94,10 @@ class SectorsTest extends DuskTestCase
     //Dusk - Edição de um novo Setor
     public function tests_editSectors()
     {
-        $user = User::factory()->create();
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
         $randomSector = DB::table('sectors')
         ->inRandomOrder()
         ->first();
@@ -100,7 +111,7 @@ class SectorsTest extends DuskTestCase
             ->assertSee($randomSector->id)
             ->press('@sector-'.$randomSector->id)
             ->type('#name','**'.$randomSector->name.'**')
-            ->checked('@checkboxSectors')
+            ->check('@checkboxSectors')
             ->assertChecked('@checkboxSectors')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
@@ -109,89 +120,6 @@ class SectorsTest extends DuskTestCase
         });
         $this->assertDatabaseHas('sectors', [
           'name' =>'**'.$randomSector->name.'**',
-      ]);
-            ->visit('/sectors')
-            ->assertSee('Nome')
-            ->click('#novo')
-            ->assertPathIs('/sectors/create')
-            ->type('#name',$generateSector['name'])
-            ->assertChecked('@checkboxSectors')
-            ->script('document.querySelectorAll("#submitButton")[0].click();');
-          $browser
-            ->assertPathIs('/sectors')
-            ->assertSee('Setor criado com sucesso!');
-        });
-        $this->assertDatabaseHas('sectors', [
-          'name' => $generateSector['name']
-      ]);
-    }
-
-     /**
-     * @test
-     * @group testSearch
-     * @group link
-     */
-
-     // Dusk - Procura um setor
-     public function testSearch()
-    {
-        $user = User::factory()->create();
-        $sector = Sector::all()->random(1)->toArray()[0];
-
-        //Wrong Search
-        $this->browse(function ($browser) use ($user) {
-            $browser
-              ->loginAs($user->id)
-                ->visit('/sectors')
-                ->type('@search-input', '132312312vcxvdsf413543445654')
-                ->click('@search-button')
-                ->waitForText('Nenhum Setor encontrado',8)
-                ->assertSee('Nenhum Setor encontrado');
-        });
-
-        //Right Search
-        $this->browse(function ($browser) use ($user,$sector) {
-          $browser
-            ->loginAs($user->id)
-              ->visit('/sectors')
-              ->type('@search-input', $sector['name'])
-              ->click('@search-button')
-              ->assertSee($sector['id']);
-      });
-    }
-
-    /*
-     * @test
-     * @group tests_editSectors
-     * @group link
-     */
-
-    //Dusk - Edição de um novo Setor
-    public function tests_editSectors()
-    {
-        $user = User::factory()->create();
-        $randomSector = app(Sectors::class)
-        ->randomElement()
-        ->toArray();
-
-        dd($randomSector);
-
-        $this->browse(function ($browser) use ($user) {
-          $browser
-            ->loginAs($user->id)
-            ->visit('/sectors')
-            ->assertSee('Nome')
-            ->click('#novo')
-            ->assertPathIs('/sectors/create')
-            ->type('#name',$generateSector['name'])
-            ->assertChecked('@checkboxSectors')
-            ->script('document.querySelectorAll("#submitButton")[0].click();');
-          $browser
-            ->assertPathIs('/sectors')
-            ->assertSee('Setor criado com sucesso!');
-        });
-        $this->assertDatabaseHas('sectors', [
-          'name' => $generateSector['name']
       ]);
     }
 }
