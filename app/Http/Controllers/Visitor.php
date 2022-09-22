@@ -38,6 +38,10 @@ class Visitor extends Controller
 
     public function store(VisitorRequest $request)
     {
+        //app(SectorsRepository::class)->findById($id),
+        dd($request['person_id']);
+
+        //criar a pessoa quando não existir
         $visitor = app(VisitorsRepository::class)->create($request->all());
 
         return redirect()

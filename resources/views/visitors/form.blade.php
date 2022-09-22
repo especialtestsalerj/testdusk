@@ -38,25 +38,14 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('occurred_at')) ?
+ (formMode() == 'create' ? $routine->entranced_at : $visitor->occurred_at_formatted) : old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at')}}"/>
                         </div>
-                        <div class="form-group">
-                            <label for="person_id">Visitante*</label>
-                            <select class="form-control select2" name="person_id" id="person_id" value="{{is_null(old('person_id')) ? $visitor->person_id : old('person_id')}}">
-                                <option value="">SELECIONE</option>
-                                @foreach ($people as $key => $person)
-                                    @if(((!is_null($visitor->id)) && (!is_null($visitor->person_id) && $visitor->person_id === $person->id) || (!is_null(old('person_id'))) && old('person_id') == $person->id))
-                                        <option value="{{ $person->id }}" selected="selected">{{ $person->full_name }}</option>
-                                    @else
-                                        <option value="{{ $person->id }}">{{ $person->full_name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
+                        <livewire:people.people :visitor="$visitor" />
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
                             <select class="form-control select2" name="sector_id" id="sector_id" value="{{is_null(old('sector_id')) ? $visitor->sector_id : old('sector_id')}}">

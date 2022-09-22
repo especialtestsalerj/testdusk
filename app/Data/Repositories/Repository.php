@@ -111,6 +111,13 @@ abstract class Repository
         return $query->where($this->qualifyColumn($columnName), $arguments);
     }
 
+    public function disablePagination()
+    {
+        $this->paginate = false;
+
+        return $this;
+    }
+
     /**
      * @param null $type
      * @return Builder

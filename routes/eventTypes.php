@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventType;
+use App\Http\Livewire\EventTypes\Index as EventTypesIndex;
 
 Route::group(['prefix' => '/event_types'], function () {
     Route::get('/create', [EventType::class, 'create'])->name('event_types.create');
@@ -11,5 +12,5 @@ Route::group(['prefix' => '/event_types'], function () {
 
     Route::post('/{id}', [EventType::class, 'update'])->name('event_types.update');
 
-    Route::get('/', [EventType::class, 'index'])->name('event_types.index');
+    Route::get('/', EventTypesIndex::class)->name('event_types.index');
 });

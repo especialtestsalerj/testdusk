@@ -1,6 +1,6 @@
 
 
-<table id="sectorTable" class="table table-striped table-bordered">
+<table id="eventTypeTable" class="table table-striped table-bordered">
     <thead>
         <tr>
             <th class="col-md-1">#</th>
@@ -9,16 +9,16 @@
         </tr>
     </thead>
     <tbody>
-    @forelse ($sectors as $sector)
+    @forelse ($eventTypes as $eventType)
         <tr>
             <td>
-                <a href="{{ route('sectors.show', ['id' => $sector['id']]) }}" title="{{ $sector['name'] }}">{{ $sector['id'] }}</a>
+                <a href="{{ route('event_types.show', ['id' => $eventType['id']]) }}" title="{{ $eventType['name'] }}">{{ $eventType['id'] }}</a>
             </td>
             <td>
-                {{ $sector['name'] }}
+                {{ $eventType['name'] }}
             </td>
             <td class="text-center">
-                @if ($sector['status'])
+                @if ($eventType['status'])
                     <label class="badge bg-success"> Ativo </label>
                 @else
                     <label class="badge bg-danger"> Inativo </label>
@@ -27,8 +27,11 @@
         </tr>
     @empty
         <div class="alert alert-warning mt-2">
-            Nenhum Setor encontrado
+            Nenhum Tipo de Ocorrência encontrado
         </div>
     @endforelse
+    <div class="d-felx justify-content-center">
+
+    </div>
     </tbody>
 </table>
