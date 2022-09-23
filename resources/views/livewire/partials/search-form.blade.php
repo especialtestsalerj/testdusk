@@ -11,7 +11,8 @@
         </div>
         <div class="col-sm-8">
             <div class="input-group">
-
+                <input type="text" name="search" class="form-control" placeholder="Pesquisar..." wire:model.debounce.500ms="searchString" value="">
+                <a class="btn btn-outline-secondary" type="button" title="Buscar" onClick="javascript:document.getElementById('searchForm').submit();"><i class="fa fa-search"></i></a>
             </div>
         </div>
     </div>

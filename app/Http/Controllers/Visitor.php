@@ -63,6 +63,8 @@ class Visitor extends Controller
 
     public function update(VisitorUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $visitor = app(VisitorsRepository::class)->create($request->all());
         app(VisitorsRepository::class)->update($id, $request->all());
 

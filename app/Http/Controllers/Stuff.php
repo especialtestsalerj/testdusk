@@ -53,6 +53,8 @@ class Stuff extends Controller
 
     public function update(StuffUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $stuff = app(StuffsRepository::class)->create($request->all());
         app(StuffsRepository::class)->update($id, $request->all());
 

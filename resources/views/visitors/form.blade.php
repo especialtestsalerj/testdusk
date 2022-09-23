@@ -38,14 +38,14 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('occurred_at')) ?
- (formMode() == 'create' ? $routine->entranced_at : $visitor->occurred_at_formatted) : old('occurred_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ?
+ (formMode() == 'create' ? $routine->entranced_at : $visitor->entranced_at_formatted) : old('entranced_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at')}}"/>
                         </div>
-                        <livewire:people.people :visitor="$visitor" />
+                        @livewire('people.people', ['person' => $visitor->person, 'mode' => formMode()])
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
                             <select class="form-control select2" name="sector_id" id="sector_id" value="{{is_null(old('sector_id')) ? $visitor->sector_id : old('sector_id')}}">

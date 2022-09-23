@@ -12,7 +12,7 @@ abstract class BaseIndex extends Component
 
     protected $repository;
     protected $paginationTheme = 'bootstrap';
-    public $searchString = 'fechada';
+    public $searchString = '';
     public $pageSize = 20;
     protected $refreshFields = ['searchString'];
     protected $paginationEnabled = true;

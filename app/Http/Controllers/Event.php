@@ -56,6 +56,8 @@ class Event extends Controller
 
     public function update(EventUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $event = app(EventsRepository::class)->create($request->all());
         app(EventsRepository::class)->update($id, $request->all());
 

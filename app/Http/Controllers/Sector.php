@@ -40,6 +40,8 @@ class Sector extends Controller
 
     public function update(SectorUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         app(SectorsRepository::class)->update($id, $request->all());
 
         return redirect()

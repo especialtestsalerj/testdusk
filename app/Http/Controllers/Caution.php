@@ -68,6 +68,8 @@ class Caution extends Controller
 
     public function update(CautionUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $caution = app(CautionsRepository::class)->create($request->all());
         app(CautionsRepository::class)->update($id, $request->all());
 

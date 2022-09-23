@@ -300,6 +300,11 @@ function mask_zipcode($zipcode)
     return preg_replace('/(\d\d\d\d\d)(\d\d\d)/', '$1-$2', $zipcode);
 }
 
+function mask_cpf($cpf)
+{
+    return preg_replace('/(\d\d\d).(\d\d\d).(\d\d\d)-(\d\d)/', '$1.$2.$3-$4', $cpf);
+}
+
 function login_as_system()
 {
     return app(\App\Data\Repositories\Users::class)->loginAsSystem();

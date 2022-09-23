@@ -43,6 +43,8 @@ class EventType extends Controller
 
     public function update(EventTypeUpdateRequest $request, $id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         app(EventTypesRepository::class)->update($id, $request->all());
 
         return redirect()
