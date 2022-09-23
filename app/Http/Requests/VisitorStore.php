@@ -32,4 +32,31 @@ class VisitorStore extends Request
             'description.required' => 'Observações: preencha o campo corretamente.',
         ];
     }
+
+    public function sanitize(array $all)
+    {
+        $input = $all;
+
+        if (!empty($this->get('cpf'))) {
+            $input['cpf'] = only_numbers($input['cpf']);
+
+            $this->replace($input);
+        }
+
+        return $input;
+    }
+
+    /*
+    public function sanitize(array $all)
+    {
+        if (!empty($this->get('cpf'))) {
+            $input = $this->all();
+
+            $input['cpf'] = only_numbers($input['cpf']);
+
+            $this->replace($input);
+        }
+
+        return $this->all();
+    }*/
 }

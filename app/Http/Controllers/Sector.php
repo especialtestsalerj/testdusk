@@ -33,6 +33,8 @@ class Sector extends Controller
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         return $this->view('sectors.form')->with([
             'sector' => app(SectorsRepository::class)->findById($id),
         ]);
@@ -40,8 +42,6 @@ class Sector extends Controller
 
     public function update(SectorUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
         app(SectorsRepository::class)->update($id, $request->all());
 
         return redirect()

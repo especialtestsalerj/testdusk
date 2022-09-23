@@ -56,7 +56,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhuma Cautela encontrada
+                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
                 </div>
             @endforelse
             </tbody>

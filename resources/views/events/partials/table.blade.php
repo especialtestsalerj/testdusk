@@ -48,7 +48,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhuma Ocorrência encontrada
+                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Ocorrência encontrada.
                 </div>
             @endforelse
             </tbody>

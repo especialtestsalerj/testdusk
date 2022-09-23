@@ -22,19 +22,23 @@ class People extends BaseForm
     public function searchCpf()
     {
         try {
-            if ($result = app(PeopleRepository::class)->findByCpf(only_numbers($this->cpf))) {
+            $this->resetErrorBag('cpf');
+            if (!validate_cpf(only_numbers($this->cpf))) {
+                $this->person_id = null;
+                $this->full_name = null;
+                $this->origin = null;
+
+                $this->addError('cpf', 'CPF não encontrado');
+            } elseif ($result = app(PeopleRepository::class)->findByCpf(only_numbers($this->cpf))) {
                 $this->person_id = $result['id'];
                 $this->full_name = $result['full_name'];
                 $this->origin = $result['origin'];
 
                 $this->resetErrorBag('cpf');
             } else {
-                //$this->focus('cpf');
                 $this->person_id = null;
                 $this->full_name = null;
                 $this->origin = null;
-
-                $this->addError('cpf', 'CPF não encontrado');
             }
         } catch (\Exception $e) {
             $this->focus('cpf');

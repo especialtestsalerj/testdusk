@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->char('cpf', 11);
             $table->string('full_name');
-            $table->string('origin');
+            $table->string('origin')->nullable();
             $table->string('photo')->nullable();
             $table->text('alert_obs')->nullable();
             $table

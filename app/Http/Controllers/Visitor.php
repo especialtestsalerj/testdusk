@@ -38,10 +38,10 @@ class Visitor extends Controller
 
     public function store(VisitorRequest $request)
     {
-        //app(SectorsRepository::class)->findById($id),
-        dd($request['person_id']);
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
-        //criar a pessoa quando não existir
+        $request->merge(['person_id' => $person->id]);
+
         $visitor = app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
@@ -51,6 +51,8 @@ class Visitor extends Controller
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $visitor = app(VisitorsRepository::class)->findById($id);
         return $this->view('visitors.form')->with([
             'routine_id' => $visitor->routine_id,
@@ -63,10 +65,11 @@ class Visitor extends Controller
 
     public function update(VisitorUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
-        $visitor = app(VisitorsRepository::class)->create($request->all());
-        app(VisitorsRepository::class)->update($id, $request->all());
+        $request->merge(['person_id' => $person->id]);
+
+        $visitor = app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('routines.show', $visitor->routine_id)

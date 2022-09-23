@@ -327,3 +327,13 @@ class Timer
     public static $starttime;
     public static $endtime;
 }
+
+function validate_cpf($string)
+{
+    return Validator::make(
+        ['string' => $string],
+        [
+            'string' => 'required|cpf',
+        ]
+    )->passes();
+}

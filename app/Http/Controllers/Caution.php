@@ -56,6 +56,8 @@ class Caution extends Controller
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $caution = app(CautionsRepository::class)->findById($id);
         return $this->view('cautions.form')->with([
             'routine_id' => $caution->routine_id,
@@ -68,10 +70,7 @@ class Caution extends Controller
 
     public function update(CautionUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
-        $caution = app(CautionsRepository::class)->create($request->all());
-        app(CautionsRepository::class)->update($id, $request->all());
+        $caution = app(CautionsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('routines.show', $caution->routine_id)

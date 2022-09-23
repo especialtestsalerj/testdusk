@@ -1,10 +1,10 @@
 <div class="form-group">
-    <div class="row">
-        <div
-            x-init="VMasker($refs.cpf).maskPattern(cpfmask);"
-            x-data="{ isEditing: {{formMode() == 'create' ? 'true' : 'false'}}, cpfmask: '999.999.999-99'}"
-            @focus-field.window="$refs[$event.detail.field].focus()"
-        >
+    <div
+        x-init="VMasker($refs.cpf).maskPattern(cpfmask);"
+        x-data="{ isEditing: {{formMode() == 'create' ? 'true' : 'false'}}, cpfmask: '999.999.999-99'}"
+        @focus-field.window="$refs[$event.detail.field].focus()"
+    >
+        <div class="row">
             <div class="col-md-2 d-flex align-items-end">
                 <div class="col-md-10">
                     <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">

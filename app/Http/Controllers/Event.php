@@ -44,6 +44,8 @@ class Event extends Controller
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $event = app(EventsRepository::class)->findById($id);
         return $this->view('events.form')->with([
             'routine_id' => $event->routine_id,
@@ -56,10 +58,7 @@ class Event extends Controller
 
     public function update(EventUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
-        $event = app(EventsRepository::class)->create($request->all());
-        app(EventsRepository::class)->update($id, $request->all());
+        $event = app(EventsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('routines.show', $event->routine_id)

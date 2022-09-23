@@ -7,8 +7,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
 
-    <title>{{ config('app.medium_name') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>

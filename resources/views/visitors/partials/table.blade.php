@@ -53,7 +53,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhum/a Visitante encontrado/a
+                    <i class="fa fa-exclamation-triangle"></i> Nenhum/a Visitante encontrado/a.
                 </div>
             @endforelse
             </tbody>

@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 <a id="novo" href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Novo/a Visitante">
-                    <i class="fa fa-plus"></i> Novo/a
+                    <i class="fa fa-plus"></i> Novo
                 </a>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhum Material encontrado
+                    <i class="fa fa-exclamation-triangle"></i> Nenhum Material encontrado.
                 </div>
             @endforelse
             </tbody>

@@ -31,11 +31,13 @@ class EventType extends Controller
 
         return redirect()
             ->route('event_types.index')
-            ->with('status', 'Tipo de ocorrência adicionada com sucesso!');
+            ->with('status', 'Tipo de Ocorrência adicionada com sucesso!');
     }
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         return $this->view('event_types.form')->with([
             'eventType' => app(EventTypesRepository::class)->findById($id),
         ]);
@@ -43,12 +45,10 @@ class EventType extends Controller
 
     public function update(EventTypeUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
         app(EventTypesRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('event_types.index')
-            ->with('status', 'Tipo de ocorrência alterada com sucesso!');
+            ->with('status', 'Tipo de Ocorrência alterada com sucesso!');
     }
 }

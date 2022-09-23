@@ -4,14 +4,14 @@
             <div class="alert alert-danger">
                 <ul class="list-unstyled">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li><i class="fa fa-exclamation-circle"></i> {{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
         @if (session('status'))
             <div class="alert alert-success">
-                {{ session('status') }}
+                <i class="fa fa-check-circle"></i> {{ session('status') }}
             </div>
         @endif
     </div>

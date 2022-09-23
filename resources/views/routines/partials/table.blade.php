@@ -37,7 +37,7 @@
         </tr>
     @empty
         <div class="alert alert-warning mt-2">
-            Nenhuma Rotina encontrada
+            <i class="fa fa-exclamation-triangle"></i> Nenhuma Rotina encontrada.
         </div>
     @endforelse
     </tbody>

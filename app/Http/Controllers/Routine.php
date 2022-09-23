@@ -54,8 +54,6 @@ class Routine extends Controller
 
     public function update(RoutineUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
         app(RoutinesRepository::class)->update($id, $request->all());
 
         return redirect()

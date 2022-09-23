@@ -42,6 +42,8 @@ class Stuff extends Controller
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $stuff = app(StuffsRepository::class)->findById($id);
         return $this->view('stuffs.form')->with([
             'routine_id' => $stuff->routine_id,
@@ -53,10 +55,7 @@ class Stuff extends Controller
 
     public function update(StuffUpdateRequest $request, $id)
     {
-        formMode(Constants::FORM_MODE_SHOW);
-
-        $stuff = app(StuffsRepository::class)->create($request->all());
-        app(StuffsRepository::class)->update($id, $request->all());
+        $stuff = app(StuffsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route('routines.show', $stuff->routine_id)

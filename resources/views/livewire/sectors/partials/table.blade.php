@@ -27,11 +27,11 @@
         </tr>
     @empty
         <div class="alert alert-warning mt-2">
-            Nenhum Setor encontrado
+            <i class="fa fa-exclamation-triangle"></i> Nenhum Setor encontrado.
         </div>
     @endforelse
-    <div class="d-felx justify-content-center">
-        {{ $sectors->links('vendor.livewire.navigation') }}
+    <div class="d-flex justify-content-center">
+        {{ $sectors->links() }}
     </div>
     </tbody>
 </table>
