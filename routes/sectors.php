@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Sector;
+use App\Http\Livewire\Sectors\Index as SectorsIndex;
 
 Route::group(['prefix' => '/sectors'], function () {
     Route::get('/create', [Sector::class, 'create'])->name('sectors.create');
@@ -11,5 +12,5 @@ Route::group(['prefix' => '/sectors'], function () {
 
     Route::post('/{id}', [Sector::class, 'update'])->name('sectors.update');
 
-    Route::get('/', [Sector::class, 'index'])->name('sectors.index');
+    Route::get('/', SectorsIndex::class)->name('sectors.index');
 });

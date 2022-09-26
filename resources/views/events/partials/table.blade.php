@@ -19,7 +19,8 @@
             <tr>
                 <th class="col-md-2">Data/Hora</th>
                 <th class="col-md-3">Tipo</th>
-                <th class="col-md-5">Plantonista</th>
+                <th class="col-md-2">Setor</th>
+                <th class="col-md-3">Plantonista</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -27,10 +28,13 @@
             @forelse ($events as $event)
                 <tr>
                     <td>
-                        {{ $event?->occurred_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $event?->occurred_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
                         {{ $event->eventType->name }}
+                    </td>
+                    <td>
+                        {{ $event?->sector?->name ?? '-' }}
                     </td>
                     <td>
                         {{ $event->dutyUser->name }}
@@ -44,7 +48,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhuma Ocorrência encontrada
+                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Ocorrência encontrada.
                 </div>
             @endforelse
             </tbody>

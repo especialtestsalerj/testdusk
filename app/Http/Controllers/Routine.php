@@ -35,7 +35,9 @@ class Routine extends Controller
     {
         app(RoutinesRepository::class)->create($request->all());
 
-        return redirect()->route('routines.index')->with('status', 'Rotina criada com sucesso!');
+        return redirect()
+            ->route('routines.index')
+            ->with('status', 'Rotina adicionada com sucesso!');
     }
 
     public function show($id)
@@ -52,8 +54,10 @@ class Routine extends Controller
 
     public function update(RoutineUpdateRequest $request, $id)
     {
-        app(RoutinesRepository::class)->update($request->all());
+        app(RoutinesRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.index')->with('status', 'Rotina criada com sucesso!');
+        return redirect()
+            ->route('routines.index')
+            ->with('status', 'Rotina alterada com sucesso!');
     }
 }

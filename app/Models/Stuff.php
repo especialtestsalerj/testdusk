@@ -8,6 +8,7 @@ class Stuff extends Model
         'routine_id',
         'entranced_at',
         'exited_at',
+        'sector_id',
         'duty_user_id',
         'description',
     ];
@@ -16,6 +17,11 @@ class Stuff extends Model
         'entranced_at' => 'datetime:Y-m-d H:i',
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class, 'sector_id');
+    }
 
     public function dutyUser()
     {

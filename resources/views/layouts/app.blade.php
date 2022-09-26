@@ -7,8 +7,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
 
-    <title>{{ config('app.medium_name') }}</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -21,6 +22,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @include('layouts.partials.environment')
+    @livewireStyles
 </head>
 
 <body>
@@ -59,6 +61,8 @@
 
     @include('layouts.partials.livereload')
     @include('layouts.partials.google-analytics')
+    @livewireScripts
+    <script src="{{ mix('js/alpine.js') }}" defer></script>
 </body>
 
 

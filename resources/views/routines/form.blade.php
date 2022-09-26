@@ -18,22 +18,25 @@
                             @if(is_null($routine->id))
                                 > Nova
                             @else
-                                > {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y \à\s H:i') }}
+                                > {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h2>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                        <span class="required-msg">* Campos obrigatórios</span>
                         @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>'routines:update'])
                     </div>
                 </div>
             </div>
 
             <div class="card-body">
+                @include('layouts.msg')
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="shift_id">Turno</label>
+                            <label for="shift_id">Turno*</label>
                             <select class="form-control select2" name="shift_id" id="shift_id" value="{{is_null(old('shift_id')) ? $routine->shift_id : old('shift_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($shifts as $key => $shift)
@@ -46,11 +49,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="entranced_at">Assunção</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
+                            <label for="entranced_at">Data (Assunção)*</label>
+                                @if (Route::is('routines.create') )
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{date('Y-m-d H:i')}}"/>
+                                @else
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
+                                @endif
                         </div>
                         <div class="form-group">
-                            <label for="entranced_user_id">Responsável (Assunção)</label>
+                            <label for="entranced_user_id">Responsável (Assunção)*</label>
                             <select class="form-control select2" name="entranced_user_id" id="entranced_user_id" value="{{is_null(old('entranced_user_id')) ? $routine->entranced_user_id : old('entranced_user_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($entrancedUsers as $key => $user)
@@ -65,12 +72,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="checkpoint_obs">Carga</label>
+                            <label for="checkpoint_obs">Carga*</label>
                             <input class="form-control" name="checkpoint_obs" id="checkpoint_obs" value="{{is_null(old('checkpoint_obs')) ? $routine->checkpoint_obs : old('checkpoint_obs')}}"/>
                         </div>
                         <div class="form-group">
-                            <label for="exited_at">Passagem</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
+                            <label for="exited_at">Data (Passagem)</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="exited_user_id">Responsável (Passagem)</label>

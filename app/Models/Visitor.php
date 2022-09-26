@@ -8,8 +8,9 @@ class Visitor extends Model
         'routine_id',
         'entranced_at',
         'exited_at',
-        'duty_user_id',
         'person_id',
+        'sector_id',
+        'duty_user_id',
         'description',
     ];
 
@@ -18,14 +19,19 @@ class Visitor extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
-    public function dutyUser()
-    {
-        return $this->belongsTo(User::class, 'duty_user_id');
-    }
-
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class, 'sector_id');
+    }
+
+    public function dutyUser()
+    {
+        return $this->belongsTo(User::class, 'duty_user_id');
     }
 
     public function getEntrancedAtFormattedAttribute()

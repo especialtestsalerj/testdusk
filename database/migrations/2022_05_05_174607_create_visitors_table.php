@@ -15,11 +15,12 @@ return new class extends Migration {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->integer('routine_id');
-            $table->timestamp('entranced_at')->nullable();
+            $table->timestamp('entranced_at');
             $table->timestamp('exited_at')->nullable();
             $table->integer('duty_user_id');
             $table->integer('person_id');
-            $table->text('description')->nullable();
+            $table->integer('sector_id')->nullable();
+            $table->text('description');
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
@@ -42,6 +43,10 @@ return new class extends Migration {
                 ->foreign('person_id')
                 ->references('id')
                 ->on('people');
+            $table
+                ->foreign('sector_id')
+                ->references('id')
+                ->on('sectors');
         });
     }
 

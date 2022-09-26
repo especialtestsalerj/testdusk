@@ -26,11 +26,15 @@ class Sector extends Controller
     {
         app(SectorsRepository::class)->create($request->all());
 
-        return redirect()->route('sectors.index')->with('status', 'Setor criado com sucesso!');
+        return redirect()
+            ->route('sectors.index')
+            ->with('status', 'Setor adicionado com sucesso!');
     }
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         return $this->view('sectors.form')->with([
             'sector' => app(SectorsRepository::class)->findById($id),
         ]);
@@ -40,6 +44,8 @@ class Sector extends Controller
     {
         app(SectorsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('sectors.index')->with('status', 'Setor editado com sucesso!');
+        return redirect()
+            ->route('sectors.index')
+            ->with('status', 'Setor alterado com sucesso!');
     }
 }

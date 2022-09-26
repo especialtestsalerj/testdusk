@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Stuffs as StuffsRepository;
+use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Http\Requests\StuffStore as StuffRequest;
 use App\Http\Requests\StuffUpdate as StuffUpdateRequest;
@@ -19,9 +20,13 @@ class Stuff extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
         return $this->view('stuffs.form')->with([
             'routine_id' => $routine_id,
+            'routine' => $routine,
             'stuff' => app(StuffsRepository::class)->new(),
+            'sectors' => app(SectorsRepository::class)->all('name'),
             'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
@@ -29,27 +34,31 @@ class Stuff extends Controller
     public function store(StuffRequest $request)
     {
         $stuff = app(StuffsRepository::class)->create($request->all());
-        $routine = app(RoutinesRepository::class)->findById($stuff->routine_id);
 
         return redirect()
             ->route('routines.show', $stuff->routine_id)
-            ->with(['routine' => $routine]);
+            ->with('status', 'Material adicionado com sucesso!');
     }
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $stuff = app(StuffsRepository::class)->findById($id);
         return $this->view('stuffs.form')->with([
             'routine_id' => $stuff->routine_id,
             'stuff' => $stuff,
+            'sectors' => app(SectorsRepository::class)->all('name'),
             'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
 
     public function update(StuffUpdateRequest $request, $id)
     {
-        app(StuffsRepository::class)->update($id, $request->all());
+        $stuff = app(StuffsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('stuffs.index');
+        return redirect()
+            ->route('routines.show', $stuff->routine_id)
+            ->with('status', 'Material alterado com sucesso!');
     }
 }

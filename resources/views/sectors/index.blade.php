@@ -23,10 +23,9 @@
         </div>
 
         <div class="card-body">
-
             @include('layouts.msg')
 
-            @include('sectors.partials.table')
+            <livewire:sectors.sectors :sectors="$sectors" />
         </div>
     </div>
 @endsection

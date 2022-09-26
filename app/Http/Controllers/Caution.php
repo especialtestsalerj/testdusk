@@ -25,8 +25,11 @@ class Caution extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
         return $this->view('cautions.form')->with([
             'routine_id' => $routine_id,
+            'routine' => $routine,
             'caution' => app(CautionsRepository::class)->new(),
             'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
@@ -47,11 +50,14 @@ class Caution extends Controller
 
         return redirect()
             ->route('routines.show', $caution->routine_id)
-            ->with(['routine' => $routine]);
+            ->with(['routine' => $routine])
+            ->with('status', 'Cautela adicionada com sucesso!');
     }
 
     public function show($id)
     {
+        formMode(Constants::FORM_MODE_SHOW);
+
         $caution = app(CautionsRepository::class)->findById($id);
         return $this->view('cautions.form')->with([
             'routine_id' => $caution->routine_id,
@@ -64,9 +70,10 @@ class Caution extends Controller
 
     public function update(CautionUpdateRequest $request, $id)
     {
-        $caution = app(CautionsRepository::class)->create($request->all());
-        app(CautionsRepository::class)->update($id, $request->all());
+        $caution = app(CautionsRepository::class)->update($id, $request->all());
 
-        return redirect()->route('routines.show', $caution->routine_id);
+        return redirect()
+            ->route('routines.show', $caution->routine_id)
+            ->with('status', 'Cautela alterada com sucesso!');
     }
 }

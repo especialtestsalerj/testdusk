@@ -27,8 +27,11 @@
         </tr>
     @empty
         <div class="alert alert-warning mt-2">
-            Nenhum Tipo de Ocorrência encontrado
+            <i class="fa fa-exclamation-triangle"></i> Nenhum Tipo de Ocorrência encontrado.
         </div>
     @endforelse
+    <div class="d-flex justify-content-center">
+        {{ $eventTypes->links() }}
+    </div>
     </tbody>
 </table>

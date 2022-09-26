@@ -21,13 +21,13 @@
                 {{ $routine?->shift?->name }}
             </td>
             <td>
-                {{ $routine?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                {{ $routine?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
             </td>
             <td>
                 {{ $routine?->entrancedUser?->name }}
             </td>
             <td>
-                {{ $routine?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                {{ $routine?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
             </td>
             <td>
                 <a id="novo" href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" title="Gerenciar rotina">
@@ -37,7 +37,7 @@
         </tr>
     @empty
         <div class="alert alert-warning mt-2">
-            Nenhuma Rotina encontrada
+            <i class="fa fa-exclamation-triangle"></i> Nenhuma Rotina encontrada.
         </div>
     @endforelse
     </tbody>

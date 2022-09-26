@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 <a id="novo" href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Novo/a Visitante">
-                    <i class="fa fa-plus"></i> Novo/a
+                    <i class="fa fa-plus"></i> Novo
                 </a>
             </div>
         </div>
@@ -19,7 +19,8 @@
             <tr>
                 <th class="col-md-2">Entrada</th>
                 <th class="col-md-2">Saída</th>
-                <th class="col-md-6">Plantonista</th>
+                <th class="col-md-2">Setor</th>
+                <th class="col-md-4">Plantonista</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -27,10 +28,13 @@
             @forelse ($stuffs as $stuff)
                 <tr>
                     <td>
-                        {{ $stuff?->entranced_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $stuff?->exited_at?->format('d/m/Y \à\s H:i') ?? '-'}}
+                        {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                    </td>
+                    <td>
+                        {{ $stuff?->sector?->name ?? '-' }}
                     </td>
                     <td>
                         {{ $stuff->dutyUser->name }}
@@ -44,7 +48,7 @@
                 </tr>
             @empty
                 <div class="alert alert-warning mt-2">
-                    Nenhum Material encontrado
+                    <i class="fa fa-exclamation-triangle"></i> Nenhum Material encontrado.
                 </div>
             @endforelse
             </tbody>

@@ -19,7 +19,7 @@
                             @if(is_null($caution->id))
                                 > Novo/a
                             @else
-                                > {{ $caution->id }} - {{ $caution->started_at->format('d/m/Y \à\s H:i') }}
+                                > {{ $caution->id }} - {{ $caution->started_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
                     </div>
@@ -31,6 +31,7 @@
             </div>
 
             <div class="card-body">
+                @include('layouts.msg')
                 @if ($errors->has('name'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('name') }}
@@ -46,11 +47,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="started_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? $caution->started_at_formatted: old('started_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="person_id">Visitante</label>
