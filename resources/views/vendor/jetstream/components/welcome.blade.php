@@ -1,4 +1,81 @@
 <div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card shadow bg-white">
+            <div class="card-header">
+                <div class="row mx-3 my-3">
+                    <div class="col-8">
+                        <h3>
+                            Rotina 03/10/2022 (20:00 – 08:00)
+                        </h3>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <h5><span class="badge rounded-pill bg-danger">Aberta</span></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body bg-white px-5 py-5 border-bottom rounded">
+{{--
+
+                <div class="row mx-3 my-3">
+                    <div class="col-8">
+                        <h3>
+                            Rotina 03/10/2022 (20:00 – 08:00)
+                        </h3>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <h5><span class="badge rounded-pill bg-danger">Aberta</span></h5>
+                    </div>
+                </div>
+
+--}}
+                <div class="row mt-3 mb-3 routine-icons text-center">
+                    <div class="col-3">
+                        <span class="fa-stack fa-3x" data-count="05">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-list-check fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h5 class="mt-2">
+                            Ocorrências
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <span class="fa-stack fa-3x" data-count="10">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-bell fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h5 class="mt-2">
+                            Visitantes
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <span class="fa-stack fa-3x" data-count="02">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-dolly-box fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h5 class="mt-2">
+                            Materiais
+                        </h5>
+                    </div>
+                    <div class="col-3">
+                        <span class="fa-stack fa-3x" data-count="08">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-gun fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h5 class="mt-2">
+                            Cautelas de Armas
+                        </h5>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row justify-content-center my-5">
     <div class="col-md-12">
         <div class="card shadow bg-light">
             <div class="card-body bg-white px-5 py-3 border-bottom rounded-top">
