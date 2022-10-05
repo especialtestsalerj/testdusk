@@ -5,7 +5,7 @@
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('routines.update', ['id' => $routine->id]) }}" @else action="{{ route('routines.store')}}" @endIf method="POST">
             @csrf
 
-            @if (isset($event))
+            @if (isset($routine))
                 <input name="id" type="hidden" value="{{ $routine->id }}">
             @endif
 

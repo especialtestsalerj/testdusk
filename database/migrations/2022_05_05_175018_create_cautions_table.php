@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->integer('person_id');
             $table->integer('destiny_sector_id');
             $table->bigInteger('protocol_number');
+            $table->text('description')->nullable();
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()

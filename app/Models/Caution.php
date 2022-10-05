@@ -12,6 +12,7 @@ class Caution extends Model
         'person_id',
         'destiny_sector_id',
         'protocol_number',
+        'description',
     ];
 
     protected $casts = [

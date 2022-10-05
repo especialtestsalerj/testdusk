@@ -8,12 +8,12 @@
                 </div>
 
                 <div class="col-md-9">
-                    <form action="{{ route('event_types.index') }}" id="searchForm">
+                    <form action="{{ route('event-types.index') }}" id="searchForm">
                         @include(
                             'livewire.partials.search-form',
                             [
-                                'routeSearch' => 'event_types.index',
-                                'routeCreate' => 'event_types.create',
+                                'routeSearch' => 'event-types.index',
+                                'routeCreate' => 'event-types.create',
                             ]
                         )
                     </form>
@@ -24,6 +24,6 @@
         <div class="card-body">
             @include('layouts.msg')
 
-            @include('livewire.event_types.partials.table')
+            @include('livewire.event-types.partials.table')
         </div>
     </div>

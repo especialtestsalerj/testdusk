@@ -39,24 +39,19 @@ class VisitorStore extends Request
 
         if (!empty($this->get('cpf'))) {
             $input['cpf'] = only_numbers($input['cpf']);
+            $this->replace($input);
+        }
 
+        if (!empty($this->get('full_name'))) {
+            $input['full_name'] = mb_strtoupper($input['full_name']);
+            $this->replace($input);
+        }
+
+        if (!empty($this->get('origin'))) {
+            $input['origin'] = mb_strtoupper($input['origin']);
             $this->replace($input);
         }
 
         return $input;
     }
-
-    /*
-    public function sanitize(array $all)
-    {
-        if (!empty($this->get('cpf'))) {
-            $input = $this->all();
-
-            $input['cpf'] = only_numbers($input['cpf']);
-
-            $this->replace($input);
-        }
-
-        return $this->all();
-    }*/
 }

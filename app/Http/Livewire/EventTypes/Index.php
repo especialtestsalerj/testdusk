@@ -19,6 +19,6 @@ class Index extends BaseIndex
 
     public function render()
     {
-        return view('livewire.event_types.index')->with(['eventTypes' => $this->filter()]);
+        return view('livewire.event-types.index')->with(['eventTypes' => $this->filter()]);
     }
 }

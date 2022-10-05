@@ -6,7 +6,7 @@ class EventTypeStore extends Request
 {
     public function authorize()
     {
-        return allows('event_types:store');
+        return allows('event-types:store');
     }
 
     public function rules()

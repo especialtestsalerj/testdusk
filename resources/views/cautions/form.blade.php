@@ -46,28 +46,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="started_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at : $event->occurred_at_formatted) : old('occurred_at')}}"/>
+                            <label for="started_at">Entrada*</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at')}}"/>
                         </div>
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>
                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
                         </div>
+                        @livewire('people.people', ['person' => $caution->person, 'mode' => formMode()])
                         <div class="form-group">
-                            <label for="person_id">Visitante</label>
-                            <select class="form-control select2" name="person_id" id="person_id" value="{{is_null(old('person_id')) ? $caution->person_id : old('person_id')}}">
-                                <option value="">SELECIONE</option>
-                                @foreach ($people as $key => $person)
-                                    @if(((!is_null($caution->id)) && (!is_null($caution->person_id) && $caution->person_id === $person->id) || (!is_null(old('person_id'))) && old('person_id') == $person->id))
-                                        <option value="{{ $person->id }}" selected="selected">{{ $person->full_name }}</option>
-                                    @else
-                                        <option value="{{ $person->id }}">{{ $person->full_name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="destiny_sector_id">Setor</label>
+                            <label for="destiny_sector_id">Destino*</label>
                             <select class="form-control select2" name="destiny_sector_id" id="destiny_sector_id" value="{{is_null(old('destiny_sector_id')) ? $caution->destiny_sector_id : old('destiny_sector_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($sectors as $key => $sector)
@@ -80,7 +68,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="duty_user_id">Plantonista</label>
+                            <label for="duty_user_id">Plantonista*</label>
                             <select class="form-control select2" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
@@ -92,9 +80,40 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="description">Observações</label>
+                            <textarea class="form-control" name="description" id="description">{{is_null(old('description')) ? $caution->description: old('description')}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mt-4">
+                    <div class="col-sm-10">
+                        <h5 class="mb-0">
+                            <i class="fas fa-gun"></i> Armas
+                        </h5>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <!-- Button trigger modal -->
+                        <button type="button" wire:click="clearWeapon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
+                            <i class="fa fa-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </form>
+        <!-- Modal -->
+        <div class="modal fade" id="weaponModal" tabindex="-1" aria-labelledby="weaponModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> {{1==2 ? 'Alterar' : 'Nova'}} Arma</h5>
+                        <span class="required-msg">* Campos obrigatórios</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <livewire:caution-weapons.create-form />
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

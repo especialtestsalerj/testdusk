@@ -1,6 +1,5 @@
-@extends('layouts.app')
 
-@section('content')
+
     <div class="card card-default">
         <div class="card-header">
             <div class="row">
@@ -11,7 +10,7 @@
                 <div class="col-md-9">
                     <form action="{{ route('routines.index') }}" id="searchForm">
                         @include(
-                            'layouts.partials.search-form',
+                            'livewire.partials.search-form',
                             [
                                 'routeSearch' => 'routines.index',
                                 'routeCreate' => 'routines.create',
@@ -25,8 +24,6 @@
         <div class="card-body">
             @include('layouts.msg')
 
-            @include('routines.partials.table')
+            @include('livewire.routines.partials.table')
         </div>
     </div>
-@endsection
-
