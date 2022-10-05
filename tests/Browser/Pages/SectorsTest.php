@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Sector;
 use Illuminate\Support\Facades\DB;
+use App\Http\Livewire\Sectors\Index;
 use App\Support\Constants;
+use Livewire\Livewire;
 use Tests\DuskTestCase;
 
 class SectorsTest extends DuskTestCase
@@ -43,8 +45,6 @@ class SectorsTest extends DuskTestCase
             ->assertPathIs('/sectors')
             ->assertSee('Setor adicionado com sucesso!');
         });
-        $this->assertDatabaseHas('sectors', [
-0      ]);
     }
 
      /**
@@ -53,35 +53,23 @@ class SectorsTest extends DuskTestCase
      * @group link
      */
 
-     // Dusk - Procura um setor
+     // Livewire - Procura um setor
      public function testSearch()
     {
+      
       $user = User::factory()->create();
       $user->assign(Constants::ROLE_ADMINISTRATOR);
       $user->allow('*');
       $user->save();
-        $sector = Sector::all()->random(1)->toArray()[0];
+      $sector = Sector::all()->random(1)->toArray()[0];
 
-        //Wrong Search
-        $this->browse(function ($browser) use ($user) {
-            $browser
-              ->loginAs($user->id)
-                ->visit('/sectors')
-                ->type('@search-input', '132312312vcxvdsf413543445654')
-                ->click('@search-button')
-                ->waitForText('Nenhum Setor encontrado',8)
-                ->assertSee('Nenhum Setor encontrado');
-        });
-
-        //Right Search
-        $this->browse(function ($browser) use ($user,$sector) {
-          $browser
-            ->loginAs($user->id)
-              ->visit('/sectors')
-              ->type('@search-input', $sector['name'])
-              ->click('@search-button')
-              ->assertSee($sector['id']);
-      });
+      Livewire::test(Index::class)
+          ->assertSee('Setores')
+          ->set('searchString',$sector['name'])
+          ->assertSet('searchString',$sector['name'])
+          ->assertSee($sector['id'])
+          ->set('searchString','6662223')
+          ->assertSee('Nenhum Setor encontrado.');
     }
 
     /*
@@ -90,7 +78,7 @@ class SectorsTest extends DuskTestCase
      * @group link
      */
 
-    //Dusk - Edição de um novo Setor
+    //Dusk e Livewire - Edição de um novo Setor
     public function tests_editSectors()
     {
       $user = User::factory()->create();
@@ -104,28 +92,21 @@ class SectorsTest extends DuskTestCase
         $this->browse(function ($browser) use ($user,$randomSector) {
           $browser
             ->loginAs($user->id)
-            ->visit('/sectors')
-            ->screenshot('1')
-            ->type('@search-input', $randomSector->name)
-            ->click('@search-button')
-            ->screenshot('2')
-            ->assertSee($randomSector->id)
-            ->press('@sector-'.$randomSector->id)
+            ->visit('/sectors/'.$randomSector->id)
             ->type('#name','**'.$randomSector->name.'**')
-            ->screenshot('3')
             ->check('@checkboxSectors')
             ->assertChecked('@checkboxSectors')
-            ->screenshot('4')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
-            ->screenshot('6')
             ->assertPathIs('/sectors')
-            ->assertSee('Setor alterado com sucesso!')
-            ->type('@search-input', $randomSector->name)
-            ->click('@search-button')
-            ->screenshot('7')
-            ->assertSee($randomSector->id);
+            ->assertSee('Setor alterado com sucesso!');
         });
         $this->assertDatabaseHas('sectors', ['name' =>'**'.$randomSector->name.'**']);
+
+        Livewire::test(Index::class)
+          ->assertSee('Setores')
+          ->set('searchString',$randomSector->name)
+          ->assertSet('searchString',$randomSector->name)
+          ->assertSee($randomSector->id);
     }
 }
