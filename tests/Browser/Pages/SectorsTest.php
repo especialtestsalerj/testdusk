@@ -44,8 +44,7 @@ class SectorsTest extends DuskTestCase
             ->assertSee('Setor adicionado com sucesso!');
         });
         $this->assertDatabaseHas('sectors', [
-          'name' => $generateSector['name']
-      ]);
+0      ]);
     }
 
      /**
@@ -106,20 +105,27 @@ class SectorsTest extends DuskTestCase
           $browser
             ->loginAs($user->id)
             ->visit('/sectors')
+            ->screenshot('1')
             ->type('@search-input', $randomSector->name)
             ->click('@search-button')
+            ->screenshot('2')
             ->assertSee($randomSector->id)
             ->press('@sector-'.$randomSector->id)
             ->type('#name','**'.$randomSector->name.'**')
+            ->screenshot('3')
             ->check('@checkboxSectors')
             ->assertChecked('@checkboxSectors')
+            ->screenshot('4')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
+            ->screenshot('6')
             ->assertPathIs('/sectors')
-            ->assertSee('Setor alterado com sucesso!');
+            ->assertSee('Setor alterado com sucesso!')
+            ->type('@search-input', $randomSector->name)
+            ->click('@search-button')
+            ->screenshot('7')
+            ->assertSee($randomSector->id);
         });
-        $this->assertDatabaseHas('sectors', [
-          'name' =>'**'.$randomSector->name.'**',
-      ]);
+        $this->assertDatabaseHas('sectors', ['name' =>'**'.$randomSector->name.'**']);
     }
 }
