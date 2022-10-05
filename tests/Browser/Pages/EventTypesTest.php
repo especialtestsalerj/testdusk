@@ -43,9 +43,7 @@ class EventTypesTest extends DuskTestCase
             ->assertPathIs('/event_types')
             ->assertSee('Tipo de ocorrência adicionada com sucesso!');
         });
-        $this->assertDatabaseHas('event_types', [
-          'name' => $generateEventType['name']
-      ]);
+        $this->assertDatabaseHas('event_types', ['name' => $generateEventType['name']]);
     }
 
      /**
