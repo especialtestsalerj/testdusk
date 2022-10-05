@@ -71,6 +71,8 @@
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
                             <select class="form-select" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
+                            <label for="duty_user_id">Plantonista*</label>
+                            <select class="form-control select2" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->duty_user_id) && $caution->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -85,6 +87,20 @@
                             <label for="description">Observações</label>
                             <textarea class="form-control" name="description" id="description">{{is_null(old('description')) ? $caution->description: old('description')}}</textarea>
                         </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mt-4">
+                    <div class="col-sm-10">
+                        <h5 class="mb-0">
+                            <i class="fas fa-gun"></i> Armas
+                        </h5>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <!-- Button trigger modal -->
+                        <button type="button" wire:click="clearWeapon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
+                            <i class="fa fa-plus"></i>
+                        </button>
                     </div>
                 </div>
                 @if (formMode() == 'show')
