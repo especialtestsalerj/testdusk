@@ -7,7 +7,7 @@ use App\Models\Sector;
 use App\Support\Constants;
 use Tests\DuskTestCase;
 
-class SectorsTest extends DuskTestCase
+class RoutinesTest extends DuskTestCase
 {
      /**
      * @test
