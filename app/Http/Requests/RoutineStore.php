@@ -22,7 +22,6 @@ class RoutineStore extends Request
     public function messages()
     {
         return [
-            'shift_id.required' => 'Turno: preencha o campo corretamente.',
             'entranced_at.required' => 'Data (Assunção): preencha o campo corretamente.',
             'entranced_user_id.required' =>
                 'Responsável (Assunção): preencha o campo corretamente.',

@@ -198,5 +198,6 @@ return [
         'to' => 'nome da pessoa ou razão social',
         'entry_type_id' => 'meio',
         'cost_center_id' => 'centro de custo',
+        'shift_id' => 'Turno',
     ],
 ];

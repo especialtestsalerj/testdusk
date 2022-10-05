@@ -9,11 +9,11 @@
                 <label for="weapon_type_id">Tipo de Arma*</label>
                 <select class="form-control select2" name="weapon_type_id" id="weapon_type_id" value="{{is_null(old('weapon_type_id')) ? $cautionWeapon->weapon_type_id : old('weapon_type_id')}}" wire:model.defer="weapon_type_id">
                     <option value="">SELECIONE</option>
-                    @foreach ($users as $key => $user)
-                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $user->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $user->id))
-                            <option value="{{ $user->id }}" selected="selected">{{ $user->name }}</option>
+                    @foreach ($weaponTypes as $key => $weaponType)
+                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
+                            <option value="{{ $weaponType->id }}" selected="selected">{{ $weaponType->name }}</option>
                         @else
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
                         @endif
                     @endforeach
                 </select>

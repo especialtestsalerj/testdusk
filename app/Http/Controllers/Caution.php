@@ -58,7 +58,7 @@ class Caution extends Controller
             ->with('status', 'Cautela adicionada com sucesso!');*/
 
         return redirect()
-            ->route('routines.show', $caution->routine_id)
+            ->route('cautions.show', $caution->routine_id)
             ->with('status', 'Cautela adicionada com sucesso!');
     }
 

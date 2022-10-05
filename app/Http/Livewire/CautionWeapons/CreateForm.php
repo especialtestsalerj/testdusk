@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\CautionWeapons;
 
+use App\Data\Repositories\WeaponTypes;
 use App\Http\Livewire\BaseForm;
 use App\Models\CautionWeapon;
 use App\Data\Repositories\Users as UsersRepository;
+use App\Data\Repositories\WeaponTypes as WeaponTypesRepository;
+
 use function view;
 
 class CreateForm extends BaseForm
@@ -106,13 +109,14 @@ class CreateForm extends BaseForm
 
     protected function getComponentVariables()
     {
-        return [];
+        return [
+            'users' => app(UsersRepository::class)->all(),
+            'weaponTypes' => app(WeaponTypesRepository::class)->all(),
+        ];
     }
 
     public function mount()
     {
-        $users = app(UsersRepository::class)->all('name');
-
         if ($this->mode == 'create') {
             $this->cautionWeapon = new CautionWeapon();
         }

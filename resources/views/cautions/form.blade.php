@@ -25,6 +25,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                        <span class="required-msg">* Campos obrigatórios</span>
                         @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>'cautions:store','id' =>$routine_id])
                     </div>
                 </div>
@@ -86,20 +87,20 @@
                         </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row mt-4">
-                    <div class="col-sm-10">
-                        <h5 class="mb-0">
+                @if (formMode() == 'show')
+                    <div class="p-4 bg-light border rounded-3">
+                        <h5>
                             <i class="fas fa-gun"></i> Armas
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
+                                <i class="fa fa-plus"></i>
+                            </button>
                         </h5>
                     </div>
-                    <div class="col-md-2 text-right">
-                        <!-- Button trigger modal -->
-                        <button type="button" wire:click="clearWeapon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
-                            <i class="fa fa-plus"></i>
-                        </button>
+                @else
+                    <div class="alert alert-warning mt-2">
+                        <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
                     </div>
-                </div>
+                @endif
             </div>
         </form>
         <!-- Modal -->
@@ -108,7 +109,6 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> {{1==2 ? 'Alterar' : 'Nova'}} Arma</h5>
-                        <span class="required-msg">* Campos obrigatórios</span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <livewire:caution-weapons.create-form />

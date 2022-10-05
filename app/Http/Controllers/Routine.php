@@ -8,7 +8,6 @@ use App\Http\Requests\RoutineStore as RoutineRequest;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Requests\RoutineUpdate as RoutineUpdateRequest;
 use App\Support\Constants;
-use function Sodium\add;
 
 class Routine extends Controller
 {
@@ -22,6 +21,12 @@ class Routine extends Controller
 
     public function create()
     {
+        if (app(RoutinesRepository::class)->hasRoutineOpened()) {
+            return redirect()
+                ->route('routines.index')
+                ->withErrors(['Existe alguma rotina em aberto.']);
+        }
+
         formMode(Constants::FORM_MODE_CREATE);
 
         return $this->view('routines.form')->with([
