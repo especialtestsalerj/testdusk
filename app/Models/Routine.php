@@ -15,6 +15,7 @@ class Routine extends Model
         'exited_at',
         'exited_user_id',
         'exited_obs',
+        'status',
     ];
 
     protected $casts = [

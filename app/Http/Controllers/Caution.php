@@ -31,14 +31,18 @@ class Caution extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'caution' => app(CautionsRepository::class)->new(),
-            'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
             'sectors' => app(SectorsRepository::class)->all('name'),
+            'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
 
     public function store(CautionRequest $request)
     {
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+
+        $request->merge(['person_id' => $person->id]);
+
         $values = $request->all();
         $ano = substr($values['started_at'], 0, 4);
         $values = array_merge($values, [
@@ -46,11 +50,15 @@ class Caution extends Controller
         ]);
 
         $caution = app(CautionsRepository::class)->create($values);
-        $routine = app(RoutinesRepository::class)->findById($caution->routine_id);
+        //$routine = app(RoutinesRepository::class)->findById($caution->routine_id);
+
+        /*return redirect()
+            ->route('routines.show', $caution->routine_id)
+            ->with(['routine' => $routine])
+            ->with('status', 'Cautela adicionada com sucesso!');*/
 
         return redirect()
             ->route('routines.show', $caution->routine_id)
-            ->with(['routine' => $routine])
             ->with('status', 'Cautela adicionada com sucesso!');
     }
 
@@ -62,14 +70,18 @@ class Caution extends Controller
         return $this->view('cautions.form')->with([
             'routine_id' => $caution->routine_id,
             'caution' => $caution,
-            'users' => app(UsersRepository::class)->all('name'),
             'people' => app(PeopleRepository::class)->all('name'),
             'sectors' => app(SectorsRepository::class)->all('name'),
+            'users' => app(UsersRepository::class)->all('name'),
         ]);
     }
 
     public function update(CautionUpdateRequest $request, $id)
     {
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+
+        $request->merge(['person_id' => $person->id]);
+
         $caution = app(CautionsRepository::class)->update($id, $request->all());
 
         return redirect()

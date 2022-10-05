@@ -19,9 +19,9 @@
             </td>
             <td class="text-center">
                 @if ($sector['status'])
-                    <label class="badge bg-success"> Ativo </label>
+                    <label class="badge bg-success"> ATIVO </label>
                 @else
-                    <label class="badge bg-danger"> Inativo </label>
+                    <label class="badge bg-danger"> INATIVO </label>
                 @endif
             </td>
         </tr>
