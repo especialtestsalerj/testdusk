@@ -34,7 +34,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Nome*</label>
-                            <input class="form-control" id="name" name="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event-types:store'])/>
+                            <input class="form-control text-uppercase" id="name" name="name" value="{{is_null(old('name')) ? $eventType->name : old('name')}}" @include('partials.disabled', ['model'=>$eventType, 'permission'=>'event-types:store'])/>
                         </div>
 
                         <div class="form-group">

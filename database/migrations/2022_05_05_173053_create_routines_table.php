@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->timestamp('exited_at')->nullable();
             $table->integer('exited_user_id')->nullable();
             $table->text('exited_obs')->nullable();
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(true); // em aberto / finalizada
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()

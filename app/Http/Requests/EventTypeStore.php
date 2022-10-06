@@ -20,9 +20,7 @@ class EventTypeStore extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Nome: preencha o campo corretamente.',
             'name.unique' => 'Nome: tipo de ocorrência já existente.',
-            'status.required' => 'Status: preencha o campo corretamente.',
         ];
     }
 

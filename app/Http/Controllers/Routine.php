@@ -24,7 +24,9 @@ class Routine extends Controller
         if (app(RoutinesRepository::class)->hasRoutineOpened()) {
             return redirect()
                 ->route('routines.index')
-                ->withErrors(['Existe alguma rotina em aberto.']);
+                ->withErrors([
+                    'Existe(m) rotina(s) em aberto. Você deve finalizar todas as rotinas para cadastrar uma nova.',
+                ]);
         }
 
         formMode(Constants::FORM_MODE_CREATE);

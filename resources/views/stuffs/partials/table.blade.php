@@ -9,10 +9,10 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a id="novo" href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Novo/a Visitante">
+                <a href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Novo/a Visitante">
                     <i class="fa fa-plus"></i> Novo
                 </a>
-                    @endif
+                @endif
             </div>
         </div>
 
@@ -43,9 +43,9 @@
                     </td>
                     <td class="text-center">
                         <a href="{{ route('stuffs.show', ['id' => $stuff['id']]) }}" title="{{ $stuff['entranced_at'] }}"><i class="fa fa-search"></i></a>
-
-                        &nbsp;&nbsp;
+                        @if($routine->status)
                         <a href="{{ route('stuffs.show', ['id' => $stuff['id']]) }}" title="{{ $stuff['entranced_at'] }}"><i class="fa fa-pencil"></i></a>
+                        @endif
                     </td>
                 </tr>
             @empty

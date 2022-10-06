@@ -9,10 +9,10 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a id="novo" href="{{ route('events.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Nova Ocorrência">
+                <a href="{{ route('events.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Nova Ocorrência">
                     <i class="fa fa-plus"></i> Nova
                 </a>
-                    @endif
+                @endif
             </div>
         </div>
 
@@ -43,9 +43,9 @@
                     </td>
                     <td class="text-center">
                         <a href="{{ route('events.show', ['id' => $event['id']]) }}" title="{{ $event['occurred_at'] }}"><i class="fa fa-search"></i></a>
-
-                        &nbsp;&nbsp;
+                        @if($routine->status)
                         <a href="{{ route('events.show', ['id' => $event['id']]) }}" title="{{ $event['occurred_at'] }}"><i class="fa fa-pencil"></i></a>
+                        @endif
                     </td>
                 </tr>
             @empty

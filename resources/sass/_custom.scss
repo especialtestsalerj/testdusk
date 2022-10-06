@@ -136,11 +136,15 @@
     color: #FFF;
 }
 
-.form-control {
+.form-control, .form-select {
     background-color: #FFF;
 }
 
 .required-msg {
     padding-right: 10px;
     padding-top: 5px;
+}
+
+.card-header {
+    border-bottom: var(--bs-card-border-width) solid var(--bs-border-color);
 }

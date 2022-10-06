@@ -20,9 +20,7 @@ class SectorStore extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Nome: preencha o campo corretamente.',
             'name.unique' => 'Nome: setor já existente.',
-            'status.required' => 'Status: preencha o campo corretamente.',
         ];
     }
 

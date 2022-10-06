@@ -8,9 +8,9 @@ class Caution extends Model
         'routine_id',
         'started_at',
         'concluded_at',
-        'duty_user_id',
-        'person_id',
+        'visitor_id',
         'destiny_sector_id',
+        'duty_user_id',
         'protocol_number',
         'description',
     ];
@@ -20,19 +20,19 @@ class Caution extends Model
         'concluded_at' => 'datetime:Y-m-d H:i',
     ];
 
-    public function dutyUser()
+    public function visitor()
     {
-        return $this->belongsTo(User::class, 'duty_user_id');
-    }
-
-    public function person()
-    {
-        return $this->belongsTo(Person::class, 'person_id');
+        return $this->belongsTo(Visitor::class, 'visitor_id');
     }
 
     public function destinySector()
     {
         return $this->belongsTo(Sector::class, 'destiny_sector_id');
+    }
+
+    public function dutyUser()
+    {
+        return $this->belongsTo(User::class, 'duty_user_id');
     }
 
     public function getStartedAtFormattedAttribute()

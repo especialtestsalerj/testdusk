@@ -22,15 +22,17 @@
                             @endif
 
                         </h2>
-                        @if ($routine['status'])
-                            <label class="badge bg-success"> EM ABERTO </label>
-                        @else
-                            <label class="badge bg-danger"> FINALIZADA </label>
+                        @if (!Route::is('routines.create') )
+                            @if ($routine['status'])
+                                <label class="badge bg-success"> EM ABERTO </label>
+                            @else
+                                <label class="badge bg-danger"> FINALIZADA </label>
+                            @endif
                         @endif
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
                         <span class="required-msg">* Campos obrigatórios</span>
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>'routines:update'])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? 'routines:update' : '')])
                     </div>
                 </div>
             </div>
