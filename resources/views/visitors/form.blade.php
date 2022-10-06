@@ -48,7 +48,7 @@
                         @livewire('people.people', ['person' => $visitor->person, 'mode' => formMode()])
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
-                            <select class="form-control select2" name="sector_id" id="sector_id" value="{{is_null(old('sector_id')) ? $visitor->sector_id : old('sector_id')}}">
+                            <select class="form-select" name="sector_id" id="sector_id" value="{{is_null(old('sector_id')) ? $visitor->sector_id : old('sector_id')}}">
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
-                            <select class="form-control select2" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $visitor->duty_user_id : old('duty_user_id')}}">
+                            <select class="form-select" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $visitor->duty_user_id : old('duty_user_id')}}">
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($visitor->id)) && (!is_null($visitor->duty_user_id) && $visitor->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))

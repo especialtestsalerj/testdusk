@@ -66,7 +66,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exited_user_id">Responsável (Passagem)*</label>
-                                <select class="form-control select2" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}">
+                                <select class="form-select" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}">
                                     <option value="">SELECIONE</option>
                                     @foreach ($exitedUsers as $key => $user)
                                         @if(((!is_null($routine->id)) && (!is_null($routine->exited_user_id) && $routine->exited_user_id === $user->id) || (!is_null(old('exited_user_id'))) && old('exited_user_id') == $user->id))

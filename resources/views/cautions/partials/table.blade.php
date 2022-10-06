@@ -8,9 +8,11 @@
             </div>
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                @if($routine->status)
                 <a id="novo" href="{{ route('cautions.create', $routine->id) }}" class="btn btn-outline-primary float-end" title="Nova Cautela">
                     <i class="fa fa-plus"></i> Nova
                 </a>
+                    @endif
             </div>
         </div>
 

@@ -28,9 +28,10 @@ class Routine extends Controller
         }
 
         formMode(Constants::FORM_MODE_CREATE);
-
+        $routine = app(RoutinesRepository::class)->new();
+        $routine->status = true;
         return $this->view('routines.form')->with([
-            'routine' => app(RoutinesRepository::class)->new(),
+            'routine' => $routine,
             'shifts' => app(ShiftsRepository::class)->all('name'),
             'entrancedUsers' => app(UsersRepository::class)->all('name'),
             'exitedUsers' => app(UsersRepository::class)->all('name'),
