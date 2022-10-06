@@ -1,12 +1,12 @@
 <div class="row mt-5">
     <div class="col-10 offset-1">
         <!-- Slider main container -->
-        <div class="swiper">
+        <div dir="rtl" class="swiper">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 <div class="swiper-slide">
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -80,7 +80,7 @@
 
                 </div>
                 <div class="swiper-slide">
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -142,7 +142,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -205,7 +205,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -267,7 +267,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -329,7 +329,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -391,7 +391,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
@@ -453,7 +453,7 @@
 
                 <div class="swiper-slide">
 
-                    <div class="col-10 offset-1">
+                    <div dir="ltr" class="col-10 offset-1">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-3 mt-3 mb-2">
