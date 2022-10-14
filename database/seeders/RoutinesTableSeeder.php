@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\RoutinesFactory;
+use Database\Factories\RoutineFactory;
 use Illuminate\Database\Seeder;
 
 class RoutinesTableSeeder extends Seeder
@@ -14,8 +14,8 @@ class RoutinesTableSeeder extends Seeder
      */
     public function run()
     {
-        app(RoutinesFactory::class)
-        ->count(1)
+        app(RoutineFactory::class)
+        ->count(3)
         ->create();
     }
 }

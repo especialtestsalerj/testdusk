@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\Routine;
 use App\Support\Constants;
 use Tests\DuskTestCase;
+
 
 class RoutinesTest extends DuskTestCase
 {
@@ -22,24 +24,28 @@ class RoutinesTest extends DuskTestCase
         $user->allow('*');
         $user->save();
         //dd($user->roles()->get());
-        $generateSector = ['name'=>strtoupper(faker()->unique()->company)];
+        $generateRoutine = Routine::factory()->create()->toArray();
 
-        $this->browse(function ($browser) use ($user,$generateSector) {
+        $this->browse(function ($browser) use ($user,$generateRoutine) {
           $browser
             ->loginAs($user->id)
-            ->visit('/sectors')
-            ->assertSee('Nome')
+            ->visit('/routines')
+            ->assertSee('Rotinas')
             ->click('#novo')
-            ->assertPathIs('/sectors/create')
+            ->assertPathIs('/routines/create')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
-            ->assertSee('Nome: preencha o campo corretamente.')
-            ->type('#name', $generateSector['name'])
-            ->assertChecked('@checkboxSectors')
+            ->assertSee('Turno: preencha o campo corretamente.')
+            ->assertSee('Responsável (Assunção): preencha o campo corretamente.')
+            ->assertSee('Carga: preencha o campo corretamente.')
+            ->select('#shift_id',$generateRoutine['shift_id'])
+            ->type('#checkpoint_obs', $generateRoutine['checkpoint_obs'])
+            ->select('#entranced_user_id', $generateRoutine['entranced_user_id'])
+            ->select('#exited_user_id', $generateRoutine['exited_user_id'])
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
-            ->assertPathIs('/sectors')
-            ->assertSee('Setor adicionado com sucesso!');
+            ->assertPathIs('/routines')
+            ->assertSee(' Rotina adicionada com sucesso!');
         });
     }
 }
