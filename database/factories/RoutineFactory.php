@@ -10,7 +10,7 @@ use Carbon\Carbon;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class RoutinesFactory extends Factory
+class RoutineFactory extends Factory
 {
      /**
      * The name of the factory's corresponding model.
@@ -28,11 +28,19 @@ class RoutinesFactory extends Factory
     {
         $date = Carbon::now()
             ->toDateTimeString();
+        
         $user_id = User::all()->random(1)->toArray()[0]['id'];
+        
         return [
             'shift_id' => rand(1,2),
             'entranced_at' => $date,
             'entranced_user_id' => $user_id,
+            'entranced_obs' => str_random(15),
+            'checkpoint_obs' => str_random(10),
+            'exited_at' => faker()->dateTimeBetween('+1 month','+2 months')->format('Y-m-d H:i:s') ,
+            'exited_user_id' => $user_id,
+            'exited_obs' => str_random(5),
+            'status' => (bool)rand(0,1),
             
         ];
     }
