@@ -41,6 +41,8 @@ class RoutineFactory extends Factory
             'exited_user_id' => $user_id,
             'exited_obs' => str_random(5),
             'status' => (bool)rand(0,1),
+            'created_by_id' => $user_id,
+            'created_at'=>$date,
             
         ];
     }
