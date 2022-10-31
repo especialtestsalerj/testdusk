@@ -37,6 +37,7 @@ jobs:
       - run:
           name: "Composer"
           command: |
+            composer update
             composer install --dev
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
