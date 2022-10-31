@@ -37,9 +37,7 @@ jobs:
       - run:
           name: "Composer"
           command: |
-            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-            composer require --dev laravel/dusk
-
+            composer install
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
