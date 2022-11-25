@@ -17,6 +17,7 @@ class CautionStore extends Request
             'visitor_id' => 'required',
             'destiny_sector_id' => 'required',
             'duty_user_id' => 'required',
+            id_card,
         ];
     }
 

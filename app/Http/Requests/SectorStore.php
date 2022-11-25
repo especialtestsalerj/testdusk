@@ -26,12 +26,13 @@ class SectorStore extends Request
 
     public function sanitize(array $all)
     {
+        $input = $all;
+
         if (!empty($this->get('name'))) {
-            $input = $all;
             $input['name'] = mb_strtoupper($input['name']);
             $this->replace($input);
         }
 
-        return $all;
+        return $input;
     }
 }

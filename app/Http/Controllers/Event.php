@@ -27,9 +27,9 @@ class Event extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'event' => app(EventsRepository::class)->new(),
-            'eventTypes' => app(EventTypesRepository::class)->all('name'),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'eventTypes' => app(EventTypesRepository::class)->all(),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 
@@ -50,9 +50,9 @@ class Event extends Controller
         return $this->view('events.form')->with([
             'routine_id' => $event->routine_id,
             'event' => $event,
-            'eventTypes' => app(EventTypesRepository::class)->all('name'),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'eventTypes' => app(EventTypesRepository::class)->all(),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 

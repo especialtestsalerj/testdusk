@@ -26,8 +26,8 @@ class Stuff extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'stuff' => app(StuffsRepository::class)->new(),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 
@@ -48,8 +48,8 @@ class Stuff extends Controller
         return $this->view('stuffs.form')->with([
             'routine_id' => $stuff->routine_id,
             'stuff' => $stuff,
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 

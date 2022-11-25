@@ -44,7 +44,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="shift_id">Turno*</label>
-                            <select class="form-select" name="shift_id" id="shift_id" value="{{is_null(old('shift_id')) ? $routine->shift_id : old('shift_id')}}" @disabled(!$routine->status)>
+                            <select class="form-select" name="shift_id" id="shift_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($shifts as $key => $shift)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->shift_id) && $routine->shift_id === $shift->id) || (!is_null(old('shift_id'))) && old('shift_id') == $shift->id))
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <label for="entranced_user_id">Responsável (Assunção)*</label>
-                            <select class="form-select" name="entranced_user_id" id="entranced_user_id" value="{{is_null(old('entranced_user_id')) ? $routine->entranced_user_id : old('entranced_user_id')}}" @disabled(!$routine->status)>
+                            <select class="select2" name="entranced_user_id" id="entranced_user_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($entrancedUsers as $key => $user)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->entranced_user_id) && $routine->entranced_user_id === $user->id) || (!is_null(old('entranced_user_id'))) && old('entranced_user_id') == $user->id))
@@ -88,7 +88,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exited_user_id">Responsável (Passagem)</label>
-                            <select class="form-select" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}" {{(!$routine->status ? 'disabled="disabled"' : '')}}>
+                            <select class="select2" name="exited_user_id" id="exited_user_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($exitedUsers as $key => $user)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->exited_user_id) && $routine->exited_user_id === $user->id) || (!is_null(old('exited_user_id'))) && old('exited_user_id') == $user->id))

@@ -34,9 +34,9 @@ class Routine extends Controller
         $routine->status = true;
         return $this->view('routines.form')->with([
             'routine' => $routine,
-            'shifts' => app(ShiftsRepository::class)->all('name'),
-            'entrancedUsers' => app(UsersRepository::class)->all('name'),
-            'exitedUsers' => app(UsersRepository::class)->all('name'),
+            'shifts' => app(ShiftsRepository::class)->all(),
+            'entrancedUsers' => app(UsersRepository::class)->all(),
+            'exitedUsers' => app(UsersRepository::class)->all(),
         ]);
     }
 
@@ -55,9 +55,9 @@ class Routine extends Controller
 
         return $this->view('routines.form')->with([
             'routine' => app(RoutinesRepository::class)->findById($id),
-            'shifts' => app(ShiftsRepository::class)->all('name'),
-            'entrancedUsers' => app(UsersRepository::class)->all('name'),
-            'exitedUsers' => app(UsersRepository::class)->all('name'),
+            'shifts' => app(ShiftsRepository::class)->all(),
+            'entrancedUsers' => app(UsersRepository::class)->all(),
+            'exitedUsers' => app(UsersRepository::class)->all(),
         ]);
     }
 

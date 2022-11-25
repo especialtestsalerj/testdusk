@@ -45,19 +45,26 @@
                 @endif
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="started_at">Entrada*</label>
                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at')}}"/>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at')}}"/>
                         </div>
-                        @livewire('people.people', ['person' => $caution->person, 'mode' => formMode()])
+                    </div>
+                </div>
+                <div class="row">
+                    @livewire('visitors.people', ['person' => $caution?->visitor?->person, 'mode' => formMode()])
+
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_id">Destino*</label>
-                            <select class="form-select" name="destiny_sector_id" id="destiny_sector_id" value="{{is_null(old('destiny_sector_id')) ? $caution->destiny_sector_id : old('destiny_sector_id')}}">
+                            <select class="select2" name="destiny_sector_id" id="destiny_sector_id">
                                 <option value="">SELECIONE</option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
@@ -70,9 +77,7 @@
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
-                            <select class="form-select" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
-                            <label for="duty_user_id">Plantonista*</label>
-                            <select class="form-control select2" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
+                            <select class="select2" name="duty_user_id" id="duty_user_id">
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->duty_user_id) && $caution->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -91,16 +96,15 @@
                 </div>
                 <hr />
                 <div class="row mt-4">
-                    <div class="col-sm-10">
+                    <div class="col-md-12">
                         <h5 class="mb-0">
                             <i class="fas fa-gun"></i> Armas
+                            @if (formMode() == 'show')
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            @endif
                         </h5>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <!-- Button trigger modal -->
-                        <button type="button" wire:click="clearWeapon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal" title="Nova Arma">
-                            <i class="fa fa-plus"></i>
-                        </button>
                     </div>
                 </div>
                 @if (formMode() == 'show')
