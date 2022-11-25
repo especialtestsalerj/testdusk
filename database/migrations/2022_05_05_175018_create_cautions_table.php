@@ -37,9 +37,9 @@ return new class extends Migration {
                 ->references('id')
                 ->on('routines');
             $table
-                ->foreign('person_id')
+                ->foreign('visitor_id')
                 ->references('id')
-                ->on('people');
+                ->on('visitors');
             $table
                 ->foreign('destiny_sector_id')
                 ->references('id')

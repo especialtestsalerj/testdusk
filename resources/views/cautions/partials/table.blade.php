@@ -41,7 +41,7 @@
                         {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                     </td>
                     <td>
-                        {{ $caution->person->full_name }}
+                        {{ $caution->visitor->person->full_name }}
                     </td>
                     <td>
                         {{ $caution->destinySector->name }}

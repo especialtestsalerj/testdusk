@@ -34622,6 +34622,10 @@ select + .select2-container--bootstrap-5 {
   padding-top: 5px;
 }
 
+.card-header {
+  border-bottom: var(--bs-card-border-width) solid var(--bs-border-color);
+}
+
 .routine-icons .fa-circle:before {
   color: #142b53;
 }
@@ -34650,10 +34654,6 @@ select + .select2-container--bootstrap-5 {
     font-size: calc(1rem + 0.39vw);
   }
 }
-.card-header {
-  border-bottom: var(--bs-card-border-width) solid var(--bs-border-color);
-}
-
 .logo-alerj {
   max-width: 275px;
   /*float: left;*/

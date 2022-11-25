@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\CautionWeapons;
 
-use App\Data\Repositories\WeaponTypes;
 use App\Http\Livewire\BaseForm;
 use App\Models\CautionWeapon;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\WeaponTypes as WeaponTypesRepository;
+use App\Data\Repositories\Cabinets as CabinetsRepository;
+use App\Data\Repositories\Shelves as ShelvesRepository;
 
+use Carbon\Carbon;
 use function view;
 
 class CreateForm extends BaseForm
@@ -15,6 +17,7 @@ class CreateForm extends BaseForm
     public CautionWeapon $cautionWeapon;
     public $selectedId;
 
+    public $caution_id;
     public $caution_weapon_id;
     public $weapon_type_id;
     public $description;
@@ -47,6 +50,16 @@ class CreateForm extends BaseForm
 
     public function store()
     {
+        $values = ['caution_id' => $this->caution_id];
+        $values = array_merge($values, ['entranced_at' => Carbon::now()]);
+        $values = array_merge($values, ['exited_at' => Carbon::now()]);
+        $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
+        $values = array_merge($values, ['weapon_type_id' => $this->weapon_type_id]);
+        $values = array_merge($values, ['description' => $this->description]);
+        $values = array_merge($values, ['weapon_number' => $this->weapon_number]);
+        $values = array_merge($values, ['cabinet_id' => $this->cabinet_id]);
+        $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
+
         /*$this->start_date = Carbon::createFromFormat('!m-Y', $this->start_date)
             ->startOfMonth()
             ->toDateString();
@@ -86,13 +99,14 @@ class CreateForm extends BaseForm
             $validatedData['end_date'] = Carbon::create($validatedData['end_date'])->endOfDay();
         }
         $validatedData['limit'] = $this->limit;*/
-        $validatedData['entranced_at'] = null; //todo: definir regras para datas
+        //$validatedData['entranced_at'] = null; //todo: definir regras para datas
         if ($this->selectedId) {
             $row = CautionWeapon::find($this->selectedId);
-            $row->fill($validatedData);
+            //$row->fill($validatedData);
             $row->save();
         } else {
-            CautionWeapon::create($validatedData);
+            //CautionWeapon::create($validatedData);
+            CautionWeapon::create($values);
         }
 
         $this->clearWeapon();
@@ -112,6 +126,8 @@ class CreateForm extends BaseForm
         return [
             'users' => app(UsersRepository::class)->all(),
             'weaponTypes' => app(WeaponTypesRepository::class)->all(),
+            'cabinets' => app(CabinetsRepository::class)->all(),
+            'shelves' => app(ShelvesRepository::class)->all(),
         ];
     }
 

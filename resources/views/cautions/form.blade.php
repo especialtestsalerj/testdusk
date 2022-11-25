@@ -59,8 +59,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    @livewire('visitors.people', ['person' => $caution?->visitor?->person, 'mode' => formMode()])
-
+                    @livewire('visitors.people', ['routine_id' => $routine_id, 'visitor_id' => $caution?->visitor?->id, 'mode' => formMode()])
+                </div>
+                <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_id">Destino*</label>
@@ -131,7 +132,7 @@
                         <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> {{1==2 ? 'Alterar' : 'Nova'}} Arma</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <livewire:caution-weapons.create-form />
+                    <livewire:caution-weapons.create-form :caution_id="$caution->id" />
                 </div>
             </div>
         </div>
