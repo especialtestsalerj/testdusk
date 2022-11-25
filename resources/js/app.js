@@ -6,37 +6,23 @@ window.Alpine = Alpine
 
 Alpine.start()
 
-window.$ = window.jQuery = require('jquery')
 
-/**
- * Select2
- */
-require('select2/dist/js/select2.min.js')
+// core version + navigation, pagination modules:
+import Swiper, { Navigation } from 'swiper';
 
-$(() => {
-    // jshint ignore:line
-    $(document).ready(function () {
-        $('.select2').select2({
-            theme: 'bootstrap-5',
-            tags: false,
-            width: '100%',
-        })
+// init Swiper:
+const swiper = new Swiper('.swiper', {
+    modules: [Navigation],
 
-        $('.select2-tag').select2({
-            theme: 'bootstrap-5',
-            tags: true,
-            width: '100%',
-        })
-    })
-})
+    // Optional parameters
+    direction: 'horizontal',
+    loop: false,
 
-$(document).on('select2:open', (e) => {
-    const selectId = e.target.id
+    // Navigation arrows
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
 
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
-        key,
-        value,
-    ) {
-        value.focus()
-    })
-})
+});
+

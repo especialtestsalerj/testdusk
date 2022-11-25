@@ -1,0 +1,6 @@
+2022-09-15 15:34:22.518 -03 [64154] FATAL:  lock file "postmaster.pid" already exists
+2022-09-15 15:34:22.518 -03 [64154] HINT:  Is another postmaster (PID 905) running in data directory "/Users/breno/pgdata"?
+2022-09-15 15:36:24.251 -03 [69535] FATAL:  lock file "postmaster.pid" already exists
+2022-09-15 15:36:24.251 -03 [69535] HINT:  Is another postmaster (PID 905) running in data directory "/Users/breno/pgdata"?
+2022-09-26 16:51:28.606 -03 [43362] FATAL:  lock file "postmaster.pid" already exists
+2022-09-26 16:51:28.606 -03 [43362] HINT:  Is another postmaster (PID 4090) running in data directory "/Users/breno/pgdata"?

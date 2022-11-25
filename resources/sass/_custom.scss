@@ -148,3 +148,37 @@
 .card-header {
     border-bottom: var(--bs-card-border-width) solid var(--bs-border-color);
 }
+
+
+.routine-icons {
+    .fa-circle:before {
+        color: #142b53;
+        &:hover {
+            color: #21478a;
+        }
+    }
+}
+
+.fa-stack[data-count]:after{
+    position:absolute;
+    right:0%;
+    top:1%;
+    content: attr(data-count);
+    font-size:30%;
+    padding:.6em;
+    border-radius:999px;
+    line-height:.75em;
+    color: white;
+    background:rgba(255,0,0,.85);
+    text-align:center;
+    min-width:2em;
+    font-weight:bold;
+}
+
+
+@media (max-width: 500px) {
+    h3, .h3 {
+        font-size: calc(1rem + 0.39vw);
+    }
+}
+
