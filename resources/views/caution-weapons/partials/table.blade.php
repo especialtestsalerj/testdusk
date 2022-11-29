@@ -20,9 +20,9 @@
             <thead>
             <tr>
                 <th class="col-md-2">Data/Hora</th>
-                <th class="col-md-3">Tipo</th>
-                <th class="col-md-2">Setor</th>
-                <th class="col-md-3">Plantonista</th>
+                <th class="col-md-3">Arma</th>
+                <th class="col-md-2">Numeração</th>
+                <th class="col-md-3">Armário / Box</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -33,10 +33,10 @@
                         {{$weapon->id}}
                     </td>
                     <td>
-                        {{$weapon->weaponTypes->name}}
+                        {{$weapon?->weaponType?->name}} {{$weapon?->weapon_description}}
                     </td>
                     <td>
-                        {{$weapon->weapon_type_id}}
+                        {{$weapon->weapon_number}}
                     </td>
                     <td>
 
