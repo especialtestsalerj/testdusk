@@ -11,6 +11,28 @@ use Tests\DuskTestCase;
 
 class RoutinesTest extends DuskTestCase
 {
+  
+  public function insertDate($diff,$inputId){
+    $this->browse(function ($browser) use ($diff,$inputId) {
+      $browser->script('
+        var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
+            if (dateString !== "") {
+        
+                var dateVal = new Date(dateString);
+                var day = dateVal.getDate().toString().padStart(2, "0");
+                var month = (1 + dateVal.getMonth() + '.$diff.').toString().padStart(2, "0");
+                var hour = dateVal.getHours().toString().padStart(2, "0");
+                var minute = dateVal.getMinutes().toString().padStart(2, "0");
+                var sec = dateVal.getSeconds().toString().padStart(2, "0");
+                var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
+                var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
+        
+                document.querySelector("[id='.$inputId.']").value=(inputDate);
+            }
+        ');
+      });
+    }
+
     /**
      * @test
      * @group tests_createRoutine
@@ -50,38 +72,8 @@ class RoutinesTest extends DuskTestCase
             ->type('#checkpoint_obs', $generateRoutine['checkpoint_obs'])
             ->select('#entranced_user_id', rand(2,9))
             ->select('#exited_user_id', rand(2,9));
-            $browser->script('
-            var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
-                if (dateString !== "") {
-            
-                    var dateVal = new Date(dateString);
-                    var day = dateVal.getDate().toString().padStart(2, "0");
-                    var month = (1 + dateVal.getMonth()).toString().padStart(2, "0");
-                    var hour = dateVal.getHours().toString().padStart(2, "0");
-                    var minute = dateVal.getMinutes().toString().padStart(2, "0");
-                    var sec = dateVal.getSeconds().toString().padStart(2, "0");
-                    var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
-                    var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
-            
-                    document.querySelector(\'[id="entranced_at"]\').value=(inputDate);
-                }
-            ');
-          $browser->script('
-            var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
-                if (dateString !== "") {
-            
-                    var dateVal = new Date(dateString);
-                    var day = dateVal.getDate().toString().padStart(2, "0");
-                    var month = (1 + dateVal.getMonth() + 1 ).toString().padStart(2, "0");
-                    var hour = dateVal.getHours().toString().padStart(2, "0");
-                    var minute = dateVal.getMinutes().toString().padStart(2, "0");
-                    var sec = dateVal.getSeconds().toString().padStart(2, "0");
-                    var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
-                    var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
-            
-                    document.querySelector(\'[id="exited_at"]\').value=(inputDate);
-                }
-            ');
+            $this->insertDate(0,'entranced_at');
+            $this->insertDate(1,'exited_at');
           $browser
             ->screenshot('1')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
@@ -93,7 +85,7 @@ class RoutinesTest extends DuskTestCase
 
     /**
      * @test
-     * @group testSearch
+     * @group testEditRoutine
      * @group link
      */
 
