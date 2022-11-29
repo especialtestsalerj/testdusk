@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Descrição da Arma*</label>
-                <input class="form-control" name="description" id="description" value="{{is_null(old('description')) ? $cautionWeapon->description : old('description')}}" wire:model.defer="description"/>
+                <input class="form-control text-uppercase" name="description" id="description" value="{{is_null(old('description')) ? $cautionWeapon->description : old('description')}}" wire:model.defer="description"/>
                 <div>
                     @error('description')
                     <small class="text-danger">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label for="weapon_number">Numeração da Arma*</label>
-                <input class="form-control" name="weapon_number" id="weapon_number" value="{{is_null(old('weapon_number')) ? $cautionWeapon->weapon_number : old('weapon_number')}}" wire:model.defer="weapon_number"/>
+                <input class="form-control text-uppercase" name="weapon_number" id="weapon_number" value="{{is_null(old('weapon_number')) ? $cautionWeapon->weapon_number : old('weapon_number')}}" wire:model.defer="weapon_number"/>
                 <div>
                     @error('weapon_number')
                     <small class="text-danger">

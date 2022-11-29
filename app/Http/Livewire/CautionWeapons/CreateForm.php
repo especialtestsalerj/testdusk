@@ -41,8 +41,8 @@ class CreateForm extends BaseForm
 
         $this->caution_weapon_id = $cautionWeapon->caution_weapon_id;
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
-        $this->description = $cautionWeapon?->description;
-        $this->weapon_number = $cautionWeapon?->weapon_number;
+        $this->description = mb_strtoupper($cautionWeapon?->description);
+        $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
 
@@ -56,8 +56,8 @@ class CreateForm extends BaseForm
         $values = array_merge($values, ['exited_at' => Carbon::now()]);
         $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
         $values = array_merge($values, ['weapon_type_id' => $this->weapon_type_id]);
-        $values = array_merge($values, ['description' => $this->description]);
-        $values = array_merge($values, ['weapon_number' => $this->weapon_number]);
+        $values = array_merge($values, ['weapon_description' => mb_strtoupper($this->description)]);
+        $values = array_merge($values, ['weapon_number' => mb_strtoupper($this->weapon_number)]);
         $values = array_merge($values, ['cabinet_id' => $this->cabinet_id]);
         $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
 
@@ -113,6 +113,7 @@ class CreateForm extends BaseForm
         $this->clearWeapon();
         $this->cautionWeapon->refresh();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
+        return redirect()->to('/cautions/' . $this->caution_id);
     }
 
     public function fillModel()

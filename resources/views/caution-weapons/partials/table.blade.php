@@ -19,10 +19,9 @@
         <table id="cautionWeaponTable" class="table table-striped table-bordered mt-2">
             <thead>
             <tr>
-                <th class="col-md-2">Data/Hora</th>
-                <th class="col-md-3">Arma</th>
+                <th class="col-md-6">Descrição</th>
                 <th class="col-md-2">Numeração</th>
-                <th class="col-md-3">Armário / Box</th>
+                <th class="col-md-2">Localização</th>
                 <th class="col-md-2"></th>
             </tr>
             </thead>
@@ -30,19 +29,16 @@
             @forelse ($cautionWeapons as $weapon)
                 <tr>
                     <td>
-                        {{$weapon->id}}
-                    </td>
-                    <td>
                         {{$weapon?->weaponType?->name}} {{$weapon?->weapon_description}}
                     </td>
                     <td>
                         {{$weapon->weapon_number}}
                     </td>
                     <td>
-
+                        {{$weapon?->cabinet?->name}} / BOX {{$weapon?->shelf?->name}}
                     </td>
-                    <td>
-
+                    <td class="text-center">
+                        
                     </td>
                 </tr>
             @empty

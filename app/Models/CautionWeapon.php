@@ -20,12 +20,18 @@ class CautionWeapon extends Model
         'shelf_id',
     ];
 
-    /*public function weaponTypes()
-    {
-        return $this->hasMany(WeaponType::class);
-    }*/
     public function weaponType()
     {
         return $this->belongsTo(WeaponType::class);
+    }
+
+    public function cabinet()
+    {
+        return $this->belongsTo(Cabinet::class);
+    }
+
+    public function shelf()
+    {
+        return $this->belongsTo(Shelf::class);
     }
 }
