@@ -5,8 +5,9 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Routine;
 use App\Support\Constants;
+use Livewire\Livewire;
+use App\Http\Livewire\Routines\Index;
 use Tests\DuskTestCase;
-
 
 class RoutinesTest extends DuskTestCase
 {
@@ -25,7 +26,7 @@ class RoutinesTest extends DuskTestCase
         $user->save();
         //dd($user->roles()->get());
         $generateRoutine = Routine::factory()->create()->toArray();
-        dump($generateRoutine['entranced_at'][8]);
+        //dump($generateRoutine['entranced_at']);
         $this->browse(function ($browser) use ($user,$generateRoutine) {
           $browser
             ->loginAs($user->id)
@@ -45,17 +46,79 @@ class RoutinesTest extends DuskTestCase
             ->screenshot('1')
             ->select('#shift_id',$generateRoutine['shift_id'])
             ->assertSelected('#shift_id',$generateRoutine['shift_id'])
-            ->type('#entranced_at',str_replace($generateRoutine['entranced_at']))
-            ->screenshot('2');
-            //->script('entranced_at.value="2022-10-20 08:09";');
-          $browser
+            ->pause(1000)
             ->type('#checkpoint_obs', $generateRoutine['checkpoint_obs'])
             ->select('#entranced_user_id', rand(2,9))
-            ->select('#exited_user_id', rand(2,9))
+            ->select('#exited_user_id', rand(2,9));
+            $browser->script('
+            var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
+                if (dateString !== "") {
+            
+                    var dateVal = new Date(dateString);
+                    var day = dateVal.getDate().toString().padStart(2, "0");
+                    var month = (1 + dateVal.getMonth()).toString().padStart(2, "0");
+                    var hour = dateVal.getHours().toString().padStart(2, "0");
+                    var minute = dateVal.getMinutes().toString().padStart(2, "0");
+                    var sec = dateVal.getSeconds().toString().padStart(2, "0");
+                    var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
+                    var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
+            
+                    document.querySelector(\'[id="entranced_at"]\').value=(inputDate);
+                }
+            ');
+          $browser->script('
+            var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
+                if (dateString !== "") {
+            
+                    var dateVal = new Date(dateString);
+                    var day = dateVal.getDate().toString().padStart(2, "0");
+                    var month = (1 + dateVal.getMonth() + 1 ).toString().padStart(2, "0");
+                    var hour = dateVal.getHours().toString().padStart(2, "0");
+                    var minute = dateVal.getMinutes().toString().padStart(2, "0");
+                    var sec = dateVal.getSeconds().toString().padStart(2, "0");
+                    var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
+                    var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
+            
+                    document.querySelector(\'[id="exited_at"]\').value=(inputDate);
+                }
+            ');
+          $browser
+            ->screenshot('1')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
             ->assertPathIs('/routines')
-            ->assertSee(' Rotina adicionada com sucesso!');
+            ->assertSee('Rotina adicionada com sucesso!');
         });
     }
+
+    /**
+     * @test
+     * @group testSearch
+     * @group link
+     */
+
+     // Dusk - Edita uma Rotina
+     public function testEditRoutine()
+    {
+      
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $routine = Routine::all()->random(1)->toArray()[0];
+      
+      $this->browse(function ($browser) use ($user,$routine) {
+        $browser
+          ->loginAs($user->id)
+          ->visit('/routines')
+          ->assertSee('Rotinas')
+          ->press('@manageRoutine-'.$routine['id'])
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->type('#checkpoint_obs', str_random(15))
+          ->script('document.querySelectorAll("#submitButton")[0].click();');
+        $browser
+        ->assertPathIs('/routines')
+        ->assertSee('Rotina alterada com sucesso!');
+    });
+  }
 }
