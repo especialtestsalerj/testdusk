@@ -160,7 +160,7 @@ abstract class Repository
         }
 
         return $query->paginate(
-            10,
+            isset($this->paginate) && $this->paginate ? 10 : 10000,
             ['*'],
             'page',
             $queryFilter->get('pagination') && $queryFilter->get('pagination')['current_page']

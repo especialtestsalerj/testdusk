@@ -30,9 +30,11 @@ class Visitor extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'visitor' => app(VisitorsRepository::class)->new(),
-            'people' => app(PeopleRepository::class)->all('name'),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'people' => app(PeopleRepository::class)->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 
@@ -57,9 +59,9 @@ class Visitor extends Controller
         return $this->view('visitors.form')->with([
             'routine_id' => $visitor->routine_id,
             'visitor' => $visitor,
-            'people' => app(PeopleRepository::class)->all('name'),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'people' => app(PeopleRepository::class)->all(),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 

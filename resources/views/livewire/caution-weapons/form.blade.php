@@ -7,13 +7,13 @@
 
             <div class="form-group">
                 <label for="weapon_type_id">Tipo de Arma*</label>
-                <select class="form-control select2" name="weapon_type_id" id="weapon_type_id" value="{{is_null(old('weapon_type_id')) ? $cautionWeapon->weapon_type_id : old('weapon_type_id')}}" wire:model.defer="weapon_type_id">
+                <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id">
                     <option value="">SELECIONE</option>
-                    @foreach ($users as $key => $user)
-                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $user->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $user->id))
-                            <option value="{{ $user->id }}" selected="selected">{{ $user->name }}</option>
+                    @foreach ($weaponTypes as $key => $weaponType)
+                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
+                            <option value="{{ $weaponType->id }}" selected="selected">{{ $weaponType->name }}</option>
                         @else
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -52,13 +52,13 @@
             </div>
             <div class="form-group">
                 <label for="cabinet_id">Armário*</label>
-                <select class="form-control select2" name="cabinet_id" id="cabinet_id" value="{{is_null(old('cabinet_id')) ? $cautionWeapon->cabinet_id : old('cabinet_id')}}" wire:model.defer="cabinet_id">
+                <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id">
                     <option value="">SELECIONE</option>
-                    @foreach ($users as $key => $user)
-                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->cabinet_id) && $cautionWeapon->cabinet_id === $user->id) || (!is_null(old('cabinet_id'))) && old('cabinet_id') == $user->id))
-                            <option value="{{ $user->id }}" selected="selected">{{ $user->name }}</option>
+                    @foreach ($cabinets as $key => $cabinet)
+                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->cabinet_id) && $cautionWeapon->cabinet_id === $cabinet->id) || (!is_null(old('cabinet_id'))) && old('cabinet_id') == $cabinet->id))
+                            <option value="{{ $cabinet->id }}" selected="selected">{{ $cabinet->name }}</option>
                         @else
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -73,13 +73,13 @@
             </div>
             <div class="form-group">
                 <label for="shelf_id">Box*</label>
-                <select class="form-control select2" name="shelf_id" id="shelf_id" value="{{is_null(old('shelf_id')) ? $cautionWeapon->shelf_id : old('shelf_id')}}" wire:model.defer="shelf_id">
+                <select class="form-select" name="shelf_id" id="shelf_id" wire:model.defer="shelf_id">
                     <option value="">SELECIONE</option>
-                    @foreach ($users as $key => $user)
-                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->shelf_id) && $cautionWeapon->shelf_id === $user->id) || (!is_null(old('shelf_id'))) && old('shelf_id') == $user->id))
-                            <option value="{{ $user->id }}" selected="selected">{{ $user->name }}</option>
+                    @foreach ($shelves as $key => $shelf)
+                        @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->shelf_id) && $cautionWeapon->shelf_id === $shelf->id) || (!is_null(old('shelf_id'))) && old('shelf_id') == $shelf->id))
+                            <option value="{{ $shelf->id }}" selected="selected">{{ $shelf->name }}</option>
                         @else
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
                         @endif
                     @endforeach
                 </select>

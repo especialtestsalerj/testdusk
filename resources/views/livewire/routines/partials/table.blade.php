@@ -4,10 +4,9 @@
     <thead>
         <tr>
             <th class="col-md-1">#</th>
-            <th class="col-md-2">Turno</th>
-            <th class="col-md-2">Assunção</th>
-            <th class="col-md-4">Responsável</th>
-            <th class="col-md-2">Passagem</th>
+            <th class="col-md-1">Turno</th>
+            <th class="col-md-3">Assunção</th>
+            <th class="col-md-3">Passagem</th>
             <th class="col-md-2">Status</th>
             <th class="col-md-1"></th>
         </tr>
@@ -23,25 +22,26 @@
             </td>
             <td>
                 {{ $routine?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
-            </td>
-            <td>
+                <br />
                 {{ $routine?->entrancedUser?->name }}
             </td>
             <td>
                 {{ $routine?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                <br />
+                {{ $routine?->entrancedUser?->name ?? '-'}}
             </td>
             <td class="text-center">
-                <?php if($routine['status']): ?>
+                @if ($routine['status'])
                     <label class="badge bg-success"> EM ABERTO </label>
                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine['id']}}" title="Finalizar Rotina">
                         <i class="fa fa-check"></i> Finalizar
                     </button>
-                <?php else: ?>
+                @else
                     <label class="badge bg-danger"> FINALIZADA </label>
-                <?php endif; ?>
+                @endif
             </td>
             <td>
-                <a href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" dusk="manageRoutine-{{$routine['id']}}" title="Gerenciar Rotina">
+                <a href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" title="Gerenciar Rotina">
                     <i class="fa fa-cog"></i> Gerenciar
                 </a>
             </td>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exited_user_id">Responsável (Passagem)*</label>
-                                <select class="form-control select2" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}">
+                                <select class="form-select" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}">
                                     <option value="">SELECIONE</option>
                                     @foreach ($exitedUsers as $key => $user)
                                         @if(((!is_null($routine->id)) && (!is_null($routine->exited_user_id) && $routine->exited_user_id === $user->id) || (!is_null(old('exited_user_id'))) && old('exited_user_id') == $user->id))
