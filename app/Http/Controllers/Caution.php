@@ -11,6 +11,7 @@ use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\Cabinets as CabinetsRepository;
 use App\Data\Repositories\Shelves as ShelvesRepository;
+use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
 
 use App\Support\Constants;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,9 +30,8 @@ class Caution extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+        $routine = app(RoutinesRepository::class)->findById($routine_id);
 
-        //app(VisitorsRepository::class)->findByRoutineId([$routine_id])
         $visitors = app(VisitorsRepository::class)
             ->disablePagination()
             ->findByRoutine($routine_id);
@@ -71,8 +71,6 @@ class Caution extends Controller
 
         $caution = app(CautionsRepository::class)->create($values);
 
-        //$visitors = app(VisitorsRepository::class)->findById($request->visitor_id);
-
         return redirect()
             ->route('routines.show', $caution->routine_id)
             ->with('status', 'Cautela adicionada com sucesso!');
@@ -81,16 +79,21 @@ class Caution extends Controller
     public function show($id)
     {
         formMode(Constants::FORM_MODE_SHOW);
-        //'people' => app(PeopleRepository::class)->all(),
+
         $caution = app(CautionsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($caution->routine_id);
+        $cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($caution->id);
+
         return $this->view('cautions.form')->with([
             'routine_id' => $caution->routine_id,
             'caution' => $caution,
+            'routine' => $routine,
             'visitors' => app(VisitorsRepository::class)->all(),
             'sectors' => app(SectorsRepository::class)->all(),
             'users' => app(UsersRepository::class)->all(),
             'cabinets' => app(CabinetsRepository::class)->all(),
             'shelves' => app(ShelvesRepository::class)->all(),
+            'cautionWeapons' => $cautionWeapons,
         ]);
     }
 

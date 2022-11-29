@@ -26,6 +26,7 @@ class CreateForm extends BaseForm
     public $shelf_id;
 
     public $entranced_at;
+    public $routineStatus;
 
     public function clearWeapon()
     {
@@ -111,7 +112,7 @@ class CreateForm extends BaseForm
 
         $this->clearWeapon();
         $this->cautionWeapon->refresh();
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'weaponModal']);
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
     }
 
     public function fillModel()
@@ -119,6 +120,7 @@ class CreateForm extends BaseForm
         $this->entranced_at = is_null(old('entranced_at'))
             ? $this->cautionWeapon->entranced_at ?? ''
             : old('entranced_at');
+        //$this->routineStatus = $this->cautionWeapon->routineStatus;
     }
 
     protected function getComponentVariables()

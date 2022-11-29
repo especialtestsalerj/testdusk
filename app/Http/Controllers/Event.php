@@ -47,9 +47,12 @@ class Event extends Controller
         formMode(Constants::FORM_MODE_SHOW);
 
         $event = app(EventsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($event->routine_id);
+
         return $this->view('events.form')->with([
             'routine_id' => $event->routine_id,
             'event' => $event,
+            'routine' => $routine,
             'eventTypes' => app(EventTypesRepository::class)->all(),
             'sectors' => app(SectorsRepository::class)->all(),
             'users' => app(UsersRepository::class)->all(),

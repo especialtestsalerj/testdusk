@@ -24,7 +24,7 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+        $routine = app(RoutinesRepository::class)->findById($routine_id);
 
         return $this->view('visitors.form')->with([
             'routine_id' => $routine_id,
@@ -56,9 +56,12 @@ class Visitor extends Controller
         formMode(Constants::FORM_MODE_SHOW);
 
         $visitor = app(VisitorsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($visitor->routine_id);
+
         return $this->view('visitors.form')->with([
             'routine_id' => $visitor->routine_id,
             'visitor' => $visitor,
+            'routine' => $routine,
             'people' => app(PeopleRepository::class)->all(),
             'sectors' => app(SectorsRepository::class)->all(),
             'users' => app(UsersRepository::class)->all(),

@@ -17,6 +17,7 @@ class People extends BaseForm
     public $cpf;
     public $full_name;
     public $origin;
+    public $routineStatus;
 
     public function searchCpf()
     {

@@ -20,6 +20,14 @@ abstract class Repository
         return $this->applyFilter($this->newQuery());
     }
 
+    public function allOrderBy($field, $direction, $limit)
+    {
+        return $this->model
+            ::orderBy($field, $direction)
+            ->limit($limit)
+            ->get();
+    }
+
     /**
      * @return mixed
      */
@@ -98,6 +106,11 @@ abstract class Repository
     protected function findByAnyColumnName($name, $arguments)
     {
         return $this->makeQueryByAnyColumnName('findBy', $name, $arguments)->first();
+    }
+
+    protected function getByAnyColumnName($name, $arguments)
+    {
+        return $this->makeQueryByAnyColumnName('getBy', $name, $arguments)->get();
     }
 
     protected function makeQueryByAnyColumnName($type, $name, $arguments, $query = null)

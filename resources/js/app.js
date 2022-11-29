@@ -17,13 +17,13 @@ $(() => {
     // jshint ignore:line
     $(document).ready(function () {
         $('.select2').select2({
-            theme: 'bootstrap4',
+            theme: 'bootstrap-5',
             tags: false,
             width: '100%',
         })
 
         $('.select2-tag').select2({
-            theme: 'bootstrap4',
+            theme: 'bootstrap-5',
             tags: true,
             width: '100%',
         })

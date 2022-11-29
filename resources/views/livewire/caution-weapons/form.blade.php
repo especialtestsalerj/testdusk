@@ -2,7 +2,6 @@
     <div class="modal-body">
         <form>
             <input type="hidden" class="form-control" name="caution_id" id="caution_id" wire:model.defer="caution_id">
-
             <p class="text-end">* Campos obrigatórios</p>
 
             <div class="form-group">

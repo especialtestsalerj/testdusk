@@ -23,16 +23,21 @@ class People extends BaseForm
     public $certificate_number;
     public $certificate_valid_until;
 
+    public $routineStatus;
+
     public function find()
     {
-        if ($result = app(PeopleRepository::class)->findById($this->visitor_id)) {
-            $this->person_id = $result['id'];
-            $this->certificate_type = $result['certificate_type'];
-            $this->id_card = $result['id_card'];
-            $this->certificate_number = $result['certificate_number'];
-            $this->certificate_valid_until = $result['certificate_valid_until'];
+        $result =
+            $this->visitor_id == null
+                ? false
+                : app(VisitorsRepository::class)->findById($this->visitor_id);
 
-            $this->resetErrorBag('cpf');
+        if ($result) {
+            $this->person_id = $result->person->id;
+            $this->certificate_type = $result->person->certificate_type;
+            $this->id_card = $result->person->id_card;
+            $this->certificate_number = $result->person->certificate_number;
+            $this->certificate_valid_until = $result->person->certificate_valid_until;
         } else {
             $this->person_id = null;
             $this->certificate_type = null;
