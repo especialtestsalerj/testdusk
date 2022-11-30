@@ -20,6 +20,14 @@ abstract class Repository
         return $this->applyFilter($this->newQuery());
     }
 
+    public function allOrderBy($field, $direction, $limit)
+    {
+        return $this->model
+            ::orderBy($field, $direction)
+            ->limit($limit)
+            ->get();
+    }
+
     /**
      * @return mixed
      */
@@ -100,6 +108,11 @@ abstract class Repository
         return $this->makeQueryByAnyColumnName('findBy', $name, $arguments)->first();
     }
 
+    protected function getByAnyColumnName($name, $arguments)
+    {
+        return $this->makeQueryByAnyColumnName('getBy', $name, $arguments)->get();
+    }
+
     protected function makeQueryByAnyColumnName($type, $name, $arguments, $query = null)
     {
         if (!$query) {
@@ -160,7 +173,7 @@ abstract class Repository
         }
 
         return $query->paginate(
-            10,
+            isset($this->paginate) && $this->paginate ? 10 : 10000,
             ['*'],
             'page',
             $queryFilter->get('pagination') && $queryFilter->get('pagination')['current_page']

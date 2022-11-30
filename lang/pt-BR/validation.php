@@ -94,7 +94,7 @@ return [
     'numeric' => 'O campo :attribute deve conter um valor numérico.',
     'present' => 'O campo :attribute deve estar presente.',
     'regex' => 'O formato do valor informado no campo :attribute é inválido.',
-    'required' => 'O campo :attribute é obrigatório.',
+    'required' => ':attribute: preencha o campo corretamente.',
     'required_if' =>
         'O campo :attribute é obrigatório quando o valor do campo :other é igual a :value.',
     'required_unless' =>
@@ -198,5 +198,14 @@ return [
         'to' => 'nome da pessoa ou razão social',
         'entry_type_id' => 'meio',
         'cost_center_id' => 'centro de custo',
+
+        'name' => 'Nome',
+        'status' => 'Status',
+        'shift_id' => 'Turno',
+        'event_type_id' => 'Tipo',
+        'occurred_at' => 'Data da Ocorrência',
+        'duty_user_id' => 'Plantonista',
+        'description' => 'Observações',
+        'checkpoint_obs' => 'Carga',
     ],
 ];

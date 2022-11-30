@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class CautionWeapon extends Model
 {
@@ -13,10 +12,26 @@ class CautionWeapon extends Model
         'caution_id',
         'entranced_at',
         'exited_at',
+        'register_number',
         'weapon_type_id',
-        'description',
+        'weapon_description',
         'weapon_number',
         'cabinet_id',
         'shelf_id',
     ];
+
+    public function weaponType()
+    {
+        return $this->belongsTo(WeaponType::class);
+    }
+
+    public function cabinet()
+    {
+        return $this->belongsTo(Cabinet::class);
+    }
+
+    public function shelf()
+    {
+        return $this->belongsTo(Shelf::class);
+    }
 }

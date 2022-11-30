@@ -10,7 +10,7 @@ class EventType extends Controller
 {
     public function index()
     {
-        return $this->view('event_types.index')->with(
+        return $this->view('event-types.index')->with(
             'eventTypes',
             app(EventTypesRepository::class)->all()
         );
@@ -20,7 +20,7 @@ class EventType extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        return $this->view('event_types.form')->with([
+        return $this->view('event-types.form')->with([
             'eventType' => app(EventTypesRepository::class)->new(),
         ]);
     }
@@ -30,7 +30,7 @@ class EventType extends Controller
         app(EventTypesRepository::class)->create($request->all());
 
         return redirect()
-            ->route('event_types.index')
+            ->route('event-types.index')
             ->with('status', 'Tipo de Ocorrência adicionada com sucesso!');
     }
 
@@ -38,7 +38,7 @@ class EventType extends Controller
     {
         formMode(Constants::FORM_MODE_SHOW);
 
-        return $this->view('event_types.form')->with([
+        return $this->view('event-types.form')->with([
             'eventType' => app(EventTypesRepository::class)->findById($id),
         ]);
     }
@@ -48,7 +48,7 @@ class EventType extends Controller
         app(EventTypesRepository::class)->update($id, $request->all());
 
         return redirect()
-            ->route('event_types.index')
+            ->route('event-types.index')
             ->with('status', 'Tipo de Ocorrência alterada com sucesso!');
     }
 }

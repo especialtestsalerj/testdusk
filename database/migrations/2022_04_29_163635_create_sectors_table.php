@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(true); // ativo / inativo
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()

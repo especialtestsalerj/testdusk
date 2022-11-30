@@ -26,8 +26,8 @@ class Stuff extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'stuff' => app(StuffsRepository::class)->new(),
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 
@@ -45,11 +45,14 @@ class Stuff extends Controller
         formMode(Constants::FORM_MODE_SHOW);
 
         $stuff = app(StuffsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($stuff->routine_id);
+
         return $this->view('stuffs.form')->with([
             'routine_id' => $stuff->routine_id,
             'stuff' => $stuff,
-            'sectors' => app(SectorsRepository::class)->all('name'),
-            'users' => app(UsersRepository::class)->all('name'),
+            'routine' => $routine,
+            'sectors' => app(SectorsRepository::class)->all(),
+            'users' => app(UsersRepository::class)->all(),
         ]);
     }
 

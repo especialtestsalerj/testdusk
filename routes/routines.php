@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Routine;
+use App\Http\Livewire\Routines\Index as RoutinesIndex;
 
 Route::group(['prefix' => '/routines'], function () {
     Route::get('/create', [Routine::class, 'create'])->name('routines.create');
@@ -11,5 +12,7 @@ Route::group(['prefix' => '/routines'], function () {
 
     Route::post('/{id}', [Routine::class, 'update'])->name('routines.update');
 
-    Route::get('/', [Routine::class, 'index'])->name('routines.index');
+    Route::get('/', RoutinesIndex::class)->name('routines.index');
+
+    Route::post('/finish/{id}', [Routine::class, 'finish'])->name('routines.finish');
 });

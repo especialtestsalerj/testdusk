@@ -1,5 +1,9 @@
 // Custom style...
 
+:root {
+  --bs-row-bg: #ddeeff;
+}
+
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -83,7 +87,7 @@
 }
 
 .bg-light {
-  background: #f3f4f6 !important;
+  background: #dee2e6;
 }
 
 .card {
@@ -136,13 +140,17 @@
     color: #FFF;
 }
 
-.form-control {
+.form-control, .form-select, .select2, .select2-container--bootstrap-5 .select2-selection {
     background-color: #FFF;
 }
 
 .required-msg {
     padding-right: 10px;
     padding-top: 5px;
+}
+
+.card-header {
+    border-bottom: var(--bs-card-border-width) solid var(--bs-border-color);
 }
 
 
@@ -178,3 +186,10 @@
     }
 }
 
+.table-striped>thead>tr { background-color: #ffffff; }
+
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: var(--bs-row-bg) }
+
+.table-striped>tbody>tr:nth-of-type(odd) { background-color: #ddeeff; }
+
+.table-striped>tbody>tr:nth-of-type(even) { background-color: #ffffff; }

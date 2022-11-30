@@ -17,10 +17,11 @@ return new class extends Migration {
             $table->integer('routine_id');
             $table->timestamp('started_at')->nullable();
             $table->timestamp('concluded_at')->nullable();
-            $table->integer('duty_user_id');
-            $table->integer('person_id');
+            $table->integer('visitor_id');
             $table->integer('destiny_sector_id');
+            $table->integer('duty_user_id');
             $table->bigInteger('protocol_number');
+            $table->text('description')->nullable();
             $table
                 ->bigInteger('created_by_id')
                 ->unsigned()
@@ -36,17 +37,17 @@ return new class extends Migration {
                 ->references('id')
                 ->on('routines');
             $table
-                ->foreign('duty_user_id')
+                ->foreign('visitor_id')
                 ->references('id')
-                ->on('users');
-            $table
-                ->foreign('person_id')
-                ->references('id')
-                ->on('people');
+                ->on('visitors');
             $table
                 ->foreign('destiny_sector_id')
                 ->references('id')
                 ->on('sectors');
+            $table
+                ->foreign('duty_user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 

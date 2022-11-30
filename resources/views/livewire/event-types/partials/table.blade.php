@@ -12,16 +12,16 @@
     @forelse ($eventTypes as $eventType)
         <tr>
             <td>
-                <a href="{{ route('event_types.show', ['id' => $eventType['id']]) }}" title="{{ $eventType['name'] }}">{{ $eventType['id'] }}</a>
+                <a href="{{ route('event-types.show', ['id' => $eventType['id']]) }}" title="{{ $eventType['name'] }}">{{ $eventType['id'] }}</a>
             </td>
             <td>
                 {{ $eventType['name'] }}
             </td>
             <td class="text-center">
                 @if ($eventType['status'])
-                    <label class="badge bg-success"> Ativo </label>
+                    <label class="badge bg-success"> ATIVO </label>
                 @else
-                    <label class="badge bg-danger"> Inativo </label>
+                    <label class="badge bg-danger"> INATIVO </label>
                 @endif
             </td>
         </tr>

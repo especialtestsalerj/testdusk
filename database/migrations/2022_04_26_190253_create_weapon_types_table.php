@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        $rows = ['Pistola', 'Revólver', 'Faca / Objeto cortante', 'Fuzil'];
+        $rows = ['PISTOLA', 'REVÓLVER', 'FACA / OBJETO CORTANTE', 'FUZIL'];
 
         foreach ($rows as $name) {
             $row = new WeaponType();

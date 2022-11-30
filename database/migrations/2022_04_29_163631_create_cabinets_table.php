@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        $rows = ['Armário 1', 'Armário 2'];
+        $rows = ['ARMÁRIO 1', 'ARMÁRIO 2'];
 
         foreach ($rows as $name) {
             $row = new Cabinet();

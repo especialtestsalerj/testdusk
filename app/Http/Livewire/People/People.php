@@ -5,7 +5,6 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Http\Livewire\BaseForm;
 use App\Models\Person;
-use App\Models\Visitor;
 use function app;
 use function info;
 use function view;
@@ -18,6 +17,7 @@ class People extends BaseForm
     public $cpf;
     public $full_name;
     public $origin;
+    public $routineStatus;
 
     public function searchCpf()
     {

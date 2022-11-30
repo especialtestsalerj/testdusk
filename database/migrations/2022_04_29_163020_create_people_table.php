@@ -17,6 +17,10 @@ return new class extends Migration {
             $table->char('cpf', 11);
             $table->string('full_name');
             $table->string('origin')->nullable();
+            $table->string('id_card')->nullable();
+            $table->string('certificate_type')->nullable(); // público / privado
+            $table->string('certificate_number')->nullable();
+            $table->date('certificate_valid_until')->nullable();
             $table->string('photo')->nullable();
             $table->text('alert_obs')->nullable();
             $table

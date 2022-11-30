@@ -14,7 +14,7 @@
         </a>
 
         <div class="d-flex ml-auto">
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarGlobal" aria-controls="navbarGlobal" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGlobal" aria-controls="navbarGlobal" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
@@ -27,22 +27,22 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Home</a>
+                        <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">Home</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
                             @can('sectors:show')
-                                <li><a class="dropdown-item" href="{{ route('sectors.index') }}">Setores</a></li>
+                                <li><a class="dropdown-item {{ (request()->routeIs('sectors.*')) ? 'active' : '' }}" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan
-                            @can('event_types:show')
-                                <li><a class="dropdown-item" href="{{ route('event_types.index') }}">Tipos de Ocorrência</a></li>
+                            @can('event-types:show')
+                                <li><a class="dropdown-item {{ (request()->routeIs('event-types.*')) ? 'active' : '' }}" href="{{ route('event-types.index') }}">Tipos de Ocorrência</a></li>
                             @endCan
                             @can('routines:show')
-                                <li><a class="dropdown-item" href="{{ route('routines.index') }}">Rotinas</a></li>
+                                <li><a class="dropdown-item {{ (request()->routeIs('routines.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
                             @endCan
                         </ul>
                     </li>

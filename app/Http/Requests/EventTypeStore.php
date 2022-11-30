@@ -6,7 +6,7 @@ class EventTypeStore extends Request
 {
     public function authorize()
     {
-        return allows('event_types:store');
+        return allows('event-types:store');
     }
 
     public function rules()
@@ -20,20 +20,19 @@ class EventTypeStore extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Nome: preencha o campo corretamente.',
             'name.unique' => 'Nome: tipo de ocorrência já existente.',
-            'status.required' => 'Status: preencha o campo corretamente.',
         ];
     }
 
     public function sanitize(array $all)
     {
+        $input = $all;
+
         if (!empty($this->get('name'))) {
-            $input = $all;
             $input['name'] = mb_strtoupper($input['name']);
             $this->replace($input);
         }
 
-        return $all;
+        return $input;
     }
 }

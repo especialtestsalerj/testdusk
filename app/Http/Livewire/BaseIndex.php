@@ -84,6 +84,17 @@ abstract class BaseIndex extends Component
                                 );
                             });
                             break;
+                        case 'date':
+                            $query->when($this->searchString, function ($query) use ($field) {
+                                $query->orWhereRaw(
+                                    'to_char(' .
+                                        $field .
+                                        ", 'DD/MM/YYYY HH:MI') LIKE '%" .
+                                        $this->searchString .
+                                        "%'"
+                                );
+                            });
+                            break;
                     }
                 });
             });

@@ -25,7 +25,8 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>'cautions:store','id' =>$routine_id])
+                        <span class="required-msg">* Campos obrigatórios</span>
+                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>($routine->status ? 'cautions:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -44,31 +45,27 @@
                 @endif
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="started_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at')}}"/>
+                            <label for="started_at">Entrada*</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at')}}" @disabled(!$routine->status)/>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="concluded_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted: old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at')}}" @disabled(!$routine->status)/>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @livewire('visitors.people', ['routine_id' => $routine_id, 'visitor_id' => $caution?->visitor?->id, 'routineStatus' => $routine->status, 'mode' => formMode()])
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="person_id">Visitante</label>
-                            <select class="form-control select2" name="person_id" id="person_id" value="{{is_null(old('person_id')) ? $caution->person_id : old('person_id')}}">
-                                <option value="">SELECIONE</option>
-                                @foreach ($people as $key => $person)
-                                    @if(((!is_null($caution->id)) && (!is_null($caution->person_id) && $caution->person_id === $person->id) || (!is_null(old('person_id'))) && old('person_id') == $person->id))
-                                        <option value="{{ $person->id }}" selected="selected">{{ $person->full_name }}</option>
-                                    @else
-                                        <option value="{{ $person->id }}">{{ $person->full_name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="destiny_sector_id">Setor</label>
-                            <select class="form-control select2" name="destiny_sector_id" id="destiny_sector_id" value="{{is_null(old('destiny_sector_id')) ? $caution->destiny_sector_id : old('destiny_sector_id')}}">
+                            <label for="destiny_sector_id">Destino*</label>
+                            <select class="select2" name="destiny_sector_id" id="destiny_sector_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
@@ -80,8 +77,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="duty_user_id">Plantonista</label>
-                            <select class="form-control select2" name="duty_user_id" id="duty_user_id" value="{{is_null(old('duty_user_id')) ? $caution->duty_user_id : old('duty_user_id')}}">
+                            <label for="duty_user_id">Plantonista*</label>
+                            <select class="select2" name="duty_user_id" id="duty_user_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->duty_user_id) && $caution->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -92,9 +89,34 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="description">Observações</label>
+                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status)>{{is_null(old('description')) ? $caution->description: old('description')}}</textarea>
+                        </div>
                     </div>
                 </div>
+                @if (formMode() == 'show')
+                    <div class="p-4 bg-light border rounded-3">
+                        @include('caution-weapons.partials.table', ['cautionWeapons' => $cautionWeapons, 'routineStatus' => $routine->status])
+                    </div>
+                @else
+                    <div class="alert alert-warning mt-2">
+                        <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
+                    </div>
+                @endif
             </div>
         </form>
+        <!-- Modal -->
+        <div wire:ignore.self class="modal fade" id="weapon-modal" tabindex="-1" role="dialog" aria-labelledby="weaponModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> {{1==2 ? 'Alterar' : 'Nova'}} Arma</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <livewire:caution-weapons.create-form :caution_id="$caution->id" />
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

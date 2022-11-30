@@ -17,8 +17,9 @@ return new class extends Migration {
             $table->integer('caution_id');
             $table->timestamp('entranced_at');
             $table->timestamp('exited_at');
+            $table->string('register_number')->nullable();
             $table->integer('weapon_type_id');
-            $table->text('description')->nullable();
+            $table->text('weapon_description')->nullable();
             $table->string('weapon_number')->nullable();
             $table->integer('cabinet_id')->nullable();
             $table->integer('shelf_id')->nullable();

@@ -5,7 +5,7 @@
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('routines.update', ['id' => $routine->id]) }}" @else action="{{ route('routines.store')}}" @endIf method="POST">
             @csrf
 
-            @if (isset($event))
+            @if (isset($routine))
                 <input name="id" type="hidden" value="{{ $routine->id }}">
             @endif
 
@@ -20,12 +20,19 @@
                             @else
                                 > {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
-                        </h2>
-                    </div>
 
+                        </h2>
+                        @if (!Route::is('routines.create') )
+                            @if ($routine['status'])
+                                <label class="badge bg-success"> EM ABERTO </label>
+                            @else
+                                <label class="badge bg-danger"> FINALIZADA </label>
+                            @endif
+                        @endif
+                    </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
                         <span class="required-msg">* Campos obrigatórios</span>
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>'routines:update'])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? 'routines:update' : '')])
                     </div>
                 </div>
             </div>
@@ -37,7 +44,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="shift_id">Turno*</label>
-                            <select class="form-control select2" name="shift_id" id="shift_id" value="{{is_null(old('shift_id')) ? $routine->shift_id : old('shift_id')}}">
+                            <select class="form-select" name="shift_id" id="shift_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($shifts as $key => $shift)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->shift_id) && $routine->shift_id === $shift->id) || (!is_null(old('shift_id'))) && old('shift_id') == $shift->id))
@@ -53,12 +60,12 @@
                                 @if (Route::is('routines.create') )
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{date('Y-m-d H:i')}}"/>
                                 @else
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}"/>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control" name="entranced_at" id="entranced_at" value="{{is_null(old('entranced_at')) ? $routine->entranced_at_formatted : old('entranced_at')}}" @disabled(!$routine->status)/>
                                 @endif
                         </div>
                         <div class="form-group">
                             <label for="entranced_user_id">Responsável (Assunção)*</label>
-                            <select class="form-control select2" name="entranced_user_id" id="entranced_user_id" value="{{is_null(old('entranced_user_id')) ? $routine->entranced_user_id : old('entranced_user_id')}}">
+                            <select class="select2" name="entranced_user_id" id="entranced_user_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($entrancedUsers as $key => $user)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->entranced_user_id) && $routine->entranced_user_id === $user->id) || (!is_null(old('entranced_user_id'))) && old('entranced_user_id') == $user->id))
@@ -73,15 +80,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="checkpoint_obs">Carga*</label>
-                            <input class="form-control" name="checkpoint_obs" id="checkpoint_obs" value="{{is_null(old('checkpoint_obs')) ? $routine->checkpoint_obs : old('checkpoint_obs')}}"/>
+                            <input class="form-control" name="checkpoint_obs" id="checkpoint_obs" value="{{is_null(old('checkpoint_obs')) ? $routine->checkpoint_obs : old('checkpoint_obs')}}" @disabled(!$routine->status)/>
                         </div>
                         <div class="form-group">
                             <label for="exited_at">Data (Passagem)</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}"/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at_formatted : old('exited_at')}}" @disabled(!$routine->status)/>
                         </div>
                         <div class="form-group">
                             <label for="exited_user_id">Responsável (Passagem)</label>
-                            <select class="form-control select2" name="exited_user_id" id="exited_user_id" value="{{is_null(old('exited_user_id')) ? $routine->exited_user_id : old('exited_user_id')}}">
+                            <select class="select2" name="exited_user_id" id="exited_user_id" @disabled(!$routine->status)>
                                 <option value="">SELECIONE</option>
                                 @foreach ($exitedUsers as $key => $user)
                                     @if(((!is_null($routine->id)) && (!is_null($routine->exited_user_id) && $routine->exited_user_id === $user->id) || (!is_null(old('exited_user_id'))) && old('exited_user_id') == $user->id))
