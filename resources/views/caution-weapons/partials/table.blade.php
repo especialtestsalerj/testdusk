@@ -38,7 +38,10 @@
                         {{$weapon?->cabinet?->name}} / BOX {{$weapon?->shelf?->name}}
                     </td>
                     <td class="text-center">
-                        
+                        <a href="#" title="Detalhar arma"><i class="fa fa-search"></i></a>
+                        @if($routine->status)
+                            <a href="#" title="Alterar arma"><i class="fa fa-pencil"></i></a>
+                        @endif
                     </td>
                 </tr>
             @empty

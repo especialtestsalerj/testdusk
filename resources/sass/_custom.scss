@@ -1,5 +1,9 @@
 // Custom style...
 
+:root {
+  --bs-row-bg: #ddeeff;
+}
+
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -83,7 +87,7 @@
 }
 
 .bg-light {
-  background: #f3f4f6 !important;
+  background: #dee2e6;
 }
 
 .card {
@@ -182,3 +186,10 @@
     }
 }
 
+.table-striped>thead>tr { background-color: #ffffff; }
+
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: var(--bs-row-bg) }
+
+.table-striped>tbody>tr:nth-of-type(odd) { background-color: #ddeeff; }
+
+.table-striped>tbody>tr:nth-of-type(even) { background-color: #ffffff; }
