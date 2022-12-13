@@ -15,7 +15,7 @@ class EventTypesTableSeeder extends Seeder
     public function run()
     {
         app(EventTypeFactory::class)
-            ->count(50)
+            ->count(7)
             ->create();
     }
 }

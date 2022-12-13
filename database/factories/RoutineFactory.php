@@ -40,7 +40,7 @@ class RoutineFactory extends Factory
             'exited_at' => faker()->dateTimeBetween('+1 month','+2 months')->format('Y-m-d H:i:s') ,
             'exited_user_id' => $user_id,
             'exited_obs' => str_random(5),
-            'status' => (bool)rand(0,1),
+            'status' => false,
             'created_by_id' => $user_id,
             'created_at'=>$date,
             

@@ -15,7 +15,7 @@ class SectorsTableSeeder extends Seeder
     public function run()
     {
         app(SectorFactory::class)
-            ->count(50)
+            ->count(7)
             ->create();
     }
 }

@@ -17,19 +17,17 @@ class RoutinesTest extends DuskTestCase
       $browser->script('
         var dateString = new Date().toISOString().substring(0, 16).replace("T"," ");
             if (dateString !== "") {
-        
                 var dateVal = new Date(dateString);
-                var day = dateVal.getDate().toString().padStart(2, "0");
-                var month = (1 + dateVal.getMonth() + '.$diff.').toString().padStart(2, "0");
+                var day = ('.$diff.'+ dateVal.getDate()).toString().padStart(2, "0");
+                var month = (1 + dateVal.getMonth()).toString().padStart(2, "0");
                 var hour = dateVal.getHours().toString().padStart(2, "0");
                 var minute = dateVal.getMinutes().toString().padStart(2, "0");
                 var sec = dateVal.getSeconds().toString().padStart(2, "0");
                 var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
-                var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);
-        
-                document.querySelector("[id='.$inputId.']").value=(inputDate);
-            }
-        ');
+                var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);}
+                a = document.querySelector("[id='.$inputId.']").value=(inputDate);
+                dispatchEvent(new Event(\'change\'));'
+        );
       });
     }
 
@@ -56,16 +54,13 @@ class RoutinesTest extends DuskTestCase
             ->assertSee('Rotinas')
             ->click('#novo')
             ->assertPathIs('/routines/create')
-            ->screenshot('1')
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
             ->assertSee('Turno: preencha o campo corretamente.')
             ->assertSee('Responsável (Assunção): preencha o campo corretamente.')
             ->assertSee('Carga: preencha o campo corretamente.')
             ->visit('/routines/create')
-            ->assertPathIs('/routines/create')
             ->pause(1000)
-            ->screenshot('1')
             ->select('#shift_id',$generateRoutine['shift_id'])
             ->assertSelected('#shift_id',$generateRoutine['shift_id'])
             ->pause(1000)
@@ -73,9 +68,9 @@ class RoutinesTest extends DuskTestCase
             ->select('#entranced_user_id', rand(2,9))
             ->select('#exited_user_id', rand(2,9));
             $this->insertDate(0,'entranced_at');
-            $this->insertDate(1,'exited_at');
+            //$this->insertDate(1,'exited_at');
           $browser
-            ->screenshot('1')
+            ->pause(1000)
             ->script('document.querySelectorAll("#submitButton")[0].click();');
           $browser
             ->assertPathIs('/routines')
@@ -90,6 +85,7 @@ class RoutinesTest extends DuskTestCase
      */
 
      // Dusk - Edita uma Rotina
+     
      public function testEditRoutine()
     {
       
@@ -97,7 +93,7 @@ class RoutinesTest extends DuskTestCase
       $user->assign(Constants::ROLE_ADMINISTRATOR);
       $user->allow('*');
       $user->save();
-      $routine = Routine::all()->random(1)->toArray()[0];
+      $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
       
       $this->browse(function ($browser) use ($user,$routine) {
         $browser
@@ -105,12 +101,47 @@ class RoutinesTest extends DuskTestCase
           ->visit('/routines')
           ->assertSee('Rotinas')
           ->press('@manageRoutine-'.$routine['id'])
-          ->assertPathIs('/routines/'.$routine['id'])
-          ->type('#checkpoint_obs', str_random(15))
+          ->type('#checkpoint_obs', str_random(15));
+          $this->insertDate(0,'entranced_at');
+        $browser
           ->script('document.querySelectorAll("#submitButton")[0].click();');
         $browser
         ->assertPathIs('/routines')
         ->assertSee('Rotina alterada com sucesso!');
     });
   }
+
+  /**
+     * @test
+     * @group testFinishRoutine
+     * @group link
+     */
+
+     // Dusk - Finalizar uma Rotina
+     public function testFinishRoutine()
+     {
+       
+       $user = User::factory()->create();
+       $user->assign(Constants::ROLE_ADMINISTRATOR);
+       $user->allow('*');
+       $user->save();
+       $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
+       
+       $this->browse(function ($browser) use ($user,$routine) {
+         $browser
+           ->loginAs($user->id)
+           ->visit('/routines')
+           ->assertSee('Rotinas')
+           ->press('@finishRoutine-'.$routine['id'])
+           ->waitForText('* Campos obrigatórios');
+           $this->insertDate(1,'exited_at');
+           $browser
+            ->pause(1000)
+            ->press('@finishRoutine')
+            ->pause(1000)
+            ->assertPathIs('/routines')
+            ->assertSee('Rotina finalizada com sucesso!');
+     });
+   }
+
 }
