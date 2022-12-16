@@ -4,9 +4,14 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Routine;
+use App\Models\EventType;
+use App\Models\Sector;
+use App\Models\Visitor;
 use App\Support\Constants;
 use Livewire\Livewire;
+use App\Http\Livewire\People\People;
 use App\Http\Livewire\Routines\Index;
+use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
 
 class RoutinesTest extends DuskTestCase
@@ -110,6 +115,261 @@ class RoutinesTest extends DuskTestCase
         ->assertSee('Rotina alterada com sucesso!');
     });
   }
+
+  /**
+     * @test
+     * @group testCreateEditEvent
+     * @group link
+     */
+
+     // Dusk - Cria/Altera um evento detro de Rotina.
+     
+     public function testEvents()
+    {
+      
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
+      $event_type = EventType::all()->random(1)->toArray()[0];
+      $sector = Sector::all()->random(1)->toArray()[0];
+      $duty_user = User::all()->random(1)->toArray()[0];
+
+
+      
+      $this->browse(function ($browser) use ($user,$routine,$event_type,$sector,$duty_user) {
+        $browser
+          ->loginAs($user->id)
+          ->visit('/routines')
+          ->assertSee('Rotinas')
+          ->press('@manageRoutine-'.$routine['id'])
+          ->press('@newEvent')
+          ->assertPathIs('/events/create/'.$routine['id'])
+          ->press('#submitButton')
+          ->assertSee('Tipo: preencha o campo corretamente.')
+          ->assertSee('Plantonista: preencha o campo corretamente.')
+          ->assertSee('Observações: preencha o campo corretamente.')
+          ->visit('/events/create/'.$routine['id'])
+          ->select('@event_type_id',$event_type['id']);
+          $this->insertDate(0,'occurred_at');
+        $browser
+          ->select('@sector_id',$sector['id'])
+          ->select('@duty_user_id',$duty_user['id'])
+          ->type('#description', str_random(15))
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Ocorrência adicionada com sucesso!');
+          $event = DB::table('events')
+            ->where('routine_id','=',$routine['id'])
+            ->first();
+        $browser
+          ->visit('/events/'.$event->id)
+          ->type('#description', str_random(15));
+          $this->insertDate(0,'occurred_at');
+        $browser
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Ocorrência alterada com sucesso!');
+    });
+  }
+
+  /**
+     * @test
+     * @group testCreateEditVisitors
+     * @group link
+     */
+
+     // Dusk - Cria/Altera um visitante detro de Rotina.
+     
+     public function testVisitors()
+    {
+      
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
+      $event_type = EventType::all()->random(1)->toArray()[0];
+      $sector = Sector::all()->random(1)->toArray()[0];
+      $duty_user = User::all()->random(1)->toArray()[0];
+
+
+      
+      $this->browse(function ($browser) use ($user,$routine,$event_type,$sector,$duty_user) {
+        $browser
+          ->loginAs($user->id)
+          ->visit('/routines')
+          ->assertSee('Rotinas')
+          ->press('@manageRoutine-'.$routine['id'])
+          ->press('@newVisitors')
+          ->assertPathIs('/visitors/create/'.$routine['id'])
+          ->press('#submitButton')
+          ->assertSee('CPF (Visitante): preencha o campo corretamente.')
+          ->assertSee('Nome (Visitante): preencha o campo corretamente.')
+          ->assertSee('Plantonista: preencha o campo corretamente.')
+          ->assertSee('Observações: preencha o campo corretamente.')
+          ->visit('/visitors/create/'.$routine['id']);
+          $this->insertDate(0,'entranced_at');
+          $this->insertDate(1,'exited_at');
+        $browser
+          ->select('#sector_id',$sector['id'])
+          ->select('#duty_user_id',$duty_user['id'])
+          ->type('#cpf','12312312387')
+          ->click('#btn_buscar')
+          ->pause(1000)
+          ->type('#description', str_random(15))
+          ->type('#full_name',str_random(10))
+          ->type('#origin',str_random(5))
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Visitante adicionado com sucesso!');
+          $visitor = DB::table('visitors')
+            ->where('routine_id','=',$routine['id'])
+            ->first();
+        $browser
+          ->visit('/visitors/'.$visitor->id)
+          ->type('#description', str_random(15));
+          $this->insertDate(0,'entranced_at');
+          $this->insertDate(1,'exited_at');
+        $browser
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Visitante alterado com sucesso!');
+    });
+  }
+
+
+   /**
+     * @test
+     * @group testCreateEditStuffs
+     * @group link
+     */
+
+     // Dusk - Cria/Altera um materiais detro de Rotina.
+     
+     public function testStuffs()
+    {
+      
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
+      $event_type = EventType::all()->random(1)->toArray()[0];
+      $sector = Sector::all()->random(1)->toArray()[0];
+      $duty_user = User::all()->random(1)->toArray()[0];
+
+
+      
+      $this->browse(function ($browser) use ($user,$routine,$event_type,$sector,$duty_user) {
+        $browser
+          ->loginAs($user->id)
+          ->visit('/routines')
+          ->assertSee('Rotinas')
+          ->press('@manageRoutine-'.$routine['id'])
+          ->press('@newStuff')
+          ->assertPathIs('/stuffs/create/'.$routine['id'])
+          ->press('#submitButton')
+          ->assertSee('Plantonista: preencha o campo corretamente.')
+          ->assertSee('Observações: preencha o campo corretamente.')
+          ->visit('/stuffs/create/'.$routine['id']);
+          $this->insertDate(0,'entranced_at');
+          $this->insertDate(1,'exited_at');
+        $browser
+          ->select('#sector_id',$sector['id'])
+          ->select('#duty_user_id',$duty_user['id'])
+          ->type('#description',str_random(5))
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Material adicionado com sucesso!');
+          $stuff = DB::table('stuffs')
+            ->where('routine_id','=',$routine['id'])
+            ->first();
+        $browser
+          ->visit('/stuffs/'.$stuff->id)
+          ->type('#description', str_random(15));
+          $this->insertDate(0,'entranced_at');
+          $this->insertDate(1,'exited_at');
+        $browser
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Material alterado com sucesso!');
+    });
+  }
+
+
+  /**
+     * @test
+     * @group testCreateEditCautions
+     * @group link
+     */
+
+     // Dusk - Cria/Altera uma Cautela de Armas detro de Rotina.
+     
+     public function testCautions()
+    {
+      
+      $user = User::factory()->create();
+      $user->assign(Constants::ROLE_ADMINISTRATOR);
+      $user->allow('*');
+      $user->save();
+      $routine = Routine::all()->where('status','=>','true')->random(1)->toArray()[0];
+      $event_type = EventType::all()->random(1)->toArray()[0];
+      $sector = Sector::all()->random(1)->toArray()[0];
+      $duty_user = User::all()->random(1)->toArray()[0];
+      $visitor = Visitor::all()->random(1)->toArray()[0];
+
+
+      
+      $this->browse(function ($browser) use ($user,$routine,$event_type,$sector,$duty_user,$visitor) {
+        $browser
+          ->loginAs($user->id)
+          ->visit('/routines')
+          ->assertSee('Rotinas')
+          ->press('@manageRoutine-'.$routine['id'])
+          ->press('@newCaution')
+          ->assertPathIs('/cautions/create/'.$routine['id'])
+          ->press('#submitButton')
+          ->assertSee('Visitante: preencha o campo corretamente.')
+          ->assertSee('Tipo de Porte: preencha o campo corretamente.')
+          ->assertSee('RG: preencha o campo corretamente.')
+          ->assertSee('Núm. Certificado: preencha o campo corretamente.')
+          ->assertSee('Validade Certificado: preencha o campo corretamente.')
+          ->assertSee('Destino: preencha o campo corretamente.')
+          ->assertSee('Plantonista: preencha o campo corretamente.')
+          ->visit('/cautions/create/'.$routine['id']);
+          $this->insertDate(0,'started_at');
+          $this->insertDate(1,'concluded_at');
+        $browser
+          ->select('#visitor_id',$visitor['id'])
+          ->select('#certificate_type',rand(1,2))
+          ->type('#id_card','441273312')
+          ->type('#certificate_number','123123');
+          $this->insertDate(5,'certificate_valid_until');
+        $browser
+          ->select('destiny_sector_id', $sector['id'])
+          ->select('#duty_user_id',$duty_user['id'])
+          ->type('#description',str_random(5))
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Cautela adicionada com sucesso!');
+          $stuff = DB::table('cautions')
+            ->where('routine_id','=',$routine['id'])
+            ->first();
+        $browser
+          ->visit('/caution/'.$stuff->id)
+          ->type('#description', str_random(15));
+          $this->insertDate(0,'started_at');
+          $this->insertDate(1,'concluded_at');
+          $this->insertDate(5,'certificate_valid_until');
+        $browser
+          ->press('#submitButton')
+          ->assertPathIs('/routines/'.$routine['id'])
+          ->assertSee('Cautela alterada com sucesso!');
+    });
+  }
+
 
   /**
      * @test
