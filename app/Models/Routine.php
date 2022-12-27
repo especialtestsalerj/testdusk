@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Routine extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'shift_id',
         'entranced_at',
