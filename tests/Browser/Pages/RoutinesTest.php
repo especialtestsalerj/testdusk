@@ -341,34 +341,78 @@ class RoutinesTest extends DuskTestCase
           ->visit('/cautions/create/'.$routine['id']);
           $this->insertDate(0,'started_at');
           $this->insertDate(1,'concluded_at');
-        $browser
-          ->select('#visitor_id',$visitor['id'])
-          ->select('#certificate_type',rand(1,2))
+          $browser
+          ->pause(5000);
+          $browser
+          ->script([
+                    'a = document.querySelector("[id=\'visitor_id\']");',
+                    'a.value='.$visitor['id'].';',
+                    'a.dispatchEvent(new Event(\'input\'));',
+                    'a.dispatchEvent(new Event(\'change\'));']);
+          $browser
+            ->pause(5000);
+          $browser
+          ->script(['b = document.querySelector("[id=\'certificate_type\']");',
+                    'b.value='.rand(1,2).';',
+                    'b.dispatchEvent(new Event(\'input\'));',
+                    'b.dispatchEvent(new Event(\'change\'));']);
+          $browser
           ->type('#id_card','441273312')
           ->type('#certificate_number','123123');
-          $this->insertDate(5,'certificate_valid_until');
+          $browser
+          ->script(['b = document.querySelector("[id=\'certificate_valid_until\']");',
+                    'b.value="2024-05-05";',
+                    'b.dispatchEvent(new Event(\'input\'));',
+                    'b.dispatchEvent(new Event(\'change\'));']);          
         $browser
-          ->select('destiny_sector_id', $sector['id'])
+          ->select('#destiny_sector_id', $sector['id'])
           ->select('#duty_user_id',$duty_user['id'])
           ->type('#description',str_random(5))
           ->press('#submitButton')
           ->assertPathIs('/routines/'.$routine['id'])
           ->assertSee('Cautela adicionada com sucesso!');
-          $stuff = DB::table('cautions')
+          $caution = DB::table('cautions')
             ->where('routine_id','=',$routine['id'])
             ->first();
         $browser
-          ->visit('/caution/'.$stuff->id)
+          ->visit('/cautions/'.$caution->id)
           ->type('#description', str_random(15));
           $this->insertDate(0,'started_at');
           $this->insertDate(1,'concluded_at');
-          $this->insertDate(5,'certificate_valid_until');
         $browser
           ->press('#submitButton')
           ->assertPathIs('/routines/'.$routine['id'])
           ->assertSee('Cautela alterada com sucesso!');
-    });
+
+          //adiciona uma arma
+
+          $browser
+          ->visit('/cautions/'.$caution->id)
+          ->press('@newWeapon')
+          ->waitForText('Nova Arma')
+          ->select('#weapon_type_id',rand(1,3))
+          ->pause(1000);
+          $browser
+          ->script(['b = document.querySelector("[dusk=\'formDescription\']");',
+                    'b.value="artefato";',
+                    'b.dispatchEvent(new Event(\'input\'));',
+                    'b.dispatchEvent(new Event(\'change\'));']);
+          $browser
+          ->pause(1000)
+          ->script(['b = document.querySelector("[id=\'weapon_number\']");',
+                    'b.value='.rand(1999,3000).';',
+                    'b.dispatchEvent(new Event(\'input\'));',
+                    'b.dispatchEvent(new Event(\'change\'));']);
+          $browser
+          ->pause(1000)
+          ->select('#cabinet_id',rand(1,2))
+          ->select('#shelf_id',rand(2,50))
+          ->press('@submit')
+          ->pause(2000)
+          ->screenshot(6);
+        });
   }
+  
 
 
   /**
@@ -378,6 +422,7 @@ class RoutinesTest extends DuskTestCase
      */
 
      // Dusk - Finalizar uma Rotina
+     
      public function testFinishRoutine()
      {
        
@@ -403,5 +448,4 @@ class RoutinesTest extends DuskTestCase
             ->assertSee('Rotina finalizada com sucesso!');
      });
    }
-
 }

@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Descrição da Arma*</label>
-                <input class="form-control text-uppercase" name="description" id="description" value="{{is_null(old('description')) ? $cautionWeapon->description : old('description')}}" wire:model.defer="description"/>
+                <input class="form-control text-uppercase" name="description" dusk='formDescription' id="description" value="{{is_null(old('description')) ? $cautionWeapon->description : old('description')}}" wire:model.defer="description"/>
                 <div>
                     @error('description')
                     <small class="text-danger">
@@ -94,7 +94,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" wire:click.prevent="store()" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Salvar</button>
-        <button type="button" wire:click.prevent="clearWeapon" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+        <button type="button" dusk='submit' wire:click.prevent="store()" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Salvar</button>
+        <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
     </div>
 </div>
