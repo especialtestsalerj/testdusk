@@ -11,7 +11,6 @@
         "doctrine/dbal": "^3.3",
         "geekcom/validator-docs": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/dusk": "^7.1",
         "laravel/framework": "^9.2",
         "laravel/jetstream": "^2.7",
         "laravel/sanctum": "^2.14.1",
@@ -23,6 +22,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.9.1",
+        "laravel/dusk": "^7.2",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nascent-africa/jetstrap": "^2.5",
