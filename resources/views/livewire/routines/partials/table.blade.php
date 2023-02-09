@@ -33,7 +33,7 @@
             <td class="text-center">
                 @if ($routine['status'])
                     <label class="badge bg-success"> EM ABERTO </label>
-                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine['id']}}" title="Finalizar Rotina">
+                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine['id']}}" dusk="finishRoutine-{{$routine['id']}}" title="Finalizar Rotina">
                         <i class="fa fa-check"></i> Finalizar
                     </button>
                 @else
@@ -41,7 +41,7 @@
                 @endif
             </td>
             <td>
-                <a href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" title="Gerenciar Rotina">
+                <a href="{{ route('routines.show', ['id' => $routine['id']]) }}" class="btn btn-primary" dusk="manageRoutine-{{$routine['id']}}" title="Gerenciar Rotina">
                     <i class="fa fa-cog"></i> Gerenciar
                 </a>
             </td>
@@ -78,7 +78,7 @@
                                 </select>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Finalizar</button>
+                                <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
                                 <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                             </div>
                         </form>

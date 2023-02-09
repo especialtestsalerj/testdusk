@@ -2,19 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Sector;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class SectorFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Sector::class;
 
     /**
      * Define the model's default state.
@@ -25,11 +24,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => faker()->name,
-            'username' => faker()->name,
-            'email' => faker()->username.rand(1,10).'@alerj.rj.gov.br',
-            'email_verified_at' => now(),
-            'password' => Hash::make('123456789'),
-            'remember_token' => Str::random(10),
+            'name' => strtoupper(faker()->company),
+            'status' => (bool)rand(0,1),
         ];
     }
 }
