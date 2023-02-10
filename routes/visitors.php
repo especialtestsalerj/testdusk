@@ -3,11 +3,21 @@
 use App\Http\Controllers\Visitor;
 
 Route::group(['prefix' => '/visitors'], function () {
-    Route::get('/create/{routine_id}', [Visitor::class, 'create'])->name('visitors.create');
+    //Criar
+    Route::get('/create/{routine_id}', [Visitor::class, 'create'])
+        ->name('visitors.create')
+        ->can('visitors:store');
 
-    Route::post('/', [Visitor::class, 'store'])->name('visitors.store');
+    Route::post('/', [Visitor::class, 'store'])
+        ->name('visitors.store')
+        ->can('visitors:store');
 
-    Route::get('/{id}', [Visitor::class, 'show'])->name('visitors.show');
+    //Alterar
+    Route::get('/{id}', [Visitor::class, 'show'])
+        ->name('visitors.show')
+        ->can('visitors:show');
 
-    Route::post('/{id}', [Visitor::class, 'update'])->name('visitors.update');
+    Route::post('/{id}', [Visitor::class, 'update'])
+        ->name('visitors.update')
+        ->can('visitors:update');
 });
