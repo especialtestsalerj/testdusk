@@ -6,6 +6,11 @@ use Illuminate\Validation\Rule;
 
 class SectorUpdate extends SectorStore
 {
+    public function authorize()
+    {
+        return allows('sectors:update');
+    }
+
     public function rules()
     {
         return [

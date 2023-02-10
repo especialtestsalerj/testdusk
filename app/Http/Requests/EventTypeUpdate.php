@@ -6,6 +6,11 @@ use Illuminate\Validation\Rule;
 
 class EventTypeUpdate extends EventTypeStore
 {
+    public function authorize()
+    {
+        return allows('event-types:update');
+    }
+
     public function rules()
     {
         return [
