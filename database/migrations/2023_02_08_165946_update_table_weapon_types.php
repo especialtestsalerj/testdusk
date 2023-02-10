@@ -13,12 +13,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('weapon_types', function (Blueprint $table) {
-            $affected = DB::update(
-                "update weapon_types set name = 'FUZIL / ARMA LONGA' where name = ?",
-                ['FUZIL']
-            );
-        });
+        $affected = DB::update(
+            "update weapon_types set name = 'FUZIL / ARMA LONGA' where name = ?",
+            ['FUZIL']
+        );
     }
 
     /**
@@ -28,10 +26,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('weapon_types', function (Blueprint $table) {
-            $affected = DB::update("update weapon_types set name = 'FUZIL' where name = ?", [
-                'FUZIL / ARMA LONGA',
-            ]);
-        });
+        $affected = DB::update("update weapon_types set name = 'FUZIL' where name = ?", [
+            'FUZIL / ARMA LONGA',
+        ]);
     }
 };
