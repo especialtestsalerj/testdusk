@@ -3,11 +3,21 @@
 use App\Http\Controllers\Stuff;
 
 Route::group(['prefix' => '/stuffs'], function () {
-    Route::get('/create/{routine_id}', [Stuff::class, 'create'])->name('stuffs.create');
+    //Criar
+    Route::get('/create/{routine_id}', [Stuff::class, 'create'])
+        ->name('stuffs.create')
+        ->can('stuffs:store');
 
-    Route::post('/', [Stuff::class, 'store'])->name('stuffs.store');
+    Route::post('/', [Stuff::class, 'store'])
+        ->name('stuffs.store')
+        ->can('stuffs:store');
 
-    Route::get('/{id}', [Stuff::class, 'show'])->name('stuffs.show');
+    //Alterar
+    Route::get('/{id}', [Stuff::class, 'show'])
+        ->name('stuffs.show')
+        ->can('stuffs:show');
 
-    Route::post('/{id}', [Stuff::class, 'update'])->name('stuffs.update');
+    Route::post('/{id}', [Stuff::class, 'update'])
+        ->name('stuffs.update')
+        ->can('stuffs:update');
 });
