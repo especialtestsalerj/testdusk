@@ -12,7 +12,7 @@
                 <!-- todo pacheco criar loop e adicionar dados reais -->
                 <div class="swiper-slide">
                     <div dir="ltr" class="col-12">
-                        <div class="card shadow bg-white">
+                        <div class="card bg-white">
                             <div class="card-header">
                                 <div class="row mx-lg-3 mt-3 mb-2">
                                     <div class="col-3 text-center text-lg-start">
