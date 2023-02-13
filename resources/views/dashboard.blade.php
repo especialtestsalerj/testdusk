@@ -11,7 +11,7 @@
                 @forelse ($routines as $routine)
                 <!-- todo pacheco criar loop e adicionar dados reais -->
                 <div class="swiper-slide">
-                    <div dir="ltr" class="col-12 col-lg-10 offset-lg-1">
+                    <div dir="ltr" class="col-12">
                         <div class="card shadow bg-white">
                             <div class="card-header">
                                 <div class="row mx-lg-3 mt-3 mb-2">
