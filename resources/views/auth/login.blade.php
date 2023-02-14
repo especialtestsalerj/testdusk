@@ -8,17 +8,17 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="mb-3">
-                    <x-jet-label for="email" value="{{ __('Login ALERJ') }}" />
+                    {{--<x-jet-label for="email" value="{{ __('Login ALERJ') }}" />--}}
 
-                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" :value="old('email')" required />
+                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" :value="old('email')" placeholder="{{ __('Login ALERJ') }}" required />
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
 
                 <div class="mb-3">
-                    <x-jet-label for="password" value="{{ __('Password') }}" />
+                    {{--<x-jet-label for="password" value="{{ __('Password') }}" />--}}
 
                     <x-jet-input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
-                                 id="password" name="password" required autocomplete="current-password" />
+                                 id="password" name="password" required autocomplete="current-password" placeholder="{{ __('Password') }}" />
                     <x-jet-input-error for="password"></x-jet-input-error>
                 </div>
 

@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body bg-white px-5 py-5 border-bottom rounded">
+                            <div class="card-body px-5 py-5 border-bottom rounded">
                                 <div class="row mt-3 mb-3 routine-icons text-center">
                                     <div class="col-6 col-lg-3">
                                         <span class="fa-stack fa-3x" data-count="{{$routine->events()->count()}}">

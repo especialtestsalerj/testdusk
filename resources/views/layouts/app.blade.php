@@ -24,7 +24,7 @@
     @include('layouts.partials.environment')
     @livewireStyles
 </head>
-<body>
+<body class="bg-light">
     <div id="app">
         @include('layouts.partials.menu')
 

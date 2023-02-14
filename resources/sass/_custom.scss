@@ -212,6 +212,20 @@ div.well{
     min-width: 200px;
     max-width: 600px;
     padding: 40px;
+
+    .card {
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+
+        .form-control {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        input::placeholder {
+            font-weight: 700;
+            color:#919eab;
+        }
+    }
 }
 
 #logo-container{
@@ -222,5 +236,11 @@ div.well{
     background-image:url('http://placehold.it/200x30/000000/ffffff/&text=BRAND+LOGO');
 }
 
+
+
+body.bg-light {
+    background: rgb(183,192,201);
+    background: linear-gradient(315deg, rgba(183,192,201,1) 0%, rgba(241,243,245,1) 100%);
+}
 
 

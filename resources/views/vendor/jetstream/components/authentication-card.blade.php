@@ -22,7 +22,7 @@
     <div class="row">
         <div class="Absolute-Center is-Responsive">
 
-            <div class="col-sm-12 col-md-10 col-md-offset-1 card px-3 py-3">
+            <div class="col-sm-12 col-md-10 col-md-offset-1 card px-4 py-4">
 
                 <div class="">
                     {{ $logo }}
