@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        <span class="required-msg">* Campos obrigatórios</span>
+                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
                         @include('partials.save-button', ['model'=>$sector, 'backUrl' => 'sectors.index', 'permission'=>'sectors:store'])
                     </div>
                 </div>
@@ -29,7 +29,11 @@
 
             <div class="card-body">
                 @include('layouts.msg')
-
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">

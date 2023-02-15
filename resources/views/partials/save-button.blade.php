@@ -1,6 +1,6 @@
 <button
     type="submit"
-    class="btn btn-outline-success ml-1"
+    class="btn btn-success text-white ml-1"
     id="submitButton"
     @include('partials.disabled', ['model' => $model ?? null, $permission])
 >
@@ -9,12 +9,12 @@
 &nbsp;@if(isset($id))
 <a href="{{route($backUrl,$id)}}"
    id="cancelButton"
-   class="btn btn-outline-danger ml-1"
+   class="btn btn-danger text-white ml-1"
 >
     @else
         <a href="{{route($backUrl)}}"
            id="cancelButton"
-           class="btn btn-outline-danger ml-1"
+           class="btn btn-danger text-white ml-1"
         >
         @endif
     <i class="fas fa-ban"></i> Cancelar

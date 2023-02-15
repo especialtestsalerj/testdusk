@@ -11,7 +11,7 @@
 &nbsp;
 <a href="{{route($backUrl)}}"
    id="cancelButton"
-   class="btn btn-outline-danger ml-1"
+   class="btn btn-danger text-white ml-1"
 >
     <i class="fas fa-ban"></i> Cancelar
 </a>

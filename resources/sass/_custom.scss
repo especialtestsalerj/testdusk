@@ -245,10 +245,12 @@ div.well{
 body.bg-light {
     background: rgb(183,192,201);
     background: linear-gradient(315deg, rgba(183,192,201,1) 0%, rgba(241,243,245,1) 100%);
+    min-height: 100vh;
 }
 
 .card.card-default {
     background: rgba(251, 251, 252, 0.7);
+    border: 2px solid #d4dadf !important;
 
     .card-header {
         .form-group {

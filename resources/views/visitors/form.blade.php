@@ -25,15 +25,19 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        <span class="required-msg">* Campos obrigatórios</span>
+                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
                         @include('partials.save-button', ['model'=>$visitor, 'backUrl' => 'routines.show', 'permission'=>($routine->status ? 'visitors:update' : ''),'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-4">
+            <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
-
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

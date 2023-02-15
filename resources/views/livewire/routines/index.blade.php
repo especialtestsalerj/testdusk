@@ -1,6 +1,6 @@
 
 
-    <div class="card card-default mx-4 my-5">
+    <div class="card card-default mx-5 my-4">
         <div class="card-header py-4 px-4">
             <div class="row">
                 <div class="col-md-3">
