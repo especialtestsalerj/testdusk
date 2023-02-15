@@ -1,7 +1,7 @@
 
 
-    <div class="card card-default">
-        <div class="card-header">
+    <div class="card card-default mx-4 my-5">
+        <div class="card-header py-4 px-4">
             <div class="row">
                 <div class="col-md-3">
                     <h2 class="mb-0">Rotinas</h2>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="card-body">
+        <div class="card-body p-0">
             @include('layouts.msg')
 
             @include('livewire.routines.partials.table')
