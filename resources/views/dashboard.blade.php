@@ -12,7 +12,7 @@
                 <!-- todo pacheco criar loop e adicionar dados reais -->
                 <div class="swiper-slide">
                     <div dir="ltr" class="col-12">
-                        <div class="card shadow bg-white">
+                        <div class="card bg-white">
                             <div class="card-header">
                                 <div class="row mx-lg-3 mt-3 mb-2">
                                     <div class="col-3 text-center text-lg-start">
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body bg-white px-5 py-5 border-bottom rounded">
+                            <div class="card-body px-5 py-5 border-bottom rounded">
                                 <div class="row mt-3 mb-3 routine-icons text-center">
                                     <div class="col-6 col-lg-3">
                                         <span class="fa-stack fa-3x" data-count="{{$routine->events()->count()}}">

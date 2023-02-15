@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default" id="vue-cautions">
+    <div class="card card-default mx-5 my-4" id="vue-cautions">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.update', ['id' => $caution->id]) }}" @else action="{{ route('cautions.store')}}" @endIf method="POST">
             @csrf
 
@@ -10,7 +10,7 @@
             @endif
             <input name="routine_id" type="hidden" value="{{ $routine_id }}">
 
-            <div class="card-header">
+            <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body mx-4 my-4">
                 @include('layouts.msg')
                 @if ($errors->has('name'))
                     <div class="alert alert-danger" role="alert">
