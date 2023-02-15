@@ -4,7 +4,7 @@
     <div class="d-flex row justify-content-end">
         <div class="col-sm-4">
             @if (isset($routeCreate))
-                <a id="novo" href="{{ route($routeCreate) }}" class="btn btn-primary float-end" title="Novo/a">
+                <a id="novo" href="{{ route($routeCreate) }}" class="btn btn-primary text-white float-end" title="Novo/a">
                     <i class="fa fa-plus"></i> Novo/a
                 </a>
             @endif

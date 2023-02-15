@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if ($routine->status)
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" dusk='newWeapon' data-bs-target="#weapon-modal" title="Nova Arma">
+                    <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" dusk='newWeapon' data-bs-target="#weapon-modal" title="Nova Arma">
                         <i class="fa fa-plus"></i>
                     </button>
                 @endif
