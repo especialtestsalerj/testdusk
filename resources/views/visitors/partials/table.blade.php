@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a href="{{ route('visitors.create', $routine->id) }}" class="btn btn-outline-primary float-end" dusk="newVisitors" title="Novo/a Visitante">
+                <a href="{{ route('visitors.create', $routine->id) }}" class="btn btn-primary float-end" dusk="newVisitors" title="Novo/a Visitante">
                     <i class="fa fa-plus"></i> Novo/a
                 </a>
                 @endif
