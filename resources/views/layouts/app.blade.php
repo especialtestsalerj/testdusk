@@ -56,6 +56,8 @@
                 </div>
             </div>
         </main>
+
+        @include('layouts.partials.footer')
     </div>
 
     @include('layouts.partials.livereload')
