@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-5 my-4" id="vue-visitors">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4" id="vue-visitors">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
 

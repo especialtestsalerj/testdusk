@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-5 my-4" id="vue-events">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4" id="vue-events">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('events.update', ['id' => $event->id]) }}" @else action="{{ route('events.store')}}" @endIf method="POST">
             @csrf
 

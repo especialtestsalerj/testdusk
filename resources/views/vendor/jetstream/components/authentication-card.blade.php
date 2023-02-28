@@ -20,9 +20,9 @@
 
 <div class="container">
     <div class="row">
-        <div class="Absolute-Center is-Responsive">
+        <div class="Absolute-Center is-Responsive p-0">
 
-            <div class="col-sm-12 col-md-10 col-md-offset-1 card px-4 py-4">
+            <div class="col-sm-12 col-md-12 col-md-offset-1 card px-4 py-4">
 
                 <div class="">
                     {{ $logo }}
