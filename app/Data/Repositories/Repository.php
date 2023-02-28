@@ -16,7 +16,6 @@ abstract class Repository
 {
     public function all()
     {
-        //return $this->model::all();
         return $this->applyFilter($this->newQuery());
     }
 

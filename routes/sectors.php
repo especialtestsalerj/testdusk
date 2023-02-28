@@ -26,4 +26,9 @@ Route::group(['prefix' => '/sectors'], function () {
     Route::get('/', SectorsIndex::class)
         ->name('sectors.index')
         ->can('sectors:show');
+
+    //Remover
+    Route::post('/delete/{id}', [Sector::class, 'delete'])
+        ->name('sectors.delete')
+        ->can('sectors:show');
 });

@@ -26,4 +26,9 @@ Route::group(['prefix' => '/event-types'], function () {
     Route::get('/', EventTypesIndex::class)
         ->name('event-types.index')
         ->can('event-types:show');
+
+    //Remover
+    Route::post('/delete/{id}', [EventType::class, 'delete'])
+        ->name('event-types.delete')
+        ->can('event-types:show');
 });

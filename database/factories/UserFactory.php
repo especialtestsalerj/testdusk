@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name' => faker()->name,
             'username' => faker()->name,
-            'email' => faker()->username.rand(1,10).'@alerj.rj.gov.br',
+            'email' => faker()->username . rand(1, 10) . '@alerj.rj.gov.br',
             'email_verified_at' => now(),
             'password' => Hash::make('123456789'),
             'remember_token' => Str::random(10),

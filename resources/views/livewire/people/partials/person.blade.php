@@ -5,10 +5,12 @@
         @focus-field.window="$refs[$event.detail.field].focus()"
     >
         <div class="row">
-            <div class="col-md-3 d-flex align-items-end">
+            @if($modal)
+            <div class="form-group">
+            @endif
+            <div class="@if($modal) col-md-12 @else col-md-3 @endif d-flex align-items-end">
                 <div class="col-md-10">
                     <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
-
                     <label for="cpf">CPF (Visitante)*</label>
                     <input
                         class="form-control @error('cpf') is-invalid @endError"
@@ -17,33 +19,40 @@
                         wire:model.lazy="cpf"
                         x-ref="cpf"
                         onblur="btn_buscar.click()"
-                        @disabled(!$routineStatus)
+                        @disabled(!$routineStatus) @if($modal) disabled @endif
                     />
                 </div>
                 <div class="col-md-2">
-                    <button type="button" wire:click="searchCpf" class="btn btn-outline-secondary" id="btn_buscar" @disabled(!$routineStatus)>
+                    <button type="button" wire:click="searchCpf" class="btn btn-outline-secondary" id="btn_buscar" @disabled(!$routineStatus) @if($modal) disabled @endif>
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
-            <div class="col-md-5">
+            @if($modal)
+            </div>
+            <div class="form-group">
+            @endif
+            <div class="@if($modal) col-md-12 @else col-md-5 @endif">
                 <label for="full_name">Nome (Visitante)*</label>
                 <input
                     class="form-control"
                     name="full_name"
                     id="full_name"
                     wire:model.defer="full_name"
-                    @disabled(!$routineStatus)
+                    @disabled(!$routineStatus) @if($modal) disabled @endif
                 />
             </div>
-            <div class="col-md-4">
+            @if($modal)
+            </div>
+            @endif
+            <div class="@if($modal) col-md-12 @else col-md-4 @endif">
                 <label for="origin">Origem (Visitante)</label>
                 <input
                     class="form-control"
                     name="origin"
                     id="origin"
                     wire:model.defer="origin"
-                    @disabled(!$routineStatus)
+                    @disabled(!$routineStatus) @if($modal) disabled @endif
                 />
             </div>
         </div>

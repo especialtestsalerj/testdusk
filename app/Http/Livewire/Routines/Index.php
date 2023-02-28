@@ -22,22 +22,6 @@ class Index extends BaseIndex
         'routines.entranced_at' => 'date',
     ];
 
-    public function finish(RoutinesRequest $request)
-    {
-        dd('index');
-        /*$data = $request->all();
-
-        $model = $this->model::find($data->id);
-
-        $data->merge(['status' => false]);
-        $model->fill($data->toArray());
-        $model->save();
-
-        return redirect()
-            ->route('routines.index')
-            ->with('status', 'Rotina finalizada com sucesso!');*/
-    }
-
     public function render()
     {
         return view('livewire.routines.index')->with([

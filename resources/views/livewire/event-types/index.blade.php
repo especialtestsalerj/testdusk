@@ -27,3 +27,7 @@
             @include('livewire.event-types.partials.table')
         </div>
     </div>
+
+<div class="text-center py-4">
+    <a href="{{ url('/dashboard') }}" title="Ir para a Home">Home</a>
+</div>

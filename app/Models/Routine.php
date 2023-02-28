@@ -53,21 +53,21 @@ class Routine extends Model
 
     public function events()
     {
-        return $this->hasMany(Event::class, 'routine_id');
+        return $this->hasMany(Event::class, 'routine_id')->orderBy('occurred_at');
     }
 
     public function visitors()
     {
-        return $this->hasMany(Visitor::class, 'routine_id');
+        return $this->hasMany(Visitor::class, 'routine_id')->orderBy('entranced_at');
     }
 
     public function stuffs()
     {
-        return $this->hasMany(Stuff::class, 'routine_id');
+        return $this->hasMany(Stuff::class, 'routine_id')->orderBy('entranced_at');
     }
 
     public function cautions()
     {
-        return $this->hasMany(Caution::class, 'routine_id');
+        return $this->hasMany(Caution::class, 'routine_id')->orderBy('started_at');
     }
 }

@@ -9,7 +9,9 @@ class Dashboard extends Controller
     {
         return $this->view('dashboard')->with(
             'routines',
-            app(RoutinesRepository::class)->allOrderBy('entranced_at', 'desc', 14)
+            app(RoutinesRepository::class)
+                ->disablePagination()
+                ->allOrderBy('entranced_at', 'desc', 14)
         );
     }
 }

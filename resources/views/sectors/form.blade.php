@@ -3,7 +3,7 @@
 @section('content')
     <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('sectors.update', ['id' => $sector->id]) }}" @else action="{{ route('sectors.store')}}" @endIf method="POST">
-            {{ csrf_field() }}
+            @csrf
             <input name="id" type="hidden" value="{{$sector->id}}" id="id" >
 
             <div class="card-header py-4 px-4">

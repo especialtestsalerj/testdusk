@@ -10,9 +10,8 @@
                     <i class="fa fa-search"></i>
                 </span>
                 @if(isset($routeSearch))
-                    <span class="input-group-text"
-                          onClick="javascript:document.getElementById('searchForm').submit();">
-                        <a href="{{ route($routeSearch) }}">
+                    <span class="input-group-text" onClick="javascript:document.getElementById('searchForm').submit();">
+                        <a href="{{ route($routeSearch, $routeSearchParams ?? []) }}">
                             <i class="fas fa-eraser"></i>
                         </a>
                     </span>
@@ -21,7 +20,7 @@
         </div>
         <div class="col-4 col-md-4">
             @if (isset($routeCreate))
-                <a id="novo" href="{{ route($routeCreate) }}" class="btn btn-primary text-white float-end" title="Novo/a">
+                <a id="novo" href="{{ route($routeCreate, $routeCreateParams ?? []) }}" class="btn btn-primary text-white float-end" title="Novo/a">
                     <i class="fa fa-plus"></i> Novo/a
                 </a>
             @endif

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4" id="vue-cautions">
-        <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.update', ['id' => $caution->id]) }}" @else action="{{ route('cautions.store')}}" @endIf method="POST">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+        <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.update', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" @else action="{{ route('cautions.store', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 
             @if (isset($caution))
@@ -10,7 +10,7 @@
             @endif
             <input name="routine_id" type="hidden" value="{{ $routine_id }}">
 
-            <div class="card-header py-4 px-4">
+            <div class="card-header">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
@@ -19,28 +19,24 @@
                             @if(is_null($caution->id))
                                 > Novo/a
                             @else
-                                > {{ $caution->id }} - {{ $caution->started_at->format('d/m/Y \À\S H:i') }}
+                                > {{ $caution->id }} - {{ $caution?->protocol_number_formatted }}
                             @endif
                         </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
-                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>($routine->status ? 'cautions:update' : ''), 'id' =>$routine_id])
+                        <span class="required-msg">* Campos obrigatórios</span>
+                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
             <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                @if ($errors->has('status'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->first('status') }}
+
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        <i class="fa fa-check-circle"></i> {{ session('message') }}
                     </div>
                 @endif
                 <div class="row">
@@ -51,14 +47,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="started_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at')}}" @disabled(!$routine->status)/>
+                            <label for="started_at">Abertura*</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{ is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="concluded_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at')}}" @disabled(!$routine->status)/>
+                            <label for="concluded_at">Fechamento</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{ is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>
                         </div>
                     </div>
                 </div>
@@ -69,7 +65,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_id">Destino*</label>
-                            <select class="select2" name="destiny_sector_id" id="destiny_sector_id" @disabled(!$routine->status)>
+                            <select class="select2 form-control" name="destiny_sector_id" id="destiny_sector_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
@@ -82,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
-                            <select class="select2" name="duty_user_id" id="duty_user_id" @disabled(!$routine->status)>
+                            <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->duty_user_id) && $caution->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -95,7 +91,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Observações</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status)>{{is_null(old('description')) ? $caution->description: old('description')}}</textarea>
+                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>{{ is_null(old('description')) ? $caution->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -115,7 +111,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> {{1==2 ? 'Alterar' : 'Nova'}} Arma</h5>
+                        <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> Nova Arma</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <livewire:caution-weapons.create-form :caution_id="$caution->id" />

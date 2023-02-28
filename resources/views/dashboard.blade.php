@@ -38,52 +38,25 @@
                                     </div>
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
+                                        @if ($routine->status)
+                                            <span class="badge rounded-pill bg-success" title="Status da Rotina">ABERTA</span>
+                                        @else
+                                            <span class="badge rounded-pill bg-danger" title="Status da Rotina">FINALIZADA</span>
+                                        @endif
                                             <i class="fas fa-clock ms-lg-3"></i> {{ $routine?->shift?->name ?? '-' }}
                                         </h4>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="card-body px-5 py-5 border-bottom rounded">
                                 <div class="row mt-3 mb-3 routine-icons text-center">
-                                    <div class="col-6 col-lg-3">
-                                        <span class="fa-stack fa-3x" data-count="{{$routine->events()->count()}}">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-list-check fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h5 class="mt-2">
-                                            Ocorrências
-                                        </h5>
-                                    </div>
-                                    <div class="col-6 col-lg-3">
-                                        <span class="fa-stack fa-3x" data-count="{{$routine->visitors()->count()}}">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-people-group fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h5 class="mt-2">
-                                            Visitantes
-                                        </h5>
-                                    </div>
-                                    <div class="col-6 col-lg-3">
-                                        <span class="fa-stack fa-3x" data-count="{{$routine->stuffs()->count()}}">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-dolly-box fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h5 class="mt-2">
-                                            Materiais
-                                        </h5>
-                                    </div>
-                                    <div class="col-6 col-lg-3">
-                                        <span class="fa-stack fa-3x" data-count="{{$routine->cautions()->count()}}">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-gun fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <h5 class="mt-2">
-                                            Cautelas de Armas
-                                        </h5>
+                                    @include('partials.dashboard-button', ['url' => route('events.index', $routine->id), 'permission' => 'events:show', 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
 
-                                    </div>
+                                    @include('partials.dashboard-button', ['url' => route('visitors.index', $routine->id), 'permission' => 'visitors:show', 'title' => 'Visitantes', 'ico' => 'fa-people-group', 'count' => $routine->visitors()->count()])
+
+                                    @include('partials.dashboard-button', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
+
+                                    @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
                                 </div>
                             </div>
                         </div>
