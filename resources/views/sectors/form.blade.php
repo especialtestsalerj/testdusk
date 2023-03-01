@@ -3,13 +3,13 @@
 @section('content')
     <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('sectors.update', ['id' => $sector->id]) }}" @else action="{{ route('sectors.store')}}" @endIf method="POST">
-            {{ csrf_field() }}
+            @csrf
             <input name="id" type="hidden" value="{{$sector->id}}" id="id" >
 
             <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h2 class="mb-0">
+                        <h4 class="mb-0">
                             <a href="{{ route('sectors.index') }}">Setores</a>
 
                             @if(is_null($sector->id))
@@ -17,17 +17,16 @@
                             @else
                                 > {{ $sector->id }} - {{ $sector->name }}
                             @endif
-                        </h2>
+                        </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
                         @include('partials.save-button', ['model'=>$sector, 'backUrl' => 'sectors.index', 'permission'=>'sectors:store'])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">

@@ -24,7 +24,7 @@ class EventTypeFactory extends Factory
     {
         return [
             'name' => strtoupper(faker()->name),
-            'status' => (bool)rand(0,1),
+            'status' => (bool) rand(0, 1),
         ];
     }
 }

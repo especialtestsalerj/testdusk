@@ -233,6 +233,19 @@
 
 .table-striped>tbody>tr:nth-of-type(even) { background-color: #ffffff; }
 
+.fa-disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+}
+
+.form-control:disabled {
+    cursor: not-allowed;
+}
+
+.actions a, .actions button {
+    padding: 0 5px 0 5px;
+}
+
 */
 
 

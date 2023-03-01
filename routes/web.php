@@ -16,27 +16,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. now create something great!
 |
 */
-Route::get('/', function () {
-    return view('/auth/login');
-});
 
 Route::get('/logout', [
     \Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class,
     'destroy',
 ])->name('logout-get');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(
-    function () {
-        Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
-    }
-);
-
 Route::group(
     [
         'prefix' => '/',
-        'middleware' => ['auth'],
+        'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'use-app'],
     ],
     function () {
+        Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+        Route::get('/', function () {
+            redirect('dashboard');
+        });
         require __DIR__ . '/eventTypes.php';
         require __DIR__ . '/sectors.php';
         require __DIR__ . '/routines.php';

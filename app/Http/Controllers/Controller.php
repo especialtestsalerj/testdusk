@@ -18,7 +18,7 @@ class Controller extends BaseController
      */
     public function getSuccessMessage($message = 'Gravado com sucesso')
     {
-        return ['status' => $message];
+        return ['message' => $message];
     }
 
     public function view($name)

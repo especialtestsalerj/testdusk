@@ -12,29 +12,47 @@ use App\Support\Constants;
 
 class Visitor extends Controller
 {
-    public function index()
-    {
-        return $this->view('visitors.index')->with(
-            'visitors',
-            app(VisitorsRepository::class)->all()
-        );
-    }
-
     public function create($routine_id)
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        $routine = app(RoutinesRepository::class)->findById($routine_id);
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
 
         return $this->view('visitors.form')->with([
             'routine_id' => $routine_id,
             'routine' => $routine,
             'visitor' => app(VisitorsRepository::class)->new(),
-            'people' => app(PeopleRepository::class)->all(),
+            'people' => app(PeopleRepository::class)
+                ->disablePagination()
+                ->all(),
             'sectors' => app(SectorsRepository::class)
                 ->disablePagination()
                 ->all(),
-            'users' => app(UsersRepository::class)->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+        ]);
+    }
+
+    public function createFromDashboard($routine_id)
+    {
+        formMode(Constants::FORM_MODE_CREATE);
+
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
+        return $this->view('visitors.form-dashboard')->with([
+            'routine_id' => $routine_id,
+            'routine' => $routine,
+            'visitor' => app(VisitorsRepository::class)->new(),
+            'people' => app(PeopleRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -48,7 +66,20 @@ class Visitor extends Controller
 
         return redirect()
             ->route('routines.show', $visitor->routine_id)
-            ->with('status', 'Visitante adicionado com sucesso!');
+            ->with('message', 'Visitante adicionado/a com sucesso!');
+    }
+
+    public function storeFromDashboard(VisitorRequest $request)
+    {
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+
+        $request->merge(['person_id' => $person->id]);
+
+        $visitor = app(VisitorsRepository::class)->create($request->all());
+
+        return redirect()
+            ->route('visitors.index', $visitor->routine_id)
+            ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 
     public function show($id)
@@ -60,11 +91,40 @@ class Visitor extends Controller
 
         return $this->view('visitors.form')->with([
             'routine_id' => $visitor->routine_id,
-            'visitor' => $visitor,
             'routine' => $routine,
-            'people' => app(PeopleRepository::class)->all(),
-            'sectors' => app(SectorsRepository::class)->all(),
-            'users' => app(UsersRepository::class)->all(),
+            'visitor' => $visitor,
+            'people' => app(PeopleRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+        ]);
+    }
+
+    public function showFromDashboard($routine_id, $id)
+    {
+        formMode(Constants::FORM_MODE_SHOW);
+
+        $visitor = app(VisitorsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($visitor->routine_id);
+
+        return $this->view('visitors.form-dashboard')->with([
+            'routine_id' => $routine_id,
+            'routine' => $routine,
+            'visitor' => $visitor,
+            'people' => app(PeopleRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -78,6 +138,41 @@ class Visitor extends Controller
 
         return redirect()
             ->route('routines.show', $visitor->routine_id)
-            ->with('status', 'Visitante alterado com sucesso!');
+            ->with('message', 'Visitante alterado/a com sucesso!');
+    }
+
+    public function updateFromDashboard(VisitorUpdateRequest $request, $routine_id, $id)
+    {
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+
+        $request->merge(['person_id' => $person->id]);
+
+        $visitor = app(VisitorsRepository::class)->update($id, $request->all());
+
+        return redirect()
+            ->route('visitors.index', $routine_id)
+            ->with('message', 'Visitante alterado/a com sucesso!');
+    }
+
+    public function delete($id)
+    {
+        $visitor = app(VisitorsRepository::class)->findById($id);
+
+        $visitor->delete($id);
+
+        return redirect()
+            ->route('routines.show', $visitor->routine_id)
+            ->with('message', 'Visitante removido/a com sucesso!');
+    }
+
+    public function deleteFromDashboard($id)
+    {
+        $visitor = app(VisitorsRepository::class)->findById($id);
+
+        $visitor->delete($id);
+
+        return redirect()
+            ->route('visitors.index', $visitor->routine_id)
+            ->with('message', 'Visitante removido/a com sucesso!');
     }
 }

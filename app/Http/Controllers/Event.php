@@ -12,11 +12,6 @@ use App\Support\Constants;
 
 class Event extends Controller
 {
-    public function index()
-    {
-        return $this->view('events.index')->with('events', app(EventsRepository::class)->all());
-    }
-
     public function create($routine_id)
     {
         formMode(Constants::FORM_MODE_CREATE);
@@ -27,9 +22,37 @@ class Event extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'event' => app(EventsRepository::class)->new(),
-            'eventTypes' => app(EventTypesRepository::class)->all(),
-            'sectors' => app(SectorsRepository::class)->all(),
-            'users' => app(UsersRepository::class)->all(),
+            'eventTypes' => app(EventTypesRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+        ]);
+    }
+
+    public function createFromDashboard($routine_id)
+    {
+        formMode(Constants::FORM_MODE_CREATE);
+
+        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
+        return $this->view('events.form-dashboard')->with([
+            'routine_id' => $routine_id,
+            'routine' => $routine,
+            'event' => app(EventsRepository::class)->new(),
+            'eventTypes' => app(EventTypesRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -39,7 +62,16 @@ class Event extends Controller
 
         return redirect()
             ->route('routines.show', $event->routine_id)
-            ->with('status', 'Ocorrência adicionada com sucesso!');
+            ->with('message', 'Ocorrência adicionada com sucesso!');
+    }
+
+    public function storeFromDashboard(EventRequest $request)
+    {
+        $event = app(EventsRepository::class)->create($request->all());
+
+        return redirect()
+            ->route('events.index', $event->routine_id)
+            ->with('message', 'Ocorrência adicionada com sucesso!');
     }
 
     public function show($id)
@@ -51,11 +83,40 @@ class Event extends Controller
 
         return $this->view('events.form')->with([
             'routine_id' => $event->routine_id,
-            'event' => $event,
             'routine' => $routine,
-            'eventTypes' => app(EventTypesRepository::class)->all(),
-            'sectors' => app(SectorsRepository::class)->all(),
-            'users' => app(UsersRepository::class)->all(),
+            'event' => $event,
+            'eventTypes' => app(EventTypesRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+        ]);
+    }
+
+    public function showFromDashboard($routine_id, $id)
+    {
+        formMode(Constants::FORM_MODE_SHOW);
+
+        $event = app(EventsRepository::class)->findById($id);
+        $routine = app(RoutinesRepository::class)->findById($routine_id);
+
+        return $this->view('events.form-dashboard')->with([
+            'routine_id' => $routine_id,
+            'routine' => $routine,
+            'event' => $event,
+            'eventTypes' => app(EventTypesRepository::class)
+                ->disablePagination()
+                ->all(),
+            'sectors' => app(SectorsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'users' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -65,6 +126,37 @@ class Event extends Controller
 
         return redirect()
             ->route('routines.show', $event->routine_id)
-            ->with('status', 'Ocorrência alterada com sucesso!');
+            ->with('message', 'Ocorrência alterada com sucesso!');
+    }
+
+    public function updateFromDashboard(EventUpdateRequest $request, $routine_id, $id)
+    {
+        $event = app(EventsRepository::class)->update($id, $request->all());
+
+        return redirect()
+            ->route('events.index', $routine_id)
+            ->with('message', 'Ocorrência alterada com sucesso!');
+    }
+
+    public function delete($id)
+    {
+        $event = app(EventsRepository::class)->findById($id);
+
+        $event->delete($id);
+
+        return redirect()
+            ->route('routines.show', $event->routine_id)
+            ->with('message', 'Ocorrência removida com sucesso!');
+    }
+
+    public function deleteFromDashboard($id)
+    {
+        $event = app(EventsRepository::class)->findById($id);
+
+        $event->delete($id);
+
+        return redirect()
+            ->route('events.index', $event->routine_id)
+            ->with('message', 'Ocorrência removida com sucesso!');
     }
 }

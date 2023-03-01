@@ -1,0 +1,109 @@
+
+
+<table id="cautionTable" class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th class="col-md-1">Protocolo</th>
+        <th class="col-md-2">Abertura</th>
+        <th class="col-md-2">Fechamento</th>
+        <th class="col-md-2">Solicitante</th>
+        <th class="col-md-2">Destino</th>
+        <th class="col-md-2">Plantonista</th>
+        <th class="col-md-2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @forelse ($cautions as $caution)
+        <tr>
+            <td>
+                {{ $caution?->protocol_number_formatted ?? '-' }}
+            </td>
+            <td>
+                {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+            </td>
+            <td>
+                {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+            </td>
+            <td>
+                    {{ $caution->visitor->person->full_name }}
+            </td>
+            <td>
+                {{ $caution->destinySector->name }}
+            </td>
+            <td>
+                {{ $caution->dutyUser->name }}
+            </td>
+            <td class="text-center actions">
+                <a href="{{ route('cautions.showFromDashboard', ['routine_id' => $routine_id, 'id' => $caution->id, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                @if($routine->status)
+                    <a href="{{ route('cautions.showFromDashboard', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $caution->id }}" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                @endif
+            </td>
+            <!-- Modal -->
+            <div class="modal fade" id="delete-modal{{ $caution->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Cautela</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form" action="{{ route('cautions.deleteFromDashboard', ['id' => $caution->id]) }}" method="post">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="protocol_number">Protocolo</label>
+                                    <input type="text" class="form-control text-uppercase" name="protocol_number" id="protocol_number" value="{{ $caution?->protocol_number_formatted }}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="started_at">Data da Abertura</label>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{ $caution->started_at }}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="concluded_at">Data da Fechamento</label>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{ $caution->concluded_at }}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="visitor">Visitante</label>
+                                    <input type="text" class="form-control text-uppercase" name="visitor" id="visitor" value="{{ $caution?->visitor->person->full_name }}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sector_id">Destino</label>
+                                    <select class="form-select form-control" name="sector_id" id="sector_id" disabled>
+                                        <option value="{{ $caution->destinySector?->id }}" selected="selected">{{ $caution->destinySector?->name }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="duty_user_id">Plantonista</label>
+                                    <select class="form-select form-control" name="duty_user_id" id="duty_user_id" disabled>
+                                        <option value="{{ $caution->dutyUser?->id }}" selected="selected">{{ $caution->dutyUser?->name }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Observações</label>
+                                    <textarea class="form-control" name="description" id="description" disabled>{{ $caution->description }}</textarea>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Confirmar</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+    @empty
+        <div class="alert alert-warning mt-2">
+            <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
+        </div>
+    @endforelse
+    <div class="d-flex justify-content-center">
+        {{ $cautions->links() }}
+    </div>
+    </tbody>
+</table>
