@@ -2,7 +2,7 @@
     type="submit"
     class="btn btn-success text-white ml-1"
     id="submitButton"
-    @include('partials.disabled', ['model' => $model ?? null, $permission])
+    @include('partials.disabled', ['model' => $model ?? null, ''])
 >
     <i class="fa fa-save"></i> Salvar
 </button>

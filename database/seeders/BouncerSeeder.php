@@ -22,6 +22,5 @@ class BouncerSeeder extends Seeder
         Bouncer::allow('GESTOR')->everything();
 
         Bouncer::allow('PLANTONISTA')->everything();
-
     }
 }

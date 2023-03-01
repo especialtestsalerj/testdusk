@@ -3,13 +3,13 @@
 @section('content')
     <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('event-types.update', ['id' => $eventType->id]) }}" @else action="{{ route('event-types.store')}}" @endIf method="POST">
-            {{ csrf_field() }}
+            @csrf
             <input name="id" type="hidden" value="{{$eventType->id}}" id="id" >
 
             <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h2 class="mb-0">
+                        <h4 class="mb-0">
                             <a href="{{ route('event-types.index') }}">Tipos de Ocorrência</a>
 
                             @if(is_null($eventType->id))
@@ -17,11 +17,10 @@
                             @else
                                 > {{ $eventType->id }} - {{ $eventType->name }}
                             @endif
-                        </h2>
+                        </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
                         @include('partials.save-button', ['model'=>$eventType, 'backUrl' => 'event-types.index', 'permission'=>'event-types:store'])
                     </div>
                 </div>

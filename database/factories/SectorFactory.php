@@ -25,7 +25,7 @@ class SectorFactory extends Factory
         return [
             'name' => faker()->name,
             'name' => strtoupper(faker()->company),
-            'status' => (bool)rand(0,1),
+            'status' => (bool) rand(0, 1),
         ];
     }
 }

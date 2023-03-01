@@ -9,9 +9,9 @@
                 </ul>
             </div>
         @endif
-        @if (session('status'))
+        @if (session('message'))
             <div class="alert alert-success">
-                <i class="fa fa-check-circle"></i> {{ session('status') }}
+                <i class="fa fa-check-circle"></i> {{ session('message') }}
             </div>
         @endif
     </div>

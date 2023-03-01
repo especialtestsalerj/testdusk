@@ -121,6 +121,11 @@ class CreateForm extends BaseForm
         $this->entranced_at = is_null(old('entranced_at'))
             ? $this->cautionWeapon->entranced_at ?? ''
             : old('entranced_at');
+
+        $this->weapon_type_id = is_null(old('weapon_type_id'))
+            ? $this->cautionWeapon->weapon_type_id ?? ''
+            : old('weapon_type_id');
+
         //$this->routineStatus = $this->cautionWeapon->routineStatus;
     }
 
@@ -138,6 +143,8 @@ class CreateForm extends BaseForm
     {
         if ($this->mode == 'create') {
             $this->cautionWeapon = new CautionWeapon();
+        } else {
+            $this->cautionWeapon = CautionWeapon::find($this->caution_weapon_id);
         }
 
         $this->fillModel();

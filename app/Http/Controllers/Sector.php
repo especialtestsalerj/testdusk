@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SectorStore as SectorRequest;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Requests\SectorUpdate as SectorUpdateRequest;
+use App\Http\Requests\SectorDelete as SectorDeleteRequest;
 use App\Support\Constants;
 
 class Sector extends Controller
 {
     public function index()
     {
-        return $this->view('sectors.index')->with('sectors', app(SectorsRepository::class)->all());
+        return $this->view('sectors.index')->with(
+            'sectors',
+            app(SectorsRepository::class)
+                ->disablePagination()
+                ->all()
+        );
     }
 
     public function create()
@@ -28,7 +34,7 @@ class Sector extends Controller
 
         return redirect()
             ->route('sectors.index')
-            ->with('status', 'Setor adicionado com sucesso!');
+            ->with('message', 'Setor adicionado com sucesso!');
     }
 
     public function show($id)
@@ -46,6 +52,17 @@ class Sector extends Controller
 
         return redirect()
             ->route('sectors.index')
-            ->with('status', 'Setor alterado com sucesso!');
+            ->with('message', 'Setor alterado com sucesso!');
+    }
+
+    public function delete(SectorDeleteRequest $request, $id)
+    {
+        $eventType = app(SectorsRepository::class)->findById($id);
+
+        $eventType->delete($id);
+
+        return redirect()
+            ->route('sectors.index')
+            ->with('message', 'Setor removido com sucesso!');
     }
 }

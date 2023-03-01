@@ -15,7 +15,9 @@ class Routine extends Controller
     {
         return $this->view('routines.index')->with(
             'routines',
-            app(RoutinesRepository::class)->all()
+            app(RoutinesRepository::class)
+                ->disablePagination()
+                ->all()
         );
     }
 
@@ -30,13 +32,21 @@ class Routine extends Controller
         }
 
         formMode(Constants::FORM_MODE_CREATE);
+
         $routine = app(RoutinesRepository::class)->new();
         $routine->status = true;
+
         return $this->view('routines.form')->with([
             'routine' => $routine,
-            'shifts' => app(ShiftsRepository::class)->all(),
-            'entrancedUsers' => app(UsersRepository::class)->all(),
-            'exitedUsers' => app(UsersRepository::class)->all(),
+            'shifts' => app(ShiftsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'entrancedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+            'exitedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -46,7 +56,7 @@ class Routine extends Controller
 
         return redirect()
             ->route('routines.index')
-            ->with('status', 'Rotina adicionada com sucesso!');
+            ->with('message', 'Rotina adicionada com sucesso!');
     }
 
     public function show($id)
@@ -55,9 +65,15 @@ class Routine extends Controller
 
         return $this->view('routines.form')->with([
             'routine' => app(RoutinesRepository::class)->findById($id),
-            'shifts' => app(ShiftsRepository::class)->all(),
-            'entrancedUsers' => app(UsersRepository::class)->all(),
-            'exitedUsers' => app(UsersRepository::class)->all(),
+            'shifts' => app(ShiftsRepository::class)
+                ->disablePagination()
+                ->all(),
+            'entrancedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+            'exitedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 
@@ -67,7 +83,7 @@ class Routine extends Controller
 
         return redirect()
             ->route('routines.index')
-            ->with('status', 'Rotina alterada com sucesso!');
+            ->with('message', 'Rotina alterada com sucesso!');
     }
 
     public function finish(RoutineFinish $request, $id)
@@ -77,6 +93,6 @@ class Routine extends Controller
 
         return redirect()
             ->route('routines.index')
-            ->with('status', 'Rotina finalizada com sucesso!');
+            ->with('message', 'Rotina finalizada com sucesso!');
     }
 }

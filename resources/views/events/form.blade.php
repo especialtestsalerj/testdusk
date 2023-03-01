@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4" id="vue-events">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('events.update', ['id' => $event->id]) }}" @else action="{{ route('events.store')}}" @endIf method="POST">
             @csrf
 
@@ -25,8 +25,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        {{--<span class="required-msg">* Campos obrigatórios</span>--}}
-                        @include('partials.save-button', ['model'=>$event, 'backUrl' => 'routines.show', 'permission'=>($routine->status ? 'events:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model'=>$event, 'backUrl' => 'routines.show', 'permission'=>($routine->status && !request()->query('disabled') ? 'events:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -42,7 +41,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="event_type_id">Tipo*</label>
-                            <select class="select2" name="event_type_id" dusk='event_type_id' id="event_type_id" value="{{is_null(old('event_type_id')) ? $event->event_type_id : old('event_type_id')}}" @disabled(!$routine->status)>
+                            <select class="select2" name="event_type_id" id="event_type_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($eventTypes as $key => $eventType)
                                     @if(((!is_null($event->id)) && (!is_null($event->event_type_id) && $event->event_type_id === $eventType->id) || (!is_null(old('event_type_id'))) && old('event_type_id') == $eventType->id))
@@ -53,13 +52,17 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="occurred_at">Data da Ocorrência*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at')}}" @disabled(!$routine->status)/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>
                         </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
-                            <select class="select2" name="sector_id" dusk="sector_id" id="sector_id" value="{{is_null(old('sector_id')) ? $event->sector_id : old('sector_id')}}" @disabled(!$routine->status)>
+                            <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($event->id)) && (!is_null($event->sector_id) && $event->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
@@ -72,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
-                            <select class="select2" name="duty_user_id" dusk="duty_user_id" id="duty_user_id" @disabled(!$routine->status)>
+                            <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($event->id)) && (!is_null($event->duty_user_id) && $event->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -85,7 +88,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Observações*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status)>{{is_null(old('description')) ? $event->description: old('description')}}</textarea>
+                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>{{ is_null(old('description')) ? $event->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
