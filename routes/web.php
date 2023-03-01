@@ -30,7 +30,7 @@ Route::group(
     function () {
         Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
         Route::get('/', function () {
-            redirect('dashboard');
+            return redirect('dashboard');
         });
         require __DIR__ . '/eventTypes.php';
         require __DIR__ . '/sectors.php';
