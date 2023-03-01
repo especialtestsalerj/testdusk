@@ -12,7 +12,7 @@
             <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h2 class="mb-0">
+                        <h4 class="mb-0">
                             <a href="{{ route('routines.index') }}">Rotinas</a>
 
                             @if(is_null($routine->id))
@@ -21,7 +21,7 @@
                                 > {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
 
-                        </h2>
+                        </h4>
                         @if (!Route::is('routines.create') )
                             @if ($routine['status'])
                                 <label class="badge bg-success"> ABERTA </label>
@@ -38,13 +38,11 @@
 
             <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
-
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
                         <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.updateFromDashboard', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" @else action="{{ route('cautions.storeFromDashboard', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 
@@ -13,7 +13,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h2 class="mb-0">
+                        <h4 class="mb-0">
                             <a href="{{ route('cautions.index', ['routine_id' => $routine_id]) }}">Cautelas de Armas</a>
 
                             @if(is_null($caution->id))
@@ -21,19 +21,22 @@
                             @else
                                 > {{ $caution->id }} - {{ $caution->started_at->format('d/m/Y \À\S H:i') }}
                             @endif
-                        </h2>
+                        </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        <span class="required-msg">* Campos obrigatórios</span>
                         @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'cautions.index', 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
-
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

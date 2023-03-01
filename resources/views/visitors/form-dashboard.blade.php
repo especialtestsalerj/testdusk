@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default">
+    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.updateFromDashboard', ['routine_id' => $routine_id, 'id' => $visitor->id]) }}" @else action="{{ route('visitors.storeFromDashboard', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 
@@ -10,10 +10,10 @@
             @endif
             <input name="routine_id" type="hidden" value="{{ $routine_id }}">
 
-            <div class="card-header">
+            <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h2 class="mb-0">
+                        <h4 class="mb-0">
                             <a href="{{ route('visitors.index', ['routine_id' => $routine_id]) }}">Visitantes</a>
 
                             @if(is_null($visitor->id))
@@ -21,19 +21,22 @@
                             @else
                                 > {{ $visitor->id }} - {{ $visitor->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
-                        </h2>
+                        </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        <span class="required-msg">* Campos obrigatórios</span>
                         @include('partials.save-button', ['model'=>$visitor, 'backUrl' => 'visitors.index', 'permission'=>($routine->status && !request()->query('disabled') ? 'visitors:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body mx-4 my-2">
                 @include('layouts.msg')
-
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
