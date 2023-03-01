@@ -22,3 +22,5 @@
 2023-02-23 14:17:29.154 -03 [7340] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-02-23 14:17:29.182 -03 [7353] LOG:  database system was shut down at 2023-02-23 10:17:17 -03
 2023-02-23 14:17:29.225 -03 [7340] LOG:  database system is ready to accept connections
+2023-02-28 13:47:05.789 -03 [85170] FATAL:  role "root" does not exist
+2023-02-28 13:47:44.309 -03 [85203] FATAL:  database "riodeimpacto_novo" does not exist
