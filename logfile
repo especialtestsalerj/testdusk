@@ -24,3 +24,9 @@
 2023-02-23 14:17:29.225 -03 [7340] LOG:  database system is ready to accept connections
 2023-02-28 13:47:05.789 -03 [85170] FATAL:  role "root" does not exist
 2023-02-28 13:47:44.309 -03 [85203] FATAL:  database "riodeimpacto_novo" does not exist
+2023-03-02 12:56:23.895 -03 [7340] LOG:  received smart shutdown request
+2023-03-02 12:56:23.897 -03 [7340] LOG:  background worker "logical replication launcher" (PID 7361) exited with exit code 1
+2023-03-02 12:56:23.898 -03 [7356] LOG:  shutting down
+2023-03-02 12:56:23.909 -03 [7340] LOG:  database system is shut down
+2023-03-02 14:09:04.189 -03 [3750] FATAL:  lock file "postmaster.pid" already exists
+2023-03-02 14:09:04.189 -03 [3750] HINT:  Is another postmaster (PID 3716) running in data directory "/Users/breno/pgdata"?
