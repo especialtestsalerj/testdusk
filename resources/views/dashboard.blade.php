@@ -10,7 +10,7 @@
                 <!-- Slides -->
                 @forelse ($routines as $routine)
                 <!-- todo pacheco criar loop e adicionar dados reais -->
-                <div class="swiper-slide">
+                <div class="swiper-slide swiper-home">
                     <div dir="ltr" class="col-12">
                         <div class="card bg-white">
                             <div class="card-header">
@@ -38,11 +38,6 @@
                                     </div>
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
-                                        @if ($routine->status)
-                                            <span class="badge rounded-pill bg-success" title="Status da Rotina">ABERTA</span>
-                                        @else
-                                            <span class="badge rounded-pill bg-danger" title="Status da Rotina">FINALIZADA</span>
-                                        @endif
                                             <i class="fas fa-clock ms-lg-3"></i> {{ $routine?->shift?->name ?? '-' }}
                                         </h4>
                                     </div>
