@@ -6,9 +6,10 @@
             @csrf
 
             @if (isset($event))
-                <input name="id" type="hidden" value="{{ $event->id }}">
+                <input type="hidden" name="id" value="{{ $event->id }}">
             @endif
-            <input name="routine_id" type="hidden" value="{{ $routine_id }}">
+            <input type="hidden" name="routine_id" value="{{ $routine_id }}">
+            <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
 
             <div class="card-header py-4 px-4">
                 <div class="row">
@@ -25,7 +26,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$event, 'backUrl' => 'routines.show', 'permission'=>($routine->status && !request()->query('disabled') ? 'events:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model'=>$event, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'events:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="occurred_at">Data da Ocorrência*</label>
                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>

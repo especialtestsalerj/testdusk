@@ -90,7 +90,7 @@
                 </div>
                 @if (formMode() == 'show')
                     <div class="p-4 bg-light border rounded-3">
-                        @include('caution-weapons.partials.table', ['cautionWeapons' => $cautionWeapons, 'routineStatus' => $routine->status])
+                        <livewire:caution-weapons.index-form :caution="$caution" :readonly="request()->query('disabled')"/>
                     </div>
                 @else
                     <div class="alert alert-warning mt-2">

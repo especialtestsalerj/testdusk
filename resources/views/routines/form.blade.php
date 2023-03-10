@@ -106,13 +106,13 @@
                 </div>
 
                 @if(formMode() == 'show')
-                    @include('events.partials.table',['events'=>$routine->events])
+                    @include('events.partials.table',['events'=>$routine->events, 'redirect' => 'routines.show'])
 
-                    @include('visitors.partials.table',['visitors'=>$routine->visitors])
+                    @include('visitors.partials.table',['visitors'=>$routine->visitors, 'redirect' => 'routines.show'])
 
-                    @include('stuffs.partials.table',['stuffs'=>$routine->stuffs])
+                    @include('stuffs.partials.table',['stuffs'=>$routine->stuffs, 'redirect' => 'routines.show'])
 
-                    @include('cautions.partials.table',['cautions'=>$routine->cautions])
+                    @include('cautions.partials.table',['cautions'=>$routine->cautions, 'redirect' => 'routines.show'])
                 @endIf
             </div>
         </form>

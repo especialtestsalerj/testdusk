@@ -117,7 +117,7 @@
                         <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> Nova Arma</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <livewire:caution-weapons.create-form :caution_id="$caution->id" />
+                    <livewire:caution-weapons.index-form :caution="$caution" :readonly="request()->query('disabled')"/>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Requests\EventStore as EventRequest;
 use App\Http\Requests\EventUpdate as EventUpdateRequest;
+use App\Http\Requests\EventDelete as EventDeleteRequest;
 use App\Support\Constants;
 
 class Event extends Controller
@@ -59,9 +60,9 @@ class Event extends Controller
     public function store(EventRequest $request)
     {
         $event = app(EventsRepository::class)->create($request->all());
-
+        //->route('routines.show', $event->routine_id)
         return redirect()
-            ->route('routines.show', $event->routine_id)
+            ->route($request['redirect'], $event->routine_id)
             ->with('message', 'Ocorrência adicionada com sucesso!');
     }
 
@@ -123,9 +124,9 @@ class Event extends Controller
     public function update(EventUpdateRequest $request, $id)
     {
         $event = app(EventsRepository::class)->update($id, $request->all());
-
+        //->route('routines.show', $event->routine_id)
         return redirect()
-            ->route('routines.show', $event->routine_id)
+            ->route($request['redirect'], $event->routine_id)
             ->with('message', 'Ocorrência alterada com sucesso!');
     }
 
@@ -138,14 +139,14 @@ class Event extends Controller
             ->with('message', 'Ocorrência alterada com sucesso!');
     }
 
-    public function delete($id)
+    public function delete(EventDeleteRequest $request, $id)
     {
         $event = app(EventsRepository::class)->findById($id);
 
         $event->delete($id);
-
+        //->route('routines.show', $event->routine_id)
         return redirect()
-            ->route('routines.show', $event->routine_id)
+            ->route($request['redirect'], $event->routine_id)
             ->with('message', 'Ocorrência removida com sucesso!');
     }
 

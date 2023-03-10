@@ -1,5 +1,5 @@
 
-
+<div>
     <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
         <div class="card-header py-4 px-4">
             <div class="row">
@@ -12,6 +12,8 @@
                         @include(
                             'livewire.partials.search-form',
                             [
+                                'btnNovoLabel' => 'Novo',
+                                'btnNovoTitle' => 'Novo Tipo de Ocorrência',
                                 'routeSearch' => 'event-types.index',
                                 'routeCreate' => 'event-types.create',
                             ]
@@ -28,6 +30,7 @@
         </div>
     </div>
 
-<div class="text-center py-4">
-    <a href="{{ url('/dashboard') }}" title="Ir para a Home">Home</a>
+    <div class="text-center py-4">
+        <a href="{{ url('/dashboard') }}" title="Ir para a Home">Home</a>
+    </div>
 </div>

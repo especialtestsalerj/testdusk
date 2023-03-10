@@ -38,7 +38,7 @@
             </td>
             <td class="text-center">
                 @if ($routine->status)
-                    <a href="{{ route('routines.show', ['id' => $routine->id]) }}" class="btn btn-primary text-white" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
+                    <a href="{{ route('routines.show', ['id' => $routine->id]) }}" class="btn btn-primary" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
                         <i class="fa fa-cog"></i> Gerenciar
                     </a>
                 @else

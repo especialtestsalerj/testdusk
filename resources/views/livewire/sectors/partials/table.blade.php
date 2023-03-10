@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Confirmar</button>
+                                    <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-check"></i> Remover</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>

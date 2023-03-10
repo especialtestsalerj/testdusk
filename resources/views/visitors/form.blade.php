@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$visitor, 'backUrl' => 'routines.show', 'permission'=>($routine->status ? 'visitors:update' : ''),'id' =>$routine_id])
+                        @include('partials.save-button', ['model'=>$visitor, 'backUrl' => 'routines.show', 'permission'=>($routine->status && !request()->query('disabled') ? 'visitors:update' : ''),'id' =>$routine_id])
                     </div>
                 </div>
             </div>

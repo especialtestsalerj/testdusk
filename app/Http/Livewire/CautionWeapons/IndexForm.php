@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\CautionWeapons;
 
+use App\Data\Repositories\CautionWeapons;
 use App\Http\Livewire\BaseForm;
+use App\Models\Caution;
 use App\Models\CautionWeapon;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\WeaponTypes as WeaponTypesRepository;
@@ -12,9 +14,10 @@ use App\Data\Repositories\Shelves as ShelvesRepository;
 use Carbon\Carbon;
 use function view;
 
-class CreateForm extends BaseForm
+class IndexForm extends BaseForm
 {
     public CautionWeapon $cautionWeapon;
+    public Caution $caution;
     public $selectedId;
 
     public $caution_id;
@@ -31,6 +34,11 @@ class CreateForm extends BaseForm
     public $edit;
     public $modalMode;
 
+    public $cautionWeapons;
+    public $routine;
+    public $disabled;
+    public $readonly;
+
     public function clearWeapon()
     {
         $this->selectedId = null;
@@ -41,6 +49,8 @@ class CreateForm extends BaseForm
         $this->weapon_number = null;
         $this->cabinet_id = null;
         $this->shelf_id = null;
+
+        $this->disabled = null;
 
         $this->resetErrorBag();
     }
@@ -54,16 +64,15 @@ class CreateForm extends BaseForm
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
 
-    public function prepareForUpdate($id, $readonly = false)
+    public function prepareForUpdate($id, $disabled = false)
     {
-        dd('update');
         $this->selectedId = $id;
         $cautionWeapon = CautionWeapon::find($id);
 
-        $this->modalMode = 'update';
-        $this->readonly = $readonly;
+        $this->modalMode = $disabled ? 'detail' : 'update';
+        $this->disabled = $disabled;
 
-        $this->caution_weapon_id = $cautionWeapon->caution_weapon_id;
+        $this->caution_weapon_id = $id;
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
@@ -73,14 +82,15 @@ class CreateForm extends BaseForm
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
 
-    public function prepareForDelete($id)
+    public function prepareForDelete($id, $disabled = false)
     {
         $this->selectedId = $id;
         $cautionWeapon = CautionWeapon::find($id);
 
         $this->modalMode = 'delete';
+        $this->disabled = $disabled;
 
-        $this->caution_weapon_id = $cautionWeapon->caution_weapon_id;
+        $this->caution_weapon_id = $id;
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
@@ -92,7 +102,7 @@ class CreateForm extends BaseForm
 
     public function store()
     {
-        $values = ['caution_id' => $this->caution_id];
+        $values = ['caution_id' => $this->caution->id];
         $values = array_merge($values, ['entranced_at' => Carbon::now()]);
         $values = array_merge($values, ['exited_at' => Carbon::now()]);
         $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
@@ -147,6 +157,7 @@ class CreateForm extends BaseForm
         if ($this->selectedId) {
             $row = CautionWeapon::find($this->selectedId);
             //$row->fill($validatedData);
+            $row->fill($values);
             $row->save();
         } else {
             //CautionWeapon::create($validatedData);
@@ -154,21 +165,26 @@ class CreateForm extends BaseForm
         }
 
         $this->clearWeapon();
-        $this->cautionWeapon->refresh();
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
-        return redirect()->to('/cautions/' . $this->caution_id);
+        //return redirect()->to('/cautions/' . $this->caution_id);
     }
 
     public function delete()
     {
-        $row = CautionWeapon::find($this->selectedId);
-        $row->delete($this->selectedId);
+        if ($this->selectedId) {
+            CautionWeapon::find($this->selectedId)->delete();
+        }
+
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
 
         //CautionWeapon::find($this->selectedId)->delete();
 
-        $this->clearWeapon();
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
-        return redirect()->to('/cautions/' . $this->caution_id);
+        //$this->clearWeapon();
+        //$this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
+
+        //return redirect()->to('/cautions/' . $this->caution_id);
     }
 
     public function fillModel()
@@ -210,6 +226,11 @@ class CreateForm extends BaseForm
 
     public function mount()
     {
+        dd('ok');
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
+        dd($this->caution->routine);
+        $this->routine = $this->caution->routine;
+
         if ($this->mode == 'create') {
             $this->cautionWeapon = new CautionWeapon();
         } else {

@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-outline-primary text-white float-end" dusk="newStuff" title="Novo Material">
+                <a href="{{ route('stuffs.create', $routine->id) }}" class="btn btn-primary text-white float-end" dusk="newStuff" title="Novo Material">
                     <i class="fa fa-plus"></i> Novo
                 </a>
                 @endif
@@ -87,7 +87,7 @@
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Confirmar</button>
+                                            <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-check"></i> Remover</button>
                                             <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                         </div>
                                     </form>

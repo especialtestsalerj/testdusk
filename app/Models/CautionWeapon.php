@@ -34,4 +34,9 @@ class CautionWeapon extends Model
     {
         return $this->belongsTo(Shelf::class);
     }
+
+    public function caution()
+    {
+        return $this->belongsTo(Caution::class);
+    }
 }
