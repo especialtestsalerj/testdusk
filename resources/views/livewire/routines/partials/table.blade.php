@@ -1,5 +1,93 @@
 
 
+<div class="card card-routine m-1">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6 col-lg-1 text-center"> 08:00 - 20:00 </div>
+            <div class="col-6  col-lg-1 text-center">
+                <label class="badge bg-success"> ABERTA </label>
+            </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-12 col-lg-2">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finishModal3" title="Finalizar Rotina">
+                    <i class="fa fa-check"></i> Finalizar </button>
+                <a href="http://ocorrencias.test/routines/3" class="btn btn-primary text-white" dusk="manageRoutine-3" title="Gerenciar Rotina">
+                    <i class="fa fa-cog"></i> Gerenciar </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-routine m-1">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6 col-lg-1 text-center"> 08:00 - 20:00 </div>
+            <div class="col-6  col-lg-1 text-center">
+                <label class="badge bg-success"> ABERTA </label>
+            </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-12 col-lg-2">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finishModal3" title="Finalizar Rotina">
+                    <i class="fa fa-check"></i> Finalizar </button>
+                <a href="http://ocorrencias.test/routines/3" class="btn btn-primary text-white" dusk="manageRoutine-3" title="Gerenciar Rotina">
+                    <i class="fa fa-cog"></i> Gerenciar </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-routine m-1">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6 col-lg-1 text-center"> 08:00 - 20:00 </div>
+            <div class="col-6  col-lg-1 text-center">
+                <label class="badge bg-success"> ABERTA </label>
+            </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-6  col-lg-1">
+                <h6 class="mt-3 mt-lg-0 text-end">
+                    <strong>Assunção</strong>
+                </h6>
+            </div>
+            <div class="col-12 col-lg-3"> 14/02/2023 ÀS 17:32 <br> BRENO TRENGROUSE LAIGNIER DE SOUZA </div>
+            <div class="col-12 col-lg-2">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#finishModal3" title="Finalizar Rotina">
+                    <i class="fa fa-check"></i> Finalizar </button>
+                <a href="http://ocorrencias.test/routines/3" class="btn btn-primary text-white" dusk="manageRoutine-3" title="Gerenciar Rotina">
+                    <i class="fa fa-cog"></i> Gerenciar </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table id="routineTable" class="table table-striped table-bordered">
     <thead>
         <tr>

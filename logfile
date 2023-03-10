@@ -30,3 +30,5 @@
 2023-03-02 12:56:23.909 -03 [7340] LOG:  database system is shut down
 2023-03-02 14:09:04.189 -03 [3750] FATAL:  lock file "postmaster.pid" already exists
 2023-03-02 14:09:04.189 -03 [3750] HINT:  Is another postmaster (PID 3716) running in data directory "/Users/breno/pgdata"?
+2023-03-09 16:49:07.046 -03 [1816] FATAL:  lock file "postmaster.pid" already exists
+2023-03-09 16:49:07.046 -03 [1816] HINT:  Is another postmaster (PID 1507) running in data directory "/Users/breno/pgdata"?

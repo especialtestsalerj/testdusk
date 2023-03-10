@@ -1,13 +1,13 @@
 
 
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
-        <div class="card-header py-4 px-4">
+    <div class="mx-0 my-0 ">
+        <div class="py-4 px-4">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-3">
                     <h2 class="mb-0">Rotinas</h2>
                 </div>
 
-            <div class="col-md-9">
+            <div class="col-9">
                 <form action="{{ route('routines.index') }}" id="searchForm">
                     @include(
                         'livewire.partials.search-form',
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-        <div class="card-body p-0">
+        <div class="p-0">
             @include('layouts.msg')
 
         @include('livewire.routines.partials.table')
