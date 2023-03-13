@@ -1,7 +1,7 @@
 
 
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
-        <div class="card-header py-4 px-4">
+    <div class="mx-0 my-0 mx-lg-5 my-lg-4">
+        <div class="py-4 px-4">
             <div class="row">
                 <div class="col-md-3">
                     <h2 class="mb-0">Tipos de Ocorrência</h2>

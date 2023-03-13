@@ -349,3 +349,16 @@ body.bg-light {
 .bg-custom {
     background: #b7c0c9;
 }
+
+
+
+.cards-striped {
+    .card {
+        &:nth-of-type(odd){
+            background: rgba(255, 255, 255, 0.3);
+        }
+        &:nth-of-type(even){
+            background: rgba(255, 255, 255, 0.6);
+        }
+    }
+}

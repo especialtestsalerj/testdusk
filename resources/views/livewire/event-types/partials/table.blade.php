@@ -1,4 +1,165 @@
+<div class="cards-striped mx-3 mx-lg-0">
 
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>  <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>  <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>  <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>  <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    BRENO TRENGROUSE LAIGNIER DE SOUZA
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
 <table id="eventTypeTable" class="table table-striped table-bordered">
