@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 
-class SectorDelete extends SectorStore
+class SectorDestroy extends SectorStore
 {
     public function authorize()
     {
-        return allows('sectors:update');
+        return allows('sectors:destroy');
     }
 
     public function rules()

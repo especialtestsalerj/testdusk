@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Requests\SectorDelete;
+use App\Http\Requests\SectorDestroy;
 use Illuminate\Support\Facades\Validator;
 
 class Sector extends Model
@@ -13,7 +13,7 @@ class Sector extends Model
 
     public function canDelete()
     {
-        $request = new SectorDelete($this->toArray());
+        $request = new SectorDestroy($this->toArray());
 
         return Validator::make($request->all(), $request->rules())->fails();
     }

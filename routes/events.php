@@ -4,8 +4,13 @@ use App\Http\Controllers\Event;
 use App\Http\Livewire\Events\Index as EventsIndex;
 
 Route::group(['prefix' => '/events'], function () {
+    //Visualizar
+    Route::get('', EventsIndex::class)
+        ->name('events.index')
+        ->can('events:show');
+
     //Criar
-    Route::get('/create/{routine_id}', [Event::class, 'create'])
+    Route::get('/create', [Event::class, 'create'])
         ->name('events.create')
         ->can('events:store');
 
@@ -14,30 +19,25 @@ Route::group(['prefix' => '/events'], function () {
         ->name('events.show')
         ->can('events:show');
 
-    //Visualizar
-    Route::get('/index/{routine_id}', EventsIndex::class)
-        ->name('events.index')
-        ->can('events:show');
-
     Route::group(
         [
             'middleware' => ['must-have-opened-routine'],
         ],
         function () {
-            //Criar (Rotina)
-            Route::post('/', [Event::class, 'store'])
+            //Criar
+            Route::post('', [Event::class, 'store'])
                 ->name('events.store')
                 ->can('events:store');
 
-            //Alterar (Rotina)
+            //Alterar
             Route::post('/{id}', [Event::class, 'update'])
                 ->name('events.update')
                 ->can('events:update');
 
-            //Remover (Rotina)
-            Route::post('/delete/{id}', [Event::class, 'delete'])
-                ->name('events.delete')
-                ->can('events:show');
+            //Remover
+            Route::delete('/{id}', [Event::class, 'destroy'])
+                ->name('events.destroy')
+                ->can('events:destroy');
         }
     );
 });

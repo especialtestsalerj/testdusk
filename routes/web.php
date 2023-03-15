@@ -32,12 +32,16 @@ Route::group(
         Route::get('/', function () {
             return redirect('dashboard');
         });
+
         require __DIR__ . '/eventTypes.php';
         require __DIR__ . '/sectors.php';
         require __DIR__ . '/routines.php';
-        require __DIR__ . '/events.php';
-        require __DIR__ . '/visitors.php';
-        require __DIR__ . '/stuffs.php';
-        require __DIR__ . '/cautions.php';
+
+        Route::group(['prefix' => '/routines/{routine_id}'], function () {
+            require __DIR__ . '/events.php';
+            require __DIR__ . '/visitors.php';
+            require __DIR__ . '/stuffs.php';
+            require __DIR__ . '/cautions.php';
+        });
     }
 );

@@ -22,9 +22,9 @@
                                     'btnNovoLabel' => 'Novo',
                                     'btnNovoTitle' => 'Novo Material',
                                     'routeSearch' => 'stuffs.index',
-                                    'routeCreate' => 'stuffs.createFromDashboard',
                                     'routeSearchParams' => ['routine_id' => $routine_id],
-                                    'routeCreateParams' => ['routine_id' => $routine_id],
+                                    'routeCreate' => 'stuffs.create',
+                                    'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
                                 ]
                             )
                         @else
@@ -34,7 +34,7 @@
                                     'btnNovoLabel' => 'Novo',
                                     'btnNovoTitle' => 'Novo Material',
                                     'routeSearch' => 'stuffs.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
+                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
                                 ]
                             )
                         @endif
@@ -46,7 +46,7 @@
         <div class="card-body">
             @include('layouts.msg')
 
-            @include('livewire.stuffs.partials.table')
+            @include('livewire.stuffs.partials.table', ['redirect' => 'stuffs.index'])
         </div>
     </div>
 

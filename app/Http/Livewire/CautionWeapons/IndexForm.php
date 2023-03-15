@@ -38,6 +38,7 @@ class IndexForm extends BaseForm
     public $routine;
     public $disabled;
     public $readonly;
+    public $redirect;
 
     public function clearWeapon()
     {
@@ -50,7 +51,7 @@ class IndexForm extends BaseForm
         $this->cabinet_id = null;
         $this->shelf_id = null;
 
-        $this->disabled = null;
+        $this->readonly = false;
 
         $this->resetErrorBag();
     }
@@ -64,13 +65,13 @@ class IndexForm extends BaseForm
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
 
-    public function prepareForUpdate($id, $disabled = false)
+    public function prepareForUpdate($id, $readonly = false)
     {
         $this->selectedId = $id;
         $cautionWeapon = CautionWeapon::find($id);
 
-        $this->modalMode = $disabled ? 'detail' : 'update';
-        $this->disabled = $disabled;
+        $this->modalMode = $readonly ? 'detail' : 'update';
+        $this->readonly = $readonly;
 
         $this->caution_weapon_id = $id;
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
@@ -82,13 +83,13 @@ class IndexForm extends BaseForm
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
 
-    public function prepareForDelete($id, $disabled = false)
+    public function prepareForDelete($id)
     {
         $this->selectedId = $id;
         $cautionWeapon = CautionWeapon::find($id);
 
         $this->modalMode = 'delete';
-        $this->disabled = $disabled;
+        $this->readonly = true;
 
         $this->caution_weapon_id = $id;
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
@@ -102,7 +103,9 @@ class IndexForm extends BaseForm
 
     public function store()
     {
-        $values = ['caution_id' => $this->caution->id];
+        //$values = ['caution_id' => $this->caution->id];
+        $values = ['caution_id' => $this->caution_id];
+        $values = array_merge($values, ['redirect' => $this->redirect]);
         $values = array_merge($values, ['entranced_at' => Carbon::now()]);
         $values = array_merge($values, ['exited_at' => Carbon::now()]);
         $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
@@ -165,7 +168,7 @@ class IndexForm extends BaseForm
         }
 
         $this->clearWeapon();
-        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
         //return redirect()->to('/cautions/' . $this->caution_id);
     }
@@ -176,7 +179,7 @@ class IndexForm extends BaseForm
             CautionWeapon::find($this->selectedId)->delete();
         }
 
-        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
 
         //CautionWeapon::find($this->selectedId)->delete();
@@ -226,10 +229,11 @@ class IndexForm extends BaseForm
 
     public function mount()
     {
-        dd('ok');
-        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
-        dd($this->caution->routine);
-        $this->routine = $this->caution->routine;
+        //$this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution->id)->get();
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
+
+        //$this->routine = $this->caution->routine;
+        $this->routine = $this->routine;
 
         if ($this->mode == 'create') {
             $this->cautionWeapon = new CautionWeapon();

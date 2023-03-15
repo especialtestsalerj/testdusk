@@ -47,7 +47,6 @@ window.addEventListener('swal', function (e) {
 })
 
 window.addEventListener('show-modal', function (e) {
-    alert('ok')
     $('#' + e.detail.target).modal('show')
 })
 

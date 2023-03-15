@@ -22,9 +22,9 @@
                                     'btnNovoLabel' => 'Novo/a',
                                     'btnNovoTitle' => 'Novo/a Visitante',
                                     'routeSearch' => 'visitors.index',
-                                    'routeCreate' => 'visitors.createFromDashboard',
                                     'routeSearchParams' => ['routine_id' => $routine_id],
-                                    'routeCreateParams' => ['routine_id' => $routine_id],
+                                    'routeCreate' => 'visitors.create',
+                                    'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'visitors.index'],
                                 ]
                             )
                         @else
@@ -34,7 +34,7 @@
                                     'btnNovoLabel' => 'Novo/a',
                                     'btnNovoTitle' => 'Novo/a Visitante',
                                     'routeSearch' => 'visitors.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
+                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'visitors.index'],
                                 ]
                             )
                         @endif
@@ -46,7 +46,7 @@
         <div class="card-body">
             @include('layouts.msg')
 
-            @include('livewire.visitors.partials.table')
+            @include('livewire.visitors.partials.table', ['redirect' => 'visitors.index'])
         </div>
     </div>
 

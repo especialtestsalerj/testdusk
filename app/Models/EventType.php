@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Requests\EventTypeDelete;
+use App\Http\Requests\EventTypeDestroy;
 use Illuminate\Support\Facades\Validator;
 
 class EventType extends Model
@@ -18,7 +18,7 @@ class EventType extends Model
 
     public function canDelete()
     {
-        $request = new EventTypeDelete($this->toArray());
+        $request = new EventTypeDestroy($this->toArray());
 
         return Validator::make($request->all(), $request->rules())->fails();
     }

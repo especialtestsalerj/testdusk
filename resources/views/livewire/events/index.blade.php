@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-8">
-                    <h2 class="mb-0">Ocorrênciasxxxxxxxxxxx</h2>
+                    <h2 class="mb-0">Ocorrências</h2>
                     Rotina {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
                     @if ($routine->status)
                         <label class="badge bg-success"> ABERTA </label>
@@ -22,8 +22,8 @@
                                     'btnNovoLabel' => 'Nova',
                                     'btnNovoTitle' => 'Nova Ocorrência',
                                     'routeSearch' => 'events.index',
-                                    'routeCreate' => 'events.create',
                                     'routeSearchParams' => ['routine_id' => $routine_id],
+                                    'routeCreate' => 'events.create',
                                     'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'events.index'],
                                 ]
                             )
@@ -34,7 +34,7 @@
                                     'btnNovoLabel' => 'Nova',
                                     'btnNovoTitle' => 'Nova Ocorrência',
                                     'routeSearch' => 'events.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
+                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'events.index'],
                                 ]
                             )
                         @endif

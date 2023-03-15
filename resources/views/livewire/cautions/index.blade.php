@@ -22,9 +22,9 @@
                                     'btnNovoLabel' => 'Nova',
                                     'btnNovoTitle' => 'Nova Cautela de Arma',
                                     'routeSearch' => 'cautions.index',
-                                    'routeCreate' => 'cautions.createFromDashboard',
                                     'routeSearchParams' => ['routine_id' => $routine_id],
-                                    'routeCreateParams' => ['routine_id' => $routine_id],
+                                    'routeCreate' => 'cautions.create',
+                                    'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
                                 ]
                             )
                         @else
@@ -34,7 +34,7 @@
                                     'btnNovoLabel' => 'Nova',
                                     'btnNovoTitle' => 'Nova Cautela de Arma',
                                     'routeSearch' => 'cautions.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
+                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
                                 ]
                             )
                         @endif
@@ -46,7 +46,7 @@
         <div class="card-body">
             @include('layouts.msg')
 
-            @include('livewire.cautions.partials.table')
+            @include('livewire.cautions.partials.table', ['redirect' => 'cautions.index'])
         </div>
     </div>
 

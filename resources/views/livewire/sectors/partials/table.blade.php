@@ -38,8 +38,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="form" action="{{ route('sectors.delete', ['id' => $sector->id]) }}" method="post">
+                            <form class="form" action="{{ route('sectors.destroy', ['id' => $sector->id]) }}" method="post">
                                 @csrf
+                                @method('delete')
                                 <input name="id" type="hidden" value="{{ $sector->id }}">
                                 <div class="form-group">
                                     <label for="name">Nome</label>
@@ -53,8 +54,8 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>
                         </div>

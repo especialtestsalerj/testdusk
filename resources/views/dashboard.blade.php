@@ -9,7 +9,6 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 @forelse ($routines as $routine)
-                <!-- todo pacheco criar loop e adicionar dados reais -->
                 <div class="swiper-slide">
                     <div dir="ltr" class="col-12">
                         <div class="card bg-white">
@@ -19,7 +18,7 @@
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
                                             @can('cautions:show')
-                                            <a href="{{ route('routines.show', ['id' => $routine->id]) }}">
+                                            <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
                                                 Rotina {{ $routine->id }}
                                             </a>
                                             @endcan

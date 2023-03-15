@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventTypeStore as EventTypeRequest;
 use App\Data\Repositories\EventTypes as EventTypesRepository;
 use App\Http\Requests\EventTypeUpdate as EventTypeUpdateRequest;
-use App\Http\Requests\EventTypeDelete as EventTypeDeleteRequest;
+use App\Http\Requests\EventTypeDestroy as EventTypeDestroyRequest;
 use App\Support\Constants;
 
 class EventType extends Controller
@@ -55,7 +55,7 @@ class EventType extends Controller
             ->with('message', 'Tipo de Ocorrência alterado com sucesso!');
     }
 
-    public function delete(EventTypeDeleteRequest $request, $id)
+    public function destroy(EventTypeDestroyRequest $request, $id)
     {
         $eventType = app(EventTypesRepository::class)->findById($id);
 

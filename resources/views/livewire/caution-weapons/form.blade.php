@@ -8,8 +8,7 @@
             </div>
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
-
-                @if ($routine->status && !$readonly)
+                @if ($routine->status && !$disabled)
                     <button type="button" class="btn btn-primary" wire:click="prepareForCreate" dusk='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
                         <i class="fa fa-plus"></i>
                     </button>
@@ -40,7 +39,9 @@
                         </div>
                         <div class="modal-body">
                             <form>
+                                @csrf
                                 <input type="hidden" class="form-control" name="caution_id" id="caution_id" wire:model.defer="caution_id">
+
                                 @if($modalMode != 'delete')
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-end">
@@ -52,8 +53,8 @@
                                 @if($modalMode == 'create')
                                     <div class="form-group">
                                         CARREGAR LISTA DE ARMAS PARA SELECIONAR UMA...
-                                        <label for="weapon_type_id">Lista de Armas{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                        <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id" {{$disabled ? 'disabled' : ''}}>
+                                        <label for="weapon_type_id_new">Lista de Armas{{ ($modalMode == 'delete') ? '' : '*' }}</label>
+                                        <select class="form-select" name="weapon_type_id_new" id="weapon_type_id_new" wire:model.defer="weapon_type_id" @disabled($disabled || $readonly)>
                                             <option value="">SELECIONE</option>
                                             @foreach ($weaponTypes as $key => $weaponType)
                                                 @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
@@ -63,13 +64,12 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                    <div>
-                                    <br /><br />
+                                    </div>
                                 @endif
 
                                 <div class="form-group">
                                     <label for="weapon_type_id">Tipo de Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                    <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id" {{$disabled ? 'disabled' : ''}}>
+                                    <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id" @disabled($disabled || $readonly)>
                                         <option value="">SELECIONE</option>
                                         @foreach ($weaponTypes as $key => $weaponType)
                                             @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="weapon_description">Descrição da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                    <input class="form-control text-uppercase" name="weapon_description" dusk='formWeaponDescription' id="weapon_description" value="{{is_null(old('weapon_description')) ? $cautionWeapon->weapon_description : old('weapon_description')}}" wire:model.defer="weapon_description" {{ $disabled ? 'disabled' : '' }}/>
+                                    <input class="form-control text-uppercase" name="weapon_description" dusk='formWeaponDescription' id="weapon_description" value="{{ is_null(old('weapon_description')) ? $cautionWeapon->weapon_description : old('weapon_description') }}" wire:model.defer="weapon_description" @disabled($disabled || $readonly)/>
                                     <div>
                                         @error('weapon_description')
                                         <small class="text-danger">
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="weapon_number">Numeração da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                    <input class="form-control text-uppercase" name="weapon_number" id="weapon_number" value="{{is_null(old('weapon_number')) ? $cautionWeapon->weapon_number : old('weapon_number')}}" wire:model.defer="weapon_number" {{$disabled ? 'disabled' : ''}}/>
+                                    <input class="form-control text-uppercase" name="weapon_number" id="weapon_number" value="{{ is_null(old('weapon_number')) ? $cautionWeapon->weapon_number : old('weapon_number') }}" wire:model.defer="weapon_number" @disabled($disabled || $readonly)/>
                                     <div>
                                         @error('weapon_number')
                                         <small class="text-danger">
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cabinet_id">Armário{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                    <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" {{$disabled ? 'disabled' : ''}}>
+                                    <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" @disabled($disabled || $readonly)>
                                         <option value="">SELECIONE</option>
                                         @foreach ($cabinets as $key => $cabinet)
                                             @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->cabinet_id) && $cautionWeapon->cabinet_id === $cabinet->id) || (!is_null(old('cabinet_id'))) && old('cabinet_id') == $cabinet->id))
@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="shelf_id">Box{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                    <select class="form-select" name="shelf_id" id="shelf_id" wire:model.defer="shelf_id" {{$disabled ? 'disabled' : ''}}>
+                                    <select class="form-select" name="shelf_id" id="shelf_id" wire:model.defer="shelf_id" @disabled($disabled || $readonly)>
                                         <option value="">SELECIONE</option>
                                         @foreach ($shelves as $key => $shelf)
                                             @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->shelf_id) && $cautionWeapon->shelf_id === $shelf->id) || (!is_null(old('shelf_id'))) && old('shelf_id') == $shelf->id))
@@ -158,60 +158,62 @@
                         </div>
                         <div class="modal-footer">
                             @if($modalMode != 'delete')
-                                <button type="button" dusk='submit' wire:click.prevent="store()" class="btn btn-outline-success btn-sm close-modal" title="Salvar" {{$disabled ? 'disabled' : ''}}><i class="fa fa-save"></i> Salvar</button>
+                                <button type="button" dusk='submit' wire:click.prevent="store()" class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly)><i class="fa fa-save"></i> Salvar</button>
                             @endif
                             @if($modalMode == 'delete')
-                                <button type="button" dusk='submit' wire:click.prevent="delete()" class="btn btn-outline-success btn-sm close-modal" title="Remover"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" dusk='submit' wire:click.prevent="delete()" class="btn btn-success btn-sm text-white close-modal" title="Remover"><i class="fa fa-check"></i> Remover</button>
                             @endif
-                            <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <table id="cautionWeaponTable" class="table table-striped table-bordered mt-2">
-            <thead>
-            <tr>
-                <th class="col-md-6">Descrição</th>
-                <th class="col-md-2">Numeração</th>
-                <th class="col-md-2">Localização</th>
-                <th class="col-md-2"></th>
-            </tr>
-            </thead>
-            <tbody>
-            @forelse ($cautionWeapons as $weapon)
+        <div class="row">
+            <table id="cautionWeaponTable" class="table table-striped table-bordered mt-2">
+                <thead>
                 <tr>
-                    <td>
-                        {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
-                    </td>
-                    <td>
-                        {{ $weapon->weapon_number }}
-                    </td>
-                    <td>
-                        {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }}, {{ true }})" title="Detalhar Arma">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        @if ($routine->status && !$readonly)
-                            <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        @endif
-                    </td>
+                    <th class="col-md-6">Descrição</th>
+                    <th class="col-md-2">Numeração</th>
+                    <th class="col-md-2">Localização</th>
+                    <th class="col-md-2"></th>
                 </tr>
-            @empty
-                <div class="alert alert-warning mt-2">
-                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
-                </div>
-            @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @forelse ($cautionWeapons as $weapon)
+                    <tr>
+                        <td>
+                            {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
+                        </td>
+                        <td>
+                            {{ $weapon->weapon_number }}
+                        </td>
+                        <td>
+                            {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id, false }}, {{ true }})" title="Detalhar Arma">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            @if ($routine->status && !$disabled)
+                                <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <div class="alert alert-warning mt-2">
+                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
+                    </div>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

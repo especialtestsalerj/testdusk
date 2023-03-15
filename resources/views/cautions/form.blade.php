@@ -6,18 +6,19 @@
             @csrf
 
             @if (isset($caution))
-                <input name="id" type="hidden" value="{{ $caution->id }}">
+                <input type="hidden" name="id" value="{{ $caution->id }}">
             @endif
-            <input name="routine_id" type="hidden" value="{{ $routine_id }}">
+            <input type="hidden" name="routine_id" value="{{ $routine_id }}">
+            <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
 
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route('routines.show', ['id' => $routine_id]) }}">Cautelas de Armas</a>
+                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Cautelas de Armas</a>
 
                             @if(is_null($caution->id))
-                                > Novo/a
+                                > Nova
                             @else
                                 > {{ $caution->id }} - {{ $caution?->protocol_number_formatted }}
                             @endif
@@ -25,7 +26,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => 'routines.show', 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -43,21 +44,16 @@
                     </div>
                 @endif
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="started_at">Abertura*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{ is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{ is_null(old('started_at')) ? (formMode() == 'create' ? $routine->entranced_at : $caution->started_at_formatted) : old('started_at') }}" @if(!$routine->status || request()->query('disabled')) disabled @endif/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="concluded_at">Fechamento</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{ is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at') }}" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="concluded_at" id="concluded_at" value="{{ is_null(old('concluded_at')) ? $caution->concluded_at_formatted : old('concluded_at') }}" @if(!$routine->status || request()->query('disabled')) disabled @endif/>
                         </div>
                     </div>
                 </div>
@@ -68,7 +64,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_id">Destino*</label>
-                            <select class="select2 form-control" name="destiny_sector_id" id="destiny_sector_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
+                            <select class="select2 form-control" name="destiny_sector_id" id="destiny_sector_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
@@ -81,7 +77,7 @@
                         </div>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
-                            <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>
+                            <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($users as $key => $user)
                                     @if(((!is_null($caution->id)) && (!is_null($caution->duty_user_id) && $caution->duty_user_id === $user->id) || (!is_null(old('duty_user_id'))) && old('duty_user_id') == $user->id))
@@ -94,13 +90,13 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Observações</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status) @if(request()->query('disabled')) disabled @endif>{{ is_null(old('description')) ? $caution->description: old('description') }}</textarea>
+                            <textarea class="form-control" name="description" id="description" @if(!$routine->status || request()->query('disabled')) disabled @endif>{{ is_null(old('description')) ? $caution->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
                 @if (formMode() == 'show')
                     <div class="p-4 bg-light border rounded-3">
-                        @include('caution-weapons.partials.table', ['cautionWeapons' => $cautionWeapons, 'routineStatus' => $routine->status])
+                        <livewire:caution-weapons.index-form :caution_id="$caution->id" :cautionWeapons="$cautionWeapons" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
                     </div>
                 @else
                     <div class="alert alert-warning mt-2">
@@ -109,17 +105,6 @@
                 @endif
             </div>
         </form>
-        <!-- Modal -->
-        <div wire:ignore.self class="modal fade" id="weapon-modal" tabindex="-1" role="dialog" aria-labelledby="weaponModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="weaponModalLabel"><i class="fas fa-gun"></i> Nova Arma</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <livewire:caution-weapons.index-form :caution="$caution" :readonly="request()->query('disabled')"/>
-                </div>
-            </div>
-        </div>
+
     </div>
 @endsection

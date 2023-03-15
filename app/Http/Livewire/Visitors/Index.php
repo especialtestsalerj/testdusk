@@ -15,6 +15,7 @@ class Index extends BaseIndex
     public $paginationEnabled = true;
     public $routine_id;
     public $routine;
+    public $redirect;
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
