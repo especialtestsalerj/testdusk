@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a href="{{ route('cautions.create', $routine->id) }}" class="btn btn-primary text-white float-end" dusk="newCaution" title="Nova Cautela">
+                <a href="{{ route('cautions.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Cautela" dusk="newCaution">
                     <i class="fa fa-plus"></i> Nova
                 </a>
                 @endif
@@ -50,9 +50,9 @@
                         {{ $caution->dutyUser->name }}
                     </td>
                     <td class="text-center actions">
-                        <a href="{{ route('cautions.show', ['id' => $caution->id, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                        <a href="{{ route('cautions.show', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                         @if($routine->status)
-                            <a href="{{ route('cautions.show', ['id' => $caution->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ route('cautions.show', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                             <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal-caution{{ $caution->id }}" title="Remover">
                                 <i class="fa fa-trash"></i>
                             </button>
@@ -67,9 +67,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form" action="{{ route('cautions.delete', ['id' => $caution->id]) }}" method="post">
+                                    <form class="form" action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" method="post">
                                         @csrf
-
+                                        @method('delete')
+                                        <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <label for="protocol_number">Protocolo</label>
                                             <input type="text" class="form-control text-uppercase" name="protocol_number" id="protocol_number" value="{{ $caution?->protocol_number_formatted }}" disabled/>
@@ -104,8 +105,8 @@
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Confirmar</button>
-                                            <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                            <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                            <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                         </div>
                                     </form>
                                 </div>

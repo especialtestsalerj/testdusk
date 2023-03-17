@@ -9,7 +9,6 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 @forelse ($routines as $routine)
-                <!-- todo pacheco criar loop e adicionar dados reais -->
                 <div class="swiper-slide">
                     <div dir="ltr" class="col-12">
                         <div class="card bg-white">
@@ -18,10 +17,19 @@
 
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
-                                            Rotina {{$routine->id}}
+                                            @can('cautions:show')
+                                            <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
+                                                Rotina {{ $routine->id }}
+                                            </a>
+                                            @endcan
+                                            @cannot('cautions:show')
+                                                <a href="{{ route('routines.show', ['id' => $routine->id]) }}">
+                                                    Rotina {{ $routine->id }}
+                                                </a>
+                                            @endcannot
                                         </h4>
                                     </div>
-                                    <div class="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-end">
+                                    <div class="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-start">
                                         <h4>
                                             @if ($routine->status)
                                                 <span class="badge rounded-pill bg-success">ABERTA</span>
@@ -38,11 +46,6 @@
                                     </div>
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
-                                        @if ($routine->status)
-                                            <span class="badge rounded-pill bg-success" title="Status da Rotina">ABERTA</span>
-                                        @else
-                                            <span class="badge rounded-pill bg-danger" title="Status da Rotina">FINALIZADA</span>
-                                        @endif
                                             <i class="fas fa-clock ms-lg-3"></i> {{ $routine?->shift?->name ?? '-' }}
                                         </h4>
                                     </div>
@@ -56,7 +59,7 @@
 
                                     @include('partials.dashboard-button', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
 
-                                    @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
+                                    @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'cautions:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
                                 </div>
                             </div>
                         </div>

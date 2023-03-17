@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 
-class EventTypeDelete extends EventTypeStore
+class EventTypeDestroy extends EventTypeStore
 {
     public function authorize()
     {
-        return allows('event-types:update');
+        return allows('event-types:destroy');
     }
 
     public function rules()

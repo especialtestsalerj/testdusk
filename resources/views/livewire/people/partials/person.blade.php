@@ -1,7 +1,7 @@
 <div class="form-group">
     <div
         x-init="VMasker($refs.cpf).maskPattern(cpfmask);"
-        x-data="{ isEditing: {{formMode() == 'create' ? 'true' : 'false'}}, cpfmask: '999.999.999-99'}"
+        x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99'}"
         @focus-field.window="$refs[$event.detail.field].focus()"
     >
         <div class="row">

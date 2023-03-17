@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                <a href="{{ route('events.create', $routine->id) }}" class="btn btn-primary text-white float-end" title="Nova Ocorrência" dusk="newEvent">
+                <a href="{{ route('events.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Ocorrência" dusk="newEvent">
                     <i class="fa fa-plus"></i> Nova
                 </a>
                 @endif
@@ -42,9 +42,9 @@
                         {{ $event->dutyUser->name }}
                     </td>
                     <td class="text-center actions">
-                        <a href="{{ route('events.show', ['id' => $event->id, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                        <a href="{{ route('events.show', ['routine_id' => $routine->id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                         @if($routine->status)
-                            <a href="{{ route('events.show', ['id' => $event->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ route('events.show', ['routine_id' => $routine->id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                             <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $event->id }}" title="Remover">
                                 <i class="fa fa-trash"></i>
                             </button>
@@ -59,8 +59,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form" action="{{ route('events.delete', ['id' => $event->id]) }}" method="post">
+                                    <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
                                         @csrf
+                                        @method('delete')
+                                        <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <label for="event_type_id">Tipo</label>
                                             <select class="form-select form-control" name="event_type_id" id="event_type_id" disabled>
@@ -89,8 +91,8 @@
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save"></i> Confirmar</button>
-                                            <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                            <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                            <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                         </div>
                                     </form>
                                 </div>

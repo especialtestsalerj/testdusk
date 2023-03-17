@@ -29,7 +29,7 @@
             <td class="text-center">
                 @if ($routine->status)
                     <label class="badge bg-success"> ABERTA </label>
-                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina">
+                    <button type="button" class="btn btn-outline-darks btn-sm" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina">
                         <i class="fa fa-check"></i> Finalizar
                     </button>
                 @else
@@ -38,11 +38,11 @@
             </td>
             <td class="text-center">
                 @if ($routine->status)
-                    <a href="{{ route('routines.show', ['id' => $routine->id]) }}" class="btn btn-primary text-white" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
+                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-primary" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
                         <i class="fa fa-cog"></i> Gerenciar
                     </a>
                 @else
-                    <a href="{{ route('routines.show', ['id' => $routine->id]) }}" class="btn btn-primary" title="Detalhar Rotina">
+                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-primary" title="Detalhar Rotina">
                         <i class="fa fa-search"></i> Visualizar
                     </a>
                 @endif
@@ -80,8 +80,8 @@
                                 </select>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-outline-success btn-sm close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                             </div>
                         </form>
                     </div>

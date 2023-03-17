@@ -51,4 +51,9 @@ class Caution extends Model
         $codigo = substr($this->protocol_number, 4, 4);
         return $codigo . '/' . $ano;
     }
+
+    public function routine()
+    {
+        return $this->belongsTo(Routine::class);
+    }
 }

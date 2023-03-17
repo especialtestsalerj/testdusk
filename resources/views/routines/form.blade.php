@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route('routines.index') }}">Rotinas</a>
+                            <a href="{{ route(request()->query('redirect')) }}">Rotinas</a>
 
                             @if(is_null($routine->id))
                                 > Nova
@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? 'routines:update' : '')])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status ? 'routines:update' : '')])
                     </div>
                 </div>
             </div>
@@ -106,13 +106,13 @@
                 </div>
 
                 @if(formMode() == 'show')
-                    @include('events.partials.table',['events'=>$routine->events])
+                    @include('events.partials.table',['events'=>$routine->events, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
 
-                    @include('visitors.partials.table',['visitors'=>$routine->visitors])
+                    @include('visitors.partials.table',['visitors'=>$routine->visitors, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
 
-                    @include('stuffs.partials.table',['stuffs'=>$routine->stuffs])
+                    @include('stuffs.partials.table',['stuffs'=>$routine->stuffs, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
 
-                    @include('cautions.partials.table',['cautions'=>$routine->cautions])
+                    @include('cautions.partials.table',['cautions'=>$routine->cautions, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
                 @endIf
             </div>
         </form>

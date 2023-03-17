@@ -2,9 +2,7 @@
 <button
     type="submit"
     class="btn btn-primary ml-1"
-    id="vue-editButton"
-    v-on:click.prevent="editButton()"
-    :disabled="isEditing || isCreating"
+    id="editButton"
 >
     <i class="fa fa-save"></i> Alterar
 </button>
