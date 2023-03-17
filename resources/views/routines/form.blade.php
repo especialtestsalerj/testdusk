@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="mx-0 my-0 mx-lg-5 my-lg-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('routines.update', ['id' => $routine->id]) }}" @else action="{{ route('routines.store')}}" @endIf method="POST">
             @csrf
 
