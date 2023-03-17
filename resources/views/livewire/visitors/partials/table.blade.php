@@ -1,3 +1,51 @@
+<div class="cards-striped mx-3 mx-lg-0 mt-lg-4">
+
+    <div class="card card-routine m-1">
+        <div class="card-body py-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <div class="row">
+                        <div class="col-6 col-lg-12 fw-bold">Entrada :</div>
+                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <div class="row">
+                        <div class="col-6 col-lg-12 fw-bold">Saída</div>
+                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <div class="row">
+                        <div class="col-6 col-lg-12 fw-bold">Visitante :</div>
+                        <div class="col-6 col-lg-12 fw-bold">TESTE DE NOME DO VISITANTE</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <div class="row">
+                        <div class="col-6 col-lg-12 fw-bold">Setor :</div>
+                        <div class="col-6 col-lg-12 fw-bold">Novo Setor</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <div class="row">
+                        <div class="col-6 col-lg-12 fw-bold">Plantonista :</div>
+                        <div class="col-6 col-lg-12 fw-bold">Nome do Plantonista Teste Nome Longo</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-2 text-center text-lg-end">
+                    <a href="http://ocorrencias.test/events/index/show/3/1?disabled=1" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                    <a href="http://ocorrencias.test/events/index/show/3/1" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal1" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
 <table id="visitorTable" class="table table-striped table-bordered">

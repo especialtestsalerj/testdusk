@@ -1,6 +1,4 @@
 <div class="cards-striped mx-3 mx-lg-0">
-
-
     <div class="card card-routine m-1">
         <div class="card-body">
             <div class="row">
@@ -118,9 +116,6 @@
             </div>
         </div>
     </div>
-
-
-
 </div>
 
 

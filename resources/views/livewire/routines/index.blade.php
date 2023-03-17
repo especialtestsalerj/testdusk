@@ -1,6 +1,4 @@
-
-
-    <div class="mx-0 my-0 ">
+    <div class="mx-0 my-0 mx-lg-5 my-lg-4">
         <div class="py-4 px-4">
             <div class="row">
                 <div class="col-3">

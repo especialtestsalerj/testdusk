@@ -1,43 +1,41 @@
+<div class="mx-0 my-0 mx-lg-5 my-lg-4">
 
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-0">Ocorrências</h2>
+            Rotina {{ $routine->id }}
+            @if ($routine->status)
+                <label class="badge bg-success"> ABERTA </label>
+            @else
+                <label class="badge bg-danger"> FINALIZADA </label>
+            @endif {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
+        </div>
 
-<div class="card card-default">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="mb-0">Ocorrências</h2>
-                Rotina {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
+        <div class="col-md-4">
+            <form action="{{ route('events.index', ['routine_id' => $routine_id]) }}" id="searchForm">
                 @if ($routine->status)
-                    <label class="badge bg-success"> ABERTA </label>
+                    @include(
+                        'livewire.partials.search-form',
+                        [
+                            'routeSearch' => 'events.index',
+                            'routeCreate' => 'events.createFromDashboard',
+                            'routeSearchParams' => ['routine_id' => $routine_id],
+                            'routeCreateParams' => ['routine_id' => $routine_id],
+                        ]
+                    )
                 @else
-                    <label class="badge bg-danger"> FINALIZADA </label>
+                    @include(
+                        'livewire.partials.search-form',
+                        [
+                            'routeSearch' => 'events.index',
+                            'routeSearchParams' => ['routine_id' => $routine_id],
+                        ]
+                    )
                 @endif
-            </div>
-
-            <div class="col-md-4">
-                <form action="{{ route('events.index', ['routine_id' => $routine_id]) }}" id="searchForm">
-                    @if ($routine->status)
-                        @include(
-                            'livewire.partials.search-form',
-                            [
-                                'routeSearch' => 'events.index',
-                                'routeCreate' => 'events.createFromDashboard',
-                                'routeSearchParams' => ['routine_id' => $routine_id],
-                                'routeCreateParams' => ['routine_id' => $routine_id],
-                            ]
-                        )
-                    @else
-                        @include(
-                            'livewire.partials.search-form',
-                            [
-                                'routeSearch' => 'events.index',
-                                'routeSearchParams' => ['routine_id' => $routine_id],
-                            ]
-                        )
-                    @endif
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+
 
     <div class="card-body">
         @include('layouts.msg')
