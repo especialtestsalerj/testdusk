@@ -49,7 +49,6 @@
                         <div class="modal-body">
                             <form class="form" action="{{ route('visitors.destroy', ['routine_id' => $routine_id, 'id' => $visitor->id]) }}" method="post">
                                 @csrf
-                                @method('delete')
                                 <input type="hidden" name="redirect" value="{{ $redirect }}">
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada</label>

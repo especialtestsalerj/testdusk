@@ -35,7 +35,7 @@ Route::group(['prefix' => '/cautions'], function () {
                 ->can('cautions:update');
 
             //Remover
-            Route::delete('/{id}', [Caution::class, 'destroy'])
+            Route::post('/delete/{id}', [Caution::class, 'destroy'])
                 ->name('cautions.destroy')
                 ->can('cautions:destroy');
         }

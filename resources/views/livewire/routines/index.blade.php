@@ -15,7 +15,7 @@
                                 'btnNovoLabel' => 'Nova',
                                 'btnNovoTitle' => 'Nova Rotina',
                                 'routeSearch' => 'routines.index',
-                                'routeCreate' => 'routines.create',
+                                'routeCreate' => 'routines.create', ['redirect' => 'routines.index'],
                             ]
                         )
                     </form>

@@ -69,7 +69,6 @@
                                 <div class="modal-body">
                                     <form class="form" action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" method="post">
                                         @csrf
-                                        @method('delete')
                                         <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <label for="protocol_number">Protocolo</label>

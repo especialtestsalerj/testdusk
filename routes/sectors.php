@@ -28,7 +28,7 @@ Route::group(['prefix' => '/sectors'], function () {
         ->can('sectors:update');
 
     //Remover
-    Route::delete('/{id}', [Sector::class, 'destroy'])
+    Route::post('/delete/{id}', [Sector::class, 'destroy'])
         ->name('sectors.destroy')
         ->can('sectors:destroy');
 });

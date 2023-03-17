@@ -41,7 +41,6 @@
                         <div class="modal-body">
                             <form class="form" action="{{ route('event-types.destroy', ['id' => $eventType->id]) }}" method="post">
                                 @csrf
-                                @method('delete')
                                 <input name="id" type="hidden" value="{{ $eventType->id }}">
                                 <div class="form-group">
                                     <label for="name">Nome</label>

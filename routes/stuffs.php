@@ -35,7 +35,7 @@ Route::group(['prefix' => '/stuffs'], function () {
                 ->can('stuffs:update');
 
             //Remover
-            Route::delete('/{id}', [Stuff::class, 'destroy'])
+            Route::post('/delete/{id}', [Stuff::class, 'destroy'])
                 ->name('stuffs.destroy')
                 ->can('stuffs:destroy');
         }

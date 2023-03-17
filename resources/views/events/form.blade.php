@@ -15,18 +15,18 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Ocorrências</a>
-
                             @if(is_null($event->id))
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Ocorrências</a>
                                 > Nova
                             @else
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $event->id]) }}">Ocorrências</a>
                                 > {{ $event->id }} - {{ $event->occurred_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$event, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'events:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model' => $event, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'events:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>

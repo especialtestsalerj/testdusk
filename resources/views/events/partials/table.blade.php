@@ -6,7 +6,6 @@
                     <i class="fas fa-list-check"></i> Ocorrências
                 </h4>
             </div>
-
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
                 <a href="{{ route('events.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Ocorrência" dusk="newEvent">
@@ -61,7 +60,6 @@
                                 <div class="modal-body">
                                     <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
                                         @csrf
-                                        @method('delete')
                                         <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <label for="event_type_id">Tipo</label>

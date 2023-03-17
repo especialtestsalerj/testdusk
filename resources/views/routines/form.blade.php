@@ -6,14 +6,14 @@
             @csrf
 
             @if (isset($routine))
-                <input name="id" type="hidden" value="{{ $routine->id }}">
+                <input type="hidden" name="id" value="{{ $routine->id }}">
             @endif
 
             <div class="card-header py-4 px-4">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect')) }}">Rotinas</a>
+                            <a href="{{ route('routines.index') }}">Rotinas</a>
 
                             @if(is_null($routine->id))
                                 > Nova
@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status ? 'routines:update' : '')])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? 'routines:update' : ''), 'id' => $routine->id])
                     </div>
                 </div>
             </div>
@@ -104,18 +104,17 @@
                         </div>
                     </div>
                 </div>
-
-                @if(formMode() == 'show')
-                    @include('events.partials.table',['events'=>$routine->events, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
-
-                    @include('visitors.partials.table',['visitors'=>$routine->visitors, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
-
-                    @include('stuffs.partials.table',['stuffs'=>$routine->stuffs, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
-
-                    @include('cautions.partials.table',['cautions'=>$routine->cautions, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
-                @endIf
             </div>
         </form>
+        @if(formMode() == 'show')
+            @include('events.partials.table',['events'=>$routine->events, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
+
+            @include('visitors.partials.table',['visitors'=>$routine->visitors, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
+
+            @include('stuffs.partials.table',['stuffs'=>$routine->stuffs, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
+
+            @include('cautions.partials.table',['cautions'=>$routine->cautions, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
+        @endIf
     </div>
 
     <div class="text-center py-4">

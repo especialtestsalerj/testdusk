@@ -15,18 +15,18 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Cautelas de Armas</a>
-
                             @if(is_null($caution->id))
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Cautelas de Armas</a>
                                 > Nova
                             @else
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $caution->id]) }}">Cautelas de Armas</a>
                                 > {{ $caution->id }} - {{ $caution?->protocol_number_formatted }}
                             @endif
                         </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model' => $caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>

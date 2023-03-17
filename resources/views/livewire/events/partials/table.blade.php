@@ -45,7 +45,6 @@
                         <div class="modal-body">
                             <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
                                 @csrf
-                                @method('delete')
                                 <input type="hidden" name="redirect" value="{{ $redirect }}">
                                 <div class="form-group">
                                     <label for="event_type_id">Tipo</label>

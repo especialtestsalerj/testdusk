@@ -35,7 +35,7 @@ Route::group(['prefix' => '/visitors'], function () {
                 ->can('visitors:update');
 
             //Remover
-            Route::delete('/{id}', [Visitor::class, 'destroy'])
+            Route::post('/delete/{id}', [Visitor::class, 'destroy'])
                 ->name('visitors.destroy')
                 ->can('visitors:destroy');
         }

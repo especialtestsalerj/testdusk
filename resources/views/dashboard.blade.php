@@ -23,7 +23,7 @@
                                             </a>
                                             @endcan
                                             @cannot('cautions:show')
-                                                <a href="{{ route('routines.show', ['id' => $routine->id]) }}">
+                                                <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
                                                     Rotina {{ $routine->id }}
                                                 </a>
                                             @endcannot

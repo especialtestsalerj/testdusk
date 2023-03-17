@@ -40,7 +40,6 @@
                         <div class="modal-body">
                             <form class="form" action="{{ route('sectors.destroy', ['id' => $sector->id]) }}" method="post">
                                 @csrf
-                                @method('delete')
                                 <input name="id" type="hidden" value="{{ $sector->id }}">
                                 <div class="form-group">
                                     <label for="name">Nome</label>

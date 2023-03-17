@@ -15,17 +15,17 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Materiais</a>
-
                             @if(is_null($stuff->id))
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Materiais</a>
                                 > Novo
                             @else
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $stuff->id]) }}">Materiais</a>
                                 > {{ $stuff->id }} - {{ $stuff->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$stuff, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'stuffs:update' : ''), 'id' => $routine_id])
+                        @include('partials.save-button', ['model' => $stuff, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'stuffs:update' : ''), 'id' => $routine_id])
                     </div>
                 </div>
             </div>
