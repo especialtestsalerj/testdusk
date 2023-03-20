@@ -14,7 +14,7 @@ jobs:
           POSTGRES_PASSWORD: vagrant
     steps:
       - add_ssh_keys:
-          fingerprints: "a5:3d:c0:4b:4e:2f:bd:e4:9f:9c:86:a1:8e:2b:2a:e7"
+          fingerprints: "70:64:ea:d1:a2:4a:92:69:51:0e:b0:80:46:1c:bb:bf"
       - checkout
       - run:
           name: "Prepare Environment"
