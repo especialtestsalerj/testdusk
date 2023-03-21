@@ -29,17 +29,17 @@
                 <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                 @if($routine->status)
                     <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $event->id }}" title="Remover">
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-delete-modal{{ $event->id }}" title="Remover">
                         <i class="fa fa-trash"></i>
                     </button>
                 @endif
             </td>
             <!-- Modal -->
-            <div class="modal fade" id="delete-modal{{ $event->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="event-delete-modal{{ $event->id }}" tabindex="-1" aria-labelledby="deleteModalLabelEvent" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Ocorrênciax</h5>
+                            <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fas fa-trash"></i> Remoção de Ocorrênciax</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

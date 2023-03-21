@@ -24,17 +24,17 @@
             <td class="text-center actions">
                 <a href="{{ route('sectors.show', ['id' => $sector->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                 @if(!$sector->canDelete())
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $sector->id }}" title="Remover">
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#sector-delete-modal{{ $sector->id }}" title="Remover">
                         <i class="fa fa-trash"></i>
                     </button>
                 @endif
             </td>
             <!-- Modal -->
-            <div class="modal fade" id="delete-modal{{ $sector->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="sector-delete-modal{{ $sector->id }}" tabindex="-1" aria-labelledby="deleteModalLabelSector" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Setor</h5>
+                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fas fa-trash"></i> Remoção de Setor</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

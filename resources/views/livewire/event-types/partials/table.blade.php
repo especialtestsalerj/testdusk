@@ -25,17 +25,17 @@
             <td class="text-center actions">
                 <a href="{{ route('event-types.show', ['id' => $eventType->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                 @if(!$eventType->canDelete())
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $eventType->id }}" title="Remover">
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-type-delete-modal{{ $eventType->id }}" title="Remover">
                         <i class="fa fa-trash"></i>
                     </button>
                 @endif
             </td>
             <!-- Modal -->
-            <div class="modal fade" id="delete-modal{{ $eventType->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="event-type-delete-modal{{ $eventType->id }}" tabindex="-1" aria-labelledby="deleteModalLabelEventType" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Tipo de Ocorrência</h5>
+                            <h5 class="modal-title" id="deleteModalLabelEventType"><i class="fas fa-trash"></i> Remoção de Tipo de Ocorrência</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
