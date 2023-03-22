@@ -41,7 +41,7 @@ class Visitor extends Controller
 
         $request->merge(['person_id' => $person->id]);
 
-        $visitor = app(VisitorsRepository::class)->create($request->all());
+        app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)
@@ -77,7 +77,7 @@ class Visitor extends Controller
 
         $request->merge(['person_id' => $person->id]);
 
-        $visitor = app(VisitorsRepository::class)->update($id, $request->all());
+        app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)

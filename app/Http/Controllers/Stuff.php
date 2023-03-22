@@ -33,7 +33,7 @@ class Stuff extends Controller
 
     public function store(StuffRequest $request, $routine_id)
     {
-        $stuff = app(StuffsRepository::class)->create($request->all());
+        app(StuffsRepository::class)->create($request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)
@@ -62,7 +62,7 @@ class Stuff extends Controller
 
     public function update(StuffUpdateRequest $request, $routine_id, $id)
     {
-        $stuff = app(StuffsRepository::class)->update($id, $request->all());
+        app(StuffsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)

@@ -37,7 +37,7 @@ class Event extends Controller
 
     public function store(EventRequest $request, $routine_id)
     {
-        $event = app(EventsRepository::class)->create($request->all());
+        app(EventsRepository::class)->create($request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)
@@ -69,7 +69,7 @@ class Event extends Controller
 
     public function update(EventUpdateRequest $request, $routine_id, $id)
     {
-        $event = app(EventsRepository::class)->update($id, $request->all());
+        app(EventsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)

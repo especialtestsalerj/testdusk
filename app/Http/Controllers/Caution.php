@@ -63,7 +63,7 @@ class Caution extends Controller
             'protocol_number' => app(CautionsRepository::class)->makeProtocolNumber($ano),
         ]);
 
-        $caution = app(CautionsRepository::class)->create($values);
+        app(CautionsRepository::class)->create($values);
 
         return redirect()
             ->route($request['redirect'], $routine_id)
@@ -118,7 +118,7 @@ class Caution extends Controller
         $request->request->remove('certificate_number');
         $request->request->remove('certificate_valid_until');
 
-        $caution = app(CautionsRepository::class)->update($id, $request->all());
+        app(CautionsRepository::class)->update($id, $request->all());
 
         return redirect()
             ->route($request['redirect'], $routine_id)
