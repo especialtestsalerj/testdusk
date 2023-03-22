@@ -38,11 +38,6 @@
                         <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
                     </div>
                 </div>
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        <i class="fa fa-check-circle"></i> {{ session('message') }}
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
