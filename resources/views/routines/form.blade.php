@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? 'routines:update' : ''), 'id' => $routine->id])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? (formMode() == 'show' ? 'routines:update' : 'routines:store') : ''), 'id' => $routine->id])
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@
                         </h4>
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model' => $stuff, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'stuffs:update' : ''), 'id' => $routine_id])
+                        @include('partials.save-button', ['model' => $stuff, 'backUrl' => request()->query('redirect'), 'permission' => ($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'stuffs:update' : 'stuffs:store') : ''), 'id' => $routine_id])
                     </div>
                 </div>
             </div>
