@@ -63,11 +63,15 @@ class Caution extends Controller
             'protocol_number' => app(CautionsRepository::class)->makeProtocolNumber($ano),
         ]);
 
-        app(CautionsRepository::class)->create($values);
+        $caution = app(CautionsRepository::class)->create($values);
 
         return redirect()
-            ->route($request['redirect'], $routine_id)
-            ->with('message', 'Cautela adicionada com sucesso!');
+            ->route('cautions.show', [
+                'routine_id' => $routine_id,
+                'id' => $caution->id,
+                'redirect' => $request['redirect'],
+            ])
+            ->with('message', 'Cautela adicionada com sucesso! Agora informe pelo menos uma arma.');
     }
 
     public function show($routine_id, $id)
