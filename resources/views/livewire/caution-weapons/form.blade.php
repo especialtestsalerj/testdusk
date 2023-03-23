@@ -113,6 +113,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="register_number">Número de Registro (Porte)</label>
+                                    <input class="form-control text-uppercase" name="register_number" id="register_number" value="{{ is_null(old('register_number')) ? $cautionWeapon->register_number : old('register_number') }}" wire:model.defer="register_number" @disabled($disabled || $readonly)/>
+                                    <div>
+                                        @error('register_number')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="cabinet_id">Armário{{ ($modalMode == 'delete') ? '' : '*' }}</label>
                                     <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" @disabled($disabled || $readonly)>
                                         <option value="">SELECIONE</option>

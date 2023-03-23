@@ -25,6 +25,7 @@ class IndexForm extends BaseForm
     public $weapon_type_id;
     public $weapon_description;
     public $weapon_number;
+    public $register_number;
     public $cabinet_id;
     public $shelf_id;
 
@@ -48,6 +49,7 @@ class IndexForm extends BaseForm
         $this->weapon_type_id = null;
         $this->weapon_description = null;
         $this->weapon_number = null;
+        $this->register_number = null;
         $this->cabinet_id = null;
         $this->shelf_id = null;
 
@@ -77,6 +79,7 @@ class IndexForm extends BaseForm
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
+        $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
 
@@ -95,6 +98,7 @@ class IndexForm extends BaseForm
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
+        $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
 
@@ -114,6 +118,9 @@ class IndexForm extends BaseForm
             'weapon_description' => mb_strtoupper($this->weapon_description),
         ]);
         $values = array_merge($values, ['weapon_number' => mb_strtoupper($this->weapon_number)]);
+        $values = array_merge($values, [
+            'register_number' => mb_strtoupper($this->register_number),
+        ]);
         $values = array_merge($values, ['cabinet_id' => $this->cabinet_id]);
         $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
 
@@ -207,6 +214,10 @@ class IndexForm extends BaseForm
         $this->weapon_number = is_null(old('weapon_number'))
             ? $this->cautionWeapon->weapon_number ?? ''
             : old('weapon_number');
+
+        $this->register_number = is_null(old('register_number'))
+            ? $this->cautionWeapon->register_number ?? ''
+            : old('register_number');
 
         $this->cabinet_id = is_null(old('cabinet_id'))
             ? $this->cautionWeapon->cabinet_id ?? ''
