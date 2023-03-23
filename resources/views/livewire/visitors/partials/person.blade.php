@@ -16,7 +16,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="certificate_type">Tipo de Porte*</label>
-                <select class="form-select" name="certificate_type" id="certificate_type" wire:model.defer="certificate_type" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif>
+                <select class="form-select" name="certificate_type" id="certificate_type" wire:model="certificate_type" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif>
                     <option value="">SELECIONE</option>
                     <option value="1">PÚBLICO</option>
                     <option value="2">PRIVADO</option>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="id_card">RG(*)</label>
+                <label for="id_card">RG{{ ($certificate_type == 2) ? '*' : '' }}</label>
                 <input
                     class="form-control"
                     name="id_card"
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <label for="certificate_number">Núm. Certificado(*)</label>
+            <label for="certificate_number">Núm. Certificado{{ ($certificate_type == 2) ? '*' : '' }}</label>
             <input
                 class="form-control"
                 name="certificate_number"
@@ -46,7 +46,7 @@
             />
         </div>
         <div class="col-md-2">
-            <label for="certificate_valid_until">Validade Certificado(*)</label>
+            <label for="certificate_valid_until">Validade Certificado{{ ($certificate_type == 2) ? '*' : '' }}</label>
             <input
                 type="date"
                 class="form-control text-uppercase"
