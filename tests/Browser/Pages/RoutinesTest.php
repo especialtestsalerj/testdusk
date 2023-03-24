@@ -390,7 +390,6 @@ class RoutinesTest extends DuskTestCase
                 'b.dispatchEvent(new Event(\'change\'));',
             ]);
             $browser
-                ->select('#destiny_sector_id', $sector['id'])
                 ->select('#duty_user_id', $duty_user['id'])
                 ->type('#description', str_random(5))
                 ->press('#submitButton')

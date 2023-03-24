@@ -19,7 +19,6 @@ class CautionStore extends Request
             'id_card' => 'required_if:certificate_type,2',
             'certificate_number' => 'required_if:certificate_type,2',
             'certificate_valid_until' => 'required_if:certificate_type,2',
-            'destiny_sector_id' => 'required',
             'duty_user_id' => 'required',
         ];
     }
@@ -34,7 +33,6 @@ class CautionStore extends Request
             'certificate_number.required_if' => 'Núm. Certificado: preencha o campo corretamente.',
             'certificate_valid_until.required_if' =>
                 'Validade Certificado: preencha o campo corretamente.',
-            'destiny_sector_id.required' => 'Destino: preencha o campo corretamente.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
         ];
     }

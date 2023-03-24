@@ -25,10 +25,10 @@
                 {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
             </td>
             <td>
-                    {{ $caution->visitor->person->full_name }}
+                {{ $caution->visitor->person->full_name }}
             </td>
             <td>
-                {{ $caution->destinySector->name }}
+                {{ $caution->visitor?->sector?->name }}
             </td>
             <td>
                 {{ $caution->dutyUser->name }}
@@ -72,8 +72,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="sector_id">Destino</label>
-                                    <select class="form-select form-control" name="sector_id" id="sector_id" disabled>
-                                        <option value="{{ $caution->destinySector?->id }}" selected="selected">{{ $caution->destinySector?->name }}</option>
+                                    <select class="form-select form-control" name="sector_name" id="sector_id" disabled>
+                                        <option value="{{ $caution->visitor?->sector?->name }}" selected="selected">{{ $caution->visitor?->sector?->name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

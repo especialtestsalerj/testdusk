@@ -44,7 +44,7 @@
                         {{ $caution->visitor->person->full_name }}
                     </td>
                     <td>
-                        {{ $caution->destinySector->name }}
+                        {{ $caution->visitor?->sector?->name }}
                     </td>
                     <td>
                         {{ $caution->dutyUser->name }}

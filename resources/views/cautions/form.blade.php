@@ -58,19 +58,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="destiny_sector_id">Destino*</label>
-                            <select class="select2 form-control" name="destiny_sector_id" id="destiny_sector_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
-                                <option value="">SELECIONE</option>
-                                @foreach ($sectors as $key => $sector)
-                                    @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
-                                        <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
-                                    @else
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
                             <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
