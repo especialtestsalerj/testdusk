@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Visitors;
 
-use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Models\Person;
@@ -22,6 +21,7 @@ class People extends BaseForm
     public $id_card;
     public $certificate_number;
     public $certificate_valid_until;
+    public $destiny_sector_name;
 
     public $routineStatus;
 
@@ -38,12 +38,14 @@ class People extends BaseForm
             $this->id_card = $result->person->id_card;
             $this->certificate_number = $result->person->certificate_number;
             $this->certificate_valid_until = $result->person->certificate_valid_until;
+            $this->destiny_sector_name = $result?->sector?->name;
         } else {
             $this->person_id = null;
             $this->certificate_type = null;
             $this->id_card = null;
             $this->certificate_number = null;
             $this->certificate_valid_until = null;
+            $this->destiny_sector_name = null;
         }
     }
 
@@ -65,6 +67,9 @@ class People extends BaseForm
         $this->certificate_valid_until = is_null(old('certificate_valid_until'))
             ? $visitor->person->certificate_valid_until ?? ''
             : old('certificate_valid_until');
+        $this->destiny_sector_name = is_null(old('destiny_sector_name'))
+            ? $visitor->sector->name ?? ''
+            : old('destiny_sector_name');
     }
 
     public function mount()

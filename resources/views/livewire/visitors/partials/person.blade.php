@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="dados-visitante">
+    <div class="row">
         <div class="col-md-3">
             <div class="form-group">
                 <label for="certificate_type">Tipo de Porte*</label>
@@ -54,6 +54,19 @@
                 id="certificate_valid_until"
                 wire:model.defer="certificate_valid_until"
                 @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif
+            >
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="destiny_sector_name">Destino</label>
+            <input
+                type="text"
+                class="form-control text-uppercase"
+                name="destiny_sector_name"
+                id="destiny_sector_name"
+                wire:model.defer="destiny_sector_name"
+                @disabled(true)
             >
         </div>
     </div>
