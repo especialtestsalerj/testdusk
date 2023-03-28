@@ -52,16 +52,11 @@
 
                                 @if($modalMode == 'create')
                                     <div class="form-group">
-                                        CARREGAR LISTA DE ARMAS PARA SELECIONAR UMA...
-                                        <label for="weapon_type_id_new">Lista de Armas{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                        <select class="form-select" name="weapon_type_id_new" id="weapon_type_id_new" wire:model.defer="weapon_type_id" @disabled($disabled || $readonly)>
-                                            <option value="">SELECIONE</option>
-                                            @foreach ($weaponTypes as $key => $weaponType)
-                                                @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
-                                                    <option value="{{ $weaponType->id }}" selected="selected">{{ $weaponType->name }}</option>
-                                                @else
-                                                    <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
-                                                @endif
+                                        <label for="person_weapon">Lista de Armas do/a Visitante</label>
+                                        <select class="form-select" name="person_weapon" id="person_weapon" wire:model="person_weapon" wire:change="find" @disabled($disabled || $readonly)>
+                                            <option value=""></option>
+                                            @foreach ($personWeapons as $key => $personWeapon)
+                                                <option value="{{ $personWeapon?->id }}">{{ $personWeapon?->weaponType?->name }} - {{ $personWeapon?->weapon_description }} - {{ $personWeapon?->weapon_number }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -113,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="register_number">Número de Registro (Porte)</label>
+                                    <label for="register_number">Número de Registro (Sinarm)</label>
                                     <input class="form-control text-uppercase" name="register_number" id="register_number" value="{{ is_null(old('register_number')) ? $cautionWeapon->register_number : old('register_number') }}" wire:model.defer="register_number" @disabled($disabled || $readonly)/>
                                     <div>
                                         @error('register_number')
@@ -187,8 +182,9 @@
             <table id="cautionWeaponTable" class="table table-striped table-bordered mt-2">
                 <thead>
                 <tr>
-                    <th class="col-md-6">Descrição</th>
+                    <th class="col-md-4">Descrição</th>
                     <th class="col-md-2">Numeração</th>
+                    <th class="col-md-2">Registro Sinarm</th>
                     <th class="col-md-2">Localização</th>
                     <th class="col-md-2"></th>
                 </tr>
@@ -201,6 +197,9 @@
                         </td>
                         <td>
                             {{ $weapon->weapon_number }}
+                        </td>
+                        <td>
+                            {{ $weapon->register_number }}
                         </td>
                         <td>
                             {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
