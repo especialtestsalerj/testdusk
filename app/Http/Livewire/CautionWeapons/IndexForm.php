@@ -130,6 +130,24 @@ class IndexForm extends BaseForm
 
     public function store()
     {
+        $validatedData = $this->validate(
+            [
+                'weapon_type_id' => 'required',
+                'weapon_description' => 'required',
+                'weapon_number' => 'required',
+                'cabinet_id' => 'required',
+                'shelf_id' => 'required',
+            ],
+            [
+                'weapon_type_id.required' => 'Tipo de Arma: preencha o campo corretamente.',
+                'weapon_description.required' =>
+                    'Descrição da Arma: preencha o campo corretamente.',
+                'weapon_number.required' => 'Numeração da Arma: preencha o campo corretamente.',
+                'cabinet_id.required' => 'Armário: preencha o campo corretamente.',
+                'shelf_id.required' => 'Box: preencha o campo corretamente.',
+            ]
+        );
+
         $values = ['caution_id' => $this->caution_id];
         $values = array_merge($values, ['redirect' => $this->redirect]);
         $values = array_merge($values, ['entranced_at' => Carbon::now()]);
@@ -146,60 +164,17 @@ class IndexForm extends BaseForm
         $values = array_merge($values, ['cabinet_id' => $this->cabinet_id]);
         $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
 
-        /*$this->start_date = Carbon::createFromFormat('!m-Y', $this->start_date)
-            ->startOfMonth()
-            ->toDateString();
-        if ($this->end_date) {
-            $this->end_date = Carbon::createFromFormat('!m-Y', $this->end_date)
-                ->endOfMonth()
-                ->toDateString();
-        }
-
-        $validatedData = $this->withValidator(function (Validator $validator) {
-            $validator->after(function ($validator) {
-                if ($validator->failed()) {
-                    $this->start_date = Carbon::create($this->start_date)->format('m-Y');
-                    if ($this->end_date) {
-                        $this->end_date = Carbon::create($this->end_date)->format('m-Y');
-                    }
-                }
-            });
-        })->validate([
-            'cost_center_id' => 'required',
-            'start_date' => [
-                'required',
-                'date',
-                new EmptyPeriod(
-                    $this->start_date,
-                    $this->end_date,
-                    $this->cost_center_id,
-                    $this->selectedId
-                ),
-            ],
-            'end_date' => $this->end_date ? 'date|after_or_equal:start_date' : '',
-        ]);
-
-        if ($validatedData['end_date'] == '') {
-            $validatedData['end_date'] = null;
-        } else {
-            $validatedData['end_date'] = Carbon::create($validatedData['end_date'])->endOfDay();
-        }
-        $validatedData['limit'] = $this->limit;*/
-        //$validatedData['entranced_at'] = null; //todo: definir regras para datas
         if ($this->selectedId) {
             $row = CautionWeapon::find($this->selectedId);
-            //$row->fill($validatedData);
             $row->fill($values);
             $row->save();
         } else {
-            //CautionWeapon::create($validatedData);
             CautionWeapon::create($values);
         }
 
         $this->clearWeapon();
         $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
-        //return redirect()->to('/cautions/' . $this->caution_id);
     }
 
     public function delete()

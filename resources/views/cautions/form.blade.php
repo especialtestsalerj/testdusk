@@ -76,17 +76,16 @@
                         </div>
                     </div>
                 </div>
-                @if (formMode() == 'show')
-                    <div class="p-4 bg-light border rounded-3">
-                        <livewire:caution-weapons.index-form :caution_id="$caution->id" :cautionWeapons="$cautionWeapons" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
-                    </div>
-                @else
-                    <div class="alert alert-warning mt-2">
-                        <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
-                    </div>
-                @endif
             </div>
         </form>
-
+        @if (formMode() == 'show')
+            <div class="p-4 bg-light border rounded-3">
+                <livewire:caution-weapons.index-form :caution_id="$caution->id" :cautionWeapons="$cautionWeapons" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
+            </div>
+        @else
+            <div class="alert alert-warning mt-2">
+                <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
+            </div>
+        @endif
     </div>
 @endsection
