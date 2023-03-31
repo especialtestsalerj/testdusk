@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.update', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" @else action="{{ route('cautions.store', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 

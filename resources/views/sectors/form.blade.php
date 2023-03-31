@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('sectors.update', ['id' => $sector->id]) }}" @else action="{{ route('sectors.store')}}" @endIf method="POST">
             @csrf
             <input name="id" type="hidden" value="{{$sector->id}}" id="id" >
 
-            <div class="card-header py-4 px-4">
+            <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">

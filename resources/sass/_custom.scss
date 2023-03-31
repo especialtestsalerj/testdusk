@@ -337,3 +337,14 @@ body.bg-light {
 .form-control:disabled, .form-select:disabled {
     cursor: not-allowed;
 }
+
+.cards-striped {
+    .card {
+        &:nth-of-type(odd){
+            background: rgba(255, 255, 255, 0.3);
+        }
+        &:nth-of-type(even){
+            background: rgba(255, 255, 255, 0.6);
+        }
+    }
+}

@@ -1,7 +1,7 @@
 
 <div>
-    <div class="card card-default">
-        <div class="card-header">
+    <div class="mx-0 my-0 mx-lg-5 my-lg-4">
+        <div class="">
             <div class="row">
                 <div class="col-md-8">
                     <h2 class="mb-0">Cautelas de Armas</h2>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="card-body">
+        <div class="">
             @include('layouts.msg')
 
             @include('livewire.cautions.partials.table', ['redirect' => 'cautions.index'])

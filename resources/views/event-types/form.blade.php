@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('event-types.update', ['id' => $eventType->id]) }}" @else action="{{ route('event-types.store')}}" @endIf method="POST">
             @csrf
             <input name="id" type="hidden" value="{{$eventType->id}}" id="id" >
 
-            <div class="card-header py-4 px-4">
+            <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-2">
+            <div class="mx-4 my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">

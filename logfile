@@ -22,3 +22,21 @@
 2023-02-23 14:17:29.154 -03 [7340] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-02-23 14:17:29.182 -03 [7353] LOG:  database system was shut down at 2023-02-23 10:17:17 -03
 2023-02-23 14:17:29.225 -03 [7340] LOG:  database system is ready to accept connections
+2023-03-29 17:55:23.805 -03 [1184] LOG:  starting PostgreSQL 14.7 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2023-03-29 17:55:23.924 -03 [1184] LOG:  listening on IPv6 address "::1", port 5432
+2023-03-29 17:55:23.924 -03 [1184] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-03-29 17:55:23.933 -03 [1184] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-03-29 17:55:24.116 -03 [1194] LOG:  database system was shut down at 2023-03-29 17:53:51 -03
+2023-03-29 17:55:24.139 -03 [1184] LOG:  database system is ready to accept connections
+2023-03-31 11:07:11.837 -03 [9728] FATAL:  lock file "postmaster.pid" already exists
+2023-03-31 11:07:11.837 -03 [9728] HINT:  Is another postmaster (PID 1184) running in data directory "/Users/breno/pgdata"?
+2023-03-31 15:34:43.057 -03 [1184] LOG:  received smart shutdown request
+2023-03-31 15:34:43.061 -03 [1184] LOG:  background worker "logical replication launcher" (PID 1200) exited with exit code 1
+2023-03-31 15:34:43.061 -03 [1195] LOG:  shutting down
+2023-03-31 15:34:43.071 -03 [1184] LOG:  database system is shut down
+2023-03-31 15:36:15.375 -03 [1143] LOG:  starting PostgreSQL 14.7 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2023-03-31 15:36:15.379 -03 [1143] LOG:  listening on IPv6 address "::1", port 5432
+2023-03-31 15:36:15.379 -03 [1143] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-03-31 15:36:15.381 -03 [1143] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-03-31 15:36:15.401 -03 [1145] LOG:  database system was shut down at 2023-03-31 15:34:43 -03
+2023-03-31 15:36:15.416 -03 [1143] LOG:  database system is ready to accept connections
