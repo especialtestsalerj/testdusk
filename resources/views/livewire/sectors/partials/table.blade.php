@@ -1,3 +1,259 @@
+<div class="cards-striped mx-3 mx-lg-0">
+
+
+
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-routine m-1">
+        <div class="card-body p-1">
+            <div class="row d-flex align-items-center">
+                <div class="col-2 col-lg-1 text-center">
+                    <label class="badge bg-success"> ATIVO </label>
+                </div>
+                {{--
+                <div class="col-2 col-lg-1 d-flex justify-content-lg-end">
+                    <strong>Nome</strong>
+                    </h6>
+                </div>
+                --}}
+                <div class="col-8 col-lg-10">
+                    Nome do Setor
+                </div>
+
+                <div class="col-2 col-lg-1 text-center actions">
+                    <a href="http://ocorrencias.test/sectors/2" class="btn btn-link py-0" title="Alterar">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="btn btn-link py-0" data-bs-toggle="modal" data-bs-target="#delete-modal2" title="Remover">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
 
 
 <table id="sectorTable" class="table table-striped table-bordered">
@@ -24,23 +280,22 @@
             <td class="text-center actions">
                 <a href="{{ route('sectors.show', ['id' => $sector->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                 @if(!$sector->canDelete())
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $sector->id }}" title="Remover">
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#sector-delete-modal{{ $sector->id }}" title="Remover">
                         <i class="fa fa-trash"></i>
                     </button>
                 @endif
             </td>
             <!-- Modal -->
-            <div class="modal fade" id="delete-modal{{ $sector->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="sector-delete-modal{{ $sector->id }}" tabindex="-1" aria-labelledby="deleteModalLabelSector" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Setor</h5>
+                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fas fa-trash"></i> Remoção de Setor</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form class="form" action="{{ route('sectors.destroy', ['id' => $sector->id]) }}" method="post">
                                 @csrf
-                                @method('delete')
                                 <input name="id" type="hidden" value="{{ $sector->id }}">
                                 <div class="form-group">
                                     <label for="name">Nome</label>

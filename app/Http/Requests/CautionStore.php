@@ -16,10 +16,9 @@ class CautionStore extends Request
             'started_at' => 'required',
             'visitor_id' => 'required',
             'certificate_type' => 'required',
-            'id_card' => 'required',
-            'certificate_number' => 'required',
-            'certificate_valid_until' => 'required',
-            'destiny_sector_id' => 'required',
+            'id_card' => 'required_if:certificate_type,2',
+            'certificate_number' => 'required_if:certificate_type,2',
+            'certificate_valid_until' => 'required_if:certificate_type,2',
             'duty_user_id' => 'required',
         ];
     }
@@ -30,11 +29,10 @@ class CautionStore extends Request
             'started_at.required' => 'Entrada: preencha o campo corretamente.',
             'visitor_id.required' => 'Visitante: preencha o campo corretamente.',
             'certificate_type.required' => 'Tipo de Porte: preencha o campo corretamente.',
-            'id_card.required' => 'RG: preencha o campo corretamente.',
-            'certificate_number.required' => 'Núm. Certificado: preencha o campo corretamente.',
-            'certificate_valid_until.required' =>
+            'id_card.required_if' => 'RG: preencha o campo corretamente.',
+            'certificate_number.required_if' => 'Núm. Certificado: preencha o campo corretamente.',
+            'certificate_valid_until.required_if' =>
                 'Validade Certificado: preencha o campo corretamente.',
-            'destiny_sector_id.required' => 'Destino: preencha o campo corretamente.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
         ];
     }

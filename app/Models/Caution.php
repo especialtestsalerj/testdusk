@@ -9,7 +9,6 @@ class Caution extends Model
         'started_at',
         'concluded_at',
         'visitor_id',
-        'destiny_sector_id',
         'duty_user_id',
         'protocol_number',
         'description',
@@ -23,11 +22,6 @@ class Caution extends Model
     public function visitor()
     {
         return $this->belongsTo(Visitor::class, 'visitor_id');
-    }
-
-    public function destinySector()
-    {
-        return $this->belongsTo(Sector::class, 'destiny_sector_id');
     }
 
     public function dutyUser()

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('cautions.update', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" @else action="{{ route('cautions.store', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 
@@ -15,18 +15,18 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Cautelas de Armas</a>
-
                             @if(is_null($caution->id))
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Cautelas de Armas</a>
                                 > Nova
                             @else
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $caution->id]) }}">Cautelas de Armas</a>
                                 > {{ $caution->id }} - {{ $caution?->protocol_number_formatted }}
                             @endif
                         </h4>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'cautions:update' : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model' => $caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'cautions:update' : 'cautions:store') : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -38,11 +38,6 @@
                         <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
                     </div>
                 </div>
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        <i class="fa fa-check-circle"></i> {{ session('message') }}
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -63,19 +58,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="destiny_sector_id">Destino*</label>
-                            <select class="select2 form-control" name="destiny_sector_id" id="destiny_sector_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
-                                <option value="">SELECIONE</option>
-                                @foreach ($sectors as $key => $sector)
-                                    @if(((!is_null($caution->id)) && (!is_null($caution->destiny_sector_id) && $caution->destiny_sector_id === $sector->id) || (!is_null(old('destiny_sector_id'))) && old('destiny_sector_id') == $sector->id))
-                                        <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
-                                    @else
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
                             <select class="select2 form-control" name="duty_user_id" id="duty_user_id" @if(!$routine->status || request()->query('disabled')) disabled @endif>
                                 <option value="">SELECIONE</option>
@@ -94,17 +76,16 @@
                         </div>
                     </div>
                 </div>
-                @if (formMode() == 'show')
-                    <div class="p-4 bg-light border rounded-3">
-                        <livewire:caution-weapons.index-form :caution_id="$caution->id" :cautionWeapons="$cautionWeapons" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
-                    </div>
-                @else
-                    <div class="alert alert-warning mt-2">
-                        <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
-                    </div>
-                @endif
             </div>
         </form>
-
+        @if (formMode() == 'show')
+            <div class="p-4 bg-light border rounded-3">
+                <livewire:caution-weapons.index-form :caution_id="$caution->id" :cautionWeapons="$cautionWeapons" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
+            </div>
+        @else
+            <div class="alert alert-warning mt-2">
+                <i class="fa fa-exclamation-triangle"></i> Para adicionar armas, salve primeiramente o cadastro da cautela.
+            </div>
+        @endif
     </div>
 @endsection

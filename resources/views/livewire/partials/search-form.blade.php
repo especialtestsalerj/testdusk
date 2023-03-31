@@ -1,7 +1,7 @@
 {{ csrf_field() }}
 
 <div class="form-group float-end">
-    <div class="d-flex row justify-content-end mt-3">
+    <div class="d-flex row justify-content-end">
 
         <div class="col-8 col-md-8">
             <div class="input-group">

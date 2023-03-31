@@ -19,6 +19,11 @@ Route::group(['prefix' => '/cautions'], function () {
         ->name('cautions.show')
         ->can('cautions:show');
 
+    //Comprovante
+    Route::get('/{id}/receipt', [Caution::class, 'receipt'])
+        ->name('cautions.receipt')
+        ->can('cautions:show');
+
     Route::group(
         [
             'middleware' => ['must-have-opened-routine'],
@@ -35,7 +40,7 @@ Route::group(['prefix' => '/cautions'], function () {
                 ->can('cautions:update');
 
             //Remover
-            Route::delete('/{id}', [Caution::class, 'destroy'])
+            Route::post('/delete/{id}', [Caution::class, 'destroy'])
                 ->name('cautions.destroy')
                 ->can('cautions:destroy');
         }

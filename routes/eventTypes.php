@@ -28,7 +28,7 @@ Route::group(['prefix' => '/event-types'], function () {
         ->can('event-types:update');
 
     //Remover
-    Route::delete('/{id}', [EventType::class, 'destroy'])
+    Route::post('/delete/{id}', [EventType::class, 'destroy'])
         ->name('event-types.destroy')
         ->can('event-types:destroy');
 });

@@ -184,6 +184,20 @@
     h3, .h3 {
         font-size: calc(1rem + 0.39vw);
     }
+
+    .Absolute-Center.is-Responsive {
+        width: 90% !important;
+    }
+    .swiper-home {
+        .card {
+            .card-header {
+                h4{
+                    font-size: 18px !important;
+                }
+            }
+        }
+    }
+
 }
 
 
@@ -259,11 +273,14 @@ div.well{
     top: 0; left: 0; bottom: 0; right: 0;
 }
 
+
+
 .Absolute-Center.is-Responsive {
     width: 50%;
     height: 50%;
     min-width: 200px;
     max-width: 450px;
+
     .card {
         background: rgba(255, 255, 255, 0.7);
         box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
@@ -277,6 +294,10 @@ div.well{
         }
     }
 }
+
+
+
+
 
 #logo-container{
     margin: auto;
@@ -329,11 +350,15 @@ body.bg-light {
     background: #b7c0c9;
 }
 
-.fa-disabled {
-    opacity: 0.6;
-    cursor: not-allowed !important;
-}
 
-.form-control:disabled, .form-select:disabled {
-    cursor: not-allowed;
+
+.cards-striped {
+    .card {
+        &:nth-of-type(odd){
+            background: rgba(255, 255, 255, 0.3);
+        }
+        &:nth-of-type(even){
+            background: rgba(255, 255, 255, 0.6);
+        }
+    }
 }

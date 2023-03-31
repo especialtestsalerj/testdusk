@@ -6,7 +6,6 @@
                     <i class="fas fa-list-check"></i> Ocorrências
                 </h4>
             </div>
-
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
                 <a href="{{ route('events.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Ocorrência" dusk="newEvent">
@@ -15,6 +14,40 @@
                 @endif
             </div>
         </div>
+
+        <div class="cards-striped mx-3 mx-lg-0 mt-lg-4">
+            <div class="card card-routine m-1">
+                <div class="card-body py-1">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-12 col-lg-2 text-center text-lg-start">
+                            <span class="fw-bold">Data/Hora :</span> 14/02/2023 ÀS 17:32
+                        </div>
+                        <div class="col-12 col-lg-2 text-center text-lg-start">
+                            <span class="fw-bold">Tipo :</span> TESTE OCORRENCIA
+                        </div>
+                        <div class="col-12 col-lg-2 text-center text-lg-start">
+                            <span class="fw-bold">Setor :</span> Novo Setor
+                        </div>
+                        <div class="col-12 col-lg-4 text-center text-lg-start">
+                            <span class="fw-bold">Plantonista :</span> Nome do Plantonista Teste Nome Longo
+                        </div>
+                        <div class="col-12 col-lg-2 text-center text-lg-end">
+                            <a href="http://ocorrencias.test/events/index/show/3/1?disabled=1" class="btn btn-link" title="Detalhar">
+                                <i class="fa fa-search"></i>
+                            </a>
+                            <a href="http://ocorrencias.test/events/index/show/3/1" class="btn btn-link" title="Alterar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal1" title="Remover">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <table id="eventTable" class="table table-striped table-bordered mt-2">
             <thead>
@@ -45,23 +78,22 @@
                         <a href="{{ route('events.show', ['routine_id' => $routine->id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                         @if($routine->status)
                             <a href="{{ route('events.show', ['routine_id' => $routine->id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal{{ $event->id }}" title="Remover">
+                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-delete-modal{{ $event->id }}" title="Remover">
                                 <i class="fa fa-trash"></i>
                             </button>
                         @endif
                     </td>
                     <!-- Modal -->
-                    <div class="modal fade" id="delete-modal{{ $event->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="event-delete-modal{{ $event->id }}" tabindex="-1" aria-labelledby="deleteModalLabelEvent" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash"></i> Remoção de Ocorrência</h5>
+                                    <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fas fa-trash"></i> Remoção de Ocorrência</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
                                         @csrf
-                                        @method('delete')
                                         <input type="hidden" name="redirect" value="{{ $redirect }}">
                                         <div class="form-group">
                                             <label for="event_type_id">Tipo</label>

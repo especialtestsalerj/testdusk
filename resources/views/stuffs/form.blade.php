@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-default mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('stuffs.update', ['routine_id' => $routine_id, 'id' => $stuff->id]) }}" @else action="{{ route('stuffs.store', ['routine_id' => $routine_id])}}" @endIf method="POST">
             @csrf
 
@@ -11,21 +11,21 @@
             <input type="hidden" name="routine_id" value="{{ $routine_id }}">
             <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
 
-            <div class="card-header py-4 px-4">
+            <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id]) }}">Materiais</a>
-
                             @if(is_null($stuff->id))
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Materiais</a>
                                 > Novo
                             @else
+                                <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $stuff->id]) }}">Materiais</a>
                                 > {{ $stuff->id }} - {{ $stuff->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                        @include('partials.save-button', ['model'=>$stuff, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? 'stuffs:update' : ''), 'id' => $routine_id])
+                        @include('partials.save-button', ['model' => $stuff, 'backUrl' => request()->query('redirect'), 'permission' => ($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'stuffs:update' : 'stuffs:store') : ''), 'id' => $routine_id])
                     </div>
                 </div>
             </div>
