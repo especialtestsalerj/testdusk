@@ -9,7 +9,8 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 @forelse ($routines as $routine)
-                <div class="swiper-slide">
+                <!-- todo pacheco criar loop e adicionar dados reais -->
+                <div class="swiper-slide swiper-home">
                     <div dir="ltr" class="col-12">
                         <div class="card bg-white">
                             <div class="card-header">
@@ -17,19 +18,10 @@
 
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
-                                            @can('cautions:show')
-                                            <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
-                                                Rotina {{ $routine->id }}
-                                            </a>
-                                            @endcan
-                                            @cannot('cautions:show')
-                                                <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
-                                                    Rotina {{ $routine->id }}
-                                                </a>
-                                            @endcannot
+                                            Rotina {{$routine->id}}
                                         </h4>
                                     </div>
-                                    <div class="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-start">
+                                    <div class="col-6 col-lg-3 d-flex justify-content-center justify-content-lg-end">
                                         <h4>
                                             @if ($routine->status)
                                                 <span class="badge rounded-pill bg-success">ABERTA</span>
@@ -59,7 +51,7 @@
 
                                     @include('partials.dashboard-button', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
 
-                                    @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'cautions:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
+                                    @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
                                 </div>
                             </div>
                         </div>
