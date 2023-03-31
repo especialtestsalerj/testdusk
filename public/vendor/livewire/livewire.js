@@ -5837,9 +5837,7 @@
                             var directives = wireDirectives(el)
                             if (!directives.missing('model')) {
                                 var modelValue = directives.get('model').value
-                                ;(('SELECT' == el.nodeName && !el.multiple) ||
-                                    !DOM.hasFocus(el) ||
-                                    dirtyInputs.includes(modelValue)) &&
+                                ;(DOM.hasFocus(el) && !dirtyInputs.includes(modelValue)) ||
                                     DOM.setInputValueFromModel(el, _this7)
                             }
                         })
