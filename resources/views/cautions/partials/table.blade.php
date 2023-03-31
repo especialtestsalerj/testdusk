@@ -113,6 +113,7 @@
                                 <i class="fa fa-trash"></i>
                             </button>
                         @endif
+                        <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
                     </td>
                     <!-- Modal -->
                     <div class="modal fade" id="caution-delete-modal{{ $caution->id }}" tabindex="-1" aria-labelledby="deleteModalLabelCaution" aria-hidden="true">

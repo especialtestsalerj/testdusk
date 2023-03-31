@@ -68,6 +68,7 @@ class IndexForm extends BaseForm
     {
         $this->selectedId = null;
 
+        $this->person_weapon = null;
         $this->caution_weapon_id = null;
         $this->weapon_type_id = null;
         $this->weapon_description = null;

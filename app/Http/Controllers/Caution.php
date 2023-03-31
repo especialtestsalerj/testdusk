@@ -13,6 +13,7 @@ use App\Data\Repositories\Shelves as ShelvesRepository;
 use App\Http\Requests\CautionStore as CautionRequest;
 use App\Http\Requests\CautionUpdate as CautionUpdateRequest;
 use App\Http\Requests\CautionDestroy as CautionDestroyRequest;
+use App\Services\PDF\Service as PDF;
 use App\Support\Constants;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -138,5 +139,26 @@ class Caution extends Controller
         return redirect()
             ->route($request['redirect'], $routine_id)
             ->with('message', 'Cautela removida com sucesso!');
+    }
+
+    public function receipt($routine_id, $id)
+    {
+        $caution = app(CautionsRepository::class)->findById($id);
+        $cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($caution->id);
+
+        return app(PDF::class)
+            ->initialize(
+                view('cautions.pdf')
+                    ->with(
+                        'logoBlob',
+                        base64_encode(file_get_contents(public_path('img/logo-alerj.png')))
+                    )
+                    ->with('caution', $caution)
+                    ->with('cautionWeapons', $cautionWeapons)
+                    ->render(),
+                'A4',
+                'portrait'
+            )
+            ->download(make_pdf_filename('Cautela' . $caution?->protocol_number));
     }
 }

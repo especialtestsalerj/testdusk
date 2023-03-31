@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\EventType;
-use App\Http\Controllers\Sector;
-use App\Http\Controllers\Routine;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 
