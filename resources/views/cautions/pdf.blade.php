@@ -221,7 +221,7 @@
                 <p>© {{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</p>
             </td>
             <td class="right" colspan="2">
-                <p>{{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</p>
+                <p>{{ mb_strtoupper(env('APP_NAME', 'Laravel')) }}</p>
             </td>
         </tr>
     </table>
