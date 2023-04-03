@@ -263,10 +263,6 @@
 */
 
 
-div.well{
-    height: 250px;
-}
-
 .Absolute-Center {
     margin: auto;
     position: absolute;
@@ -361,4 +357,8 @@ body.bg-light {
             background: rgba(255, 255, 255, 0.6);
         }
     }
+}
+
+.text-justify {
+    text-align: justify;
 }

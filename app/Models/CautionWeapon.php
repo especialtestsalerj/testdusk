@@ -18,6 +18,7 @@ class CautionWeapon extends Model
         'weapon_number',
         'cabinet_id',
         'shelf_id',
+        'old_id',
     ];
 
     public function weaponType()

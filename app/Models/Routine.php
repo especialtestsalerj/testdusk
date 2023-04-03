@@ -70,4 +70,18 @@ class Routine extends Model
     {
         return $this->hasMany(Caution::class, 'routine_id')->orderBy('started_at');
     }
+
+    public function getPendingVisitors()
+    {
+        return Visitor::where('routine_id', $this->id)
+            ->whereNull('exited_at')
+            ->get();
+    }
+
+    public function getPendingCautions()
+    {
+        return Caution::where('routine_id', $this->id)
+            ->whereNull('concluded_at')
+            ->get();
+    }
 }

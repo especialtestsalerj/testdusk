@@ -5,8 +5,6 @@ namespace App\Http\Livewire\Routines;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Http\Livewire\BaseIndex;
-use App\Http\Requests\Request;
-use App\Http\Requests\RoutineUpdate as RoutinesRequest;
 use App\Models\Routine;
 
 class Index extends BaseIndex
