@@ -134,6 +134,13 @@ class Caution extends Controller
     {
         $caution = app(CautionsRepository::class)->findById($id);
 
+        //deleting weapons
+        $cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($id);
+        foreach ($cautionWeapons as $cautionWeapon) {
+            $cautionWeapon->delete($cautionWeapon->id);
+        }
+
+        //deleting caution
         $caution->delete($id);
 
         return redirect()
