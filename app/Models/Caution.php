@@ -12,6 +12,8 @@ class Caution extends Model
         'duty_user_id',
         'protocol_number',
         'description',
+        'old_id',
+        'visitor_old_id',
     ];
 
     protected $casts = [

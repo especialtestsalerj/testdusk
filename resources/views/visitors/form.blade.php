@@ -56,7 +56,7 @@
                     <div class="col-md-12">
                         @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => request()->query('disabled')])
                         <div class="form-group">
-                            <label for="sector_id">Setor</label>
+                            <label for="sector_id">Setor*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(!$routine->status || request()->query('disabled'))>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)

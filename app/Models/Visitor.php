@@ -12,6 +12,7 @@ class Visitor extends Model
         'sector_id',
         'duty_user_id',
         'description',
+        'old_id',
     ];
 
     protected $casts = [

@@ -1,13 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
+use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Shifts as ShiftsRepository;
 use App\Data\Repositories\Users as UsersRepository;
+use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Requests\RoutineFinish;
 use App\Http\Requests\RoutineStore as RoutineRequest;
-use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Requests\RoutineUpdate as RoutineUpdateRequest;
 use App\Support\Constants;
+use App\Models\Visitor;
+use App\Models\Caution;
+use Illuminate\Support\Facades\DB;
+use App\Models\CautionWeapon;
 
 class Routine extends Controller
 {
@@ -52,7 +58,17 @@ class Routine extends Controller
 
     public function store(RoutineRequest $request)
     {
-        app(RoutinesRepository::class)->create($request->all());
+        DB::transaction(function () use ($request) {
+            //Catch last routine
+            $oldRoutineId = DB::table('routines')->max('id');
+            $oldRoutine = app(RoutinesRepository::class)->findById($oldRoutineId);
+
+            $newRoutine = app(RoutinesRepository::class)->create($request->all());
+
+            $this->storePendingVisitors($oldRoutine->getPendingVisitors(), $newRoutine->id);
+
+            $this->storePendingCautions($oldRoutine->getPendingCautions(), $newRoutine->id);
+        });
 
         return redirect()
             ->route('routines.index')
@@ -94,5 +110,102 @@ class Routine extends Controller
         return redirect()
             ->route('routines.index')
             ->with('message', 'Rotina finalizada com sucesso!');
+    }
+
+    public function storePendingVisitors($pendingVisitors, $newRoutineId)
+    {
+        //Retrieve pending visitors from the last completed routine
+        foreach ($pendingVisitors as $pendingVisitor) {
+            //create visitor
+            $visitor = new Visitor();
+
+            $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
+            $array = array_diff_key($pendingVisitor->toArray(), array_flip($excludeKeys));
+
+            $visitor->fill($array);
+
+            $visitor->routine_id = $newRoutineId;
+            $visitor->old_id = $pendingVisitor->old_id
+                ? $pendingVisitor->old_id
+                : $pendingVisitor->id;
+
+            $visitor->save();
+        }
+    }
+
+    public function storePendingCautions($pendingCautions, $newRoutineId)
+    {
+        //Retrieve pending cautions from the last completed routine
+        foreach ($pendingCautions as $pendingCaution) {
+            //find visitor by visitor.old_id
+            if (
+                !($visitor = app(VisitorsRepository::class)->findByOldId(
+                    $pendingCaution->visitor_id
+                ))
+            ) {
+                $visitor = new Visitor();
+
+                $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
+                $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
+
+                $visitor->fill($array);
+                $visitor->routine_id = $newRoutineId;
+                $visitor->entranced_at = $pendingCaution->visitor->entranced_at;
+                $visitor->exited_at = $pendingCaution->visitor->exited_at;
+                $visitor->person_id = $pendingCaution->visitor->person_id;
+                $visitor->sector_id = $pendingCaution->visitor->sector_id;
+                $visitor->duty_user_id = $pendingCaution->visitor->duty_user_id;
+                $visitor->description = $pendingCaution->visitor->description;
+                $visitor->old_id = $pendingCaution->visitor->old_id
+                    ? $pendingCaution->old_id
+                    : $pendingCaution->visitor->id;
+                $visitor->save();
+                $visitorOldId = $visitor->old_id;
+            } else {
+                $visitorOldId = null;
+            }
+
+            //create caution
+            $caution = new Caution();
+
+            $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
+            $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
+
+            $caution->fill($array);
+            $caution->routine_id = $newRoutineId;
+            $caution->visitor_id = $visitor->id;
+            $caution->old_id = $pendingCaution->old_id
+                ? $pendingCaution->old_id
+                : $pendingCaution->id;
+            $caution->visitor_old_id = $visitorOldId;
+            $caution->save();
+
+            //create weapons
+            if (
+                $oldCautionWeapons = app(CautionWeaponsRepository::class)->findByCautionId(
+                    $pendingCaution->id
+                )
+            ) {
+                foreach ($oldCautionWeapons->get() as $oldCautionWeapon) {
+                    $cautionWeapon = new CautionWeapon();
+
+                    $excludeKeys = [
+                        'id',
+                        'created_by_id',
+                        'updated_by_id',
+                        'created_at',
+                        'updated_at',
+                    ];
+                    $array = array_diff_key($oldCautionWeapon->toArray(), array_flip($excludeKeys));
+
+                    $cautionWeapon->fill($array);
+                    $cautionWeapon->caution_id = $caution->id;
+                    $cautionWeapon->old_id = $oldCautionWeapon->old_id
+                        ? $oldCautionWeapon->old_id
+                        : $oldCautionWeapon->id;
+                    $cautionWeapon->save();
+                }
+            }
+        }
     }
 }

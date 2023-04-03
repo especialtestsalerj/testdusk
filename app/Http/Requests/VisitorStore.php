@@ -16,6 +16,7 @@ class VisitorStore extends Request
             'entranced_at' => 'required',
             'cpf' => 'required|cpf',
             'full_name' => 'required',
+            'sector_id' => 'required',
             'duty_user_id' => 'required',
             'description' => 'required',
         ];
@@ -28,6 +29,7 @@ class VisitorStore extends Request
             'cpf.required' => 'CPF (Visitante): preencha o campo corretamente.',
             'cpf.cpf' => 'CPF (Visitante): número inválido.',
             'full_name.required' => 'Nome (Visitante): preencha o campo corretamente.',
+            'sector_id.required' => 'Setor: preencha o campo corretamente.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
             'description.required' => 'Observações: preencha o campo corretamente.',
         ];

@@ -249,10 +249,6 @@
 */
 
 
-div.well{
-    height: 250px;
-}
-
 .Absolute-Center {
     margin: auto;
     position: absolute;
@@ -336,4 +332,8 @@ body.bg-light {
 
 .form-control:disabled, .form-select:disabled {
     cursor: not-allowed;
+}
+
+.text-justify {
+    text-align: justify;
 }

@@ -60,8 +60,11 @@
                         <form class="form" action="{{ route('routines.finish', ['id' => $routine->id]) }}" method="post">
                             @csrf
 
-                            <p class="text-end">* Campos obrigatórios</p>
-
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="exited_at">Data (Passagem)*</label>
                                 <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $routine->exited_at?->format('Y-m-d H:i') : old('exited_at')}}"/>
@@ -79,6 +82,28 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="exited_obs">Observações</label>
+                                <textarea class="form-control" name="exited_obs" id="exited_obs" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('exited_obs')) ? $routine->exited_obs: old('exited_obs') }}</textarea>
+                            </div>
+                            <?php
+                                $qtdPendingVisitors = count($routine->getPendingVisitors());
+                                $qtdPendingCautions = count($routine->getPendingCautions());
+                            ?>
+                            @if($qtdPendingVisitors > 0 || $qtdPendingCautions > 0)
+                                <div class="alert alert-warning" role="alert">
+                                    <p><i class="fa fa-triangle-exclamation"></i><strong> Pendências encontradas</strong></p>
+                                    <hr>
+                                    @if($qtdPendingVisitors > 0)
+                                        <p>Visitantes sem encerramento: {{ $qtdPendingVisitors }}</p>
+                                    @endif
+                                    @if($qtdPendingCautions > 0)
+                                    <p>Cautelas de Armas sem encerramento: {{ $qtdPendingCautions }}</p>
+                                    @endif
+                                    <hr>
+                                    <p class="text-justify">Caso deseje finalizar esta rotina, as pendências serão repassadas para a próxima rotina a ser criada, ou seja, serão repassados visitantes e/ou cautelas para serem finalizados na rotina seguinte.</p>
+                                </div>
+                            @endif
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
                                 <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
