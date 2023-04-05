@@ -6,10 +6,10 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Entrada:</span> {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Entrada:</span> {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Saída:</span> {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Saída:</span> {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $stuff?->sector?->name ?? '-' }}
@@ -44,11 +44,11 @@
                                 <input type="hidden" name="redirect" value="{{ $redirect }}">
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada</label>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ $stuff->entranced_at }}" disabled/>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ $stuff?->entranced_at }}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="exited_at">Saída</label>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ $stuff->exited_at }}" disabled/>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ $stuff?->exited_at }}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="sector_id">Setor</label>

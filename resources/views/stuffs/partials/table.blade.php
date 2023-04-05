@@ -20,10 +20,10 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Entrada:</span> {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Entrada:</span> {{ $stuff?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Saída:</span> {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Saída:</span> {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $stuff?->sector?->name ?? '-' }}

@@ -20,7 +20,7 @@
                                 > Novo
                             @else
                                 <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $stuff->id]) }}">Materiais</a>
-                                > {{ $stuff->id }} - {{ $stuff->entranced_at->format('d/m/Y \À\S H:i') }}
+                                > {{ $stuff->id }} {{ $stuff?->entranced_at?->format('- d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
                     </div>
@@ -40,14 +40,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $stuff->entranced_at_formatted) : old('occurred_at')}}" @disabled(!$routine->status || request()->query('disabled'))/>
+                            <label for="entranced_at">Entrada</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ is_null(old('entranced_at')) ? $stuff?->entranced_at_formatted : old('entranced_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $stuff->exited_at_formatted: old('exited_at')}}" @disabled(!$routine->status || request()->query('disabled'))/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $stuff?->exited_at_formatted : old('exited_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Observações*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status || request()->query('disabled'))>{{is_null(old('description')) ? $stuff->description: old('description')}}</textarea>
+                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('description')) ? $stuff->description : old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
