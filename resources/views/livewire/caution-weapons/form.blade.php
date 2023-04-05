@@ -179,53 +179,51 @@
         </div>
 
         <div class="row">
-            <table id="cautionWeaponTable" class="table table-striped table-bordered mt-2">
-                <thead>
-                <tr>
-                    <th class="col-md-4">Descrição</th>
-                    <th class="col-md-2">Numeração</th>
-                    <th class="col-md-2">Registro Sinarm</th>
-                    <th class="col-md-2">Localização</th>
-                    <th class="col-md-2"></th>
-                </tr>
-                </thead>
-                <tbody>
-                @forelse ($cautionWeapons as $weapon)
-                    <tr>
-                        <td>
-                            {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
-                        </td>
-                        <td>
-                            {{ $weapon->weapon_number }}
-                        </td>
-                        <td>
-                            {{ $weapon->register_number }}
-                        </td>
-                        <td>
-                            {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id, false }}, {{ true }})" title="Detalhar Arma">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            @if ($routine->status && !$disabled)
-                                <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
+            @forelse ($cautionWeapons as $weapon)
+                <div class="cards-striped mx-lg-0 mt-lg-2">
+                    <div class="card">
+                        <div class="card-body py-1">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                    <span class="fw-bold">Descrição:</span> {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
+                                </div>
+                                <div class="col-12 col-lg-2 text-center text-lg-start">
+                                    <span class="fw-bold">Numeração:</span> {{ $weapon?->weapon_number ?? '-' }}
+                                </div>
+                                <div class="col-12 col-lg-2 text-center text-lg-start">
+                                    <span class="fw-bold">Registro Sinarm:</span> {{ $weapon?->register_number ?? '-' }}
+                                </div>
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                    <span class="fw-bold">Localização:</span> {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
+                                </div>
+                                <div class="col-12 col-lg-2 text-center text-lg-end">
+                                    <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id, false }}, {{ true }})" title="Detalhar Arma">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    @if ($routine->status && !$disabled)
+                                        <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
 
-                                <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            @endif
-                        </td>
-                    </tr>
-                @empty
-                    <div class="alert alert-warning mt-2">
+                                        <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-md-12">
+                    <div class="alert alert-warning">
                         <i class="fa fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
                     </div>
-                @endforelse
-                </tbody>
-            </table>
+                </div>
+            @endforelse
+            <div class="d-flex justify-content-center">
+
+            </div>
         </div>
     </div>
 </div>

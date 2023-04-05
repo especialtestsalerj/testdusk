@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="p-0">
+        <div class="card-body my-2">
             @include('layouts.msg')
 
             @include('livewire.event-types.partials.table')

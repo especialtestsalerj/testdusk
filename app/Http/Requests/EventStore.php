@@ -13,8 +13,8 @@ class EventStore extends Request
     {
         return [
             'routine_id' => 'required',
-            'event_type_id' => 'required',
             'occurred_at' => 'required',
+            'event_type_id' => 'required',
             'duty_user_id' => 'required',
             'description' => 'required',
         ];

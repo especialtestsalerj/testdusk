@@ -1,157 +1,42 @@
-<div class="cards-striped mx-3 mx-lg-0 mt-lg-4">
-
-    <div class="card card-routine m-1">
-        <div class="card-body py-1">
-            <div class="row d-flex align-items-center">
-                <div class="col-12 col-lg-1 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Protocolo :</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
+<div class="row mb-2">
+    <div class="col-md-12">
+        @forelse ($cautions as $caution)
+            <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
+                <div class="card">
+                    <div class="card-body py-1">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <span class="fw-bold">Protocolo:</span> {{ $caution?->protocol_number_formatted ?? '-' }}
+                            </div>
+                            <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <span class="fw-bold">Abertura:</span> {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                            </div>
+                            <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <span class="fw-bold">Fechamento:</span> {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                            </div>
+                            <div class="col-12 col-lg-6 text-center text-lg-start">
+                                <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->full_name }}
+                            </div>
+                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                                <span class="fw-bold">Destino:</span> {{ $caution->visitor?->sector?->name }}
+                            </div>
+                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                                <span class="fw-bold">Plantonista:</span> {{ $caution->dutyUser->name }}
+                            </div>
+                            <div class="col-12 col-lg-4 text-center text-lg-end">
+                                <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
+                                <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                @if($routine->status)
+                                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-lg-1 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Abertura</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Fechamento :</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Solicitante :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Novo Solicitante</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Destino :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Nome do Destino</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Plantonista :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Nome do Plantonista</div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-2 text-center text-lg-end">
-                    <a href="http://ocorrencias.test/events/index/show/3/1?disabled=1" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                    <a href="http://ocorrencias.test/events/index/show/3/1" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal1" title="Remover">
-                        <i class="fa fa-trash"></i>
-                    </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="cards-striped mx-3 mx-lg-0 mt-lg-4">
-    <div class="card card-routine m-1">
-        <div class="card-body py-1">
-            <div class="row d-flex align-items-center">
-                <div class="col-12 col-lg-1 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Protocolo :</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-1 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Abertura</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Fechamento :</div>
-                        <div class="col-6 col-lg-12 fw-bold">14/02/2023 ÀS 17:32</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Solicitante :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Novo Solicitante</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Destino :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Nome do Destino</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <div class="row">
-                        <div class="col-6 col-lg-12 fw-bold">Plantonista :</div>
-                        <div class="col-6 col-lg-12 fw-bold">Nome do Plantonista</div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2 text-center text-lg-end">
-                    <a href="http://ocorrencias.test/events/index/show/3/1?disabled=1" class="btn btn-link" title="Detalhar">
-                        <i class="fa fa-search"></i>
-                    </a>
-                    <a href="http://ocorrencias.test/events/index/show/3/1" class="btn btn-link" title="Alterar">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#delete-modal1" title="Remover">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<table id="cautionTable" class="table table-striped table-bordered">
-    <thead>
-    <tr>
-        <th class="col-md-1">Protocolo</th>
-        <th class="col-md-2">Abertura</th>
-        <th class="col-md-2">Fechamento</th>
-        <th class="col-md-2">Solicitante</th>
-        <th class="col-md-2">Destino</th>
-        <th class="col-md-2">Plantonista</th>
-        <th class="col-md-2"></th>
-    </tr>
-    </thead>
-    <tbody>
-    @forelse ($cautions as $caution)
-        <tr>
-            <td>
-                {{ $caution?->protocol_number_formatted ?? '-' }}
-            </td>
-            <td>
-                {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-'}}
-            </td>
-            <td>
-                {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
-            </td>
-            <td>
-                {{ $caution->visitor->person->full_name }}
-            </td>
-            <td>
-                {{ $caution->visitor?->sector?->name }}
-            </td>
-            <td>
-                {{ $caution->dutyUser->name }}
-            </td>
-            <td class="text-center actions">
-                <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                @if($routine->status)
-                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                @endif
-                <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
-            </td>
             <!-- Modal -->
             <div class="modal fade" id="caution-delete-modal{{ $caution->id }}" tabindex="-1" aria-labelledby="deleteModalLabelCaution" aria-hidden="true">
                 <div class="modal-dialog">
@@ -206,14 +91,13 @@
                     </div>
                 </div>
             </div>
-        </tr>
-    @empty
-        <div class="alert alert-warning mt-2">
-            <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
+        @empty
+            <div class="alert alert-warning mt-2">
+                <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
+            </div>
+        @endforelse
+        <div class="d-flex justify-content-center mt-2">
+            {{ $cautions->links() }}
         </div>
-    @endforelse
-    <div class="d-flex justify-content-center">
-        {{ $cautions->links() }}
     </div>
-    </tbody>
-</table>
+</div>

@@ -25,13 +25,13 @@
                         </h4>
                     </div>
 
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button', ['model' => $caution, 'backUrl' => request()->query('redirect'), 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'cautions:update' : 'cautions:store') : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">

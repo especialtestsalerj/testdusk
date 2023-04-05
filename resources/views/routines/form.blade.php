@@ -30,13 +30,13 @@
                             @endif
                         @endif
                     </div>
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? (formMode() == 'show' ? 'routines:update' : 'routines:store') : ''), 'id' => $routine->id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">

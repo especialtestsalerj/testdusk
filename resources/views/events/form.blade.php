@@ -25,13 +25,13 @@
                         </h4>
                     </div>
 
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button', ['model' => $event, 'backUrl' => request()->query('redirect'), 'permission' => ($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'events:update' : 'events:store') : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
@@ -39,10 +39,16 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="occurred_at">Data da Ocorrência*</label>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="event_type_id">Tipo*</label>
-                            <select class="select2" name="event_type_id" id="event_type_id" @disabled(!$routine->status || request()->query('disabled'))>
+                            <select class="select2 form-control" name="event_type_id" id="event_type_id" @disabled(!$routine->status || request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach ($eventTypes as $key => $eventType)
                                     @if(((!is_null($event->id)) && (!is_null($event->event_type_id) && $event->event_type_id === $eventType->id) || (!is_null(old('event_type_id'))) && old('event_type_id') == $eventType->id))
@@ -52,12 +58,6 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="occurred_at">Data da Ocorrência*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-12">

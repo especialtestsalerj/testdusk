@@ -4,7 +4,10 @@
     <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('sectors.update', ['id' => $sector->id]) }}" @else action="{{ route('sectors.store')}}" @endIf method="POST">
             @csrf
-            <input name="id" type="hidden" value="{{$sector->id}}" id="id" >
+
+            @if (isset($sector))
+                <input type="hidden" name="id" value="{{ $sector->id }}">
+            @endif
 
             <div class="">
                 <div class="row">
@@ -20,13 +23,13 @@
                         </h4>
                     </div>
 
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button', ['model' => $sector, 'backUrl' => 'sectors.index', 'permission' => (formMode() == 'show' ? 'sectors:update' : 'sectors:store')])
                     </div>
                 </div>
             </div>
 
-            <div class="card-body mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
