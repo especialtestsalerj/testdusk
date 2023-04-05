@@ -23,6 +23,8 @@ class IndexForm extends BaseForm
 
     public $caution_id;
     public $caution_weapon_id;
+    public $entranced_at;
+    public $exited_at;
     public $weapon_type_id;
     public $weapon_description;
     public $weapon_number;
@@ -31,7 +33,6 @@ class IndexForm extends BaseForm
     public $shelf_id;
     public $person_weapon;
 
-    public $entranced_at;
     public $routineStatus;
 
     public $edit;
@@ -52,11 +53,15 @@ class IndexForm extends BaseForm
                 : app(CautionWeapons::class)->findById($this->person_weapon);
 
         if ($result) {
+            $this->entranced_at = $result?->entranced_at;
+            $this->exited_at = $result?->exited_at;
             $this->weapon_type_id = $result->weapon_type_id;
             $this->weapon_description = $result->weapon_description;
             $this->weapon_number = $result->weapon_number;
             $this->register_number = $result->register_number;
         } else {
+            $this->entranced_at = null;
+            $this->exited_at = null;
             $this->weapon_type_id = null;
             $this->weapon_description = null;
             $this->weapon_number = null;
@@ -70,6 +75,8 @@ class IndexForm extends BaseForm
 
         $this->person_weapon = null;
         $this->caution_weapon_id = null;
+        $this->entranced_at = null;
+        $this->exited_at = null;
         $this->weapon_type_id = null;
         $this->weapon_description = null;
         $this->weapon_number = null;
@@ -88,6 +95,8 @@ class IndexForm extends BaseForm
 
         $this->clearWeapon();
 
+        $this->entranced_at = $this->caution->started_at->format('Y-m-d H:i');
+
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
 
@@ -100,6 +109,8 @@ class IndexForm extends BaseForm
         $this->readonly = $readonly;
 
         $this->caution_weapon_id = $id;
+        $this->entranced_at = $cautionWeapon?->entranced_at?->format('Y-m-d H:i');
+        $this->exited_at = $cautionWeapon?->exited_at?->format('Y-m-d H:i');
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
@@ -119,6 +130,8 @@ class IndexForm extends BaseForm
         $this->readonly = true;
 
         $this->caution_weapon_id = $id;
+        $this->entranced_at = $cautionWeapon?->entranced_at?->format('Y-m-d H:i');
+        $this->exited_at = $cautionWeapon?->exited_at?->format('Y-m-d H:i');
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
         $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
         $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
@@ -133,6 +146,7 @@ class IndexForm extends BaseForm
     {
         $validatedData = $this->validate(
             [
+                'entranced_at' => 'required',
                 'weapon_type_id' => 'required',
                 'weapon_description' => 'required',
                 'weapon_number' => 'required',
@@ -140,6 +154,7 @@ class IndexForm extends BaseForm
                 'shelf_id' => 'required',
             ],
             [
+                'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
                 'weapon_type_id.required' => 'Tipo de Arma: preencha o campo corretamente.',
                 'weapon_description.required' =>
                     'Descrição da Arma: preencha o campo corretamente.',
@@ -154,6 +169,8 @@ class IndexForm extends BaseForm
         $values = array_merge($values, ['entranced_at' => Carbon::now()]);
         $values = array_merge($values, ['exited_at' => Carbon::now()]);
         $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
+        $values = array_merge($values, ['entranced_at' => $this->entranced_at]);
+        $values = array_merge($values, ['exited_at' => $this->exited_at]);
         $values = array_merge($values, ['weapon_type_id' => $this->weapon_type_id]);
         $values = array_merge($values, [
             'weapon_description' => mb_strtoupper($this->weapon_description),
@@ -191,8 +208,12 @@ class IndexForm extends BaseForm
     public function fillModel()
     {
         $this->entranced_at = is_null(old('entranced_at'))
-            ? $this->cautionWeapon->entranced_at ?? ''
+            ? $this->cautionWeapon?->entranced_at?->format('Y-m-d H:i') ?? ''
             : old('entranced_at');
+
+        $this->exited_at = is_null(old('exited_at'))
+            ? $this->cautionWeapon?->exited_at?->format('Y-m-d H:i') ?? ''
+            : old('exited_at');
 
         $this->weapon_type_id = is_null(old('weapon_type_id'))
             ? $this->cautionWeapon->weapon_type_id ?? ''
@@ -233,10 +254,12 @@ class IndexForm extends BaseForm
     {
         $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
 
-        $caution = app(CautionsRepository::class)->findById($this->caution_id);
+        $this->caution = app(CautionsRepository::class)->findById($this->caution_id);
 
         $this->personWeapons = CautionWeapon::select(
             'caution_weapons.id',
+            'caution_weapons.entranced_at',
+            'caution_weapons.exited_at',
             'caution_weapons.weapon_type_id',
             'caution_weapons.weapon_description',
             'caution_weapons.weapon_number',
@@ -244,7 +267,7 @@ class IndexForm extends BaseForm
         )
             ->join('cautions', 'caution_weapons.caution_id', '=', 'cautions.id')
             ->join('visitors', 'cautions.visitor_id', '=', 'visitors.id')
-            ->where('visitors.person_id', $caution->visitor->person->id)
+            ->where('visitors.person_id', $this->caution->visitor->person->id)
             ->get();
 
         if ($this->mode == 'create') {

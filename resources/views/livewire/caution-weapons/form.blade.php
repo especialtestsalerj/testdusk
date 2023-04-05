@@ -62,60 +62,86 @@
                                         </div>
                                     @endif
 
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="entranced_at">Entrada*</label>
+                                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.defer="entranced_at" @disabled($disabled || $readonly)/>
+                                                <div>
+                                                    @error('entranced_at')
+                                                        <small class="text-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ $message }}
+                                                        </small>
+                                                    @endError
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exited_at">Saída</label>
+                                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" wire:model.defer="exited_at" @disabled($disabled || $readonly)/>
+                                                <div>
+                                                    @error('exited_at')
+                                                        <small class="text-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ $message }}
+                                                        </small>
+                                                    @endError
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="weapon_type_id">Tipo de Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
                                         <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id" @disabled($disabled || $readonly)>
                                             <option value="">SELECIONE</option>
                                             @foreach ($weaponTypes as $key => $weaponType)
-                                                @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->weapon_type_id) && $cautionWeapon->weapon_type_id === $weaponType->id) || (!is_null(old('weapon_type_id'))) && old('weapon_type_id') == $weaponType->id))
-                                                    <option value="{{ $weaponType->id }}" selected="selected">{{ $weaponType->name }}</option>
-                                                @else
-                                                    <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
-                                                @endif
+                                                <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
                                             @endforeach
                                         </select>
                                         <div>
                                             @error('weapon_type_id')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="weapon_description">Descrição da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                        <input class="form-control text-uppercase" name="weapon_description" dusk='formWeaponDescription' id="weapon_description" value="{{ is_null(old('weapon_description')) ? $cautionWeapon->weapon_description : old('weapon_description') }}" wire:model.defer="weapon_description" @disabled($disabled || $readonly)/>
+                                        <input class="form-control text-uppercase" name="weapon_description" dusk='formWeaponDescription' id="weapon_description" wire:model.defer="weapon_description" @disabled($disabled || $readonly)/>
                                         <div>
                                             @error('weapon_description')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="weapon_number">Numeração da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                                        <input class="form-control text-uppercase" name="weapon_number" id="weapon_number" value="{{ is_null(old('weapon_number')) ? $cautionWeapon->weapon_number : old('weapon_number') }}" wire:model.defer="weapon_number" @disabled($disabled || $readonly)/>
+                                        <input class="form-control text-uppercase" name="weapon_number" id="weapon_number" wire:model.defer="weapon_number" @disabled($disabled || $readonly)/>
                                         <div>
                                             @error('weapon_number')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="register_number">Número de Registro (Sinarm)</label>
-                                        <input class="form-control text-uppercase" name="register_number" id="register_number" value="{{ is_null(old('register_number')) ? $cautionWeapon->register_number : old('register_number') }}" wire:model.defer="register_number" @disabled($disabled || $readonly)/>
+                                        <input class="form-control text-uppercase" name="register_number" id="register_number" wire:model.defer="register_number" @disabled($disabled || $readonly)/>
                                         <div>
                                             @error('register_number')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
@@ -125,19 +151,15 @@
                                         <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" @disabled($disabled || $readonly)>
                                             <option value="">SELECIONE</option>
                                             @foreach ($cabinets as $key => $cabinet)
-                                                @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->cabinet_id) && $cautionWeapon->cabinet_id === $cabinet->id) || (!is_null(old('cabinet_id'))) && old('cabinet_id') == $cabinet->id))
-                                                    <option value="{{ $cabinet->id }}" selected="selected">{{ $cabinet->name }}</option>
-                                                @else
-                                                    <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
-                                                @endif
+                                                <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
                                             @endforeach
                                         </select>
                                         <div>
                                             @error('cabinet_id')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
@@ -146,19 +168,15 @@
                                         <select class="form-select" name="shelf_id" id="shelf_id" wire:model.defer="shelf_id" @disabled($disabled || $readonly)>
                                             <option value="">SELECIONE</option>
                                             @foreach ($shelves as $key => $shelf)
-                                                @if(((!is_null($cautionWeapon->id)) && (!is_null($cautionWeapon->shelf_id) && $cautionWeapon->shelf_id === $shelf->id) || (!is_null(old('shelf_id'))) && old('shelf_id') == $shelf->id))
-                                                    <option value="{{ $shelf->id }}" selected="selected">{{ $shelf->name }}</option>
-                                                @else
-                                                    <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
-                                                @endif
+                                                <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
                                             @endforeach
                                         </select>
                                         <div>
                                             @error('shelf_id')
-                                            <small class="text-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
                                             @endError
                                         </div>
                                     </div>
@@ -187,16 +205,22 @@
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Descrição:</span> {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
                                 </div>
-                                <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Numeração:</span> {{ $weapon?->weapon_number ?? '-' }}
                                 </div>
-                                <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <div class="col-12 col-lg-6 text-center text-lg-start">
                                     <span class="fw-bold">Registro Sinarm:</span> {{ $weapon?->register_number ?? '-' }}
+                                </div>
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                    <span class="fw-bold">Entrada:</span> {{ $weapon?->entranced_at_formatted }}
+                                </div>
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                    <span class="fw-bold">Saída:</span> {{ $weapon?->exited_at_formatted }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Localização:</span> {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
                                 </div>
-                                <div class="col-12 col-lg-2 text-center text-lg-end">
+                                <div class="col-12 col-lg-3 text-center text-lg-end">
                                     <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id, false }}, {{ true }})" title="Detalhar Arma">
                                         <i class="fa fa-search"></i>
                                     </button>
