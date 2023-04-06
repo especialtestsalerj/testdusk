@@ -31,10 +31,10 @@
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $visitor?->sector?->name ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                            <div class="col-12 col-lg-5 text-center text-lg-start">
                                 <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}
                             </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-end">
+                            <div class="col-12 col-lg-3 text-center text-lg-end">
                                 <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
                                     <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
