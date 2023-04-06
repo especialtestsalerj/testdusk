@@ -65,9 +65,11 @@ class Routine extends Controller
 
             $newRoutine = app(RoutinesRepository::class)->create($request->all());
 
-            $this->storePendingVisitors($oldRoutine->getPendingVisitors(), $newRoutine->id);
+            if (isset($oldRoutine)) {
+                $this->storePendingVisitors($oldRoutine->getPendingVisitors(), $newRoutine->id);
 
-            $this->storePendingCautions($oldRoutine->getPendingCautions(), $newRoutine->id);
+                $this->storePendingCautions($oldRoutine->getPendingCautions(), $newRoutine->id);
+            }
         });
 
         return redirect()
