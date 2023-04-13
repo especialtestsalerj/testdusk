@@ -10,6 +10,7 @@ use App\Http\Requests\VisitorStore as VisitorRequest;
 use App\Http\Requests\VisitorUpdate as VisitorUpdateRequest;
 use App\Http\Requests\VisitorDestroy as VisitorDestroyRequest;
 use App\Support\Constants;
+use Illuminate\Support\Facades\DB;
 
 class Visitor extends Controller
 {
@@ -73,11 +74,38 @@ class Visitor extends Controller
 
     public function update(VisitorUpdateRequest $request, $routine_id, $id)
     {
-        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+        DB::transaction(function () use ($request, $routine_id, $id) {
+            $currentVisitor = app(VisitorsRepository::class)->findById($id);
 
-        $request->merge(['person_id' => $person->id]);
+            //syncronizing visitors
+            if (isset($currentVisitor?->old_id)) {
+                $visitor = app(VisitorsRepository::class)->findByOldId($currentVisitor->old_id);
 
-        app(VisitorsRepository::class)->update($id, $request->all());
+                if (isset($visitor)) {
+                    $array = [];
+                    $array = array_add($array, 'exited_at', $request['exited_at']);
+
+                    app(VisitorsRepository::class)->update($currentVisitor->old_id, $array);
+                }
+
+                $visitors = app(VisitorsRepository::class)->findByOldId($currentVisitor->old_id);
+                if (isset($visitors)) {
+                    foreach ($visitors as $visitor) {
+                        if ($visitor->id != $currentVisitor->id && isset($visitor?->old_id)) {
+                            $array = [];
+                            $array = array_add($array, 'exited_at', $request['exited_at']);
+                            app(VisitorsRepository::class)->update($visitor->id, $array);
+                        }
+                    }
+                }
+            }
+
+            $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
+
+            $request->merge(['person_id' => $person->id]);
+
+            app(VisitorsRepository::class)->update($id, $request->all());
+        });
 
         return redirect()
             ->route($request['redirect'], $routine_id)

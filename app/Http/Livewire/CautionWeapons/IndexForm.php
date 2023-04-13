@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\CautionWeapons;
 
-use App\Data\Repositories\CautionWeapons;
+use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Models\Caution;
 use App\Models\CautionWeapon;
@@ -13,6 +13,7 @@ use App\Data\Repositories\Shelves as ShelvesRepository;
 use App\Data\Repositories\Cautions as CautionsRepository;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use function view;
 
 class IndexForm extends BaseForm
@@ -31,6 +32,7 @@ class IndexForm extends BaseForm
     public $register_number;
     public $cabinet_id;
     public $shelf_id;
+    public $old_id;
     public $person_weapon;
 
     public $routineStatus;
@@ -45,12 +47,14 @@ class IndexForm extends BaseForm
     public $readonly;
     public $redirect;
 
+    public $hasPending;
+
     public function find()
     {
         $result =
             $this->person_weapon == null
                 ? false
-                : app(CautionWeapons::class)->findById($this->person_weapon);
+                : app(CautionWeaponsRepository::class)->findById($this->person_weapon);
 
         if ($result) {
             $this->entranced_at = $result?->entranced_at;
@@ -59,6 +63,7 @@ class IndexForm extends BaseForm
             $this->weapon_description = $result->weapon_description;
             $this->weapon_number = $result->weapon_number;
             $this->register_number = $result->register_number;
+            $this->old_id = $result->old_id;
         } else {
             $this->entranced_at = null;
             $this->exited_at = null;
@@ -66,6 +71,7 @@ class IndexForm extends BaseForm
             $this->weapon_description = null;
             $this->weapon_number = null;
             $this->register_number = null;
+            $this->old_id = null;
         }
     }
 
@@ -83,6 +89,7 @@ class IndexForm extends BaseForm
         $this->register_number = null;
         $this->cabinet_id = null;
         $this->shelf_id = null;
+        $this->old_id = null;
 
         $this->readonly = false;
 
@@ -117,6 +124,7 @@ class IndexForm extends BaseForm
         $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
+        $this->old_id = $cautionWeapon?->old_id;
 
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
@@ -138,6 +146,7 @@ class IndexForm extends BaseForm
         $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
+        $this->old_id = $cautionWeapon?->old_id;
 
         $this->dispatchBrowserEvent('show-modal', ['target' => 'weapon-modal']);
     }
@@ -166,11 +175,11 @@ class IndexForm extends BaseForm
 
         $values = ['caution_id' => $this->caution_id];
         $values = array_merge($values, ['redirect' => $this->redirect]);
-        $values = array_merge($values, ['entranced_at' => Carbon::now()]);
-        $values = array_merge($values, ['exited_at' => Carbon::now()]);
         $values = array_merge($values, ['caution_weapon_id' => $this->caution_weapon_id]);
         $values = array_merge($values, ['entranced_at' => $this->entranced_at]);
-        $values = array_merge($values, ['exited_at' => $this->exited_at]);
+        $values = array_merge($values, [
+            'exited_at' => $this?->exited_at == '' ? null : $this?->exited_at,
+        ]);
         $values = array_merge($values, ['weapon_type_id' => $this->weapon_type_id]);
         $values = array_merge($values, [
             'weapon_description' => mb_strtoupper($this->weapon_description),
@@ -183,9 +192,74 @@ class IndexForm extends BaseForm
         $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
 
         if ($this->selectedId) {
-            $row = CautionWeapon::find($this->selectedId);
-            $row->fill($values);
-            $row->save();
+            DB::transaction(function () use ($values) {
+                $currentCautionWeapon = app(CautionWeaponsRepository::class)->findById(
+                    $this->selectedId
+                );
+
+                //syncronizing weapons
+                if (isset($this->old_id)) {
+                    $cautionWeapon = app(CautionWeaponsRepository::class)->findById($this->old_id);
+
+                    $array = [];
+                    $array = array_add(
+                        $array,
+                        'exited_at',
+                        $this?->exited_at == '' ? null : $this?->exited_at
+                    );
+                    $array = array_add($array, 'weapon_type_id', $this->weapon_type_id);
+                    $array = array_add($array, 'weapon_description', $this->weapon_description);
+                    $array = array_add($array, 'weapon_number', $this->weapon_number);
+                    $array = array_add($array, 'register_number', $this->register_number);
+                    $array = array_add($array, 'cabinet_id', $this->cabinet_id);
+                    $array = array_add($array, 'shelf_id', $this->shelf_id);
+
+                    app(CautionWeaponsRepository::class)->update($this->old_id, $array);
+
+                    $cautionWeapons = app(CautionWeaponsRepository::class)
+                        ->findByOldId($this->old_id)
+                        ->get();
+
+                    if (isset($cautionWeapons)) {
+                        foreach ($cautionWeapons as $cautionWeapon) {
+                            if (
+                                $cautionWeapon->id != $this->selectedId &&
+                                isset($cautionWeapon?->old_id)
+                            ) {
+                                $array = [];
+                                $array = array_add(
+                                    $array,
+                                    'exited_at',
+                                    $this?->exited_at == '' ? null : $this?->exited_at
+                                );
+                                $array = array_add($array, 'weapon_type_id', $this->weapon_type_id);
+                                $array = array_add(
+                                    $array,
+                                    'weapon_description',
+                                    $this->weapon_description
+                                );
+                                $array = array_add($array, 'weapon_number', $this->weapon_number);
+                                $array = array_add(
+                                    $array,
+                                    'register_number',
+                                    $this->register_number
+                                );
+                                $array = array_add($array, 'cabinet_id', $this->cabinet_id);
+                                $array = array_add($array, 'shelf_id', $this->shelf_id);
+
+                                app(CautionWeaponsRepository::class)->update(
+                                    $cautionWeapon->id,
+                                    $array
+                                );
+                            }
+                        }
+                    }
+                }
+
+                $row = CautionWeapon::find($this->selectedId);
+                $row->fill($values);
+                $row->save();
+            });
         } else {
             CautionWeapon::create($values);
         }
@@ -238,6 +312,8 @@ class IndexForm extends BaseForm
         $this->shelf_id = is_null(old('shelf_id'))
             ? $this->cautionWeapon->shelf_id ?? ''
             : old('shelf_id');
+
+        $this->old_id = is_null(old('old_id')) ? $this->cautionWeapon->old_id ?? '' : old('old_id');
     }
 
     protected function getComponentVariables()

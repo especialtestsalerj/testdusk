@@ -24,6 +24,7 @@ class People extends BaseForm
     public $destiny_sector_name;
 
     public $routineStatus;
+    public $readonly;
 
     public function find()
     {
@@ -51,9 +52,15 @@ class People extends BaseForm
 
     public function fillModel()
     {
-        $this->visitors = app(VisitorsRepository::class)
-            ->disablePagination()
-            ->findByRoutine($this->routine_id);
+        if ($this->mode == 'create') {
+            $this->visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending(
+                $this->routine_id
+            );
+        } else {
+            $this->visitors = app(VisitorsRepository::class)
+                ->disablePagination()
+                ->findByRoutine($this->routine_id);
+        }
 
         $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
 

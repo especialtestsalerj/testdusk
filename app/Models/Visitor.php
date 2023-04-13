@@ -44,4 +44,18 @@ class Visitor extends Model
     {
         return $this->exited_at?->format('Y-m-d H:i');
     }
+
+    public function hasPending()
+    {
+        return isset($this?->old_id);
+    }
+
+    public function hasPendingFromCaution()
+    {
+        $cautions = Caution::whereNotNull('visitor_old_id')
+            ->where('visitor_old_id', $this->old_id)
+            ->get();
+
+        return count($cautions) > 0;
+    }
 }

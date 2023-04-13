@@ -118,19 +118,16 @@ class Routine extends Controller
     {
         //Retrieve pending visitors from the last completed routine
         foreach ($pendingVisitors as $pendingVisitor) {
-            //create visitor
-            $visitor = new Visitor();
-
             $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
             $array = array_diff_key($pendingVisitor->toArray(), array_flip($excludeKeys));
 
+            //create visitor
+            $visitor = new Visitor();
             $visitor->fill($array);
-
             $visitor->routine_id = $newRoutineId;
             $visitor->old_id = $pendingVisitor->old_id
                 ? $pendingVisitor->old_id
                 : $pendingVisitor->id;
-
             $visitor->save();
         }
     }
@@ -139,17 +136,20 @@ class Routine extends Controller
     {
         //Retrieve pending cautions from the last completed routine
         foreach ($pendingCautions as $pendingCaution) {
-            //find visitor by visitor.old_id
-            if (
-                !($visitor = app(VisitorsRepository::class)->findByOldId(
-                    $pendingCaution->visitor_id
-                ))
-            ) {
-                $visitor = new Visitor();
+            //Check if the visitor already exists in the new routine
+            $visitor = app(VisitorsRepository::class)->findOld(
+                $newRoutineId,
+                $pendingCaution->visitor->old_id
+            );
 
+            if (isset($visitor) && count($visitor)) {
+                $visitorId = $visitor[0]->id;
+                $visitorOldId = null;
+            } else {
                 $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
                 $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
 
+                $visitor = new Visitor();
                 $visitor->fill($array);
                 $visitor->routine_id = $newRoutineId;
                 $visitor->entranced_at = $pendingCaution->visitor->entranced_at;
@@ -160,22 +160,21 @@ class Routine extends Controller
                 $visitor->description = $pendingCaution->visitor->description;
                 $visitor->old_id = $pendingCaution->visitor->old_id
                     ? $pendingCaution->old_id
-                    : $pendingCaution->visitor->id;
+                    : $pendingCaution->visitor_id;
                 $visitor->save();
-                $visitorOldId = $visitor->old_id;
-            } else {
-                $visitorOldId = null;
-            }
 
-            //create caution
-            $caution = new Caution();
+                $visitorId = $visitor->id;
+                $visitorOldId = $visitor->old_id;
+            }
 
             $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
             $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
 
+            //create caution
+            $caution = new Caution();
             $caution->fill($array);
             $caution->routine_id = $newRoutineId;
-            $caution->visitor_id = $visitor->id;
+            $caution->visitor_id = $visitorId;
             $caution->old_id = $pendingCaution->old_id
                 ? $pendingCaution->old_id
                 : $pendingCaution->id;
@@ -183,14 +182,11 @@ class Routine extends Controller
             $caution->save();
 
             //create weapons
-            if (
-                $oldCautionWeapons = app(CautionWeaponsRepository::class)->findByCautionId(
-                    $pendingCaution->id
-                )
-            ) {
-                foreach ($oldCautionWeapons->get() as $oldCautionWeapon) {
-                    $cautionWeapon = new CautionWeapon();
-
+            $oldCautionWeapons = app(CautionWeaponsRepository::class)->findByCaution(
+                $pendingCaution->id
+            );
+            if (isset($oldCautionWeapons)) {
+                foreach ($oldCautionWeapons as $oldCautionWeapon) {
                     $excludeKeys = [
                         'id',
                         'created_by_id',
@@ -200,6 +196,7 @@ class Routine extends Controller
                     ];
                     $array = array_diff_key($oldCautionWeapon->toArray(), array_flip($excludeKeys));
 
+                    $cautionWeapon = new CautionWeapon();
                     $cautionWeapon->fill($array);
                     $cautionWeapon->caution_id = $caution->id;
                     $cautionWeapon->old_id = $oldCautionWeapon->old_id

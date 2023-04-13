@@ -8,10 +8,13 @@
             </div>
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                @if ($routine->status && !$disabled)
+                @if ($routine->status && !$disabled && !isset($this->caution?->old_id))
                     <button type="button" class="btn btn-primary" wire:click="prepareForCreate" dusk='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
                         <i class="fa fa-plus"></i>
                     </button>
+                @endif
+                @if(isset($this->caution?->old_id))
+                    <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> Só é permitido incluir armas em cautelas da rotina atual. Recomendamos que abra nova visita e cautela para esse/a visitante </span>
                 @endif
             </div>
 
@@ -36,6 +39,11 @@
                                             <i class="fas fa-gun"></i> Arma
                                     @endswitch
                                 </h5>
+                                @if($modalMode == 'update')
+                                    @if (isset($this->old_id))
+                                        &nbsp;<span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
+                                    @endif
+                                @endif
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -66,7 +74,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="entranced_at">Entrada*</label>
-                                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.defer="entranced_at" @disabled($disabled || $readonly)/>
+                                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.defer="entranced_at" @disabled($disabled || $readonly) @if(isset($this->old_id)) readonly @endif/>
                                                 <div>
                                                     @error('entranced_at')
                                                         <small class="text-danger">
@@ -202,25 +210,28 @@
                     <div class="card">
                         <div class="card-body py-1">
                             <div class="row d-flex align-items-center">
-                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                <div class="col-12 col-lg-6 text-center text-lg-start">
                                     <span class="fw-bold">Descrição:</span> {{ $weapon?->weaponType?->name }} {{ $weapon?->weapon_description }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Numeração:</span> {{ $weapon?->weapon_number ?? '-' }}
                                 </div>
-                                <div class="col-12 col-lg-6 text-center text-lg-start">
+                                <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Registro Sinarm:</span> {{ $weapon?->register_number ?? '-' }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
-                                    <span class="fw-bold">Entrada:</span> {{ $weapon?->entranced_at_formatted }}
+                                    <span class="fw-bold">Entrada:</span> {{ $weapon?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
-                                    <span class="fw-bold">Saída:</span> {{ $weapon?->exited_at_formatted }}
+                                    <span class="fw-bold">Saída:</span> {{ $weapon?->exited_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Localização:</span> {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-end">
+                                    @if (isset($weapon?->old_id))
+                                        <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
+                                    @endif
                                     <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id, false }}, {{ true }})" title="Detalhar Arma">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -228,10 +239,11 @@
                                         <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
                                             <i class="fa fa-pencil"></i>
                                         </button>
-
-                                        <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
+                                        @if (!isset($weapon?->old_id))
+                                            <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        @endif
                                     @endif
                                 </div>
                             </div>

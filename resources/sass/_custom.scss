@@ -370,3 +370,34 @@ body.bg-light {
 .text-justify {
     text-align: justify;
 }
+
+input[type=text]:read-only,
+input[type=date]:read-only,
+input[type=datetime]:read-only,
+input[type=datetime-local]:read-only,
+textarea:read-only,
+select[readonly] {
+    pointer-events: none;
+    touch-action: none;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    background: #e9ecef !important;
+    outline: none !important;
+}
+
+select[readonly].select2 + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+
+    .select2-selection {
+        -webkit-box-shadow: none !important;
+        background: #e9ecef;
+        box-shadow: none;
+        outline: none !important;
+    }
+
+    .select2-selection__arrow,
+    .select2-selection__clear {
+        display: none;
+    }
+}

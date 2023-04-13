@@ -11,7 +11,7 @@ class Cautions extends Repository
      */
     protected $model = Caution::class;
 
-    //Retornar o próximo número de protocolo para o ano de criação da nova cautela
+    //Return the next protocol number for the year of creation of the new caution
     public function makeProtocolNumber($ano)
     {
         $new_number =
@@ -22,5 +22,13 @@ class Cautions extends Repository
             $new_number == '1' ? $ano . str_pad($new_number, 4, '0', STR_PAD_LEFT) : $new_number;
 
         return $new_number;
+    }
+
+    public function findOld($old_id)
+    {
+        return $this->model
+            ::where('old_id', $old_id)
+            ->whereNotNull('old_id')
+            ->get();
     }
 }

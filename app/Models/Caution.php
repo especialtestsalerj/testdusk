@@ -52,4 +52,16 @@ class Caution extends Model
     {
         return $this->belongsTo(Routine::class);
     }
+
+    public function hasPending()
+    {
+        return isset($this?->old_id);
+    }
+
+    public function hasWeapons()
+    {
+        $weapons = CautionWeapon::where('caution_id', $this->id)->get();
+
+        return count($weapons) > 0;
+    }
 }

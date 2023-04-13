@@ -22,13 +22,13 @@
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Protocolo:</span> {{ $caution?->protocol_number_formatted ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Abertura:</span> {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                            <div class="col-12 col-lg-3 text-center text-lg-start">
+                                <span class="fw-bold">Abertura:</span> {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Fechamento:</span> {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                            <div class="col-12 col-lg-3 text-center text-lg-start">
+                                <span class="fw-bold">Fechamento:</span> {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-6 text-center text-lg-start">
+                            <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->full_name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
@@ -38,13 +38,21 @@
                                 <span class="fw-bold">Plantonista:</span> {{ $caution->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-end">
+                                @if(!$caution->hasWeapons())
+                                    <span class="badge bg-danger text-white"><i class="fa fa-exclamation-triangle"></i> SEM ARMA(S) </span>
+                                @endif
+                                @if($caution->hasPending())
+                                    <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
+                                @endif
                                 <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
                                 <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
                                     <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if(!$caution->hasPending())
+                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
                                 @endif
                             </div>
                         </div>

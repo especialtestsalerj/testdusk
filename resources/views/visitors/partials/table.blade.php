@@ -35,12 +35,17 @@
                                 <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
+                                @if($visitor->hasPending())
+                                    <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
+                                @endif
                                 <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
                                     <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if(!$visitor->hasPending())
+                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
                                 @endif
                             </div>
                         </div>
