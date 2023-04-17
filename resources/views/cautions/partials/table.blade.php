@@ -26,7 +26,7 @@
                                 <span class="fw-bold">Abertura:</span> {{ $caution?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-start">
-                                <span class="fw-bold">Fechamento:</span> {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                <span class="fw-bold">Fechamento:</span> @if(isset($caution?->concluded_at)) {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->full_name }}

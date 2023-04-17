@@ -6,10 +6,10 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Entrada:</span> {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Entrada:</span> {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Saída:</span> {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Saída:</span> @if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Visitante:</span> {{ $visitor->person->full_name }}
