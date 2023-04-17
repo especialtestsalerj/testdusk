@@ -4,12 +4,10 @@ use App\Http\Controllers\EventType;
 use App\Http\Livewire\EventTypes\Index as EventTypesIndex;
 
 Route::group(['prefix' => '/event-types'], function () {
-    //Visualizar
     Route::get('', EventTypesIndex::class)
         ->name('event-types.index')
         ->can('event-types:show');
 
-    //Criar
     Route::get('/create', [EventType::class, 'create'])
         ->name('event-types.create')
         ->can('event-types:store');
@@ -18,7 +16,6 @@ Route::group(['prefix' => '/event-types'], function () {
         ->name('event-types.store')
         ->can('event-types:store');
 
-    //Alterar
     Route::get('/{id}', [EventType::class, 'show'])
         ->name('event-types.show')
         ->can('event-types:show');
@@ -27,7 +24,6 @@ Route::group(['prefix' => '/event-types'], function () {
         ->name('event-types.update')
         ->can('event-types:update');
 
-    //Remover
     Route::post('/delete/{id}', [EventType::class, 'destroy'])
         ->name('event-types.destroy')
         ->can('event-types:destroy');

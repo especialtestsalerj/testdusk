@@ -6,7 +6,7 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-3 text-center text-lg-start">
-                                <span class="fw-bold">Rotina:</span> {{ $routine->id }}
+                                <span class="fw-bold">Rotina:</span> {{ $routine->code }}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-start">
                                 <span class="fw-bold">Turno:</span> {{ $routine?->shift?->name }}

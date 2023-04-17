@@ -18,7 +18,7 @@
                                                 <h4>
                                                     @can('cautions:show')
                                                         <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
-                                                            Rotina {{ $routine->id }}
+                                                            Rotina {{ $routine->code }}
                                                         </a>
                                                     @endcan
                                                     @cannot('cautions:show')

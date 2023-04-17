@@ -4,13 +4,7 @@ namespace App\Data\Repositories;
 
 use Exception;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Data\Traits\Eventable;
-use App\Data\Traits\DataProcessing;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 abstract class Repository
 {

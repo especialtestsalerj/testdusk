@@ -63,7 +63,11 @@ class Routine extends Controller
             $oldRoutineId = DB::table('routines')->max('id');
             $oldRoutine = app(RoutinesRepository::class)->findById($oldRoutineId);
 
-            $newRoutine = app(RoutinesRepository::class)->create($request->all());
+            $values = $request->all();
+            $values = array_merge($values, [
+                'code' => app(RoutinesRepository::class)->makeCode(),
+            ]);
+            $newRoutine = app(RoutinesRepository::class)->create($values);
 
             if (isset($oldRoutine)) {
                 $this->storePendingVisitors($oldRoutine->getPendingVisitors(), $newRoutine->id);
