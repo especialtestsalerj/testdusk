@@ -13,7 +13,7 @@ class StuffStore extends Request
     {
         return [
             'routine_id' => 'required',
-            'entranced_at' => 'required',
+            'entranced_at' => 'required_if:exited_at,null',
             'duty_user_id' => 'required',
             'description' => 'required',
         ];
@@ -22,7 +22,7 @@ class StuffStore extends Request
     public function messages()
     {
         return [
-            'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
+            'entranced_at.required_if' => 'Entrada ou Saída: informe pelo menos uma das datas.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
             'description.required' => 'Observações: preencha o campo corretamente.',
         ];

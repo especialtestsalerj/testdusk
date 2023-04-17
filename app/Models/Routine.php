@@ -10,6 +10,7 @@ class Routine extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'shift_id',
         'entranced_at',
         'entranced_user_id',
@@ -53,21 +54,44 @@ class Routine extends Model
 
     public function events()
     {
-        return $this->hasMany(Event::class, 'routine_id')->orderBy('occurred_at');
+        return $this->hasMany(Event::class, 'routine_id')
+            ->orderBy('occurred_at')
+            ->orderBy('id');
     }
 
     public function visitors()
     {
-        return $this->hasMany(Visitor::class, 'routine_id')->orderBy('entranced_at');
+        return $this->hasMany(Visitor::class, 'routine_id')
+            ->orderBy('entranced_at')
+            ->orderBy('id');
     }
 
     public function stuffs()
     {
-        return $this->hasMany(Stuff::class, 'routine_id')->orderBy('entranced_at');
+        return $this->hasMany(Stuff::class, 'routine_id')
+            ->orderBy('entranced_at')
+            ->orderBy('id');
     }
 
     public function cautions()
     {
-        return $this->hasMany(Caution::class, 'routine_id')->orderBy('started_at');
+        return $this->hasMany(Caution::class, 'routine_id')->orderBy('protocol_number');
+    }
+
+    public function getPendingVisitors()
+    {
+        return Visitor::where('routine_id', $this->id)
+            ->whereNull('exited_at')
+            ->orderBy('entranced_at')
+            ->orderBy('id')
+            ->get();
+    }
+
+    public function getPendingCautions()
+    {
+        return Caution::where('routine_id', $this->id)
+            ->whereNull('concluded_at')
+            ->orderBy('protocol_number')
+            ->get();
     }
 }

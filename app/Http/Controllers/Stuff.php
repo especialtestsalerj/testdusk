@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 use App\Data\Repositories\Stuffs as StuffsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
-use App\Http\Requests\StuffStore as StuffRequest;
-use App\Http\Requests\StuffUpdate as StuffUpdateRequest;
-use App\Http\Requests\StuffDestroy as StuffDestroyRequest;
 use App\Data\Repositories\Routines as RoutinesRepository;
+use App\Http\Requests\StuffStore;
+use App\Http\Requests\StuffUpdate;
+use App\Http\Requests\StuffDestroy;
 use App\Support\Constants;
 
 class Stuff extends Controller
@@ -31,7 +31,7 @@ class Stuff extends Controller
         ]);
     }
 
-    public function store(StuffRequest $request, $routine_id)
+    public function store(StuffStore $request, $routine_id)
     {
         app(StuffsRepository::class)->create($request->all());
 
@@ -60,7 +60,7 @@ class Stuff extends Controller
         ]);
     }
 
-    public function update(StuffUpdateRequest $request, $routine_id, $id)
+    public function update(StuffUpdate $request, $routine_id, $id)
     {
         app(StuffsRepository::class)->update($id, $request->all());
 
@@ -69,7 +69,7 @@ class Stuff extends Controller
             ->with('message', 'Material alterado com sucesso!');
     }
 
-    public function destroy(StuffDestroyRequest $request, $routine_id, $id)
+    public function destroy(StuffDestroy $request, $routine_id, $id)
     {
         $stuff = app(StuffsRepository::class)->findById($id);
 

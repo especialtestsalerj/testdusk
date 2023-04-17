@@ -20,7 +20,7 @@
                         </h4>
                     </div>
 
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button', ['model' => $eventType, 'backUrl' => 'event-types.index', 'permission' => (formMode() == 'show' ? 'event-types:update' : 'event-types:store')])
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg">* Campos obrigatórios </span>
+                        <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
                     </div>
                 </div>
                 <div class="row">

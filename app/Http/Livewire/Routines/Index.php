@@ -5,8 +5,6 @@ namespace App\Http\Livewire\Routines;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Http\Livewire\BaseIndex;
-use App\Http\Requests\Request;
-use App\Http\Requests\RoutineUpdate as RoutinesRequest;
 use App\Models\Routine;
 
 class Index extends BaseIndex
@@ -14,8 +12,8 @@ class Index extends BaseIndex
     protected $repository = RoutinesRepository::class;
     private $model = Routine::class;
 
-    public $orderByField = 'entranced_at';
-    public $orderByDirection = 'desc';
+    public $orderByField = ['entranced_at', 'id'];
+    public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
 
     public $searchFields = [

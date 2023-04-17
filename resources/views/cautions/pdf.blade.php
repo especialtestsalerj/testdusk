@@ -150,6 +150,20 @@
         .table .footer p {
             padding-top: 0;
         }
+
+        @if (!app()->environment('production'))
+            /* watermark */
+            table:before {
+                content: 'RASCUNHO';
+                z-index: -1;
+                opacity: 0.1;
+                position: absolute;
+                top: 13%;
+                width: 100%;
+                text-align: center;
+                font-size: 120px;
+            }
+        @endif
     </style>
 </head>
 <body>

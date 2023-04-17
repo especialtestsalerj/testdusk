@@ -10,8 +10,8 @@ class Index extends BaseIndex
 {
     protected $repository = EventsRepository::class;
 
-    public $orderByField = 'occurred_at';
-    public $orderByDirection = 'asc';
+    public $orderByField = ['occurred_at', 'id'];
+    public $orderByDirection = [];
     public $paginationEnabled = true;
     public $routine_id;
     public $routine;

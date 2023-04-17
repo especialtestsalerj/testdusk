@@ -12,6 +12,8 @@ class Caution extends Model
         'duty_user_id',
         'protocol_number',
         'description',
+        'old_id',
+        'visitor_old_id',
     ];
 
     protected $casts = [
@@ -49,5 +51,17 @@ class Caution extends Model
     public function routine()
     {
         return $this->belongsTo(Routine::class);
+    }
+
+    public function hasPending()
+    {
+        return isset($this?->old_id);
+    }
+
+    public function hasWeapons()
+    {
+        $weapons = CautionWeapon::where('caution_id', $this->id)->get();
+
+        return count($weapons) > 0;
     }
 }

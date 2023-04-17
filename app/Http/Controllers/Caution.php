@@ -10,12 +10,13 @@ use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
 use App\Data\Repositories\Cabinets as CabinetsRepository;
 use App\Data\Repositories\Shelves as ShelvesRepository;
-use App\Http\Requests\CautionStore as CautionRequest;
-use App\Http\Requests\CautionUpdate as CautionUpdateRequest;
-use App\Http\Requests\CautionDestroy as CautionDestroyRequest;
+use App\Http\Requests\CautionStore;
+use App\Http\Requests\CautionUpdate;
+use App\Http\Requests\CautionDestroy;
 use App\Services\PDF\Service as PDF;
 use App\Support\Constants;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class Caution extends Controller
 {
@@ -25,7 +26,7 @@ class Caution extends Controller
 
         $routine = app(RoutinesRepository::class)->findById([$routine_id]);
 
-        $visitors = app(VisitorsRepository::class)->findByRoutine($routine_id);
+        $visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending($routine_id);
 
         return $this->view('cautions.form')->with([
             'routine_id' => $routine_id,
@@ -41,7 +42,7 @@ class Caution extends Controller
         ]);
     }
 
-    public function store(CautionRequest $request, $routine_id)
+    public function store(CautionStore $request, $routine_id)
     {
         $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
 
@@ -106,34 +107,68 @@ class Caution extends Controller
         ]);
     }
 
-    public function update(CautionUpdateRequest $request, $routine_id, $id)
+    public function update(CautionUpdate $request, $routine_id, $id)
     {
-        $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
+        DB::transaction(function () use ($request, $routine_id, $id) {
+            $currentCaution = app(CautionsRepository::class)->findById($id);
 
-        $personRequest = new FormRequest();
-        $personRequest->merge(['certificate_type' => $request->certificate_type]);
-        $personRequest->merge(['id_card' => $request->id_card]);
-        $personRequest->merge(['certificate_number' => $request->certificate_number]);
-        $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
+            //syncronizing cautions
+            if (isset($currentCaution?->old_id)) {
+                $caution = app(CautionsRepository::class)->findById($currentCaution->old_id);
 
-        app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
+                if (isset($caution)) {
+                    $array = [];
+                    $array = array_add($array, 'concluded_at', $request['concluded_at']);
 
-        $request->request->remove('certificate_type');
-        $request->request->remove('id_card');
-        $request->request->remove('certificate_number');
-        $request->request->remove('certificate_valid_until');
+                    app(CautionsRepository::class)->update($currentCaution->old_id, $array);
+                }
 
-        app(CautionsRepository::class)->update($id, $request->all());
+                $cautions = app(CautionsRepository::class)->findOld($currentCaution->old_id);
+                if (isset($cautions) && count($cautions) > 0) {
+                    foreach ($cautions as $caution) {
+                        if ($caution->id != $currentCaution->id && isset($caution?->old_id)) {
+                            $array = [];
+                            $array = array_add($array, 'concluded_at', $request['concluded_at']);
+                            app(CautionsRepository::class)->update($caution->id, $array);
+                        }
+                    }
+                }
+            }
+
+            $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
+
+            $personRequest = new FormRequest();
+            $personRequest->merge(['certificate_type' => $request->certificate_type]);
+            $personRequest->merge(['id_card' => $request->id_card]);
+            $personRequest->merge(['certificate_number' => $request->certificate_number]);
+            $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
+
+            app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
+
+            $request->request->remove('certificate_type');
+            $request->request->remove('id_card');
+            $request->request->remove('certificate_number');
+            $request->request->remove('certificate_valid_until');
+
+            app(CautionsRepository::class)->update($id, $request->all());
+        });
 
         return redirect()
             ->route($request['redirect'], $routine_id)
             ->with('message', 'Cautela alterada com sucesso!');
     }
 
-    public function destroy(CautionDestroyRequest $request, $routine_id, $id)
+    public function destroy(CautionDestroy $request, $routine_id, $id)
     {
         $caution = app(CautionsRepository::class)->findById($id);
 
+        //deleting weapons
+        $cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($id);
+        foreach ($cautionWeapons as $cautionWeapon) {
+            $cautionWeapon->delete($cautionWeapon->id);
+        }
+
+        //deleting caution
         $caution->delete($id);
 
         return redirect()

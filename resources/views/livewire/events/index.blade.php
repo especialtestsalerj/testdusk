@@ -1,11 +1,11 @@
 
 <div>
-    <div class="mx-0 my-0 mx-lg-5 my-lg-4">
+    <div class="py-4 px-4">
         <div class="">
             <div class="row">
                 <div class="col-md-8">
                     <h2 class="mb-0">Ocorrências</h2>
-                    Rotina {{ $routine->id }} - {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
+                    Rotina {{ $routine->code }} - {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
                     @if ($routine->status)
                         <label class="badge bg-success"> ABERTA </label>
                     @else

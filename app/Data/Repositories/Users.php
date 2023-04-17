@@ -3,10 +3,8 @@
 namespace App\Data\Repositories;
 
 use App\Models\User;
-use App\Support\Constants;
-use App\Data\Repositories\Congressmen as CongressmenRepository;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class Users extends Repository
 {

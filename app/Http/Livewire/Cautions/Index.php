@@ -10,8 +10,8 @@ class Index extends BaseIndex
 {
     protected $repository = CautionsRepository::class;
 
-    public $orderByField = 'started_at';
-    public $orderByDirection = 'asc';
+    public $orderByField = ['protocol_number'];
+    public $orderByDirection = [];
     public $paginationEnabled = true;
     public $routine_id;
     public $routine;

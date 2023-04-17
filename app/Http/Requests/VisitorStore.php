@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 class VisitorStore extends Request
 {
     public function authorize()
@@ -11,11 +14,23 @@ class VisitorStore extends Request
 
     public function rules()
     {
+        Validator::extend('cpf_inactive', function ($attribute, $value, $parameters, $validator) {
+            $input = $validator->getData();
+
+            return !DB::table('visitors')
+                ->join('people', 'visitors.person_id', '=', 'people.id')
+                ->where('visitors.routine_id', $input['routine_id'])
+                ->where('people.cpf', $input['cpf'])
+                ->whereNull('visitors.exited_at')
+                ->exists();
+        });
+
         return [
             'routine_id' => 'required',
             'entranced_at' => 'required',
-            'cpf' => 'required|cpf',
+            'cpf' => 'required|cpf|cpf_inactive:id,routine_id,cpf',
             'full_name' => 'required',
+            'sector_id' => 'required',
             'duty_user_id' => 'required',
             'description' => 'required',
         ];
@@ -27,7 +42,9 @@ class VisitorStore extends Request
             'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
             'cpf.required' => 'CPF (Visitante): preencha o campo corretamente.',
             'cpf.cpf' => 'CPF (Visitante): número inválido.',
+            'cpf.cpf_inactive' => 'CPF (Visitante): possui visita em aberto.',
             'full_name.required' => 'Nome (Visitante): preencha o campo corretamente.',
+            'sector_id.required' => 'Setor: preencha o campo corretamente.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
             'description.required' => 'Observações: preencha o campo corretamente.',
         ];
