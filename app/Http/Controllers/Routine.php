@@ -6,9 +6,9 @@ use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Shifts as ShiftsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
+use App\Http\Requests\RoutineStore;
+use App\Http\Requests\RoutineUpdate;
 use App\Http\Requests\RoutineFinish;
-use App\Http\Requests\RoutineStore as RoutineRequest;
-use App\Http\Requests\RoutineUpdate as RoutineUpdateRequest;
 use App\Support\Constants;
 use App\Models\Visitor;
 use App\Models\Caution;
@@ -56,7 +56,7 @@ class Routine extends Controller
         ]);
     }
 
-    public function store(RoutineRequest $request)
+    public function store(RoutineStore $request)
     {
         DB::transaction(function () use ($request) {
             //Catch last routine
@@ -95,7 +95,7 @@ class Routine extends Controller
         ]);
     }
 
-    public function update(RoutineUpdateRequest $request, $id)
+    public function update(RoutineUpdate $request, $id)
     {
         app(RoutinesRepository::class)->update($id, $request->all());
 
@@ -125,9 +125,7 @@ class Routine extends Controller
             $visitor = new Visitor();
             $visitor->fill($array);
             $visitor->routine_id = $newRoutineId;
-            $visitor->old_id = $pendingVisitor->old_id
-                ? $pendingVisitor->old_id
-                : $pendingVisitor->id;
+            $visitor->old_id = $pendingVisitor->old_id ?? $pendingVisitor->id;
             $visitor->save();
         }
     }
@@ -139,7 +137,7 @@ class Routine extends Controller
             //Check if the visitor already exists in the new routine
             $visitor = app(VisitorsRepository::class)->findOld(
                 $newRoutineId,
-                $pendingCaution->visitor->old_id
+                $pendingCaution->visitor->old_id ?? $pendingCaution->visitor_id
             );
 
             if (isset($visitor) && count($visitor)) {
@@ -158,9 +156,10 @@ class Routine extends Controller
                 $visitor->sector_id = $pendingCaution->visitor->sector_id;
                 $visitor->duty_user_id = $pendingCaution->visitor->duty_user_id;
                 $visitor->description = $pendingCaution->visitor->description;
-                $visitor->old_id = $pendingCaution->visitor->old_id
+                $visitor->old_id = $pendingCaution->visitor->old_id ?? $pendingCaution->visitor_id;
+                /*$visitor->old_id = $pendingCaution->visitor->old_id
                     ? $pendingCaution->old_id
-                    : $pendingCaution->visitor_id;
+                    : $pendingCaution->visitor_id;*/
                 $visitor->save();
 
                 $visitorId = $visitor->id;
@@ -175,9 +174,7 @@ class Routine extends Controller
             $caution->fill($array);
             $caution->routine_id = $newRoutineId;
             $caution->visitor_id = $visitorId;
-            $caution->old_id = $pendingCaution->old_id
-                ? $pendingCaution->old_id
-                : $pendingCaution->id;
+            $caution->old_id = $pendingCaution->old_id ?? $pendingCaution->id;
             $caution->visitor_old_id = $visitorOldId;
             $caution->save();
 
@@ -199,9 +196,7 @@ class Routine extends Controller
                     $cautionWeapon = new CautionWeapon();
                     $cautionWeapon->fill($array);
                     $cautionWeapon->caution_id = $caution->id;
-                    $cautionWeapon->old_id = $oldCautionWeapon->old_id
-                        ? $oldCautionWeapon->old_id
-                        : $oldCautionWeapon->id;
+                    $cautionWeapon->old_id = $oldCautionWeapon->old_id ?? $oldCautionWeapon->id;
                     $cautionWeapon->save();
                 }
             }
