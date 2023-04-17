@@ -10,8 +10,8 @@ class Index extends BaseIndex
 {
     protected $repository = StuffsRepository::class;
 
-    public $orderByField = 'entranced_at';
-    public $orderByDirection = 'asc';
+    public $orderByField = ['entranced_at', 'id'];
+    public $orderByDirection = [];
     public $paginationEnabled = true;
     public $routine_id;
     public $routine;

@@ -9,8 +9,8 @@ class Index extends BaseIndex
 {
     protected $repository = EventTypesRepository::class;
 
-    public $orderByField = 'name';
-    public $orderByDirection = 'asc';
+    public $orderByField = ['name', 'id'];
+    public $orderByDirection = [];
     public $paginationEnabled = true;
 
     public $searchFields = [

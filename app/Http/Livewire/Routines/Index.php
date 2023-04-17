@@ -12,8 +12,8 @@ class Index extends BaseIndex
     protected $repository = RoutinesRepository::class;
     private $model = Routine::class;
 
-    public $orderByField = 'entranced_at';
-    public $orderByDirection = 'desc';
+    public $orderByField = ['entranced_at', 'id'];
+    public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
 
     public $searchFields = [

@@ -52,11 +52,18 @@ abstract class BaseIndex extends Component
         return $query;
     }
 
-    protected $orderByField = 'updated_at';
-    protected $orderByDirection = 'desc';
+    protected $orderByField = ['updated_at'];
+    protected $orderByDirection = ['desc'];
+
     public function orderBy($query)
     {
-        return $query->orderBy($this->orderByField, $this->orderByDirection);
+        $sql = $query;
+        $i = 0;
+        foreach ($this->orderByField as $field) {
+            $sql->orderBy($field, $this->orderByDirection[$i] ?? 'asc');
+            $i++;
+        }
+        return $sql;
     }
 
     public function filter()

@@ -9,8 +9,8 @@ class Index extends BaseIndex
 {
     protected $repository = SectorsRepository::class;
 
-    public $orderByField = 'name';
-    public $orderByDirection = 'asc';
+    public $orderByField = ['name'];
+    public $orderByDirection = [];
     public $paginationEnabled = true;
 
     public $searchFields = [
