@@ -6,9 +6,9 @@ use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\People as PeopleRepository;
-use App\Http\Requests\VisitorStore as VisitorRequest;
-use App\Http\Requests\VisitorUpdate as VisitorUpdateRequest;
-use App\Http\Requests\VisitorDestroy as VisitorDestroyRequest;
+use App\Http\Requests\VisitorStore;
+use App\Http\Requests\VisitorUpdate;
+use App\Http\Requests\VisitorDestroy;
 use App\Support\Constants;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +36,7 @@ class Visitor extends Controller
         ]);
     }
 
-    public function store(VisitorRequest $request, $routine_id)
+    public function store(VisitorStore $request, $routine_id)
     {
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
@@ -72,7 +72,7 @@ class Visitor extends Controller
         ]);
     }
 
-    public function update(VisitorUpdateRequest $request, $routine_id, $id)
+    public function update(VisitorUpdate $request, $routine_id, $id)
     {
         DB::transaction(function () use ($request, $routine_id, $id) {
             $currentVisitor = app(VisitorsRepository::class)->findById($id);
@@ -112,7 +112,7 @@ class Visitor extends Controller
             ->with('message', 'Visitante alterado/a com sucesso!');
     }
 
-    public function destroy(VisitorDestroyRequest $request, $routine_id, $id)
+    public function destroy(VisitorDestroy $request, $routine_id, $id)
     {
         $visitor = app(VisitorsRepository::class)->findById($id);
 

@@ -10,9 +10,9 @@ use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
 use App\Data\Repositories\Cabinets as CabinetsRepository;
 use App\Data\Repositories\Shelves as ShelvesRepository;
-use App\Http\Requests\CautionStore as CautionRequest;
-use App\Http\Requests\CautionUpdate as CautionUpdateRequest;
-use App\Http\Requests\CautionDestroy as CautionDestroyRequest;
+use App\Http\Requests\CautionStore;
+use App\Http\Requests\CautionUpdate;
+use App\Http\Requests\CautionDestroy;
 use App\Services\PDF\Service as PDF;
 use App\Support\Constants;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,7 +42,7 @@ class Caution extends Controller
         ]);
     }
 
-    public function store(CautionRequest $request, $routine_id)
+    public function store(CautionStore $request, $routine_id)
     {
         $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
 
@@ -107,7 +107,7 @@ class Caution extends Controller
         ]);
     }
 
-    public function update(CautionUpdateRequest $request, $routine_id, $id)
+    public function update(CautionUpdate $request, $routine_id, $id)
     {
         DB::transaction(function () use ($request, $routine_id, $id) {
             $currentCaution = app(CautionsRepository::class)->findById($id);
@@ -158,7 +158,7 @@ class Caution extends Controller
             ->with('message', 'Cautela alterada com sucesso!');
     }
 
-    public function destroy(CautionDestroyRequest $request, $routine_id, $id)
+    public function destroy(CautionDestroy $request, $routine_id, $id)
     {
         $caution = app(CautionsRepository::class)->findById($id);
 

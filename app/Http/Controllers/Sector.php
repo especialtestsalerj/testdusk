@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\SectorStore as SectorRequest;
 use App\Data\Repositories\Sectors as SectorsRepository;
-use App\Http\Requests\SectorUpdate as SectorUpdateRequest;
-use App\Http\Requests\SectorDestroy as SectorDestroyRequest;
+use App\Http\Requests\SectorStore;
+use App\Http\Requests\SectorUpdate;
+use App\Http\Requests\SectorDestroy;
 use App\Support\Constants;
 
 class Sector extends Controller
@@ -28,7 +28,7 @@ class Sector extends Controller
         ]);
     }
 
-    public function store(SectorRequest $request)
+    public function store(SectorStore $request)
     {
         app(SectorsRepository::class)->create($request->all());
 
@@ -46,7 +46,7 @@ class Sector extends Controller
         ]);
     }
 
-    public function update(SectorUpdateRequest $request, $id)
+    public function update(SectorUpdate $request, $id)
     {
         app(SectorsRepository::class)->update($id, $request->all());
 
@@ -55,7 +55,7 @@ class Sector extends Controller
             ->with('message', 'Setor alterado com sucesso!');
     }
 
-    public function destroy(SectorDestroyRequest $request, $id)
+    public function destroy(SectorDestroy $request, $id)
     {
         $eventType = app(SectorsRepository::class)->findById($id);
 

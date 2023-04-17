@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\EventTypeStore as EventTypeRequest;
 use App\Data\Repositories\EventTypes as EventTypesRepository;
-use App\Http\Requests\EventTypeUpdate as EventTypeUpdateRequest;
-use App\Http\Requests\EventTypeDestroy as EventTypeDestroyRequest;
+use App\Http\Requests\EventTypeStore;
+use App\Http\Requests\EventTypeUpdate;
+use App\Http\Requests\EventTypeDestroy;
 use App\Support\Constants;
 
 class EventType extends Controller
@@ -28,7 +28,7 @@ class EventType extends Controller
         ]);
     }
 
-    public function store(EventTypeRequest $request)
+    public function store(EventTypeStore $request)
     {
         app(EventTypesRepository::class)->create($request->all());
 
@@ -46,7 +46,7 @@ class EventType extends Controller
         ]);
     }
 
-    public function update(EventTypeUpdateRequest $request, $id)
+    public function update(EventTypeUpdate $request, $id)
     {
         app(EventTypesRepository::class)->update($id, $request->all());
 
@@ -55,7 +55,7 @@ class EventType extends Controller
             ->with('message', 'Tipo de Ocorrência alterado com sucesso!');
     }
 
-    public function destroy(EventTypeDestroyRequest $request, $id)
+    public function destroy(EventTypeDestroy $request, $id)
     {
         $eventType = app(EventTypesRepository::class)->findById($id);
 

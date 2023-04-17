@@ -6,9 +6,9 @@ use App\Data\Repositories\EventTypes as EventTypesRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
-use App\Http\Requests\EventStore as EventRequest;
-use App\Http\Requests\EventUpdate as EventUpdateRequest;
-use App\Http\Requests\EventDestroy as EventDestroyRequest;
+use App\Http\Requests\EventStore;
+use App\Http\Requests\EventUpdate;
+use App\Http\Requests\EventDestroy;
 use App\Support\Constants;
 
 class Event extends Controller
@@ -35,7 +35,7 @@ class Event extends Controller
         ]);
     }
 
-    public function store(EventRequest $request, $routine_id)
+    public function store(EventStore $request, $routine_id)
     {
         app(EventsRepository::class)->create($request->all());
 
@@ -67,7 +67,7 @@ class Event extends Controller
         ]);
     }
 
-    public function update(EventUpdateRequest $request, $routine_id, $id)
+    public function update(EventUpdate $request, $routine_id, $id)
     {
         app(EventsRepository::class)->update($id, $request->all());
 
@@ -76,7 +76,7 @@ class Event extends Controller
             ->with('message', 'Ocorrência alterada com sucesso!');
     }
 
-    public function destroy(EventDestroyRequest $request, $routine_id, $id)
+    public function destroy(EventDestroy $request, $routine_id, $id)
     {
         $event = app(EventsRepository::class)->findById($id);
 
