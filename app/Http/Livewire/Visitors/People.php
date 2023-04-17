@@ -40,6 +40,9 @@ class People extends BaseForm
             $this->certificate_number = $result->person->certificate_number;
             $this->certificate_valid_until = $result->person->certificate_valid_until;
             $this->destiny_sector_name = $result?->sector?->name;
+            if ($result->hasCpfActiveOnRoutine()) {
+                $this->addError('msg_visitor', 'Visitante possui cautela em aberto.');
+            }
         } else {
             $this->person_id = null;
             $this->certificate_type = null;

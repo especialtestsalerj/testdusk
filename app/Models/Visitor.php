@@ -58,4 +58,17 @@ class Visitor extends Model
 
         return count($cautions) > 0;
     }
+
+    public function hasCpfActiveOnRoutine()
+    {
+        $cautions = Caution::select('cautions.*')
+            ->join('visitors', 'visitors.id', '=', 'cautions.visitor_id')
+            ->join('people', 'people.id', '=', 'visitors.person_id')
+            ->where('cautions.routine_id', $this->routine_id)
+            ->where('people.cpf', $this->person->cpf)
+            ->whereNull('cautions.concluded_at')
+            ->get();
+
+        return count($cautions) > 0;
+    }
 }
