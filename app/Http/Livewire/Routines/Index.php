@@ -12,7 +12,7 @@ class Index extends BaseIndex
     protected $repository = RoutinesRepository::class;
     private $model = Routine::class;
 
-    public $orderByField = ['entranced_at', 'id'];
+    public $orderByField = ['id'];
     public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
 
