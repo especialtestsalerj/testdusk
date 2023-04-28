@@ -102,6 +102,18 @@ abstract class BaseIndex extends Component
                                 );
                             });
                             break;
+                        case 'protocol_number':
+                            $query->when($this->searchString, function ($query) use ($field) {
+                                $query->orWhereRaw(
+                                    'CAST(' .
+                                        $field .
+                                        ' AS VARCHAR(10))' .
+                                        " LIKE '%" .
+                                        protocol_number_masked_to_bigint($this->searchString) .
+                                        "%'"
+                                );
+                            });
+                            break;
                     }
                 });
             });

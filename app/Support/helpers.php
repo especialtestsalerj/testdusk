@@ -337,3 +337,21 @@ function validate_cpf($string)
         ]
     )->passes();
 }
+
+function mask_protocol_number($protocol_number)
+{
+    $ano = substr($protocol_number, 0, 4);
+    $codigo = substr($protocol_number, 4, 4);
+
+    return $codigo . '/' . $ano;
+}
+
+function protocol_number_masked_to_bigint($protocol_number_masked)
+{
+    $protocol_number = only_numbers($protocol_number_masked);
+
+    $codigo = substr($protocol_number, 0, 4);
+    $ano = substr($protocol_number, 4, 4);
+
+    return $ano . $codigo;
+}

@@ -43,9 +43,7 @@ class Caution extends Model
 
     public function getProtocolNumberFormattedAttribute()
     {
-        $ano = substr($this->protocol_number, 0, 4);
-        $codigo = substr($this->protocol_number, 4, 4);
-        return $codigo . '/' . $ano;
+        return mask_protocol_number($this->protocol_number);
     }
 
     public function routine()
