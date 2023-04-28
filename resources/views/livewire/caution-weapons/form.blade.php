@@ -223,7 +223,7 @@
                                     <span class="fw-bold">Entrada:</span> {{ $weapon?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
-                                    <span class="fw-bold">Saída:</span> {{ $weapon?->exited_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                    <span class="fw-bold">Saída:</span> @if(isset($weapon?->exited_at)) {{ $weapon?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                                 </div>
                                 <div class="col-12 col-lg-3 text-center text-lg-start">
                                     <span class="fw-bold">Localização:</span> {{ $weapon?->cabinet?->name }} / BOX {{ $weapon?->shelf?->name }}
