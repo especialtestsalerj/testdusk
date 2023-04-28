@@ -19,7 +19,15 @@ class RoutineStore extends Request
     {
         return [
             'shift_id' => 'required',
-            'entranced_at' => ['required'],
+            'entranced_at' => [
+                'required',
+                new ShiftNotExists(
+                    $this->get('id'),
+                    $this->get('shift_id'),
+                    $this->get('entranced_at'),
+                    'Data (Assunção): já existe um turno para essa data.'
+                ),
+            ],
             'entranced_user_id' => 'required',
             'checkpoint_obs' => 'required',
             'exited_at' => ['bail', 'nullable', 'after:entranced_at'],
