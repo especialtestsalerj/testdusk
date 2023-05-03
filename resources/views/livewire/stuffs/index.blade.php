@@ -14,31 +14,29 @@
                 </div>
 
                 <div class="col-md-4">
-                    <form action="{{ route('stuffs.index', ['routine_id' => $routine_id]) }}" id="searchForm">
-                        @if ($routine->status)
-                            @include(
-                                'livewire.partials.search-form',
-                                [
-                                    'btnNovoLabel' => 'Novo',
-                                    'btnNovoTitle' => 'Novo Material',
-                                    'routeSearch' => 'stuffs.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
-                                    'routeCreate' => 'stuffs.create',
-                                    'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
-                                ]
-                            )
-                        @else
-                            @include(
-                                'livewire.partials.search-form',
-                                [
-                                    'btnNovoLabel' => 'Novo',
-                                    'btnNovoTitle' => 'Novo Material',
-                                    'routeSearch' => 'stuffs.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
-                                ]
-                            )
-                        @endif
-                    </form>
+                    @if ($routine->status)
+                        @include(
+                            'livewire.partials.search-form',
+                            [
+                                'btnNovoLabel' => 'Novo',
+                                'btnNovoTitle' => 'Novo Material',
+                                'routeSearch' => 'stuffs.index',
+                                'routeSearchParams' => ['routine_id' => $routine_id],
+                                'routeCreate' => 'stuffs.create',
+                                'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
+                            ]
+                        )
+                    @else
+                        @include(
+                            'livewire.partials.search-form',
+                            [
+                                'btnNovoLabel' => 'Novo',
+                                'btnNovoTitle' => 'Novo Material',
+                                'routeSearch' => 'stuffs.index',
+                                'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'stuffs.index'],
+                            ]
+                        )
+                    @endif
                 </div>
             </div>
         </div>
