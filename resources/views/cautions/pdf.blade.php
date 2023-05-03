@@ -98,21 +98,29 @@
         }
 
         table.table tr td {
-            padding: 10px;
+            padding: 5px 15px;
         }
 
         .table .header td {
             vertical-align: top;
-            padding-bottom: 5px;
+            padding-bottom: 0;
+        }
+
+        .table .header td p {
+            padding-left: 0;
         }
 
         .table .header td p:first-child {
-            padding-top: 25px;
+            padding-top: 20px;
         }
 
         .table .header .logo {
-            width: 100px;
+            width: 80px;
+        }
 
+        .table .header .logo img {
+            width: 80px;
+            height: 80px;
         }
 
         .table .subject {
@@ -120,20 +128,27 @@
             background-color: #CCC;
         }
 
+        .table .subject td {
+            padding: 5px 0;
+        }
+
+        .table .content td table {
+            margin: 5px 20px;
+        }
+
         .table .content td {
-            padding-left: 2px;
-            padding-right: 2px;
-            padding-bottom: 2px;
+            padding: 2px;
+            position: relative;
         }
 
         .table .signature td {
             font-size: 95%;
             padding-top: 0;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
         .table .signature td p {
-            padding-top: 2px;
+            padding-top: 0;
             padding-bottom: 2px;
         }
 
@@ -144,7 +159,7 @@
         }
 
         .table .footer td {
-            padding-bottom: 20px;
+            padding-bottom: 10px;
         }
 
         .table .footer p {
@@ -152,14 +167,13 @@
         }
 
         @if (!app()->environment('production'))
-            /* watermark */
-            table:before {
-                content: 'RASCUNHO';
-                z-index: -1;
-                opacity: 0.1;
+            .watermark {
                 position: absolute;
-                top: 13%;
+                display: inline-block;
                 width: 100%;
+                top: 0;
+                left: 0;
+                opacity: 0.1;
                 text-align: center;
                 font-size: 120px;
             }
@@ -167,7 +181,7 @@
     </style>
 </head>
 <body>
-<main>
+    @for($i = 0; $i < 2; $i++)
     <table class="table">
         <tr class="header">
             <td class="logo">
@@ -182,46 +196,43 @@
                 <p>{{ $caution?->started_at?->format('H:i') ?? '-'}}</p>
             </td>
         </tr>
-        <tr class="subject">
+        <tr class="subject subject2">
             <td class="center bold" colspan="3">CAUTELA DE ARMA Nº {{ $caution?->protocol_number_formatted ?? '' }}</td>
         </tr>
         <tr class="content">
-            <td class="right bold">
-                NOME:
-            </td>
-            <td class="left" colspan="2">
-                {{ $caution->visitor->person->full_name }} - {{ $caution->visitor->person->cpf_formatted }}
-            </td>
-        </tr>
-        <tr class="content">
-            <td class="right bold">
-                DESTINO:
-            </td>
-            <td colspan="2">
-                {{ $caution->visitor?->sector?->name }}
-            </td>
-        </tr>
-        <tr class="content">
-            <td class="right bold">
-                ARMA(S):
-            </td>
-            <td class="left" colspan="2">
-                <?php
-                    $i = 0;
-                ?>
-                <ul>
-                    @foreach($cautionWeapons as $cautionWeapon)
-                        <?php
-                            $i++;
-                        ?>
-                        <li>
-                            {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}) {{ $cautionWeapon->weaponType->name }} {{ $cautionWeapon->weapon_description }}
-                            {{ (is_null($cautionWeapon->register_number)) ? '' : ' NÚM. '.$cautionWeapon->weapon_number }}
-                            {{ (is_null($cautionWeapon->register_number)) ? '' : ' (Nº REG. SINARM '.$cautionWeapon->register_number.')' }}
-                            {{ ' '.$cautionWeapon->cabinet->name }} {{ '/ BOX '.$cautionWeapon->shelf->name }}
-                        </li>
-                    @endforeach
-                </ul>
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td class="bold">NOME: </td>
+                        <td>{{ $caution->visitor->person->full_name }} - {{ $caution->visitor->person->cpf_formatted }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">DESTINO: </td>
+                        <td>{{ $caution->visitor?->sector?->name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">ARMA(S): </td>
+                        <td>
+                            <?php
+                            $j = 0;
+                            ?>
+                            <ul>
+                                @foreach($cautionWeapons as $cautionWeapon)
+                                    <?php
+                                    $j++;
+                                    ?>
+                                    <li>
+                                        {{ str_pad($j, 2, '0', STR_PAD_LEFT) }}) {{ $cautionWeapon->weaponType->name }} {{ $cautionWeapon->weapon_description }}
+                                        {{ (is_null($cautionWeapon->register_number)) ? '' : ' NÚM. '.$cautionWeapon->weapon_number }}
+                                        {{ (is_null($cautionWeapon->register_number)) ? '' : ' (Nº REG. SINARM '.$cautionWeapon->register_number.')' }}
+                                        {{ ' '.$cautionWeapon->cabinet->name }} {{ '/ BOX '.$cautionWeapon->shelf->name }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <div class="watermark">RASCUNHO</div>
             </td>
         </tr>
         <tr class="content signature">
@@ -239,6 +250,6 @@
             </td>
         </tr>
     </table>
-</main>
+    @endfor
 </body>
 </html>
