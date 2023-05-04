@@ -79,6 +79,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="entranced_obs">Observações (Assunção)</label>
+                            <textarea class="form-control" name="entranced_obs" id="entranced_obs" @disabled(!$routine->status)>{{ is_null(old('entranced_obs')) ? $routine->entranced_obs : old('entranced_obs') }}</textarea>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -101,6 +105,10 @@
                                     @endif
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exited_obs">Observações (Passagem)</label>
+                            <textarea class="form-control" name="exited_obs" id="exited_obs" @disabled(!$routine->status)>{{ is_null(old('exited_obs')) ? $routine->exited_obs : old('exited_obs') }}</textarea>
                         </div>
                     </div>
                 </div>
