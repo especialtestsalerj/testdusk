@@ -74,7 +74,7 @@
         }
 
         ul li {
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
         .left {
@@ -98,16 +98,12 @@
         }
 
         table.table tr td {
-            padding: 5px 15px;
+            padding: 5px;
         }
 
         .table .header td {
             vertical-align: top;
             padding-bottom: 0;
-        }
-
-        .table .header td p {
-            padding-left: 0;
         }
 
         .table .header td p:first-child {
@@ -121,6 +117,14 @@
         .table .header .logo img {
             width: 80px;
             height: 80px;
+        }
+
+        .table .header td.left, .table .footer td.left {
+            padding-left: 25px;
+        }
+
+        .table .header td.right, .table .footer td.right {
+            padding-right: 25px;
         }
 
         .table .subject {
@@ -164,6 +168,7 @@
 
         .table .footer p {
             padding-top: 0;
+            font-style: italic;
         }
 
         @if (!app()->environment('production'))
@@ -184,10 +189,10 @@
     @for($i = 0; $i < 2; $i++)
     <table class="table">
         <tr class="header">
-            <td class="logo">
+            <td class="left logo">
                 <img alt="Logo Alerj" src="data:image/png;base64,{{ $logoBlob }}" />
             </td>
-            <td class="left bold">
+            <td class="bold">
                 <p>ASSEMBLEIA LEGISLATIVA DO ESTADO DO RIO DE JANEIRO</p>
                 <p>DEPARTAMENTO DE POLÍCIA E SEGURANÇA</p>
             </td>
@@ -223,8 +228,8 @@
                                     ?>
                                     <li>
                                         {{ str_pad($j, 2, '0', STR_PAD_LEFT) }}) {{ $cautionWeapon->weaponType->name }} {{ $cautionWeapon->weapon_description }}
-                                        {{ (is_null($cautionWeapon->register_number)) ? '' : ' NÚM. '.$cautionWeapon->weapon_number }}
-                                        {{ (is_null($cautionWeapon->register_number)) ? '' : ' (Nº REG. SINARM '.$cautionWeapon->register_number.')' }}
+                                        {{ (strlen($cautionWeapon->weapon_number) > 0) ? ' NÚM. '.$cautionWeapon->weapon_number : '' }}
+                                        {{ (strlen($cautionWeapon->register_number) > 0) ? ' (Nº REG. SINARM '.$cautionWeapon->register_number.')' : '' }}
                                         {{ ' '.$cautionWeapon->cabinet->name }} {{ '/ BOX '.$cautionWeapon->shelf->name }}
                                     </li>
                                 @endforeach
