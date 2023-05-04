@@ -48,5 +48,8 @@ php artisan ocorrencias:role:assign administrator admin@alerj.rj.gov.br
 - Ata de reunião 07/04/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/ESw5td6F4AtBjnMWhxL76qoBAaIxpltbp5TtZHRSFM54MQ?e=x2afYM)
 - Ata de reunião 03/05/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/EWEkYHjL9jFKu6mcvway5AEBm9Lq6O2K5w8OJbmaUSWm8Q?e=02cccI)
 - Ata de reunião 05/10/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/EbEHMUds1hFKuL7Q3YtIwoEBDv54yb0ufrKg5AvQDHFd8g?e=76AfAx)
+- Ata de reunião 14/12/2022 (https://alerj.sharepoint.com/:w:/s/arquivos/EbEHMUds1hFKuL7Q3YtIwoEBDv54yb0ufrKg5AvQDHFd8g?e=76AfAx)
+- Ata de reunião 08/02/2023 (https://alerj.sharepoint.com/:w:/s/arquivos/ERF8WHTIH2NHq7mSkU0JxgcBIeZY10rO16g6Tpsmrjwb0A?e=naAURp)
+- Ata de reunião 03/05/2023 (https://alerj.sharepoint.com/:w:/s/arquivos/Eeq1VSIwDr1DiVRLwTXZiqYB2rRHJCUpZxLpjNs45lRTQg?e=4FJCiP)
 - Diagrama de classe Laravel (https://alerj.sharepoint.com/:b:/s/arquivos/ERBxip1lKVdMkJTKtkT9TWQBUOQPRTizWCuwd5gb0IsWVg?e=hvUQuZ)
 - Diagrama de classe Português (https://alerj.sharepoint.com/:b:/s/arquivos/EXy8Vp7yhqlKryVgW_59ltMBFoh88wK8quEYAyieUrOj3A?e=Vj2bY9)
