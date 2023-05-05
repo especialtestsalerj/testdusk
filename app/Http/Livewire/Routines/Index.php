@@ -5,14 +5,13 @@ namespace App\Http\Livewire\Routines;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Http\Livewire\BaseIndex;
-use App\Models\Routine;
+use App\Models\User;
 
 class Index extends BaseIndex
 {
     protected $repository = RoutinesRepository::class;
-    private $model = Routine::class;
 
-    public $orderByField = ['entranced_at', 'id'];
+    public $orderByField = ['id'];
     public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
 
@@ -24,7 +23,7 @@ class Index extends BaseIndex
     {
         return view('livewire.routines.index')->with([
             'routines' => $this->filter(),
-            'exitedUsers' => app(UsersRepository::class)->all('name'),
+            'exitedUsers' => User::all(),
         ]);
     }
 }

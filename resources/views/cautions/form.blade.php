@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @livewire('visitors.people', ['routine_id' => $routine_id, 'visitor_id' => $caution?->visitor?->id, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $caution->hasPending()])
+                    @livewire('visitors.people', ['routine_id' => $routine_id, 'caution_id' => $caution?->id, 'visitor_id' => $caution?->visitor?->id, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $caution->hasPending()])
                 </div>
                 <div class="row">
                     <div class="col-md-12">

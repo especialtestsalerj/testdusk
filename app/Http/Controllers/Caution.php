@@ -88,12 +88,6 @@ class Caution extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'caution' => $caution,
-            'visitors' => app(VisitorsRepository::class)
-                ->disablePagination()
-                ->all(),
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -112,38 +106,9 @@ class Caution extends Controller
         DB::transaction(function () use ($request, $routine_id, $id) {
             $currentCaution = app(CautionsRepository::class)->findById($id);
 
-            //syncronizing cautions
-            if (isset($currentCaution?->old_id)) {
-                $caution = app(CautionsRepository::class)->findById($currentCaution->old_id);
+            $this->syncronize_cautions($request, $currentCaution);
 
-                if (isset($caution)) {
-                    $array = [];
-                    $array = array_add($array, 'concluded_at', $request['concluded_at']);
-
-                    app(CautionsRepository::class)->update($currentCaution->old_id, $array);
-                }
-
-                $cautions = app(CautionsRepository::class)->findOld($currentCaution->old_id);
-                if (isset($cautions) && count($cautions) > 0) {
-                    foreach ($cautions as $caution) {
-                        if ($caution->id != $currentCaution->id && isset($caution?->old_id)) {
-                            $array = [];
-                            $array = array_add($array, 'concluded_at', $request['concluded_at']);
-                            app(CautionsRepository::class)->update($caution->id, $array);
-                        }
-                    }
-                }
-            }
-
-            $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
-
-            $personRequest = new FormRequest();
-            $personRequest->merge(['certificate_type' => $request->certificate_type]);
-            $personRequest->merge(['id_card' => $request->id_card]);
-            $personRequest->merge(['certificate_number' => $request->certificate_number]);
-            $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
-
-            app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
+            $this->update_visitor($request);
 
             $request->request->remove('certificate_type');
             $request->request->remove('id_card');
@@ -151,11 +116,64 @@ class Caution extends Controller
             $request->request->remove('certificate_valid_until');
 
             app(CautionsRepository::class)->update($id, $request->all());
+
+            if (isset($request['concluded_at'])) {
+                $this->update_weapons($id, $request['concluded_at']);
+            }
         });
 
         return redirect()
             ->route($request['redirect'], $routine_id)
             ->with('message', 'Cautela alterada com sucesso!');
+    }
+
+    public function syncronize_cautions($request, $currentCaution)
+    {
+        if (isset($currentCaution?->old_id)) {
+            $caution = app(CautionsRepository::class)->findById($currentCaution->old_id);
+
+            if (isset($caution)) {
+                $array = [];
+                $array = array_add($array, 'concluded_at', $request['concluded_at']);
+
+                app(CautionsRepository::class)->update($currentCaution->old_id, $array);
+            }
+
+            $cautions = app(CautionsRepository::class)->findOld($currentCaution->old_id);
+            if (isset($cautions) && count($cautions) > 0) {
+                foreach ($cautions as $caution) {
+                    if ($caution->id != $currentCaution->id && isset($caution?->old_id)) {
+                        $array = [];
+                        $array = array_add($array, 'concluded_at', $request['concluded_at']);
+                        app(CautionsRepository::class)->update($caution->id, $array);
+                    }
+                }
+            }
+        }
+    }
+
+    public function update_visitor($request)
+    {
+        $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
+
+        $personRequest = new FormRequest();
+        $personRequest->merge(['certificate_type' => $request->certificate_type]);
+        $personRequest->merge(['id_card' => $request->id_card]);
+        $personRequest->merge(['certificate_number' => $request->certificate_number]);
+        $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
+
+        app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
+    }
+
+    public function update_weapons($caution_id, $concluded_at)
+    {
+        foreach (app(CautionWeaponsRepository::class)->findByCaution($caution_id) as $weapon) {
+            if (is_null($weapon->exited_at)) {
+                $array = [];
+                $array = array_add($array, 'exited_at', $concluded_at);
+                app(CautionWeaponsRepository::class)->update($weapon->id, $array);
+            }
+        }
     }
 
     public function destroy(CautionDestroy $request, $routine_id, $id)
