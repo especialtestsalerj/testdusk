@@ -88,12 +88,6 @@ class Caution extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'caution' => $caution,
-            'visitors' => app(VisitorsRepository::class)
-                ->disablePagination()
-                ->all(),
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),

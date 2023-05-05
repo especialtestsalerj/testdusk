@@ -2,22 +2,24 @@
 
 namespace App\Rules;
 
-use App\Data\Repositories\Visitors as VisitorsRepository;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
-class CpfAvailableOnCaution implements Rule
+class ValidPeriodOnCaution implements Rule
 {
-    public $visitor_id;
     public $caution_id;
+    public $datetime;
+    public $message;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($visitor_id, $caution_id)
+    public function __construct($caution_id, $datetime, $message)
     {
-        $this->visitor_id = $visitor_id;
         $this->caution_id = $caution_id;
+        $this->datetime = $datetime;
+        $this->message = $message;
     }
 
     /**
@@ -29,9 +31,11 @@ class CpfAvailableOnCaution implements Rule
      */
     public function passes($attribute, $value)
     {
-        $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
+        $query = DB::table('cautions')
+            ->where('id', $this->caution_id)
+            ->where('started_at', '>', $this->datetime);
 
-        return !$visitor?->hasCpfActiveOnRoutine($this->caution_id) ?? false;
+        return $query->doesntExist();
     }
 
     /**
@@ -41,6 +45,6 @@ class CpfAvailableOnCaution implements Rule
      */
     public function message()
     {
-        return 'Visitante: possui cautela em aberto.';
+        return $this->message;
     }
 }

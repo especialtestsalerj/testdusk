@@ -13,6 +13,7 @@ class People extends BaseForm
 {
     public $routine_id;
     public $visitor_id;
+    public $caution_id;
 
     public $visitors;
 
@@ -40,7 +41,7 @@ class People extends BaseForm
             $this->certificate_number = $result->person->certificate_number;
             $this->certificate_valid_until = $result->person->certificate_valid_until;
             $this->destiny_sector_name = $result?->sector?->name;
-            if ($result->hasCpfActiveOnRoutine()) {
+            if ($result->hasCpfActiveOnRoutine($this->caution_id)) {
                 $this->addError('msg_visitor', 'Visitante possui cautela em aberto.');
             }
         } else {
@@ -55,15 +56,9 @@ class People extends BaseForm
 
     public function fillModel()
     {
-        if ($this->mode == 'create') {
-            $this->visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending(
-                $this->routine_id
-            );
-        } else {
-            $this->visitors = app(VisitorsRepository::class)
-                ->disablePagination()
-                ->findByRoutine($this->routine_id);
-        }
+        $this->visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending(
+            $this->routine_id
+        );
 
         $this->visitor_id = old('visitor_id') ?? $this->visitor_id;
 

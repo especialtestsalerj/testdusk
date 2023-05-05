@@ -11,8 +11,8 @@ use App\Data\Repositories\WeaponTypes as WeaponTypesRepository;
 use App\Data\Repositories\Cabinets as CabinetsRepository;
 use App\Data\Repositories\Shelves as ShelvesRepository;
 use App\Data\Repositories\Cautions as CautionsRepository;
+use App\Rules\ValidPeriodOnCaution;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use function view;
 
@@ -155,7 +155,23 @@ class IndexForm extends BaseForm
     {
         $validatedData = $this->validate(
             [
-                'entranced_at' => 'required',
+                'entranced_at' => [
+                    'required',
+                    new ValidPeriodOnCaution(
+                        $this->caution_id,
+                        $this->entranced_at,
+                        'A Data da Entrada deve ser posterior à abertura da cautela.'
+                    ),
+                ],
+                'exited_at' => [
+                    'nullable',
+                    new ValidPeriodOnCaution(
+                        $this->caution_id,
+                        $this->exited_at,
+                        'A Data da Saída deve ser posterior à abertura da cautela.'
+                    ),
+                    'after_or_equal:entranced_at',
+                ],
                 'weapon_type_id' => 'required',
                 'weapon_description' => 'required',
                 'weapon_number' => 'required',
@@ -164,6 +180,8 @@ class IndexForm extends BaseForm
             ],
             [
                 'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
+                'exited_at.after_or_equal' =>
+                    'A Data da Saída deve ser posterior à entrada da arma.',
                 'weapon_type_id.required' => 'Tipo de Arma: preencha o campo corretamente.',
                 'weapon_description.required' =>
                     'Descrição da Arma: preencha o campo corretamente.',
