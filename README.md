@@ -14,33 +14,37 @@
 - [PostgreSQL](https://www.postgresql.org/)
 - [Pusher](https://pusher.com/)
 
-### Instalação
+### Atualização
 
-- Clonar o repositório (branch: staging [homologação] or production [produção])
-- Configurar servidor web para apontar para a **`<pasta-aonde-o-site-foi-instalado>`/public**
-- Instalar certificado SSL (precisamos que a página seja acessível **via https apenas**)
-- Criar o banco do dados.
-- Entrar na `<pasta-aonde-o-site-foi-instalado>`
-- Configurar o arquivo `.env`
-    - Copiar o arquivo `.env.example` para `.env`
-    - Configurar todos dados do sistema
-    - Alterar a variável `APP_ENV` para o ambiente correto (local, testing, staging, production)
-    - Configurar banco de dados
-    - Configurar o Pusher (criar uma conta, se necessário)
-    - Configurar o serviço de e-mail (Outlook, Mailtrap, ou MAIL_DRIVER=log)
-- Executar o comando `composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev` para instalar todas as dependências da aplicação.
-    - Caso estiver no ambiente de desenvolvimento, executar `composer install`
-- Executar o comando `php artisan migrate` para criar/atualizar a estrutura de Banco de dados
-- Linkar a pasta storage, executando o comando `php artisan storage:link`
-- Criar uma chave para a aplicação, executando o comando `php artisan key:generate`
-- Criar o primeiro usuário administrador
 ```
-php artisan ocorrencias:users:create admin@alerj.rj.gov.br Admin
-php artisan ocorrencias:sync:roles
-php artisan ocorrencias:role:assign administrator admin@alerj.rj.gov.br
+Executar, para o Ocorrências de produção, os itens (1), (2) e (3), sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
+
+------------------------------------
+
+(1) Executar o comando a partir da pasta de produção do DOCIGP para entrar em modo de manutenção
+
+php artisan down
+
+------------------------------------
+
+(2) Atualizar a versão de produção do DOCIGP. Executar os comandos
+
+Após o 'git pull', rodar os comandos:
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+php artisan migrate --force
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+php artisan route:clear
+
+Dar permissionamento de owner para a pasta e todos os arquivos internos (Exemplo: sudo chown -R www-data:www-data docigp/)
+
+------------------------------------
+
+(3) Executar o comando a partir da pasta de produção do DOCIGP para sair do modo de manutenção
+
+php artisan up
 ```
-- Resetar a senha para o usuário administrador criado
-- Criar os usuários restantes e dar suas respectivas permissões através da sessão do usuário administrador
 
 ### Documentação
 
