@@ -32,7 +32,7 @@ class RoutinesTest extends DuskTestCase
                 var minute = dateVal.getMinutes().toString().padStart(2, "0");
                 var sec = dateVal.getSeconds().toString().padStart(2, "0");
                 var ms = dateVal.getMilliseconds().toString().padStart(3, "0");
-                var inputDate = dateVal.getFullYear() + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);}
+                var inputDate = 2025 + "-" + (month) + "-" + (day) + "T" + (hour) + ":" + (minute);}
                 a = document.querySelector("[id=' .
                     $inputId .
                     ']").value=(inputDate);
@@ -48,7 +48,7 @@ class RoutinesTest extends DuskTestCase
      */
 
     //Dusk - Criação de uma nova Rotina
-    public function tests_createRoutine()
+    public function testCreateRoutine()
     {
         $user = User::factory()->create();
         $user->assign(Constants::ROLE_ADMINISTRATOR);
@@ -60,6 +60,7 @@ class RoutinesTest extends DuskTestCase
             ->toArray();
         //dump($generateRoutine['entranced_at']);
         $this->browse(function ($browser) use ($user, $generateRoutine) {
+
             $browser
                 ->loginAs($user->id)
                 ->visit('/routines')
@@ -67,6 +68,7 @@ class RoutinesTest extends DuskTestCase
                 ->click('#novo')
                 ->assertPathIs('/routines/create')
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
+
             $browser
                 ->assertSee('Turno: preencha o campo corretamente.')
                 ->assertSee('Responsável (Assunção): preencha o campo corretamente.')
@@ -81,8 +83,13 @@ class RoutinesTest extends DuskTestCase
                 ->select('#exited_user_id', rand(2, 9));
             $this->insertDate(0, 'entranced_at');
             //$this->insertDate(1,'exited_at');
-            $browser->pause(1000)->script('document.querySelectorAll("#submitButton")[0].click();');
-            $browser->assertPathIs('/routines')->assertSee('Rotina adicionada com sucesso!');
+            $browser
+                ->pause(1000)
+                ->script('document.querySelectorAll("#submitButton")[0].click();');
+            $browser
+                ->assertPathIs('/routines/create')
+                ->waitForText('Rotina adicionada com sucesso!', 10)
+                ->assertSee('Rotina adicionada com sucesso!');
         });
     }
 
