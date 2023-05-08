@@ -41,7 +41,7 @@ class RoutineStore extends Request
             'entranced_at.required' => 'Data (Assunção): preencha o campo corretamente.',
             'entranced_user_id.required' =>
                 'Responsável (Assunção): preencha o campo corretamente.',
-            'exited_at.after' => 'Data (Passagem): deve ser maior que a data (assunção).',
+            'exited_at.after' => 'Data (Passagem): deve ser posterior à data (assunção).',
         ];
     }
 }
