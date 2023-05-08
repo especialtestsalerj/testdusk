@@ -16,6 +16,7 @@ class EventStore extends Request
         return [
             'routine_id' => 'required',
             'occurred_at' => [
+                'bail',
                 'required',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),

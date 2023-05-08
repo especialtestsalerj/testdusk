@@ -196,4 +196,6 @@ return [
             // 'ExampleClass' => App\Example\ExampleClass::class,
         ])
         ->toArray(),
+
+    'draft_document' => env('APP_DAFT_DOCUMENT', true),
 ];

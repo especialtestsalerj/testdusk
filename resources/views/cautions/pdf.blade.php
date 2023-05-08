@@ -171,7 +171,7 @@
             font-style: italic;
         }
 
-        @if (!app()->environment('production'))
+        @if (config('app.draft_document'))
             .watermark {
                 position: absolute;
                 display: inline-block;
@@ -237,7 +237,9 @@
                         </td>
                     </tr>
                 </table>
-                <div class="watermark">RASCUNHO</div>
+                @if (config('app.draft_document'))
+                    <div class="watermark">RASCUNHO</div>
+                @endif
             </td>
         </tr>
         <tr class="content signature">

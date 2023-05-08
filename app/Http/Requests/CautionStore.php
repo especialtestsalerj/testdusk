@@ -21,6 +21,7 @@ class CautionStore extends Request
         return [
             'routine_id' => 'required',
             'started_at' => [
+                'bail',
                 'required',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),
@@ -30,6 +31,7 @@ class CautionStore extends Request
                 ),
             ],
             'concluded_at' => [
+                'bail',
                 'nullable',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),
@@ -39,6 +41,7 @@ class CautionStore extends Request
                 'after_or_equal:started_at',
             ],
             'visitor_id' => [
+                'bail',
                 'required',
                 new CpfAvailableOnCaution($this->get('visitor_id'), $this->get('id')),
             ],
