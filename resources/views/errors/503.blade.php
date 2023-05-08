@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>ALERJ - ERRO 404</title>
+    <title>ALERJ - ERRO 503</title>
     <style type="text/css">
         html, body{
             height:100%;
@@ -13,8 +13,8 @@
             /*background: #1a6d62;
             background: radial-gradient(ellipse at center,  #2d9c8e 0%,#1d4641 100%);*/
 
-            background: rgb(183, 192, 201);
-            background: linear-gradient(315deg, rgb(183, 192, 201) 0%, rgb(241, 243, 245) 100%);
+            background: #b7c0c9;
+            background: linear-gradient(315deg,#b7c0c9,#f1f3f5);
         }
         .error-container{
             width:100%;
@@ -22,13 +22,18 @@
             position:absolute;
             top: 0;
             bottom: 0;
-            height:365px;
+            height:550px;
             margin:auto;
         }
         .error{
             display:inline-block;
-            max-width: 360px;
+            max-width: 400px;
         }
+
+        .logo img{
+            width: 100%;
+        }
+
         .number{
             font-size:160px;
             color:#eef7f5;
@@ -45,28 +50,27 @@
             font-size:20px;
             /*text-shadow: 1px 1px 10px #4b5a69;*/
         }
-
         .cog-faint{
             position:absolute;
             font-size:400px!important;
             color:#4b5a69;
             opacity:0.1;
-            margin: 50px 0 0 50px;
         }
     </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
 <script src="https://use.fontawesome.com/87f6f824d6.js"></script>
-
-<i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
+<!-- erro 503 -->
+<i class="fa fa-ban cog-faint" aria-hidden="true"></i>
 <div class="error-container">
     <div class="error">
-        <div class="number">404</div>
-        <div class="title">Página não encontrada</div>
-        <div class="message">A URL requisitada /fimdaURL não foi encontrada no servidor. É tudo que sabemos até agora.</div>
+        <div class="logo">
+            <img src="img/logo-alerj-grande.png">
+        </div>
+        <div class="number">503</div>
+        <div class="title">Serviço indisponível</div>
     </div>
 </div>
-<!-- partial -->
+<!-- erro 503 - end -->
 </body>
 </html>
