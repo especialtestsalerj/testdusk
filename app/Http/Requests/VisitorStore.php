@@ -21,6 +21,7 @@ class VisitorStore extends Request
         return [
             'routine_id' => 'required',
             'entranced_at' => [
+                'bail',
                 'required',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),
@@ -30,6 +31,7 @@ class VisitorStore extends Request
                 ),
             ],
             'exited_at' => [
+                'bail',
                 'nullable',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),
@@ -39,6 +41,7 @@ class VisitorStore extends Request
                 'after_or_equal:entranced_at',
             ],
             'cpf' => [
+                'bail',
                 'required',
                 'cpf',
                 new CpfAvailableOnVisit(

@@ -56,13 +56,17 @@ class People extends BaseForm
 
     public function fillModel()
     {
-        $this->visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending(
-            $this->routine_id
-        );
-
         $this->visitor_id = old('visitor_id') ?? $this->visitor_id;
-
         $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
+
+        $this->visitors = isset($visitor->old_id)
+            ? app(VisitorsRepository::class)->findByRoutine($this->routine_id)
+            : app(VisitorsRepository::class)->findByRoutineWithoutPending(
+                $this->routine_id,
+                $this->visitor_id
+            );
+
+        //        $this->visitors = app(VisitorsRepository::class)->findByRoutine($this->routine_id);
 
         $this->certificate_type = is_null(old('certificate_type'))
             ? $visitor->person->certificate_type ?? ''

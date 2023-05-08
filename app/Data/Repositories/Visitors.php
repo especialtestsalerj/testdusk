@@ -16,11 +16,12 @@ class Visitors extends Repository
         return $this->model::where('routine_id', $routine_id)->get();
     }
 
-    public function findByRoutineWithoutPending($routine_id)
+    public function findByRoutineWithoutPending($routine_id, $visitor_id = null)
     {
         return $this->model
             ::where('routine_id', $routine_id)
             ->whereNull('old_id')
+            ->whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')
             ->get();
     }
 
