@@ -8,17 +8,15 @@
                 </div>
 
                 <div class="col-md-9">
-                    <form action="{{ route('event-types.index') }}" id="searchForm">
-                        @include(
-                            'livewire.partials.search-form',
-                            [
-                                'btnNovoLabel' => 'Novo',
-                                'btnNovoTitle' => 'Novo Tipo de Ocorrência',
-                                'routeSearch' => 'event-types.index',
-                                'routeCreate' => 'event-types.create',
-                            ]
-                        )
-                    </form>
+                    @include(
+                        'livewire.partials.search-form',
+                        [
+                            'btnNovoLabel' => 'Novo',
+                            'btnNovoTitle' => 'Novo Tipo de Ocorrência',
+                            'routeSearch' => 'event-types.index',
+                            'routeCreate' => 'event-types.create',
+                        ]
+                    )
                 </div>
             </div>
         </div>

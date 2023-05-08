@@ -14,31 +14,29 @@
                 </div>
 
                 <div class="col-md-4">
-                    <form action="{{ route('cautions.index', ['routine_id' => $routine_id]) }}" id="searchForm">
-                        @if ($routine->status)
-                            @include(
-                                'livewire.partials.search-form',
-                                [
-                                    'btnNovoLabel' => 'Nova',
-                                    'btnNovoTitle' => 'Nova Cautela de Arma',
-                                    'routeSearch' => 'cautions.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id],
-                                    'routeCreate' => 'cautions.create',
-                                    'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
-                                ]
-                            )
-                        @else
-                            @include(
-                                'livewire.partials.search-form',
-                                [
-                                    'btnNovoLabel' => 'Nova',
-                                    'btnNovoTitle' => 'Nova Cautela de Arma',
-                                    'routeSearch' => 'cautions.index',
-                                    'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
-                                ]
-                            )
-                        @endif
-                    </form>
+                    @if ($routine->status)
+                        @include(
+                            'livewire.partials.search-form',
+                            [
+                                'btnNovoLabel' => 'Nova',
+                                'btnNovoTitle' => 'Nova Cautela de Arma',
+                                'routeSearch' => 'cautions.index',
+                                'routeSearchParams' => ['routine_id' => $routine_id],
+                                'routeCreate' => 'cautions.create',
+                                'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
+                            ]
+                        )
+                    @else
+                        @include(
+                            'livewire.partials.search-form',
+                            [
+                                'btnNovoLabel' => 'Nova',
+                                'btnNovoTitle' => 'Nova Cautela de Arma',
+                                'routeSearch' => 'cautions.index',
+                                'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
+                            ]
+                        )
+                    @endif
                 </div>
             </div>
         </div>

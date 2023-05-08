@@ -154,10 +154,6 @@ abstract class Repository
 
         $this->filterText($queryFilter, $query);
 
-        //$this->order($query);
-
-        //$this->processCustomQueries($query);
-
         if (
             isset($queryFilter->toArray()['pagination']['current_page']) &&
             $queryFilter->toArray()['pagination']['current_page'] == 0

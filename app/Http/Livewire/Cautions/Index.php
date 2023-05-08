@@ -18,6 +18,7 @@ class Index extends BaseIndex
     public $redirect;
 
     public $searchFields = [
+        'cautions.protocol_number' => 'protocol_number',
         'cautions.started_at' => 'date',
     ];
 
