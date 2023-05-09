@@ -25,6 +25,7 @@ class StuffStore extends Request
                 ),
             ],
             'exited_at' => [
+                'bail',
                 'nullable',
                 new ValidPeriodOnRoutine(
                     $this->get('routine_id'),

@@ -193,10 +193,16 @@
                                 @if($modalMode != 'delete')
                                     <button type="submit" dusk='submit' class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly)><i class="fa fa-save"></i> Salvar</button>
                                 @endif
+
                                 @if($modalMode == 'delete')
-                                    <button type="button" dusk='submit' wire:click.prevent="delete()" class="btn btn-success btn-sm text-white close-modal" title="Remover"><i class="fa fa-check"></i> Remover</button>
+                                    <div>
+                                        <button dusk='delete' wire:click.prevent="delete" class="btn btn-success btn-sm text-white close-modal" title="Remover"><i class="fas fa-check"></i> Remover</button>
+                                    </div>
                                 @endif
-                                <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
+
+                                <div>
+                                    <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
