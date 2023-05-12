@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Models\Routine;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 /**
@@ -18,6 +20,8 @@ class RoutineFactory extends Factory
      * @var string
      */
     protected $model = Routine::class;
+
+    //public $code = 1;
 
     /**
      * Define the model's default state.
@@ -33,6 +37,7 @@ class RoutineFactory extends Factory
             ->toArray()[0]['id'];
 
         return [
+            'code' => app(RoutinesRepository::class)->makeCode(),
             'shift_id' => rand(1, 2),
             'entranced_at' => $date,
             'entranced_user_id' => $user_id,
@@ -48,4 +53,5 @@ class RoutineFactory extends Factory
             'created_at' => $date,
         ];
     }
+
 }

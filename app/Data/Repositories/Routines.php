@@ -15,9 +15,7 @@ class Routines extends Repository
     //Return the next code of the new caution
     public function makeCode()
     {
-        $new_number = $this->model::find(DB::table('routines')->max('code'));
-
-        return ($new_number->code ?? 0) + 1;
+        return (DB::table('routines')->max('code') ?? 0) + 1;
     }
 
     public function hasRoutineOpened()

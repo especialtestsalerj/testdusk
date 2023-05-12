@@ -14,8 +14,10 @@ class RoutinesTableSeeder extends Seeder
      */
     public function run()
     {
-        app(RoutineFactory::class)
-            ->count(7)
-            ->create();
+        for($i= 0; $i < 7; $i++) {
+            app(RoutineFactory::class)
+                ->create();
+        }
+
     }
 }
