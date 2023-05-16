@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\People;
 
 use App\Data\Repositories\People as PeopleRepository;
+use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Models\Person;
+use Illuminate\Support\MessageBag;
 use function app;
 use function info;
 use function view;
@@ -20,11 +22,15 @@ class People extends BaseForm
     public $routineStatus;
     public $modal;
     public $readonly;
+    public $showRestrictions = false;
+    public $alerts = [];
 
     public function searchCpf()
     {
         try {
             $this->resetErrorBag('cpf');
+            $this->alerts = [];
+
             if (!validate_cpf(only_numbers($this->cpf))) {
                 $this->person_id = null;
                 $this->full_name = null;
@@ -36,7 +42,15 @@ class People extends BaseForm
                 $this->full_name = $result['full_name'];
                 $this->origin = $result['origin'];
 
-                $this->resetErrorBag('cpf');
+                if ($this->showRestrictions) {
+                    $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
+                        only_numbers($this->cpf)
+                    );
+
+                    foreach ($restrictions as $restriction) {
+                        array_push($this->alerts, $restriction->message);
+                    }
+                }
             } else {
                 $this->person_id = null;
                 $this->full_name = null;
@@ -50,14 +64,24 @@ class People extends BaseForm
 
     public function fillModel()
     {
-        $this->cpf = is_null(old('cpf'))
-            ? mask_cpf($this->person->cpf) ?? ''
-            : mask_cpf(old('cpf'));
+        $cpf = is_null(old('cpf')) ? mask_cpf($this->person->cpf) ?? '' : mask_cpf(old('cpf'));
+
+        $this->cpf = $cpf;
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
         $this->full_name = is_null(old('full_name'))
             ? $this->person->full_name ?? ''
             : old('full_name');
         $this->origin = is_null(old('origin')) ? $this->person->origin ?? '' : old('origin');
+
+        if ($this->showRestrictions) {
+            $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
+                only_numbers($cpf)
+            );
+
+            foreach ($restrictions as $restriction) {
+                array_push($this->alerts, $restriction->message);
+            }
+        }
     }
 
     public function mount()

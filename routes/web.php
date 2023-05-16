@@ -32,6 +32,7 @@ Route::group(
 
         require __DIR__ . '/eventTypes.php';
         require __DIR__ . '/sectors.php';
+        require __DIR__ . '/person-restrictions.php';
         require __DIR__ . '/routines.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {

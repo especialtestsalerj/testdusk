@@ -57,7 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => ($routine->status), 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending()])
+                        @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => ($routine->status), 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                         <div class="form-group">
                             <label for="sector_id">Setor*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(!$routine->status || request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>

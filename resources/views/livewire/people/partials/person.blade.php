@@ -60,4 +60,19 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        @error('cpf')
+        <small class="text-danger">
+            <i class="fas fa-exclamation-triangle"></i>
+            {{ $message }}
+        </small>
+        @endError
+
+        @foreach($alerts as $alert)
+            <small class="text-danger">
+                <i class="fas fa-cancel"></i>
+                {{ $alert }}
+            </small>
+        @endforeach
+    </div>
 </div>

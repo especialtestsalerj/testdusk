@@ -66,8 +66,6 @@ class People extends BaseForm
                 $this->visitor_id
             );
 
-        //        $this->visitors = app(VisitorsRepository::class)->findByRoutine($this->routine_id);
-
         $this->certificate_type = is_null(old('certificate_type'))
             ? $visitor->person->certificate_type ?? ''
             : old('certificate_type');
