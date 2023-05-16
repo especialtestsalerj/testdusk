@@ -28,8 +28,8 @@ A ferramenta evoluiu para uma aplicação mais robusta, onde ocorrências, mater
 - [Termo de abertura](https://alerj.sharepoint.com/:w:/s/arquivos/ET_KbA0R6ZFJhjQGnG_TFt8Br4qaORM89VIa6F743MhUBQ?e=rKxy3h)
 
 ### Diagramas
-- [Diagrama de classe (Laravel)](https://alerj.sharepoint.com/:b:/s/arquivos/ERBxip1lKVdMkJTKtkT9TWQBUOQPRTizWCuwd5gb0IsWVg?e=hvUQuZ)
-- [Diagrama de classe (Português)](https://alerj.sharepoint.com/:b:/s/arquivos/EXy8Vp7yhqlKryVgW_59ltMBFoh88wK8quEYAyieUrOj3A?e=Vj2bY9)
+- [Diagrama de classe (atual)](https://alerj.sharepoint.com/:b:/s/arquivos/ERBxip1lKVdMkJTKtkT9TWQBUOQPRTizWCuwd5gb0IsWVg?e=hvUQuZ)
+- [Diagrama de classe (original)](https://alerj.sharepoint.com/:b:/s/arquivos/EXy8Vp7yhqlKryVgW_59ltMBFoh88wK8quEYAyieUrOj3A?e=Vj2bY9)
 
 ### Atas de Reuniões
 - [07/04/2022](https://alerj.sharepoint.com/:w:/s/arquivos/ESw5td6F4AtBjnMWhxL76qoBAaIxpltbp5TtZHRSFM54MQ?e=x2afYM)
@@ -38,6 +38,7 @@ A ferramenta evoluiu para uma aplicação mais robusta, onde ocorrências, mater
 - [14/12/2022](https://alerj.sharepoint.com/:w:/s/arquivos/EbEHMUds1hFKuL7Q3YtIwoEBDv54yb0ufrKg5AvQDHFd8g?e=76AfAx)
 - [08/02/2023](https://alerj.sharepoint.com/:w:/s/arquivos/ERF8WHTIH2NHq7mSkU0JxgcBIeZY10rO16g6Tpsmrjwb0A?e=naAURp)
 - [03/05/2023](https://alerj.sharepoint.com/:w:/s/arquivos/Eeq1VSIwDr1DiVRLwTXZiqYB2rRHJCUpZxLpjNs45lRTQg?e=4FJCiP)
+- [09/05/2023](https://alerj.sharepoint.com/:w:/s/arquivos/ETZkc03iso5NvQGewDx5bOoBxXea4cEFxCZsQJU426z9ug?e=g6TdUO)
 
 ## Implantação
 

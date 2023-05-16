@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col-md-8">
                     <h2 class="mb-0">Cautelas de Armas</h2>
-                    Rotina {{ $routine->code }} - {{ $routine->entranced_at->format('d/m/Y') }} {{$routine->shift->name}}
-                    @if ($routine->status)
+                    Rotina {{ $routine?->code }} - {{ $routine?->entranced_at->format('d/m/Y') }} {{$routine?->shift?->name}}
+                    @if ($routine?->status)
                         <label class="badge bg-success"> ABERTA </label>
                     @else
                         <label class="badge bg-danger"> FINALIZADA </label>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    @if ($routine->status)
+                    @if ($routine?->status)
                         @include(
                             'livewire.partials.search-form',
                             [
