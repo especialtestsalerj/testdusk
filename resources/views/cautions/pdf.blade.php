@@ -107,7 +107,11 @@
         }
 
         .table .header td p:first-child {
-            padding-top: 20px;
+            padding-top: 15px;
+        }
+
+        .table .header td p {
+            line-height: 10px;
         }
 
         .table .header .logo {
@@ -194,7 +198,8 @@
             </td>
             <td class="bold">
                 <p>ASSEMBLEIA LEGISLATIVA DO ESTADO DO RIO DE JANEIRO</p>
-                <p>DEPARTAMENTO DE POLÍCIA E SEGURANÇA</p>
+                <p>DEPARTAMENTO DE SEGURANÇA</p>
+                <p>ÓRGÃO DA PRESIDÊNCIA</p>
             </td>
             <td class="right">
                 <p>{{ $caution?->started_at?->format('d/m/Y') ?? '-'}}</p>
