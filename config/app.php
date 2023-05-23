@@ -197,5 +197,5 @@ return [
         ])
         ->toArray(),
 
-    'draft_document' => env('APP_DAFT_DOCUMENT', true),
+    'draft_document' => filter_var(env('APP_DRAFT_DOCUMENT', true), FILTER_VALIDATE_BOOLEAN),
 ];
