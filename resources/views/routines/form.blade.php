@@ -18,7 +18,7 @@
                             @if(is_null($routine->id))
                                 > Nova
                             @else
-                                > {{ $routine->code }} - {{ $routine->entranced_at->format('d/m/Y \À\S H:i') }}
+                                > {{ $routine->code }}
                             @endif
 
                         </h4>
