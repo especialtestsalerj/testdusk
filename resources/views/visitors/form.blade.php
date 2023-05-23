@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $visitor->entranced_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? date('Y-m-d H:i') : $visitor->entranced_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
                         </div>
                     </div>
                     <div class="col-md-6">

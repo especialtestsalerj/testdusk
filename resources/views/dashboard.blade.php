@@ -22,7 +22,7 @@
                                                         </a>
                                                     @endcan
                                                     @cannot('cautions:show')
-                                                        Rotina {{ $routine->id }}
+                                                        Rotina {{ $routine?->code }}
                                                     @endcannot
                                                 </h4>
                                             </div>

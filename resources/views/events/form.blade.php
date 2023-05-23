@@ -42,7 +42,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="occurred_at">Data da Ocorrência*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? $routine->entranced_at->format('Y-m-d ').date('H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? date('Y-m-d H:i') : $event->occurred_at_formatted) : old('occurred_at') }}" @disabled(!$routine->status || request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-12">
