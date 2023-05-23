@@ -67,7 +67,7 @@ Utilizar o [SGUS](http://intranet/sgus/) para definir os perfis e usuários.
 ### Atualização
 
 ```
-Executar os itens abaixo, sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
+Executar os itens abaixo para o sistema OCORRÊNCIAS de PRODUÇÃO, sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
 
 1) Executar o comando a partir da pasta de produção para entrar em modo de manutenção:
 
