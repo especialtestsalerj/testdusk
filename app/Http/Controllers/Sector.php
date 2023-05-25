@@ -57,9 +57,9 @@ class Sector extends Controller
 
     public function destroy(SectorDestroy $request, $id)
     {
-        $eventType = app(SectorsRepository::class)->findById($id);
+        $sector = app(SectorsRepository::class)->findById($id);
 
-        $eventType->delete($id);
+        $sector->delete($id);
 
         return redirect()
             ->route('sectors.index')

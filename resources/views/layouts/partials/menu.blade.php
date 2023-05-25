@@ -31,7 +31,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
@@ -40,6 +40,9 @@
                             @endCan
                             @can('event-types:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('event-types.*')) ? 'active' : '' }}" href="{{ route('event-types.index') }}">Tipos de Ocorrência</a></li>
+                            @endCan
+                            @can('person-restrictions:show')
+                                <li><a class="dropdown-item {{ (request()->routeIs('person-restrictions.*')) ? 'active' : '' }}" href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a></li>
                             @endCan
                             @can('routines:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
