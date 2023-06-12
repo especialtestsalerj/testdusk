@@ -24,7 +24,7 @@
                                     <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-primary btn-sm text-white mx-2" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
                                         <i class="fa fa-cog"></i>
                                     </a>
-                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina" dusk="finishRoutine">
                                         <i class="fa fa-check"></i> Finalizar
                                     </button>
                                 @else

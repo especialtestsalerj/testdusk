@@ -32,6 +32,7 @@ class RoutineFactory extends Factory
     {
         $date = Carbon::createFromFormat('Y-m-d H:i:s', '2023-01-01 08:00:00');
 
+
         $user_id = User::all()
             ->random(1)
             ->toArray()[0]['id'];
