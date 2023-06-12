@@ -2,9 +2,7 @@
 
 namespace Tests\Browser\Pages;
 
-use Laravel\Dusk\Page as BasePage;
-
-abstract class Page extends BasePage
+trait Page
 {
     /**
      * Get the global element shortcuts for the site.
@@ -14,7 +12,7 @@ abstract class Page extends BasePage
     public static function siteElements(): array
     {
         return [
-            '@element' => '#selector',
+            '@novo' => '#novo',
         ];
     }
 }

@@ -30,7 +30,7 @@ class RoutineFactory extends Factory
      */
     public function definition()
     {
-        $date = Carbon::now()->toDateTimeString();
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', '2023-01-01 08:00:00');
 
         $user_id = User::all()
             ->random(1)
