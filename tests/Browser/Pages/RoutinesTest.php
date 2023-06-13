@@ -30,15 +30,28 @@ class RoutinesTest extends DuskTestCase
         return $user; // retorna o usuário criado
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        foreach (static::$browsers as $browser) {
+            $browser->driver->manage()->deleteAllCookies();
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        $this->browse(function ($browser) {
+            $browser->logout();
+        });
+
+        parent::tearDown();
+    }
+
     public function lastRoutine()
     {
         return Routine::orderBy('entranced_at', 'desc')->first();
     }
 
-    public function firstRoutine()
-    {
-        return Routine::latest()->first();
-    }
 
     public function createRoutine($user)
     {
@@ -73,7 +86,8 @@ class RoutinesTest extends DuskTestCase
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
             $browser
                 ->assertPathIs('/routines')
-                ->assertSee('Rotina adicionada com sucesso!');
+                ->assertSee('Rotina adicionada com sucesso!')
+                ->logout();
         });
     }
 
@@ -90,11 +104,13 @@ class RoutinesTest extends DuskTestCase
         $exitedAtValue = $exitedAt ? $exitedAt->format('Y-m-d H:i') : '';
 
         // Chama a criação da rotina usando o usuário criado em (loginAsRoot)
-        $this->createRoutine($this->loginAsRoot());
+        $user = $this->loginAsRoot();
+        $this->createRoutine($user);
 
         // Finalizando a rotina criada
-        $this->browse(function ($browser) use ($exitedAtValue) {
+        $this->browse(function ($browser) use ($exitedAtValue, $user) {
             $browser
+                ->loginAs($user)
                 ->visit('/routines')
                 ->assertSee('Rotinas')
                 ->press('@finishRoutine')
@@ -117,26 +133,96 @@ class RoutinesTest extends DuskTestCase
         $exitedAtValue = $exitedAt ? $exitedAt->format('Y-m-d H:i') : '';
 
         // Chama a criação da rotina usando o usuário criado em (loginAsRoot)
-        $this->createRoutine($this->loginAsRoot());
+        $user = $this->loginAsRoot();
+        $this->createRoutine($user);
 
-        $routine = Routine::where('status', true)->inRandomOrder()->first(); //Rotina em Aberto
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
 
         // Edita a rotina (em aberto)
-        $this->browse(function ($browser) use ($routine) {
+        $this->browse(function ($browser) use ($routine, $user, $exitedAtValue) {
             $browser
+                ->loginAs($user)
                 ->visit('/routines')
                 ->assertSee('Rotinas')
                 ->press('@manageRoutine-' . $routine['id'])
                 ->type('#checkpoint_obs', str_random(15))
-                //Editar a data para um valor aleatório
                 ->script("document.getElementById('entranced_at').value = '". $this->lastRoutine()->entranced_at
-                    ->setDate(2023, rand(1,12), rand(1,30))->setTime(rand(8, 20), rand (1, 59), 0). "'");
+                        ->setDate(2023, rand(1,12), rand(1,30))->setTime(rand(8, 20), rand (1, 59), 0). "'");
             $browser
                 ->screenshot('Editou a Rotina')
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
             $browser
                 ->assertPathIs('/routines')
                 ->assertSee('Rotina alterada com sucesso!');
+
+        // Finalizando a rotina editada
+
+            $browser
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->press('@finishRoutine')
+                ->waitForText('* Campos obrigatórios')
+                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
+            $browser
+                ->pause(1000)
+                ->click('@finishRoutine', ['force' => true])
+                ->assertPathIs('/routines')
+                ->assertSee('Rotina finalizada com sucesso!')
+                ->screenshot('Rotina Finalizada')
+                ->logout();
+
+        });
+    }
+
+
+
+    /**
+     * @test
+     * @group RoutineOptions
+     * @group link
+     */
+
+    public function testCreateEvents()
+    {
+        // Chama a criação da rotina usando o usuário criado em (loginAsRoot)
+        $user = $this->loginAsRoot();
+        $this->createRoutine($user);
+
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em Aberto
+        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
+
+        $event_type = EventType::all()
+            ->random(6)
+            ->toArray()[0];
+        $sector = Sector::all()
+            ->random(6)
+            ->toArray()[0];
+        $duty_user = User::all()
+            ->random(20)
+            ->toArray()[0];
+
+        $this->browse(function ($browser) use ($user, $routine, $event_type, $sector, $duty_user, $exitedAtValue) {
+            $browser
+                ->loginAs($user)
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->press('@manageRoutine-' . $routine['id'])
+                ->press('@newEvent')
+                ->assertPathIs('/routines' . '/' . $routine['id'] . '/events/create')
+                ->press('#submitButton')
+                ->assertSee('Tipo: preencha o campo corretamente.')
+                ->assertSee('Plantonista: preencha o campo corretamente.')
+                ->assertSee('Observações: preencha o campo corretamente.')
+                ->script("document.getElementById('occurred_at').value = '{$exitedAtValue}'");
+
+            $browser
+                ->select('#event_type_id', $event_type['id'])
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->type('#description', str_random(15))
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Ocorrência adicionada com sucesso!');
         });
 
         // Finalizando a rotina editada
@@ -155,57 +241,7 @@ class RoutinesTest extends DuskTestCase
                 ->screenshot('Rotina Finalizada')
                 ->logout();
         });
-    }
 
-    /**
-     * @test
-     * @group RoutineOptions
-     * @group link
-     */
-
-    public function testCreateEvents()
-    {
-        // Chama a criação da rotina usando o usuário criado em (loginAsRoot)
-        $this->createRoutine($this->loginAsRoot());
-
-        $routine = Routine::all()->where('status', '=>', 'true')
-            ->random(1)
-            ->toArray()[0];
-        $event_type = EventType::all()
-            ->random(6)
-            ->toArray()[0];
-        $sector = Sector::all()
-            ->random(6)
-            ->toArray()[0];
-        $duty_user = User::all()
-            ->random(20)
-            ->toArray()[0];
-
-        $this->browse(function ($browser) use ($routine, $event_type, $sector, $duty_user) {
-            $browser
-                ->visit('/routines')
-                ->screenshot('teste')
-                ->assertSee('Rotinas')
-                ->press('@manageRoutine-' . $routine['id'])
-                ->press('@newEvent')
-                ->assertPathIs('/routines' . '/' . $routine['id'] . '/events/create')
-                ->press('#submitButton')
-                ->assertSee('Tipo: preencha o campo corretamente.')
-                ->assertSee('Plantonista: preencha o campo corretamente.')
-                ->assertSee('Observações: preencha o campo corretamente.')
-                // Data da ocorrência (a mesma da rotina em aberto)
-                ->script("document.getElementById('occurred_at').value = '".
-                    $this->lastRoutine()->entranced_at->format('Y-m-d H:i'). "'");
-
-            $browser
-                ->select('#event_type_id', $event_type['id'])
-                ->select('#sector_id', $sector['id'])
-                ->select('#duty_user_id', $duty_user['id'])
-                ->type('#description', str_random(15))
-                ->press('#submitButton')
-                ->assertPathIs('/routines/' . $routine['id'])
-                ->assertSee('Ocorrência adicionada com sucesso!');
-        });
     }
 
 
