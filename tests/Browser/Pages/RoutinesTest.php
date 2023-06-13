@@ -35,6 +35,11 @@ class RoutinesTest extends DuskTestCase
         return Routine::orderBy('entranced_at', 'desc')->first();
     }
 
+    public function firstRoutine()
+    {
+        return Routine::latest()->first();
+    }
+
     public function createRoutine($user)
     {
         $generateRoutine = Routine::factory()->raw();
@@ -123,9 +128,9 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Rotinas')
                 ->press('@manageRoutine-' . $routine['id'])
                 ->type('#checkpoint_obs', str_random(15))
-                ->script("document.getElementById('entranced_at').value = '".
-                    $this->lastRoutine()->entranced_at //Editar a data para um valor aleatório
-                    ->setDate(rand(2022, 2024), rand(1,12), rand(1,30))->setTime(rand(8, 20), rand (1, 59), 0). "'");
+                //Editar a data para um valor aleatório
+                ->script("document.getElementById('entranced_at').value = '". $this->lastRoutine()->entranced_at
+                    ->setDate(2023, rand(1,12), rand(1,30))->setTime(rand(8, 20), rand (1, 59), 0). "'");
             $browser
                 ->screenshot('Editou a Rotina')
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
@@ -160,10 +165,10 @@ class RoutinesTest extends DuskTestCase
 
     public function testCreateEvents()
     {
-        $user = $this->loginAsRoot();
+        // Chama a criação da rotina usando o usuário criado em (loginAsRoot)
+        $this->createRoutine($this->loginAsRoot());
 
-        $routine = Routine::all()
-            ->where('status', '=>', 'true')
+        $routine = Routine::all()->where('status', '=>', 'true')
             ->random(1)
             ->toArray()[0];
         $event_type = EventType::all()
@@ -176,9 +181,8 @@ class RoutinesTest extends DuskTestCase
             ->random(20)
             ->toArray()[0];
 
-        $this->browse(function ($browser) use ($user, $routine, $event_type, $sector, $duty_user) {
+        $this->browse(function ($browser) use ($routine, $event_type, $sector, $duty_user) {
             $browser
-                ->loginAs($user->id)
                 ->visit('/routines')
                 ->screenshot('teste')
                 ->assertSee('Rotinas')
@@ -189,6 +193,11 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Tipo: preencha o campo corretamente.')
                 ->assertSee('Plantonista: preencha o campo corretamente.')
                 ->assertSee('Observações: preencha o campo corretamente.')
+                // Data da ocorrência (a mesma da rotina em aberto)
+                ->script("document.getElementById('occurred_at').value = '".
+                    $this->lastRoutine()->entranced_at->format('Y-m-d H:i'). "'");
+
+            $browser
                 ->select('#event_type_id', $event_type['id'])
                 ->select('#sector_id', $sector['id'])
                 ->select('#duty_user_id', $duty_user['id'])
