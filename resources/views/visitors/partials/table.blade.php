@@ -6,9 +6,9 @@
                     <i class="fas fa-people-group"></i> Visitantes
                 </h4>
             </div>
-            <div class="col-sm-4 align-self-center d-flex justify-content-end">
+            <div  class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                    <a href="{{ route('visitors.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" dusk="newVisitor">
+                    <a href="{{ route('visitors.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" id="newVisitor">
                         <i class="fa fa-plus"></i> Novo/a
                     </a>
                 @endif
