@@ -35,26 +35,6 @@ trait Page
     }
 
 
-    public function finishOpenRoutine()
-    {
-        $routine = Routine::where('status', true)->inRandomOrder()->first();
-        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
-
-        // Finalizando a rotina editada
-        $this->browse(function ($browser) use ($routine, $exitedAtValue) {
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->press('@finishRoutine')
-                ->waitForText('* Campos obrigatórios')
-                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
-            $browser
-                ->pause(1000)
-                ->click('@finishRoutine', ['force' => true])
-                ->assertPathIs('/routines')
-                ->assertSee('Rotina finalizada com sucesso!');
-        });
-    }
     public function createRoutine()
     {
         $generateRoutine = Routine::factory()->raw();
@@ -89,6 +69,26 @@ trait Page
                 ->assertSee('Rotina adicionada com sucesso!');
 
             // Permanece logado para a utilização nos testes
+        });
+    }
+    public function finishOpenRoutine()
+    {
+        $routine = Routine::where('status', true)->inRandomOrder()->first();
+        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
+
+        // Finalizando a rotina editada
+        $this->browse(function ($browser) use ($routine, $exitedAtValue) {
+            $browser
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->press('@finishRoutine')
+                ->waitForText('* Campos obrigatórios')
+                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
+            $browser
+                ->pause(1000)
+                ->click('@finishRoutine', ['force' => true])
+                ->assertPathIs('/routines')
+                ->assertSee('Rotina finalizada com sucesso!');
         });
     }
 }

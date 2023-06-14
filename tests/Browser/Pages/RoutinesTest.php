@@ -57,10 +57,9 @@ class RoutinesTest extends DuskTestCase
         $this->createRoutine();
 
         $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
-        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
 
         // Edita a rotina (em aberto)
-        $this->browse(function ($browser) use ($routine, $exitedAtValue) {
+        $this->browse(function ($browser) use ($routine) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
@@ -83,10 +82,12 @@ class RoutinesTest extends DuskTestCase
 
     public function testCreateEvents()
     {
+        //$this->finishOpenRoutine(); chamar antes?
+
         $this->createRoutine();
 
         $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
-        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
+        $occurred_at = $routine->entranced_at->format('Y-m-d H:i');
 
         $event_type = EventType::all()
             ->random(6)
@@ -98,7 +99,7 @@ class RoutinesTest extends DuskTestCase
             ->random(20)
             ->toArray()[0];
 
-        $this->browse(function ($browser) use ($routine, $event_type, $sector, $duty_user, $exitedAtValue) {
+        $this->browse(function ($browser) use ($routine, $event_type, $sector, $duty_user, $occurred_at) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
@@ -109,7 +110,7 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Tipo: preencha o campo corretamente.')
                 ->assertSee('Plantonista: preencha o campo corretamente.')
                 ->assertSee('Observações: preencha o campo corretamente.')
-                ->script("document.getElementById('occurred_at').value = '{$exitedAtValue}'");
+                ->script("document.getElementById('occurred_at').value = '{$occurred_at}'");
 
             $browser
                 ->select('#event_type_id', $event_type['id'])
