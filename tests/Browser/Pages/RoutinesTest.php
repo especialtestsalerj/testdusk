@@ -80,7 +80,7 @@ class RoutinesTest extends DuskTestCase
     }
 
 
-    public function testCreateEvents()
+    public function testCreateEvent()
     {
         //$this->finishOpenRoutine(); chamar antes?
 
@@ -126,28 +126,21 @@ class RoutinesTest extends DuskTestCase
         $this->finishOpenRoutine();
 
     }
-    public function testVisitors()
+    public function testCreateVisitor()
     {
         $this->createRoutine();
-        
-        $routine = Routine::all()
-            ->where('status', '=>', 'true')
-            ->random(1)
-            ->toArray()[0];
-        $entranced_at = $routine->entranced_at->format('Y-m-d H:i')->addDay();
-        $event_type = EventType::all()
-            ->random(1)
-            ->toArray()[0];
+
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
+        $entranced_at = $routine->entranced_at->format('Y-m-d H:i');
+
         $sector = Sector::all()
             ->random(1)
             ->toArray()[0];
         $duty_user = User::all()
             ->random(1)
             ->toArray()[0];
-            dump($routine);
-        
-        
-        $this->browse(function ($browser) use ($entranced_at, $routine, $event_type, $sector, $duty_user) {
+
+        $this->browse(function ($browser) use ($entranced_at, $routine, $sector, $duty_user) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
@@ -162,7 +155,7 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Plantonista: preencha o campo corretamente.')
                 ->assertSee('Observações: preencha o campo corretamente.')
                 ->script("document.getElementById('entranced_at').value = '{$entranced_at}'");
-            
+
             $browser
                 ->select('#sector_id', $sector['id'])
                 ->select('#duty_user_id', $duty_user['id'])
@@ -176,72 +169,75 @@ class RoutinesTest extends DuskTestCase
                 ->assertPathIs('/routines/' . $routine['id'])
                 ->assertSee('Visitante adicionado/a com sucesso!');
         });
+
         $this->finishOpenRoutine();
     }
 
-//    /**
-//     * @test
-//     * @group testCreateEditStuffs
-//     * @group link
-//     */
-//
-//    // Dusk - Cria/Altera um materiais detro de Rotina.
-//
-//    public function testStuffs()
-//    {
-//        $user = User::factory()->create();
-//        $user->assign(Constants::ROLE_ADMINISTRATOR);
-//        $user->allow('*');
-//        $user->save();
-//        $routine = Routine::all()
-//            ->where('status', '=>', 'true')
-//            ->random(1)
-//            ->toArray()[0];
-//        $event_type = EventType::all()
-//            ->random(1)
-//            ->toArray()[0];
-//        $sector = Sector::all()
-//            ->random(1)
-//            ->toArray()[0];
-//        $duty_user = User::all()
-//            ->random(1)
-//            ->toArray()[0];
-//
-//        $this->browse(function ($browser) use ($user, $routine, $event_type, $sector, $duty_user) {
+    /**
+     * @test
+     * @group testCreateEditStuffs
+     * @group link
+     */
+
+    // Cria/Altera materiais dentro de uma rotina em aberto
+
+    public function testCreateStuff()
+    {
+        $this->createRoutine();
+
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
+        $entranced_at = $routine->entranced_at->format('Y-m-d H:i');
+        //$exited_at = $routine->exited_at->format('Y-m-d H:i');
+
+        $sector = Sector::all()
+            ->random(1)
+            ->toArray()[0];
+        $duty_user = User::all()
+            ->random(1)
+            ->toArray()[0];
+
+        $stuff = DB::table('stuffs')
+            ->where('routine_id', '=', $routine['id'])
+            ->first();
+
+        $this->browse(function ($browser) use ($routine, $sector, $duty_user, $entranced_at, $stuff) {
+            $browser
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->press('@manageRoutine-' . $routine['id'])
+                ->script('document.getElementById("newStuff").click()');
+            $browser
+                ->assertPathIs('/routines'. '/' . $routine['id'] . '/stuffs/create')
+                ->screenshot('stuffs')
+                ->press('#submitButton')
+                ->assertSee('Plantonista: preencha o campo corretamente.')
+                ->assertSee('Observações: preencha o campo corretamente.')
+                ->script("document.getElementById('entranced_at').value = '{$entranced_at}'");
 //            $browser
-//                ->loginAs($user->id)
-//                ->visit('/routines')
-//                ->assertSee('Rotinas')
-//                ->press('@manageRoutine-' . $routine['id'])
-//                ->script('document.getElementById("newStuff").click()');
-//
+//                ->script("document.getElementById('exited_at').value = '{$exited_at}'");
+            $browser
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->type('#description', str_random(20))
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Material adicionado com sucesso!');
+
+            //EDIÇÃO DO VISITANTE - falta fazer
 //            $browser
-//                ->assertPathIs('/routines'. '/' . $routine['id'] . '/stuffs/create')
-//                ->screenshot('stuffs')
-//                ->press('#submitButton')
-//                ->assertSee('Plantonista: preencha o campo corretamente.')
-//                ->assertSee('Observações: preencha o campo corretamente.');
-//            $this->insertDate(1, 'exited_at');
-//            $browser
-//                ->select('#sector_id', $sector['id'])
-//                ->select('#duty_user_id', $duty_user['id'])
-//                ->type('#description', str_random(5))
-//                ->press('#submitButton')
-//                ->assertPathIs('/routines/' . $routine['id'])
-//                ->assertSee('Material adicionado com sucesso!');
-//            // $stuff = DB::table('stuffs')
-//            //     ->where('routine_id', '=', $routine['id'])
-//            //     ->first();
-//            // $browser->visit('/stuffs/' . $stuff->id)->type('#description', str_random(15));
-//            // $this->insertDate(0, 'entranced_at');
-//            // $this->insertDate(1, 'exited_at');
-//            // $browser
-//            //     ->press('#submitButton')
-//            //     ->assertPathIs('/routines/' . $routine['id'])
-//            //     ->assertSee('Material alterado com sucesso!');
-//        });
-//    }
-//
+//                ->visit('/stuffs/' . $stuff->id)
+//                ->type('#description', 'teste');
+            // $this->insertDate(0, 'entranced_at');
+            // $this->insertDate(1, 'exited_at');
+            // $browser
+            //     ->press('#submitButton')
+            //     ->assertPathIs('/routines/' . $routine['id'])
+            //     ->assertSee('Material alterado com sucesso!');
+        });
+
+        $this->finishOpenRoutine();
+    }
+
 //    /**
 //     * @test
 //     * @group testCreateEditCautions
