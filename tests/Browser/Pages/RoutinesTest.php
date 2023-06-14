@@ -126,57 +126,59 @@ class RoutinesTest extends DuskTestCase
         $this->finishOpenRoutine();
 
     }
-//    public function testVisitors()
-//    {
-//        $user = User::factory()->create();
-//        $user->assign(Constants::ROLE_ADMINISTRATOR);
-//        $user->allow('*');
-//        $user->save();
-//        $routine = Routine::all()
-//            ->where('status', '=>', 'true')
-//            ->random(1)
-//            ->toArray()[0];
-//        $event_type = EventType::all()
-//            ->random(1)
-//            ->toArray()[0];
-//        $sector = Sector::all()
-//            ->random(1)
-//            ->toArray()[0];
-//        $duty_user = User::all()
-//            ->random(1)
-//            ->toArray()[0];
-//
-//        $this->browse(function ($browser) use ($user, $routine, $event_type, $sector, $duty_user) {
-//            $browser
-//                ->loginAs($user->id)
-//                ->visit('/routines')
-//                ->assertSee('Rotinas')
-//                ->press('@manageRoutine-' . $routine['id'])
-//                ->script('document.getElementById("newVisitor").click()');
-//            $browser
-//                ->assertPathIs('/routines'. '/' . $routine['id'] . '/visitors/create' )
-//
-//                ->press('#submitButton')
-//                ->assertSee('CPF (Visitante): preencha o campo corretamente.')
-//                ->assertSee('Nome (Visitante): preencha o campo corretamente.')
-//                ->assertSee('Plantonista: preencha o campo corretamente.')
-//                ->assertSee('Observações: preencha o campo corretamente.');
-//            $this->insertDate(1, 'exited_at');
-//            $browser
-//                ->select('#sector_id', $sector['id'])
-//                ->select('#duty_user_id', $duty_user['id'])
-//                ->type('#cpf', '12312312387')
-//                ->click('#btn_buscar')
-//                ->pause(1000)
-//                ->type('#description', str_random(15))
-//                ->type('#full_name', str_random(10))
-//                ->type('#origin', str_random(5))
-//                ->press('#submitButton')
-//                ->assertPathIs('/routines/' . $routine['id'])
-//                ->assertSee('Visitante adicionado/a com sucesso!');
-//        });
-//    }
-//
+    public function testVisitors()
+    {
+        $this->createRoutine();
+        
+        $routine = Routine::all()
+            ->where('status', '=>', 'true')
+            ->random(1)
+            ->toArray()[0];
+        $entranced_at = $routine->entranced_at->format('Y-m-d H:i')->addDay();
+        $event_type = EventType::all()
+            ->random(1)
+            ->toArray()[0];
+        $sector = Sector::all()
+            ->random(1)
+            ->toArray()[0];
+        $duty_user = User::all()
+            ->random(1)
+            ->toArray()[0];
+            dump($routine);
+        
+        
+        $this->browse(function ($browser) use ($entranced_at, $routine, $event_type, $sector, $duty_user) {
+            $browser
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->press('@manageRoutine-' . $routine['id'])
+                ->script('document.getElementById("newVisitor").click()');
+            $browser
+                ->assertPathIs('/routines'. '/' . $routine['id'] . '/visitors/create' )
+
+                ->press('#submitButton')
+                ->assertSee('CPF (Visitante): preencha o campo corretamente.')
+                ->assertSee('Nome (Visitante): preencha o campo corretamente.')
+                ->assertSee('Plantonista: preencha o campo corretamente.')
+                ->assertSee('Observações: preencha o campo corretamente.')
+                ->script("document.getElementById('entranced_at').value = '{$entranced_at}'");
+            
+            $browser
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->type('#cpf', '12312312387')
+                ->click('#btn_buscar')
+                ->pause(1000)
+                ->type('#description', str_random(15))
+                ->type('#full_name', str_random(10))
+                ->type('#origin', str_random(5))
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Visitante adicionado/a com sucesso!');
+        });
+        $this->finishOpenRoutine();
+    }
+
 //    /**
 //     * @test
 //     * @group testCreateEditStuffs
