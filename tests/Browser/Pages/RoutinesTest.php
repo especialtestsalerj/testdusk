@@ -46,38 +46,18 @@ class RoutinesTest extends DuskTestCase
     // Cria e finaliza uma nova rotina
     public function testCreateRoutine()
     {
-        $exitedAt = $this->lastRoutine()->exited_at;
-        $exitedAtValue = $exitedAt ? $exitedAt->format('Y-m-d H:i') : '';
-
         $this->createRoutine();
 
-        // Finalizando a rotina criada
-        $this->browse(function ($browser) use ($exitedAtValue) {
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->screenshot('CreateRoutine')
-                ->press('@finishRoutine')
-                ->waitForText('* Campos obrigatórios')
-                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
-            $browser
-                ->pause(1000)
-                ->click('@finishRoutine', ['force' => true])
-                ->assertPathIs('/routines')
-                ->assertSee('Rotina finalizada com sucesso!')
-                ->screenshot('FinishRoutine');
-        });
+        $this->finishOpenRoutine();
     }
 
     // Edição de uma nova rotina (finaliza no final do teste)
     public function testEditRoutine()
     {
-        $exitedAt = $this->lastRoutine()->exited_at;
-        $exitedAtValue = $exitedAt ? $exitedAt->format('Y-m-d H:i') : '';
-
         $this->createRoutine();
 
         $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
+        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
 
         // Edita a rotina (em aberto)
         $this->browse(function ($browser) use ($routine, $exitedAtValue) {
@@ -95,34 +75,17 @@ class RoutinesTest extends DuskTestCase
             $browser
                 ->assertPathIs('/routines')
                 ->assertSee('Rotina alterada com sucesso!');
-
-        // Finalizando a rotina editada
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->press('@finishRoutine')
-                ->waitForText('* Campos obrigatórios')
-                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
-            $browser
-                ->pause(1000)
-                ->click('@finishRoutine', ['force' => true])
-                ->assertPathIs('/routines')
-                ->assertSee('Rotina finalizada com sucesso!');
         });
+
+        $this->finishOpenRoutine();
     }
 
-    /**
-     * @test
-     * @group RoutineOptions
-     * @group link
-     */
 
     public function testCreateEvents()
     {
-
         $this->createRoutine();
 
-        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em Aberto
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
         $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
 
         $event_type = EventType::all()
@@ -159,20 +122,7 @@ class RoutinesTest extends DuskTestCase
                 ->screenshot('AddEvents');
         });
 
-        // Finalizando a rotina editada
-        $this->browse(function ($browser) use ($exitedAtValue) {
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->press('@finishRoutine')
-                ->waitForText('* Campos obrigatórios')
-                ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
-            $browser
-                ->pause(1000)
-                ->click('@finishRoutine', ['force' => true])
-                ->assertPathIs('/routines')
-                ->assertSee('Rotina finalizada com sucesso!');
-        });
+        $this->finishOpenRoutine();
 
     }
 //    public function testVisitors()
