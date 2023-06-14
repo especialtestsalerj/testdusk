@@ -35,6 +35,7 @@ abstract class DuskTestCase extends BaseTestCase
         static::startChromeDriver();
     }
 
+    
     /**
      * Create the RemoteWebDriver instance.
      *
@@ -53,4 +54,6 @@ abstract class DuskTestCase extends BaseTestCase
             DesiredCapabilities::chrome()->setCapability(ChromeOptions::CAPABILITY, $options)
         );
     }
+
+    
 }
