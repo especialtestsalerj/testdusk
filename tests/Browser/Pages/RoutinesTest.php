@@ -37,13 +37,14 @@ class RoutinesTest extends DuskTestCase
         parent::tearDown();
     }
 
+
     /**
+     * Cria e finaliza uma nova rotina.
+     *
      * @test
      * @group CreateRoutine
      * @group link
      */
-
-    // Cria e finaliza uma nova rotina
     public function testCreateRoutine()
     {
         $this->createRoutine();
@@ -51,7 +52,13 @@ class RoutinesTest extends DuskTestCase
         $this->finishOpenRoutine();
     }
 
-    // Edição de uma nova rotina (finaliza no final do teste)
+    /**
+     * Edição de uma nova rotina (finaliza no final do teste).
+     *
+     * @test
+     * @group CreateRoutine
+     * @group link
+     */
     public function testEditRoutine()
     {
         $this->createRoutine();
@@ -66,8 +73,8 @@ class RoutinesTest extends DuskTestCase
                 ->screenshot('BeforeEditRoutine')
                 ->press('@manageRoutine-' . $routine['id'])
                 ->type('#checkpoint_obs', str_random(15))
-                ->script("document.getElementById('entranced_at').value = '". $this->lastRoutine()->entranced_at
-                        ->setDate(2023, rand(1,12), rand(1,30))->setTime(rand(8, 20), rand (1, 59), 0). "'");
+                ->script("document.getElementById('entranced_at').value = '" . $this->getDateRoutine()->entranced_at
+                        ->setDate(2023, rand(1, 12), rand(1, 30))->setTime(rand(8, 20), rand(1, 59), 0) . "'");
             $browser
                 ->screenshot('EditRoutine')
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
@@ -79,11 +86,15 @@ class RoutinesTest extends DuskTestCase
         $this->finishOpenRoutine();
     }
 
-
+    /**
+     * Cria um novo evento.
+     *
+     * @test
+     * @group CreateEvent
+     * @group link
+     */
     public function testCreateEvent()
     {
-        //$this->finishOpenRoutine(); chamar antes?
-
         $this->createRoutine();
 
         $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
@@ -126,6 +137,14 @@ class RoutinesTest extends DuskTestCase
         $this->finishOpenRoutine();
 
     }
+
+    /**
+     * Cria um novo visitante.
+     *
+     * @test
+     * @group CreateVisitor
+     * @group link
+     */
     public function testCreateVisitor()
     {
         $this->createRoutine();
@@ -147,8 +166,7 @@ class RoutinesTest extends DuskTestCase
                 ->press('@manageRoutine-' . $routine['id'])
                 ->script('document.getElementById("newVisitor").click()');
             $browser
-                ->assertPathIs('/routines'. '/' . $routine['id'] . '/visitors/create' )
-
+                ->assertPathIs('/routines' . '/' . $routine['id'] . '/visitors/create')
                 ->press('#submitButton')
                 ->assertSee('CPF (Visitante): preencha o campo corretamente.')
                 ->assertSee('Nome (Visitante): preencha o campo corretamente.')
@@ -168,10 +186,23 @@ class RoutinesTest extends DuskTestCase
                 ->press('#submitButton')
                 ->assertPathIs('/routines/' . $routine['id'])
                 ->assertSee('Visitante adicionado/a com sucesso!');
+
+            //Finalizar visitante 1
+
+            //Criar visitante 2 para testar edição e exclusão
+
+            //Edição
+            $browser
+                ->click('#alterar');
+
+            //Excluir visitante
+
+
         });
 
         $this->finishOpenRoutine();
     }
+
 
     /**
      * @test
@@ -207,7 +238,7 @@ class RoutinesTest extends DuskTestCase
                 ->press('@manageRoutine-' . $routine['id'])
                 ->script('document.getElementById("newStuff").click()');
             $browser
-                ->assertPathIs('/routines'. '/' . $routine['id'] . '/stuffs/create')
+                ->assertPathIs('/routines' . '/' . $routine['id'] . '/stuffs/create')
                 ->screenshot('stuffs')
                 ->press('#submitButton')
                 ->assertSee('Plantonista: preencha o campo corretamente.')
@@ -223,7 +254,7 @@ class RoutinesTest extends DuskTestCase
                 ->assertPathIs('/routines/' . $routine['id'])
                 ->assertSee('Material adicionado com sucesso!');
 
-            //EDIÇÃO DO VISITANTE - falta fazer
+            //EDIÇÃO DO MATERIAL - falta fazer
 //            $browser
 //                ->visit('/stuffs/' . $stuff->id)
 //                ->type('#description', 'teste');
@@ -233,8 +264,9 @@ class RoutinesTest extends DuskTestCase
             //     ->press('#submitButton')
             //     ->assertPathIs('/routines/' . $routine['id'])
             //     ->assertSee('Material alterado com sucesso!');
-        });
 
+            //CRIAR E EXCLUIR MATERIAL - falta fazer
+        });
         $this->finishOpenRoutine();
     }
 

@@ -9,46 +9,48 @@ use App\Support\Constants;
 trait Page
 {
     /**
-     * Get the global element shortcuts for the site.
+     * Cria um usuário administrador.
      *
-     * @return array<string, string>
+     * @return User O usuário administrador criado
      */
-    public static function siteElements(): array
+    public function createAdminUser(): User
     {
-        return [
-            '@novo' => '#novo',
-        ];
+        $adminUser = User::factory()->create();
+        $adminUser->assign(Constants::ROLE_ADMINISTRATOR)->allow('*')->save();
+
+        return $adminUser;
     }
 
-    public function createAdminUser()
+    /**
+     * Retorna a data da última rotina adicionada.
+     *
+     * @return Routine A última rotina adicionada
+     */
+    public function getDateRoutine(): ?Routine
     {
-        $user = User::factory()->create();
-        $user->assign(Constants::ROLE_ADMINISTRATOR);
-        $user->allow('*');
-        $user->save();
-        return $user; // retorna o usuário criado
+        return Routine::orderByDesc('entranced_at')->first();
     }
 
-    public function lastRoutine()
-    {
-        return Routine::orderBy('entranced_at', 'desc')->first();
-    }
-
-
-    public function createRoutine()
+    /**
+     * Cria uma nova rotina.
+     *
+     * @return void
+     */
+    public function createRoutine(): void
     {
         $generateRoutine = Routine::factory()->raw();
 
-        $user = $this->createAdminUser();
+        $adminUser = $this->createAdminUser();
 
-        $this->browse(function ($browser) use ($user, $generateRoutine) {
+        $this->browse(function ($browser) use ($adminUser, $generateRoutine) {
             $browser
-                ->loginAs($user->id)
+                ->loginAs($adminUser->id)
                 ->visit('/routines')
                 ->assertSee('Rotinas')
-                ->click(Page::siteElements()['@novo'])
+                ->click('#novo')
                 ->assertPathIs('/routines/create')
                 ->script('document.querySelectorAll("#submitButton")[0].click();');
+
             $browser
                 ->assertSee('Turno: preencha o campo corretamente.')
                 ->assertSee('Responsável (Assunção): preencha o campo corretamente.')
@@ -60,10 +62,11 @@ trait Page
                 ->select('#entranced_user_id', rand(2, 15))
                 ->select('#exited_user_id', rand(2, 15))
                 ->waitFor('#entranced_at')
-                ->script("document.getElementById('entranced_at').value = '".
-                    $this->lastRoutine()->entranced_at->addDay()->format('Y-m-d H:i'). "'");
-            $browser
-                ->script('document.querySelectorAll("#submitButton")[0].click();');
+                ->script("document.getElementById('entranced_at').value = '" .
+                    $this->getDateRoutine()->entranced_at->addDay()->format('Y-m-d H:i') . "'");
+
+            $browser->script('document.querySelectorAll("#submitButton")[0].click();');
+
             $browser
                 ->assertPathIs('/routines')
                 ->assertSee('Rotina adicionada com sucesso!');
@@ -71,19 +74,26 @@ trait Page
             // Permanece logado para a utilização nos testes
         });
     }
-    public function finishOpenRoutine()
-    {
-        $routine = Routine::where('status', true)->inRandomOrder()->first();
-        $exitedAtValue = $routine->entranced_at->format('Y-m-d H:i');
 
-        // Finalizando a rotina editada
-        $this->browse(function ($browser) use ($routine, $exitedAtValue) {
+    /**
+     * Finaliza uma rotina em aberto.
+     *
+     * @return void
+     */
+    public function finishOpenRoutine(): void
+    {
+        $openRoutine = Routine::where('status', true)->inRandomOrder()->first();
+        $exitedAtValue = $openRoutine->entranced_at->format('Y-m-d H:i');
+
+        // Finalizando a rotina em aberto
+        $this->browse(function ($browser) use ($openRoutine, $exitedAtValue) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
                 ->press('@finishRoutine')
                 ->waitForText('* Campos obrigatórios')
                 ->script("document.getElementById('exited_at').value = '{$exitedAtValue}'");
+
             $browser
                 ->pause(1000)
                 ->click('@finishRoutine', ['force' => true])
