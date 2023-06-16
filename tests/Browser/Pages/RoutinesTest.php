@@ -16,6 +16,8 @@ use App\Http\Livewire\Routines\Index;
 use Illuminate\Support\Facades\DB;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\Page;
+use Faker\Factory as Faker;
+
 
 class RoutinesTest extends DuskTestCase
 {
@@ -36,7 +38,6 @@ class RoutinesTest extends DuskTestCase
         });
         parent::tearDown();
     }
-
 
     /**
      * Cria e finaliza uma nova rotina.
@@ -153,18 +154,20 @@ class RoutinesTest extends DuskTestCase
         $entranced_at = $routine->entranced_at->format('Y-m-d H:i');
 
         $sector = Sector::all()
-            ->random(1)
+            ->random(6)
             ->toArray()[0];
         $duty_user = User::all()
-            ->random(1)
+            ->random(20)
             ->toArray()[0];
 
+        //Adicionar visitante
         $this->browse(function ($browser) use ($entranced_at, $routine, $sector, $duty_user) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
                 ->press('@manageRoutine-' . $routine['id'])
                 ->script('document.getElementById("newVisitor").click()');
+
             $browser
                 ->assertPathIs('/routines' . '/' . $routine['id'] . '/visitors/create')
                 ->press('#submitButton')
@@ -173,29 +176,41 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Plantonista: preencha o campo corretamente.')
                 ->assertSee('Observações: preencha o campo corretamente.')
                 ->script("document.getElementById('entranced_at').value = '{$entranced_at}'");
-
             $browser
                 ->select('#sector_id', $sector['id'])
                 ->select('#duty_user_id', $duty_user['id'])
-                ->type('#cpf', '12312312387')
+                ->type('#cpf', Faker::create('pt_BR')->cpf())
                 ->click('#btn_buscar')
-                ->pause(1000)
-                ->type('#description', str_random(15))
-                ->type('#full_name', str_random(10))
-                ->type('#origin', str_random(5))
+                ->type('#description', Faker::create()->text(50))
+                ->type('#full_name', Faker::create('pt_BR')->name())
+                ->type('#origin', str_random(10))
+                ->screenshot('Visitante na entrada')
                 ->press('#submitButton')
                 ->assertPathIs('/routines/' . $routine['id'])
                 ->assertSee('Visitante adicionado/a com sucesso!');
 
-            //Finalizar visitante 1
-
-            //Criar visitante 2 para testar edição e exclusão
-
-            //Edição
+            //Editar o visitante (e adicionar a saída dele)
             $browser
-                ->click('#alterar');
+                ->click('#alterar')
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->type('#cpf', Faker::create('pt_BR')->cpf())
+                ->clear('#description')
+                ->type('#description', Faker::create()->text(500))
+                ->clear('#full_name')
+                ->type('#full_name', Faker::create('pt_BR')->name())
+                ->clear('#origin')
+                ->type('#origin', 'origem')
+                ->script("document.getElementById('entranced_at').value = '{$this->getDateRoutine()->entranced_at->addDay()->format('Y-m-d H:i')}'");
+            $browser
+                ->script("document.getElementById('exited_at').value = '{$this->getDateRoutine()->entranced_at->addDay(2)->format('Y-m-d H:i')}'");
+            $browser
+                ->screenshot('Visitante na saída')
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Visitante alterado/a com sucesso!');
 
-            //Excluir visitante
+            //Excluir o visitante
 
 
         });
