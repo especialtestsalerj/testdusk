@@ -11,7 +11,7 @@ trait Page
     /**
      * Cria um usuário administrador.
      *
-     * @return User O usuário administrador criado
+     * @return user
      */
     public function createAdminUser(): User
     {
@@ -24,9 +24,9 @@ trait Page
     /**
      * Retorna a data da última rotina adicionada.
      *
-     * @return Routine A última rotina adicionada
+     * @return 'entranced_at'
      */
-    public function getDateRoutine(): ?Routine
+    public function getDataRotina(): ?Routine
     {
         return Routine::orderByDesc('entranced_at')->first();
     }
@@ -36,7 +36,7 @@ trait Page
      *
      * @return void
      */
-    public function createRoutine(): void
+    public function criaRotina(): void
     {
         $generateRoutine = Routine::factory()->raw();
 
@@ -63,7 +63,7 @@ trait Page
                 ->select('#exited_user_id', rand(2, 15))
                 ->waitFor('#entranced_at')
                 ->script("document.getElementById('entranced_at').value = '" .
-                    $this->getDateRoutine()->entranced_at->addDay()->format('Y-m-d H:i') . "'");
+                    $this->getDataRotina()->entranced_at->addDay()->format('Y-m-d H:i') . "'");
 
             $browser->script('document.querySelectorAll("#submitButton")[0].click();');
 
@@ -80,7 +80,7 @@ trait Page
      *
      * @return void
      */
-    public function finishOpenRoutine(): void
+    public function finalizaRotinaAberta(): void
     {
         $openRoutine = Routine::where('status', true)->inRandomOrder()->first();
         $exitedAtValue = $openRoutine->entranced_at->format('Y-m-d H:i');

@@ -8,7 +8,7 @@
             </div>
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                    <a href="{{ route('cautions.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Cautela" dusk="newCaution">
+                    <a href="{{ route('cautions.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Nova Cautela" dusk="newCaution" id="newCaution" >
                         <i class="fa fa-plus"></i> Nova
                     </a>
                 @endif
