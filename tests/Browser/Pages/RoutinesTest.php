@@ -128,7 +128,10 @@ class RoutinesTest extends DuskTestCase
 
             //Edita a ocorrência
             $browser
-                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertPathIs('/routines/' . $routine['id']);
+            $browser
+                ->script("document.getElementById('editEvent').scrollIntoView();");
+            $browser
                 ->click('#editEvent')
                 ->select('#event_type_id', $event_type['id'])
                 ->select('#sector_id', $sector['id'])
@@ -143,25 +146,19 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Ocorrência alterada com sucesso!')
                 ->screenshot('Ocorrencia editada');
 
-            //Excluir a ocorrência
-//            $browser
-//                ->click('#removerEvent')
-//                ->pause(1000)
-//                ->click('#submitRemover')
-//                ->pause(1000)
-//                ->assertSee('Ocorrência removida com sucesso!')
-//                ->screenshot('Ocorrência removida');
+            $browser
+                ->script("document.getElementById('removerEvent').scrollIntoView();");
+            $browser
+                ->click('#removerEvent')
+                ->pause(2000)
+                ->click('#submitRemoverEvent')
+                ->pause(2000)
+                ->assertSee('Ocorrência removida com sucesso!');
         });
 
         // Finaliza a rotina
         $this->finalizaRotinaAberta();
 
-        $this->browse(function ($browser) {
-           $browser
-               ->visit('/routines')
-               ->assertSee('Rotinas')
-               ->screenshot('rotina ocorrencia finalizada');
-        });
     }
 
 
@@ -213,50 +210,48 @@ class RoutinesTest extends DuskTestCase
                 ->screenshot('Visitante preenchido');
 
             //Edita o visitante e adiciona a saída dele
-//            $browser
-//                ->click('#alterar');
-////                ->select('#sector_id', $sector['id'])
-////                ->select('#duty_user_id', $duty_user['id'])
-////                ->clear('#description')
-////                ->type('#description', Faker::create()->text(500))
-////                ->clear('#full_name')
-////                ->type('#full_name', Faker::create('pt_BR')->name())
-////                ->clear('#origin')
-////                ->type('#origin', 'origem');
-//            //Tentativa de inserir uma data inferir à assunção
-////            $browser
-////                ->script("document.getElementById('exited_at').value = '2000-01-30 10:30'");
-////            $browser
-////                ->press('#submitButton')
-////                ->assertSee('A Data da Saída deve ser posterior à assunção da rotina.');
-//            //Saída do visitante com uma data possível
-//            $browser
-//                ->script("document.getElementById('exited_at').value = '{$this->getDataRotina()->entranced_at->addDay(2)->format('Y-m-d H:i')}'");
-//            $browser
-//                ->screenshot('Visitante na saída')
-//                ->press('#submitButton')
-//                ->assertPathIs('/routines/' . $routine['id'])
-//                ->assertSee('Visitante alterado/a com sucesso!');
+            $browser
+                ->script("document.getElementById('alterarVisitor').scrollIntoView();");
+            $browser
+                ->click('#alterarVisitor')
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->clear('#description')
+                ->type('#description', Faker::create()->text(500))
+                ->clear('#full_name')
+                ->type('#full_name', Faker::create('pt_BR')->name())
+                ->clear('#origin')
+                ->type('#origin', 'origem');
+            //Tentativa de inserir uma data inferir à assunção
+            $browser
+                ->script("document.getElementById('exited_at').value = '2000-01-30 10:30'");
+            $browser
+                ->press('#submitButton')
+                ->assertSee('A Data da Saída deve ser posterior à assunção da rotina.');
+            //Saída do visitante com uma data possível
+            $browser
+                ->script("document.getElementById('exited_at').value = '{$this->getDataRotina()->entranced_at->addDay(2)->format('Y-m-d H:i')}'");
+            $browser
+                ->screenshot('Visitante na saída')
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Visitante alterado/a com sucesso!');
 
             //Exclui o visitante
             //Garante que a exclusão está funcionando corretamente (deve ser feito com a rotina ainda em aberto)
-//            $browser
-//                ->click('#remover')
-//                ->pause(2000)
-//                ->click('#submitRemover')
-//                ->pause(2000)
-//                ->assertSee('Visitante removido/a com sucesso!');
-       });
+            $browser
+                ->script("document.getElementById('removerVisitor').scrollIntoView();");
+            $browser
+                ->click('#removerVisitor')
+                ->pause(2000)
+                ->click('#submitRemoverVisitor')
+                ->pause(2000)
+                ->assertSee('Visitante removido/a com sucesso!');
+        });
 
         //Finaliza a rotina
         $this->finalizaRotinaAberta();
 
-        $this->browse(function ($browser) {
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->screenshot('rotina visitante finalizada');
-        });
     }
 
 
@@ -308,6 +303,9 @@ class RoutinesTest extends DuskTestCase
             //Edita o material
             $browser
                 ->assertPathIs('/routines/' . $routine['id'])
+                ->script("document.getElementById('editMaterial').scrollIntoView();");
+            $browser
+                ->pause(1000)
                 ->click('#editMaterial')
                 ->select('#sector_id', $sector['id'])
                 ->select('#duty_user_id', $duty_user['id'])
@@ -322,21 +320,17 @@ class RoutinesTest extends DuskTestCase
 
             //Exclui o material
             //Garante que a exclusão está funcionando corretamente (deve ser feito com a rotina ainda em aberto)
-//            $browser
-//                ->click('#removerMaterial')
-//                ->pause(2000)
-//                ->click('#submitRemover')
-//                ->pause(2000)
-//                ->assertSee('Material removido com sucesso!');
+            $browser
+                ->script("document.getElementById('removerMaterial').scrollIntoView();");
+            $browser
+                ->click('#removerMaterial')
+                ->pause(2000)
+                ->click('#submitRemoverStuff')
+                ->pause(2000)
+                ->assertSee('Material removido com sucesso!');
         });
         $this->finalizaRotinaAberta();
 
-        $this->browse(function ($browser) {
-            $browser
-                ->visit('/routines')
-                ->assertSee('Rotinas')
-                ->screenshot('rotina material finalizada');
-        });
     }
 
 
@@ -382,8 +376,11 @@ class RoutinesTest extends DuskTestCase
         $visitor = Visitor::all()
             ->random(1)
             ->toArray()[0];
+
+        $visitorName = "PEDRO ALVARES CABRAL";
+
         //Cadastro da cautela
-        $this->browse(function ($browser) use ($routine, $sector, $duty_user, $entranced_at, $visitor) {
+        $this->browse(function ($browser) use ($routine, $sector, $duty_user, $entranced_at, $visitorName) {
             $browser
                 ->visit('/routines')
                 ->assertSee('Rotinas')
@@ -395,22 +392,34 @@ class RoutinesTest extends DuskTestCase
                 ->assertSee('Tipo de Porte: preencha o campo corretamente.')
                 ->assertSee('Plantonista: preencha o campo corretamente.');
             $browser
-                ->pause(10000)
-                ->select('visitor_id')
-                ->script([
-                    'a = document.querySelector("[id=\'visitor_id\']");',
-                    'a.value="PEDRO ALVARES CABRAL";',
-                    'a.dispatchEvent(new Event(\'input\'));',
-                    'a.dispatchEvent(new Event(\'change\'));',
-                ]);
+                ->script("document.getElementById('visitor_id').scrollIntoView();");
+
+            $browser->script([
+                'var visitorName = "' . $visitorName . '";
+                 var selectElement = document.getElementById("visitor_id");
+                 if (selectElement) {
+                     var options = selectElement.options;
+                     for (var i = 0; i < options.length; i++) {
+                         if (options[i].text.trim() === visitorName) {
+                             options[i].selected = true;
+                             var event = new Event("input", { bubbles: true });
+                             selectElement.dispatchEvent(event);
+                             event = new Event("change", { bubbles: true });
+                             selectElement.dispatchEvent(event);
+                             break;
+                         }
+                     }
+                 }
+            ']);
+
             $browser
                 ->pause(10000)
                 ->script([
-                'b = document.querySelector("[id=\'certificate_type\']");',
-                'b.value=' . rand(1,2) . ';',
-                'b.dispatchEvent(new Event(\'input\'));',
-                'b.dispatchEvent(new Event(\'change\'));',
-            ]);
+                    'b = document.querySelector("[id=\'certificate_type\']");',
+                    'b.value=' . rand(1,2) . ';',
+                    'b.dispatchEvent(new Event(\'input\'));',
+                    'b.dispatchEvent(new Event(\'change\'));',
+                ]);
             $browser
                 ->pause(10000)
                 ->script("document.getElementById('certificate_valid_until').value = '2030-01-01'");
