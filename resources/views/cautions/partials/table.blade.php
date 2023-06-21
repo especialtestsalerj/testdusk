@@ -47,9 +47,9 @@
                                 <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
                                 <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editCautela"><i class="fa fa-pencil"></i></a>
                                     @if(!$caution->hasPending())
-                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover">
+                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover" id="removeCautela">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     @endif
@@ -105,7 +105,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="removerCautela"><i class="fa fa-check"></i> Remover</button>
                                     <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>

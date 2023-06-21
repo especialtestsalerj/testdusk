@@ -3,8 +3,10 @@
 namespace Tests\Browser\Pages;
 
 use App\Models\Routine;
+use App\Models\Sector;
 use App\Models\User;
 use App\Support\Constants;
+use Faker\Factory as Faker;
 
 trait Page
 {
@@ -99,6 +101,46 @@ trait Page
                 ->click('@finishRoutine', ['force' => true])
                 ->assertPathIs('/routines')
                 ->assertSee('Rotina finalizada com sucesso!');
+        });
+    }
+
+    public function createVistante()
+    {
+        $routine = Routine::where('status', true)->inRandomOrder()->first(); // Rotina em aberto
+        $entranced_at = $routine->entranced_at->format('Y-m-d H:i'); // Pega a data da rotina em aberto
+
+        $sector = Sector::all()->random(6)->toArray()[0];
+        $duty_user = User::all()->random(20)->toArray()[0];
+
+        $this->browse(function ($browser) use ($entranced_at, $routine, $sector, $duty_user) {
+            $browser
+                ->visit('/routines')
+                ->assertSee('Rotinas')
+                ->screenshot('criou a rotina - visitante')
+                ->press('@manageRoutine-' . $routine['id'])
+                ->script('document.getElementById("newVisitor").click()');
+
+            $browser
+                ->assertPathIs('/routines' . '/' . $routine['id'] . '/visitors/create')
+                ->press('#submitButton')
+                ->assertSee('CPF (Visitante): preencha o campo corretamente.')
+                ->assertSee('Nome (Visitante): preencha o campo corretamente.')
+                ->assertSee('Plantonista: preencha o campo corretamente.')
+                ->assertSee('Observações: preencha o campo corretamente.')
+                ->script("document.getElementById('entranced_at').value = '{$entranced_at}'");
+            $browser
+                ->select('#sector_id', $sector['id'])
+                ->select('#duty_user_id', $duty_user['id'])
+                ->type('#cpf', Faker::create('pt_BR')->cpf())
+                ->click('#btn_buscar')
+                ->type('#description', Faker::create()->text(50))
+                ->type('#full_name', Faker::create('pt_BR')->name())
+                ->type('#origin', str_random(10))
+                ->press('#submitButton')
+                ->assertPathIs('/routines/' . $routine['id'])
+                ->assertSee('Visitante adicionado/a com sucesso!')
+                ->screenshot('Visitante preenchido');
+
         });
     }
 }

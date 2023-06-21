@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemover"><i class="fa fa-check"></i> Remover</button>
+                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverEvent"><i class="fa fa-check"></i> Remover</button>
                                     <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>
