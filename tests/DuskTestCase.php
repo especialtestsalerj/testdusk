@@ -35,6 +35,7 @@ abstract class DuskTestCase extends BaseTestCase
         static::startChromeDriver();
     }
 
+    
     /**
      * Create the RemoteWebDriver instance.
      *
@@ -49,8 +50,10 @@ abstract class DuskTestCase extends BaseTestCase
         ]);
 
         return RemoteWebDriver::create(
-            'http://localhost:9515',
+            'http://selenium:4444',
             DesiredCapabilities::chrome()->setCapability(ChromeOptions::CAPABILITY, $options)
         );
     }
+
+    
 }

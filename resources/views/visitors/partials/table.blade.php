@@ -6,9 +6,9 @@
                     <i class="fas fa-people-group"></i> Visitantes
                 </h4>
             </div>
-            <div class="col-sm-4 align-self-center d-flex justify-content-end">
+            <div  class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if($routine->status)
-                    <a href="{{ route('visitors.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" dusk="newVisitor">
+                    <a href="{{ route('visitors.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" id="newVisitor">
                         <i class="fa fa-plus"></i> Novo/a
                     </a>
                 @endif
@@ -40,9 +40,9 @@
                                 @endif
                                 <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="alterarVisitor"><i class="fa fa-pencil"></i></a>
                                     @if(!$visitor->hasPending())
-                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover">
+                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover" id="removerVisitor">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     @endif
@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverVisitor"><i class="fa fa-check"></i> Remover</button>
                                     <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>

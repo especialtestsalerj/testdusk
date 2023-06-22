@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if ($routine->status && !$disabled && !isset($this->caution?->old_id))
-                    <button type="button" class="btn btn-primary" wire:click="prepareForCreate" dusk='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
+                    <button type="button" class="btn btn-primary" wire:click="prepareForCreate" id='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
                         <i class="fa fa-plus"></i>
                     </button>
                 @endif
@@ -191,12 +191,12 @@
                             </div>
                             <div class="modal-footer">
                                 @if($modalMode != 'delete')
-                                    <button type="submit" dusk='submit' class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly)><i class="fa fa-save"></i> Salvar</button>
+                                    <button type="submit" dusk='submit' class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly) id="salvarWeapon"><i class="fa fa-save"></i> Salvar</button>
                                 @endif
 
                                 @if($modalMode == 'delete')
                                     <div>
-                                        <button dusk='delete' wire:click.prevent="delete" class="btn btn-success btn-sm text-white close-modal" title="Remover"><i class="fas fa-check"></i> Remover</button>
+                                        <button dusk='delete' wire:click.prevent="delete" class="btn btn-success btn-sm text-white close-modal" title="Remover" id="removerWeapon"><i class="fas fa-check"></i> Remover</button>
                                     </div>
                                 @endif
 
@@ -242,11 +242,11 @@
                                         <i class="fa fa-search"></i>
                                     </button>
                                     @if ($routine->status && !$disabled)
-                                        <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma">
+                                        <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma" id="editWeapon">
                                             <i class="fa fa-pencil"></i>
                                         </button>
                                         @if (!isset($weapon?->old_id))
-                                            <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma">
+                                            <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma" id="removeWeapon">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endif
