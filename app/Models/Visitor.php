@@ -11,7 +11,6 @@ class Visitor extends Model
         'person_id',
         'sector_id',
         'description',
-        'old_id',
     ];
 
     protected $casts = [
@@ -22,6 +21,11 @@ class Visitor extends Model
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function cautions()
+    {
+        return $this->hasMany(Caution::class);
     }
 
     public function sector()
@@ -49,26 +53,11 @@ class Visitor extends Model
         return isset($this?->old_id);
     }
 
-    public function hasPendingFromCaution()
+    public function hasOpenCaution($caution_id = null)
     {
-        $cautions = Caution::whereNotNull('visitor_old_id')
-            ->where('visitor_old_id', $this->old_id)
-            ->get();
-
-        return count($cautions) > 0;
-    }
-
-    public function hasCpfActiveOnRoutine($caution_id = null)
-    {
-        $cautions = Caution::select('cautions.*')
-            ->join('visitors', 'visitors.id', '=', 'cautions.visitor_id')
-            ->join('people', 'people.id', '=', 'visitors.person_id')
-            ->where('cautions.routine_id', $this->routine_id)
-            ->where('people.cpf', $this->person->cpf)
+        return $this->cautions()
             ->whereRaw(isset($caution_id) ? 'cautions.id <> ' . $caution_id : '1=1')
             ->whereNull('cautions.concluded_at')
-            ->get();
-
-        return count($cautions) > 0;
+            ->count() > 0;
     }
 }

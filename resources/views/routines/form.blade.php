@@ -117,8 +117,6 @@
         @if(formMode() == 'show')
             @include('events.partials.table',['events'=>$routine->events, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
 
-            @include('visitors.partials.table',['visitors'=>$routine->visitors, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
-
             @include('stuffs.partials.table',['stuffs'=>$routine->stuffs, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])
 
             @include('cautions.partials.table',['cautions'=>$routine->cautions, 'routine_id' => $routine->id, 'redirect' => 'routines.show'])

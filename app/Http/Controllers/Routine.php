@@ -70,8 +70,6 @@ class Routine extends Controller
             $newRoutine = app(RoutinesRepository::class)->create($values);
 
             if (isset($oldRoutine)) {
-                $this->storePendingVisitors($oldRoutine->getPendingVisitors(), $newRoutine->id);
-
                 $this->storePendingCautions($oldRoutine->getPendingCautions(), $newRoutine->id);
             }
         });
@@ -118,57 +116,14 @@ class Routine extends Controller
             ->with('message', 'Rotina finalizada com sucesso!');
     }
 
-    public function storePendingVisitors($pendingVisitors, $newRoutineId)
-    {
-        //Retrieve pending visitors from the last completed routine
-        foreach ($pendingVisitors as $pendingVisitor) {
-            $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
-            $array = array_diff_key($pendingVisitor->toArray(), array_flip($excludeKeys));
-
-            //create visitor
-            $visitor = new Visitor();
-            $visitor->fill($array);
-            $visitor->routine_id = $newRoutineId;
-            $visitor->old_id = $pendingVisitor->old_id ?? $pendingVisitor->id;
-            $visitor->save();
-        }
-    }
-
     public function storePendingCautions($pendingCautions, $newRoutineId)
     {
         //Retrieve pending cautions from the last completed routine
         foreach ($pendingCautions as $pendingCaution) {
             //Check if the visitor already exists in the new routine
-            $visitor = app(VisitorsRepository::class)->findOld(
-                $newRoutineId,
-                $pendingCaution->visitor->old_id ?? $pendingCaution->visitor_id
-            );
+            $visitor = $pendingCaution->visitor;
 
-            if (isset($visitor) && count($visitor)) {
-                $visitorId = $visitor[0]->id;
-                $visitorOldId = null;
-            } else {
-                $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
-                $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
-
-                $visitor = new Visitor();
-                $visitor->fill($array);
-                $visitor->routine_id = $newRoutineId;
-                $visitor->entranced_at = $pendingCaution->visitor->entranced_at;
-                $visitor->exited_at = $pendingCaution->visitor->exited_at;
-                $visitor->person_id = $pendingCaution->visitor->person_id;
-                $visitor->sector_id = $pendingCaution->visitor->sector_id;
-                $visitor->duty_user_id = $pendingCaution->visitor->duty_user_id;
-                $visitor->description = $pendingCaution->visitor->description;
-                $visitor->old_id = $pendingCaution->visitor->old_id ?? $pendingCaution->visitor_id;
-                /*$visitor->old_id = $pendingCaution->visitor->old_id
-                    ? $pendingCaution->old_id
-                    : $pendingCaution->visitor_id;*/
-                $visitor->save();
-
-                $visitorId = $visitor->id;
-                $visitorOldId = $visitor->old_id;
-            }
+            $visitorId = $visitor->id;
 
             $excludeKeys = ['id', 'created_by_id', 'updated_by_id', 'created_at', 'updated_at'];
             $array = array_diff_key($pendingCaution->toArray(), array_flip($excludeKeys));
@@ -179,7 +134,6 @@ class Routine extends Controller
             $caution->routine_id = $newRoutineId;
             $caution->visitor_id = $visitorId;
             $caution->old_id = $pendingCaution->old_id ?? $pendingCaution->id;
-            $caution->visitor_old_id = $visitorOldId;
             $caution->save();
 
             //create weapons

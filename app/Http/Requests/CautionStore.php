@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\CpfAvailableOnCaution;
+use App\Rules\VisitorHasNoOpenCaution;
 use App\Rules\ValidPeriodOnRoutine;
 use App\Data\Repositories\Cautions as CautionsRepository;
 
@@ -43,7 +43,7 @@ class CautionStore extends Request
             'visitor_id' => [
                 'bail',
                 'required',
-                new CpfAvailableOnCaution($this->get('visitor_id'), $this->get('id')),
+                new VisitorHasNoOpenCaution($this->get('visitor_id'), $this->get('id')),
             ],
             'certificate_type' => 'required',
             'id_card' => 'required_if:certificate_type,2',

@@ -58,7 +58,6 @@ class IndexForm extends BaseForm
 
         if ($result) {
             $this->entranced_at = $result?->entranced_at;
-            $this->exited_at = $result?->exited_at;
             $this->weapon_type_id = $result->weapon_type_id;
             $this->weapon_description = $result->weapon_description;
             $this->weapon_number = $result->weapon_number;

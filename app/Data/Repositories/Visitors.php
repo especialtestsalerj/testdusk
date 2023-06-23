@@ -11,34 +11,17 @@ class Visitors extends Repository
      */
     protected $model = Visitor::class;
 
-    public function findByRoutine($routine_id)
+    public function allNotExited()
     {
-        return $this->model::where('routine_id', $routine_id)->get();
+        return $this->model::with('person')->whereNull('exited_at')->get()->sortBy(function ($row) {
+            return $row->person->full_name;
+        });
     }
 
-    public function findByRoutineWithoutPending($routine_id, $visitor_id = null)
+    public function findByRoutineWithoutPending($visitor_id = null)
     {
         return $this->model
-            ::where('routine_id', $routine_id)
-            ->whereNull('old_id')
-            ->whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')
-            ->get();
-    }
-
-    public function findByOldId($old_id)
-    {
-        return $this->model
-            ::where('old_id', $old_id)
-            ->whereNotNull('old_id')
-            ->get();
-    }
-
-    public function findOld($routine_id, $old_id)
-    {
-        return $this->model
-            ::where('routine_id', $routine_id)
-            ->where('old_id', $old_id)
-            ->whereNotNull('old_id')
+            ::whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')
             ->get();
     }
 }
