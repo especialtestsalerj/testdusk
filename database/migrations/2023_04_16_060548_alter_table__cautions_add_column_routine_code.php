@@ -20,8 +20,9 @@ return new class extends Migration {
         $affected = DB::update('UPDATE routines SET code = id');
 
         Schema::table('routines', function (Blueprint $table) {
-            $table->unique('code', 'routines_code_unique');
+           $table->unique('code', 'routines_code_unique');
         });
+
     }
 
     /**

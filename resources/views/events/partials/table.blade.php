@@ -34,8 +34,8 @@
                             <div class="col-12 col-lg-2 text-center text-lg-end">
                                 <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-delete-modal{{ $event->id }}" title="Remover">
+                                    <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editEvent"><i class="fa fa-pencil"></i></a>
+                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-delete-modal{{ $event->id }}" title="Remover" id="removerEvent">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 @endif
@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
+                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverEvent"><i class="fa fa-check"></i> Remover</button>
                                     <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>

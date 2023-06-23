@@ -15,7 +15,6 @@ class RoutinesTableSeeder extends Seeder
     public function run()
     {
         app(RoutineFactory::class)
-            ->count(7)
             ->create();
     }
 }

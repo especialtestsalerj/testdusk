@@ -7,6 +7,7 @@ use App\Models\EventType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Livewire\EventTypes\Index;
 use App\Support\Constants;
+use Barryvdh\Debugbar\Twig\Extension\Dump;
 use Livewire\Livewire;
 use Tests\DuskTestCase;
 
@@ -19,19 +20,20 @@ class EventTypesTest extends DuskTestCase
      */
 
     //Dusk - Criação de um novo Tipo de Ocorrência
-    public function tests_createEventTypes()
+
+    
+    public function testCreateEventTypes()
     {
         $user = User::factory()->create();
         $user->assign(Constants::ROLE_ADMINISTRATOR);
         $user->allow('*');
         $user->save();
-        //dd($user->roles()->get());
         $generateEventType = ['name' => strtoupper(faker()->unique()->company)];
-
+        
         $this->browse(function ($browser) use ($user, $generateEventType) {
             $browser
                 ->loginAs($user->id)
-                ->visit('/event-types')
+                ->visit('/event-types') 
                 ->assertSee('Nome')
                 ->click('#novo')
                 ->assertPathIs('/event-types/create')
@@ -80,7 +82,7 @@ class EventTypesTest extends DuskTestCase
      */
 
     //Dusk e Livewire - Edição de um novo Tipo de Ocorrência
-    public function tests_editEventTypes()
+    public function testEditEventTypes()
     {
         $user = User::factory()->create();
         $user->assign(Constants::ROLE_ADMINISTRATOR);
@@ -89,9 +91,11 @@ class EventTypesTest extends DuskTestCase
         $randomEventType = DB::table('event_types')
             ->inRandomOrder()
             ->first();
-
+        session()->flush();
+        //parent::tearDown();
         $this->browse(function ($browser) use ($user, $randomEventType) {
             $browser
+                ->refresh()
                 ->loginAs($user->id)
                 ->visit('event-types/' . $randomEventType->id)
                 ->type('#name', '**' . $randomEventType->name . '**')

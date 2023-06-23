@@ -28,7 +28,7 @@
     <div id="app">
         @include('layouts.partials.menu')
 
-        <main class="py-0 py-lg-4">
+        <main class="py-0 py-lg-4" >
             <div class="container-fluid px-0 px-lg-3">
                 <div class="row justify-content-center">
                     <div class="col">
