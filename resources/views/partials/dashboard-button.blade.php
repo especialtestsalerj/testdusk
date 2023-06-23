@@ -1,4 +1,4 @@
-<div class="col-6 col-lg-3">
+<div class="col-6 col-lg-4">
     @can($permission)
     <a href="{{$url}}">
     @endcan

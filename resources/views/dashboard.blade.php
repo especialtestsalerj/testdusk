@@ -3,6 +3,40 @@
 @section('content')
     <div class="row mt-0 mt-lg-5">
         <div class="col-12 col-lg-10 offset-lg-1">
+            <div class="card mb-3 bg-white">
+                <div class="card-body px-5 py-5 border-bottom rounded">
+                    <div class="row mt-3 mb-3 text-center">
+                        <div class="col-sm-12 col-md-6 col-lg-2 xxx">
+                            <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
+                                                    <span class="row">
+                                                        <span class="col-12 text-center"><i class="fa fa-people-group fa-2x"></i><br></span>
+                                                    </span>
+                                <span class="col-12 text-center"><h5 class="title">Visitantes</h5></span>
+                            </a>
+                        </div>
+                        <!--
+                                                                    <div class="col-sm-12 col-md-6 col-lg-2">
+                                                                        <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
+                                                                            <span class="row">
+                                                                                <span class="col-12 text-center"><i class="fa fa-traffic-light fa-2x"></i><br></span>
+                                                                            </span>
+                                                                            <span class="col-12 text-center"><h5 class="title">Controle de Tráfego</h5></span>
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <div class="col-sm-12 col-md-6 col-lg-2">
+                                                                        <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
+                                                                            <span class="row">
+                                                                                <span class="col-12 text-center"><i class="fa fa-address-book fa-2x"></i><br></span>
+                                                                            </span>
+                                                                            <span class="col-12 text-center"><h5 class="title">Agendamento</h5></span>
+                                                                        </a>
+                                                                    </div>
+                        -->
+                    </div>
+                </div>
+            </div>
+
             <!-- Slider main container -->
             <div dir="rtl" class="swiper">
                 <!-- Additional required wrapper -->
@@ -51,8 +85,6 @@
                                         <div class="row mt-3 mb-3 routine-icons text-center">
                                             @include('partials.dashboard-button', ['url' => route('events.index', $routine->id), 'permission' => 'events:show', 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
 
-                                            @include('partials.dashboard-button', ['url' => route('visitors.index', $routine->id), 'permission' => 'visitors:show', 'title' => 'Visitantes', 'ico' => 'fa-people-group', 'count' => $routine->visitors()->count()])
-
                                             @include('partials.dashboard-button', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
 
                                             @include('partials.dashboard-button', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
@@ -68,19 +100,8 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
+
+            <!-- Slider main container -->
         </div>
-    </div>
-
-
-
-    <div class="row justify-content-center my-5 routine-cards">
-
-
-
-
-
-
-
-
     </div>
 @endsection
