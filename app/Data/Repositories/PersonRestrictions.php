@@ -16,8 +16,8 @@ class PersonRestrictions extends Repository
     {
         return DB::table('person_restrictions')
             ->select('person_restrictions.message')
-            ->join('people', 'person_restrictions.person_id', '=', 'people.id')
-            ->where('people.cpf', $cpf)
+            ->join('documents', 'person_restrictions.person_id', '=', 'documents.id')
+            ->where('documents.number', $cpf)
             ->whereRaw(
                 "CURRENT_TIMESTAMP BETWEEN person_restrictions.started_at AND COALESCE(person_restrictions.ended_at, '9999-12-31 23:59:59')"
             )

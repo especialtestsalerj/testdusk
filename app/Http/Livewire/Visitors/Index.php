@@ -11,7 +11,7 @@ class Index extends BaseIndex
     protected $repository = VisitorsRepository::class;
 
     public $orderByField = ['entranced_at', 'id'];
-    public $orderByDirection = [];
+    public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
     public $routine_id;
     public $routine;
@@ -19,18 +19,41 @@ class Index extends BaseIndex
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
+        'visitors.exited_at' =>'date',
+
     ];
 
     public function mount()
     {
-        $params = \Route::getCurrentRoute()->parameters();
-        $this->routine_id = $params['routine_id'];
-        $this->routine = app(RoutinesRepository::class)->findById([$this->routine_id]);
+
     }
 
     public function additionalFilterQuery($query)
     {
-        return $query->where('routine_id', $this->routine_id);
+        if (!is_null($this->searchString) && $this->searchString != '') {
+
+            //Busca na tabela de people
+            $query = $query->orWhereRaw(
+                "visitors.person_id in (select id from people p
+             where p.full_name ILIKE '%'||unaccent('" .
+                pg_escape_string($this->searchString) .
+                "')||'%'
+                                        or p.social_name ILIKE '%'||unaccent('" .
+                pg_escape_string($this->searchString) .
+                "')||'%' )"
+            );
+            //busca na tabela de documentos
+            $query = $query->orWhereRaw(
+                "visitors.person_id in (select id from documents d
+             where d.number ILIKE '%'||unaccent('" .
+                pg_escape_string($this->searchString) .
+                "')||'%')"
+            );
+
+
+        }
+
+        return $query;
     }
 
     public function render()

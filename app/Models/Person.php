@@ -7,6 +7,7 @@ class Person extends Model
     protected $fillable = [
         'cpf',
         'full_name',
+        'social_name',
         'origin',
         'id_card',
         'certificate_type',
@@ -16,6 +17,8 @@ class Person extends Model
         'alert_obs',
     ];
 
+    protected $appends = ['name'];
+
     public function getCpfFormattedAttribute()
     {
         $formatted = substr($this->cpf, 0, 3) . '.';
@@ -24,5 +27,11 @@ class Person extends Model
         $formatted .= substr($this->cpf, 9, 2) . '';
 
         return $formatted;
+    }
+
+
+    public function getNameAttribute()
+    {
+        return is_null($this->full_name) ? $this->social_name : $this->full_name;
     }
 }

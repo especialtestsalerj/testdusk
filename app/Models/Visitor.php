@@ -10,7 +10,6 @@ class Visitor extends Model
         'exited_at',
         'person_id',
         'sector_id',
-        'duty_user_id',
         'description',
         'old_id',
     ];
