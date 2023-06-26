@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="mb-0">
+                <div class="mb-3">
                     <div class="d-flex justify-content-end align-items-baseline">
                         @if (Route::has('password.request'))
                             <a class="text-muted me-3" href="{{ route('password.request') }}">
@@ -43,6 +43,10 @@
                             {{ __('Entrar') }}
                         </x-jet-button>
                     </div>
+                </div>
+
+                <div class="mb-0 text-center">
+                    <span class="mb-3 mb-md-0 text-muted">Copyright © 2023 Intranet - {{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</span>
                 </div>
             </form>
         </div>

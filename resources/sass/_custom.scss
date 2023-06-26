@@ -413,3 +413,22 @@ select[readonly].select2 + .select2-container {
 .card.bg-white {
         background: rgba(255, 255, 255, 0.4) !important;
 }
+
+body.bg-logo {
+    background: url("/img/bg.jpg") fixed no-repeat;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: 50%;
+}
+
+.btn-blue {
+    background-color: #142B53;
+    color: #FFF;
+}
+
+.btn-blue:hover, .btn-blue:focus {
+    background-color: #B57D18 !important;
+    color: #FFF !important;
+}
