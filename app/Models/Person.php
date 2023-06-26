@@ -54,4 +54,9 @@ class Person extends Model
 
         return false;
     }
+
+    public function pendingVisit()
+    {
+        return $this->hasOne(Visitor::class)->whereNull('exited_at');
+    }
 }

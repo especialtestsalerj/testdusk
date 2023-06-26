@@ -28,9 +28,12 @@
                                 @can('visitors:update')
                                         <i class="fa-solid fa-pen"></i>
                                 @endCan
-                                @can('visitors:checkout')
-                                    <i class="fa-solid fa-user-minus"></i>
-                                @endCan
+
+                                @if(!$visitor->exited_at)
+                                    @can('visitors:checkout')
+                                        <i class="fa-solid fa-user-minus"></i>
+                                    @endCan
+                                @endIf
                             </div>
 
                             <div>{{$visitor->document->documentType->name}} - {{$visitor->document->number}}</div>

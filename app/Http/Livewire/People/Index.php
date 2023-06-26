@@ -17,21 +17,22 @@ class Index extends BaseIndex
 
     public $searchFields = [
         'people.full_name' => 'text',
-        'people.social_name' =>'text',
+        'people.social_name' => 'text',
     ];
 
     public function additionalFilterQuery($query)
     {
         if (!is_null($this->searchString) && $this->searchString != '') {
-
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
                 "people.id in (select id from documents d
              where d.number ILIKE '%'||unaccent('" .
-                pg_escape_string($this->searchString) .
-                "')||'%')"
+                    pg_escape_string($this->searchString) .
+                    "')||'%')"
             );
         }
+
+        $query = $query->with('pendingVisit');
 
         return $query;
     }
