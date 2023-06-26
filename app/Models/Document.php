@@ -15,6 +15,7 @@ class Document extends Model
         'document_type_id',
         'number',
         'state_id',
+        'issuing_authority',
         'created_by_id',
         'updated_by_id',
     ];
