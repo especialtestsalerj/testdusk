@@ -50,4 +50,9 @@ class Document extends Model
     {
         return Attribute::make(get: fn($value) => $this->documentType->name);
     }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
 }
