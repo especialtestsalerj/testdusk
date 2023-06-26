@@ -22,9 +22,15 @@
 {{--                                <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}--}}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
-                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                <i class="fa-solid fa-pen"></i>
-                                <i class="fa-solid fa-user-minus"></i>
+                                @can('visitors:show')
+                                    <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                @endCan
+                                @can('visitors:update')
+                                        <i class="fa-solid fa-pen"></i>
+                                @endCan
+                                @can('visitors:checkout')
+                                    <i class="fa-solid fa-user-minus"></i>
+                                @endCan
                             </div>
 
                             <div>{{$visitor->document->documentType->name}} - {{$visitor->document->number}}</div>

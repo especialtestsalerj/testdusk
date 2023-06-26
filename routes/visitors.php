@@ -5,19 +5,15 @@ use App\Http\Livewire\People\Index as PeopleIndex;
 use App\Http\Livewire\Visitors\Index as VisitorsIndex;
 
 Route::group(['prefix' => '/visitors'], function () {
-
     Route::group(['prefix' => '/people'], function () {
-
         Route::get('', PeopleIndex::class)
             ->name('people.index')
-            ->can('visitors:show');
-
+            ->can('people:show');
     });
 
     Route::get('', VisitorsIndex::class)
         ->name('visitors.index')
         ->can('visitors:show');
-
 
     Route::get('/create', [Visitor::class, 'create'])
         ->name('visitors.create')

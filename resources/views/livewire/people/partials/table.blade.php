@@ -24,10 +24,18 @@
                                 @endforeach
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <i class="fa fa-search"></i>
-                                <i class="fa-solid fa-pen"></i>
-                                <i class="fa-solid fa-user-plus"></i>
-                                <i class="fa-solid fa-user-minus"></i>
+                                @can('people:show')
+                                    <i class="fa fa-search"></i>
+                                @endCan
+                                @can('people:update')
+                                    <i class="fa-solid fa-pen"></i>
+                                @endCan
+                                @can('visitors:store')
+                                    <i class="fa-solid fa-user-plus"></i>
+                                @endCan
+                                @can('visitors:checkout')
+                                    <i class="fa-solid fa-user-minus"></i>
+                                @endCan
                             </div>
 {{--                            @if($person->hasPendingVisitors())--}}
 {{--                            <div class="col-12 col-lg-5 text-center text-lg-start">--}}
