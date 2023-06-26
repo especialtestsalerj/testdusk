@@ -29,7 +29,6 @@ class Person extends Model
         return $formatted;
     }
 
-
     public function getNameAttribute()
     {
         return is_null($this->full_name) ? $this->social_name : $this->full_name;
@@ -47,14 +46,17 @@ class Person extends Model
 
     public function hasPendingVisitors()
     {
-
-        foreach($this->visitors as $visitor){
-
-            if(is_null($visitor->exited_at)){
+        foreach ($this->visitors as $visitor) {
+            if (is_null($visitor->exited_at)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
     }
 }

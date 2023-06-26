@@ -40,7 +40,7 @@ class People extends BaseForm
             $this->certificate_number = $result->person->certificate_number;
             $this->certificate_valid_until = $result->person->certificate_valid_until;
             $this->destiny_sector_name = $result?->sector?->name;
-            if ($result->hasCpfActiveOnRoutine($this->caution_id)) {
+            if ($result->hasOpenCaution($this->caution_id)) {
                 $this->addError('msg_visitor', 'Visitante possui cautela em aberto.');
             }
         } else {
@@ -58,12 +58,7 @@ class People extends BaseForm
         $this->visitor_id = old('visitor_id') ?? $this->visitor_id;
         $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
 
-        $this->visitors = isset($visitor->old_id)
-            ? app(VisitorsRepository::class)->findByRoutine($this->routine_id)
-            : app(VisitorsRepository::class)->findByRoutineWithoutPending(
-                $this->routine_id,
-                $this->visitor_id
-            );
+        $this->visitors = app(VisitorsRepository::class)->allNotExited();
 
         $this->certificate_type = is_null(old('certificate_type'))
             ? $visitor->person->certificate_type ?? ''

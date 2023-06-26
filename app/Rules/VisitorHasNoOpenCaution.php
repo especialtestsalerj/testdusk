@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use Illuminate\Contracts\Validation\Rule;
 
-class CpfAvailableOnCaution implements Rule
+class VisitorHasNoOpenCaution implements Rule
 {
     public $visitor_id;
     public $caution_id;
@@ -31,7 +31,7 @@ class CpfAvailableOnCaution implements Rule
     {
         $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
 
-        return !$visitor?->hasCpfActiveOnRoutine($this->caution_id) ?? false;
+        return !$visitor?->hasOpenCaution($this->caution_id) ?? false;
     }
 
     /**

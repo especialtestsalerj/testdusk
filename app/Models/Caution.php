@@ -13,7 +13,6 @@ class Caution extends Model
         'protocol_number',
         'description',
         'old_id',
-        'visitor_old_id',
     ];
 
     protected $casts = [

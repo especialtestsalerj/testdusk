@@ -80,8 +80,8 @@ class Routine extends Model
 
     public function getPendingVisitors()
     {
-        return Visitor::where('routine_id', $this->id)
-            ->whereNull('exited_at')
+        return Visitor::
+            whereNull('exited_at')
             ->orderBy('entranced_at')
             ->orderBy('id')
             ->get();
