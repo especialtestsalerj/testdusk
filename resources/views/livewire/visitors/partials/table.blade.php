@@ -23,6 +23,8 @@
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
                                 <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <i class="fa-solid fa-pen"></i>
+                                <i class="fa-solid fa-user-minus"></i>
                             </div>
 
                             <div>DOCUMENTO UTILIZADO</div>

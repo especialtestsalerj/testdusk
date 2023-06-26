@@ -1,44 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mt-0 mt-lg-5">
-        <div class="col-12 col-lg-10 offset-lg-1">
-            <div class="card mb-3 bg-white">
-                <div class="card-body px-5 py-5 border-bottom rounded">
-                    <div class="row mt-3 mb-3 text-center">
-                        <div class="col-sm-12 col-md-6 col-lg-2 xxx">
-                            <a href="{{route('visitors.index')}}" class="btn btn-primary text-white p-3 btn-dashboard">
-                                                    <span class="row">
-                                                        <span class="col-12 text-center"><i class="fa fa-people-group fa-2x"></i><br></span>
-                                                    </span>
-                                <span class="col-12 text-center"><h5 class="title">Visitas</h5></span>
-                            </a>
+
+            @canany(['visitors:show', 'people:show'])
+                    <div dir="ltr" class="col-12">
+                        <div class="card bg-white">
+                            <div class="card-header">
+                                <div class="row mx-0 mx-lg-3 mt-3 mb-2">
+                                    <div class="col-6 col-lg-3 text-center text-lg-start">
+                                        <h4>
+                                           Visitas
+                                        </h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-body px-5 py-5 border-bottom rounded">
+                                <div class="row mt-3 mb-3 text-center">
+                                    @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitantes', 'ico' => 'fa-people-roof'])
+
+                                    @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
+
+{{--                                    @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'schedules:show', 'title' => 'Agendamentos', 'ico' => 'fa-calendar-days'])--}}
+{{--                                    @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'traffic:show', 'title' => 'Tráfego', 'ico' => 'fa-building'])--}}
+                                </div>
+                            </div>
                         </div>
-                        <!--
-                                                                    <div class="col-sm-12 col-md-6 col-lg-2">
-                                                                        <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
-                                                                            <span class="row">
-                                                                                <span class="col-12 text-center"><i class="fa fa-traffic-light fa-2x"></i><br></span>
-                                                                            </span>
-                                                                            <span class="col-12 text-center"><h5 class="title">Controle de Tráfego</h5></span>
-                                                                        </a>
-                                                                    </div>
+            @endcanany
 
-                                                                    <div class="col-sm-12 col-md-6 col-lg-2">
-                                                                        <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
-                                                                            <span class="row">
-                                                                                <span class="col-12 text-center"><i class="fa fa-address-book fa-2x"></i><br></span>
-                                                                            </span>
-                                                                            <span class="col-12 text-center"><h5 class="title">Agendamento</h5></span>
-                                                                        </a>
-                                                                    </div>
-                        -->
-                    </div>
-                </div>
-            </div>
+    </div>
 
+                    @can('routines:show')
             <!-- Slider main container -->
-            <div dir="rtl" class="swiper">
+            <div dir="rtl" class="swiper mt-5">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- Slides -->
@@ -82,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body px-5 py-5 border-bottom rounded">
-                                        <div class="row mt-3 mb-3 routine-icons text-center">
+                                        <div class="row mt-3 mb-3 text-center">
                                             @include('partials.dashboard-button', ['url' => route('events.index', $routine->id), 'permission' => 'events:show', 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
 
                                             @include('partials.dashboard-button', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
@@ -101,6 +95,7 @@
                 <div class="swiper-button-next"></div>
             </div>
 
+            @endCan
             <!-- Slider main container -->
         </div>
     </div>

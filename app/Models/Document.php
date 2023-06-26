@@ -15,6 +15,7 @@ class Document extends Model
         'document_type_id',
         'number',
         'state_id',
+        'issuing_authority',
         'created_by_id',
         'updated_by_id',
     ];
@@ -49,5 +50,10 @@ class Document extends Model
     public function type(): Attribute
     {
         return Attribute::make(get: fn($value) => $this->documentType->name);
+    }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
     }
 }
