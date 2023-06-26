@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire\People;
 
+use App\Data\Repositories\Cities;
+use App\Data\Repositories\Countries;
 use App\Data\Repositories\Documents;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
+use App\Data\Repositories\States;
 use App\Http\Livewire\BaseForm;
 use App\Models\Person;
+
 use Illuminate\Support\MessageBag;
 use function app;
 use function info;
@@ -67,7 +71,14 @@ class People extends BaseForm
     {
         $document = app(Documents::class)->findByNumber(only_numbers($this->cpf));
 
-        dd($document);
+        if(!is_null($document)){
+            $this->person = $document->person;
+            $this->fillModel();
+            $this->readonly = true;
+
+        }else{
+            $this->openModal();
+        }
 
     }
 
@@ -103,6 +114,20 @@ class People extends BaseForm
 
     public function render()
     {
-        return view('livewire.people.partials.person');
+
+        return view('livewire.people.partials.person')->with($this->getViewVariables());
+    }
+
+    protected function formVariables(){
+        return [
+            'countries'=>app(Countries::class)->allOrderBy('name','asc',null),
+            'states'=>app(States::class)->allOrderBy('name','asc',null),
+            'cities'=>app(Cities::class)->allOrderBy('name','asc',null),
+        ];
+    }
+
+    public function openModal()
+    {
+        $this->dispatchBrowserEvent('openDocumentModalFOrm');
     }
 }

@@ -61,7 +61,7 @@
                     <div class="col-md-12">
                         @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => (null), 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                         <div class="form-group">
-                            <label for="sector_id">Setor*</label>
+                            <label for="sector_id">Destino*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
@@ -74,12 +74,17 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Observações*</label>
+                            <label for="description">Motivo Visita*</label>
                             <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+                window.addEventListener('openDocumentModalFOrm', event => {
+                    $("#documentModalForm").modal('show');
+                })
+            </script>
         </form>
     </div>
 @endsection
