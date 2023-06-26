@@ -8,9 +8,15 @@
                 </div>
 
                 <div class="col-4 col-md-4">
-                    <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-end" title="Nova Visita">
-                        <i class="fa fa-plus"></i> Nova
-                    </a>
+                    <div class="float-end">
+                        <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Etiqueta anônima">
+                            <i class="fa fa-plus"></i> Etiqueta anônima
+                        </a>
+
+                        <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
+                            <i class="fa fa-plus"></i> Nova
+                        </a>
+                    </div>
                 </div>
             </div>
 

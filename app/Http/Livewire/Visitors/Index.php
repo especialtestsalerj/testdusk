@@ -8,7 +8,7 @@ use App\Http\Livewire\BaseIndex;
 
 class Index extends BaseIndex
 {
-        protected $repository = VisitorsRepository::class;
+    protected $repository = VisitorsRepository::class;
 
     public $orderByField = ['entranced_at', 'id'];
     public $orderByDirection = ['desc'];
@@ -19,39 +19,36 @@ class Index extends BaseIndex
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
-        'visitors.exited_at' =>'date',
-
+        'visitors.exited_at' => 'date',
     ];
 
     public function mount()
     {
-
     }
 
     public function additionalFilterQuery($query)
     {
         if (!is_null($this->searchString) && $this->searchString != '') {
-
             //Busca na tabela de people
             $query = $query->orWhereRaw(
                 "visitors.person_id in (select id from people p
              where p.full_name ILIKE '%'||unaccent('" .
-                pg_escape_string($this->searchString) .
-                "')||'%'
+                    pg_escape_string($this->searchString) .
+                    "')||'%'
                                         or p.social_name ILIKE '%'||unaccent('" .
-                pg_escape_string($this->searchString) .
-                "')||'%' )"
+                    pg_escape_string($this->searchString) .
+                    "')||'%' )"
             );
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
                 "visitors.person_id in (select id from documents d
              where d.number ILIKE '%'||unaccent('" .
-                pg_escape_string($this->searchString) .
-                "')||'%')"
+                    pg_escape_string($this->searchString) .
+                    "')||'%')"
             );
-
-
         }
+
+        $query->with('document.documentType');
 
         return $query;
     }

@@ -27,7 +27,7 @@
                                 <i class="fa-solid fa-user-minus"></i>
                             </div>
 
-                            <div>DOCUMENTO UTILIZADO</div>
+                            <div>{{$visitor->document->documentType->name}} - {{$visitor->document->number}}</div>
                         </div>
                     </div>
                 </div>
