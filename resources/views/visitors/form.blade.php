@@ -84,6 +84,10 @@
                 window.addEventListener('openDocumentModalFOrm', event => {
                     $("#documentModalForm").modal('show');
                 })
+
+                $('#document_type_id').select2({
+                    dropdownParent: $('#documentModalForm')
+                });
             </script>
         </form>
     </div>

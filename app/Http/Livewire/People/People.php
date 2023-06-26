@@ -5,6 +5,7 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\Cities;
 use App\Data\Repositories\Countries;
 use App\Data\Repositories\Documents;
+use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Data\Repositories\States;
@@ -69,15 +70,18 @@ class People extends BaseForm
 
     public function searchDocumentNumber()
     {
-        $document = app(Documents::class)->findByNumber(only_numbers($this->cpf));
 
-        if(!is_null($document)){
-            $this->person = $document->person;
-            $this->fillModel();
-            $this->readonly = true;
+        if(!is_null($this->cpf) && $this->cpf != "") {
+            $document = app(Documents::class)->findByNumber(only_numbers($this->cpf));
 
-        }else{
-            $this->openModal();
+            if (!is_null($document)) {
+                $this->person = $document->person;
+                $this->fillModel();
+                $this->readonly = true;
+
+            } else {
+                $this->openModal();
+            }
         }
 
     }
@@ -123,6 +127,7 @@ class People extends BaseForm
             'countries'=>app(Countries::class)->allOrderBy('name','asc',null),
             'states'=>app(States::class)->allOrderBy('name','asc',null),
             'cities'=>app(Cities::class)->allOrderBy('name','asc',null),
+            'documentTypes'=>app(DocumentTypes::class)->allOrderBy('name','asc',null),
         ];
     }
 
