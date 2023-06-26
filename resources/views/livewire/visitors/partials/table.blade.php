@@ -22,7 +22,7 @@
 {{--                                <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}--}}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
-                                <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                             </div>
 
                             <div>DOCUMENTO UTILIZADO</div>
