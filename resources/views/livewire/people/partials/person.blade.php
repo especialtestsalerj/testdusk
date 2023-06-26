@@ -20,11 +20,11 @@
                             wire:model.lazy="cpf"
                             x-ref="cpf"
                             onblur="btn_buscar.click()"
-                            @disabled(!$routineStatus) @if($modal) disabled @endif @if($readonly) readonly @endif
+                            @if($modal) disabled @endif @if($readonly) readonly @endif
                         />
                     </div>
                     <div class="col-md-2">
-                        <button type="button" wire:click="searchCpf" class="btn btn-outline-secondary" id="btn_buscar" @disabled(!$routineStatus) @if($modal || $readonly) disabled @endif>
+                        <button type="button" wire:click="searchCpf" class="btn btn-outline-secondary" id="btn_buscar" @if($modal || $readonly) disabled @endif>
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -53,7 +53,7 @@
                         name="full_name"
                         id="full_name"
                         wire:model.defer="full_name"
-                        @disabled(!$routineStatus) @if($modal) disabled @endif @if($readonly) readonly @endif
+                        @if($modal) disabled @endif @if($readonly) readonly @endif
                     />
                 </div>
             </div>
@@ -69,7 +69,7 @@
                         name="origin"
                         id="origin"
                         wire:model.defer="origin"
-                        @disabled(!$routineStatus) @if($modal) disabled @endif @if($readonly) readonly @endif
+                        @if($modal) disabled @endif @if($readonly) readonly @endif
                     />
                 </div>
             </div>

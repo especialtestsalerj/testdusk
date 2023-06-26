@@ -11,7 +11,6 @@ use function view;
 
 class People extends BaseForm
 {
-    public $routine_id;
     public $visitor_id;
     public $caution_id;
 

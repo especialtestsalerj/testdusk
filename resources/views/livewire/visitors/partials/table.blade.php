@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-md-12">
+
         @forelse ($visitors as $visitor)
             <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
                 <div class="card">
@@ -12,28 +13,19 @@
                                 <span class="fw-bold">Saída:</span> @if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->full_name }}
+                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $visitor?->sector?->name ?? '-' }}
                             </div>
                             <div class="col-12 col-lg-5 text-center text-lg-start">
-                                <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}
+{{--                                <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}--}}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
-                                @if($visitor->hasPending())
-                                    <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
-                                @endif
-                                <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                @if($routine->status)
-                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                                    @if(!$visitor->hasPending())
-                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    @endif
-                                @endif
+                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                             </div>
+
+                            <div>DOCUMENTO UTILIZADO</div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +50,7 @@
                                     <label for="exited_at">Saída</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ $visitor->exited_at }}" disabled/>
                                 </div>
-                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true])
+{{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true])--}}
                                 <div class="form-group">
                                     <label for="sector_id">Setor</label>
                                     <select class="form-select form-control" name="sector_id" id="sector_id" disabled>

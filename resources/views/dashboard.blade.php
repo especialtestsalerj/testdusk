@@ -7,11 +7,11 @@
                 <div class="card-body px-5 py-5 border-bottom rounded">
                     <div class="row mt-3 mb-3 text-center">
                         <div class="col-sm-12 col-md-6 col-lg-2 xxx">
-                            <a href="#" class="btn btn-primary text-white p-3 btn-dashboard">
+                            <a href="{{route('visitors.index')}}" class="btn btn-primary text-white p-3 btn-dashboard">
                                                     <span class="row">
                                                         <span class="col-12 text-center"><i class="fa fa-people-group fa-2x"></i><br></span>
                                                     </span>
-                                <span class="col-12 text-center"><h5 class="title">Visitantes</h5></span>
+                                <span class="col-12 text-center"><h5 class="title">Visitas</h5></span>
                             </a>
                         </div>
                         <!--

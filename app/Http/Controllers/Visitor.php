@@ -14,15 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 class Visitor extends Controller
 {
-    public function create($routine_id)
+    public function create()
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+
 
         return $this->view('visitors.form')->with([
-            'routine_id' => $routine_id,
-            'routine' => $routine,
             'visitor' => app(VisitorsRepository::class)->new(),
             'people' => app(PeopleRepository::class)
                 ->disablePagination()
@@ -49,16 +47,13 @@ class Visitor extends Controller
             ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 
-    public function show($routine_id, $id)
+    public function show($id)
     {
         formMode(Constants::FORM_MODE_SHOW);
 
         $visitor = app(VisitorsRepository::class)->findById($id);
-        $routine = app(RoutinesRepository::class)->findById($routine_id);
 
         return $this->view('visitors.form')->with([
-            'routine_id' => $routine_id,
-            'routine' => $routine,
             'visitor' => $visitor,
             'people' => app(PeopleRepository::class)
                 ->disablePagination()
