@@ -11,7 +11,7 @@
                 <div class="col-md-12 d-flex align-items-end">
                     <div class="col-md-4">
                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
-                        <label for="cpf">CPF (Visitante)*</label>
+                        <label for="cpf">Documento:</label>
                         <input
                             type="text"
                             class="form-control @error('cpf') is-invalid @endError"
@@ -19,25 +19,25 @@
                             id="cpf"
                             wire:model.lazy="cpf"
                             x-ref="cpf"
-                            onblur="btn_buscar.click()"
+                            wire:blur="searchDocumentNumber"
                             @if($modal) disabled @endif @if($readonly) readonly @endif
                         />
                     </div>
                     <div class="col-md-2">
-                        <button type="button" wire:click="searchCpf" class="btn btn-outline-secondary" id="btn_buscar" @if($modal || $readonly) disabled @endif>
+                        <button type="button" wire:click="searchDocumentNumber" class="btn btn-outline-secondary" id="btn_buscar" @if($modal || $readonly) disabled @endif>
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
-                    <div class="col-md-6">
-                        <label class="block mb-4">
-                            <span class="sr-only">Choose File</span>
-                            <input type="file" name="image"
-                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-                            @error('image')
-                            <span class="text-red-600 text-sm">{{ $message }}</span>
-                            @enderror
-                        </label>
-                    </div>
+{{--                    <div class="col-md-6">--}}
+{{--                        <label class="block mb-4">--}}
+{{--                            <span class="sr-only">Choose File</span>--}}
+{{--                            <input type="file" name="image"--}}
+{{--                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />--}}
+{{--                            @error('image')--}}
+{{--                            <span class="text-red-600 text-sm">{{ $message }}</span>--}}
+{{--                            @enderror--}}
+{{--                        </label>--}}
+{{--                    </div>--}}
                 </div>
 
             </div>
@@ -46,7 +46,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
-                    <label for="full_name">Nome (Visitante)*</label>
+                    <label for="full_name">Nome Completo *</label>
                     <input
                         type="text"
                         class="form-control"
@@ -58,6 +58,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="full_name">Nome Social *</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="social_name"
+                        id="social_name"
+                        wire:model.defer="social_name"
+                        @if($modal) disabled @endif @if($readonly) readonly @endif
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label for="full_name">País *</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="social_name"
+                        id="social_name"
+                        wire:model.defer="social_name"
+                        @if($modal) disabled @endif @if($readonly) readonly @endif
+                    />
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="form-group">
 

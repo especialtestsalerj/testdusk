@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\People;
 
+use App\Data\Repositories\Documents;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Livewire\BaseForm;
@@ -25,41 +26,49 @@ class People extends BaseForm
     public $showRestrictions = false;
     public $alerts = [];
 
-    public function searchCpf()
+//    public function searchCpf()
+//    {
+//        try {
+//            $this->resetErrorBag('cpf');
+//            $this->alerts = [];
+//
+//            if (!validate_cpf(only_numbers($this->cpf))) {
+//                $this->person_id = null;
+//                $this->full_name = null;
+//                $this->origin = null;
+//
+//                $this->addError('cpf', 'CPF não encontrado');
+//            } elseif ($result = app(PeopleRepository::class)->findByCpf(only_numbers($this->cpf))) {
+//                $this->person_id = $result['id'];
+//                $this->full_name = $result['full_name'];
+//                $this->origin = $result['origin'];
+//
+//                if ($this->showRestrictions) {
+//                    $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
+//                        only_numbers($this->cpf)
+//                    );
+//
+//                    foreach ($restrictions as $restriction) {
+//                        array_push($this->alerts, $restriction->message);
+//                    }
+//                }
+//            } else {
+//                $this->person_id = null;
+//                $this->full_name = null;
+//                $this->origin = null;
+//            }
+//        } catch (\Exception $e) {
+//            $this->focus('cpf');
+//            info('Exception no CPF');
+//        }
+//    }
+
+    public function searchDocumentNumber()
     {
-        try {
-            $this->resetErrorBag('cpf');
-            $this->alerts = [];
+        $document = app(Documents::class)->findByNumber(only_numbers($this->cpf));
 
-            if (!validate_cpf(only_numbers($this->cpf))) {
-                $this->person_id = null;
-                $this->full_name = null;
-                $this->origin = null;
+        dd($document);
 
-                $this->addError('cpf', 'CPF não encontrado');
-            } elseif ($result = app(PeopleRepository::class)->findByCpf(only_numbers($this->cpf))) {
-                $this->person_id = $result['id'];
-                $this->full_name = $result['full_name'];
-                $this->origin = $result['origin'];
-
-                if ($this->showRestrictions) {
-                    $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
-                        only_numbers($this->cpf)
-                    );
-
-                    foreach ($restrictions as $restriction) {
-                        array_push($this->alerts, $restriction->message);
-                    }
-                }
-            } else {
-                $this->person_id = null;
-                $this->full_name = null;
-                $this->origin = null;
-            }
-        } catch (\Exception $e) {
-            $this->focus('cpf');
-            info('Exception no CPF');
-        }
     }
 
     public function fillModel()

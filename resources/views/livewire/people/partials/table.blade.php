@@ -17,10 +17,11 @@
                                 <span class="fw-bold">Documento(s):</span>
                                 <br/>
                                 @foreach($person->documents as $document)
-                                    <span class="fw-bold">{{$document->documentType->name}}</span> : {{$document->number}} <br />
-{{--                                    @if($document->state->name)--}}
-{{--                                        {{$document->state->name}}--}}
-{{--                                    @endif--}}
+                                    <span class="fw-bold">{{$document->documentType->name}}</span> : {{$document->number}}
+                                    @if($document->state?->initial)
+                                        - {{$document->state->initial}}
+                                    @endif
+                                    <br />
                                 @endforeach
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
