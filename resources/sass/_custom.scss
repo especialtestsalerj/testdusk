@@ -163,6 +163,13 @@
     }
 }
 
+.dashboard-active-icons .fa-circle:before {
+    color: #142b53;
+  }
+  .dashboard-active-icons:hover .fa-circle::before {
+    color: #B57D18 !important;
+}
+
 .dashboard-inactive-icons {
     .fa-circle:before {
         color: #808080;
