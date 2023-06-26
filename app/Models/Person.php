@@ -34,4 +34,27 @@ class Person extends Model
     {
         return is_null($this->full_name) ? $this->social_name : $this->full_name;
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
+
+    public function hasPendingVisitors()
+    {
+
+        foreach($this->visitors as $visitor){
+
+            if(is_null($visitor->exited_at)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

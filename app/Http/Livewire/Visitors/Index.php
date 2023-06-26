@@ -8,7 +8,7 @@ use App\Http\Livewire\BaseIndex;
 
 class Index extends BaseIndex
 {
-    protected $repository = VisitorsRepository::class;
+        protected $repository = VisitorsRepository::class;
 
     public $orderByField = ['entranced_at', 'id'];
     public $orderByDirection = ['desc'];
