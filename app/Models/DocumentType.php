@@ -19,4 +19,9 @@ class DocumentType extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
 }

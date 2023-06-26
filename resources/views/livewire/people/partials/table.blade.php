@@ -9,7 +9,7 @@
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Nome/Nome Social:</span> {{ $person->name}}
                                 @if($person->hasPendingVisitors())
-                                    <span class="badge bg-warning text-black">Saída Pendente </span>
+                                    <span class="badge bg-warning text-black">Visita em aberto </span>
                                 @endif
                             </div>
 
@@ -18,11 +18,15 @@
                                 <br/>
                                 @foreach($person->documents as $document)
                                     <span class="fw-bold">{{$document->documentType->name}}</span> : {{$document->number}} <br />
+{{--                                    @if($document->state->name)--}}
+{{--                                        {{$document->state->name}}--}}
+{{--                                    @endif--}}
                                 @endforeach
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <i class="fa fa-search"></i>
                                 <i class="fa-solid fa-people-group"></i>
+                                <i class="fa-solid fa-pen"></i>
 
                             </div>
 {{--                            @if($person->hasPendingVisitors())--}}
