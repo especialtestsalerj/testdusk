@@ -9,13 +9,17 @@
 
                 <div class="col-4 col-md-4">
                     <div class="float-end">
-                        <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Etiqueta anônima">
-                            <i class="fa fa-plus"></i> Etiqueta anônima
-                        </a>
+                        @can('visitors:store')
+                            <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Etiqueta anônima">
+                                <i class="fa-solid fa-id-badge"></i> &nbsp;Etiqueta anônima
+                            </a>
+                        @endCan
 
-                        <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
-                            <i class="fa fa-plus"></i> Nova
-                        </a>
+                        @can('people:index')
+                            <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
+                                <i class="fa fa-plus"></i> Nova
+                            </a>
+                        @endCan
                     </div>
                 </div>
             </div>
