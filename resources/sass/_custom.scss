@@ -154,13 +154,21 @@
 }
 
 
-.routine-icons {
+.dashboard-active-icons {
     .fa-circle:before {
         color: #142b53;
         &:hover {
             color: #21478a;
         }
     }
+}
+
+.dashboard-inactive-icons {
+    .fa-circle:before {
+        color: #808080;
+        opacity: 0.6;
+    }
+    cursor: not-allowed !important;
 }
 
 .fa-stack[data-count]:after{
@@ -246,11 +254,6 @@
 .table-striped>tbody>tr:nth-of-type(odd) { background-color: #ddeeff; }
 
 .table-striped>tbody>tr:nth-of-type(even) { background-color: #ffffff; }
-
-.fa-disabled {
-    opacity: 0.6;
-    cursor: not-allowed !important;
-}
 
 .form-control:disabled {
     cursor: not-allowed;

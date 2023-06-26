@@ -54,9 +54,4 @@ class Person extends Model
 
         return false;
     }
-
-    public function documents()
-    {
-        return $this->hasMany(Document::class);
-    }
 }

@@ -25,9 +25,9 @@
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <i class="fa fa-search"></i>
-                                <i class="fa-solid fa-people-group"></i>
                                 <i class="fa-solid fa-pen"></i>
-
+                                <i class="fa-solid fa-user-plus"></i>
+                                <i class="fa-solid fa-user-minus"></i>
                             </div>
 {{--                            @if($person->hasPendingVisitors())--}}
 {{--                            <div class="col-12 col-lg-5 text-center text-lg-start">--}}
