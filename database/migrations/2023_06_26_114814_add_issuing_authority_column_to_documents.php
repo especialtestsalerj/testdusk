@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('documents', function (Blueprint $table) {
-            $table->string('issuing_authority');
+            $table->string('issuing_authority')->nullable();
         });
     }
 
