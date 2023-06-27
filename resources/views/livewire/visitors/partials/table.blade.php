@@ -31,7 +31,9 @@
 
                                 @if(!$visitor->exited_at)
                                     @can('visitors:checkout')
-                                        <i class="fa-solid fa-user-minus"></i>
+                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
+                                            <i class="fa-solid fa-user-minus"></i>
+                                        </span>
                                     @endCan
                                 @endIf
                             </div>

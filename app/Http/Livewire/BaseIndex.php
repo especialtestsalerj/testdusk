@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Data\Repositories\Providers as ProvidersRepository;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -123,5 +122,14 @@ abstract class BaseIndex extends Component
         $query = $this->orderBy($query);
 
         return $this->paginationEnabled ? $query->paginate($this->pageSize) : $query->get();
+    }
+
+    public function emitSwall($title,$text,$confirmEvent,$action){
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'text' => $text,
+            'confirmEvent' => $confirmEvent,
+            'action' => $action,
+        ]);
     }
 }
