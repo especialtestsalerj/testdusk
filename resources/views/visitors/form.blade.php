@@ -31,7 +31,10 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-{{--                        @include('partials.save-button', ['model' => $visitor, 'backUrl' => request()->query('redirect'), 'permission' => (!$visitor->hasPendingFromCaution() && !request()->query('disabled') ? (formMode() == 'show' ? 'visitors:update' : 'visitors:store') : '')])--}}
+
+                        @include('partials.save-button',
+                                ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
                 </div>
             </div>
@@ -53,7 +56,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) @if($visitor->hasPendingFromCaution()) readonly @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) />
                         </div>
                     </div>
                 </div>
@@ -61,7 +64,7 @@
                     <div class="col-md-12">
                         @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => (null), 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                         <div class="form-group">
-                            <label for="sector_id">Setor*</label>
+                            <label for="sector_id">Destino*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
@@ -74,8 +77,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Observações*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) @if($visitor->hasPendingFromCaution()) readonly @endif>{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+                            <label for="description">Motivo Visita*</label>
+                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
