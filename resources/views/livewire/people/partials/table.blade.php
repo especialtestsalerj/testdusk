@@ -31,12 +31,17 @@
                                 @can('people:update')
                                     <i class="fa-solid fa-pen"></i>
                                 @endCan
-                                @can('visitors:store')
-                                    <i class="fa-solid fa-user-plus"></i>
-                                @endCan
-                                @can('visitors:checkout')
-                                    <i class="fa-solid fa-user-minus"></i>
-                                @endCan
+                                @if(!$person->pendingVisit)
+                                    @can('visitors:store')
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    @endCan
+                                @else
+                                    @can('visitors:checkout')
+                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$person->pendingVisit->id}})">
+                                            <i class="fa-solid fa-user-minus"></i>
+                                        </span>
+                                    @endCan
+                                @endIf
                             </div>
 {{--                            @if($person->hasPendingVisitors())--}}
 {{--                            <div class="col-12 col-lg-5 text-center text-lg-start">--}}

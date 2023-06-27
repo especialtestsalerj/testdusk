@@ -15,7 +15,7 @@
                             </a>
                         @endCan
 
-                        @can('people:index')
+                        @can('people:show')
                             <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
                                 <i class="fa fa-plus"></i> Nova
                             </a>
