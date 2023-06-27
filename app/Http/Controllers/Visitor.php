@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\Repositories\Documents;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
@@ -34,16 +35,24 @@ class Visitor extends Controller
         ]);
     }
 
-    public function store(VisitorStore $request, $routine_id)
+    public function store(VisitorStore $request)
     {
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
+
         $request->merge(['person_id' => $person->id]);
+        $request->merge(['number' => $request->get('cpf')]);
+
+//        dd($request->all());
+
+        $document = app(Documents::class)->create($request->all());
+
+        $request->merge(['document_id' => $document->id]);
 
         app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
-            ->route($request['redirect'], $routine_id)
+            ->route('visitors.index')
             ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 

@@ -31,7 +31,10 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-{{--                        @include('partials.save-button', ['model' => $visitor, 'backUrl' => request()->query('redirect'), 'permission' => (!$visitor->hasPendingFromCaution() && !request()->query('disabled') ? (formMode() == 'show' ? 'visitors:update' : 'visitors:store') : '')])--}}
+
+                        @include('partials.save-button',
+                                ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
                 </div>
             </div>
@@ -80,15 +83,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-                window.addEventListener('openDocumentModalFOrm', event => {
-                    $("#documentModalForm").modal('show');
-                })
-
-                $('#document_type_id').select2({
-                    dropdownParent: $('#documentModalForm')
-                });
-            </script>
         </form>
     </div>
 @endsection

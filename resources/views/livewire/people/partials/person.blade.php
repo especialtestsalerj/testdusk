@@ -9,6 +9,19 @@
             <div class="form-group">
 
                 <div class="col-md-12 d-flex align-items-end">
+
+                    <div class="col-md-2">
+                        <label for="document_type_id">Tipo de Documento - {{$document_type_id}}</label> CPF={{$this->cpf}}
+                        <select name= "document_type_id" class="select2 form-control" wire:model="document_type_id"
+                        x-ref="document_type_id">
+                            <option value="">Selecione</option>
+                            @foreach($documentTypes as $documentType)
+                                <option value="{{$documentType->id}}"
+                                 >{{$documentType->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="col-md-4">
                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
                         <label for="cpf">Documento:</label>
@@ -18,6 +31,7 @@
                             name="cpf"
                             id="cpf"
                             wire:model.lazy="cpf"
+
                             x-ref="cpf"
                             wire:blur="searchDocumentNumber"
                             @if($modal) disabled @endif @if($readonly) readonly @endif
@@ -28,25 +42,15 @@
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
-                    {{--                    <div class="col-md-6">--}}
-                    {{--                        <label class="block mb-4">--}}
-                    {{--                            <span class="sr-only">Choose File</span>--}}
-                    {{--                            <input type="file" name="image"--}}
-                    {{--                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />--}}
-                    {{--                            @error('image')--}}
-                    {{--                            <span class="text-red-600 text-sm">{{ $message }}</span>--}}
-                    {{--                            @enderror--}}
-                    {{--                        </label>--}}
-                    {{--                    </div>--}}
                 </div>
 
             </div>
-            @include('livewire.people.partials.modal')
+
         </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
-                    <label for="full_name">Nome Completo *</label>
+                    <label for="full_name">Nome Completo *</label>{{$full_name}}
                     <input
                         type="text"
                         class="form-control"
@@ -63,7 +67,7 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="full_name">Nome Social *</label>
+                    <label for="full_name">Nome Social</label>
                     <input
                         type="text"
                         class="form-control"
@@ -78,23 +82,27 @@
 
         <div class="row">
 
+
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">País*</label>
-                    <select class="select2 form-control">
+                    <label for="full_name">País*</label> Country_id = {{$country_id}}
+                    <select name="country_id" class="select2 form-control" wire:model="country_id">
                         <option value="">Selecione o país</option>
                         @foreach($countries as $country)
-                            <option value="{{$country->id}}">{{$country->name}}</option>
+                            <option value="{{$country->id}}"
+                            >{{$country->name}}</option>
                         @endforeach
                     </select>
 
                 </div>
             </div>
 
+
+            @if($country_id == "" || $country_id = $country_br->id)
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">Estado*</label>
-                    <select class="select2 form-control">
+                    <label for="full_name">Estado</label>
+                    <select name="state_id" class="select2 form-control">
                         <option value="">Selecione o país</option>
                         @foreach($states as $state)
                             <option value="{{$state->id}}">{{$state->initial}}</option>
@@ -105,8 +113,8 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">Cidade*</label>
-                    <select class="select2 form-control">
+                    <label for="full_name">Cidade</label>
+                    <select name="city_id" class="select2 form-control">
                         <option value="">Selecione o país</option>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
@@ -115,6 +123,15 @@
                 </div>
             </div>
         </div>
+        @else
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="full_name">Cidade*</label>
+                    <input type="text" name="city" class="form-control" />
+
+                </div>
+            </div>
+        @endif
 
         <div class="row">
             <div class="form-group">

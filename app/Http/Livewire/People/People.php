@@ -10,6 +10,8 @@ use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Data\Repositories\States;
 use App\Http\Livewire\BaseForm;
+use App\Models\Country;
+use App\Models\DocumentType;
 use App\Models\Person;
 
 use Illuminate\Support\MessageBag;
@@ -24,12 +26,17 @@ class People extends BaseForm
     public $person_id;
     public $cpf;
     public $full_name;
+    public $country_id;
+    public $document_type_id;
+
     public $origin;
     public $routineStatus;
     public $modal;
     public $readonly;
     public $showRestrictions = false;
     public $alerts = [];
+
+
 
 //    public function searchCpf()
 //    {
@@ -77,10 +84,9 @@ class People extends BaseForm
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->fillModel();
+                $this->cpf = $document->number;
                 $this->readonly = true;
 
-            } else {
-                $this->openModal();
             }
         }
 
@@ -88,7 +94,9 @@ class People extends BaseForm
 
     public function fillModel()
     {
+
         $cpf = is_null(old('cpf')) ? mask_cpf($this->person->cpf) ?? '' : mask_cpf(old('cpf'));
+
 
         $this->cpf = $cpf;
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
@@ -114,6 +122,8 @@ class People extends BaseForm
             $this->person = new Person();
         }
         $this->fillModel();
+
+        $this->loadDefault();
     }
 
     public function render()
@@ -128,11 +138,19 @@ class People extends BaseForm
             'states'=>app(States::class)->allOrderBy('name','asc',null),
             'cities'=>app(Cities::class)->allOrderBy('name','asc',null),
             'documentTypes'=>app(DocumentTypes::class)->allOrderBy('name','asc',null),
+            'country_br'=> Country::where('name','ilike', 'Brasil')->first(),
         ];
     }
 
     public function openModal()
     {
         $this->dispatchBrowserEvent('openDocumentModalFOrm');
+    }
+
+    private function loadDefault()
+    {
+
+        $this->document_type_id = DocumentType::where('name', '=','CPF')->first()->id;
+        $this->country_id = Country::where('name','ilike', 'Brasil')->first()->id;
     }
 }
