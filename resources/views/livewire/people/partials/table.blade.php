@@ -36,8 +36,9 @@
                                     @endCan
                                 @else
                                     @can('visitors:checkout')
-{{--                                        route('visitors.checkout', [$visitor => pendingVisit->id]) --}}
-                                        <i class="fa-solid fa-user-minus"></i>
+                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$person->pendingVisit->id}})">
+                                            <i class="fa-solid fa-user-minus"></i>
+                                        </span>
                                     @endCan
                                 @endIf
                             </div>

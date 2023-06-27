@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Person extends Model
 {
     protected $fillable = [
@@ -34,6 +36,15 @@ class Person extends Model
         return is_null($this->full_name) ? $this->social_name : $this->full_name;
     }
 
+    protected function abbreviatedName(): Attribute
+    {
+        $words = explode(' ', $this->full_name);
+        $firstWord = $words[0];
+        $lastWord = $words[count($words) - 1];
+        $concatenated = $firstWord . ' ' . $lastWord;
+
+        return Attribute::make(get: fn($value) => $concatenated);
+    }
     public function documents()
     {
         return $this->hasMany(Document::class);

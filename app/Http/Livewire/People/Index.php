@@ -5,10 +5,13 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\People as PeopleRepository;
 
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\Checkoutable;
 use Livewire\Component;
 
 class Index extends BaseIndex
 {
+    use Checkoutable;
+
     protected $repository = PeopleRepository::class;
 
     public $orderByField = ['full_name', 'created_at'];
@@ -20,6 +23,9 @@ class Index extends BaseIndex
         'people.social_name' => 'text',
     ];
 
+    protected $listeners = [
+        'confirm-checkout-visitor' => 'confirmCheckout',
+    ];
     public function additionalFilterQuery($query)
     {
         if (!is_null($this->searchString) && $this->searchString != '') {
