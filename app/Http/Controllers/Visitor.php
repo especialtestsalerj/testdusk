@@ -117,4 +117,10 @@ class Visitor extends Controller
             ->route($request['redirect'], $routine_id)
             ->with('message', 'Visitante removido/a com sucesso!');
     }
+
+    public function card()
+    {
+        return view('visitors.card');
+    }
+
 }

@@ -19,6 +19,9 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
+    Route::get('/card', [Visitor::class, 'card'])
+        ->name('visitors.card');
+
     Route::get('/{id}', [Visitor::class, 'show'])
         ->name('visitors.show')
         ->can('visitors:show');
@@ -34,4 +37,5 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/delete/{id}', [Visitor::class, 'destroy'])
         ->name('visitors.destroy')
         ->can('visitors:destroy');
+
 });
