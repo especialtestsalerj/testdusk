@@ -19,12 +19,23 @@
                     <td data-label="Entrada">{{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}</td>
                     <td data-label="Saída">@if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
-                    <td data-label="Documento">xxx</td>
+                    <td data-label="Documento">{{$visitor->document?->documentType?->name}} - {{$visitor?->document?->number}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
                     <td class="actions">
-                        <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                        <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                         <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                        @can('visitors:show')
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                        @endCan
+                        @can('visitors:update')
+                            <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                        @endCan
+                        @if(!$visitor->exited_at)
+                            @can('visitors:checkout')
+                                <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
+                                        <i class="fa-solid fa-user-minus"></i>
+                                    </span>
+                            @endCan
+                        @endIf
                     </td>
                 </tr>
 
