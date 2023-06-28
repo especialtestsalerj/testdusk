@@ -58,7 +58,6 @@ class Index extends BaseIndex
         }
 
         $query->with('document.documentType');
-        $query->with('pendingVisit');
 
         return $query;
     }
