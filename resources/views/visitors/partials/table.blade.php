@@ -26,7 +26,7 @@
                                 <span class="fw-bold">Saída:</span> @if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->full_name }}
+                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $visitor?->sector?->name ?? '-' }}

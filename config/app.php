@@ -16,6 +16,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'live_reload'=>env('LIVE_RELOAD_PORT'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

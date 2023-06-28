@@ -1,8 +1,8 @@
 <div class="form-group">
     <div
-        x-init="VMasker($refs.cpf).maskPattern(cpfmask);"
-        x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99'}"
-        @focus-field.window="$refs[$event.detail.field].focus()"
+{{--        x-init="VMasker($refs.cpf).maskPattern(cpfmask);"--}}
+{{--        x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99'}"--}}
+{{--        @focus-field.window="$refs[$event.detail.field].focus()"--}}
     >
         <div class="row">
 
@@ -11,8 +11,8 @@
                 <div class="col-md-12 d-flex align-items-end">
 
                     <div class="col-md-2">
-                        <label for="document_type_id">Tipo de Documento - {{$document_type_id}}</label> CPF={{$this->cpf}}
-                        <select name= "document_type_id" class="select2 form-control" wire:model="document_type_id"
+                        <label for="document_type_id">Tipo de Documento </label>
+                        <select name= "document_type_id" class="form-control" wire:model="document_type_id"
                         x-ref="document_type_id">
                             <option value="">Selecione</option>
                             @foreach($documentTypes as $documentType)
@@ -28,13 +28,13 @@
                         <input
                             type="text"
                             class="form-control @error('cpf') is-invalid @endError"
-                            name="cpf"
-                            id="cpf"
-                            wire:model.lazy="cpf"
+                            name="document_number"
+                            id="document_number"
+                            wire:model.lazy="document_number"
 
-                            x-ref="cpf"
+                            x-ref="document_number"
                             wire:blur="searchDocumentNumber"
-                            @if($modal) disabled @endif @if($readonly) readonly @endif
+
                         />
                     </div>
                     <div class="col-md-2">
@@ -50,7 +50,7 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
-                    <label for="full_name">Nome Completo *</label>{{$full_name}}
+                    <label for="full_name">Nome Completo *</label>
                     <input
                         type="text"
                         class="form-control"
@@ -85,8 +85,9 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">País*</label> Country_id = {{$country_id}}
-                    <select name="country_id" class="select2 form-control" wire:model="country_id">
+                    <label for="full_name">País*</label>
+                    <select name="country_id" class="form-control" wire:model="country_id" x-ref="country_id"
+                            @if($modal) disabled @endif @if($readonly) readonly @endif>
                         <option value="">Selecione o país</option>
                         @foreach($countries as $country)
                             <option value="{{$country->id}}"
@@ -98,24 +99,28 @@
             </div>
 
 
-            @if($country_id == "" || $country_id = $country_br->id)
+            @if($country_id == "" || $country_id == $country_br->id)
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="full_name">Estado</label>
-                    <select name="state_id" class="select2 form-control">
-                        <option value="">Selecione o país</option>
+                    <select class="form-control" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities"
+                            @if($modal) disabled @endif @if($readonly) readonly @endif>
+                        <option value="">Selecione o Estado</option>
                         @foreach($states as $state)
                             <option value="{{$state->id}}">{{$state->initial}}</option>
                         @endforeach
                     </select>
+
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="full_name">Cidade</label>
-                    <select name="city_id" class="select2 form-control">
-                        <option value="">Selecione o país</option>
+                    <select name="city_id" class="select2 form-control" wire:model="city_id" x-ref="city_id"
+                            @if($modal) disabled @endif @if($readonly) readonly @endif>
+                        <option value="">Selecione a Cidade</option>
                         @foreach($cities as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
                         @endforeach
@@ -127,28 +132,12 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="full_name">Cidade*</label>
-                    <input type="text" name="city" class="form-control" />
+                    <input type="text" name="other_city" class="form-control" />
 
                 </div>
             </div>
         @endif
 
-        <div class="row">
-            <div class="form-group">
-
-                <div class="col-md-12">
-                    <label for="origin">Origem (Visitante)</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="origin"
-                        id="origin"
-                        wire:model.defer="origin"
-                        @if($modal) disabled @endif @if($readonly) readonly @endif
-                    />
-                </div>
-            </div>
-        </div>
     </div>
     <div class="row">
         @error('cpf')

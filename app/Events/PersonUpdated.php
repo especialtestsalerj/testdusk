@@ -2,6 +2,6 @@
 
 namespace App\Events;
 
-class PersonUpdated extends CongressmanBudgetCreated
+class PersonUpdated extends PersonCreated
 {
 }
