@@ -39,14 +39,15 @@ class VisitorStore extends Request
                 ),
                 'after_or_equal:entranced_at',
             ],
-            'cpf' => [
+            'document_number' => [
                 'bail',
                 'required',
-                'cpf',
+                //'cpf',
                 new CpfAvailableOnVisit(
                     $this->get('id'),
                     $this->get('routine_id'),
-                    $this->get('cpf')
+                    $this->get('document_number'),
+                    $this->get('document_type_id')
                 ),
             ],
             'full_name' => 'required',

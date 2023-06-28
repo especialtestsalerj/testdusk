@@ -19,13 +19,26 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
+        $person_id = null;
+        if(!empty(request()->get('person_id'))){
+            $people = app(PeopleRepository::class)->findById(request()->get('person_id'));
+            $person_id = $people->id;
+
+//            dd($person_id);
+        }else{
+            $people = app(PeopleRepository::class)
+                ->disablePagination()
+                ->all();
+        }
+
+
+
 
 
         return $this->view('visitors.form')->with([
             'visitor' => app(VisitorsRepository::class)->new(),
-            'people' => app(PeopleRepository::class)
-                ->disablePagination()
-                ->all(),
+            'people'=> $people,
+            'person_id'=>$person_id,
             'sectors' => app(SectorsRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -37,11 +50,13 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
+
+//        dd($request->all());
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
 
         $request->merge(['person_id' => $person->id]);
-        $request->merge(['number' => $request->get('cpf')]);
+        $request->merge(['number' => $request->get('document_number')]);
 
 //        dd($request->all());
 
