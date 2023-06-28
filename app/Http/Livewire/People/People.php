@@ -15,6 +15,7 @@ use App\Models\Country;
 use App\Models\DocumentType;
 use App\Models\Person;
 
+use App\Models\Visitor;
 use Illuminate\Support\MessageBag;
 use function app;
 use function info;
@@ -34,6 +35,7 @@ class People extends BaseForm
     public $other_city;
     public $document_type_id;
 
+
     public $cities =[];
 
     public $origin;
@@ -42,6 +44,10 @@ class People extends BaseForm
     public $readonly;
     public $showRestrictions = false;
     public $alerts = [];
+
+    public $visitor_id;
+
+    public $visitor;
 
 
 
@@ -95,6 +101,9 @@ class People extends BaseForm
                 $this->document_type_id = $document->document_type_id;
                 $this->readonly = true;
 
+            }else{
+                $this->person = new Person();
+                $this->readonly = false;
             }
         }
 
@@ -136,6 +145,11 @@ class People extends BaseForm
             $this->loadCities();
         }
 
+        if(!empty($this->visitor)){
+
+            $this->document_number = $this->visitor->document->number;
+        }
+
         $this->other_city = is_null(old('other_city'))
             ? $this->person->other_city ?? ''
             : old('other_city');
@@ -155,8 +169,13 @@ class People extends BaseForm
 
     public function mount()
     {
+
         if ($this->mode == 'create') {
             $this->person = new Person();
+        }
+
+        if(!empty($this->visitor_id)){
+            $this->visitor = Visitor::where('id', $this->visitor_id)->first();
         }
 
 
@@ -169,9 +188,7 @@ class People extends BaseForm
 
     public function render()
     {
-        if($this->state_id != ""){
 
-        }
         return view('livewire.people.partials.person')->with($this->getViewVariables());
     }
 

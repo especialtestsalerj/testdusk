@@ -19,7 +19,7 @@ class Document extends Model
         'updated_by_id',
     ];
 
-    protected $appends = ['documentType', 'type'];
+    protected $appends = [ 'type'];
 
     public function person()
     {
