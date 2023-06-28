@@ -31,9 +31,10 @@
                                 @can('people:update')
                                     <i class="fa-solid fa-pen"></i>
                                 @endCan
+
                                 @if(!$person->pendingVisit)
                                     @can('visitors:store')
-                                    <a id="novo" href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link">
+                                    <a href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link">
                                         <i class="fa-solid fa-user-plus"></i>
                                     </a>
                                     @endCan
