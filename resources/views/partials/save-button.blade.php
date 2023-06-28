@@ -7,7 +7,8 @@
 >
     <i class="fa fa-save"></i> Salvar
 </button>
-<a href="{{ isset($id) ? route($backUrl, $id) : route($backUrl) }}"
+{{--<a href="{{ isset($id) ? route($backUrl, $id) : route($backUrl) }}"--}}
+<a href="{{ url()->previous() }}"
    id="cancelButton"
    title="Cancelar"
    class="btn btn-danger text-white ml-1"

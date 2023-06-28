@@ -5,7 +5,6 @@
 {{--        @focus-field.window="$refs[$event.detail.field].focus()"--}}
     >
         <div class="row">
-
             <div class="form-group">
 
                 <div class="col-md-12 d-flex align-items-end">
@@ -13,6 +12,7 @@
                     <div class="col-md-2">
                         <label for="document_type_id">Tipo de Documento </label>
                         <select name= "document_type_id" class="form-control" wire:model="document_type_id"
+                                @if($modal) disabled @endif @if($readonly) readonly @endif
                         x-ref="document_type_id">
                             <option value="">Selecione</option>
                             @foreach($documentTypes as $documentType)
@@ -26,6 +26,7 @@
                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
                         <label for="cpf">Documento:</label>
                         <input
+                            @if($modal) disabled @endif @if($readonly) readonly @endif
                             type="text"
                             class="form-control @error('cpf') is-invalid @endError"
                             name="document_number"

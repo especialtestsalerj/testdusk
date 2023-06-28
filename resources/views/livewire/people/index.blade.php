@@ -35,5 +35,7 @@
 
             @include('livewire.people.partials.table', ['redirect' => 'visitors.index'])
         </div>
+
+        @include('partials.button-to-top')
     </div>
 </div>
