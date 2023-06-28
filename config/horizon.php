@@ -194,6 +194,7 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
+                'queue' => [env('HORIZON_QUEUE', 'ocorrencias')],
                 'maxProcesses' => 10,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
@@ -202,6 +203,7 @@ return [
 
         'local' => [
             'supervisor-1' => [
+                'queue' => [env('HORIZON_QUEUE', 'ocorrencias')],
                 'maxProcesses' => 3,
             ],
         ],
