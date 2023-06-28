@@ -37,11 +37,13 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
+
+//        dd($request->all());
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
 
         $request->merge(['person_id' => $person->id]);
-        $request->merge(['number' => $request->get('cpf')]);
+        $request->merge(['number' => $request->get('document_number')]);
 
 //        dd($request->all());
 

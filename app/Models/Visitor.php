@@ -11,6 +11,7 @@ class Visitor extends Model
         'person_id',
         'sector_id',
         'description',
+        'document_id',
     ];
 
     protected $casts = [
