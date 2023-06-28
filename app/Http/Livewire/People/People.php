@@ -113,11 +113,19 @@ class People extends BaseForm
     {
 
 
-//        dd($this->person->country_id);
-        $document_number = is_null(old('document_number')) ? mask_cpf($this->person->cpf) ?? '' : mask_cpf(old('document_number'));
+
+        if(!empty($this->person_id)){
+            $this->person = Person::where('id',$this->person_id)->first();
+            $this->document_number = $document_number = $this->person->documents[0]->number;
+            $this->readonly = true;
+        }else{
+            $document_number = is_null(old('document_number')) ? mask_cpf($this->person->cpf) ?? '' : mask_cpf(old('document_number'));
 
 
-        $this->document_Number = $document_number;
+            $this->document_Number = $document_number;
+        }
+
+
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
         $this->full_name = is_null(old('full_name'))
             ? $this->person->full_name ?? ''
@@ -177,6 +185,8 @@ class People extends BaseForm
         if(!empty($this->visitor_id)){
             $this->visitor = Visitor::where('id', $this->visitor_id)->first();
         }
+
+//        dd($this->person_id);
 
 
         $this->fillModel();

@@ -24,6 +24,8 @@ class Person extends Model
 
     protected $appends = ['name'];
 
+
+
     public function getCpfFormattedAttribute()
     {
         $formatted = substr($this->cpf, 0, 3) . '.';

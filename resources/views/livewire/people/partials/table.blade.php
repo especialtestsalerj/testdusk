@@ -33,9 +33,9 @@
                                 @endCan
                                 @if(!$person->pendingVisit)
                                     @can('visitors:store')
-                                    <span class="btn btn-link" wire:click="prepareForCheckin({{$person->id}})">
+                                    <a id="novo" href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link">
                                         <i class="fa-solid fa-user-plus"></i>
-                                    </span>
+                                    </a>
                                     @endCan
                                 @else
                                     @can('visitors:checkout')
