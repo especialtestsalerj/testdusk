@@ -33,8 +33,8 @@ class CpfAvailableOnVisit implements Rule
     {
         $query = DB::table('visitors')
             ->join('people', 'visitors.person_id', '=', 'people.id')
-            ->where('visitors.routine_id', $this->routine_id)
-            ->where('people.cpf', $this->cpf)
+            ->join('documents', 'visitors.person_id', '=', 'documents.person_id')
+            ->where('documents.number', $this->cpf)
             ->whereNull('visitors.exited_at');
 
         if (!is_null($this->id)) {

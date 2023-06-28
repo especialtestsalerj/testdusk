@@ -38,7 +38,7 @@
                                 @endIf
                             </div>
 
-                            <div>{{$visitor->document->documentType->name}} - {{$visitor->document->number}}</div>
+                            <div>{{$visitor->document?->documentType->name}} - {{$visitor->document?->number}}</div>
                         </div>
                     </div>
                 </div>
