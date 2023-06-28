@@ -14,7 +14,7 @@ class Index extends BaseIndex
 
     protected $repository = VisitorsRepository::class;
 
-    public $orderByField = ['entranced_at', 'id'];
+    public $orderByField = ['entranced_at'];
     public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
     public $routine_id;

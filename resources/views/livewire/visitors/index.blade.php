@@ -49,5 +49,5 @@
     </div>
 
     @include('partials.button-to-top')
-    
+
 </div>

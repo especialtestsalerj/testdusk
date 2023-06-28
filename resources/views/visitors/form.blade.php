@@ -7,7 +7,7 @@
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
 
-            @if (isset($visitor))
+            @if (isset($visitor->id))
                 <input type="hidden" name="id" value="{{ $visitor->id }}">
             @endif
 
@@ -18,7 +18,7 @@
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
                             @if(is_null($visitor->id))
-{{--                                <a href="{{ route(request()->query('redirect'))  }}">Visitantes</a>--}}
+                                <a href="{{ route('visitors.index')  }}">Visitantes</a>
                                 > Novo/a
                             @else
                                 <a href="{{ route(request()->query('redirect')) }}">Visitantes</a>
@@ -85,4 +85,6 @@
             </div>
         </form>
     </div>
+
+    @include('partials.button-to-top')
 @endsection
