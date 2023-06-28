@@ -64,7 +64,7 @@ class Visitor extends Controller
         app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
-            ->route('visitors.index')
+            ->route('people.index')
             ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 
@@ -86,6 +86,7 @@ class Visitor extends Controller
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),
+            'mode' => 'show' . (request()->query('disabled') ? '-read-only' : ''),
         ]);
     }
 

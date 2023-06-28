@@ -34,6 +34,7 @@
 
                         @include('partials.save-button',
                                 ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
                                 'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
                 </div>
