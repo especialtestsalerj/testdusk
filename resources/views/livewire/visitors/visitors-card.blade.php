@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<div>
     <div class="container-fluid">
         <h1 class="text-center pt-4">Visitante</h1>
         <div class="col-12 pb-3 d-flex justify-content-end">
@@ -53,4 +52,4 @@
             </button>
         </div>
     </div>
-@endsection
+</div>

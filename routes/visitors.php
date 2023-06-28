@@ -3,6 +3,7 @@
 use App\Http\Controllers\Visitor;
 use App\Http\Livewire\People\Index as PeopleIndex;
 use App\Http\Livewire\Visitors\Index as VisitorsIndex;
+use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
 
 Route::group(['prefix' => '/visitors'], function () {
     Route::group(['prefix' => '/people'], function () {
@@ -19,7 +20,7 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
-    Route::get('/card', [Visitor::class, 'card'])
+    Route::get('/card', VisitorsCard::class)
         ->name('visitors.card');
 
     Route::get('/{id}', [Visitor::class, 'show'])
