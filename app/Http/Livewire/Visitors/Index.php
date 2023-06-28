@@ -28,7 +28,9 @@ class Index extends BaseIndex
 
     protected $listeners = [
         'confirm-checkout-visitor' => 'confirmCheckout',
+        'echo:visitors,VisitorsChanged' => '$refresh',
     ];
+
     public function mount()
     {
     }
