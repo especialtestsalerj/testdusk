@@ -30,8 +30,16 @@
                         <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">Painel</a>
                     </li>
 
+                    @can('people:show')
+                        <li class="nav-item"><a class="nav-link {{ (request()->routeIs('people.*')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
+                    @endCan
+
+                    @can('visitors:show')
+                        <li class="nav-item"><a class="nav-link {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
+                    @endCan
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*', 'people.*', 'visitors.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
