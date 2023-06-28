@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class Visitor extends Controller
 {
-    public function create($id = null)
+    public function create()
     {
         formMode(Constants::FORM_MODE_CREATE);
 
