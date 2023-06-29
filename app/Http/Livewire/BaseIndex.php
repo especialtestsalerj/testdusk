@@ -18,6 +18,11 @@ abstract class BaseIndex extends Component
 
     protected $listeners = ['update-field' => 'updateField'];
 
+    protected $queryString = [
+        'searchString' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
+
     public function checkResetPage($field)
     {
         collect($this->refreshFields)->each(function ($refreshField) use ($field) {
@@ -124,7 +129,8 @@ abstract class BaseIndex extends Component
         return $this->paginationEnabled ? $query->paginate($this->pageSize) : $query->get();
     }
 
-    public function emitSwall($title,$text,$confirmEvent,$action){
+    public function emitSwall($title, $text, $confirmEvent, $action)
+    {
         $this->dispatchBrowserEvent('swal', [
             'title' => $title,
             'text' => $text,
