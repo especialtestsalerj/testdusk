@@ -25,7 +25,7 @@ class Visitor extends Controller
             $people = app(PeopleRepository::class)->findById(request()->get('person_id'));
             $person_id = $people->id;
 
-            //            dd($person_id);
+
         } else {
             $people = app(PeopleRepository::class)
                 ->disablePagination()
@@ -90,43 +90,13 @@ class Visitor extends Controller
         ]);
     }
 
-    public function update(VisitorUpdate $request, $routine_id, $id)
+    public function update(VisitorUpdate $request, $id)
     {
-        DB::transaction(function () use ($request, $routine_id, $id) {
-            $currentVisitor = app(VisitorsRepository::class)->findById($id);
 
-            //syncronizing visitors
-            if (isset($currentVisitor?->old_id)) {
-                $visitor = app(VisitorsRepository::class)->findByOldId($currentVisitor->old_id);
-
-                if (isset($visitor)) {
-                    $array = [];
-                    $array = array_add($array, 'exited_at', $request['exited_at']);
-
-                    app(VisitorsRepository::class)->update($currentVisitor->old_id, $array);
-                }
-
-                $visitors = app(VisitorsRepository::class)->findByOldId($currentVisitor->old_id);
-                if (isset($visitors)) {
-                    foreach ($visitors as $visitor) {
-                        if ($visitor->id != $currentVisitor->id && isset($visitor?->old_id)) {
-                            $array = [];
-                            $array = array_add($array, 'exited_at', $request['exited_at']);
-                            app(VisitorsRepository::class)->update($visitor->id, $array);
-                        }
-                    }
-                }
-            }
-
-            $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
-
-            $request->merge(['person_id' => $person->id]);
-
-            app(VisitorsRepository::class)->update($id, $request->all());
-        });
+        app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
-            ->route($request['redirect'], $routine_id)
+            ->route($request['redirect'])
             ->with('message', 'Visitante alterado/a com sucesso!');
     }
 
