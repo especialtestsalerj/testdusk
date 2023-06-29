@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -65,5 +66,10 @@ class Visitor extends Model
     public function document()
     {
         return $this->belongsTo(Document::class);
+    }
+
+    public function photo(): Attribute
+    {
+        return Attribute::make(get: fn($value) => '/img/no-photo.png');
     }
 }
