@@ -9,7 +9,7 @@ class Person extends Model
     protected $fillable = [
         'full_name',
         'social_name',
-//        'origin',
+        //        'origin',
         'id_card',
         'certificate_type',
         'certificate_number',
@@ -19,13 +19,10 @@ class Person extends Model
         'city_id',
         'state_id',
         'country_id',
-        'other_city'
+        'other_city',
     ];
 
     protected $appends = ['name'];
-
-
-
     public function getCpfFormattedAttribute()
     {
         $formatted = substr($this->cpf, 0, 3) . '.';
@@ -75,7 +72,6 @@ class Person extends Model
         return $this->belongsTo(Country::class);
     }
 
-
     public function hasPendingVisitors()
     {
         foreach ($this->visitors as $visitor) {
@@ -91,6 +87,4 @@ class Person extends Model
     {
         return $this->hasOne(Visitor::class)->whereNull('exited_at');
     }
-
-
 }
