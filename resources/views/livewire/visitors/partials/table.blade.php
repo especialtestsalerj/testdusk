@@ -21,7 +21,7 @@
                     <td data-label="Saída">@if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
                     <td data-label="Foto">
 {{--                        <img src="/img/no-photo.png">--}}
-                        <img class="w-75" src="{{'/img/person-'.rand(1,4).'.jpg'}}">
+                        <img class="w-75" src="{{'/img/no-photo.png'}}">
                     </td>
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
                     <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
