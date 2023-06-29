@@ -19,7 +19,7 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
-    Route::get('/{id}', [Visitor::class, 'show'])
+    Route::get('/{id}/show', [Visitor::class, 'show'])
         ->name('visitors.show')
         ->can('visitors:show');
 
@@ -35,5 +35,5 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.destroy')
         ->can('visitors:destroy');
 
-    Route::get('/{uuid}/card', [Visitor::class, 'card'])->name('visitors.card');
+    Route::get('/card/{uuid?}', [Visitor::class, 'card'])->name('visitors.card');
 });

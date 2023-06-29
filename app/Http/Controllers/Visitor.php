@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Documents;
+use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
@@ -15,6 +16,8 @@ use App\Models\Visitor as VisitorModel;
 use App\Support\Constants;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class Visitor extends Controller
 {
@@ -110,13 +113,23 @@ class Visitor extends Controller
             ->with('message', 'Visitante removido/a com sucesso!');
     }
 
-    public function card($uuid)
+    public function card(Request $request, $uuid = null)
     {
-        if (Uuid::isValid($uuid)) {
-            $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
-            return $visitor;
+        if ($uuid) {
+            if (Uuid::isValid($uuid)) {
+                $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
+                return $visitor;
+            } else {
+                abort(404);
+            }
         } else {
-            abort(404);
+            if ($timestamp = $request->query('timestamp')) {
+                return $visitor = app(Visitors::class)->getAnonymousVisitor(
+                    Carbon::createFromTimestamp($timestamp)
+                );
+            } else {
+                abort(404);
+            }
         }
     }
 }

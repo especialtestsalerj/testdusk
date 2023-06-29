@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Services\QRCode\Service;
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 class Visitor extends Model
@@ -77,9 +78,13 @@ class Visitor extends Model
     public function qrCodeUri(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => app(Service::class)->generate(
-                route('visitors.card', ['uuid' => $this->uuid])
-            )
+            get: fn($value) => $this->id
+                ? app(Service::class)->generate(route('visitors.card', ['uuid' => $this->uuid]))
+                : app(Service::class)->generate(
+                    route('visitors.card', [
+                        'timestamp' => $this->entranced_at->timestamp,
+                    ])
+                )
         );
     }
 }
