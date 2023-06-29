@@ -34680,6 +34680,62 @@ body.bg-logo {
   color: #FFF !important;
 }
 
+.table-dynamic {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-dynamic thead tr td {
+  font-weight: bold;
+}
+
+.table-dynamic thead tr, .table-dynamic tbody tr {
+  border-top: 0;
+  border-bottom: 0;
+  border-color: transparent;
+  border-style: none;
+}
+
+.table-dynamic .actions {
+  text-align: right;
+}
+
+.table-dynamic td .btn {
+  padding: 0 5px;
+}
+
+.table-dynamic td {
+  padding: 5px 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .table-dynamic .actions {
+    text-align: center;
+  }
+  .table-dynamic > :not(:first-child) {
+    border-top: 0;
+  }
+  .table-dynamic thead {
+    visibility: hidden;
+    height: 0;
+    position: absolute;
+  }
+  .table-dynamic tr {
+    display: block;
+    margin-bottom: 0.625em;
+  }
+  .table-dynamic td {
+    border-bottom: none;
+    display: block;
+    font-size: 0.9em;
+    text-align: right;
+  }
+  .table-dynamic td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+  }
+}
 .cursor-pointer {
   cursor: pointer;
 }
