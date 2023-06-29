@@ -34,4 +34,6 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/delete/{id}', [Visitor::class, 'destroy'])
         ->name('visitors.destroy')
         ->can('visitors:destroy');
+
+    Route::get('/{uuid}/card', [Visitor::class, 'card'])->name('visitors.card');
 });

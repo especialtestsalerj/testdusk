@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Services\QRCode\Service;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 class Visitor extends Model
@@ -71,5 +72,14 @@ class Visitor extends Model
     public function photo(): Attribute
     {
         return Attribute::make(get: fn($value) => '/img/no-photo.png');
+    }
+
+    public function qrCodeUri(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => app(Service::class)->generate(
+                route('visitors.card', ['uuid' => $this->uuid])
+            )
+        );
     }
 }
