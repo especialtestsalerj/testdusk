@@ -121,7 +121,11 @@
 }
 
 .navbar .navbar-nav .nav-item.active .nav-link {
-    color: white;
+    color: #B57D18;
+}
+
+.navbar-nav .show > .nav-link, .navbar-nav .nav-link.active {
+    color: #B57D18;
 }
 
 .form-group {
