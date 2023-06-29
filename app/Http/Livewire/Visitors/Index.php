@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Livewire\BaseIndex;
@@ -20,6 +21,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+    public $printVisitor;
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
@@ -33,6 +35,7 @@ class Index extends BaseIndex
 
     public function mount()
     {
+//        $this->loadAnonymousVisitor();
     }
 
     public function additionalFilterQuery($query)
@@ -60,6 +63,27 @@ class Index extends BaseIndex
         $query->with('document.documentType');
 
         return $query;
+    }
+
+    public function generateBadge($visitor_id)
+    {
+        $this->printVisitor = null;
+
+        if (!empty($visitor_id)) {
+            $this->printVisitor = app(VisitorsRepository::class)->findById([$visitor_id]);
+        } else {
+            $this->loadAnonymousVisitor();
+        }
+
+        $this->printVisitor->append(['photo','qr_code_uri']);
+
+        $this->dispatchBrowserEvent('printBadge');
+    }
+
+    private function loadAnonymousVisitor()
+    {
+        $this->printVisitor = app(Visitors::class)->getAnonymousVisitor();
+
     }
 
     public function render()

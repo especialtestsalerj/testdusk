@@ -25,8 +25,10 @@
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
                     <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
-                    <td class="actions" >
-                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print md-fa"></i></a>
+                    <td class="actions">
+                        <span class="btn btn-link" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
+                            <i class="fa fa-print md-fa"></i>
+                        </span>
                         @can('visitors:show')
                             <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search md-fa"></i></a>
                         @endCan
@@ -102,5 +104,7 @@
         <div class="d-flex justify-content-center mt-2">
             {{ $visitors->links() }}
         </div>
+
+
     </div>
 </div>

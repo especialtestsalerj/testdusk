@@ -125,6 +125,10 @@
 }
 
 .navbar-nav .show > .nav-link, .navbar-nav .nav-link.active {
+    color: #FFF;
+}
+
+.nav-item .nav-link:hover, .nav-item .nav-link:focus {
     color: #B57D18;
 }
 
@@ -517,4 +521,9 @@ body.bg-logo {
 
 .md-fa{
     font-size: 22px;
+}
+
+.qr{
+    width:80px;
+    height:80px;
 }

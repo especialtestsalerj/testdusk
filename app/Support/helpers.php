@@ -355,3 +355,19 @@ function protocol_number_masked_to_bigint($protocol_number_masked)
 
     return $ano . $codigo;
 }
+
+function mount_text($txt)
+{
+    return substr($txt, 0, 120);
+}
+
+function mount_css_text($txt)
+{
+    if (strlen($txt) <= 100) {
+        return 'badge-font-size-11';
+    } elseif (strlen($txt) <= 110) {
+        return 'badge-font-size-10';
+    } else {
+        return 'badge-font-size-9';
+    }
+}

@@ -49,11 +49,11 @@
                     </div>
                 </div>
 
-                <div class="row text-center mt-5">
+<!--                <div class="row text-center mt-5">
                     <div class="col">
 {{--                        @version--}}
                     </div>
-                </div>
+                </div>-->
             </div>
         </main>
 

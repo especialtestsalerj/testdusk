@@ -9,20 +9,20 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\Logo\Logo;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
 class Service
 {
     protected $generator;
 
     public function initialize($content)
     {
-        $writer = new PngWriter();
+        $writer = new SvgWriter();
 
         // Create QR code
         $qrCode = QrCode::create($content)
             ->setEncoding(new Encoding('UTF-8'))
             ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
-            ->setSize(300)
+            ->setSize(80)
             ->setMargin(0)
             ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
             ->setForegroundColor(new Color(0, 0, 0))
@@ -30,7 +30,7 @@ class Service
 
         // Create generic logo
         $logo = Logo::create(public_path('img/logo-alerj-black-qrcode.png'))
-            ->setResizeToWidth(70)
+            ->setResizeToWidth(15)
             ->setPunchoutBackground(true);
 
         $this->generator = $writer->write($qrCode, $logo);
