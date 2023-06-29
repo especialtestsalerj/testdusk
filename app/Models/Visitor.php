@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Models;
+use App\Services\QRCode\Service;
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -65,5 +68,23 @@ class Visitor extends Model
     public function document()
     {
         return $this->belongsTo(Document::class);
+    }
+
+    public function photo(): Attribute
+    {
+        return Attribute::make(get: fn($value) => '/img/no-photo.png');
+    }
+
+    public function qrCodeUri(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->id
+                ? app(Service::class)->generate(route('visitors.card', ['uuid' => $this->uuid]))
+                : app(Service::class)->generate(
+                    route('visitors.card', [
+                        'timestamp' => $this->entranced_at->timestamp,
+                    ])
+                )
+        );
     }
 }
