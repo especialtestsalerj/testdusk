@@ -27,7 +27,7 @@ class Visitors extends Repository
         return $this->model::whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')->get();
     }
 
-    public function getAnonymousVisitor($entrance)
+    public function getAnonymousVisitor($entrance = null)
     {
         $visitor = new Visitor();
         $visitor->entranced_at = $entrance ?? now();

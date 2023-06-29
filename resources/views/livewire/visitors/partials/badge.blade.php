@@ -125,7 +125,14 @@
     }
 </style>
 
-<div id="badge" x-init="document.addEventListener('printBadge', function () { window.print() })">
+<div id="badge" x-init="
+document.addEventListener('printBadge', function () {
+
+        setTimeout(() => {
+              window.print()
+        }, 1000);
+
+ })">
     <table>
         <tr>
             <td colspan="3" class="text-left badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
@@ -136,9 +143,11 @@
             <td class="badge-bg-title text-center badge-border-title"></td>
         </tr>
         <tr>
-            <td class="text-left photo"><img src="/img/no-photo.png" /></td>
+            <td class="text-left photo"><img src="{{$printVisitor->photo ?? ''}}" /></td>
             <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
-            <td class="text-center photo"><img src="/img/qr.png" class="qr" /></td>
+            <td class="text-center photo"><img
+                    src="{{$printVisitor->qr_code_uri ?? ''}}"
+                    class="qr" /></td>
         </tr>
         <tr>
             <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->full_name)) }}">{{ mount_text($printVisitor?->person?->full_name) }}</td>
