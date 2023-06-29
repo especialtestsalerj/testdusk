@@ -7,7 +7,7 @@
                     <h3 class="mb-0">Visitas</h3>
                 </div>
 
-                <div class="col-4 col-md-4">
+                <div class="col-md-4">
                     <div class="float-end">
                         @can('visitors:store')
                             <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Etiqueta anônima">
