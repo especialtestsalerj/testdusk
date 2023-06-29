@@ -5,8 +5,8 @@
                 <thead>
                 <tr>
                     <td class="col-md-6">Nome</td>
-                    <td class="col-md-5">Documento(s)</td>
-                    <td class="col-md-1"></td>
+                    <td class="col-md-4">Documento(s)</td>
+                    <td class="col-md-2"></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,22 @@
                 <td class="actions">
                     <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                     <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
-                    <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                    @if($person->hasPendingVisitors())
+                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                    @endif
+                    @if(!$person->hasPendingVisitors())
+                        @can('visitors:store')
+                            <a href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link" title="Registrar Entrada">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        @endCan
+                    @else
+                        @can('visitors:checkout')
+                            <span class="btn btn-link" wire:click="prepareForCheckout({{$person->pendingVisit->id}})" title="Registrar Saida">
+                                <i class="fa fa-arrow-up-right-from-square"></i>
+                            </span>
+                        @endCan
+                    @endIf
                 </td>
             </tr>
         @empty

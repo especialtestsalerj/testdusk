@@ -7,8 +7,8 @@
                     <td class="col-md-2">Entrada</td>
                     <td class="col-md-2">Saída</td>
                     <td class="col-md-3">Visitante</td>
-                    <td class="col-md-1">Documento</td>
-                    <td class="col-md-2">Setor de Destino</td>
+                    <td class="col-md-2">Documento</td>
+                    <td class="col-md-2">Destino</td>
                     <td class="col-md-1"></td>
                 </tr>
                 </thead>
@@ -31,9 +31,9 @@
                         @endCan
                         @if(!$visitor->exited_at)
                             @can('visitors:checkout')
-                                <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
-                                        <i class="fa-solid fa-user-minus"></i>
-                                    </span>
+                                <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})" title="Registrar Saída">
+                                        <i class="fa fa-arrow-up-right-from-square"></i>
+                                </span>
                             @endCan
                         @endIf
                     </td>

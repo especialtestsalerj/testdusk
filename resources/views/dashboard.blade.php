@@ -17,9 +17,9 @@
                             </div>
                             <div class="card-body px-5 py-5 border-bottom rounded">
                                 <div class="row mt-3 mb-3 text-center">
-                                    @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitas', 'ico' => 'fa-people-roof'])
-
                                     @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
+
+                                    @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitas', 'ico' => 'fa-people-roof'])
 
 {{--                                    @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'schedules:show', 'title' => 'Agendamentos', 'ico' => 'fa-calendar-days'])--}}
 {{--                                    @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'traffic:show', 'title' => 'Tráfego', 'ico' => 'fa-building'])--}}
