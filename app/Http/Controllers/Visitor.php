@@ -10,6 +10,7 @@ use App\Data\Repositories\People as PeopleRepository;
 use App\Http\Requests\VisitorStore;
 use App\Http\Requests\VisitorUpdate;
 use App\Http\Requests\VisitorDestroy;
+use App\Models\Document;
 use App\Support\Constants;
 use Illuminate\Support\Facades\DB;
 
@@ -20,25 +21,21 @@ class Visitor extends Controller
         formMode(Constants::FORM_MODE_CREATE);
 
         $person_id = null;
-        if(!empty(request()->get('person_id'))){
+        if (!empty(request()->get('person_id'))) {
             $people = app(PeopleRepository::class)->findById(request()->get('person_id'));
             $person_id = $people->id;
 
-//            dd($person_id);
-        }else{
+            //            dd($person_id);
+        } else {
             $people = app(PeopleRepository::class)
                 ->disablePagination()
                 ->all();
         }
 
-
-
-
-
         return $this->view('visitors.form')->with([
             'visitor' => app(VisitorsRepository::class)->new(),
-            'people'=> $people,
-            'person_id'=>$person_id,
+            'people' => $people,
+            'person_id' => $person_id,
             'sectors' => app(SectorsRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -50,24 +47,24 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
-
-//        dd($request->all());
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
-
         $request->merge(['person_id' => $person->id]);
+
         $request->merge(['number' => $request->get('document_number')]);
 
-//        dd($request->all());
-
-        $document = app(Documents::class)->create($request->all());
+        $document = Document::firstOrCreate([
+            'person_id' => $request->get('person_id'),
+            'number' => $request->get('document_number'),
+            'document_type_id' => $request->get('document_type_id'),
+        ]);
 
         $request->merge(['document_id' => $document->id]);
 
         app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
-            ->route('visitors.index')
+            ->route('people.index')
             ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 
@@ -79,6 +76,7 @@ class Visitor extends Controller
 
         return $this->view('visitors.form')->with([
             'visitor' => $visitor,
+            'person_id' => $visitor->person_id,
             'people' => app(PeopleRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -88,6 +86,7 @@ class Visitor extends Controller
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),
+            'mode' => 'show' . (request()->query('disabled') ? '-read-only' : ''),
         ]);
     }
 

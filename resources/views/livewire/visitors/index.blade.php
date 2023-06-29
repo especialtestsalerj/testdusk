@@ -7,11 +7,11 @@
                     <h3 class="mb-0">Visitas</h3>
                 </div>
 
-                <div class="col-4 col-md-4">
+                <div class="col-md-4">
                     <div class="float-end">
                         @can('visitors:store')
-                            <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Etiqueta anônima">
-                                <i class="fa-solid fa-id-badge"></i> &nbsp;Etiqueta anônima
+                            <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Emitir etiqueta anônima">
+                                <i class="fa-solid fa-id-badge"></i> &nbsp;Etiqueta Anônima
                             </a>
                         @endCan
 
@@ -49,5 +49,5 @@
     </div>
 
     @include('partials.button-to-top')
-    
+
 </div>

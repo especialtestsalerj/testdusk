@@ -27,14 +27,25 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">Home</a>
+                        <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">Painel</a>
                     </li>
+
+                    @can('people:show')
+                        <li class="nav-item"><a class="nav-link {{ (request()->routeIs('people.*')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
+                    @endCan
+
+                    @can('visitors:show')
+                        <li class="nav-item"><a class="nav-link {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
+                    @endCan
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
+                            @can('people:show')
+                                <li><a class="dropdown-item {{ (request()->routeIs('people.*')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
+                            @endCan
                             @can('sectors:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('sectors.*')) ? 'active' : '' }}" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan
@@ -46,6 +57,9 @@
                             @endCan
                             @can('routines:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
+                            @endCan
+                            @can('visitors:show')
+                                <li><a class="dropdown-item {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
                             @endCan
                         </ul>
                     </li>

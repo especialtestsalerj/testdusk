@@ -1,61 +1,62 @@
 <div class="row">
     <div class="col-md-12">
-
+        @if(!empty($people))
+            <table class="table-dynamic table table-striped">
+                <thead>
+                <tr>
+                    <td class="col-md-6">Nome</td>
+                    <td class="col-md-4">Documento(s)</td>
+                    <td class="col-md-2"></td>
+                </tr>
+                </thead>
+                <tbody>
+                @endif
         @forelse ($people as $person)
-            <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
-                <div class="card">
-                    <div class="card-body py-1">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Nome/Nome Social:</span> {{ $person->name}}
-                                @if($person->hasPendingVisitors())
-                                    <span class="badge bg-warning text-black">Visita em aberto </span>
-                                @endif
-                            </div>
-
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Documento(s):</span>
-                                <br/>
-                                @foreach($person->documents as $document)
-                                    <span class="fw-bold">{{$document->documentType->name}}</span> : {{$document->number}}
-                                    @if($document->state?->initial)
-                                        - {{$document->state->initial}}
-                                    @endif
-                                    <br />
-                                @endforeach
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                @can('people:show')
-                                    <i class="fa fa-search"></i>
-                                @endCan
-                                @can('people:update')
-                                    <i class="fa-solid fa-pen"></i>
-                                @endCan
-                                @if(!$person->pendingVisit)
-                                    @can('visitors:store')
-                                    <a id="novo" href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                    </a>
-                                    @endCan
-                                @else
-                                    @can('visitors:checkout')
-                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$person->pendingVisit->id}})">
-                                            <i class="fa-solid fa-user-minus"></i>
-                                        </span>
-                                    @endCan
-                                @endIf
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <tr>
+                <td data-label="Nome">
+                    {{ $person->name}}
+                    @if($person->hasPendingVisitors())
+                        <span class="badge bg-warning text-black">Visita em aberto</span>
+                    @endif
+                </td>
+                <td data-label="Documento(s)">
+                    @foreach($person->documents as $document)
+                        <span class="fw-bold">{{$document->documentType->name}}</span> : {{$document->number}}
+                        @if($document->state?->initial)
+                            - {{$document->state->initial}}
+                        @endif
+                        &nbsp;
+                    @endforeach</td>
+                <td class="actions">
+                    <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                    <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                    @if($person->hasPendingVisitors())
+                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                    @endif
+                    @if(!$person->hasPendingVisitors())
+                        @can('visitors:store')
+                            <a href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link" title="Registrar Entrada">
+                                <i class="fa fa-check"></i>
+                            </a>
+                        @endCan
+                    @else
+                        @can('visitors:checkout')
+                            <span class="btn btn-link" wire:click="prepareForCheckout({{$person->pendingVisit->id}})" title="Registrar Saida">
+                                <i class="fa fa-arrow-up-right-from-square"></i>
+                            </span>
+                        @endCan
+                    @endIf
+                </td>
+            </tr>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhum/a Pessoa encontrado/a.
+                <i class="fa fa-exclamation-triangle"></i> Nenhuma Pessoa encontrada.
             </div>
         @endforelse
+        @if(!empty($people))
+                </tbody>
+            </table>
+        @endif
         <div class="d-flex justify-content-center mt-2">
             {{ $people->links() }}
         </div>
