@@ -20,6 +20,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+    public $printVisitor;
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
@@ -33,6 +34,7 @@ class Index extends BaseIndex
 
     public function mount()
     {
+        $this->loadEmptyBadge();
     }
 
     public function additionalFilterQuery($query)
@@ -60,6 +62,23 @@ class Index extends BaseIndex
         $query->with('document.documentType');
 
         return $query;
+    }
+
+    public function generateBadge($visitor_id)
+    {
+        if (!empty($visitor_id)) {
+            $this->printVisitor = app(VisitorsRepository::class)->findById([$visitor_id]);
+        } else {
+            $this->loadEmptyBadge();
+        }
+
+        $this->dispatchBrowserEvent('printBadge');
+    }
+
+    private function loadEmptyBadge()
+    {
+        $this->printVisitor = new Visitor();
+        $this->printVisitor->entranced_at = now();
     }
 
     public function render()

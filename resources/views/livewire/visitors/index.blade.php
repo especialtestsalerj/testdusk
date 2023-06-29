@@ -1,6 +1,6 @@
 
 <div>
-    <div class="py-4 px-4">
+    <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row border-bottom border-dark mb-4 pb-2">
                 <div class="col-md-8">
@@ -10,9 +10,9 @@
                 <div class="col-md-4">
                     <div class="float-end">
                         @can('visitors:store')
-                            <a id="novo" href="#" class="btn btn-secondary text-white float-right" title="Emitir etiqueta anônima">
-                                <i class="fa-solid fa-id-badge"></i> &nbsp;Etiqueta Anônima
-                            </a>
+                            <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Anônima">
+                                <i class="fa fa-print"></i> &nbsp;Etiqueta Anônima
+                            </span>
                         @endCan
 
                         @can('people:show')
@@ -46,6 +46,9 @@
 
             @include('livewire.visitors.partials.table', ['redirect' => 'visitors.index'])
         </div>
+    </div>
+    <div>
+        @include('livewire.visitors.partials.badge', [$printVisitor])
     </div>
 
     @include('partials.button-to-top')
