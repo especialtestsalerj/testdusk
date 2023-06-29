@@ -27,7 +27,8 @@
                             <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                         @endCan
                         @can('visitors:update')
-                            <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+
                         @endCan
                         @if(!$visitor->exited_at)
                             @can('visitors:checkout')

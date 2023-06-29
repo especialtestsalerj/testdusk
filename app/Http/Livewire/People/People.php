@@ -173,6 +173,7 @@ class People extends BaseForm
                 array_push($this->alerts, $restriction->message);
             }
         }
+
     }
 
     public function mount()
