@@ -15,25 +15,26 @@ class VisitorsCard extends Component
     public $exited;
     public $visitorId;
 
-    public function mount()
+    public function mount($id)
     {
-        $visitor = Visitor::select('visitors.*', 'people.full_name', 'documents.number as document')
+        $visitor = Visitor::select('visitors.*', 'people.full_name', 'documents.number as document', 'sectors.name as sector')
+            ->where('visitors.id', '=', $id)
             ->join('people', 'people.id', '=', 'visitors.person_id')
             ->join('documents', 'documents.id', '=', 'visitors.document_id')
+            ->join('sectors', 'sectors.id', '=', 'visitors.sector_id')
             ->first();
+            
         $this->visitorId = $visitor->id;
         $this->name = $visitor->full_name;
         $this->document = $visitor->document;
-        $this->sector = $visitor->sector_id;
+        $this->sector = $visitor->sector;
         $this->reason = $visitor->description;
         $this->entranced = $visitor->entranced_at;
+        $this->exited = now()->format('Y-m-d\TH:i');
     }
 
-    public function submit()
+    public function endVisit()
     {
-        $this->validate([
-            'exited' => 'required',
-        ]);
         $visitor = Visitor::find($this->visitorId);
         $visitor->exited_at = $this->exited;
         $visitor->save();

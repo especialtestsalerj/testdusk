@@ -20,7 +20,7 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
-    Route::get('/card', VisitorsCard::class)
+    Route::get('/{id}/card', VisitorsCard::class)
         ->name('visitors.card');
 
     Route::get('/{id}', [Visitor::class, 'show'])
