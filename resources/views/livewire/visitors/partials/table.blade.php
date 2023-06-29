@@ -57,7 +57,7 @@
                                 <span class="fw-bold">Visitante:</span> {{ $visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Documento:</span> {{$visitor->document->documentType->name}} - {{$visitor->document->number}}
+                                <span class="fw-bold">Documento:</span> {{$visitor?->document?->documentType?->name}} - {{$visitor?->document?->number}}
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-end">
                                 @can('visitors:show')
