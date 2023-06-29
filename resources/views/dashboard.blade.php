@@ -9,7 +9,7 @@
                                 <div class="row mx-0 mx-lg-3 mt-3 mb-2">
                                     <div class="col-6 col-lg-3 text-center text-lg-start">
                                         <h4>
-                                           Visitas
+                                           Portaria
                                         </h4>
                                     </div>
 
@@ -17,7 +17,7 @@
                             </div>
                             <div class="card-body px-5 py-5 border-bottom rounded">
                                 <div class="row mt-3 mb-3 text-center">
-                                    @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitantes', 'ico' => 'fa-people-roof'])
+                                    @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitas', 'ico' => 'fa-people-roof'])
 
                                     @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
 

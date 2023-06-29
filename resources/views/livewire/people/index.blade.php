@@ -6,7 +6,7 @@
                     <h3 class="mb-0">Pessoas - Identificação</h3>
                 </div>
 
-                <div class="col-4 col-md-4">
+                <div class="col-md-4">
                     <a id="novo" href="{{ route('visitors.create') }}" class="btn btn-primary text-white float-end" title="Nova Visita">
                         <i class="fa fa-plus"></i> Nova
                     </a>

@@ -1,48 +1,43 @@
 <div class="row">
     <div class="col-md-12">
-
+        @if(!empty($visitors))
+            <table class="table-dynamic table table-striped">
+                <thead>
+                <tr>
+                    <td class="col-md-2">Entrada</td>
+                    <td class="col-md-2">Saída</td>
+                    <td class="col-md-3">Visitante</td>
+                    <td class="col-md-1">Documento</td>
+                    <td class="col-md-2">Setor de Destino</td>
+                    <td class="col-md-1"></td>
+                </tr>
+                </thead>
+                <tbody>
+        @endif
         @forelse ($visitors as $visitor)
-            <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
-                <div class="card">
-                    <div class="card-body py-1">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Entrada:</span> {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Saída:</span> @if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->name }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Setor:</span> {{ $visitor?->sector?->name ?? '-' }}
-                            </div>
-                            <div class="col-12 col-lg-5 text-center text-lg-start">
-{{--                                <span class="fw-bold">Plantonista:</span> {{ $visitor->dutyUser->name }}--}}
-                            </div>
-                            <div class="col-12 col-lg-3 text-center text-lg-end">
-                                @can('visitors:show')
-                                    <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                @endCan
-                                @can('visitors:update')
-                                        <i class="fa-solid fa-pen"></i>
-                                @endCan
-
-                                @if(!$visitor->exited_at)
-                                    @can('visitors:checkout')
-                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
-                                            <i class="fa-solid fa-user-minus"></i>
-                                        </span>
-                                    @endCan
-                                @endIf
-                            </div>
-
-                            <div>{{$visitor->document?->documentType->name}} - {{$visitor->document?->number}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <tr>
+                    <td data-label="Entrada">{{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}</td>
+                    <td data-label="Saída">@if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
+                    <td data-label="Visitante">{{ $visitor->person->name }}</td>
+                    <td data-label="Documento">{{$visitor->document?->documentType?->name}} - {{$visitor?->document?->number}}</td>
+                    <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
+                    <td class="actions">
+                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                        @can('visitors:show')
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                        @endCan
+                        @can('visitors:update')
+                            <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                        @endCan
+                        @if(!$visitor->exited_at)
+                            @can('visitors:checkout')
+                                <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
+                                        <i class="fa-solid fa-user-minus"></i>
+                                    </span>
+                            @endCan
+                        @endIf
+                    </td>
+                </tr>
             <!-- Modal -->
             <div class="modal fade" id="visitor-delete-modal{{ $visitor->id }}" tabindex="-1" aria-labelledby="deleteModalLabelVisitor" aria-hidden="true">
                 <div class="modal-dialog">
@@ -92,9 +87,13 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhum/a Visitante encontrado/a.
+                <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
             </div>
         @endforelse
+        @if(!empty($visitors))
+            </tbody>
+        </table>
+        @endif
         <div class="d-flex justify-content-center mt-2">
             {{ $visitors->links() }}
         </div>
