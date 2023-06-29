@@ -14,7 +14,7 @@ class Index extends BaseIndex
 
     protected $repository = VisitorsRepository::class;
 
-    public $orderByField = ['entranced_at', 'id'];
+    public $orderByField = ['entranced_at'];
     public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
     public $routine_id;
@@ -28,7 +28,9 @@ class Index extends BaseIndex
 
     protected $listeners = [
         'confirm-checkout-visitor' => 'confirmCheckout',
+        'echo:visitors,VisitorsChanged' => '$refresh',
     ];
+
     public function mount()
     {
     }

@@ -7,19 +7,24 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Person extends Model
 {
     protected $fillable = [
-        'cpf',
         'full_name',
         'social_name',
-        'origin',
+//        'origin',
         'id_card',
         'certificate_type',
         'certificate_number',
         'certificate_valid_until',
         'photo',
         'alert_obs',
+        'city_id',
+        'state_id',
+        'country_id',
+        'other_city'
     ];
 
     protected $appends = ['name'];
+
+
 
     public function getCpfFormattedAttribute()
     {
@@ -33,7 +38,7 @@ class Person extends Model
 
     public function getNameAttribute()
     {
-        return is_null($this->full_name) ? $this->social_name : $this->full_name;
+        return !is_null($this->social_name) ? $this->social_name : $this->full_name;
     }
 
     protected function abbreviatedName(): Attribute
@@ -55,6 +60,22 @@ class Person extends Model
         return $this->hasMany(Visitor::class);
     }
 
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+
     public function hasPendingVisitors()
     {
         foreach ($this->visitors as $visitor) {
@@ -70,4 +91,6 @@ class Person extends Model
     {
         return $this->hasOne(Visitor::class)->whereNull('exited_at');
     }
+
+
 }

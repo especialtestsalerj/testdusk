@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\Models\Document;
+use App\Models\DocumentType;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -9,17 +11,21 @@ class CpfAvailableOnVisit implements Rule
 {
     public $id;
     public $routine_id;
-    public $cpf;
+    public $document_number;
+
+    public $document_type_id;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($id, $routine_id, $cpf)
+    public function __construct($id, $routine_id, $document_number, $document_type_id)
     {
         $this->id = $id;
         $this->routine_id = $routine_id;
-        $this->cpf = $cpf;
+        $this->document_number = $document_number;
+
+        $this->document_type_id = $document_type_id;
     }
 
     /**
@@ -31,17 +37,26 @@ class CpfAvailableOnVisit implements Rule
      */
     public function passes($attribute, $value)
     {
-        $query = DB::table('visitors')
-            ->join('people', 'visitors.person_id', '=', 'people.id')
-            ->where('visitors.routine_id', $this->routine_id)
-            ->where('people.cpf', $this->cpf)
-            ->whereNull('visitors.exited_at');
 
-        if (!is_null($this->id)) {
-            $query->where('visitors.id', '<>', $this->id);
+        $documentType = DocumentType::where('id','=',$this->document_type_id)->first();
+
+//        dd($documentType->name);
+
+        if($documentType->name == 'CPF') {
+            $query = DB::table('visitors')
+                ->join('people', 'visitors.person_id', '=', 'people.id')
+                ->join('documents', 'visitors.person_id', '=', 'documents.person_id')
+                ->where('documents.number', $this->document_number)
+                ->whereNull('visitors.exited_at');
+
+            if (!is_null($this->id)) {
+                $query->where('visitors.id', '<>', $this->id);
+            }
+
+            return $query->doesntExist();
+        }else{
+            return true;
         }
-
-        return $query->doesntExist();
     }
 
     /**

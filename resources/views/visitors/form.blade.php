@@ -7,7 +7,7 @@
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
 
-            @if (isset($visitor))
+            @if (isset($visitor->id))
                 <input type="hidden" name="id" value="{{ $visitor->id }}">
             @endif
 
@@ -18,7 +18,7 @@
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
                             @if(is_null($visitor->id))
-{{--                                <a href="{{ route(request()->query('redirect'))  }}">Visitantes</a>--}}
+                                <a href="{{ route('visitors.index')  }}">Visitantes</a>
                                 > Novo/a
                             @else
                                 <a href="{{ route(request()->query('redirect')) }}">Visitantes</a>
@@ -31,7 +31,11 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-{{--                        @include('partials.save-button', ['model' => $visitor, 'backUrl' => request()->query('redirect'), 'permission' => (!$visitor->hasPendingFromCaution() && !request()->query('disabled') ? (formMode() == 'show' ? 'visitors:update' : 'visitors:store') : '')])--}}
+
+                        @include('partials.save-button',
+                                ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
+                                'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
                 </div>
             </div>
@@ -53,15 +57,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) @if($visitor->hasPendingFromCaution()) readonly @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => (null), 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+                        @livewire('people.people', ['person_id'=>$person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                         <div class="form-group">
-                            <label for="sector_id">Setor*</label>
+                            <label for="sector_id">Destino*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
@@ -74,12 +78,14 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Observações*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) @if($visitor->hasPendingFromCaution()) readonly @endif>{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+                            <label for="description">Motivo Visita*</label>
+                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+
+    @include('partials.button-to-top')
 @endsection

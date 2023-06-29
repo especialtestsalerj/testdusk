@@ -38,47 +38,6 @@
                         @endIf
                     </td>
                 </tr>
-
-            <!--<div class="cards-striped mx-lg-0 mt-lg-2 my-2">
-                <div class="card">
-                    <div class="card-body py-1">
-                        <div class="row d-flex align-items-center">
-
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Entrada:</span> {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Saída:</span> @if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Setor:</span> {{ $visitor?->sector?->name ?? '-' }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Visitante:</span> {{ $visitor->person->name }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Documento:</span> {{$visitor?->document?->documentType?->name}} - {{$visitor?->document?->number}}
-                            </div>
-                            <div class="col-12 col-lg-3 text-center text-lg-end">
-                                @can('visitors:show')
-                                    <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                @endCan
-                                @can('visitors:update')
-                                        <i class="fa-solid fa-pen"></i>
-                                @endCan
-
-                                @if(!$visitor->exited_at)
-                                    @can('visitors:checkout')
-                                        <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})">
-                                            <i class="fa-solid fa-user-minus"></i>
-                                        </span>
-                                    @endCan
-                                @endIf
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <!-- Modal -->
             <div class="modal fade" id="visitor-delete-modal{{ $visitor->id }}" tabindex="-1" aria-labelledby="deleteModalLabelVisitor" aria-hidden="true">
                 <div class="modal-dialog">

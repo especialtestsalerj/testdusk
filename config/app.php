@@ -16,6 +16,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'live_reload'=>env('LIVE_RELOAD_PORT'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -174,9 +176,12 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
+
         OwenIt\Auditing\AuditingServiceProvider::class,
     ],
 

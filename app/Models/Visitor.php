@@ -11,6 +11,7 @@ class Visitor extends Model
         'person_id',
         'sector_id',
         'description',
+        'document_id',
     ];
 
     protected $casts = [
@@ -33,12 +34,7 @@ class Visitor extends Model
         return $this->belongsTo(Sector::class, 'sector_id');
     }
 
-    public function dutyUser()
-    {
-        return $this->belongsTo(User::class, 'duty_user_id');
-    }
-
-    public function getEntrancedAtFormattedAttribute()
+      public function getEntrancedAtFormattedAttribute()
     {
         return $this->entranced_at?->format('Y-m-d H:i');
     }

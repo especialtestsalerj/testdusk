@@ -19,7 +19,6 @@ class VisitorStore extends Request
         $visitor = isset($id) ? app(VisitorsRepository::class)->findById($id) : null;
 
         return [
-            'routine_id' => 'required',
             'entranced_at' => [
                 'bail',
                 'required',
@@ -40,19 +39,19 @@ class VisitorStore extends Request
                 ),
                 'after_or_equal:entranced_at',
             ],
-            'cpf' => [
+            'document_number' => [
                 'bail',
                 'required',
-                'cpf',
+                //'cpf',
                 new CpfAvailableOnVisit(
                     $this->get('id'),
                     $this->get('routine_id'),
-                    $this->get('cpf')
+                    $this->get('document_number'),
+                    $this->get('document_type_id')
                 ),
             ],
             'full_name' => 'required',
             'sector_id' => 'required',
-            'duty_user_id' => 'required',
             'description' => 'required',
         ];
     }
