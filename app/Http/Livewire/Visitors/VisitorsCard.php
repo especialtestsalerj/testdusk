@@ -13,15 +13,43 @@ class VisitorsCard extends Component
     public $reason;
     public $entranced;
     public $exited;
+    public $visitorId;
 
-  /*   public function name()
+    public function mount()
     {
-      
-    } */
+        $visitor = Visitor::select('visitors.*', 'people.full_name', 'documents.number as document')
+            ->join('people', 'people.id', '=', 'visitors.person_id')
+            ->join('documents', 'documents.id', '=', 'visitors.document_id')
+            ->first();
+        $this->visitorId = $visitor->id;
+        $this->name = $visitor->full_name;
+        $this->document = $visitor->document;
+        $this->sector = $visitor->sector_id;
+        $this->reason = $visitor->description;
+        $this->entranced = $visitor->entranced_at;
+    }
+
+    public function submit()
+    {
+        $this->validate([
+            'exited' => 'required',
+        ]);
+        $visitor = Visitor::find($this->visitorId);
+        $visitor->exited_at = $this->exited;
+        $visitor->save();
+        session()->flash('message', 'Visita finalizada com sucesso');
+        return redirect()->route('visitors.index');
+    }
 
     public function render()
     {
-       /*  dd(app(Visitor::class)->first()); */
-        return view('livewire.visitors.visitors-card');
+        return view('livewire.visitors.visitors-card', [
+            'name' => $this->name,
+            'document' => $this->document,
+            'sector' => $this->sector,
+            'reason' => $this->reason,
+            'entranced' => $this->entranced,
+            'exited' => $this->exited,
+        ]);
     }
 }
