@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Ramsey\Uuid\Uuid;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -19,6 +19,11 @@ class Visitor extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    protected static function booted()
+    {
+        static::creating(fn(Visitor $visitor) => ($visitor->uuid = (string) Uuid::uuid4()));
+    }
+
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
@@ -34,7 +39,7 @@ class Visitor extends Model
         return $this->belongsTo(Sector::class, 'sector_id');
     }
 
-      public function getEntrancedAtFormattedAttribute()
+    public function getEntrancedAtFormattedAttribute()
     {
         return $this->entranced_at?->format('Y-m-d H:i');
     }

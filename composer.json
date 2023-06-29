@@ -21,6 +21,7 @@
         "owen-it/laravel-auditing": "^13.0",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
+        "ramsey/uuid": "^4.7",
         "silber/bouncer": "^1.0"
     },
     "require-dev": {
