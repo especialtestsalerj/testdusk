@@ -33,7 +33,7 @@ class VisitorsCard extends Component
         $this->exited = now()->format('Y-m-d\TH:i');
     }
 
-    public function endVisit()
+    public function finishVisit()
     {
         $visitor = Visitor::find($this->visitorId);
         $visitor->exited_at = $this->exited;
