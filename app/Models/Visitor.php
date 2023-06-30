@@ -82,7 +82,7 @@ class Visitor extends Model
                 ? app(Service::class)->generate(route('visitors.card', ['uuid' => $this->uuid]))
                 : app(Service::class)->generate(
                     route('visitors.card', [
-                        'timestamp' => $this->entranced_at->timestamp,
+                        'timestamp' => $this->entranced_at->timestamp ?? now(),
                     ])
                 )
         );
