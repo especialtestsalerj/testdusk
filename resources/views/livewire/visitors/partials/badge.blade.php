@@ -126,13 +126,18 @@
 </style>
 
 <div id="badge" x-init="
-document.addEventListener('printBadge', function () {
 
-        setTimeout(() => {
-              window.print()
-        }, 1000);
+window.debounce = function (func, timeout = 1000){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
 
- })">
+const update = window.debounce(() => window.print());
+
+document.addEventListener('printBadge', update)">
     <table>
         <tr>
             <td colspan="3" class="text-left badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
