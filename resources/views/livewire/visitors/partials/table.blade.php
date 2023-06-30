@@ -22,7 +22,7 @@
                     <td data-label="Foto">
                         <img class="w-75" src="{{$visitor->photo}}">
                     </td>
-                    <td data-label="Visitante">{{ $visitor->person->name }}{{$visitor->uuid}}</td>
+                    <td data-label="Visitante">{{ $visitor->person->name }}</td>
                     <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
                     <td class="actions">
