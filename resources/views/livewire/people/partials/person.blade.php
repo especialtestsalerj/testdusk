@@ -38,15 +38,36 @@
 
                         />
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <button type="button" wire:click="searchDocumentNumber" class="btn btn-outline-secondary" id="btn_buscar" @if($modal || $readonly) disabled @endif>
                             <i class="fa fa-search"></i>
                         </button>
+{{--                        <button type="button" wire:click="addDocument" class="btn btn-outline-primary" id="btn_buscar" >--}}
+{{--                            <i class="fa fa-plus"></i>--}}
+{{--                        </button>--}}
+                    </div>
+
+                    <div class="col-md-1">
+
                     </div>
                 </div>
 
             </div>
 
+        </div>
+        <div class="row">
+            @error('cpf')
+            <small class="text-danger">
+                <i class="fas fa-exclamation-triangle"></i>
+                {{ $message }}
+            </small>
+            @endError
+            @foreach($alerts as $alert)
+                <small class="text-danger">
+                    <i class="fas fa-cancel"></i>
+                    {{ $alert }}
+                </small>
+            @endforeach
         </div>
         <div class="row">
             <div class="form-group">
@@ -139,20 +160,5 @@
             </div>
         @endif
 
-    </div>
-    <div class="row">
-        @error('cpf')
-        <small class="text-danger">
-            <i class="fas fa-exclamation-triangle"></i>
-            {{ $message }}
-        </small>
-        @endError
-
-        @foreach($alerts as $alert)
-            <small class="text-danger">
-                <i class="fas fa-cancel"></i>
-                {{ $alert }}
-            </small>
-        @endforeach
     </div>
 </div>
