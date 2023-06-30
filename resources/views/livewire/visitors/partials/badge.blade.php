@@ -150,12 +150,10 @@ document.addEventListener('printBadge', update)">
         <tr>
             <td class="text-left photo"><img src="{{$printVisitor->photo ?? ''}}" /></td>
             <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
-            <td class="text-center photo"><img
-                    src="{{$printVisitor->qr_code_uri ?? ''}}"
-                    class="qr" /></td>
+            <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
         </tr>
         <tr>
-            <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->full_name)) }}">{{ mount_text($printVisitor?->person?->full_name) }}</td>
+            <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->name)) }}">{{ mount_text($printVisitor?->person?->name) }}</td>
         </tr>
         <tr>
             <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sector?->name)) }}">{{ mount_text($printVisitor?->sector?->name) }}</td>

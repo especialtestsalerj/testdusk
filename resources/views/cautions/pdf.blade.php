@@ -197,7 +197,7 @@
                 <img alt="Logo Alerj" src="data:image/png;base64,{{ $logoBlob }}" />
             </td>
             <td class="bold">
-                <p>ASSEMBLEIA LEGISLATIVA DO ESTADO DO RIO DE JANEIRO</p>
+                <p>{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</p>
                 <p>DEPARTAMENTO DE SEGURANÇA</p>
                 <p>ÓRGÃO DA PRESIDÊNCIA</p>
             </td>

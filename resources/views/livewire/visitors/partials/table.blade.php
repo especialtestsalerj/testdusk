@@ -4,9 +4,9 @@
             <table class="table-dynamic table table-striped">
                 <thead>
                 <tr>
+                    <td class="col-md-1">Foto</td>
                     <td class="col-md-1">Entrada</td>
                     <td class="col-md-1">Saída</td>
-                    <td class="col-md-1">Foto</td>
                     <td class="col-md-3">Visitante</td>
                     <td class="col-md-2">Documento</td>
                     <td class="col-md-2">Destino</td>
@@ -17,29 +17,29 @@
         @endif
         @forelse ($visitors as $visitor)
                 <tr class="align-middle">
-                    <td data-label="Entrada">{!! $visitor?->entranced_at?->format('d/m/Y \<\b\r\> H:i') ?? '-' !!}</td>
-                    <td data-label="Saída">@if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
                     <td data-label="Foto">
                         <img class="w-75" src="{{$visitor->photo}}">
                     </td>
+                    <td data-label="Entrada">{!! $visitor?->entranced_at?->format('d/m/Y \<\b\r\> H:i') ?? '-' !!}</td>
+                    <td data-label="Saída">@if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
                     <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
                     <td class="actions">
                         <span class="btn btn-link" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
-                            <i class="fa fa-print md-fa"></i>
+                            <i class="fa fa-lg fa-print"></i>
                         </span>
                         @can('visitors:show')
-                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search md-fa"></i></a>
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                         @endCan
                         @can('visitors:update')
-                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil md-fa"></i></a>
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
 
                         @endCan
                         @if(!$visitor->exited_at)
                             @can('visitors:checkout')
                                 <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})" title="Registrar Saída">
-                                        <i class="fa fa-arrow-up-right-from-square md-fa"></i>
+                                        <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                 </span>
                             @endCan
                         @endIf
