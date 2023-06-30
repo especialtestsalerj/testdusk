@@ -40,6 +40,8 @@ class Index extends BaseIndex
 
     public function additionalFilterQuery($query)
     {
+
+
         if (!is_null($this->searchString) && $this->searchString != '') {
             //Busca na tabela de people
             $query = $query->orWhereRaw(
@@ -53,7 +55,7 @@ class Index extends BaseIndex
             );
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
-                "visitors.person_id in (select id from documents d
+                "visitors.person_id in (select person_id from documents d
              where d.number ILIKE '%'||unaccent('" .
                     pg_escape_string($this->searchString) .
                     "')||'%')"

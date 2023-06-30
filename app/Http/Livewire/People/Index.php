@@ -28,13 +28,16 @@ class Index extends BaseIndex
     ];
     public function additionalFilterQuery($query)
     {
+
+        //dump($this->searchString);
+
         if (!is_null($this->searchString) && $this->searchString != '') {
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
-                "people.id in (select id from documents d
+                "people.id in (select person_id from documents d
              where d.number ILIKE '%'||unaccent('" .
-                    pg_escape_string($this->searchString) .
-                    "')||'%')"
+                pg_escape_string($this->searchString) .
+                "')||'%' )"
             );
         }
 
