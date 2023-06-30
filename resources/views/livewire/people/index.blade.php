@@ -1,5 +1,5 @@
 <div>
-    <div class="py-4 px-4">
+    <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row border-bottom border-dark mb-4 pb-2">
                 <div class="col-md-8">
@@ -36,6 +36,11 @@
             @include('livewire.people.partials.table', ['redirect' => 'visitors.index'])
         </div>
 
+
         @include('partials.button-to-top')
+    </div>
+
+    <div>
+        @include('livewire.visitors.partials.badge', [$printVisitor])
     </div>
 </div>

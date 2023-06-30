@@ -4,6 +4,10 @@ namespace App\Http\Livewire\Visitors;
 
 use App\Models\Visitor;
 use Livewire\Component;
+use Ramsey\Uuid\Uuid;
+use Carbon\Carbon;
+use App\Models\Visitor as VisitorModel;
+use App\Data\Repositories\Visitors as VisitorsRepository;
 
 class VisitorsCard extends Component
 {
@@ -14,23 +18,46 @@ class VisitorsCard extends Component
     public $entranced;
     public $exited;
     public $visitorId;
+    public $visitorPhoto;
+    public $alreadyExited;
 
-    public function mount($id)
+    public function mount($uuid = null)
     {
-        $visitor = Visitor::select('visitors.*', 'people.full_name', 'documents.number as document', 'sectors.name as sector')
-            ->where('visitors.id', '=', $id)
-            ->join('people', 'people.id', '=', 'visitors.person_id')
-            ->join('documents', 'documents.id', '=', 'visitors.document_id')
-            ->join('sectors', 'sectors.id', '=', 'visitors.sector_id')
-            ->first();
-            
-        $this->visitorId = $visitor->id;
-        $this->name = $visitor->full_name;
-        $this->document = $visitor->document;
-        $this->sector = $visitor->sector;
-        $this->reason = $visitor->description;
+        if ($uuid) {
+            if (Uuid::isValid($uuid)) {
+                $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
+            } else {
+                abort(404);
+            }
+        } else {
+            if ($timestamp = request()->query('timestamp')) {
+                $visitor = app(VisitorsRepository::class)->getAnonymousVisitor(
+                    Carbon::createFromTimestamp($timestamp)
+                );
+            } else {
+                abort(404);
+            }
+        }
+
+        if ($visitor->exited_at) {
+            $this->alreadyExited = true;
+            $this->exited = $visitor->exited_at->format('Y-m-d\TH:i');
+        } else {
+            if (auth()->user()?->can('visitors:checkout')) {
+                $this->exited = now()->format('Y-m-d\TH:i');
+            } else {
+                $this->exited = null;
+            }
+            $this->alreadyExited = false;
+        }
+
+        $this->visitorId = $visitor->id ?? '';
+        $this->name = $visitor->person->full_name ?? '';
+        $this->document = $visitor->document ?? '';
+        $this->sector = $visitor->sector ?? '';
+        $this->reason = $visitor->description ?? '';
         $this->entranced = $visitor->entranced_at;
-        $this->exited = now()->format('Y-m-d\TH:i');
+        $this->visitorPhoto = $visitor->photo;
     }
 
     public function finishVisit()
@@ -44,13 +71,6 @@ class VisitorsCard extends Component
 
     public function render()
     {
-        return view('livewire.visitors.visitors-card', [
-            'name' => $this->name,
-            'document' => $this->document,
-            'sector' => $this->sector,
-            'reason' => $this->reason,
-            'entranced' => $this->entranced,
-            'exited' => $this->exited,
-        ]);
+        return view('livewire.visitors.visitors-card');
     }
 }

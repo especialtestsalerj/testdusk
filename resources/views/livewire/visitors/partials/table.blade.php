@@ -4,36 +4,42 @@
             <table class="table-dynamic table table-striped">
                 <thead>
                 <tr>
-                    <td class="col-md-2">Entrada</td>
-                    <td class="col-md-2">Saída</td>
+                    <td class="col-md-1">Entrada</td>
+                    <td class="col-md-1">Saída</td>
+                    <td class="col-md-1">Foto</td>
                     <td class="col-md-3">Visitante</td>
                     <td class="col-md-2">Documento</td>
                     <td class="col-md-2">Destino</td>
-                    <td class="col-md-1"></td>
+                    <td class="col-md-2"></td>
                 </tr>
                 </thead>
                 <tbody>
         @endif
         @forelse ($visitors as $visitor)
-                <tr>
-                    <td data-label="Entrada">{{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}</td>
-                    <td data-label="Saída">@if(isset($visitor?->exited_at)) {{ $visitor?->exited_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
+                <tr class="align-middle">
+                    <td data-label="Entrada">{!! $visitor?->entranced_at?->format('d/m/Y \<\b\r\> H:i') ?? '-' !!}</td>
+                    <td data-label="Saída">@if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
+                    <td data-label="Foto">
+                        <img class="w-75" src="{{$visitor->photo}}">
+                    </td>
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
-                    <td data-label="Documento">{{$visitor->document?->documentType?->name}} - {{$visitor?->document?->number}}</td>
+                    <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
                     <td class="actions">
-                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                        <span class="btn btn-link" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
+                            <i class="fa fa-print md-fa"></i>
+                        </span>
                         @can('visitors:show')
-                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search md-fa"></i></a>
                         @endCan
                         @can('visitors:update')
-                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil md-fa"></i></a>
 
                         @endCan
                         @if(!$visitor->exited_at)
                             @can('visitors:checkout')
                                 <span class="btn btn-link" wire:click="prepareForCheckout({{$visitor->id}})" title="Registrar Saída">
-                                        <i class="fa fa-arrow-up-right-from-square"></i>
+                                        <i class="fa fa-arrow-up-right-from-square md-fa"></i>
                                 </span>
                             @endCan
                         @endIf
@@ -98,5 +104,7 @@
         <div class="d-flex justify-content-center mt-2">
             {{ $visitors->links() }}
         </div>
+
+
     </div>
 </div>

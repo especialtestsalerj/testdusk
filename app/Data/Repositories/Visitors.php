@@ -13,15 +13,24 @@ class Visitors extends Repository
 
     public function allNotExited()
     {
-        return $this->model::with('person')->whereNull('exited_at')->get()->sortBy(function ($row) {
-            return $row->person->full_name;
-        });
+        return $this->model
+            ::with('person')
+            ->whereNull('exited_at')
+            ->get()
+            ->sortBy(function ($row) {
+                return $row->person->full_name;
+            });
     }
 
     public function findByRoutineWithoutPending($visitor_id = null)
     {
-        return $this->model
-            ::whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')
-            ->get();
+        return $this->model::whereRaw(isset($visitor_id) ? 'id = ' . $visitor_id : '1=1')->get();
+    }
+
+    public function getAnonymousVisitor($entrance = null)
+    {
+        $visitor = new Visitor();
+        $visitor->entranced_at = $entrance ?? now();
+        return $visitor;
     }
 }

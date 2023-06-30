@@ -2,15 +2,17 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\Badgeable;
 use App\Http\Livewire\Traits\Checkoutable;
 use App\Models\Visitor;
 
 class Index extends BaseIndex
 {
-    use Checkoutable;
+    use Checkoutable, Badgeable;
 
     protected $repository = VisitorsRepository::class;
 
@@ -20,6 +22,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
@@ -33,10 +36,13 @@ class Index extends BaseIndex
 
     public function mount()
     {
+//        $this->loadAnonymousVisitor();
     }
 
     public function additionalFilterQuery($query)
     {
+
+
         if (!is_null($this->searchString) && $this->searchString != '') {
             //Busca na tabela de people
             $query = $query->orWhereRaw(
@@ -50,7 +56,7 @@ class Index extends BaseIndex
             );
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
-                "visitors.person_id in (select id from documents d
+                "visitors.person_id in (select person_id from documents d
              where d.number ILIKE '%'||unaccent('" .
                     pg_escape_string($this->searchString) .
                     "')||'%')"
@@ -61,6 +67,8 @@ class Index extends BaseIndex
 
         return $query;
     }
+
+
 
     public function render()
     {

@@ -164,9 +164,14 @@ class People extends BaseForm
 
         $this->origin = is_null(old('origin')) ? $this->person->origin ?? '' : old('origin');
 
+
+
         if ($this->showRestrictions) {
             $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
-                remove_punctuation($document_number)
+
+                    remove_punctuation($this->document_number)
+
+
             );
 
             foreach ($restrictions as $restriction) {

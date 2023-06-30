@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,5 @@ Route::group(
         });
     }
 );
+
+Route::get('visitors/card/{uuid?}', VisitorsCard::class)->name('visitors.card');

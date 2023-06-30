@@ -4,7 +4,7 @@
             <h1 class="text-center pt-4">Visitante</h1>
 
             <div class="text-center pb-4">
-                <img src="/img/bg.jpg" class="rounded" style="max-width: 354px;, max-height:472px;">
+                <img src="{{ $visitorPhoto }}" class="rounded" style="max-width: 354px;, max-height:354px;">
             </div>
 
             <div class="col-md-12 mb-3">
@@ -14,23 +14,27 @@
                     aria-describedby="nameHelp">
             </div>
 
-            <div class="col-md-12 mb-3">
-                <label for="document">Documento</label>
-                <input value={{ $document }} class="form-control" type="input" name="document" id="document"
-                    disabled>
-            </div>
+            @can('visitors:show')
+                <div class="col-md-12 mb-3">
+                    <label for="document">Documento</label>
+                    <input value="{{ $document->documentType->name ?? '' }} - {{ $document->number ?? '' }}"
+                        class="form-control" type="input" name="document" id="document" disabled>
+                </div>
+            @endcan
 
             <div class="col-md-12 mb-3">
                 <label for="sector">Setor de Destino</label>
                 <select name="sector" id="sector" class="form-select" disabled>
-                    <option selected value="{{ $sector }}">{{ $sector }}</option>
+                    <option selected value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="reason">Motivo da Visita</label>
-                <textarea class="form-control" id="reason" name="reason" rows="3" disabled>{{ $reason }}</textarea>
-            </div>
+            @can('visitors:show')
+                <div class="form-group">
+                    <label for="reason">Motivo da Visita</label>
+                    <textarea class="form-control" id="reason" name="reason" rows="3" disabled>{{ $reason }}</textarea>
+                </div>
+            @endcan
 
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -40,15 +44,19 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="check_out">Saída</label>
-                    <input wire:model="exited" value="{{$exited}}" name="exited" id="exited" type="datetime-local"
-                        class="form-control">
+                    <input wire:model="exited" name="exited" id="exited" type="datetime-local" class="form-control"
+                        @if (!auth()->user()?->can('visitors:checkout') || $alreadyExited) disabled @endif>
                 </div>
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-success text-white ml-1" title="Finalizar Visita">
-                    <i class="fa fa-save"></i> Finalizar Visita
-                </button>
-            </div>
+
+            @if (auth()->user()?->can('visitors:checkout') && !$alreadyExited)
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success text-white ml-1" title="Finalizar Visita">
+                        <i class="fa fa-save"></i> Finalizar Visita
+                    </button>
+                </div>
+            @endif
+
         </div>
     </form>
 </div>
