@@ -45,11 +45,11 @@
                 <div class="col-md-6 mb-3">
                     <label for="check_out">Saída</label>
                     <input wire:model="exited" name="exited" id="exited" type="datetime-local" class="form-control"
-                        @if (!auth()->user()?->can('visitors:checkout') || $alreadyExited) disabled @endif>
+                        @if ($exitedDisabled) disabled @endif>
                 </div>
             </div>
 
-            @if (auth()->user()?->can('visitors:checkout') && !$alreadyExited)
+            @if ($showSaveButton)
                 <div class="text-center">
                     <button type="submit" class="btn btn-success text-white ml-1" title="Finalizar Visita">
                         <i class="fa fa-save"></i> Finalizar Visita

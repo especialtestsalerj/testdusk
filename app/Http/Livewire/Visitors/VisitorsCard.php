@@ -21,6 +21,11 @@ class VisitorsCard extends Component
     public $visitorPhoto;
     public $alreadyExited;
 
+
+
+    public $exitedDisabled;
+    public $showSaveButton;
+
     public function mount($uuid = null)
     {
         if ($uuid) {
@@ -39,11 +44,27 @@ class VisitorsCard extends Component
             }
         }
 
+
+
+        $this->visitorId = $visitor->id ?? '';
+        $this->name = $visitor->person->name ?? '';
+        $this->document = $visitor->document ?? '';
+        $this->sector = $visitor->sector ?? '';
+        $this->reason = $visitor->description ?? '';
+        $this->entranced = $visitor->entranced_at;
+        $this->visitorPhoto = $visitor->photo;
+
+        $this->initializeExited($visitor);
+    }
+
+    public function initializeExited($visitor)
+    {
+
         if ($visitor->exited_at) {
             $this->alreadyExited = true;
             $this->exited = $visitor->exited_at->format('Y-m-d\TH:i');
         } else {
-            if (auth()->user()?->can('visitors:checkout')) {
+            if (auth()->user()?->can('visitors:checkout') && $this->visitorId) {
                 $this->exited = now()->format('Y-m-d\TH:i');
             } else {
                 $this->exited = null;
@@ -51,15 +72,11 @@ class VisitorsCard extends Component
             $this->alreadyExited = false;
         }
 
-        $this->visitorId = $visitor->id ?? '';
-        $this->name = $visitor->person->full_name ?? '';
-        $this->document = $visitor->document ?? '';
-        $this->sector = $visitor->sector ?? '';
-        $this->reason = $visitor->description ?? '';
-        $this->entranced = $visitor->entranced_at;
-        $this->visitorPhoto = $visitor->photo;
-    }
+        $this->showSaveButton =
+            $this->visitorId && (auth()->user()?->can('visitors:checkout') && !$this->alreadyExited);
 
+        $this->exitedDisabled = !$this->visitorId || (!auth()->user()?->can('visitors:checkout') || $this->alreadyExited);
+    }
     public function finishVisit()
     {
         $visitor = Visitor::find($this->visitorId);
