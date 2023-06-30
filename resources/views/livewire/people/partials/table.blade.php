@@ -28,13 +28,13 @@
                         &nbsp;
                     @endforeach</td>
                 <td class="actions">
-                    <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                    <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                     @if($person->hasPendingVisitors())
                         <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})" title="Imprimir Etiqueta">
-                            <i class="fa fa-print md-fa"></i>
+                            <i class="fa fa-print"></i>
                         </span>
                     @endif
+                    <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                    <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                     @if(!$person->hasPendingVisitors())
                         @can('visitors:store')
                             <a href="{{ route('visitors.create',['person_id'=>$person->id]) }}" class="btn btn-link" title="Registrar Entrada">

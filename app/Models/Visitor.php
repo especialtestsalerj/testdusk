@@ -72,7 +72,7 @@ class Visitor extends Model
 
     public function photo(): Attribute
     {
-        return Attribute::make(get: fn($value) => '/img/no-photo.png');
+        return Attribute::make(get: fn($value) => '/img/no-photo.svg');
     }
 
     public function qrCodeUri(): Attribute
