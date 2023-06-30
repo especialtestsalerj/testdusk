@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-use App\Services\QRCode\Service;
+use App\Services\QrCode\Service;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;

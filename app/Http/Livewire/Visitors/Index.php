@@ -6,12 +6,13 @@ use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\Badgeable;
 use App\Http\Livewire\Traits\Checkoutable;
 use App\Models\Visitor;
 
 class Index extends BaseIndex
 {
-    use Checkoutable;
+    use Checkoutable, Badgeable;
 
     protected $repository = VisitorsRepository::class;
 
@@ -21,7 +22,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
-    public $printVisitor;
+
 
     public $searchFields = [
         'visitors.entranced_at' => 'date',
@@ -67,26 +68,7 @@ class Index extends BaseIndex
         return $query;
     }
 
-    public function generateBadge($visitor_id)
-    {
-        $this->printVisitor = null;
 
-        if (!empty($visitor_id)) {
-            $this->printVisitor = app(VisitorsRepository::class)->findById([$visitor_id]);
-        } else {
-            $this->loadAnonymousVisitor();
-        }
-
-        $this->printVisitor->append(['photo','qr_code_uri']);
-
-        $this->dispatchBrowserEvent('printBadge');
-    }
-
-    private function loadAnonymousVisitor()
-    {
-        $this->printVisitor = app(Visitors::class)->getAnonymousVisitor();
-
-    }
 
     public function render()
     {

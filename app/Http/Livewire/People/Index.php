@@ -5,12 +5,13 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\People as PeopleRepository;
 
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\Badgeable;
 use App\Http\Livewire\Traits\Checkoutable;
 use Livewire\Component;
 
 class Index extends BaseIndex
 {
-    use Checkoutable;
+    use Checkoutable,  Badgeable;
 
     protected $repository = PeopleRepository::class;
 
