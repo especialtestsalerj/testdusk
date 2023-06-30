@@ -48,9 +48,9 @@
         </div>
     </div>
 
-        <div>
-            @include('livewire.visitors.partials.badge', [$printVisitor])
-        </div>
+    <div>
+        @include('livewire.visitors.partials.badge', [$printVisitor])
+    </div>
 
 
     @include('partials.button-to-top')

@@ -31,7 +31,9 @@
                     <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                     <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
                     @if($person->hasPendingVisitors())
-                        <a href="#" class="btn btn-link" title="Imprimir Etiqueta"><i class="fa fa-print"></i></a>
+                        <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})" title="Imprimir Etiqueta">
+                            <i class="fa fa-print md-fa"></i>
+                        </span>
                     @endif
                     @if(!$person->hasPendingVisitors())
                         @can('visitors:store')
