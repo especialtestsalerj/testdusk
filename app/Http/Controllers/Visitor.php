@@ -67,7 +67,7 @@ class Visitor extends Controller
         app(VisitorsRepository::class)->create($request->all());
 
         return redirect()
-            ->route('people.index')
+            ->route('visitors.index')
             ->with('message', 'Visitante adicionado/a com sucesso!');
     }
 
