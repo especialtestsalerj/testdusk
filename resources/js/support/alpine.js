@@ -26,8 +26,8 @@ window.addEventListener('swal', function (e) {
         showConfirmButton: true,
         cancelButtonColor: '#E3352E',
         confirmButtonColor: '#38c172',
-        confirmButtonText: 'confirmar',
-        cancelButtonText: 'cancelar',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
         showCancelButton: true,
     }).then((result) => {
         if (result.isConfirmed) {
@@ -40,7 +40,7 @@ window.addEventListener('swal', function (e) {
                 showCancelButton: false,
                 timer: 2000,
                 icon: 'success',
-                title: (options.action === 'delete' ? 'Apagado' : 'Salvo') + ' com sucesso',
+                title: (options.action === 'delete' ? 'Removido' : 'Salvo') + ' com sucesso',
             })
         }
     })

@@ -23,7 +23,7 @@
             @endcan
 
             <div class="col-md-12 mb-3">
-                <label for="sector">Setor de Destino</label>
+                <label for="sector">Destino</label>
                 <select name="sector" id="sector" class="form-select" disabled>
                     <option selected value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
                 </select>

@@ -39,6 +39,7 @@ class VisitorStore extends Request
                 ),
                 'after_or_equal:entranced_at',
             ],
+            'document_type_id' => 'required',
             'document_number' => [
                 'bail',
                 'required',
@@ -61,6 +62,8 @@ class VisitorStore extends Request
         return [
             'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
             'exited_at.after_or_equal' => 'A Data de Saída deve ser posterior à entrada da visita.',
+            'document_type_id.required' => 'Tipo de Documento: preencha o campo corretamente.',
+            'document_number.required' => 'Documento: preencha o campo corretamente.',
             'cpf.required' => 'CPF (Visitante): preencha o campo corretamente.',
             'cpf.cpf' => 'CPF (Visitante): número inválido.',
             'full_name.required' => 'Nome (Visitante): preencha o campo corretamente.',

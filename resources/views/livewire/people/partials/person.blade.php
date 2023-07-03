@@ -10,8 +10,8 @@
                 <div class="col-md-12 d-flex align-items-end">
 
                     <div class="col-md-2">
-                        <label for="document_type_id">Tipo de Documento </label>
-                        <select name= "document_type_id" class="form-control" wire:model="document_type_id"
+                        <label for="document_type_id">Tipo de Documento*</label>
+                        <select name= "document_type_id" class="form-control text-uppercase" wire:model="document_type_id"
                                 @if($modal) disabled @endif @if($readonly) readonly @endif
                         x-ref="document_type_id">
                             <option value="">Selecione</option>
@@ -24,7 +24,7 @@
 
                     <div class="col-md-4">
                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
-                        <label for="cpf">Documento:</label>
+                        <label for="document_number">Documento*</label>
                         <input
                             @if($modal) disabled @endif @if($readonly) readonly @endif
                             type="text"
@@ -72,10 +72,10 @@
         <div class="row">
             <div class="form-group">
                 <div class="col-md-12">
-                    <label for="full_name">Nome Completo *</label>
+                    <label for="full_name">Nome Completo*</label>
                     <input
                         type="text"
-                        class="form-control"
+                        class="form-control text-uppercase"
                         name="full_name"
                         id="full_name"
                         wire:model.defer="full_name"
@@ -89,10 +89,10 @@
 
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="full_name">Nome Social</label>
+                    <label for="social_name">Nome Social</label>
                     <input
                         type="text"
-                        class="form-control"
+                        class="form-control text-uppercase"
                         name="social_name"
                         id="social_name"
                         wire:model.defer="social_name"
@@ -107,8 +107,8 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">País*</label>
-                    <select name="country_id" class="form-control" wire:model="country_id" x-ref="country_id"
+                    <label for="country_id">País*</label>
+                    <select name="country_id" class="form-control text-uppercase" wire:model="country_id" x-ref="country_id"
                             @if($modal) disabled @endif @if($readonly) readonly @endif>
                         <option value="">Selecione o país</option>
                         @foreach($countries as $country)
@@ -125,8 +125,8 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">Estado</label>
-                    <select class="form-control" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities"
+                    <label for="state_id">Estado</label>
+                    <select class="form-control text-uppercase" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities"
                             @if($modal) disabled @endif @if($readonly) readonly @endif>
                         <option value="">Selecione o Estado</option>
                         @foreach($states as $state)
@@ -139,12 +139,12 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">Cidade</label>
-                    <select name="city_id" class="select2 form-control" wire:model="city_id" x-ref="city_id"
+                    <label for="city_id">Cidade</label>
+                    <select name="city_id" class="select2 form-control text-uppercase" wire:model="city_id" x-ref="city_id"
                             @if($modal) disabled @endif @if($readonly) readonly @endif>
-                        <option value="">Selecione a Cidade</option>
+                        <option value="">SELECIONE A CIDADE</option>
                         @foreach($cities as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            <option value="{{$city->id}}">{{mb_strtoupper($city->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -153,9 +153,8 @@
         @else
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="full_name">Cidade*</label>
-                    <input type="text" name="other_city" class="form-control" />
-
+                    <label for="other_city">Cidade*</label>
+                    <input type="text" name="other_city" class="form-control text-uppercase" value="{{$other_city}}" @if($modal) disabled @endif @if($readonly) readonly @endif />
                 </div>
             </div>
         @endif

@@ -6,7 +6,14 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-6 text-center text-lg-start">
-                                <span class="fw-bold">Pessoa:</span> {{ $personRestriction?->person?->full_name }} - {{ $personRestriction?->person?->cpf_formatted }}
+                                <span class="fw-bold">Pessoa:</span> {{ $personRestriction?->person?->name }} -
+                                @foreach($personRestriction?->person->documents as $document)
+                                    {{$document->documentType->name}}: {{$document->number}}
+                                    @if($document->state?->initial)
+                                        - {{$document->state->initial}}
+                                    @endif
+                                    &nbsp;
+                                @endforeach
                             </div>
                             <div class="col-12 col-lg-3 text-center text-lg-start">
                                 <span class="fw-bold">Início:</span> {{ $personRestriction?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
