@@ -67,27 +67,34 @@ Utilizar o [SGUS](http://intranet/sgus/) para definir os perfis e usuários.
 ### Atualização
 
 ```
-Executar os itens abaixo para o sistema OCORRÊNCIAS de PRODUÇÃO, sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
+Executar, para o Ocorrencias de produção, os itens (1), (2) e (3), sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
 
-1) Executar o comando a partir da pasta de produção para entrar em modo de manutenção:
+------------------------------------
+
+(1) Executar o comando a partir da pasta de produção do Ocorrencias para entrar em modo de manutenção
 
 php artisan down
 
-2) Atualizar a versão do sistema. Executar os comandos:
+------------------------------------
 
-git pull
+(2) Atualizar a versão de produção do Ocorrencias. Executar os comandos
+
+Após o 'git pull', rodar os comandos:
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 php artisan migrate --force
+php artisan horizon:terminate
 php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 php artisan route:clear
 
-3) Dar permissionamento de owner para a pasta e todos os arquivos internos da pasta ocorrencias:
+Reiniciar o Horizon
 
-sudo chown -R www-data:www-data .
+Dar permissionamento de owner para a pasta e todos os arquivos internos (Exemplo: sudo chown -R www-data:www-data ocorrencias/)
 
-4) Executar o comando a partir da pasta de produção para sair do modo de manutenção:
+------------------------------------
+
+(3) Executar o comando a partir da pasta de produção do Ocorrencias para sair do modo de manutenção
 
 php artisan up
 ```
