@@ -16,7 +16,7 @@
                                 <span class="fw-bold">Fechamento:</span> @if(isset($caution?->concluded_at)) {{ $caution?->concluded_at?->format('d/m/Y \À\S H:i') }} @else <span class="badge bg-warning text-black">PENDENTE </span> @endif
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->full_name }}
+                                <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Destino:</span> {{ $caution->visitor?->sector?->name }}
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="visitor">Visitante</label>
-                                    <input type="text" class="form-control text-uppercase" name="visitor" id="visitor" value="{{ $caution?->visitor->person->full_name }}" disabled/>
+                                    <input type="text" class="form-control text-uppercase" name="visitor" id="visitor" value="{{ $caution?->visitor->person->name }}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="sector_id">Destino</label>

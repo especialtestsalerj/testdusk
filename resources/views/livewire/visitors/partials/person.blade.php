@@ -6,7 +6,7 @@
                 <select class="form-select" name="visitor_id" id="visitor_id" wire:model.defer="visitor_id" wire:change="find" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif @if($readonly) readonly @endif>
                     <option value="">SELECIONE</option>
                     @foreach ($visitors as $key => $visitor)
-                        <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>{{ $visitor->person->full_name }}</option>
+                        <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>{{ $visitor->person->name }}</option>
                     @endforeach
                 </select>
                 <div>

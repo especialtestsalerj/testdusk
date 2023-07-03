@@ -78,7 +78,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Motivo Visita*</label>
+                            <label for="description">Motivo da Visita*</label>
                             <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                         </div>
                     </div>

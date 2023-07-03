@@ -54,11 +54,11 @@ class Visitor extends Controller
 
         $request->merge(['person_id' => $person->id]);
 
-        $request->merge(['number' => $request->get('document_number')]);
+        $request->merge(['number' => remove_punctuation($request->get('document_number'))]);
 
         $document = Document::firstOrCreate([
             'person_id' => $request->get('person_id'),
-            'number' => $request->get('document_number'),
+            'number' => mb_strtoupper(remove_punctuation($request->get('document_number'))),
             'document_type_id' => $request->get('document_type_id'),
         ]);
 

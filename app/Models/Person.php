@@ -42,8 +42,7 @@ class Person extends Model
     {
         $words = explode(' ', $this->full_name);
         $firstWord = $words[0];
-        $lastWord = $words[count($words) - 1];
-        $concatenated = $firstWord . ' ' . $lastWord;
+        $concatenated = $firstWord . (count($words) > 1 ? ' ' . $words[count($words) - 1] : '');
 
         return Attribute::make(get: fn($value) => $concatenated);
     }

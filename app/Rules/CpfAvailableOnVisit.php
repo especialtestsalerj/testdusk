@@ -37,12 +37,9 @@ class CpfAvailableOnVisit implements Rule
      */
     public function passes($attribute, $value)
     {
+        $documentType = DocumentType::where('id', '=', $this->document_type_id)->first();
 
-        $documentType = DocumentType::where('id','=',$this->document_type_id)->first();
-
-//        dd($documentType->name);
-
-        if($documentType->name == 'CPF') {
+        if ($documentType?->name == 'CPF') {
             $query = DB::table('visitors')
                 ->join('people', 'visitors.person_id', '=', 'people.id')
                 ->join('documents', 'visitors.person_id', '=', 'documents.person_id')
@@ -54,7 +51,7 @@ class CpfAvailableOnVisit implements Rule
             }
 
             return $query->doesntExist();
-        }else{
+        } else {
             return true;
         }
     }

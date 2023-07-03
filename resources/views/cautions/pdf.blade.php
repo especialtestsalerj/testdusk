@@ -214,7 +214,7 @@
                 <table>
                     <tr>
                         <td class="bold">NOME: </td>
-                        <td>{{ $caution->visitor->person->full_name }} - {{ $caution->visitor->person->cpf_formatted }}</td>
+                        <td>{{ $caution->visitor->person->name }} - {{ $caution->visitor->document->type }} {{ $caution->visitor->document->number }}</td>
                     </tr>
                     <tr>
                         <td class="bold">DESTINO: </td>
