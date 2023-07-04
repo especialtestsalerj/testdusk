@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Traits;
 trait WithWebcam
 {
     public $webcam_file;
+    public $webcam_data_uri;
+
     public $x;
     public $y;
     public $width;
@@ -19,6 +21,7 @@ trait WithWebcam
         $this->y = 0;
         $this->width = 400;
         $this->height = 400;
+        $this->webcam_data_uri = false;
     }
 
     public function takeSnapshot()
@@ -31,7 +34,7 @@ trait WithWebcam
         $this->removeWebcamFile();
 
         //Force update of crop panel
-        $this->iteration = $this->iteration+1;
+        $this->iteration = $this->iteration + 1;
     }
 
     public function cropChanged($event)

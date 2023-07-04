@@ -181,7 +181,14 @@ class People extends BaseForm
         }
 
         if (!empty($this->visitor_id)) {
-            $this->visitor = Visitor::where('id', $this->visitor_id)->first();
+            $this->visitor = Visitor::where('id', $this->visitor_id)
+                ->first()
+                ->append('photo');
+
+            $this->webcam_file = $this->visitor->photo;
+            $this->webcam_data_uri = true;
+        } else {
+            $this->webcam_data_uri = false;
         }
 
         $this->fillModel();

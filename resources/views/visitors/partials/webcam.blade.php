@@ -37,7 +37,7 @@
             x-init="setUp"
         >
             <div>
-                <img id="preview_webcam_file" src="{{ $webcam_file->temporaryUrl() }}" style="width: 100%; max-width: 100%;">
+                <img id="preview_webcam_file" src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}" style="width: 100%; max-width: 100%;">
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
             var ctx = canvas.getContext('2d');
             var image = new Image();
-            image.src = '{{ $webcam_file->temporaryUrl() }}'; // Replace with your image source
+            image.src = '{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}'; // Replace with your image source
 
             // When the image has loaded
             image.onload = function() {
