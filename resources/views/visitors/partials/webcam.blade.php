@@ -45,8 +45,9 @@
     <div
         class="row"
         x-init="
-            a = 1;
             var canvas = document.getElementById('canvas');
+            const base64Input = document.getElementById('photo');
+
             var ctx = canvas.getContext('2d');
             var image = new Image();
             image.src = '{{ $webcam_file->temporaryUrl() }}'; // Replace with your image source
@@ -55,10 +56,12 @@
             image.onload = function() {
               // Draw the image on the canvas, applying the crop
               ctx.drawImage(image, {{$x ?? 0}}, {{$y ?? 0}}, {{$width ?? 400}}, {{$height ?? 400}}, 0, 0, canvas.width, canvas.height);
+              base64Input.value = canvas.toDataURL()
             };
         "
     >
-        <canvas id="canvas" width="400" height="400"></canvas>
+        <canvas wire:ignore id="canvas" width="400" height="400"></canvas>
+        <input wire:ignore  id="photo" name="photo" type="hidden">
     </div>
 
 @endif

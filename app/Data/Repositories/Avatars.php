@@ -2,15 +2,16 @@
 
 namespace App\Data\Repositories;
 
-use App\Models\File as FileModel;
-use App\Models\File;
+use App\Models\Avatar as AvatarModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\TemporaryUploadedFile;
+use phpDocumentor\Reflection\Types\String_;
+use Illuminate\Support\Facades\File;
 
 class Avatars extends Repository
 {
-    protected $model = FileModel::class;
+    protected $model = AvatarModel::class;
 
     /**
      * @param $file
@@ -24,25 +25,8 @@ class Avatars extends Repository
         );
     }
 
-    private function findOrCreateFile($uploadedFile)
+    protected function findOrCreateFile($uploadedFile)
     {
-        if($uploadedFile instanceof  TemporaryUploadedFile){
-            $pathName = $uploadedFile->getRealPath();
-        }else {
-            $pathName = $uploadedFile->getPathName();
-        }
-
-        $hash = sha1(file_get_contents($pathName));
-
-        if (!($file = $this->findByHash($hash))) {
-            $file = $this->new();
-            $file->hash = $hash;
-            $file->drive = $this->getDrive();
-            $file->path = $this->makePath($hash, $uploadedFile);
-            $file->mime_type = $uploadedFile->getClientMimeType();
-            $file->save();
-        }
-
         return $file;
     }
 
@@ -66,42 +50,77 @@ class Avatars extends Repository
         }
     }
 
+    function getBase64Extension($base64String)
+    {
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64String, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
+    }
+
+    protected function getMimeType($base64String)
+    {
+        dd(File::mimeTypeFromBase64($base64String));
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+
+        // Get the MIME type using finfo
+        return $mime = $finfo->buffer($base64String);
+    }
+
     /**
      * @param $uploadedFile
      * @return File
      */
-    public function storePhysicalFile($uploadedFile): File
+    public function storePhysicalFile($uploadedFile)
     {
-        $this->storeFile($file = $this->findOrCreateFile($uploadedFile), $uploadedFile);
+        $base64String = $uploadedFile;
+        $fileContent = base64_decode(substr($base64String, strpos($base64String, ',') + 1));
+        $hash = sha1($fileContent);
 
+        $extension = Str::lower($this->getBase64Extension($base64String));
+
+        Storage::disk($this->getDrive())->put(
+            $path = $this->makePath($hash, $fileContent, $extension),
+            $fileContent
+        );
+
+        if (!($file = $this->model::where('hash', $hash)->first())) {
+            $file = new $this->model();
+            $file->hash = $hash;
+            $file->drive = $this->getDrive();
+            $file->path = $path;
+            $file->mime_type = mime_content_type(Storage::disk($this->getDrive())->path($path));
+            $file->save();
+        }
         return $file;
     }
 
     private function getDrive()
     {
-        return  'avatars';
+        return 'avatars';
     }
 
     /**
      * @param $hash
-     * @param $uploadedFile
+     * @param $fileContent
      * @return string
      */
-    private function makeFileName($hash, $uploadedFile): string
+    private function makeFileName($hash, $fileContent, $extension): string
     {
-        return $hash . '.' . Str::lower($uploadedFile->getClientOriginalExtension());
+        return $hash . '.' . $extension;
     }
 
     /**
      * @param $hash
-     * @param $uploadedFile
+     * @param $fileContent
      * @return string
      */
-    private function makePath($hash, $uploadedFile): string
+    private function makePath($hash, $fileContent, $extension): string
     {
         $deep = $this->makeDirectory($hash);
 
-        $filename = $this->makeFileName($hash, $uploadedFile);
+        $filename = $this->makeFileName($hash, $fileContent, $extension);
 
         return "{$deep}{$filename}";
     }

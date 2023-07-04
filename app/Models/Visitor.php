@@ -5,6 +5,7 @@ use App\Services\QrCode\Service;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -15,6 +16,7 @@ class Visitor extends Model
         'sector_id',
         'description',
         'document_id',
+        'avatar_id',
     ];
 
     protected $casts = [
@@ -72,7 +74,21 @@ class Visitor extends Model
 
     public function photo(): Attribute
     {
-        return Attribute::make(get: fn($value) => '/img/no-photo.svg');
+        $avatar = $this->avatar;
+
+        return Attribute::make(
+            get: fn($value) => $this->avatar
+                ? 'data:image/' .
+                    mime2ext($avatar->mime_type) .
+                    ';base64,' .
+                    base64_encode(Storage::disk('avatars')->get($avatar->path))
+                : '/img/no-photo.svg'
+        );
+    }
+
+    public function avatar()
+    {
+        return $this->belongsTo(Avatar::class);
     }
 
     public function qrCodeUri(): Attribute

@@ -1,15 +1,26 @@
 <div class="form-group">
+
+    asdadsdasdas
+
     <div
         x-init="
 
-        VMasker($refs.cpf).maskPattern(cpfmask);
+        //VMasker($refs.cpf).maskPattern(cpfmask);
+        Webcam.set({
+         width: 1920,
+         height: 1080,
+         dest_width: 1920,
+         dest_height: 1080,
+         image_format: 'jpeg',
+         jpeg_quality: 90,
+         force_flash: false
+        });
+
         Webcam.attach( '#webcam' );
         window.take_snapshot = function() {
 
             window.Webcam.snap( function(data_uri) {
-
             const fileInput = document.querySelector('input[type=file]');
-
             const myFile = base64ToFile(data_uri, 'webcam-picture.jpg');
 
             // Now let's create a DataTransfer to get a FileList

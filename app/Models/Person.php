@@ -14,7 +14,6 @@ class Person extends Model
         'certificate_type',
         'certificate_number',
         'certificate_valid_until',
-        'photo',
         'alert_obs',
         'city_id',
         'state_id',

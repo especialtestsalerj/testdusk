@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\Repositories\Avatars;
 use App\Data\Repositories\Documents;
 use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
@@ -50,6 +51,12 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
+        $photo = $request->get('photo');
+        if ($photo) {
+            $avatar = app(Avatars::class)->storePhysicalFile($photo);
+            $request->merge(['avatar_id' => $avatar->id]);
+        }
+
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
         $request->merge(['person_id' => $person->id]);

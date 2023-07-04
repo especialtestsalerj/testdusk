@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Avatar extends Model
 {
     use HasFactory;
+    protected $controlCreatedBy = false;
+    protected $controlUpdatedBy = false;
 
     protected $fillable = ['hash', 'drive', 'path', 'mime_type'];
 
