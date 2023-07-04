@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-
 class Person extends Model
 {
     protected $fillable = [
@@ -91,8 +90,8 @@ class Person extends Model
         return $this->hasOne(Visitor::class)->orderBy('created_at', 'desc');
     }
 
-    public function avatar()
+    public function photo(): Attribute
     {
-        return $this->lastVisit->avatar();
+        return Attribute::make(get: fn($value) => $this->lastVisit->photo ?? no_photo());
     }
 }

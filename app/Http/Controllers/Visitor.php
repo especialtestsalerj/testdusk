@@ -51,9 +51,10 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
+        //Store photo
         $photo = $request->get('photo');
         if ($photo) {
-            $avatar = app(Avatars::class)->storePhysicalFile($photo);
+            $avatar = app(Avatars::class)->store($photo);
             $request->merge(['avatar_id' => $avatar->id]);
         }
 

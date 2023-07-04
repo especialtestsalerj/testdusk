@@ -372,6 +372,11 @@ function mount_css_text($txt)
     }
 }
 
+function no_photo()
+{
+    return '/img/no-photo.svg';
+}
+
 function mime2ext($mime)
 {
     $mime_map = [

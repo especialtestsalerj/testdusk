@@ -76,14 +76,7 @@ class Visitor extends Model
     {
         $avatar = $this->avatar;
 
-        return Attribute::make(
-            get: fn($value) => $this->avatar
-                ? 'data:image/' .
-                    mime2ext($avatar->mime_type) .
-                    ';base64,' .
-                    base64_encode(Storage::disk('avatars')->get($avatar->path))
-                : '/img/no-photo.svg'
-        );
+        return Attribute::make(get: fn($value) => $this->avatar ? $avatar->base64Uri : no_photo());
     }
 
     public function avatar()
