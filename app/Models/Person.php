@@ -84,12 +84,12 @@ class Person extends Model
 
     public function pendingVisit()
     {
-        return $this->belongsTo(Visitor::class)->whereNull('exited_at');
+        return $this->hasOne(Visitor::class)->whereNull('exited_at');
     }
 
     public function lastVisit()
     {
-        return $this->hasOne(Visitor::class)->orderBy('created_at','desc');
+        return $this->hasOne(Visitor::class)->orderBy('created_at', 'desc');
     }
 
     public function avatar()
