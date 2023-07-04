@@ -150,6 +150,8 @@ class Visitor extends Controller
         if ($photo) {
             $avatar = app(Avatars::class)->store($photo);
             $request->merge(['avatar_id' => $avatar->id]);
+        }else{
+            $request->merge(['avatar_id' => null]);
         }
         return $request;
     }
