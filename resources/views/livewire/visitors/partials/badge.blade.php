@@ -148,7 +148,7 @@ document.addEventListener('printBadge', update)">
             <td class="badge-bg-title text-center badge-border-title"></td>
         </tr>
         <tr>
-            <td class="text-left photo"><img src="{{$printVisitor->photo ?? ''}}" /></td>
+            <td class="text-left photo"><img class="photo" src="{{$printVisitor->photo ?? ''}}" /></td>
             <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
             <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
         </tr>

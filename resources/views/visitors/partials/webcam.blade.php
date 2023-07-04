@@ -45,8 +45,8 @@
     <div
         class="row"
         x-init="
-            var canvas = document.getElementById('canvas');
-            const base64Input = document.getElementById('photo');
+            window.canvas = document.getElementById('canvas');
+            window.base64Input = document.getElementById('photo');
 
             var ctx = canvas.getContext('2d');
             var image = new Image();
