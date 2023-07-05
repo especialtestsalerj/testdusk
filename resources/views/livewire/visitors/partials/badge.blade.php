@@ -1,83 +1,24 @@
 <style type="text/css" media="screen">
-    /* reset.css */
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-    }
-    /* HTML5 display-role reset for older browsers */
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section {
-        display: block;
-    }
-    body {
-        line-height: 1;
-    }
-    ol, ul {
-        list-style: none;
-    }
-    blockquote, q {
-        quotes: none;
-    }
-    blockquote:before, blockquote:after,
-    q:before, q:after {
-        content: '';
-        content: none;
-    }
-    table {
-
-        border-width: 1mm;
-        border-color: black;
-
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    /* reset.css */
-
-    .bg-danger, .navbar, .conteudo, .conteudo-rodape {
-        display: none !important;
-    }
-
-    body {
-        background: white !important;
-    }
-
     #badge {
-
-
+        background-color: #FFFFFF;
         display: block;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 11px;
         color: #000;
         width: 72mm;
         height: 40mm;
-        margin-top: 2mm;
+
         margin-right: 4mm;
-        margin-bottom: 4mm;
         margin-left: 5mm;
-        padding-top: 4mm;
+        /*margin-top: 2mm;*/
+        /*margin-bottom: 4mm;*/
+        /*padding-top: 4mm;*/
         padding-right: -8mm;
         padding-bottom: 0;
         padding-left: -6mm;
     }
 
     #badge table {
-
         width: 100%;
     }
 
@@ -121,8 +62,17 @@
     .badge-font-size-9 {
         font-size: 9px;
     }
+
+    .zoom {
+        background-color: #d3d3d3;
+        z-index: 9999;
+        zoom: 2; /* Adjust the zoom value as per your requirement */
+    }
 </style>
 
+<div class="zoom sticky-top d-flex justify-content-center"
+
+>
 <div id="badge" x-init="
 
 window.debounce = function (func, timeout = 1000){
@@ -136,7 +86,10 @@ window.debounce = function (func, timeout = 1000){
 const update = window.debounce(() => window.print());
 
 document.addEventListener('printBadge', update)">
-    <table>
+    <table
+
+
+    >
         <tr>
             <td colspan="3" class="text-center badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
         </tr>
@@ -161,4 +114,5 @@ document.addEventListener('printBadge', update)">
             <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sector?->name)) }}">{{ mount_text($printVisitor?->sector?->name) }}</td>
         </tr>
     </table>
+</div>
 </div>

@@ -1,5 +1,4 @@
 <div class="form-group">
-
     <div
         x-init="
 
@@ -28,7 +27,7 @@
         @focus-field.window="$refs[$event.detail.field].focus()"
 
     >
-        @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
+
 
         @include('visitors.partials.webcam')
 

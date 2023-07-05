@@ -30,6 +30,7 @@
                         @endif
                     </div>
 
+
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
 
                         @include('partials.save-button',
@@ -40,6 +41,8 @@
                 </div>
             </div>
 
+
+
             <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
@@ -47,6 +50,16 @@
                         <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
                     </div>
                 </div>
+
+                <div id="scroll"></div>
+                @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
+
+                <script>
+                    window.onload = function (){
+                        document.getElementById('scroll').scrollIntoView();
+                    }
+                </script>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
