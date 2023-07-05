@@ -1,13 +1,4 @@
 <style type="text/css" media="screen">
-    .conteudo {
-        display: block !important;
-    }
-
-    #badge {
-        display: none;
-    }
-</style>
-<style type="text/css" media="print">
     /* reset.css */
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -49,6 +40,10 @@
         content: none;
     }
     table {
+
+        border-width: 1mm;
+        border-color: black;
+
         border-collapse: collapse;
         border-spacing: 0;
     }
@@ -63,6 +58,8 @@
     }
 
     #badge {
+
+
         display: block;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 11px;
@@ -80,6 +77,7 @@
     }
 
     #badge table {
+
         width: 100%;
     }
 
@@ -140,7 +138,7 @@ const update = window.debounce(() => window.print());
 document.addEventListener('printBadge', update)">
     <table>
         <tr>
-            <td colspan="3" class="text-left badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
+            <td colspan="3" class="text-center badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
         </tr>
         <tr>
             <td class="badge-bg-title text-center badge-border-title"></td>
@@ -148,7 +146,11 @@ document.addEventListener('printBadge', update)">
             <td class="badge-bg-title text-center badge-border-title"></td>
         </tr>
         <tr>
-            <td class="text-left photo"><img class="photo" src="{{$printVisitor->photo ?? ''}}" /></td>
+            <td class="text-left photo">
+{{--                <img class="photo" src="{{$printVisitor->photo ?? ''}}" />--}}
+                <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
+                <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
+            </td>
             <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
             <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
         </tr>
