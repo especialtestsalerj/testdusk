@@ -1,3 +1,5 @@
+<div style="height: 100%">
+
 <button type="button" wire:click="takeSnapshot" onclick="take_snapshot()" style="border: none;
                         padding: 0;
                         background: none;"><i class="fa-solid fa-camera"></i></button>
@@ -104,5 +106,7 @@
 
 <div>
 
+
+</div>
 
 </div>

@@ -1,8 +1,7 @@
-@extends('layouts.app')
+<div>
 
-@section('content')
     <div class="py-4 px-4">
-        <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
+        <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
 
             @if (isset($visitor->id))
@@ -62,7 +61,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="entranced_at">Entrada*</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ is_null(old('occurred_at')) ? (formMode() == 'create' ? date('Y-m-d H:i') : $visitor->entranced_at_formatted) : old('occurred_at') }}" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -74,12 +73,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div wire:ignore.self>
-                            @livewire('people.people', ['person_id'=>$person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
-                        </div>
+                        @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                         <div class="form-group">
                             <label for="sector_id">Destino*</label>
-                            <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
+                            <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
                                 <option value=""></option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
@@ -101,4 +98,4 @@
     </div>
 
     @include('partials.button-to-top')
-@endsection
+</div>
