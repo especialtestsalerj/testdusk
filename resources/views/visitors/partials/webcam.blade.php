@@ -10,13 +10,25 @@
         padding: 0;
         background: none;"><i class="fas fa-eraser"></i></button>
 
-<div wire:ignore>
-    <div id="webcam" style="width:640px; height:480px;"></div>
+<div class="row control-group" transition="expand" wire:ignore>
+    <div class="form-group col-12 floating-label-form-group controls">
+        <div class="card text-center">
+            <div class="card-header">Webcam</div>
+            <div class="card-body">
+    <div id="webcam" style="width:640px; height:480px; max-height:300px;"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @if($webcam_file)
-    <div data-instance="{{ $iteration }}">
+    <div class="row control-group" transition="expand" data-instance="{{ $iteration }}">
+        <div class="form-group col-12 floating-label-form-group controls">
+            <div class="card text-center">
+                <div class="card-header">Recortar foto</div>
+                <div class="card-body">
         <div
+        class="d-flex flex-column justify-content-center"
             wire:ignore
             wire:key="force-rerender"
             x-data="{
@@ -39,7 +51,10 @@
             x-init="setUp"
         >
             <div>
-                <img id="preview_webcam_file" src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}" style="width: 100%; max-width: 100%;">
+                <img id="preview_webcam_file" src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}" class="img-fluid" style="max-height: 300px">
+            </div>
+        </div>
+                </div>
             </div>
         </div>
     </div>

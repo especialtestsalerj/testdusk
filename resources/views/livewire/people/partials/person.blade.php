@@ -31,10 +31,10 @@
         <div class="row">
             <div class="form-group">
 
-                <div class="col-md-12 d-flex align-items-end">
+                <div class="col-md-12 d-md-flex align-md-items-baseline">
                     <div class="col-md-6">
                         <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-4">
                         <label for="document_type_id">Tipo de Documento*</label>
                         <select name= "document_type_id" class="form-control text-uppercase" wire:model="document_type_id"
                                 @if($modal) disabled @endif @if($readonly) readonly @endif
@@ -47,7 +47,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-7">
+                    <div class="col-lg-6 col-10">
                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
                         <label for="document_number">Documento*</label>
                         <input
@@ -63,7 +63,7 @@
 
                         />
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-lg-2 col-2 pt-4 text-center">
                         <button type="button" wire:click="searchDocumentNumber" class="btn btn-outline-secondary" id="btn_buscar" @if($modal || $readonly) disabled @endif>
                             <i class="fa fa-search"></i>
                         </button>
@@ -109,7 +109,7 @@
                         <div class="row">
 
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="country_id">País*</label>
                                     <select name="country_id" class="form-control text-uppercase" wire:model="country_id" x-ref="country_id"
@@ -127,7 +127,7 @@
 
                             @if($country_id == "" || $country_id == $country_br->id)
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="state_id">Estado</label>
                                         <select class="form-control text-uppercase" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities"
@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="city_id">Cidade</label>
                                         <select name="city_id" class="select2 form-control text-uppercase" wire:model="city_id" x-ref="city_id"
@@ -168,11 +168,9 @@
 
                     </div>
 
-                    <div class="col-md-1">
+                 
 
-                    </div>
-
-                    <div class="col-md-5">
+                    <div class="col-md-6 container">
 
                         @include('visitors.partials.webcam')
 
