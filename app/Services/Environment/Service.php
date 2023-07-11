@@ -15,7 +15,6 @@ class Service
                 'version' => '1.0', //Version::format('compact'),
             ],
 
-
             'broadcast' => [
                 'driver' => config('broadcasting.default', 'pusher'),
             ],
@@ -24,6 +23,7 @@ class Service
                 'server' => config('broadcasting.connections.pusher.server'),
 
                 'key' => config('broadcasting.connections.pusher.key'),
+                //                'id' => config('broadcasting.connections.pusher.app_id'),
 
                 'options' => [
                     'cluster' => config('broadcasting.connections.pusher.options.cluster', 'us2'),

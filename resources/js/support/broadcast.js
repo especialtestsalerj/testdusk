@@ -9,6 +9,7 @@ if (window.laravel.broadcast) {
     // Pusher.logToConsole = true
 
     let echoConfig = {
+        // sockedId: window.laravel.pusher.id,
         broadcaster: window.laravel.broadcast.driver,
         key: window.laravel.pusher.key,
         cluster: window.laravel.pusher.options.cluster,
