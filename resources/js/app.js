@@ -7,22 +7,70 @@ require('./bootstrap')
  */
 require('select2/dist/js/select2.min.js')
 
-$(() => {
-    // jshint ignore:line
-    $(document).ready(function () {
-        $('.select2').select2({
-            theme: 'bootstrap-5',
-            tags: false,
-            width: '100%',
-        })
+$(document).ready(function () {
 
-        $('.select2-tag').select2({
-            theme: 'bootstrap-5',
-            tags: true,
-            width: '100%',
-        })
-    })
-})
+    $('.select2').select2({
+        theme: 'bootstrap-5',
+        tags: false,
+        width: '100%',
+    });
+
+    document.addEventListener('select2SelectOption', function(event){
+        $('[data-select2-id="select2-data-'+event.detail.name+'"]').val(event.detail.value).trigger('change')
+    });
+
+    $('.select2').on('change', function (e) {
+        var data = e.target.value
+        var name = e.target.name
+
+        // console.log($('.select2[name='+name+']')[0].select2({
+        //     theme: 'bootstrap-5',
+        //     tags: false,
+        //     width: '100%',
+        // }))
+
+        // var element = $('.select2[name="'+name+'"]');
+
+        // element.select2({
+        //     theme: 'bootstrap-5',
+        //     tags: false,
+        //     width: '100%',
+        // })
+
+        // console.log(window.Livewire.all())
+        // console.log('searching for '+name)
+        // console.log(window.Livewire.all())
+
+        const livewireComponents = window.Livewire.all()
+        livewireComponents.forEach((component)=>{
+            // console.log(component.get('componentId'))
+            // console.log(component.get('selected'))
+
+            // console.log('component get = '+component.get(name))
+
+            if(component.get(name) !== undefined){
+                    // console.log('found '+name+' in '+component.get('componentId')+' as '+component.get(name) )
+
+                    // console.log('name = '+name)
+
+                    component.set(name, data)
+                    // console.log($('.select2[name="'+name+'"]')[0])
+
+
+                    // $('.select2[name="'+name+'"]').select2({
+                    //     theme: 'bootstrap-5',
+                    //     tags: false,
+                    //     width: '100%',
+                    // });
+                    //
+
+
+                }
+
+        });
+    });
+
+});
 
 $(document).on('select2:open', (e) => {
     const selectId = e.target.id

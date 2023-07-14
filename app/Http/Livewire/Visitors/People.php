@@ -26,6 +26,13 @@ class People extends BaseForm
     public $routineStatus;
     public $readonly;
 
+    public $country;
+
+    public function updatedVisitorId()
+    {
+        $this->find();
+    }
+
     public function find()
     {
         $result =
@@ -35,10 +42,19 @@ class People extends BaseForm
 
         if ($result) {
             $this->person_id = $result->person->id;
-            $this->certificate_type = $result->person->certificate_type;
-            $this->id_card = $result->person->id_card;
-            $this->certificate_number = $result->person->certificate_number;
-            $this->certificate_valid_until = $result->person->certificate_valid_until;
+
+            //START Trocar isso aqui de acordo com a tabela certa
+            $people2Person = \DB::table('people2')
+                ->where('id', $this->person_id)
+                ->first();
+
+            $this->select2SelectOption('certificate_type', $people2Person->certificate_type);
+
+            $this->id_card = $people2Person->id_card;
+            $this->certificate_number = $people2Person->certificate_number;
+            $this->certificate_valid_until = $people2Person->certificate_valid_until;
+            //END Trocar isso aqui de acordo com a tabela certa
+
             $this->destiny_sector_name = $result?->sector?->name;
             if ($result->hasOpenCaution($this->caution_id)) {
                 $this->addError('msg_visitor', 'Visitante possui cautela em aberto.');
