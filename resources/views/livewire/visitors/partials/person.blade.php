@@ -1,9 +1,9 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group" wire:ignore>
                 <label for="visitor_id">Visitante*</label>
-                <select class="form-select" name="visitor_id" id="visitor_id" wire:model.defer="visitor_id" wire:change="find" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif @if($readonly) readonly @endif>
+                <select class="form-select select2" name="visitor_id" id="visitor_id" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif @if($readonly) readonly @endif>
                     <option value="">SELECIONE</option>
                     @foreach ($visitors as $key => $visitor)
                         <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>{{ $visitor->person->name }}</option>
@@ -22,9 +22,9 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group" wire:ignore>
                 <label for="certificate_type">Tipo de Porte*</label>
-                <select class="form-select" name="certificate_type" id="certificate_type" wire:model="certificate_type" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif @if($readonly) readonly @endif>
+                <select class="form-select select2" name="certificate_type" id="certificate_type" @disabled(!$routineStatus) @if(request()->query('disabled')) disabled @endif @if($readonly) readonly @endif>
                     <option value="">SELECIONE</option>
                     <option value="1">PÚBLICO</option>
                     <option value="2">PRIVADO</option>

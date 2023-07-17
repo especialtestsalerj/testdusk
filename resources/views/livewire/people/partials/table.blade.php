@@ -4,7 +4,8 @@
             <table class="table-dynamic table table-striped">
                 <thead>
                 <tr>
-                    <td class="col-md-6">Nome</td>
+                    <td class="col-md-1">Foto</td>
+                    <td class="col-md-5">Nome</td>
                     <td class="col-md-4">Documento(s)</td>
                     <td class="col-md-2"></td>
                 </tr>
@@ -13,6 +14,9 @@
                 @endif
         @forelse ($people as $person)
             <tr>
+                <td data-label="Foto">
+                    <img class="w-75" src="{{$person->photo}}">
+                </td>
                 <td data-label="Nome">
                     {{ $person->name}}
                     @if($person->hasPendingVisitors())

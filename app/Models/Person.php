@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-
 class Person extends Model
 {
     protected $fillable = [
@@ -14,7 +13,6 @@ class Person extends Model
         'certificate_type',
         'certificate_number',
         'certificate_valid_until',
-        'photo',
         'alert_obs',
         'city_id',
         'state_id',
@@ -85,5 +83,15 @@ class Person extends Model
     public function pendingVisit()
     {
         return $this->hasOne(Visitor::class)->whereNull('exited_at');
+    }
+
+    public function lastVisit()
+    {
+        return $this->hasOne(Visitor::class)->orderBy('created_at', 'desc');
+    }
+
+    public function photo(): Attribute
+    {
+        return Attribute::make(get: fn($value) => $this->lastVisit->photo ?? no_photo());
     }
 }

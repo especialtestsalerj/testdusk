@@ -10,11 +10,14 @@ abstract class BaseForm extends Component
     use WithPagination;
 
     public $focus;
-
     protected $paginationTheme = 'bootstrap';
 
     public $mode = 'create';
 
+    public function select2SelectOption($name, $value)
+    {
+        $this->dispatchBrowserEvent('select2SelectOption', ['name' => $name, 'value' => $value]);
+    }
     protected function focus($ref)
     {
         $this->dispatchBrowserEvent('focus-field', ['field' => $ref]);
@@ -29,7 +32,6 @@ abstract class BaseForm extends Component
     {
         return [];
     }
-
     protected function getViewVariables()
     {
         return $this->formVariables() + $this->getComponentVariables();

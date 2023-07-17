@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\Repositories\Avatars;
 use App\Data\Repositories\Documents;
 use App\Data\Repositories\Visitors;
 use App\Data\Repositories\Visitors as VisitorsRepository;
@@ -50,6 +51,8 @@ class Visitor extends Controller
 
     public function store(VisitorStore $request)
     {
+        $request = $this->storeAvatar($request);
+
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
         $request->merge(['person_id' => $person->id]);
@@ -75,7 +78,9 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_SHOW);
 
-        $visitor = app(VisitorsRepository::class)->findById($id);
+        $visitor = app(VisitorsRepository::class)
+            ->findById($id)
+            ->append('photo');
 
         return $this->view('visitors.form')->with([
             'visitor' => $visitor,
@@ -95,6 +100,8 @@ class Visitor extends Controller
 
     public function update(VisitorUpdate $request, $id)
     {
+        $request = $this->storeAvatar($request);
+
         app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
@@ -131,5 +138,21 @@ class Visitor extends Controller
                 abort(404);
             }
         }
+    }
+
+    /**
+     * @param VisitorStore $request
+     * @return VisitorStore $request
+     */
+    protected function storeAvatar(VisitorStore $request)
+    {
+        $photo = $request->get('photo');
+        if ($photo) {
+            $avatar = app(Avatars::class)->store($photo);
+            $request->merge(['avatar_id' => $avatar->id]);
+        }else{
+            $request->merge(['avatar_id' => null]);
+        }
+        return $request;
     }
 }
