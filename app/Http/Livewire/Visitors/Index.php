@@ -22,6 +22,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+    public $exited_at;
 
 
     public $searchFields = [
@@ -61,6 +62,10 @@ class Index extends BaseIndex
                     pg_escape_string($this->searchString) .
                     "')||'%')"
             );
+        }
+
+        if($this->exited_at){
+            $query = $query->whereNull('exited_at');
         }
 
         $query->with('document.documentType');
