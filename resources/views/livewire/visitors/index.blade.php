@@ -38,7 +38,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-12 mt-1 ml-5 pl-5">
+                <div class="col-11 mt-4" style="padding-left: 5%;">
                     <span>
                         <input type="checkbox" name="exited_at"
                                wire:model="exited_at"> Somente Saída em Aberto
