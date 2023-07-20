@@ -65,7 +65,7 @@
 
     .zoom {
         background-color: #d3d3d3;
-        z-index: 9999;
+        z-index: 1;
         zoom: 1.5; /* Adjust the zoom value as per your requirement */
     }
 </style>
