@@ -25,7 +25,7 @@
             </div>
 
             <div class="row mb-4" >
-                <div class="col">
+                <div class="col-12">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..." wire:model.debounce.500ms="searchString" value="">
                         <span class="input-group-text">
@@ -37,6 +37,12 @@
                             </a>
                         </span>
                     </div>
+                </div>
+                <div class="col-11 mt-4" style="padding-left: 5%;">
+                    <span>
+                        <input type="checkbox" name="exited_at"
+                               wire:model="exited_at"> Somente Saída em Aberto
+                    </span>
                 </div>
             </div>
         </div>

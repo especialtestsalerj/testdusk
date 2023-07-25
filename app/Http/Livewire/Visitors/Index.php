@@ -22,6 +22,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+    public $exited_at;
 
 
     public $searchFields = [
@@ -58,9 +59,13 @@ class Index extends BaseIndex
             $query = $query->orWhereRaw(
                 "visitors.person_id in (select person_id from documents d
              where d.number ILIKE '%'||unaccent('" .
-                    pg_escape_string($this->searchString) .
+                    pg_escape_string(remove_punctuation($this->searchString)) .
                     "')||'%')"
             );
+        }
+
+        if($this->exited_at){
+            $query = $query->whereNull('exited_at');
         }
 
         $query->with('document.documentType');

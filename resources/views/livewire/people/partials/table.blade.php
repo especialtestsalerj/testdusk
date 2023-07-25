@@ -25,7 +25,7 @@
                 </td>
                 <td data-label="Documento(s)">
                     @foreach($person->documents as $document)
-                        <span class="fw-bold">{{$document->documentType->name}}</span>: {{$document->number}}
+                        <span class="fw-bold">{{$document->documentType->name}}</span>: {{$document->numberMaskered}}
                         @if($document->state?->initial)
                             - {{$document->state->initial}}
                         @endif

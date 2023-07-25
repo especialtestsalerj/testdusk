@@ -114,6 +114,7 @@ class People extends BaseForm
 
     public function fillModel()
     {
+        $this->alerts = [];
         if (!empty($this->person_id)) {
             $this->person = Person::where('id', $this->person_id)->first();
             $this->document_number = $document_number = mb_strtoupper(

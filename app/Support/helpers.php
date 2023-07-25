@@ -302,7 +302,7 @@ function mask_zipcode($zipcode)
 
 function mask_cpf($cpf)
 {
-    return preg_replace('/(\d\d\d).(\d\d\d).(\d\d\d)-(\d\d)/', '$1.$2.$3-$4', $cpf);
+    return preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '$1.$2.$3-$4', $cpf);
 }
 
 function login_as_system()

@@ -55,4 +55,12 @@ class Document extends Model
     {
         return $this->hasMany(Visitor::class);
     }
+
+    public function getNumberMaskeredAttribute()
+    {
+        if($this->documentType()->get()[0]->name == 'CPF'){
+            return mask_cpf($this->number);
+        }
+        return $this->number;
+    }
 }

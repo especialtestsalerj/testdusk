@@ -23,7 +23,7 @@
                     <td data-label="Entrada">{!! $visitor?->entranced_at?->format('d/m/Y \<\b\r\> H:i') ?? '-' !!}</td>
                     <td data-label="Saída">@if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</td>
                     <td data-label="Visitante">{{ $visitor->person->name }}</td>
-                    <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</td>
+                    <td data-label="Documento">{{$visitor->document?->documentType?->name}}: {{$visitor?->document?->numberMaskered}}</td>
                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
                     <td class="actions">
                         <span class="btn btn-link" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
