@@ -12,8 +12,7 @@ class PersonRestrictionStore extends Request
     public function rules()
     {
         return [
-            'document_number' => ['bail', 'required', 'cpf'],
-            'full_name' => 'required',
+            'person_id' => 'required',
             'started_at' => 'required',
             'ended_at' => ['bail', 'nullable', 'after_or_equal:started_at'],
             'message' => 'required',

@@ -36,12 +36,11 @@ $(document).ready(function () {
 $(document).on('select2:open', (e) => {
     const selectId = e.target.id
 
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
-        key,
-        value,
-    ) {
-        value.focus()
-    })
+    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(
+        function (key, value) {
+            value.focus()
+        },
+    )
 })
 
 // core version + navigation, pagination modules:

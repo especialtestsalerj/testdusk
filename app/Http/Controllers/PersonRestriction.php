@@ -5,6 +5,9 @@ use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Requests\PersonRestrictionStore;
 use App\Http\Requests\PersonRestrictionUpdate;
 use App\Http\Requests\PersonRestrictionDestroy;
+
+use App\Models\Person;
+
 use App\Support\Constants;
 
 class PersonRestriction extends Controller
@@ -25,6 +28,7 @@ class PersonRestriction extends Controller
 
         return $this->view('person-restrictions.form')->with([
             'personRestriction' => app(PersonRestrictionsRepository::class)->new(),
+            'people' => Person::all()->sortBy('name'),
         ]);
     }
 
@@ -43,6 +47,7 @@ class PersonRestriction extends Controller
 
         return $this->view('person-restrictions.form')->with([
             'personRestriction' => app(PersonRestrictionsRepository::class)->findById($id),
+            'people' => Person::all()->sortBy('name'),
         ]);
     }
 

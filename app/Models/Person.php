@@ -44,6 +44,15 @@ class Person extends Model
 
         return Attribute::make(get: fn($value) => $concatenated);
     }
+
+    protected function cpf(): Attribute
+    {
+        $documentWithCPF = $this->documents()->whereHas('documentType', function ($query) {
+            $query->where('name', 'CPF');
+        })->first();
+
+        return Attribute::make(get: fn($value) => $documentWithCPF->number);
+    }
     public function documents()
     {
         return $this->hasMany(Document::class);

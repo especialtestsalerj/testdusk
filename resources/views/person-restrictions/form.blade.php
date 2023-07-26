@@ -37,7 +37,29 @@
                     </div>
                 </div>
                 <div class="row">
-                    @livewire('people.people', ['person' => $personRestriction->person, 'routineStatus' => true, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => false])
+                    <div class="col-md-12">
+                        <div class="form-group" wire:ignore>
+                            <label for="visitor_id">Pessoa*</label>
+                            <select class="form-select select2" name="person_id" id="person_id"
+                                    @if(isset($readonly) && $readonly) readonly @endif
+                            >
+                                <option value="">SELECIONE</option>
+                                @foreach ($people as $key => $person)
+                                    <option value="{{ $person->id }}" @if($person->id == $personRestriction->person_id) selected="selected" @endif>
+                                        {{ $person->name . ($person->cpf ? (' - CPF '.$person->cpf.'') : '') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div>
+                                @error('person_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                @endError
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
