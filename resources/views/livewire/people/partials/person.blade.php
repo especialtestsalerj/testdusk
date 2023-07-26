@@ -1,18 +1,18 @@
 <div class="form-group">
     <div x-init="//VMasker($refs.cpf).maskPattern(cpfmask);
-    
+
     Webcam.attach('#webcam');
-    
+
     window.take_snapshot = function() {
         window.Webcam.snap(function(data_uri) {
             const fileInput = document.querySelector('input[type=file]');
             const myFile = base64ToFile(data_uri, 'webcam-picture.jpg');
-    
+
             // Now let's create a DataTransfer to get a FileList
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(myFile);
             fileInput.files = dataTransfer.files;
-    
+
             var inputEvent = new Event('input');
             fileInput.dispatchEvent(inputEvent);
             var changeEvent = new Event('change');
@@ -126,7 +126,7 @@
                                             wire:model="city_id" x-ref="city_id"
                                             @if ($modal) disabled @endif
                                             @if ($readonly) readonly @endif>
-                                            <option value="">SLECIONE</option>
+                                            <option value="">SELECIONE</option>
                                             @foreach ($cities as $city)
                                                 <option value="{{ $city->id }}">{{ mb_strtoupper($city->name) }}
                                                 </option>
