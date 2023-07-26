@@ -1,5 +1,13 @@
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=a15bd3fe062951220119cfc00168db29",
+=======
+    "/js/app.js": "/js/app.js?id=b601f6ce40940f2ea15c16ea8dd0f427",
+>>>>>>> db70f62 (Select2 support)
+=======
+    "/js/app.js": "/js/app.js?id=a15bd3fe062951220119cfc00168db29",
+>>>>>>> 6c89713 (Select2 support)
     "/js/alpine.js": "/js/alpine.js?id=4a1572cacbd703dd3f124d2c7512dc47",
     "/css/app.css": "/css/app.css?id=67628645e7e4051d9a95573c8418ea73"
 }
