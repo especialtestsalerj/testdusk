@@ -12,6 +12,10 @@ Route::group(['prefix' => '/visitors'], function () {
             ->can('people:show');
     });
 
+    Route::get('/checkout', function(){ return view('visitors.checkout');})
+        ->name('visitors.checkout');
+        /*->can('visitors:show');*/
+
     Route::get('', VisitorsIndex::class)
         ->name('visitors.index')
         ->can('visitors:show');

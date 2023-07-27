@@ -85,6 +85,10 @@ document.addEventListener('printBadge', update)">
                             </div>
                         </div>
 
+                        <div class="row">
+                            col-12
+                        </div>
+
                         <div class="d-grid gap-2 col-10 mt-2">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Tirar foto
