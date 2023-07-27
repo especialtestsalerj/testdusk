@@ -120,9 +120,13 @@ document.addEventListener('printBadge', update)">
     }" x-data="{ isEditing: true, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
 
                                     <div class="row">
-
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+                                        </div>
+                                        
                                         <div class="form-group col-md-12 d-md-flex align-md-items-baseline">
                                             <div class="col-md-12">
+
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <label for="document_type_id">Tipo de Documento*</label>
@@ -613,6 +617,12 @@ document.addEventListener('printBadge', update)">
                                 <textarea class="form-control" name="description" id="description"></textarea>
                             </div>
 
+                            <div class="col-12 align-self-center d-flex justify-content-end gap-4">
+                                @include('partials.save-button',
+                                        ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                        'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
+                                        'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
+                            </div>
 
                         </div>
                     </div>
