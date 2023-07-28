@@ -22,31 +22,18 @@ class VisitorStore extends Request
             'entranced_at' => [
                 'bail',
                 'required',
-                new ValidPeriodOnRoutine(
-                    $this->get('routine_id'),
-                    $this->get('entranced_at'),
-                    'A Data da Entrada deve ser posterior à assunção da rotina.',
-                    $visitor?->old_id
-                ),
             ],
             'exited_at' => [
                 'bail',
                 'nullable',
-                new ValidPeriodOnRoutine(
-                    $this->get('routine_id'),
-                    $this->get('exited_at'),
-                    'A Data da Saída deve ser posterior à assunção da rotina.'
-                ),
                 'after_or_equal:entranced_at',
             ],
             'document_type_id' => 'required',
             'document_number' => [
                 'bail',
                 'required',
-                //'cpf',
                 new CpfAvailableOnVisit(
                     $this->get('id'),
-                    $this->get('routine_id'),
                     $this->get('document_number'),
                     $this->get('document_type_id')
                 ),

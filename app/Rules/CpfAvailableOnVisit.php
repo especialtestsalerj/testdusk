@@ -6,11 +6,11 @@ use App\Models\Document;
 use App\Models\DocumentType;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Data\Repositories\DocumentTypes;
 
 class CpfAvailableOnVisit implements Rule
 {
     public $id;
-    public $routine_id;
     public $document_number;
 
     public $document_type_id;
@@ -19,10 +19,9 @@ class CpfAvailableOnVisit implements Rule
      *
      * @return void
      */
-    public function __construct($id, $routine_id, $document_number, $document_type_id)
+    public function __construct($id, $document_number, $document_type_id)
     {
         $this->id = $id;
-        $this->routine_id = $routine_id;
         $this->document_number = $document_number;
 
         $this->document_type_id = $document_type_id;
@@ -37,21 +36,23 @@ class CpfAvailableOnVisit implements Rule
      */
     public function passes($attribute, $value)
     {
-        $documentType = DocumentType::where('id', '=', $this->document_type_id)->first();
+        $documentType = app(DocumentTypes::class)->getByName('CPF');
 
-        if ($documentType?->name == 'CPF') {
+        if ($this->document_type_id == $documentType->id) {
             $query = DB::table('visitors')
                 ->join('people', 'visitors.person_id', '=', 'people.id')
                 ->join('documents', 'visitors.person_id', '=', 'documents.person_id')
                 ->where('documents.number', $this->document_number)
+                ->where('documents.document_type_id', $this->document_type_id)
                 ->whereNull('visitors.exited_at');
 
-            if (!is_null($this->id)) {
+            if ($this->isUpdating()) {
                 $query->where('visitors.id', '<>', $this->id);
             }
 
             return $query->doesntExist();
         } else {
+            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
             return true;
         }
     }
@@ -64,5 +65,13 @@ class CpfAvailableOnVisit implements Rule
     public function message()
     {
         return 'CPF (Visitante): possui visita em aberto.';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isUpdating(): bool
+    {
+        return !is_null($this->id);
     }
 }
