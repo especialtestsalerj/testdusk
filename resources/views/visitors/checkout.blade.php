@@ -13,28 +13,7 @@
 
             <div class="col-md-3">
                 <div class="position-sticky" style="top: 2rem;">
-                    <div class="p-4 mb-3 bg-light rounded text-center">
-                        <h4 class="fst-italic">
-                            Leitura de QR CODE
-                        </h4>
-
-                        <p class="display-1 mb-0">
-                            <i class="fas fa-qrcode"></i>
-                        </p>
-
-                        <p class="mb-0">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur malesuada ex a varius congue. Pellentesque dolor tortor, tincidunt quis sagittis ut, mollis sed metus. Integer id ligula ex.
-                        </p>
-
-                        <div class="row d-flex justify-content-end mt-3">
-                            <div class="d-grid gap-2 col-10 mx-auto">
-                                <button class="btn btn-primary fw-bold" type="button">
-                                    <i class="fas fa-qrcode me-3"></i>LER QR CODE
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <div id="reader" width="600px"></div>
 
                 </div>
             </div>

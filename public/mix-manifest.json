@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-    "/js/app.js": "/js/app.js?id=a15bd3fe062951220119cfc00168db29",
-=======
-    "/js/app.js": "/js/app.js?id=db243b3d3469b020a023a12a0d0c9383",
->>>>>>> 0dc3a87 (npm run production)
+    "/js/app.js": "/js/app.js?id=0a4a7405300106b0c78ae627d68d215e",
     "/js/alpine.js": "/js/alpine.js?id=4a1572cacbd703dd3f124d2c7512dc47",
     "/css/app.css": "/css/app.css?id=67628645e7e4051d9a95573c8418ea73"
 }
