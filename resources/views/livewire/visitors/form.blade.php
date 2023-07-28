@@ -118,12 +118,12 @@ document.addEventListener('printBadge', update)">
             fileInput.dispatchEvent(changeEvent);
         });
     }" x-data="{ isEditing: true, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
-
+                                    https://i.pravatar.cc/1000?img=22
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-end">
                                             <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
                                         </div>
-                                        
+
                                         <div class="form-group col-md-12 d-md-flex align-md-items-baseline">
                                             <div class="col-md-12">
 
