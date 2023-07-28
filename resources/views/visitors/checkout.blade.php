@@ -82,7 +82,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=31" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -125,7 +125,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=22" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -168,7 +168,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=23" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -211,7 +211,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=24" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -254,7 +254,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=25" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -297,7 +297,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=26" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -340,7 +340,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=28" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
@@ -383,7 +383,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="https://i.pravatar.cc/1000?img=21" class="img-fluid">
+                                        <img src="https://i.pravatar.cc/1000?img=29" class="img-fluid">
                                     </div>
                                     <div class="col-8">
                                         <div class="row">
