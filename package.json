@@ -20,7 +20,7 @@
         "bootstrap": "^5.1.0",
         "html5-qrcode": "^2.3.8",
         "laravel-mix": "^6.0.43",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "postcss": "^8.4.13",
         "postcss-import": "^14.0.1",
         "resolve-url-loader": "^5.0.0",

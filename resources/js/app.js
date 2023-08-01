@@ -75,6 +75,8 @@ Webcam.set({
     dest_height: 240,
 })
 
+
+
 window.remove_snapshot = function () {
     window.Webcam.snap(function (data_uri) {
         document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>'

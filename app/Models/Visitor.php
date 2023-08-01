@@ -29,6 +29,11 @@ class Visitor extends Model
         static::creating(fn(Visitor $visitor) => ($visitor->uuid = (string) Uuid::uuid4()));
     }
 
+    public static function findByUuid($uuid)
+    {
+        return self::where('uuid', $uuid)->first();
+    }
+
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
@@ -95,5 +100,18 @@ class Visitor extends Model
                     ])
                 )
         );
+    }
+
+    public function checkout($checkoutTime = null)
+    {
+        $success = false;
+
+        if (!$this->exited_at) {
+            $this->exited_at = $checkoutTime ?? now();
+            $this->save();
+            $success = true;
+        }
+
+        return $success;
     }
 }
