@@ -64,7 +64,7 @@
         <div class="">
             @include('layouts.msg')
 
-            @include('livewire.people.partials.table', ['redirect' => 'visitors.index'])
+            @include('livewire.people.partials.table', ['redirect' => 'people.index'])
         </div>
 
 

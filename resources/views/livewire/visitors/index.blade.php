@@ -10,8 +10,8 @@
                 <div class="col-8 col-md-6">
                     <div class="float-end">
                         @can('visitors:store')
-                            <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Anônima">
-                                <i class="fa fa-print"></i> &nbsp;Etiqueta Anônima
+                            <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
+                                <i class="fa fa-print"></i> &nbsp;Etiqueta Avulsa
                             </span>
                         @endCan
 

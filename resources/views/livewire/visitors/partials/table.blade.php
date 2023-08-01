@@ -315,17 +315,16 @@
                                 <i class="fa fa-lg fa-print"></i>
                             </span>
                                     @can('visitors:show')
-                                        <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}"
-                                           class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
-                                    @endCan
-                                    @can('visitors:update')
-                                        <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}"
-                                           class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
-                                    @endCan
-                                    @if (!$visitor->exited_at)
-                                        @can('visitors:checkout')
-                                            <span class="btn btn-link" wire:click="prepareForCheckout({{ $visitor->id }})"
-                                                  title="Registrar Saída">
+                                        <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
+                            @endCan
+                            @can('visitors:update')
+                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
+
+                            @endCan
+                            @if (!$visitor->exited_at)
+                                @can('visitors:checkout')
+                                    <span class="btn btn-link" wire:click="prepareForCheckout({{ $visitor->id }})"
+                                        title="Registrar Saída">
                                         <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                     </span>
                                         @endCan

@@ -124,6 +124,7 @@ class People extends BaseForm
 
             if (!is_null($document)) {
                 $this->person = $document->person;
+                $this->person_id = $this->person->id;
                 $this->fillModel();
                 $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
@@ -188,7 +189,8 @@ class People extends BaseForm
         }
 
         if (!empty($this->visitor)) {
-            $this->document_number = mb_strtoupper($this->visitor->document->number);
+            //???
+            //$this->document_number = mb_strtoupper($this->visitor->document->number);
         }
 
         $this->other_city = is_null(old('other_city'))
@@ -249,6 +251,11 @@ class People extends BaseForm
             'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
             'states' => app(States::class)->allOrderBy('name', 'asc', null),
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
+            'country_br' => Country::where(
+                'id',
+                '=',
+                mb_strtoupper(env('APP_COUNTRY_BR'))
+            )->first(),
         ];
     }
 
@@ -264,7 +271,11 @@ class People extends BaseForm
         }
 
         if (empty($this->country_id)) {
-            $this->country_id = Country::where('name', 'ilike', 'Brasil')->first()->id;
+            $this->country_id = Country::where(
+                'id',
+                '=',
+                mb_strtoupper(env('APP_COUNTRY_BR'))
+            )->first()->id;
         }
     }
 

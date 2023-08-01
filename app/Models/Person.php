@@ -9,16 +9,20 @@ class Person extends Model
     protected $fillable = [
         'full_name',
         'social_name',
+        'birthdate',
+        'gender_id',
+        'has_disability',
+        'city_id',
+        'other_city',
+        'state_id',
+        'country_id',
+        'email',
         //        'origin',
         'id_card',
         'certificate_type',
         'certificate_number',
         'certificate_valid_until',
         'alert_obs',
-        'city_id',
-        'state_id',
-        'country_id',
-        'other_city',
     ];
 
     protected $appends = ['name'];
@@ -45,6 +49,12 @@ class Person extends Model
 
         return Attribute::make(get: fn($value) => $concatenated);
     }
+
+    public function disabilities()
+    {
+        return $this->hasMany(Disability::class);
+    }
+
 
     protected function cpf(): Attribute
     {
@@ -94,6 +104,17 @@ class Person extends Model
     public function pendingVisit()
     {
         return $this->hasOne(Visitor::class)->whereNull('exited_at');
+    }
+
+    public function syncDisabilites($array, $person_id)
+    {
+        $disabilitiesToSync = [];
+
+        foreach ($array as $disability) {
+            $disabilitiesToSync[] = $disability['id'];
+        }
+
+        Person::sync($this)->disabilities(Disability::whereIn('id', $disabilitiesToSync)->get());
     }
 
     public function lastVisit()

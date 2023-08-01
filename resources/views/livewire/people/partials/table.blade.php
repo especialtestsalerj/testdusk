@@ -212,8 +212,12 @@
                                     <i class="fa fa-print"></i>
                                 </span>
                             @endif
-                            <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                            <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                @can('people:show')
+                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                @endCan
+                                @can('people:update')
+                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-pencil"></i></a>
+                                @endCan
                             @if (!$person->hasPendingVisitors())
                                 @can('visitors:store')
                                     <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
