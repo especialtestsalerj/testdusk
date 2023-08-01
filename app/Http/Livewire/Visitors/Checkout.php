@@ -8,6 +8,7 @@ use App\Models\Visitor;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
+use Ramsey\Uuid\Uuid;
 
 class Checkout extends BaseIndex
 {
@@ -19,7 +20,7 @@ class Checkout extends BaseIndex
 
     protected $queryString = [
         'searchName' => ['except' => ''],
-        'pageSize' => ['except' => '10'],
+        'pageSize' => ['except' => 10],
         'page' => ['except' => 1],
         'startDate' => ['except' => ''],
         'endDate' => ['except' => ''],
@@ -42,29 +43,10 @@ class Checkout extends BaseIndex
 
     public function additionalFilterQuery($query)
     {
-        if ($this->searchName) {
-            $query = $query
-                ->join('people', 'visitors.person_id', '=', 'people.id')
-                ->where(function ($query) {
-                    $query
-                        ->orWhereRaw(
-                            "\"people\".\"full_name\" ILIKE '%' || unaccent('" .
-                                pg_escape_string($this->searchName) .
-                                "') || '%'"
-                        )
-                        ->orWhereRaw(
-                            "\"people\".\"social_name\" ILIKE '%' || unaccent('" .
-                                pg_escape_string($this->searchName) .
-                                "') || '%'"
-                        );
-                });
-        }
+        $query = $this->filterPersonName($query);
+        $query = $this->filterDates($query);
 
-        $this->filterDates($query);
-
-        $query = $query->whereNotNull('visitors.exited_at');
-
-        return $query;
+        return $query->whereNotNull('visitors.exited_at');
     }
 
     protected function extractUuidFromUrl($visitorUrl)
@@ -72,30 +54,20 @@ class Checkout extends BaseIndex
         $pattern = '/\/([^\/?]+)(?:\?|$)/';
 
         if (preg_match($pattern, $visitorUrl, $matches)) {
-            $uuid = $matches[1];
+            $result = $matches[1];
         }
 
-        return $uuid ?? null;
+        return $result ?? null;
     }
 
     public function scan($detail)
     {
-        $uuid = $this->extractUuidFromUrl($detail['decodedText']);
+        $regexResult = $this->extractUuidFromUrl($detail['decodedText']);
 
-        //TODO: verificar se é anônimo
-
-        if ($uuid && ($visitor = Visitor::findByUuid($uuid))) {
-            if ($visitor->checkout()) {
-                $this->dispatchCheckoutSuccessSwal($visitor);
-            } else {
-                $this->dispatchBrowserEvent('swal-checkout-failure', [
-                    'error' => 'Checkout já realizado',
-                ]);
-            }
+        if ($this->isAnonymous($regexResult)) {
+            $this->dispatchAnonymousFailure();
         } else {
-            $this->dispatchBrowserEvent('swal-checkout-failure', [
-                'error' => 'QR code não reconhecido',
-            ]);
+            $this->attemptCheckout($regexResult);
         }
 
         $this->resetPage();
@@ -115,10 +87,10 @@ class Checkout extends BaseIndex
     }
 
     /**
-     * @param mixed $query
-     * @return void
+     * @param $query
+     * @return mixed
      */
-    protected function filterDates(mixed $query): void
+    protected function filterDates($query): mixed
     {
         // Check if both $startDate and $endDate are provided
         if ($this->startDate && $this->endDate) {
@@ -143,5 +115,73 @@ class Checkout extends BaseIndex
                     ->orWhere('exited_at', '<=', $this->endDate)
             );
         }
+
+        return $query;
+    }
+
+    /**
+     * @param mixed $uuid
+     * @return void
+     */
+    protected function attemptCheckout(mixed $uuid): void
+    {
+        if ($uuid && Uuid::isValid($uuid) && ($visitor = Visitor::findByUuid($uuid))) {
+            if ($visitor->checkout()) {
+                $this->dispatchCheckoutSuccessSwal($visitor);
+            } else {
+                $this->dispatchBrowserEvent('swal-checkout-failure', [
+                    'error' => 'Checkout já realizado',
+                ]);
+            }
+        } else {
+            $this->dispatchBrowserEvent('swal-checkout-failure', [
+                'error' => 'QR code não reconhecido',
+            ]);
+        }
+    }
+
+    /**
+     * @param mixed $regexResult
+     * @return bool
+     */
+    protected function isAnonymous(mixed $regexResult): bool
+    {
+        return $regexResult == 'card';
+    }
+
+    /**
+     * @return void
+     */
+    protected function dispatchAnonymousFailure(): void
+    {
+        $this->dispatchBrowserEvent('swal-checkout-failure', [
+            'error' => 'Etiqueta avulsa',
+        ]);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    protected function filterPersonName($query): mixed
+    {
+        if ($this->searchName) {
+            $query = $query
+                ->join('people', 'visitors.person_id', '=', 'people.id')
+                ->where(function ($query) {
+                    $query
+                        ->orWhereRaw(
+                            "\"people\".\"full_name\" ILIKE '%' || unaccent('" .
+                                pg_escape_string($this->searchName) .
+                                "') || '%'"
+                        )
+                        ->orWhereRaw(
+                            "\"people\".\"social_name\" ILIKE '%' || unaccent('" .
+                                pg_escape_string($this->searchName) .
+                                "') || '%'"
+                        );
+                });
+        }
+        return $query;
     }
 }
