@@ -92,31 +92,7 @@ class Checkout extends BaseIndex
      */
     protected function filterDates($query): mixed
     {
-        // Check if both $startDate and $endDate are provided
-        if ($this->startDate && $this->endDate) {
-            $query->whereRaw(
-                '(("entranced_at" >= ? and "entranced_at" <= ?) or ("exited_at" >= ? and "exited_at" <= ?))',
-                [$this->startDate, $this->endDate, $this->startDate, $this->endDate]
-            );
-        }
-        // Check if only $this->startDate is provided
-        elseif ($this->startDate) {
-            $query->where(
-                fn($query) => $query
-                    ->orWhere('entranced_at', '>=', $this->startDate)
-                    ->orWhere('exited_at', '>=', $this->startDate)
-            );
-        }
-        // Check if only $this->endDate is provided
-        elseif ($this->endDate) {
-            $query->where(
-                fn($query) => $query
-                    ->orWhere('entranced_at', '<=', $this->endDate)
-                    ->orWhere('exited_at', '<=', $this->endDate)
-            );
-        }
-
-        return $query;
+        return $query->wasThereBetweenDates($this->startDate, $this->endDate);
     }
 
     /**

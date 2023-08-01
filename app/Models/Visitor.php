@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -113,5 +114,32 @@ class Visitor extends Model
         }
 
         return $success;
+    }
+
+    public function scopeWasThereBetweenDates(Builder $query, $startDate, $endDate): void
+    {
+        // Check if both $startDate and $endDate are provided
+        if ($startDate && $endDate) {
+            $query->whereRaw(
+                '(("entranced_at" >= ? and "entranced_at" <= ?) or ("exited_at" >= ? and "exited_at" <= ?))',
+                [$startDate, $endDate, $startDate, $endDate]
+            );
+        }
+        // Check if only $startDate is provided
+        elseif ($startDate) {
+            $query->where(
+                fn($query) => $query
+                    ->orWhere('entranced_at', '>=', $startDate)
+                    ->orWhere('exited_at', '>=', $startDate)
+            );
+        }
+        // Check if only $endDate is provided
+        elseif ($endDate) {
+            $query->where(
+                fn($query) => $query
+                    ->orWhere('entranced_at', '<=', $endDate)
+                    ->orWhere('exited_at', '<=', $endDate)
+            );
+        }
     }
 }
