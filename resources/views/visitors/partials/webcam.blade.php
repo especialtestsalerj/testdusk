@@ -98,7 +98,7 @@
                                                      }
                                                  })
                                              }
-                                         }" x-init="setUp">
+                                         }" x-intersect="setUp()">
                                          <div>
                                              <img id="preview_webcam_file"
                                                  src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}"
@@ -113,12 +113,12 @@
                      <div class="row" x-init="window.canvas = document.getElementById('canvas');
                      window.canvasBadge = document.getElementById('canvas-badge');
                      window.base64Input = document.getElementById('photo');
-                     
+
                      var ctx = canvas.getContext('2d');
                      var ctxBadge = canvasBadge.getContext('2d');
                      var image = new Image();
                      image.src = '{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}'; // Replace with your image source
-                     
+
                      // When the image has loaded
                      image.onload = function() {
                          // Draw the image on the canvas, applying the crop
