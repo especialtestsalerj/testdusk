@@ -7,10 +7,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-3 col-lg-4" data-label="Foto">
-{{--                            <img src="https://i.pravatar.cc/1000?img=24" class="img-fluid">--}}
-
                             <img class="w-100" src="{{$visitor->photo}}">
-
                         </div>
                         <div class="col-8 col-lg-7">
                             <div class="row">
@@ -41,12 +38,12 @@
                                 </div>
                                 <div class="col-12">
                                     @can('visitors:show')
-                                        <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
+                                        <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                     @endCan
                                 </div>
                                 <div class="col-12">
                                     @can('visitors:update')
-                                        <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
+                                        <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                     @endCan
                                 </div>
                                 <div class="col-12">
@@ -105,10 +102,10 @@
                             <i class="fa fa-lg fa-print"></i>
                         </span>
                             @can('visitors:show')
-                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
+                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                             @endCan
                             @can('visitors:update')
-                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
+                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
 
                             @endCan
                             @if(!$visitor->exited_at)

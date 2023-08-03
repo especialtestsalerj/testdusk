@@ -14,16 +14,14 @@
 
 
             <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
-
             <div class="">
                 <div class="row border-bottom border-dark mb-4 pb-2">
                     <div class="col-sm-8 align-self-center">
                         <h4 class="mb-0">
+                            <a href="{{ route('visitors.index')  }}">Visitantes</a>
                             @if(is_null($visitor->id))
-                                <a href="{{ route('visitors.index')  }}">Visitantes</a>
                                 > Novo/a
                             @else
-                                <a href="{{ route(request()->query('redirect')) }}">Visitantes</a>
                                 > {{ $visitor->id }} - {{ $visitor->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h4>
