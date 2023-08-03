@@ -3,11 +3,11 @@
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row border-bottom border-dark mb-4 pb-2">
-                <div class="col-md-8">
+                <div class="col-4 col-md-6">
                     <h3 class="mb-0">Visitas</h3>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-8 col-md-6">
                     <div class="float-end">
                         @can('visitors:store')
                             <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Anônima">
