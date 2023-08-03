@@ -1,5 +1,5 @@
 <div>
-<div x-data="" class="py-4 px-4">
+<div wire:poll.keep-alive x-data="" class="py-4 px-4">
 
     <div class="row border-bottom border-dark mb-4 pb-2">
         <div class="col-md-8">
