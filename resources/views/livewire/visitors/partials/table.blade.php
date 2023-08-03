@@ -1,25 +1,24 @@
 <div class="row">
 
     @forelse ($visitors as $visitor)
-        <div class="col-sm-6 col-xxl-3 mb-2">
+        <div class="col-xxl-3 mb-2">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4" data-label="Foto">d
-
+                        <div class="col-3 col-lg-4" data-label="Foto">
                             <img src="https://i.pravatar.cc/1000?img=24" class="img-fluid">
                             {{--
                             <img class="w-75" src="{{$visitor->photo}}">
                             --}}
                         </div>
-                        <div class="col-7">
+                        <div class="col-8 col-lg-7">
                             <div class="row">
                                 <div class="col-12">
                                     <div data-label="Entrada">
                                         Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
                                     </div>
                                     <div data-label="Saída">
-                                        Saida: @if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y \<\b\r\> H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</div>
+                                        Saida: @if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</div>
                                     <div data-label="Visitante">
                                         {{ $visitor->person->name }}
                                     </div>

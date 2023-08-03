@@ -8,7 +8,7 @@
 
                 <div class="col-md-4">
                     <a id="novo" href="{{ route('visitors.create') }}" class="btn btn-primary text-white float-end" title="Nova Visita">
-                        <i class="fa fa-plus"></i> Nova Visita
+                        <i class="fa fa-plus"></i> Novo Visitante
                     </a>
                 </div>
             </div>
