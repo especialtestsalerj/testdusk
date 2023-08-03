@@ -13,19 +13,18 @@
 
             <div class="col-md-3">
                 <div class="position-sticky" style="top: 2rem;">
-                    <div id="reader" width="600px"></div>
+                    <div id="reader" width="300px"></div>
 
                 </div>
             </div>
 
 
-            <div class="col-md-9">
-
+            <div class="col-md-7 col-lg-9">
                 <div class="row mb-3">
-                    <div class="col-4">
+                    <div class="col-lg-5">
                         <input class="form-control" type="text" placeholder="Filtrar por nome" aria-label="default input example">
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Data de início</option>
                             <option value="1">One</option>
@@ -33,7 +32,7 @@
                             <option value="3">Three</option>
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Data de termino</option>
                             <option value="1">One</option>
@@ -41,7 +40,7 @@
                             <option value="3">Three</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Mostrar </option>
                             <option value="1">5</option>
@@ -52,11 +51,32 @@
                             <option value="6">500</option>
                         </select>
                     </div>
+                    <div class="col-1 mt-2 mt-lg-0">
+                        <div class="view-actions">
+                            <button class="view-btn list-view" title="List View">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+                                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                    <line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            </button>
+                            <button class="view-btn grid-view active" title="Grid View">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                    <rect x="3" y="14" width="7" height="7"></rect></svg>
+                            </button>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div class="row">
-
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -99,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -124,25 +144,21 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -167,25 +183,21 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -210,25 +222,21 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -253,25 +261,21 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -296,25 +300,21 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -339,16 +339,13 @@
                                                             22/12/2023 - 17:50
                                                         </strong>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="small fw-bold">
                                                         <i class="fas fa-calendar-day me-2"></i>Saída <strong> 22/12/2023 - 17:50</strong>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -357,7 +354,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">

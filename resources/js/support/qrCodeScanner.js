@@ -40,15 +40,17 @@ function onScanFailure(error) {
 
 let config = {
     fps: 10,
-    qrbox: {width: 300, height: 300},
+    qrbox: {width: 600, height: 600},
     rememberLastUsedCamera: true,
     // Only support camera scan type.
     supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
 };
 
-let html5QrcodeScanner = new Html5QrcodeScanner(
-    'reader',
-    config,
-    /* verbose= */ false,
-)
-html5QrcodeScanner.render(onScanSuccess, onScanFailure)
+if($('#reader')[0]) {
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        'reader',
+        config,
+        /* verbose= */ false,
+    )
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure)
+}

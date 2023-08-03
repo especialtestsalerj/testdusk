@@ -2,19 +2,26 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Http\Livewire\Traits\WithWebcam;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
 use App\Models\Sector;
 use App\Models\Visitor;
+use Livewire\WithFileUploads;
 
 class Form extends BaseForm
 {
+    use WithWebcam;
+    use WithFileUploads;
+
     public Visitor $visitor;
     public $mode = 'create';
     public Sector $sector;
     public Person $person;
 
-    protected $listeners = ['personModified' => 'personModified'];
+
+    protected $listeners = ['personModified' => 'personModified',
+        'cropChanged' => 'cropChanged',];
 
     protected $rules = [
         'visitor.entranced_at' => 'required',
@@ -38,13 +45,23 @@ class Form extends BaseForm
 
             $this->person = new Person();
             $this->sector = new Sector();
+
+            $this->webcam_data_uri = false;
         } else {
             //            $this->person = $this->visitor->person;
             //            $this->sector = $this->visitor->sector;
             //update person...
+
+            $this->webcam_data_uri = true;
         }
 
         $this->visitor->append(['photo']);
+
+        if ($this->visitor->photo == "/img/no-photo.svg") {
+            $this->webcam_file = "";
+        } else {
+            $this->webcam_file = $this->visitor->photo;
+        }
     }
 
     public function personModified($person)

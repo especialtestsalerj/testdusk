@@ -1,5 +1,3 @@
-teste1
-
 <div class="form-group">
     <div x-init="//VMasker($refs.cpf).maskPattern(cpfmask);
 
@@ -26,10 +24,10 @@ teste1
             <div class="form-group">
 
                 <div class="col-md-12 d-md-flex align-md-items-baseline">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="row">
-                            <div class="col-lg-4">
-                                <label for="document_type_id">Tipo de Documento*</label>
+                            <div class="col-md-6 col-xl-2 col-xxl-2">
+                                <label for="document_type_id">Tipo de Doc.*</label>
                                 <select name="document_type_id" class="form-control text-uppercase"
                                     wire:model="document_type_id" @if ($modal) disabled @endif
                                     @if ($readonly) readonly @endif x-ref="document_type_id">
@@ -40,7 +38,7 @@ teste1
                                 </select>
                             </div>
 
-                            <div class="col-lg-6 col-10">
+                            <div class="col-md-6 col-xl-2 col-xxl-2">
                                 <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
                                 <label for="document_number">Documento*</label>
                                 <input @if ($modal) disabled @endif
@@ -49,44 +47,31 @@ teste1
                                     id="document_number" wire:model.lazy="document_number" x-ref="document_number"
                                     wire:blur="searchDocumentNumber" />
                             </div>
-                            <div class="col-lg-2 col-2 pt-4 text-center">
-                                <button type="button" wire:click="searchDocumentNumber"
-                                    class="btn btn-outline-secondary" id="btn_buscar"
-                                    @if ($modal || $readonly) disabled @endif>
-                                    <i class="fa fa-search"></i>
-                                </button>
+
+
+
+
+                            <div class="col-md-6 col-lg-4">
+                                <label for="full_name">Nome Completo*</label>
+                                <input type="text" class="form-control text-uppercase" name="full_name"
+                                    id="full_name" wire:model="full_name"
+                                    @if ($modal) disabled @endif
+                                    @if ($readonly) readonly @endif />
                             </div>
-                        </div>
 
 
-                        <div class="row">
+
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <div class="col-md-12">
-                                    <label for="full_name">Nome Completo*</label>
-                                    <input type="text" class="form-control text-uppercase" name="full_name"
-                                        id="full_name" wire:model="full_name"
-                                        @if ($modal) disabled @endif
-                                        @if ($readonly) readonly @endif />
-                                </div>
+                                <label for="social_name">Nome Social</label>
+                                <input type="text" class="form-control text-uppercase" name="social_name"
+                                    id="social_name" wire:model="social_name"
+                                    @if ($modal) disabled @endif
+                                    @if ($readonly) readonly @endif />
                             </div>
                         </div>
 
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="social_name">Nome Social</label>
-                                    <input type="text" class="form-control text-uppercase" name="social_name"
-                                        id="social_name" wire:model="social_name"
-                                        @if ($modal) disabled @endif
-                                        @if ($readonly) readonly @endif />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-lg-3">
                                 <div class="form-group">
                                     <label for="country_id">País*</label>
                                     <select name="country_id" class="form-control text-uppercase"
@@ -105,7 +90,7 @@ teste1
 
                             @if ($country_id == '' || $country_id == $country_br->id)
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-lg-3">
                                     <div class="form-group">
                                         <label for="state_id">Estado</label>
                                         <select class="form-control text-uppercase" name="state_id"
@@ -121,7 +106,7 @@ teste1
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="city_id">Cidade</label>
                                         <select name="city_id" class="select2 form-control text-uppercase"
@@ -137,7 +122,7 @@ teste1
                                     </div>
                                 </div>
                             @else
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="other_city">Cidade*</label>
                                         <input type="text" name="other_city" class="form-control text-uppercase"
@@ -151,7 +136,7 @@ teste1
                     </div>
 
                     <div class="col-md-6 container">
-                        @include('visitors.partials.webcam')
+
                     </div>
                 </div>
 
