@@ -1,10 +1,5 @@
 {
-<<<<<<< HEAD
-    "/js/app.js": "/js/app.js?id=0a4a7405300106b0c78ae627d68d215e",
-    "/js/alpine.js": "/js/alpine.js?id=4a1572cacbd703dd3f124d2c7512dc47",
-=======
-    "/js/app.js": "/js/app.js?id=b00718e930c8206705e78ce9af25abf3",
+    "/js/app.js": "/js/app.js?id=71b3e62290f63d1262870d2b5e8ab9a9",
     "/js/alpine.js": "/js/alpine.js?id=ce5b599e8ac6e5ad8016bfd34d92ea9a",
->>>>>>> a1d8c0d (Checkout view)
     "/css/app.css": "/css/app.css?id=67628645e7e4051d9a95573c8418ea73"
 }
