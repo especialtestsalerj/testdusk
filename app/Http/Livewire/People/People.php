@@ -199,8 +199,11 @@ class People extends BaseForm
             $this->visitor = Visitor::where('id', $this->visitor_id)
                 ->first()
                 ->append('photo');
-
-            $this->webcam_file = $this->visitor->photo;
+            if ($this->visitor->photo == "/img/no-photo.svg") {
+                $this->webcam_file = "";
+            } else {
+                $this->webcam_file = $this->visitor->photo;
+            }
             $this->webcam_data_uri = true;
         } else {
             $this->webcam_data_uri = false;

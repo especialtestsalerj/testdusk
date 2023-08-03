@@ -12,6 +12,9 @@ window.inputHandler = (masks, max, event) => {
 
 import Alpine from 'alpinejs'
 window.Alpine = Alpine
+import intersect from '@alpinejs/intersect'
+
+Alpine.plugin(intersect)
 Alpine.start()
 
 window.Swal = require('sweetalert2')

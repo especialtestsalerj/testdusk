@@ -70,8 +70,7 @@
     }
 </style>
 
-<div class="sticky-top row">
-    <div class="zoom col-4 d-flex justify-content-center">
+
         <div id="badge" x-init="
 
 window.debounce = function (func, timeout = 1000){
@@ -114,13 +113,4 @@ document.addEventListener('printBadge', update)">
                 </tr>
             </table>
         </div>
-    </div>
-    <div class="col-8">
 
-    </div>
-    <div class="d-grid gap-2 col-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Tirar foto
-        </button>
-    </div>
-</div>

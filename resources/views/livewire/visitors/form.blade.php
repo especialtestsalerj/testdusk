@@ -1,5 +1,8 @@
 <div>
 
+
+    @include('layouts.msg')
+
     <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
@@ -7,6 +10,8 @@
             @if (isset($visitor->id))
                 <input type="hidden" name="id" value="{{ $visitor->id }}">
             @endif
+
+
 
             <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
 
@@ -26,669 +31,108 @@
                             <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
                         @endif
                     </div>
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
+                </div>
+            </div>
 
+
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-12 col-lg-4 mt-5">
+                    <div class="position-sticky" style="top: 2rem;">
+                        <div class="zoom col-12 d-flex justify-content-center mt-3">
+                            @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
+                        </div>
+                        <div class="col-12">
+                            <div class="row d-flex justify-content-center">
+                                <div class="d-grid gap-2 col-7 col-xxl-9 mt-2">
+                                    @include('visitors.partials.webcam-button')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-12 col-lg-8">
+
+                    @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+
+
+
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="entranced_at">Entrada</label>
+                                                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="entranced_at">Saída</label>
+                                                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" wire:model="visitor.exited_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-xl-6" wire:ignore>
+                                                        <!-- Livewire Component wire-end:VGhfAodKHmyPeCg2uysV -->                        <div class="form-group">
+                                                            <label for="sector_id">Destino*</label>
+                                                            <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
+                                                                <option value=""></option>
+                                                                @foreach ($sectors as $key => $sector)
+                                                                    @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
+                                                                        <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
+                                                                    @else
+                                                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="description">Motivo da Visita*</label>
+                                                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                    <div class="col-12 align-self-center d-flex justify-content-end gap-4">
                         @include('partials.save-button',
                                 ['model' => $visitor, 'backUrl' => 'visitors.create',
                                 'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
                                 'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
+
                 </div>
             </div>
 
 
-            <div class="row g-5">
-                <div class="col-md-4">
-                    <div class="position-sticky" style="top: 2rem;">
-                        <div class="zoom col-12 d-flex justify-content-center">
-                            <div id="badge" x-init="
-
-window.debounce = function (func, timeout = 1000){
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
-}
-
-const update = window.debounce(() => window.print());
-
-document.addEventListener('printBadge', update)">
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="3" class="text-center badge-text-sm">LARAVEL</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="badge-bg-title text-center badge-border-title"></td>
-                                        <td class="text-center badge-border-title">VISITANTE</td>
-                                        <td class="badge-bg-title text-center badge-border-title"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-left photo">
-
-                                            <canvas wire:ignore="" id="canvas-badge" width="75px" height="75px"></canvas>
-                                            <canvas wire:ignore="" id="canvas" style="display: none;" width="400px" height="400px"></canvas>
-                                        </td>
-                                        <td class="text-center">ENTRADA<br><br>26/07/2023 ÀS 17:36</td>
-                                        <td class="text-center photo"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iODBweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgODAgODAiPjxkZWZzPjxyZWN0IGlkPSJibG9jayIgd2lkdGg9IjIuMDAwMDAwMDAwMCIgaGVpZ2h0PSIyLjAwMDAwMDAwMDAiIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMSIvPjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iOS4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTcuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDkuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUzLjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2NS4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY5LjAwMDAwMDAwMDAiIHk9IjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTkuMDAwMDAwMDAwMCIgeT0iOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM5LjAwMDAwMDAwMDAiIHk9IjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0MS4wMDAwMDAwMDAwIiB5PSI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNzEuMDAwMDAwMDAwMCIgeT0iOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjExLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjExLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQzLjAwMDAwMDAwMDAiIHk9IjExLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUzLjAwMDAwMDAwMDAiIHk9IjExLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjExLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iMTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSIxMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjUuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDkuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iMTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2Ny4wMDAwMDAwMDAwIiB5PSIxMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcxLjAwMDAwMDAwMDAiIHk9IjEzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSIxNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjExLjAwMDAwMDAwMDAiIHk9IjE1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iMTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSIxNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjE1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjUuMDAwMDAwMDAwMCIgeT0iMTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSIxNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjE1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSIxNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU5LjAwMDAwMDAwMDAiIHk9IjE1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjMuMDAwMDAwMDAwMCIgeT0iMTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2NS4wMDAwMDAwMDAwIiB5PSIxNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY3LjAwMDAwMDAwMDAiIHk9IjE1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNzEuMDAwMDAwMDAwMCIgeT0iMTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjE3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTkuMDAwMDAwMDAwMCIgeT0iMTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSIxNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI1LjAwMDAwMDAwMDAiIHk9IjE3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjkuMDAwMDAwMDAwMCIgeT0iMTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMS4wMDAwMDAwMDAwIiB5PSIxNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjE3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iMTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0MS4wMDAwMDAwMDAwIiB5PSIxNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ1LjAwMDAwMDAwMDAiIHk9IjE3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSIxNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU1LjAwMDAwMDAwMDAiIHk9IjE3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iMTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSIxNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE1LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTcuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjcuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMS4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM1LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0My4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1NS4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU5LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iMTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSIxOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcxLjAwMDAwMDAwMDAiIHk9IjE5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjUuMDAwMDAwMDAwMCIgeT0iMjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSIyMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjIxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iMjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSIyMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjIxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSIyMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU1LjAwMDAwMDAwMDAiIHk9IjIxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjkuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIxLjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQxLjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDMuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1NS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iMjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2NS4wMDAwMDAwMDAwIiB5PSIyMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY5LjAwMDAwMDAwMDAiIHk9IjIzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iOS4wMDAwMDAwMDAwIiB5PSIyNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjExLjAwMDAwMDAwMDAiIHk9IjI1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iMjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSIyNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjI1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iMjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMy4wMDAwMDAwMDAwIiB5PSIyNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjI1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDkuMDAwMDAwMDAwMCIgeT0iMjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1MS4wMDAwMDAwMDAwIiB5PSIyNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjI1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iMjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2Ny4wMDAwMDAwMDAwIiB5PSIyNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjkuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSIyNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjcuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMy4wMDAwMDAwMDAwIiB5PSIyNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM1LjAwMDAwMDAwMDAiIHk9IjI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSIyNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQxLjAwMDAwMDAwMDAiIHk9IjI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1MS4wMDAwMDAwMDAwIiB5PSIyNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSIyNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjI3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iMjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTcuMDAwMDAwMDAwMCIgeT0iMjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMS4wMDAwMDAwMDAwIiB5PSIyOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iMjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0NS4wMDAwMDAwMDAwIiB5PSIyOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTMuMDAwMDAwMDAwMCIgeT0iMjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSIyOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY3LjAwMDAwMDAwMDAiIHk9IjI5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iMjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSIyOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNy4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0OS4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2MS4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjMxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iMzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSIzMS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjkuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNy4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIxLjAwMDAwMDAwMDAiIHk9IjMzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjMzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDMuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0NS4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjMzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDkuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1MS4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUzLjAwMDAwMDAwMDAiIHk9IjMzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTUuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYxLjAwMDAwMDAwMDAiIHk9IjMzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iMzMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2Ny4wMDAwMDAwMDAwIiB5PSIzMy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjkuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIxLjAwMDAwMDAwMDAiIHk9IjM1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjM1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNy4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM5LjAwMDAwMDAwMDAiIHk9IjM1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDEuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0NS4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjM1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1Ny4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjM1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iMzUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSIzNS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjM3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSIzNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjM3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjkuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSIzNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQzLjAwMDAwMDAwMDAiIHk9IjM3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0OS4wMDAwMDAwMDAwIiB5PSIzNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjM3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTMuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSIzNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY3LjAwMDAwMDAwMDAiIHk9IjM3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iMzcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSIzNy4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjM5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNy4wMDAwMDAwMDAwIiB5PSIzOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjM5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjEuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSIzOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjM5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0My4wMDAwMDAwMDAwIiB5PSIzOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjM5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2MS4wMDAwMDAwMDAwIiB5PSIzOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjM5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iMzkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSIzOS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSI0MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIxLjAwMDAwMDAwMDAiIHk9IjQxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSI0MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjQxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSI0MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjQxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSI0MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjQxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTcuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSI0MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYxLjAwMDAwMDAwMDAiIHk9IjQxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iNDEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0MS4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTUuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1Ny4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjQzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iNDMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSI0My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNDUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSI0NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE3LjAwMDAwMDAwMDAiIHk9IjQ1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjcuMDAwMDAwMDAwMCIgeT0iNDUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMS4wMDAwMDAwMDAwIiB5PSI0NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMzLjAwMDAwMDAwMDAiIHk9IjQ1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDEuMDAwMDAwMDAwMCIgeT0iNDUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0My4wMDAwMDAwMDAwIiB5PSI0NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ1LjAwMDAwMDAwMDAiIHk9IjQ1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iNDUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSI0NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU5LjAwMDAwMDAwMDAiIHk9IjQ1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNzEuMDAwMDAwMDAwMCIgeT0iNDUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSI0Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjQ3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iNDcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSI0Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjQ3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzUuMDAwMDAwMDAwMCIgeT0iNDcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNy4wMDAwMDAwMDAwIiB5PSI0Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjQ3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTUuMDAwMDAwMDAwMCIgeT0iNDcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSI0Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjQ3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iNDcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjQ5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iNDkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI0OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE3LjAwMDAwMDAwMDAiIHk9IjQ5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjEuMDAwMDAwMDAwMCIgeT0iNDkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSI0OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjQ5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iNDkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0OS4wMDAwMDAwMDAwIiB5PSI0OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjQ5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTcuMDAwMDAwMDAwMCIgeT0iNDkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSI0OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY3LjAwMDAwMDAwMDAiIHk9IjQ5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iNDkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSI0OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSI1MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE1LjAwMDAwMDAwMDAiIHk9IjUxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTkuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSI1MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjUxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNy4wMDAwMDAwMDAwIiB5PSI1MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM5LjAwMDAwMDAwMDAiIHk9IjUxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDEuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSI1MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUxLjAwMDAwMDAwMDAiIHk9IjUxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTcuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2MS4wMDAwMDAwMDAwIiB5PSI1MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjUxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNzEuMDAwMDAwMDAwMCIgeT0iNTEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI1My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE3LjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iNTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyOS4wMDAwMDAwMDAwIiB5PSI1My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM1LjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDUuMDAwMDAwMDAwMCIgeT0iNTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0Ny4wMDAwMDAwMDAwIiB5PSI1My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iNTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSI1My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU5LjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iNTMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSI1My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcxLjAwMDAwMDAwMDAiIHk9IjUzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjExLjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjEuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNy4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI5LjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQzLjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1NS4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2MS4wMDAwMDAwMDAwIiB5PSI1NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYzLjAwMDAwMDAwMDAiIHk9IjU1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjUuMDAwMDAwMDAwMCIgeT0iNTUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSI1Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjU3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzMuMDAwMDAwMDAwMCIgeT0iNTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSI1Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjU3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDMuMDAwMDAwMDAwMCIgeT0iNTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0OS4wMDAwMDAwMDAwIiB5PSI1Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU1LjAwMDAwMDAwMDAiIHk9IjU3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjMuMDAwMDAwMDAwMCIgeT0iNTcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2Ny4wMDAwMDAwMDAwIiB5PSI1Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE1LjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTcuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjUuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMy4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM1LjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0MS4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQzLjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU1LjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iNTkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSI1OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY5LjAwMDAwMDAwMDAiIHk9IjU5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSI2MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjYxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjcuMDAwMDAwMDAwMCIgeT0iNjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzMS4wMDAwMDAwMDAwIiB5PSI2MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMzLjAwMDAwMDAwMDAiIHk9IjYxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDEuMDAwMDAwMDAwMCIgeT0iNjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0NS4wMDAwMDAwMDAwIiB5PSI2MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjYxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDkuMDAwMDAwMDAwMCIgeT0iNjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1MS4wMDAwMDAwMDAwIiB5PSI2MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjUzLjAwMDAwMDAwMDAiIHk9IjYxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTUuMDAwMDAwMDAwMCIgeT0iNjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSI2MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjYxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNzEuMDAwMDAwMDAwMCIgeT0iNjEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE1LjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTkuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzEuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU1LjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTcuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1OS4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjYxLjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjMuMDAwMDAwMDAwMCIgeT0iNjMuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2NS4wMDAwMDAwMDAwIiB5PSI2My4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcxLjAwMDAwMDAwMDAiIHk9IjYzLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNy4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjExLjAwMDAwMDAwMDAiIHk9IjY1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTMuMDAwMDAwMDAwMCIgeT0iNjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxNS4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE5LjAwMDAwMDAwMDAiIHk9IjY1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjMuMDAwMDAwMDAwMCIgeT0iNjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyNS4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI3LjAwMDAwMDAwMDAiIHk9IjY1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iNjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0NS4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ5LjAwMDAwMDAwMDAiIHk9IjY1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iNjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjY1LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjcuMDAwMDAwMDAwMCIgeT0iNjUuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2OS4wMDAwMDAwMDAwIiB5PSI2NS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMS4wMDAwMDAwMDAwIiB5PSI2Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjEzLjAwMDAwMDAwMDAiIHk9IjY3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTUuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSI2Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjY3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjcuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyOS4wMDAwMDAwMDAwIiB5PSI2Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjMxLjAwMDAwMDAwMDAiIHk9IjY3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzcuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzOS4wMDAwMDAwMDAwIiB5PSI2Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQxLjAwMDAwMDAwMDAiIHk9IjY3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDMuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1NS4wMDAwMDAwMDAwIiB5PSI2Ny4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjY3LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iNjcuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3LjAwMDAwMDAwMDAiIHk9IjY5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTkuMDAwMDAwMDAwMCIgeT0iNjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyMy4wMDAwMDAwMDAwIiB5PSI2OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjI1LjAwMDAwMDAwMDAiIHk9IjY5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjkuMDAwMDAwMDAwMCIgeT0iNjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIzNS4wMDAwMDAwMDAwIiB5PSI2OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ1LjAwMDAwMDAwMDAiIHk9IjY5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNDcuMDAwMDAwMDAwMCIgeT0iNjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1My4wMDAwMDAwMDAwIiB5PSI2OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjY5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjEuMDAwMDAwMDAwMCIgeT0iNjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2My4wMDAwMDAwMDAwIiB5PSI2OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY1LjAwMDAwMDAwMDAiIHk9IjY5LjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNjkuMDAwMDAwMDAwMCIgeT0iNjkuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI3MS4wMDAwMDAwMDAwIiB5PSI2OS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjcuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI5LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTEuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxMy4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjE1LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMTcuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIxOS4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjIzLjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMjUuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSIyOS4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjM3LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iMzkuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI0My4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjQ3LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTEuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI1NS4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjU3LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjx1c2UgeD0iNTkuMDAwMDAwMDAwMCIgeT0iNzEuMDAwMDAwMDAwMCIgeGxpbms6aHJlZj0iI2Jsb2NrIi8+PHVzZSB4PSI2NS4wMDAwMDAwMDAwIiB5PSI3MS4wMDAwMDAwMDAwIiB4bGluazpocmVmPSIjYmxvY2siLz48dXNlIHg9IjY5LjAwMDAwMDAwMDAiIHk9IjcxLjAwMDAwMDAwMDAiIHhsaW5rOmhyZWY9IiNibG9jayIvPjxpbWFnZSB4PSIzMi41IiB5PSIzMy41IiB3aWR0aD0iMTUiIGhlaWdodD0iMTMiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIGhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZTRBQUFITkNBTUFBQUR2OFdqOEFBQUFObEJNVkVVQUFBQUFBQUQvLy84QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFEQ2xOUUNBQUFBRW5SU1RsTUEvLzhnUUdDQUVMRHcwRENnd0pEZ2NGQ2ZoL0ZpQUFBY1VFbEVRVlI0bk8yZDYyTGNxZzZGTTAyYU5FM1Rkci8veTU0empaS3hZUmwwNFdKR1dyK0hpL2xBU0FKN0hoNUMvblFKM2JVQ3RqTUZiVjhLMnI0VXRIMHBjTHRTMFBhbExlNXZvWHRWam50MmowSWRGYmg5NmNZN2NEdFE0SGFsd08xTGdkdVZBcmNyQlc1WEN0eXVGTGhkS1hDN1V1QjJwY0R0U29IYmxRSzNLd1Z1VndyY3J1UVc5K1BUOStmbjU2ZW4yZjBZSzVlNFg3Ny9lTDE4NnVmejIreitqSk5EM0krL2Jxdy85UDU5ZHA5R3lSM3VsOThYb0hjblJ0MGI3cWMvaVBiLzlYdDJ6NGJJR2U2L0I3Q3ZlL2pMN000TmtDL2N2NDVwKytEdENqZmN0bDN4OW9UN2U1bjIvM25QN21GM09jTDlsc1pmdWU3ZVgzT0UrMmVWOXVWeTcvR1lIOXdGcDl5UE9YZUQrNlZ1eXErNjgveWFHOXhWUCsxRGYyYjNzNi9jNE9iczNGZmQ5M21KRjl4dlROcDM3cHg3d2MxeTFLNjZiMnZ1QmZjN0YvZmxjWFpYZThvTGJwNWZmdFYvczd2YVUzZUIrK1g3ajMvbm1qOS9IenBhYk5xWDU2TkcvbjVjZ1huL3ZmRDZ2d1BjTDgrYnBmdU9nVDlaY2U4YStiVXM4UFZ4dnlVaDFsLzBJeXZ1dC8ydGlOZFZzekhMNDg0UFBuNkJYeGx4Zjg4YVdaVDM2cmdmZ1E4R2dObHdvN08wTlhtdmpoc0dXUG01bGcwM3V0LzJ1dVQrdlRodW5BblB6N1ZNdUovaDc5NUhQRjlyTFk3N0lCT2V4YzRtM0FlWFYxZk1ycStOKy9FQTJZLzBoeGJjUjJXUlMzaDJyWTM3TUJPZS90Q0NHOXZ5TmJQcmErTStJcEU1YXhiY1A0NSt1ZURGMWJWeEh4NTh0TVROYm1RQkJlN0F2WXdDdDFDQk8zQXZvOEF0Vk9BTzNNc29jQXNWdUFQM01ncmNRZ1h1d0wyTUFyZFFhK04rZXpwUW1zNStPZnJoUnRmUDZsMi9yS2R1WkFHdGpUc2tWT0IycGNEdFNvSGJsUUszS3dWdVZ3cmNyclEyN3NPUWVJZ2k3aDRzL2t2NlBSUlp0Y0VLM0VKUnp3TzNRb0Y3c0FLM1VOVHp3SzFRNEI2c3dDMFU5VHh3S3hTNEJ5dHdDMFU5RDl3S0JlN0JDdHhDVWM4RHQwS0JlN0FDdDFEVTg4Q3RVT0Flck1BdEZQVThjQ3NVdUFjcmNBdEZQUS9jQ2dYdXdRcmNRbEhQQTdkQ2dYdXdBcmRRMVBQQXJWRGdIaXg2YVhPU0Z2ekU5ZHE0UTBJRmJsY0szSzRVdUYwcGNMdFM0SGFscFhIUGZTUHc2V205ZnlOWkdUZittNkdSZ3Y5SWVHWlJ2MWZFL1hzVzVJMVcrL3NaNnZhQ3VIL05RcnpUcjdWZThxWmVMNGY3Wlc2Ni9LYWZTL0dtVHErRysrWGcvK0ltNk9kS3FYUHE4Mks0M3c3K3VHK0tYaGR5MEtuTGErRkcvN2c3VWEvWmYxQ2VWdFRqcFhEbi82WTlXOHY4dXpQMWR5WGM4OFB0WE9nLzNzOG82dTVDdU04UWJ1ZGFKQUNuM3E2RCt4emhkcTRmU3dSazFObFZjSjhtM002MVJBQk9mVjBFOTRuQzdWdy9Gd2pJcUt0cjRENVZ1SjFyZ1FDY2Vyb0U3cE9GMjduT0g0QlRSMWZBZmI1d085ZlpBM0RxNWdLNHp4aHU1L285ZTVqS29sNmVIL2RaQTdCVTV3N0FxWk9ueDcwSzdjdmwvY3dCR2ZYeDlMaERUUlM0WFNsd3UxTGdkcVhBN1VxQjI1VUN0eXNGYmxjNk9lNjM5d045M3ZaOVB2ckJQMjJQcUg0VmYwbmE1cnovSy83eTgzMmhSMDdicDlHNWNSL2x5YitPR3N1SjlEK2JxaDZMdi96VXowMkpsL0tSek9mTWVEcjYyUm1QUzZocjU4UjlsRG45b3YxZkdkNTJ3UCtXZi9xcDdUc0N6K1dmZm41NDZmQmM5b1RwYytyWkdYRWZYbDM1b2wwNUFIL2RacStaOTJDMjczUldsbmU5RytkTG4xUEhUb2o3OE9ySzE2V3dDbzdkYldDZUxkOWI4OXJ5L3VySTI5RmMrbk8yRFp6NmRUN2MveDJ4dk5HdUxOamQ0bWJhOHIwMXI4Mm5yN2x4YkloTzlxazk2dGJwY0IvNllMY0xuN1V6MGQxVmYvYWR4dDBiK3BYbGZkdWRqNmZldVJ3MjZ0VFpjQisrTzNDalhVT3hXOXhjVzU1WTgycXhyOGx4elB0VUw1aFFuMDZHKzNEaDNtaFhuUExrR2hIYmx1K3RlZjFXeGRkbHhHUGVaM0xRcVV1bnduMDhjamZhOVZ1cE8yeUMrK2s3YTE1ZDNyZkx4c2U5UHRFTEp0U2pNK0htMEg2cDNqamZyYW1YMnErM2pldzZVMTNlbXo0eCtqMWIxS0VUNFQ2TWFyYWpWbjkzYUxlNFJiZFlkMnplcWovLzhmWGJCWGhUZjg2RCs5aEtiOGFzL2hib2oxMmxQNnEvMzJqdlM5Y24xczBYTytaOWxoZE1xRHVud2MyaXpWaXN1M2hYWXN2VG1mSlVMM0I3ZCtUMHZLazNaOEhOb3MxNGVlaDlWNnZ3allTOTVhMTdlUnVVWitkTm5Ua0o3dVAzZ2phME9hK0I3bC9XRXRueTFKb3o1c3EyYzRjKzVDbDRVMS9PZ2Z0NFpMYzVFd2E4UC90NmhTK1hKWUV5NDdYVFRZbGowL042Z2dRYmRlVVV1QXUwTnl1RGt6SFpEMncxSTVPMnR1K1dzTUhDVmpPZk4zWGtETGg1dE91UlVaSS9WYnh3dE44S2FnY2wvN1R0NFlsNVV6OU9nTHV3UjI3R3NwNWZ1V1JwYXZGSEFCSnJ6dm40ejUvTkRDdFlrOW04cVJ2emNSZG9iOGVJNVhYdFAxdkpzUWQ3SlZzLzYzeGxHNzR4bjJXQ3FCZlRjVE5IaUhYVW9WaWNpUklubXJVYmJIUHRoVzdPNVUyZG1JMjdRSHNMajdkUUUxaUt6L2NrdXdFajFaSUVXb1VKTXBVMzlXRXliaVp0MXNhZHBGZ0VSOTAzN1k5Sm1ETm1seGd2YkRvekw3aFFGK2JpTHF5ZTNSanlYT3hrK1FpT3VtOUtQbHJOUzh0dFQ5Z0x1YUNaK1JicXdsVGNoY2hsUjVzWFB5ZCtsalNsOXFIVTR2SVNOZHNBcm1DSkp2S21Ic3pFWGFDOUc1aEgzcGduKzY3c2VPUlQrMk1TcnJ1M2kvZTVqelZVMUlHSnVFc0hIcnR0anZsOXpNUU9TMU5xZUJ5WURzQTdzK1ZwdktuOWViaExhM1puVW10WEVVbnB6VERsTjN6U0QrSXh0NFRkemFlQzEvQm4wbjBIYW40YTd0THgxbzRjTjFtUytyM0s3MnFtMzBkakdvbjlzaTFNdFVuM1c2ajFXYmhMdFBjQkZUTjZUaDAxZVVvTjE4T2ROdnNRcnREcE9ieXA4Vm00QytPeHQzZmMxRmo2djMzTUxTQlh1cnR5NDdtZHAxZzZYVW05d1NHaXRpZmhMbGk3dlZsazViVXUyVm1ZS3FYMm9YVGVzRDM4WGI5THhtWEcvWE5xZWc3dWtodTFjOU40NlRRd2hMb3c3S29rTjhmMytmYm12SlNnbWZEOVZHcDVDbTcrVUxCUE9WSVRiUGh1Ym1vbnVBWW1DZnpaVTNxSXFPRVp1RXNvOWt1RVBkS1pnMlg0bEdyMmJYSzJqNytmYzZYdFpQajN6Nm5kQ2JoTDZaWDlGc3cyNWZrZkxCdiszaUF6dFd5dmJ6OVhTNG1GNGVrV2FuYzg3bUpLZEI4ODg3M3IxQUJydzdDck1rdkJQMXJibS9OU3lKNjVscDFGelE3SFhidzl2Qjh1UHJQTTExV2RobjBxK3l0WC9tSExmdEdXcHV2ZzhKdGFIWTY3bEFCUG5HSitMSlZ0aGFhL29jcDJCcjdmOTg3dnh0andteG9kamJ2a1FpVUdqbS9LTS9QN3JWNm1vQndFLzc3NmZxb1U3N0lPRGNlb3pjRzRpK3RrdjNFemp6M2h3Q2xQdzBpdmFYVUNQLy8xa2QrUmtlRVlOVGtXZHpHd1NzNnJCZlk0YzNPTmZ4ZWEzVElTZUg0L0JEMFo2SjVUaTBOeEYxL3BTNjZKQ1Jab2VzSE1rRUg5VVA1VkZVRmM5OFR2eW12bUZIWVR0VGdTZDlFcFR4NmRIM0lEMTBxZlFmMVFsa2VWZVBySmlYWjVpZzl6ejZuQmtiaUw4VXl5a1VuTWNiWkd6UDg4bGxHUTNHcE5iRU54cGd3N0xhSDJCdUl1ZXRySmxpZEprK1NPdFBuUHFQSWNwMlI3U0taZjBRbkpMRk1uVVhQamNCYzM0elRKSkltYmN3ZlgvQWV4ZVl3a01SakpYbEIrczNEUTVYTnFiUmp1Y2x5VkxDZjlGM1QrTlNVcERaVTdmeUozSUhtYThrUWY0NjVSYTZOd2w3KzhrR3hoRWo4TjJQSUdmeHFhdTFDU1crdWlHKy81MU9vaGFtd1U3dUoybWw3UEZGMDh5bTE1Zy8rUnpEZHYwUnhLcjd3WExkdVE3QnExTlFoM2ViQ1MvVXRralBNVW1QUVRIVWc1QXBFMVR5MTBPWWt3SXJ0R1RZM0JYZjVrVWhxTmlONzJ5VU1aeStIbnA0Q0ZOZldxV0hqRTRUYzFOUVIzZVM5T3ZYTDJGWloveXMydTZmRHpVL25tTGZNSUVvTlZOdWNEc2kzVTBoRGM1WVdSQXBObFFLV3RNWlhQSWxtcUxrM01sYzE1LzJ3TE5UUUNkM201cFo2MWJCV0JVK01HV3pmMG4yVFRLSjB2NVV4QzkrMmIyaG1BdTd4eHA2WmNGSVNoY2JKSDNWZUJ6VnMyRDlOZ3JKeDM2TDU5VXp2OWNWZStkV2g4KzhPNnh3b3FGaDY4eUI2c2QvUk56ZlRIWFQ3c1NQYzQxcmZNYmdLMnZFSFVmUlc0R2l4ektvVHZ0WFNPdnFtVjdyZ3I1OWFwRVJOZVRBQW5ET2FFK1lmQThBdGQvdlRVdkJKeDlFMmVVeU85Y1ZkV2F6cW8wbzAzVHppMzJicWhkUlZXblMzdnN0M3BleFdaR3VtTnUreVFDa2NrazltaEtnaU12dEJ3Wk8rdGxhZCsxNnVwMUVabjNCWDdsL3JWMHFVSi9ydXAwZFlOamF2MENseHFleXFqMGZQc201cm9pN3Z5dlhuMXk1YWZBdUdMOFpyYVRXQXF5Zko5SUh0UzdselBzMUJxb2kvdXl0aW50S1REQ1k1SHJOZlVic292ck1rek9DbS95Z09pSmh1Sld1aUt1eEpEWjVOZit1NEh5RDNhYnBqdkJCNUltcC9OT2xneFgvMytXSkFhNkltN2NqU1YrV25TeFkxaVkvVTNPbktCblVMc0I2Ykx1L2F1Ukxma0d0WGZFM2ZGbEdkVFdmeGlGM0NlVFMrSDdRVThKM0dVbHkzdjJsOUZ0eG41WEZSL1I5eVZKOHRlN0JJdmJqUTIwam9LUXNkVVlrY3dYZDYxSTRGZTVweXE3NGU3ZHNzZ085d1FMMHd3TkMydU5ud3FmOUZROFRaU05tZHErMEVuYzA2MTk4TmRXUWlaRnlwZTNDZ3libksxNFZOZ3I1QjNNZ3V1S3VQU3laeFQ3ZDF3MTN5bWpKVTRQd0xDc0haSmxxdlFCMVRFbFdUTHV6WmoraVJicVBKZXVHdE9UYmE0NWJsdWxIUnNkRDd5SWJTUHlsM0JiSGxYcXVpVGJLSEtlK0d1RFV2MlRQSjFDWlpCdXlUTFZTanJJZDh0eE11N1M3S0Y2dTZFdXpZcTJSZ29EcktBVXlQZldvc0NENmJ3QmNVenU4ZFh1S2pxUHJpcmx4UWFMRzYwZFRkTXNseUZ2R1Q1VGJoc1Q2aE43UjVIb1ZSMUg5eTFaR08ydUlXWFdLNUNXM2ZESk10VjZNS2cvSjVyVHE4MnR6dmNiS0dhdStDdTJ0UnNjU3VXSmZKZ20xeEN2UWtOdXlMVUV5L3ZEamRicU9JdXVHditjZTd5S2pnQlM5dnFKc3VuVUF5czJMenpmRTF0ZWJjUHZxbmlIcmhyU3pXM2Jvb3JLR2pyYm5nYzlxSEN3RW1VYlFyVmVkazgrS1o2TytDdWZpSEw5S1diVDZHdHU3R25obzJxd2ovSUYydHRlVGYzMXFqZURyaXJ6a3kyYzJ2aUp6VC9HM3RxdUJITm5NcW1UWFY1dDM2TmlLcHRqN3ZLTG44U0RTYTA4QnA3YW5qUU5YTlQ4Zm1ZeHQ0YTFkb2VkOVV3WjR0YjVXR0JsbHQ3YWdjdWs2WWkrVE0zOXRhbzF1YTRxNEZLdm1JMDV4b28wOWpjVThPam9ybjhtSWQwMVlkdSs1WWdWZG9hZHoxZmtrMTBSWW9GSDE4MDk5UndYazN6QmM3Yzlhb3U3N2JlR2xYYUduZDFMUExGclRxalJubmw1cDRhWG1LcUZ4ZnlpcXE5YlhxeGhlcHNqTHUrZmVZdWlPclFFcDBTTmozOS9CREtxNmxjaEh3cnJydDhMVTlDcWNyR3VLdEJXTDducWs2eDBNV2l0cWVmSDRLSGthb0FJSi9tMWVYZE1oaWpLdHZpcnFQTGpiRHFBZ3BLc2pRKy9md1Fla3JWcHBHenEyOEtEWU14cXJFdDd1cEE1S3RTdHlZSGVXcllvT29heWoydjZ1YlQ4S0lEMWRnVWQzMis1aDZMN2pJaG12ZE43Nmw5Q3JtRXVvQXZ6OURWSDczZDhxWUttK0t1VGxjUVhPajhLeFNrTkhzWmNDdGtSblRwSEdEWXFrNEFjbEYwb2dwYjRxNHY3bnp3ZEJzdUhBWlZUVFhCbDY1MXlkbzhocS9ibzJhNUZxcXZKZTc2UXMxM1FwMEZSaEJhdmxGd0U1eFl1Z0EvZDlicVpxTFo4cWI2R3VLdWV6QTVKV1h3aEV4c2h4VHFWYm9uUlFJN1dYM2V0RnJlVkYwNzNJeGNhTzU1S0QrdGdWeVlMbzQ1YmtvNXMzSjA5WXBhTFcrcXJoM3UrbkNEcml2ZEsrU3BkVWloWG9XV2wvTG9EY1JWOWYydjBiMFdxcTBaYnNiaXpudXVIRGQwY2FsSEN2VXFtTGxXMXBXN0x2VTEwdWlraEdwcmhwdGhTL09PSy8vZURhWWZkRlhwMmxKYWtuenFNSHlYTmljbFZGa3IzSXpGRFZMQXloV0pScUJMQ3ZWeXNIa3FweW1vcXg2WnRGbmVWRmtyM0l6Rm5UczlXa1JvUCsza21PT0IwYjVYbklmZWpDRm80cHhUWFkxd014YTNhbXBqRFhUTWNXUGFlUXJPVStzR3JvbHpUblUxd3MyWTdzREYxRjRsUkQxbzh0RjZKTFM0dEdldHdNZGtUTk1XeTV1cWFvU2JzUW5uVzVEVy9zTHAzaVZqZmhWMGxiUVROVDl4WVFRbkxaWTNWZFVHTnlOYjB2QlQxQ01kODRPc3VUYklCKzRxd3l3MVdONVVVeHZjak1VTi90eER1MFRhblZKeEJHOEFhLzhnSEZoenhsSnBjQW1aYW1xQ20yR1ZkYytKaFNaN3J6anMwdFkxUitmbmpGbHZQL2VtaXByZ1pwZzI4MSs1VkI2K20yT09MN1NvWnhldzVvdzl6WDZ0aFNwcWdadno3T0RDdG5MQWNGZTExcFVoTkx2VTF5Q0JsVk1PbjB4VVR3dmNqT2tKbkV0MVhnUm16RHNka0Z3RkR5blV0UUZyenZCOHpKZFNxWjRHdURsZVVzdnZ6RVBMMXVtQTVDb1lpYW1uRndESHNVeldPK2RVVFFQY3l0NnFYOWVFTTExYkdVTndlcWtkRDJDYk9QZHdyQWNsVkkwZE55ZWVBcEdFUHNlTm5yelB6YVVQd1RCSTd4b0NWNEJobXVBT0poQlZZOGZOaWFmQTlxZS9Kb3p1QW5lTXcvRFE2UC9oQnNRb0hQdG9UTFZRTFhiY25GMFQySEw5WmpzNERtc2NpU0d2bFdPYmpLa1dxc1dNbS9QY29Lc0c2NHQ2MFJWMzAwZ01CbFdjdVcrTHhhZ1NNMjZPVVFhMlhNOW5kQngyWUVmMTFZSFI0Rmh6V3l4R2xWaHhzM0xWd0JycUQ3Q2dvOXp0UE95cXRwRVllZ0NXclRQZGFxRTZyTGc1cTlUKy80cGJ3Uk1xZlhVTXdYVmxzQ2ZLL3g4MDNVbWxPcXk0T2YwRXZxamhyeHZSV3V2eGF2ZE4wSjRZdkFXd09YQ3N1ZW5ZbStvdzRtWkZ6OERKTU53OUdYd2VkamtZWndOdVlDMVkxdHh5TGtaVkdIRnpIRFUwV29Zdm9MVzhPOFlVZW5KRGs4alo1QXlJeFZtaktteTRXVVlVMkhJTEhoU1FkSTNEV2dmZThCRTQ2OFp5QlptcXNPRm1uZkkzL2k4LzFJL091S0VWTmRRSG5DN1dybWpJckZFTk50eXMrRWRiRG10ODJOMDg4RWErSDh0T0dqSnJWSU1KTjh2QkFJR1R4WkZ1K1JJUFY0MERiempZck9yMHg2QlVnUWszNndxSjFuSWRxTjJuci9pQ2Z4Wmh3YTM5d3p2OU1TaFZZTUxOT3VZQU05SnkwNmpsRzVsY3dTbG1lUWd3ZjFpV1VoOTZVd1VXM0t4RmlucG9TWG1PdlhYOG9kWjVGcmdKczlhTytweUV5bHR3czQ2c3dVUTI1Y0NHbjNaZkR0eERRMklRNWxGWm82a092YW04QlRkcnh3UjRUQzlyVHNpeU5NK3o2RWRGZmFtRnlodHc4NmlCZVd5NkpOenVNNFlDb2Z5R0NiZmE1bW4vUVpDS0czQ3pyQS9hOWt5bmxhZ24zWEczenJQQXpaczFMRnByVHNVTnVGbTJISGhXdHVNcjFKTXVuOGZjcWpsdTlCZ3NvNmUxNWxSY2o1dG55OEZBbWJidUdWbVdnNk5tMDlWMjliZ29yVG1WMXVQbUxTbFEwTFIxejhIZFBLMm10M3BLYTA2bDliaFp0aHpSTVExVHcyK1VDdFFldDlxblVWcHpLcTNHelRNOWFKd1VnMU91c0hkU3JVT2V4V0QyZEprV0txekd6YlBsWUl1eUJjbDNneHRRNDYwZzNiODlVMkUxYnA2akFncXEzNFQvcC9GWGw2NkNKNCsyQndIZUgyL3oxdVhOcWJBV04rKzFBTFFxYko5SW1wSlU2NUJXZ3k0WEx5R2hPZ1dsc2xyY1BFdUdESS90MWR5N3dZME1CbS96VmwxQXBySmEzTHlKQ0lKRTR4MWhsTTdzbmxURG8yTjg2eFRVeUR0MVVYMjVnOG9xY1RPaEFidGpYSXFvTXdOd3QwK3JvU3FaQjdtYUc0cFVWSW1iTncrUlYyRmtnenF6Sm00VVkvQVNDSnJFR2hWVjR1YUZZU2duWXZQVW9JdmNQV1YrZ051VzNVR0R3OHZjYUJKclZGU0ptL2VrYUFMYlBMVTVPZFNEdTZpMmR2V21UeE9LVVZFZGJxYVhBdGFFMFZPYmhidDlGaFdPT05PeFVZUmlWRktIbTVsaDBEL1FrWnArb0ZTZ0hyajFpMEVSaWxGSkhXN2VCb3cyV3FOYjFmVHp3OVoyalovdVE5QjRXeDJjOUdWUlNSMXUzdk1nbDhMNDJmRTVLZk9EQVRaT1hmM3dLRTdGcUtRS045TWlJemJHenl6TXd0M2hqQVRXeWF4U2ZpcEdCVlc0bVoxQzBZdDBUQkxCa05OWUowY1F0KzJNeE9MYXlEZHZLcWpDemZSUlFQYkgrcms3TklONnYxUndGY1J0emRVREI1djVMUExObXdxcWNQUDZoTUpEMDEzOHk3UVRFcHplc1RhTVRCWFA3WlJ2M2xSUWc1dTVSQTE3MDZGbTRlNXdKSVlkRWFiaEZHL2VWRTZEbTdsbkdaN21VS2c3MDNCYmR5WmtrcG5CbmZqRmZpcW53YzBNcGxDWHJOOC9ROTJaaHR2cUl5THp4OXp0eEdsektxZkJ6VXg3STRNakhaRlVxRHZkL2grdzFuQ1BwMkhPWGZGM0hLaWNBamZYRXdaRnpkK2hSdjBaY1A3WkNUZktmVE9MU3MrOHFaZ0NOM00xSWNmY3VoQWJmMXBjSUhncVljM2VJc2VUV2FmMEcydFVUSUdiT2J3OUhQTWV5UzJlNFBCYUhVK0RNeXY5YkFjVlUrQTJkTWg2RWVIT2NLT2JtMHpYWEpwb29XSUszRXh6Z3h4ejYvamNHVzcwT013b1YzckZnWXJKY1hNOU5jUEdkS2dlQjFNOGRjR05tSEhEU3FHdlJxWGt1TG51RnVxUGJEUnl3UjFySG03ekpUbFFwMlUxRlVTbDVMaTVvd3VLbXVNd2lMdmJQM2R2QlVmWFBORU1rWmpRVjZOU2N0eE1DNGIySlhQK3E4Y2RJcDc2NEVhMU1oT1BRbCtOU3NseE0zTnFQZUt3dThPTnpxMlpqeVBNcTFFcE9XN21reUF5QytPR0Z3cTZQQS8zQmh3YjJKYWFHRGZYSUJzbTdyRzYrTWNzOVhFU2tVWG1WaW83QTZWQ1l0emNDd3FJekwzaE52c2lhTWZqUmo2eVY0ZW9rQmczZC9MMUNMdnZEcmNsOEphNTVsUklqSnM3dUlVMjlibzMzR2lVdU8vWnlGeHpLaVRHelgzSEN4UzEvdzN2M2VFMjVLSmtyamtWRXVObWRxWkwySDEvdU5FREdSWlVGWnNVTjNlRldwd1E0UlBlRzI3dTg0aGVES1F5VXR6Y0owU1hxZXpKYmRpbGVianR6Z2lxbHBzVUZtWE5xWXdVTnhkWmx5eUxEOXpjWVJMZFJxVXlJM0hienpKZ2wxYkdqUzQ0V0liNFVGUkdpcHM3dGwyeUxQZUgyM0QzV0JhSlVabkF6ZE5BM0Z6M1NQVEJMU29qeGMxOWpoNlh6TzhRdHlXdEpucFJqTXIwd2oxc2NOYkdiVW1yYWQ3aUZPSm1KOGE2REE0Mlh4TngyejhUWWhrblNlQk5SWVM0MllrRlM5bERuUTYzdlduRDlTVlI0RTFGaExpNVhtT2ZIT29kNHJaa1Vmdmo1c2FFZDRjYm55NzN3YzJ0VlJKNFU1R0J1SzFmYnBpS0c2K2tlOGZOVFl4WmJ1VWM2dzV4Vzc1NUlIbkptNG9JY1ZzbVhpL2M4KzZaZDhMTmZWdEJrbWVoSW5lQWU5NWJKSjF3VzNiTUkxRVJJVzV1b05uajljL0FuVWh5bjRXS0NIRmJucUxQMkN5TzIrVGs4Smh0d1hYQzNlTnQzN3ZFYlhyWmhzZHNDMDZHbTUzTzdYTWdkanJjZmR3UmRzVEtZdlloS2lIRHpjNlVCRzZtVFBrb1FkS2NTZ3pFYmZ0Ymlxc0NONmRUVUZSaUlHN0pLR0RkSVc3TGdYZmc3cVpldUUxSGg3MXhzNTJJd00wVnFQVTB1Tm1QRjdpNUFyV3ljUXV1SGxPSndNM1RLWEVManNTb1JDZmNsa3NhMHNjTDNBeFJpVTY0Q3kwYUZMajNPak51Kyt1K2dUdlJtWEUzK01wODRONHJjUGRTTjl5V3Z6Z1AzTDNVRFRlb09IQ1hIaTl3TTBRbHhzWGREWEIzRy9PSlRRZHVTYTF0eG54aTA0RmJVbXViTVovWWRPQ1cxTnBtekNjMkhiZ2x0YllaYzIzVGZaNHBjQi9XS3VsVSs2WUR0LzBoUkxWS090Vys2Y0J0ZndoUnJaSk90Vys2enpPeEw1R2NCamY0bW5uZzVsYk1mcURUNEFZZENkeFFqVWY1U0ZRaWNGdWFub3hiOEFWN0tpSER6ZjZJTGNETmZnUGxXSUdiMHlrb0t0SHA0akg2K0tOa0VDU1BkM2U0MmEvYm5BWTNlamxDTWdpU3h3dmNERkdKd0cxcE9uQi9LSEJ6QldwbHYwelgrNVZBUGpKTDJVTTV3VzBwV3dFWHVDMU5CMjRTc0RQOElUaVNEOXo4RzlvOFp0dkI3L1FwSGpROGdqSGdWL3J0L25DeksrMy9LUjYyMHdnU1BwSkJ3UEtCK3krM2FQOFBiYjA5TVlXdVQ1dUYvbVR0MjdkSGU4WGFwbC9zRlJ1ZVIvS25yenJjb1VVVnVGMHBjTHRTNEhhbHdPMUtnZHVWQXJjckJXNVhLdUIrRDYwdlBtNlVzQXN0cHNEdFNvSGJsUUszS3dWdVZ3cmNyaFM0WFNsd3UxTGdkcVhBN1VxQjI1VUN0eXNGYmxjSzNLNFV1RjBwY0x0UzRIYWx3TzFLZ2R1VkFyY3JCVzVYNHVOK0RxMHZQdTdRL1Nsd3UxTGdkcVhBN1VxQjI1VUN0eXNGYmxlUzRHWi9YaXMwUzdXdjRVcHdzeitlRjVxbDJ0K1MwTThDOTMwb2NMdFM0SGFsd08xS2dkdVZBcmNyQlc1WEN0eXVGTGhkS1hDN1V1QjJwY0R0U29IYmxRSzNLd1Z1VndyY3JoUzRYU2x3dTFMZ2RxWEE3VXFCMjVVQ3R5c0ZibGNLM0s0VXVGMHBjTHRTNEhhbGxyaC96LzZIdzFCTjN4dmlEaTJ2d08xS2dkdVZBcmNyQlc1WEN0eXVGTGhkS1hDN1V1QjJwY0R0U29IYmxRSzNLd1Z1VndyY3JoUzRQZWtTdUQwcGNMdFNoanQ0MzdPK2FBZnUrOWZsa3VNTzVQZXBMZCtIaEhmb252VVF1RDNwSVhnNzBzTkQ4UGFqaDRmZzdVY1BXODN1VEtpdkhuTE43bEtva3dEcmtBdjlENlJ2M2hoUWNweWFBQUFBQUVsRlRrU3VRbUNDIi8+PC9zdmc+Cg==" class="qr"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" class="badge-text text-center badge-font-size-11"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" class="badge-text text-center badge-font-size-11"></td>
-                                    </tr>
-                                    </tbody></table>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row d-flex justify-content-center">
-                                <div class="d-grid gap-2 col-11 mt-2">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Tirar foto
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div wire:id="VGhfAodKHmyPeCg2uysV" class="form-group">
-                                <div x-init="//VMasker($refs.cpf).maskPattern(cpfmask);
-
-    Webcam.attach('#webcam');
-
-    window.take_snapshot = function() {
-        window.Webcam.snap(function(data_uri) {
-            const fileInput = document.querySelector('input[type=file]');
-            const myFile = base64ToFile(data_uri, 'webcam-picture.jpg');
-
-            // Now let's create a DataTransfer to get a FileList
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(myFile);
-            fileInput.files = dataTransfer.files;
-
-            var inputEvent = new Event('input');
-            fileInput.dispatchEvent(inputEvent);
-            var changeEvent = new Event('change');
-            fileInput.dispatchEvent(changeEvent);
-        });
-    }" x-data="{ isEditing: true, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
-                                    https://i.pravatar.cc/1000?img=22
-                                    <div class="row">
-                                        <div class="col-12 d-flex justify-content-end">
-                                            <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
-                                        </div>
-
-                                        <div class="form-group col-md-12 d-md-flex align-md-items-baseline">
-                                            <div class="col-md-12">
-
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label for="document_type_id">Tipo de Documento*</label>
-                                                        <select name="document_type_id" class="form-control text-uppercase" wire:model="document_type_id" x-ref="document_type_id">
-                                                            <option value="">Selecione</option>
-                                                            <option value="3">CNH</option>
-                                                            <option value="1">CPF</option>
-                                                            <option value="4">PASSAPORTE</option>
-                                                            <option value="2">RG</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-lg-6 col-10">
-                                                        <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id" value="">
-                                                        <label for="document_number">Documento*</label>
-                                                        <input type="text" class="form-control " name="document_number" id="document_number" wire:model.lazy="document_number" x-ref="document_number" wire:blur="searchDocumentNumber">
-                                                    </div>
-                                                    <div class="col-lg-2 col-2 pt-4 text-center">
-                                                        <button type="button" wire:click="searchDocumentNumber" class="btn btn-outline-secondary" id="btn_buscar">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="full_name">Nome Completo*</label>
-                                                            <input type="text" class="form-control text-uppercase" name="full_name" id="full_name" wire:model="full_name">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="social_name">Nome Social</label>
-                                                            <input type="text" class="form-control text-uppercase" name="social_name" id="social_name" wire:model="social_name">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="country_id">País*</label>
-                                                            <select name="country_id" class="form-control text-uppercase" wire:model="country_id" x-ref="country_id">
-                                                                <option value="">Selecione</option>
-                                                                <option value="2">Afeganistão</option>
-                                                                <option value="4">Albânia</option>
-                                                                <option value="5">Alemanha</option>
-                                                                <option value="6">Andorra</option>
-                                                                <option value="7">Angola</option>
-                                                                <option value="8">Antígua e Barbuda</option>
-                                                                <option value="11">Argentina</option>
-                                                                <option value="10">Argélia</option>
-                                                                <option value="12">Armênia</option>
-                                                                <option value="9">Arábia Saudita</option>
-                                                                <option value="13">Austrália</option>
-                                                                <option value="15">Azerbaijão</option>
-                                                                <option value="16">Bahamas</option>
-                                                                <option value="17">Bahrein</option>
-                                                                <option value="18">Bangladesh</option>
-                                                                <option value="19">Barbados</option>
-                                                                <option value="21">Belize</option>
-                                                                <option value="22">Benim</option>
-                                                                <option value="23">Bielorrússia</option>
-                                                                <option value="24">Bolívia</option>
-                                                                <option value="26">Botswana</option>
-                                                                <option value="1">Brasil</option>
-                                                                <option value="27">Brunei</option>
-                                                                <option value="28">Bulgária</option>
-                                                                <option value="29">Burquina Fasso</option>
-                                                                <option value="30">Burundi</option>
-                                                                <option value="31">Butão</option>
-                                                                <option value="20">Bélgica</option>
-                                                                <option value="25">Bósnia e Herzegovina</option>
-                                                                <option value="32">Cabo Verde</option>
-                                                                <option value="33">Camarões</option>
-                                                                <option value="34">Camboja</option>
-                                                                <option value="35">Canadá</option>
-                                                                <option value="36">Catar</option>
-                                                                <option value="37">Cazaquistão</option>
-                                                                <option value="38">Chade</option>
-                                                                <option value="39">Chile</option>
-                                                                <option value="40">China</option>
-                                                                <option value="41">Chipre</option>
-                                                                <option value="42">Colômbia</option>
-                                                                <option value="43">Comores</option>
-                                                                <option value="46">Coreia do Norte</option>
-                                                                <option value="47">Coreia do Sul</option>
-                                                                <option value="49">Costa Rica</option>
-                                                                <option value="48">Costa do Marfim</option>
-                                                                <option value="50">Croácia</option>
-                                                                <option value="51">Cuba</option>
-                                                                <option value="52">Dinamarca</option>
-                                                                <option value="53">Djibouti</option>
-                                                                <option value="54">Dominica</option>
-                                                                <option value="55">Egito</option>
-                                                                <option value="57">El Salvador</option>
-                                                                <option value="56">Emirados Árabes Unidos</option>
-                                                                <option value="58">Equador</option>
-                                                                <option value="59">Eritreia</option>
-                                                                <option value="60">Eslováquia</option>
-                                                                <option value="61">Eslovênia</option>
-                                                                <option value="62">Espanha</option>
-                                                                <option value="63">Essuatíni</option>
-                                                                <option value="64">Estados Unidos</option>
-                                                                <option value="65">Estônia</option>
-                                                                <option value="66">Etiópia</option>
-                                                                <option value="67">Fiji</option>
-                                                                <option value="68">Filipinas</option>
-                                                                <option value="69">Finlândia</option>
-                                                                <option value="70">França</option>
-                                                                <option value="71">Gabão</option>
-                                                                <option value="73">Gana</option>
-                                                                <option value="74">Geórgia</option>
-                                                                <option value="75">Granada</option>
-                                                                <option value="76">Grécia</option>
-                                                                <option value="78">Guatemala</option>
-                                                                <option value="77">Guiana</option>
-                                                                <option value="79">Guiné</option>
-                                                                <option value="81">Guiné Equatorial</option>
-                                                                <option value="80">Guiné-Bissau</option>
-                                                                <option value="72">Gâmbia</option>
-                                                                <option value="82">Haiti</option>
-                                                                <option value="83">Honduras</option>
-                                                                <option value="84">Hungria</option>
-                                                                <option value="117">Ilhas Marshall</option>
-                                                                <option value="119">Ilhas Maurício</option>
-                                                                <option value="156">Ilhas Salomão</option>
-                                                                <option value="88">Indonésia</option>
-                                                                <option value="90">Iraque</option>
-                                                                <option value="91">Irlanda</option>
-                                                                <option value="89">Irã</option>
-                                                                <option value="86">Islândia</option>
-                                                                <option value="92">Israel</option>
-                                                                <option value="93">Itália</option>
-                                                                <option value="85">Iêmen</option>
-                                                                <option value="94">Jamaica</option>
-                                                                <option value="95">Japão</option>
-                                                                <option value="96">Jordânia</option>
-                                                                <option value="97">Kiribati</option>
-                                                                <option value="98">Kosovo</option>
-                                                                <option value="99">Kuwait</option>
-                                                                <option value="100">Laos</option>
-                                                                <option value="101">Lesoto</option>
-                                                                <option value="102">Letônia</option>
-                                                                <option value="104">Libéria</option>
-                                                                <option value="106">Liechtenstein</option>
-                                                                <option value="107">Lituânia</option>
-                                                                <option value="108">Luxemburgo</option>
-                                                                <option value="103">Líbano</option>
-                                                                <option value="105">Líbia</option>
-                                                                <option value="109">Macedônia do Norte</option>
-                                                                <option value="110">Madagascar</option>
-                                                                <option value="111">Malawi</option>
-                                                                <option value="113">Maldivas</option>
-                                                                <option value="114">Mali</option>
-                                                                <option value="115">Malta</option>
-                                                                <option value="112">Malásia</option>
-                                                                <option value="116">Marrocos</option>
-                                                                <option value="118">Mauritânia</option>
-                                                                <option value="121">Mianmar</option>
-                                                                <option value="122">Micronésia</option>
-                                                                <option value="123">Moldávia</option>
-                                                                <option value="125">Mongólia</option>
-                                                                <option value="126">Montenegro</option>
-                                                                <option value="127">Moçambique</option>
-                                                                <option value="120">México</option>
-                                                                <option value="124">Mônaco</option>
-                                                                <option value="128">Namíbia</option>
-                                                                <option value="129">Nauru</option>
-                                                                <option value="130">Nepal</option>
-                                                                <option value="131">Nicarágua</option>
-                                                                <option value="133">Nigéria</option>
-                                                                <option value="134">Noruega</option>
-                                                                <option value="135">Nova Zelândia</option>
-                                                                <option value="132">Níger</option>
-                                                                <option value="136">Omã</option>
-                                                                <option value="139">Palau</option>
-                                                                <option value="140">Palestina</option>
-                                                                <option value="141">Panamá</option>
-                                                                <option value="142">Papua-Nova Guiné</option>
-                                                                <option value="138">Paquistão</option>
-                                                                <option value="143">Paraguai</option>
-                                                                <option value="137">Países Baixos</option>
-                                                                <option value="144">Peru</option>
-                                                                <option value="145">Polônia</option>
-                                                                <option value="146">Portugal</option>
-                                                                <option value="148">Quirguistão</option>
-                                                                <option value="147">Quênia</option>
-                                                                <option value="149">Reino Unido</option>
-                                                                <option value="150">República Centro-Africana</option>
-                                                                <option value="44">República Democrática do Congo</option>
-                                                                <option value="152">República Dominicana</option>
-                                                                <option value="151">República Tcheca</option>
-                                                                <option value="45">República do Congo</option>
-                                                                <option value="153">Romênia</option>
-                                                                <option value="154">Ruanda</option>
-                                                                <option value="155">Rússia</option>
-                                                                <option value="162">Samoa</option>
-                                                                <option value="157">San Marino</option>
-                                                                <option value="159">Santa Lúcia</option>
-                                                                <option value="166">Seicheles</option>
-                                                                <option value="163">Senegal</option>
-                                                                <option value="165">Serra Leoa</option>
-                                                                <option value="167">Singapura</option>
-                                                                <option value="169">Somália</option>
-                                                                <option value="170">Sri Lanka</option>
-                                                                <option value="171">Sudão</option>
-                                                                <option value="172">Sudão do Sul</option>
-                                                                <option value="175">Suriname</option>
-                                                                <option value="173">Suécia</option>
-                                                                <option value="174">Suíça</option>
-                                                                <option value="158">São Cristóvão e Neves</option>
-                                                                <option value="160">São Tomé e Príncipe</option>
-                                                                <option value="161">São Vicente e Granadinas</option>
-                                                                <option value="164">Sérvia</option>
-                                                                <option value="168">Síria</option>
-                                                                <option value="177">Tailândia</option>
-                                                                <option value="176">Tajiquistão</option>
-                                                                <option value="178">Tanzânia</option>
-                                                                <option value="179">Timor-Leste</option>
-                                                                <option value="180">Togo</option>
-                                                                <option value="181">Tonga</option>
-                                                                <option value="182">Trindade e Tobago</option>
-                                                                <option value="183">Tunísia</option>
-                                                                <option value="184">Turquemenistão</option>
-                                                                <option value="185">Turquia</option>
-                                                                <option value="186">Tuvalu</option>
-                                                                <option value="187">Ucrânia</option>
-                                                                <option value="188">Uganda</option>
-                                                                <option value="189">Uruguai</option>
-                                                                <option value="190">Uzbequistão</option>
-                                                                <option value="191">Vanuatu</option>
-                                                                <option value="192">Venezuela</option>
-                                                                <option value="193">Vietnã</option>
-                                                                <option value="195">Zimbábue</option>
-                                                                <option value="194">Zâmbia</option>
-                                                                <option value="3">África do Sul</option>
-                                                                <option value="14">Áustria</option>
-                                                                <option value="87">Índia</option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
 
 
 
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="state_id">Estado</label>
-                                                            <select class="form-control text-uppercase" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities">
-                                                                <option value="">Selecione</option>
-                                                                <option value="12">AC                                                                                                                                                                                                                                                             </option>
-                                                                <option value="27">AL                                                                                                                                                                                                                                                             </option>
-                                                                <option value="16">AP                                                                                                                                                                                                                                                             </option>
-                                                                <option value="13">AM                                                                                                                                                                                                                                                             </option>
-                                                                <option value="29">BA                                                                                                                                                                                                                                                             </option>
-                                                                <option value="23">CE                                                                                                                                                                                                                                                             </option>
-                                                                <option value="53">DF                                                                                                                                                                                                                                                             </option>
-                                                                <option value="32">ES                                                                                                                                                                                                                                                             </option>
-                                                                <option value="52">GO                                                                                                                                                                                                                                                             </option>
-                                                                <option value="21">MA                                                                                                                                                                                                                                                             </option>
-                                                                <option value="51">MT                                                                                                                                                                                                                                                             </option>
-                                                                <option value="50">MS                                                                                                                                                                                                                                                             </option>
-                                                                <option value="31">MG                                                                                                                                                                                                                                                             </option>
-                                                                <option value="41">PR                                                                                                                                                                                                                                                             </option>
-                                                                <option value="25">PB                                                                                                                                                                                                                                                             </option>
-                                                                <option value="15">PA                                                                                                                                                                                                                                                             </option>
-                                                                <option value="26">PE                                                                                                                                                                                                                                                             </option>
-                                                                <option value="22">PI                                                                                                                                                                                                                                                             </option>
-                                                                <option value="24">RN                                                                                                                                                                                                                                                             </option>
-                                                                <option value="43">RS                                                                                                                                                                                                                                                             </option>
-                                                                <option value="33">RJ                                                                                                                                                                                                                                                             </option>
-                                                                <option value="11">RO                                                                                                                                                                                                                                                             </option>
-                                                                <option value="14">RR                                                                                                                                                                                                                                                             </option>
-                                                                <option value="42">SC                                                                                                                                                                                                                                                             </option>
-                                                                <option value="28">SE                                                                                                                                                                                                                                                             </option>
-                                                                <option value="35">SP                                                                                                                                                                                                                                                             </option>
-                                                                <option value="17">TO                                                                                                                                                                                                                                                             </option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="city_id">Cidade</label>
-                                                            <select name="city_id" class="select2 form-control text-uppercase select2-hidden-accessible" wire:model="city_id" x-ref="city_id" data-select2-id="select2-data-1-893j" tabindex="-1" aria-hidden="true">
-                                                                <option value="" data-select2-id="select2-data-3-ha4a">SELECIONE</option>
-                                                            </select><span class="select2 select2-container select2-container--bootstrap-5" dir="ltr" data-select2-id="select2-data-2-ocv0" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-city_id-vg-container" aria-controls="select2-city_id-vg-container"><span class="select2-selection__rendered" id="select2-city_id-vg-container" role="textbox" aria-readonly="true" title="SELECIONE">SELECIONE</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Livewire Component wire-end:VGhfAodKHmyPeCg2uysV -->                        <div class="form-group">
-                                <label for="sector_id">Destino*</label>
-                                <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id">
-                                    <option value=""></option>
-                                    <option value="1">INFORMÁTICA</option>
-                                    <option value="2">RH</option>
-                                    <option value="3">HALL DE ELEVADORES A,B,C</option>
-                                    <option value="4">HALL DE ELEVADORES D,E,F</option>
-                                    <option value="5">HALL DE ELEVADORES G,H,I,J,K,L</option>
-                                    <option value="6">HALL DE ELEVADORES SERVIÇO</option>
-                                    <option value="7">HALL DE ELEVADORES TORTARIA MEXICO</option>
-                                    <option value="8">HALL DE ELEVADORES TORTARIA  AJUDA</option>
-                                    <option value="9">GAG.  502 DEP.  FLAVIO SERAFINE</option>
-                                    <option value="10">20 ANDAR</option>
-                                    <option value="11">2º ANDAR - ELERJ</option>
-                                    <option value="12">3º ANDAR - 301</option>
-                                    <option value="13">3º ANDAR - 302</option>
-                                    <option value="14">3º ANDAR - 303</option>
-                                    <option value="15">4º ANDAR - 401</option>
-                                    <option value="16">4º ANDAR - 402</option>
-                                    <option value="17">4º ANDAR - 403</option>
-                                    <option value="18">4º ANDAR - 404</option>
-                                    <option value="19">4º ANDAR - 405</option>
-                                    <option value="20">4º ANDAR - 406</option>
-                                    <option value="21">5º ANDAR - 506</option>
-                                    <option value="22">5º ANDAR - 505</option>
-                                    <option value="23">5º ANDAR - 504</option>
-                                    <option value="24">5º ANDAR - 503</option>
-                                    <option value="25">5º ANDAR - 502</option>
-                                    <option value="26">5º ANDAR - 501</option>
-                                    <option value="27">6º ANDAR - 603</option>
-                                    <option value="28">6º ANDAR - 601</option>
-                                    <option value="29">6º ANDAR - 602</option>
-                                    <option value="30">6º ANDAR - 604</option>
-                                    <option value="31">6º ANDAR - 605</option>
-                                    <option value="32">6º ANDAR - 606</option>
-                                    <option value="33">7º ANDAR - 701</option>
-                                    <option value="34">7º ANDAR - 702</option>
-                                    <option value="35">7º ANDAR - 703</option>
-                                    <option value="36">7º ANDAR - 704</option>
-                                    <option value="37">7º ANDAR - 705</option>
-                                    <option value="38">7º ANDAR - 706</option>
-                                    <option value="39">8º ANDAR - 706</option>
-                                    <option value="40">8º ANDAR - GAB PRES</option>
-                                    <option value="41">9º ANDAR - 906</option>
-                                    <option value="42">9º ANDAR - 905</option>
-                                    <option value="43">9º ANDAR - 904</option>
-                                    <option value="44">9º ANDAR - 903</option>
-                                    <option value="45">9º ANDAR - 902</option>
-                                    <option value="46">9º ANDAR - 901</option>
-                                    <option value="47">19º ANDAR - 901</option>
-                                    <option value="48">10º ANDAR - 1001</option>
-                                    <option value="49">10º ANDAR - 1002</option>
-                                    <option value="50">10º ANDAR - 1003</option>
-                                    <option value="51">10º ANDAR - 1004</option>
-                                    <option value="52">10º ANDAR - 1005</option>
-                                    <option value="53">10º ANDAR - 1006</option>
-                                    <option value="54">11º ANDAR - 1101</option>
-                                    <option value="55">11º ANDAR - 1102</option>
-                                    <option value="56">11º ANDAR - 1103</option>
-                                    <option value="57">11º ANDAR - 1104</option>
-                                    <option value="58">11º ANDAR - 1105</option>
-                                    <option value="59">11º ANDAR - 1106</option>
-                                    <option value="60">12º ANDAR - 1206</option>
-                                    <option value="61">12º ANDAR - 1205</option>
-                                    <option value="62">12º ANDAR - 1204</option>
-                                    <option value="63">12º ANDAR - 1203</option>
-                                    <option value="64">12º ANDAR - 1202</option>
-                                    <option value="65">12º ANDAR - 1201</option>
-                                    <option value="66">13º ANDAR - 1301</option>
-                                    <option value="67">13º ANDAR - 1302</option>
-                                    <option value="68">13º ANDAR - 1303</option>
-                                    <option value="69">13º ANDAR - 1305</option>
-                                    <option value="70">13º ANDAR - 1304</option>
-                                    <option value="71">13º ANDAR - 1306</option>
-                                    <option value="72">14º ANDAR - 1401</option>
-                                    <option value="73">14º ANDAR - 1402</option>
-                                    <option value="74">14º ANDAR - 1403</option>
-                                    <option value="75">14º ANDAR - 1404</option>
-                                    <option value="76">14º ANDAR - 1405</option>
-                                    <option value="77">14º ANDAR - 1406</option>
-                                    <option value="78">15º ANDAR - 1501</option>
-                                    <option value="79">15º ANDAR - 1502</option>
-                                    <option value="80">15º ANDAR - 1503</option>
-                                    <option value="81">15º ANDAR - 1504</option>
-                                    <option value="82">15º ANDAR - 1505</option>
-                                    <option value="83">15º ANDAR - 1506</option>
-                                    <option value="84">16º ANDAR - 1601</option>
-                                    <option value="85">16º ANDAR - 1602</option>
-                                    <option value="86">16º ANDAR - 1603</option>
-                                    <option value="87">16º ANDAR - 1604</option>
-                                    <option value="88">16º ANDAR - 1605</option>
-                                    <option value="89">16º ANDAR - 1606</option>
-                                    <option value="90">17º ANDAR - 1701</option>
-                                    <option value="91">17º ANDAR - 1702</option>
-                                    <option value="92">17º ANDAR 1703</option>
-                                    <option value="93">17º ANDAR 1704</option>
-                                    <option value="94">17º ANDAR 1705</option>
-                                    <option value="95">17º ANDAR 1706</option>
-                                    <option value="96">18º ANDAR 1806</option>
-                                    <option value="97">18º ANDAR 1805</option>
-                                    <option value="98">18º ANDAR 1804</option>
-                                    <option value="99">18º ANDAR 1803</option>
-                                    <option value="100">18º ANDAR 1802</option>
-                                    <option value="101">18º ANDAR 1801</option>
-                                    <option value="102">19º ANDAR - 1902</option>
-                                    <option value="103">19º ANDAR - 1903</option>
-                                    <option value="104">19º ANDAR - 1904</option>
-                                    <option value="105">19º ANDAR - 1905</option>
-                                    <option value="106">19º ANDAR - 1906</option>
-                                    <option value="107">20º ANDAR - MEGAMATE</option>
-                                    <option value="108">20º ANDAR - ITAÚ</option>
-                                    <option value="109">20º ANDAR - DIV. PORTARIA</option>
-                                    <option value="110">21º ANDAR - AUDITORIO</option>
-                                    <option value="111">21º ANDAR - 2104 SALA REUNIÃO</option>
-                                    <option value="112">21º ANDAR - 2109 SALA REUNIÃO</option>
-                                    <option value="113">SUBSOLO 2</option>
-                                    <option value="114">PLENÁRIO</option>
-                                    <option value="115">SUBSOLO 3 ELETRICO</option>
-                                    <option value="116">SUBSOLO 3 HIDRULICO</option>
-                                    <option value="117">SUBSOLO 2 OFICINA</option>
-                                    <option value="118">SUBSOLO 2 ACEIO E CONSERVAÇÃO</option>
-                                    <option value="119">SUBSOLO 2 SEGURANÇA</option>
-                                    <option value="120">GALERIA</option>
-                                    <option value="122">22º ANDAR - GRAFICA</option>
-                                    <option value="121">22º ANDAR - IPALERJ</option>
-                                    <option value="123">18º ANDAR DEPOSITO</option>
-                                    <option value="124">25º ANDAR - FINANÇAS</option>
-                                    <option value="125">24º ANDAR - 2406 - EXPEDIENTE E COMUNICAÇÃO</option>
-                                    <option value="126">30º ANDAR - TV ALERJ</option>
-                                    <option value="128">24º SETOR DE BENEFIFIO</option>
-                                    <option value="129">DIV. DE OFICINAS - SUBSOLO  -2</option>
-                                    <option value="130">SEM OCORRENCIA</option>
-                                    <option value="131">24º ANDAR - 2401 - RECURSO HUMANOS</option>
-                                    <option value="132">2709 ANDAR - FÓRUN PREMANENTE</option>
-                                    <option value="133">29º ANDAR - COORD. DE BENS PATRIMONIAIS - SALA 2902 -</option>
-                                    <option value="134">28º ANDAR - HELPDESK / TELEFONIA 2805</option>
-                                    <option value="135">28º ANDAR - MANUTENÇÃO XEROX - 2802</option>
-                                    <option value="136">28º ANDAR - SDG INFORMATICA - 2801</option>
-                                    <option value="137">28º ANDAR - ALO ALERJ - 2804</option>
-                                    <option value="138">28º ANDAR - COORD. COMUNICAÇÃO - 2803</option>
-                                    <option value="139">28º ANDAR -  COMUNICAÇÃO - 2806</option>
-                                    <option value="140">29º ANDAR - SDG ENG E ARQT - 2901</option>
-                                    <option value="127">29º ANDAR - COOD. BENS PATR. - 2902</option>
-                                    <option value="141">29º ANDAR - DEPT. PATRIMÔNIO - 2903</option>
-                                    <option value="142">29º ANDAR - SDG ADMINISTRAÇÃO - 2904</option>
-                                    <option value="143">29º ANDAR - DEPTO. MATERIAL - 2905</option>
-                                    <option value="144">29º ANDAR - SDG SEGURANÇA - 2906</option>
-                                    <option value="145">29º ANDAR - SDG BRIGADA DE INCENDIO - 2907</option>
-                                    <option value="146">29º ANDAR - ADMINISTRAÇÃO PREDIAL - 2904</option>
-                                    <option value="147">27º ANDAR - PROCURADORUA GERAL - 2701</option>
-                                    <option value="148">27º ANDAR - PROCURADORUA  - 2704</option>
-                                    <option value="149">27º ANDAR -SDG FORUN PERMANETE - 2705</option>
-                                    <option value="150">27º ANDAR - CORREGEDORUA DA ALERJ - 2707</option>
-                                    <option value="151">27º ANDAR - COMIS. DEF. PESSOA PORTADORS DE DEFICIENCIA - 2706</option>
-                                    <option value="152">27º ANDAR - CPPA DA ALERJ - 2708</option>
-                                    <option value="153">26º ANDAR - DIRETRIA GERAL - 2601/2602</option>
-                                    <option value="155">26º ANDAR - CONSULTRIA ESP. DE ASS. ORÇAM. E FINACEIRA - 2604/2605</option>
-                                    <option value="156">26º ANDAR - ACESSORIA INST. DE SEGURANÇA - 2608</option>
-                                    <option value="157">26º ANDAR - PLANOS E ORÇAMENTO - 2606</option>
-                                    <option value="158">26º ANDAR - DEPT. TRANSPORTE - 2607</option>
-                                    <option value="154">26º ANDAR - SDG COMUNICAÇÃO SOCIAL - 2603</option>
-                                    <option value="159">25º ANDAR - SDG FINANÇAS - 2501</option>
-                                    <option value="160">25º ANDAR - DEPTO. CONTABILIDADE - 2502</option>
-                                    <option value="161">25º ANDAR - DETO. FINANCEIRO - 2501</option>
-                                    <option value="162">25º ANDAR - DEPTO. PREPARO DE PGTO - 2502</option>
-                                    <option value="163">25º ANDAR - TCE - 2505</option>
-                                    <option value="164">25º ANDAR - SDG CONTROLE INTERNO - 2506</option>
-                                    <option value="165">25º ANDAR - COMISSÃO PREMANENTE DE LICITAÇÃO - 2507</option>
-                                    <option value="166">24º ANDAR - SDG REC. HUMANOS - 2401</option>
-                                    <option value="167">24º ANDAR - DEPTO. ADM. DE PESSOAL - 2402</option>
-                                    <option value="168">24º ANDAR - DEPTO. LEGISLAÇÃO DE PESSOAL - 2403</option>
-                                    <option value="169">24º ANDAR - DEPTO. EXPEDIENTE DE COMUNICAÇÃO - 2406</option>
-                                    <option value="170">24º ANDAR - COMISSÃO DE DEF. CONSUMIDOR 9 JURIDICO) - 2407</option>
-                                    <option value="171">22º ANDAR - DEPTO. ASSIT. MÉDICA - 2205</option>
-                                    <option value="172">22º ANDAR - DIRETORIA MÉDICA - 2202</option>
-                                    <option value="173">22º ANDAR - DEPTO. ASSIT. ODONTOLÓGICA - 2206</option>
-                                    <option value="174">EDIFICIO LUCIO COSTA, INTERNA E EXTERNA</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Motivo da Visita*</label>
-                                <textarea class="form-control" name="description" id="description"></textarea>
-                            </div>
-
-                            <div class="col-12 align-self-center d-flex justify-content-end gap-4">
-                                @include('partials.save-button',
-                                        ['model' => $visitor, 'backUrl' => 'visitors.create',
-                                        'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
-                                        'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+<div class="card-body my-2">
 
 
 
-            <div class="card-body my-2">
-                @include('layouts.msg')
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
-                    </div>
-                </div>
 
-                <div id="scroll"></div>
-                @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
+</div>
 
-                <script>
-                    window.onload = function (){
-                        document.getElementById('scroll').scrollIntoView();
-                    }
-                </script>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="entranced_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
-                        <div class="form-group">
-                            <label for="sector_id">Destino*</label>
-                            <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
-                                <option value=""></option>
-                                @foreach ($sectors as $key => $sector)
-                                    @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
-                                        <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
-                                    @else
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Motivo da Visita*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('visitors.partials.webcam-modal')
         </form>
-    </div>
+</div>
 
-    @include('partials.button-to-top')
+
+@include('partials.button-to-top')
+
 </div>

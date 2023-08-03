@@ -69,18 +69,19 @@ import * as CropperJs from 'cropperjs'
 window.Cropper = CropperJs
 
 Webcam.set({
-    width: 320,
-    height: 240,
-    dest_width: 320,
-    dest_height: 240,
-})
+    width: 380,
+    height: 290,
+    dest_width: 640,
+    dest_height: 480,
+    jpeg_quality: 90,
+    force_flash: false,
+    flip_horiz: true,
+});
 
-
-
-window.remove_snapshot = function () {
-    window.Webcam.snap(function (data_uri) {
-        document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>'
-    })
+window.remove_snapshot = function() {
+    window.Webcam.snap( function(data_uri) {
+        document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+    } );
 }
 
 import 'cropperjs/dist/cropper.css'
