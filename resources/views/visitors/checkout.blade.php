@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="row g-5">
-            <div class="col-md-3">
+            <div class="col-md-5 col-lg-3">
                 <div class="position-sticky" style="top: 2rem;">
                     <div class="p-4 mb-3 bg-light rounded text-center">
                         <h4 class="fst-italic">
@@ -17,7 +17,7 @@
                         <p class="display-1 mb-0">
                             <i class="fas fa-qrcode"></i>
                         </p>
-                        <p class="mb-0 fs-5 px-5">
+                        <p class="mb-0 fs-5 px-lg-5">
                             Leia o QR CODE na etiqueta da pessoa para efetuar seu checkout.
                         </p>
                         <div class="row d-flex justify-content-end mt-3">
@@ -32,12 +32,12 @@
             </div>
 
 
-            <div class="col-md-9">
+            <div class="col-md-7 col-lg-9">
                 <div class="row mb-3">
-                    <div class="col-5">
+                    <div class="col-lg-5">
                         <input class="form-control" type="text" placeholder="Filtrar por nome" aria-label="default input example">
                     </div>
-                    <div class="col-2">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Data de início</option>
                             <option value="1">One</option>
@@ -45,7 +45,7 @@
                             <option value="3">Three</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Data de termino</option>
                             <option value="1">One</option>
@@ -53,7 +53,7 @@
                             <option value="3">Three</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Mostrar </option>
                             <option value="1">5</option>
@@ -64,7 +64,7 @@
                             <option value="6">500</option>
                         </select>
                     </div>
-                    <div class="col-1">
+                    <div class="col-1 mt-2 mt-lg-0">
                         <div class="view-actions">
                             <button class="view-btn list-view" title="List View">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
@@ -89,7 +89,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -171,7 +171,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -249,7 +249,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -288,7 +288,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -327,7 +327,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -367,7 +367,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-xxl-4 mb-2">
+                    <div class="col-12 col-xxl-4 mb-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
