@@ -34,3 +34,19 @@
 2023-03-09 16:49:07.046 -03 [1816] HINT:  Is another postmaster (PID 1507) running in data directory "/Users/breno/pgdata"?
 2023-04-03 08:36:08.476 -03 [50630] FATAL:  lock file "postmaster.pid" already exists
 2023-04-03 08:36:08.476 -03 [50630] HINT:  Is another postmaster (PID 1143) running in data directory "/Users/breno/pgdata"?
+2023-08-03 08:43:23.810 -03 [848] LOG:  starting PostgreSQL 14.7 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2023-08-03 08:43:23.814 -03 [848] LOG:  listening on IPv6 address "::1", port 5432
+2023-08-03 08:43:23.814 -03 [848] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-08-03 08:43:23.815 -03 [848] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-08-03 08:43:23.850 -03 [849] LOG:  database system was shut down at 2023-08-03 08:41:52 -03
+2023-08-03 08:43:23.868 -03 [848] LOG:  database system is ready to accept connections
+2023-08-03 10:29:23.675 -03 [848] LOG:  received smart shutdown request
+2023-08-03 10:29:23.678 -03 [848] LOG:  background worker "logical replication launcher" (PID 855) exited with exit code 1
+2023-08-03 10:29:23.678 -03 [850] LOG:  shutting down
+2023-08-03 10:29:23.688 -03 [848] LOG:  database system is shut down
+2023-08-03 10:31:05.918 -03 [882] LOG:  starting PostgreSQL 14.7 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2023-08-03 10:31:05.922 -03 [882] LOG:  listening on IPv6 address "::1", port 5432
+2023-08-03 10:31:05.922 -03 [882] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-08-03 10:31:05.925 -03 [882] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-08-03 10:31:06.105 -03 [883] LOG:  database system was shut down at 2023-08-03 10:29:23 -03
+2023-08-03 10:31:06.125 -03 [882] LOG:  database system is ready to accept connections

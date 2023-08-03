@@ -6,7 +6,7 @@
     </div>
 
 </div>
-<nav class="navbar navbar-expand-md navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
 
         <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >

@@ -521,3 +521,38 @@ body.bg-logo {
     width: 65px;
     height: 65px;
 }
+
+
+
+
+
+.view-actions {
+    display: flex;
+    align-items: center;
+}
+
+
+.view-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 4px;
+    background-color: transparent;
+    border: none;
+    color: var(--main-color);
+    margin-left: 8px;
+    transition: .2s;
+
+    &.active {
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    &:not(.active):hover {
+        background-color:  var(--link-color-hover);
+        color: var(--link-color-active);
+    }
+}
