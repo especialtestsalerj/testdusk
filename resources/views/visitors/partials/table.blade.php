@@ -38,9 +38,9 @@
                                 @if($visitor->hasPending())
                                     <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
                                 @endif
-                                <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'id' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="alterarVisitor"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'visitor' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="alterarVisitor"><i class="fa fa-pencil"></i></a>
                                     @if(!$visitor->hasPending())
                                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover" id="removerVisitor">
                                             <i class="fa fa-trash"></i>

@@ -71,7 +71,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
 
-                                    <input {{ $mode == 'update' ? 'disabled' : '' }} type="file" name="webcam_file"
+                                    <input type="file" name="webcam_file"
                                            class="custom-file-input" id="webcam_file" wire:model="webcam_file"
                                            wire:change="removeWebcamFile" style="display: none;">
                                 </div>

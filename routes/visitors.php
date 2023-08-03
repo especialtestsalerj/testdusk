@@ -4,6 +4,7 @@ use App\Http\Controllers\Visitor;
 use App\Http\Livewire\People\Index as PeopleIndex;
 use App\Http\Livewire\Visitors\Index as VisitorsIndex;
 use App\Http\Livewire\Visitors\Form as VisitorsForm;
+use App\Http\Livewire\Visitors\UpdateForm as VisitorsUpdateForm;
 use App\Http\Livewire\Visitors\Checkout;
 
 Route::group(['prefix' => '/visitors'], function () {
@@ -24,7 +25,7 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
-    Route::get('/{id}/show', [Visitor::class, 'show'])
+    Route::get('/{visitor}/show', VisitorsUpdateForm::class)
         ->name('visitors.show')
         ->can('visitors:show');
 

@@ -20,8 +20,10 @@ class Form extends BaseForm
     public Person $person;
 
 
-    protected $listeners = ['personModified' => 'personModified',
-        'cropChanged' => 'cropChanged',];
+    protected $listeners = [
+        'personModified' => 'personModified',
+        'cropChanged' => 'cropChanged'
+    ];
 
     protected $rules = [
         'visitor.entranced_at' => 'required',
@@ -37,23 +39,17 @@ class Form extends BaseForm
         }
     }
 
-    public function mount()
+    public function mount(Visitor $visitor)
     {
-        if ($this->mode == 'create') {
-            $this->visitor = new Visitor();
-            $this->visitor->entranced_at = now();
 
-            $this->person = new Person();
-            $this->sector = new Sector();
+        $this->visitor = new Visitor();
+        $this->visitor->entranced_at = now();
 
-            $this->webcam_data_uri = false;
-        } else {
-            //            $this->person = $this->visitor->person;
-            //            $this->sector = $this->visitor->sector;
-            //update person...
+        $this->person = new Person();
+        $this->sector = new Sector();
 
-            $this->webcam_data_uri = true;
-        }
+        $this->webcam_data_uri = false;
+
 
         $this->visitor->append(['photo']);
 
