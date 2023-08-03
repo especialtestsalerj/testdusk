@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\Repositories\DocumentTypes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 class Person extends Model
 {
@@ -47,11 +48,12 @@ class Person extends Model
 
     protected function cpf(): Attribute
     {
-        $documentWithCPF = $this->documents()->whereHas('documentType', function ($query) {
-            $query->where('name', 'CPF');
-        })->first();
+        $documentType = app(DocumentTypes::class)->getCPF();
 
-        return Attribute::make(get: fn($value) => $documentWithCPF->number);
+        $documentWithCPF = $this->documents()->where('document_type_id', $documentType->id)
+        ->first();
+
+        return Attribute::make(get: fn($value) => $documentWithCPF->number ?? null);
     }
     public function documents()
     {
