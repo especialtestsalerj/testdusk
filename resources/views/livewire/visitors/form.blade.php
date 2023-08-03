@@ -26,21 +26,21 @@
                             <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
                         @endif
                     </div>
-                    <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
+                    {{--<div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
 
                         @include('partials.save-button',
                                 ['model' => $visitor, 'backUrl' => 'visitors.create',
                                 'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
                                 'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
-                    </div>
+                    </div>--}}
                 </div>
             </div>
 
 
             <div class="row g-5">
-                <div class="col-md-4">
+                <div class="col-md-4 mt-5">
                     <div class="position-sticky" style="top: 2rem;">
-                        <div class="zoom col-12 d-flex justify-content-center">
+                        <div class="zoom col-12 d-flex justify-content-center mt-3">
                             <div id="badge" x-init="
 
 window.debounce = function (func, timeout = 1000){
@@ -84,7 +84,7 @@ document.addEventListener('printBadge', update)">
                         </div>
                         <div class="col-12">
                             <div class="row d-flex justify-content-center">
-                                <div class="d-grid gap-2 col-11 mt-2">
+                                <div class="d-grid gap-2 col-10 col-xxl-9 mt-2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Tirar foto
                                     </button>
@@ -118,18 +118,26 @@ document.addEventListener('printBadge', update)">
             fileInput.dispatchEvent(changeEvent);
         });
     }" x-data="{ isEditing: true, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
-                                    https://i.pravatar.cc/1000?img=22
+
                                     <div class="row">
                                         <div class="col-12 d-flex justify-content-end">
-                                            <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+                                            <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i>
+                                                * Campos obrigatórios
+                                            </span>
                                         </div>
 
                                         <div class="form-group col-md-12 d-md-flex align-md-items-baseline">
                                             <div class="col-md-12">
-
                                                 <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label for="document_type_id">Tipo de Documento*</label>
+                                                    <div class="col-12">
+                                                        <h4>
+                                                            Dados do Visitante
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-2 col-xxl-2">
+                                                        <label for="document_type_id">Tipo de Doc.*</label>
                                                         <select name="document_type_id" class="form-control text-uppercase" wire:model="document_type_id" x-ref="document_type_id">
                                                             <option value="">Selecione</option>
                                                             <option value="3">CNH</option>
@@ -138,42 +146,24 @@ document.addEventListener('printBadge', update)">
                                                             <option value="2">RG</option>
                                                         </select>
                                                     </div>
-
-                                                    <div class="col-lg-6 col-10">
+                                                    <div class="col-xl-2 col-xxl-2">
                                                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id" value="">
                                                         <label for="document_number">Documento*</label>
                                                         <input type="text" class="form-control " name="document_number" id="document_number" wire:model.lazy="document_number" x-ref="document_number" wire:blur="searchDocumentNumber">
                                                     </div>
-                                                    <div class="col-lg-2 col-2 pt-4 text-center">
-                                                        <button type="button" wire:click="searchDocumentNumber" class="btn btn-outline-secondary" id="btn_buscar">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
+                                                    <div class="col-md-12 col-lg-4">
+                                                        <div class="form-group">
                                                             <label for="full_name">Nome Completo*</label>
                                                             <input type="text" class="form-control text-uppercase" name="full_name" id="full_name" wire:model="full_name">
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 col-lg-4">
                                                         <div class="form-group">
                                                             <label for="social_name">Nome Social</label>
                                                             <input type="text" class="form-control text-uppercase" name="social_name" id="social_name" wire:model="social_name">
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 col-lg-3">
                                                         <div class="form-group">
                                                             <label for="country_id">País*</label>
                                                             <select name="country_id" class="form-control text-uppercase" wire:model="country_id" x-ref="country_id">
@@ -374,13 +364,9 @@ document.addEventListener('printBadge', update)">
                                                                 <option value="14">Áustria</option>
                                                                 <option value="87">Índia</option>
                                                             </select>
-
                                                         </div>
                                                     </div>
-
-
-
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 col-lg-3">
                                                         <div class="form-group">
                                                             <label for="state_id">Estado</label>
                                                             <select class="form-control text-uppercase" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities">
@@ -413,282 +399,311 @@ document.addEventListener('printBadge', update)">
                                                                 <option value="35">SP                                                                                                                                                                                                                                                             </option>
                                                                 <option value="17">TO                                                                                                                                                                                                                                                             </option>
                                                             </select>
-
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6 col-lg-6">
                                                         <div class="form-group">
                                                             <label for="city_id">Cidade</label>
                                                             <select name="city_id" class="select2 form-control text-uppercase select2-hidden-accessible" wire:model="city_id" x-ref="city_id" data-select2-id="select2-data-1-893j" tabindex="-1" aria-hidden="true">
                                                                 <option value="" data-select2-id="select2-data-3-ha4a">SELECIONE</option>
-                                                            </select><span class="select2 select2-container select2-container--bootstrap-5" dir="ltr" data-select2-id="select2-data-2-ocv0" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-city_id-vg-container" aria-controls="select2-city_id-vg-container"><span class="select2-selection__rendered" id="select2-city_id-vg-container" role="textbox" aria-readonly="true" title="SELECIONE">SELECIONE</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-12">
+                                                        <h4>
+                                                            Dados da Visita
+                                                        </h4>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3 col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="entranced_at">Entrada</label>
+                                                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <!-- Livewire Component wire-end:VGhfAodKHmyPeCg2uysV -->                        <div class="form-group">
+                                                            <label for="sector_id">Destino*</label>
+                                                            <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id">
+                                                                <option value=""></option>
+                                                                <option value="1">INFORMÁTICA</option>
+                                                                <option value="2">RH</option>
+                                                                <option value="3">HALL DE ELEVADORES A,B,C</option>
+                                                                <option value="4">HALL DE ELEVADORES D,E,F</option>
+                                                                <option value="5">HALL DE ELEVADORES G,H,I,J,K,L</option>
+                                                                <option value="6">HALL DE ELEVADORES SERVIÇO</option>
+                                                                <option value="7">HALL DE ELEVADORES TORTARIA MEXICO</option>
+                                                                <option value="8">HALL DE ELEVADORES TORTARIA  AJUDA</option>
+                                                                <option value="9">GAG.  502 DEP.  FLAVIO SERAFINE</option>
+                                                                <option value="10">20 ANDAR</option>
+                                                                <option value="11">2º ANDAR - ELERJ</option>
+                                                                <option value="12">3º ANDAR - 301</option>
+                                                                <option value="13">3º ANDAR - 302</option>
+                                                                <option value="14">3º ANDAR - 303</option>
+                                                                <option value="15">4º ANDAR - 401</option>
+                                                                <option value="16">4º ANDAR - 402</option>
+                                                                <option value="17">4º ANDAR - 403</option>
+                                                                <option value="18">4º ANDAR - 404</option>
+                                                                <option value="19">4º ANDAR - 405</option>
+                                                                <option value="20">4º ANDAR - 406</option>
+                                                                <option value="21">5º ANDAR - 506</option>
+                                                                <option value="22">5º ANDAR - 505</option>
+                                                                <option value="23">5º ANDAR - 504</option>
+                                                                <option value="24">5º ANDAR - 503</option>
+                                                                <option value="25">5º ANDAR - 502</option>
+                                                                <option value="26">5º ANDAR - 501</option>
+                                                                <option value="27">6º ANDAR - 603</option>
+                                                                <option value="28">6º ANDAR - 601</option>
+                                                                <option value="29">6º ANDAR - 602</option>
+                                                                <option value="30">6º ANDAR - 604</option>
+                                                                <option value="31">6º ANDAR - 605</option>
+                                                                <option value="32">6º ANDAR - 606</option>
+                                                                <option value="33">7º ANDAR - 701</option>
+                                                                <option value="34">7º ANDAR - 702</option>
+                                                                <option value="35">7º ANDAR - 703</option>
+                                                                <option value="36">7º ANDAR - 704</option>
+                                                                <option value="37">7º ANDAR - 705</option>
+                                                                <option value="38">7º ANDAR - 706</option>
+                                                                <option value="39">8º ANDAR - 706</option>
+                                                                <option value="40">8º ANDAR - GAB PRES</option>
+                                                                <option value="41">9º ANDAR - 906</option>
+                                                                <option value="42">9º ANDAR - 905</option>
+                                                                <option value="43">9º ANDAR - 904</option>
+                                                                <option value="44">9º ANDAR - 903</option>
+                                                                <option value="45">9º ANDAR - 902</option>
+                                                                <option value="46">9º ANDAR - 901</option>
+                                                                <option value="47">19º ANDAR - 901</option>
+                                                                <option value="48">10º ANDAR - 1001</option>
+                                                                <option value="49">10º ANDAR - 1002</option>
+                                                                <option value="50">10º ANDAR - 1003</option>
+                                                                <option value="51">10º ANDAR - 1004</option>
+                                                                <option value="52">10º ANDAR - 1005</option>
+                                                                <option value="53">10º ANDAR - 1006</option>
+                                                                <option value="54">11º ANDAR - 1101</option>
+                                                                <option value="55">11º ANDAR - 1102</option>
+                                                                <option value="56">11º ANDAR - 1103</option>
+                                                                <option value="57">11º ANDAR - 1104</option>
+                                                                <option value="58">11º ANDAR - 1105</option>
+                                                                <option value="59">11º ANDAR - 1106</option>
+                                                                <option value="60">12º ANDAR - 1206</option>
+                                                                <option value="61">12º ANDAR - 1205</option>
+                                                                <option value="62">12º ANDAR - 1204</option>
+                                                                <option value="63">12º ANDAR - 1203</option>
+                                                                <option value="64">12º ANDAR - 1202</option>
+                                                                <option value="65">12º ANDAR - 1201</option>
+                                                                <option value="66">13º ANDAR - 1301</option>
+                                                                <option value="67">13º ANDAR - 1302</option>
+                                                                <option value="68">13º ANDAR - 1303</option>
+                                                                <option value="69">13º ANDAR - 1305</option>
+                                                                <option value="70">13º ANDAR - 1304</option>
+                                                                <option value="71">13º ANDAR - 1306</option>
+                                                                <option value="72">14º ANDAR - 1401</option>
+                                                                <option value="73">14º ANDAR - 1402</option>
+                                                                <option value="74">14º ANDAR - 1403</option>
+                                                                <option value="75">14º ANDAR - 1404</option>
+                                                                <option value="76">14º ANDAR - 1405</option>
+                                                                <option value="77">14º ANDAR - 1406</option>
+                                                                <option value="78">15º ANDAR - 1501</option>
+                                                                <option value="79">15º ANDAR - 1502</option>
+                                                                <option value="80">15º ANDAR - 1503</option>
+                                                                <option value="81">15º ANDAR - 1504</option>
+                                                                <option value="82">15º ANDAR - 1505</option>
+                                                                <option value="83">15º ANDAR - 1506</option>
+                                                                <option value="84">16º ANDAR - 1601</option>
+                                                                <option value="85">16º ANDAR - 1602</option>
+                                                                <option value="86">16º ANDAR - 1603</option>
+                                                                <option value="87">16º ANDAR - 1604</option>
+                                                                <option value="88">16º ANDAR - 1605</option>
+                                                                <option value="89">16º ANDAR - 1606</option>
+                                                                <option value="90">17º ANDAR - 1701</option>
+                                                                <option value="91">17º ANDAR - 1702</option>
+                                                                <option value="92">17º ANDAR 1703</option>
+                                                                <option value="93">17º ANDAR 1704</option>
+                                                                <option value="94">17º ANDAR 1705</option>
+                                                                <option value="95">17º ANDAR 1706</option>
+                                                                <option value="96">18º ANDAR 1806</option>
+                                                                <option value="97">18º ANDAR 1805</option>
+                                                                <option value="98">18º ANDAR 1804</option>
+                                                                <option value="99">18º ANDAR 1803</option>
+                                                                <option value="100">18º ANDAR 1802</option>
+                                                                <option value="101">18º ANDAR 1801</option>
+                                                                <option value="102">19º ANDAR - 1902</option>
+                                                                <option value="103">19º ANDAR - 1903</option>
+                                                                <option value="104">19º ANDAR - 1904</option>
+                                                                <option value="105">19º ANDAR - 1905</option>
+                                                                <option value="106">19º ANDAR - 1906</option>
+                                                                <option value="107">20º ANDAR - MEGAMATE</option>
+                                                                <option value="108">20º ANDAR - ITAÚ</option>
+                                                                <option value="109">20º ANDAR - DIV. PORTARIA</option>
+                                                                <option value="110">21º ANDAR - AUDITORIO</option>
+                                                                <option value="111">21º ANDAR - 2104 SALA REUNIÃO</option>
+                                                                <option value="112">21º ANDAR - 2109 SALA REUNIÃO</option>
+                                                                <option value="113">SUBSOLO 2</option>
+                                                                <option value="114">PLENÁRIO</option>
+                                                                <option value="115">SUBSOLO 3 ELETRICO</option>
+                                                                <option value="116">SUBSOLO 3 HIDRULICO</option>
+                                                                <option value="117">SUBSOLO 2 OFICINA</option>
+                                                                <option value="118">SUBSOLO 2 ACEIO E CONSERVAÇÃO</option>
+                                                                <option value="119">SUBSOLO 2 SEGURANÇA</option>
+                                                                <option value="120">GALERIA</option>
+                                                                <option value="122">22º ANDAR - GRAFICA</option>
+                                                                <option value="121">22º ANDAR - IPALERJ</option>
+                                                                <option value="123">18º ANDAR DEPOSITO</option>
+                                                                <option value="124">25º ANDAR - FINANÇAS</option>
+                                                                <option value="125">24º ANDAR - 2406 - EXPEDIENTE E COMUNICAÇÃO</option>
+                                                                <option value="126">30º ANDAR - TV ALERJ</option>
+                                                                <option value="128">24º SETOR DE BENEFIFIO</option>
+                                                                <option value="129">DIV. DE OFICINAS - SUBSOLO  -2</option>
+                                                                <option value="130">SEM OCORRENCIA</option>
+                                                                <option value="131">24º ANDAR - 2401 - RECURSO HUMANOS</option>
+                                                                <option value="132">2709 ANDAR - FÓRUN PREMANENTE</option>
+                                                                <option value="133">29º ANDAR - COORD. DE BENS PATRIMONIAIS - SALA 2902 -</option>
+                                                                <option value="134">28º ANDAR - HELPDESK / TELEFONIA 2805</option>
+                                                                <option value="135">28º ANDAR - MANUTENÇÃO XEROX - 2802</option>
+                                                                <option value="136">28º ANDAR - SDG INFORMATICA - 2801</option>
+                                                                <option value="137">28º ANDAR - ALO ALERJ - 2804</option>
+                                                                <option value="138">28º ANDAR - COORD. COMUNICAÇÃO - 2803</option>
+                                                                <option value="139">28º ANDAR -  COMUNICAÇÃO - 2806</option>
+                                                                <option value="140">29º ANDAR - SDG ENG E ARQT - 2901</option>
+                                                                <option value="127">29º ANDAR - COOD. BENS PATR. - 2902</option>
+                                                                <option value="141">29º ANDAR - DEPT. PATRIMÔNIO - 2903</option>
+                                                                <option value="142">29º ANDAR - SDG ADMINISTRAÇÃO - 2904</option>
+                                                                <option value="143">29º ANDAR - DEPTO. MATERIAL - 2905</option>
+                                                                <option value="144">29º ANDAR - SDG SEGURANÇA - 2906</option>
+                                                                <option value="145">29º ANDAR - SDG BRIGADA DE INCENDIO - 2907</option>
+                                                                <option value="146">29º ANDAR - ADMINISTRAÇÃO PREDIAL - 2904</option>
+                                                                <option value="147">27º ANDAR - PROCURADORUA GERAL - 2701</option>
+                                                                <option value="148">27º ANDAR - PROCURADORUA  - 2704</option>
+                                                                <option value="149">27º ANDAR -SDG FORUN PERMANETE - 2705</option>
+                                                                <option value="150">27º ANDAR - CORREGEDORUA DA ALERJ - 2707</option>
+                                                                <option value="151">27º ANDAR - COMIS. DEF. PESSOA PORTADORS DE DEFICIENCIA - 2706</option>
+                                                                <option value="152">27º ANDAR - CPPA DA ALERJ - 2708</option>
+                                                                <option value="153">26º ANDAR - DIRETRIA GERAL - 2601/2602</option>
+                                                                <option value="155">26º ANDAR - CONSULTRIA ESP. DE ASS. ORÇAM. E FINACEIRA - 2604/2605</option>
+                                                                <option value="156">26º ANDAR - ACESSORIA INST. DE SEGURANÇA - 2608</option>
+                                                                <option value="157">26º ANDAR - PLANOS E ORÇAMENTO - 2606</option>
+                                                                <option value="158">26º ANDAR - DEPT. TRANSPORTE - 2607</option>
+                                                                <option value="154">26º ANDAR - SDG COMUNICAÇÃO SOCIAL - 2603</option>
+                                                                <option value="159">25º ANDAR - SDG FINANÇAS - 2501</option>
+                                                                <option value="160">25º ANDAR - DEPTO. CONTABILIDADE - 2502</option>
+                                                                <option value="161">25º ANDAR - DETO. FINANCEIRO - 2501</option>
+                                                                <option value="162">25º ANDAR - DEPTO. PREPARO DE PGTO - 2502</option>
+                                                                <option value="163">25º ANDAR - TCE - 2505</option>
+                                                                <option value="164">25º ANDAR - SDG CONTROLE INTERNO - 2506</option>
+                                                                <option value="165">25º ANDAR - COMISSÃO PREMANENTE DE LICITAÇÃO - 2507</option>
+                                                                <option value="166">24º ANDAR - SDG REC. HUMANOS - 2401</option>
+                                                                <option value="167">24º ANDAR - DEPTO. ADM. DE PESSOAL - 2402</option>
+                                                                <option value="168">24º ANDAR - DEPTO. LEGISLAÇÃO DE PESSOAL - 2403</option>
+                                                                <option value="169">24º ANDAR - DEPTO. EXPEDIENTE DE COMUNICAÇÃO - 2406</option>
+                                                                <option value="170">24º ANDAR - COMISSÃO DE DEF. CONSUMIDOR 9 JURIDICO) - 2407</option>
+                                                                <option value="171">22º ANDAR - DEPTO. ASSIT. MÉDICA - 2205</option>
+                                                                <option value="172">22º ANDAR - DIRETORIA MÉDICA - 2202</option>
+                                                                <option value="173">22º ANDAR - DEPTO. ASSIT. ODONTOLÓGICA - 2206</option>
+                                                                <option value="174">EDIFICIO LUCIO COSTA, INTERNA E EXTERNA</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="description">Motivo da Visita*</label>
+                                                            <textarea class="form-control" name="description" id="description"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+
+
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Livewire Component wire-end:VGhfAodKHmyPeCg2uysV -->                        <div class="form-group">
-                                <label for="sector_id">Destino*</label>
-                                <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id">
-                                    <option value=""></option>
-                                    <option value="1">INFORMÁTICA</option>
-                                    <option value="2">RH</option>
-                                    <option value="3">HALL DE ELEVADORES A,B,C</option>
-                                    <option value="4">HALL DE ELEVADORES D,E,F</option>
-                                    <option value="5">HALL DE ELEVADORES G,H,I,J,K,L</option>
-                                    <option value="6">HALL DE ELEVADORES SERVIÇO</option>
-                                    <option value="7">HALL DE ELEVADORES TORTARIA MEXICO</option>
-                                    <option value="8">HALL DE ELEVADORES TORTARIA  AJUDA</option>
-                                    <option value="9">GAG.  502 DEP.  FLAVIO SERAFINE</option>
-                                    <option value="10">20 ANDAR</option>
-                                    <option value="11">2º ANDAR - ELERJ</option>
-                                    <option value="12">3º ANDAR - 301</option>
-                                    <option value="13">3º ANDAR - 302</option>
-                                    <option value="14">3º ANDAR - 303</option>
-                                    <option value="15">4º ANDAR - 401</option>
-                                    <option value="16">4º ANDAR - 402</option>
-                                    <option value="17">4º ANDAR - 403</option>
-                                    <option value="18">4º ANDAR - 404</option>
-                                    <option value="19">4º ANDAR - 405</option>
-                                    <option value="20">4º ANDAR - 406</option>
-                                    <option value="21">5º ANDAR - 506</option>
-                                    <option value="22">5º ANDAR - 505</option>
-                                    <option value="23">5º ANDAR - 504</option>
-                                    <option value="24">5º ANDAR - 503</option>
-                                    <option value="25">5º ANDAR - 502</option>
-                                    <option value="26">5º ANDAR - 501</option>
-                                    <option value="27">6º ANDAR - 603</option>
-                                    <option value="28">6º ANDAR - 601</option>
-                                    <option value="29">6º ANDAR - 602</option>
-                                    <option value="30">6º ANDAR - 604</option>
-                                    <option value="31">6º ANDAR - 605</option>
-                                    <option value="32">6º ANDAR - 606</option>
-                                    <option value="33">7º ANDAR - 701</option>
-                                    <option value="34">7º ANDAR - 702</option>
-                                    <option value="35">7º ANDAR - 703</option>
-                                    <option value="36">7º ANDAR - 704</option>
-                                    <option value="37">7º ANDAR - 705</option>
-                                    <option value="38">7º ANDAR - 706</option>
-                                    <option value="39">8º ANDAR - 706</option>
-                                    <option value="40">8º ANDAR - GAB PRES</option>
-                                    <option value="41">9º ANDAR - 906</option>
-                                    <option value="42">9º ANDAR - 905</option>
-                                    <option value="43">9º ANDAR - 904</option>
-                                    <option value="44">9º ANDAR - 903</option>
-                                    <option value="45">9º ANDAR - 902</option>
-                                    <option value="46">9º ANDAR - 901</option>
-                                    <option value="47">19º ANDAR - 901</option>
-                                    <option value="48">10º ANDAR - 1001</option>
-                                    <option value="49">10º ANDAR - 1002</option>
-                                    <option value="50">10º ANDAR - 1003</option>
-                                    <option value="51">10º ANDAR - 1004</option>
-                                    <option value="52">10º ANDAR - 1005</option>
-                                    <option value="53">10º ANDAR - 1006</option>
-                                    <option value="54">11º ANDAR - 1101</option>
-                                    <option value="55">11º ANDAR - 1102</option>
-                                    <option value="56">11º ANDAR - 1103</option>
-                                    <option value="57">11º ANDAR - 1104</option>
-                                    <option value="58">11º ANDAR - 1105</option>
-                                    <option value="59">11º ANDAR - 1106</option>
-                                    <option value="60">12º ANDAR - 1206</option>
-                                    <option value="61">12º ANDAR - 1205</option>
-                                    <option value="62">12º ANDAR - 1204</option>
-                                    <option value="63">12º ANDAR - 1203</option>
-                                    <option value="64">12º ANDAR - 1202</option>
-                                    <option value="65">12º ANDAR - 1201</option>
-                                    <option value="66">13º ANDAR - 1301</option>
-                                    <option value="67">13º ANDAR - 1302</option>
-                                    <option value="68">13º ANDAR - 1303</option>
-                                    <option value="69">13º ANDAR - 1305</option>
-                                    <option value="70">13º ANDAR - 1304</option>
-                                    <option value="71">13º ANDAR - 1306</option>
-                                    <option value="72">14º ANDAR - 1401</option>
-                                    <option value="73">14º ANDAR - 1402</option>
-                                    <option value="74">14º ANDAR - 1403</option>
-                                    <option value="75">14º ANDAR - 1404</option>
-                                    <option value="76">14º ANDAR - 1405</option>
-                                    <option value="77">14º ANDAR - 1406</option>
-                                    <option value="78">15º ANDAR - 1501</option>
-                                    <option value="79">15º ANDAR - 1502</option>
-                                    <option value="80">15º ANDAR - 1503</option>
-                                    <option value="81">15º ANDAR - 1504</option>
-                                    <option value="82">15º ANDAR - 1505</option>
-                                    <option value="83">15º ANDAR - 1506</option>
-                                    <option value="84">16º ANDAR - 1601</option>
-                                    <option value="85">16º ANDAR - 1602</option>
-                                    <option value="86">16º ANDAR - 1603</option>
-                                    <option value="87">16º ANDAR - 1604</option>
-                                    <option value="88">16º ANDAR - 1605</option>
-                                    <option value="89">16º ANDAR - 1606</option>
-                                    <option value="90">17º ANDAR - 1701</option>
-                                    <option value="91">17º ANDAR - 1702</option>
-                                    <option value="92">17º ANDAR 1703</option>
-                                    <option value="93">17º ANDAR 1704</option>
-                                    <option value="94">17º ANDAR 1705</option>
-                                    <option value="95">17º ANDAR 1706</option>
-                                    <option value="96">18º ANDAR 1806</option>
-                                    <option value="97">18º ANDAR 1805</option>
-                                    <option value="98">18º ANDAR 1804</option>
-                                    <option value="99">18º ANDAR 1803</option>
-                                    <option value="100">18º ANDAR 1802</option>
-                                    <option value="101">18º ANDAR 1801</option>
-                                    <option value="102">19º ANDAR - 1902</option>
-                                    <option value="103">19º ANDAR - 1903</option>
-                                    <option value="104">19º ANDAR - 1904</option>
-                                    <option value="105">19º ANDAR - 1905</option>
-                                    <option value="106">19º ANDAR - 1906</option>
-                                    <option value="107">20º ANDAR - MEGAMATE</option>
-                                    <option value="108">20º ANDAR - ITAÚ</option>
-                                    <option value="109">20º ANDAR - DIV. PORTARIA</option>
-                                    <option value="110">21º ANDAR - AUDITORIO</option>
-                                    <option value="111">21º ANDAR - 2104 SALA REUNIÃO</option>
-                                    <option value="112">21º ANDAR - 2109 SALA REUNIÃO</option>
-                                    <option value="113">SUBSOLO 2</option>
-                                    <option value="114">PLENÁRIO</option>
-                                    <option value="115">SUBSOLO 3 ELETRICO</option>
-                                    <option value="116">SUBSOLO 3 HIDRULICO</option>
-                                    <option value="117">SUBSOLO 2 OFICINA</option>
-                                    <option value="118">SUBSOLO 2 ACEIO E CONSERVAÇÃO</option>
-                                    <option value="119">SUBSOLO 2 SEGURANÇA</option>
-                                    <option value="120">GALERIA</option>
-                                    <option value="122">22º ANDAR - GRAFICA</option>
-                                    <option value="121">22º ANDAR - IPALERJ</option>
-                                    <option value="123">18º ANDAR DEPOSITO</option>
-                                    <option value="124">25º ANDAR - FINANÇAS</option>
-                                    <option value="125">24º ANDAR - 2406 - EXPEDIENTE E COMUNICAÇÃO</option>
-                                    <option value="126">30º ANDAR - TV ALERJ</option>
-                                    <option value="128">24º SETOR DE BENEFIFIO</option>
-                                    <option value="129">DIV. DE OFICINAS - SUBSOLO  -2</option>
-                                    <option value="130">SEM OCORRENCIA</option>
-                                    <option value="131">24º ANDAR - 2401 - RECURSO HUMANOS</option>
-                                    <option value="132">2709 ANDAR - FÓRUN PREMANENTE</option>
-                                    <option value="133">29º ANDAR - COORD. DE BENS PATRIMONIAIS - SALA 2902 -</option>
-                                    <option value="134">28º ANDAR - HELPDESK / TELEFONIA 2805</option>
-                                    <option value="135">28º ANDAR - MANUTENÇÃO XEROX - 2802</option>
-                                    <option value="136">28º ANDAR - SDG INFORMATICA - 2801</option>
-                                    <option value="137">28º ANDAR - ALO ALERJ - 2804</option>
-                                    <option value="138">28º ANDAR - COORD. COMUNICAÇÃO - 2803</option>
-                                    <option value="139">28º ANDAR -  COMUNICAÇÃO - 2806</option>
-                                    <option value="140">29º ANDAR - SDG ENG E ARQT - 2901</option>
-                                    <option value="127">29º ANDAR - COOD. BENS PATR. - 2902</option>
-                                    <option value="141">29º ANDAR - DEPT. PATRIMÔNIO - 2903</option>
-                                    <option value="142">29º ANDAR - SDG ADMINISTRAÇÃO - 2904</option>
-                                    <option value="143">29º ANDAR - DEPTO. MATERIAL - 2905</option>
-                                    <option value="144">29º ANDAR - SDG SEGURANÇA - 2906</option>
-                                    <option value="145">29º ANDAR - SDG BRIGADA DE INCENDIO - 2907</option>
-                                    <option value="146">29º ANDAR - ADMINISTRAÇÃO PREDIAL - 2904</option>
-                                    <option value="147">27º ANDAR - PROCURADORUA GERAL - 2701</option>
-                                    <option value="148">27º ANDAR - PROCURADORUA  - 2704</option>
-                                    <option value="149">27º ANDAR -SDG FORUN PERMANETE - 2705</option>
-                                    <option value="150">27º ANDAR - CORREGEDORUA DA ALERJ - 2707</option>
-                                    <option value="151">27º ANDAR - COMIS. DEF. PESSOA PORTADORS DE DEFICIENCIA - 2706</option>
-                                    <option value="152">27º ANDAR - CPPA DA ALERJ - 2708</option>
-                                    <option value="153">26º ANDAR - DIRETRIA GERAL - 2601/2602</option>
-                                    <option value="155">26º ANDAR - CONSULTRIA ESP. DE ASS. ORÇAM. E FINACEIRA - 2604/2605</option>
-                                    <option value="156">26º ANDAR - ACESSORIA INST. DE SEGURANÇA - 2608</option>
-                                    <option value="157">26º ANDAR - PLANOS E ORÇAMENTO - 2606</option>
-                                    <option value="158">26º ANDAR - DEPT. TRANSPORTE - 2607</option>
-                                    <option value="154">26º ANDAR - SDG COMUNICAÇÃO SOCIAL - 2603</option>
-                                    <option value="159">25º ANDAR - SDG FINANÇAS - 2501</option>
-                                    <option value="160">25º ANDAR - DEPTO. CONTABILIDADE - 2502</option>
-                                    <option value="161">25º ANDAR - DETO. FINANCEIRO - 2501</option>
-                                    <option value="162">25º ANDAR - DEPTO. PREPARO DE PGTO - 2502</option>
-                                    <option value="163">25º ANDAR - TCE - 2505</option>
-                                    <option value="164">25º ANDAR - SDG CONTROLE INTERNO - 2506</option>
-                                    <option value="165">25º ANDAR - COMISSÃO PREMANENTE DE LICITAÇÃO - 2507</option>
-                                    <option value="166">24º ANDAR - SDG REC. HUMANOS - 2401</option>
-                                    <option value="167">24º ANDAR - DEPTO. ADM. DE PESSOAL - 2402</option>
-                                    <option value="168">24º ANDAR - DEPTO. LEGISLAÇÃO DE PESSOAL - 2403</option>
-                                    <option value="169">24º ANDAR - DEPTO. EXPEDIENTE DE COMUNICAÇÃO - 2406</option>
-                                    <option value="170">24º ANDAR - COMISSÃO DE DEF. CONSUMIDOR 9 JURIDICO) - 2407</option>
-                                    <option value="171">22º ANDAR - DEPTO. ASSIT. MÉDICA - 2205</option>
-                                    <option value="172">22º ANDAR - DIRETORIA MÉDICA - 2202</option>
-                                    <option value="173">22º ANDAR - DEPTO. ASSIT. ODONTOLÓGICA - 2206</option>
-                                    <option value="174">EDIFICIO LUCIO COSTA, INTERNA E EXTERNA</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Motivo da Visita*</label>
-                                <textarea class="form-control" name="description" id="description"></textarea>
-                            </div>
-
-                            <div class="col-12 align-self-center d-flex justify-content-end gap-4">
-                                @include('partials.save-button',
-                                        ['model' => $visitor, 'backUrl' => 'visitors.create',
-                                        'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
-                                        'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
-                            </div>
-
                         </div>
                     </div>
-                </div>
-
-
-            </div>
 
 
 
-            <div class="card-body my-2">
-                @include('layouts.msg')
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+
+                    <div class="col-12 align-self-center d-flex justify-content-end gap-4">
+                        @include('partials.save-button',
+                                ['model' => $visitor, 'backUrl' => 'visitors.create',
+                                'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
+                                'permission' => (formMode() == 'show' ? 'visitors:update' : 'visitors:store')])
                     </div>
-                </div>
 
-                <div id="scroll"></div>
-                @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
-
-                <script>
-                    window.onload = function (){
-                        document.getElementById('scroll').scrollIntoView();
-                    }
-                </script>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="entranced_at">Entrada</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="exited_at">Saída</label>
-                            <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
-                        <div class="form-group">
-                            <label for="sector_id">Destino*</label>
-                            <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
-                                <option value=""></option>
-                                @foreach ($sectors as $key => $sector)
-                                    @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
-                                        <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
-                                    @else
-                                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Motivo da Visita*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </form>
     </div>
 
-    @include('partials.button-to-top')
+
+</div>
+
+
+
+<div class="card-body my-2">
+    @include('layouts.msg')
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+            <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+        </div>
+    </div>
+
+    <div id="scroll"></div>
+    @include('livewire.visitors.partials.badge', ['printVisitor'=>$visitor])
+
+    <script>
+        window.onload = function (){
+            document.getElementById('scroll').scrollIntoView();
+        }
+    </script>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="entranced_at">Entrada</label>
+                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="exited_at">Saída</label>
+                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $visitor->exited_at_formatted: old('exited_at') }}" @disabled(request()->query('disabled')) />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+            <div class="form-group">
+                <label for="sector_id">Destino*</label>
+                <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
+                    <option value=""></option>
+                    @foreach ($sectors as $key => $sector)
+                        @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
+                            <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
+                        @else
+                            <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Motivo da Visita*</label>
+                <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</div>
+
+@include('partials.button-to-top')
 </div>
