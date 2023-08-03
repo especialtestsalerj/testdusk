@@ -38,7 +38,7 @@
 
 
             <div class="row g-5">
-                <div class="col-md-5 col-lg-4 mt-5">
+                <div class="col-12 col-lg-4 mt-5">
                     <div class="position-sticky" style="top: 2rem;">
                         <div class="zoom col-12 d-flex justify-content-center mt-3">
                             <div id="badge" x-init="
@@ -84,7 +84,7 @@ document.addEventListener('printBadge', update)">
                         </div>
                         <div class="col-12">
                             <div class="row d-flex justify-content-center">
-                                <div class="d-grid gap-2 col-10 col-xxl-9 mt-2">
+                                <div class="d-grid gap-2 col-7 col-xxl-9 mt-2">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Tirar foto
                                     </button>
@@ -94,7 +94,7 @@ document.addEventListener('printBadge', update)">
                     </div>
                 </div>
 
-                <div class="col-md-7 col-lg-8">
+                <div class="col-12 col-lg-8">
                     <div class="row">
                         <div class="col-md-12">
                             <div wire:id="VGhfAodKHmyPeCg2uysV" class="form-group">
@@ -136,7 +136,7 @@ document.addEventListener('printBadge', update)">
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-xl-2 col-xxl-2">
+                                                    <div class="col-md-6 col-xl-2 col-xxl-2">
                                                         <label for="document_type_id">Tipo de Doc.*</label>
                                                         <select name="document_type_id" class="form-control text-uppercase" wire:model="document_type_id" x-ref="document_type_id">
                                                             <option value="">Selecione</option>
@@ -146,24 +146,24 @@ document.addEventListener('printBadge', update)">
                                                             <option value="2">RG</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-xl-2 col-xxl-2">
+                                                    <div class="col-md-6 col-xl-2 col-xxl-2">
                                                         <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id" value="">
                                                         <label for="document_number">Documento*</label>
                                                         <input type="text" class="form-control " name="document_number" id="document_number" wire:model.lazy="document_number" x-ref="document_number" wire:blur="searchDocumentNumber">
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label for="full_name">Nome Completo*</label>
                                                             <input type="text" class="form-control text-uppercase" name="full_name" id="full_name" wire:model="full_name">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label for="social_name">Nome Social</label>
                                                             <input type="text" class="form-control text-uppercase" name="social_name" id="social_name" wire:model="social_name">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-md-6 col-lg-3">
                                                         <div class="form-group">
                                                             <label for="country_id">País*</label>
                                                             <select name="country_id" class="form-control text-uppercase" wire:model="country_id" x-ref="country_id">
@@ -366,7 +366,7 @@ document.addEventListener('printBadge', update)">
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-md-6 col-lg-3">
                                                         <div class="form-group">
                                                             <label for="state_id">Estado</label>
                                                             <select class="form-control text-uppercase" name="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities">
@@ -402,7 +402,7 @@ document.addEventListener('printBadge', update)">
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-lg-6">
+                                                    <div class="col-md-6 col-lg-6">
                                                         <div class="form-group">
                                                             <label for="city_id">Cidade</label>
                                                             <select name="city_id" class="select2 form-control text-uppercase select2-hidden-accessible" wire:model="city_id" x-ref="city_id" data-select2-id="select2-data-1-893j" tabindex="-1" aria-hidden="true">
@@ -422,13 +422,13 @@ document.addEventListener('printBadge', update)">
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-lg-3">
+                                                    <div class="col-md-6 col-lg-3">
                                                         <div class="form-group">
                                                             <label for="entranced_at">Entrada</label>
                                                             <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-9">
+                                                    <div class="col-md-6 col-lg-9">
                                                         <!-- Livewire Component wire-end:VGhfAodKHmyPeCg2uysV -->                        <div class="form-group">
                                                             <label for="sector_id">Destino*</label>
                                                             <select wire:model="visitor.sector_id" class="form-control" name="sector_id" id="sector_id">
