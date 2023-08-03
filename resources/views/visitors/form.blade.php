@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
     <div class="py-4 px-4">
         <form name="formulario" id="formulario" @if(formMode() == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
@@ -76,7 +74,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        @livewire('people.people', ['person_id'=>$person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+                        <div wire:ignore.self>
+                            @livewire('people.people', ['person_id'=>$person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => formMode(), 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+                        </div>
                         <div class="form-group">
                             <label for="sector_id">Destino*</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>

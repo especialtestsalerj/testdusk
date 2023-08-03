@@ -64,16 +64,15 @@
     }
 
     .zoom {
-        background-color: #d3d3d3;
-        z-index: 9999;
-        zoom: 2; /* Adjust the zoom value as per your requirement */
+        /*background-color: #E6E9ED;*/
+        z-index: 1;
+        zoom: 1.5; /* Adjust the zoom value as per your requirement */
     }
 </style>
 
-<div class="zoom sticky-top d-flex justify-content-center"
-
->
-<div id="badge" x-init="
+<div class="sticky-top row">
+    <div class="zoom col-4 d-flex justify-content-center">
+        <div id="badge" x-init="
 
 window.debounce = function (func, timeout = 1000){
   let timer;
@@ -86,33 +85,42 @@ window.debounce = function (func, timeout = 1000){
 const update = window.debounce(() => window.print());
 
 document.addEventListener('printBadge', update)">
-    <table
+            <table
 
 
-    >
-        <tr>
-            <td colspan="3" class="text-center badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
-        </tr>
-        <tr>
-            <td class="badge-bg-title text-center badge-border-title"></td>
-            <td class="text-center badge-border-title">VISITANTE</td>
-            <td class="badge-bg-title text-center badge-border-title"></td>
-        </tr>
-        <tr>
-            <td class="text-left photo">
-{{--                <img class="photo" src="{{$printVisitor->photo ?? ''}}" />--}}
-                <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
-                <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
-            </td>
-            <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
-            <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
-        </tr>
-        <tr>
-            <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->name)) }}">{{ mount_text($printVisitor?->person?->name) }}</td>
-        </tr>
-        <tr>
-            <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sector?->name)) }}">{{ mount_text($printVisitor?->sector?->name) }}</td>
-        </tr>
-    </table>
-</div>
+            >
+                <tr>
+                    <td colspan="3" class="text-center badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
+                </tr>
+                <tr>
+                    <td class="badge-bg-title text-center badge-border-title"></td>
+                    <td class="text-center badge-border-title">VISITANTE</td>
+                    <td class="badge-bg-title text-center badge-border-title"></td>
+                </tr>
+                <tr>
+                    <td class="text-left photo">
+                        {{--                <img class="photo" src="{{$printVisitor->photo ?? ''}}" />--}}
+                        <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
+                        <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
+                    </td>
+                    <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
+                    <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->name)) }}">{{ mount_text($printVisitor?->person?->name) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sector?->name)) }}">{{ mount_text($printVisitor?->sector?->name) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-8">
+
+    </div>
+    <div class="d-grid gap-2 col-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Tirar foto
+        </button>
+    </div>
 </div>

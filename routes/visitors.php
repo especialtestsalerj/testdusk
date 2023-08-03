@@ -3,6 +3,8 @@
 use App\Http\Controllers\Visitor;
 use App\Http\Livewire\People\Index as PeopleIndex;
 use App\Http\Livewire\Visitors\Index as VisitorsIndex;
+use App\Http\Livewire\Visitors\Form as VisitorsForm;
+use App\Http\Livewire\Visitors\Checkout;
 
 Route::group(['prefix' => '/visitors'], function () {
     Route::group(['prefix' => '/people'], function () {
@@ -11,14 +13,16 @@ Route::group(['prefix' => '/visitors'], function () {
             ->can('people:show');
     });
 
+    Route::get('/checkout', Checkout::class)->name('visitors.checkout');
+    /*->can('visitors:show');*/
+
     Route::get('', VisitorsIndex::class)
         ->name('visitors.index')
         ->can('visitors:show');
 
-    Route::get('/create', [Visitor::class, 'create'])
+    Route::get('/create', VisitorsForm::class)
         ->name('visitors.create')
         ->can('visitors:store');
-
 
     Route::get('/{id}/show', [Visitor::class, 'show'])
         ->name('visitors.show')
@@ -35,5 +39,4 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/delete/{id}', [Visitor::class, 'destroy'])
         ->name('visitors.destroy')
         ->can('visitors:destroy');
-
 });

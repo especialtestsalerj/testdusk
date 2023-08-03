@@ -36,11 +36,12 @@ $(document).ready(function () {
 $(document).on('select2:open', (e) => {
     const selectId = e.target.id
 
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(
-        function (key, value) {
-            value.focus()
-        },
-    )
+    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
+        key,
+        value,
+    ) {
+        value.focus()
+    })
 })
 
 // core version + navigation, pagination modules:
@@ -66,6 +67,15 @@ window.Webcam = Webcam
 
 import * as CropperJs from 'cropperjs'
 window.Cropper = CropperJs
+
+Webcam.set({
+    width: 320,
+    height: 240,
+    dest_width: 320,
+    dest_height: 240,
+})
+
+
 
 window.remove_snapshot = function () {
     window.Webcam.snap(function (data_uri) {
@@ -113,3 +123,5 @@ window.base64ToFile = function (dataUrl, filename) {
 }
 
 require('./support/broadcast')
+
+import './support/qrCodeScanner'

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class Repository
 {
+    public $perPage = 10;
+
     public function all()
     {
         return $this->applyFilter($this->newQuery());
@@ -19,6 +21,11 @@ abstract class Repository
             ::orderBy($field, $direction)
             ->limit($limit)
             ->get();
+    }
+
+    public function allOrderByPaginate($field, $direction)
+    {
+        return $this->applyFilter($this->newQuery(), $field, $direction);
     }
 
     /**
@@ -124,6 +131,13 @@ abstract class Repository
         return $this;
     }
 
+    public function setPerPage($perPage)
+    {
+        $this->perPage = $perPage;
+
+        return $this;
+    }
+
     /**
      * @param null $type
      * @return Builder
@@ -148,7 +162,7 @@ abstract class Repository
         return $this->new();
     }
 
-    protected function applyFilter($query)
+    protected function applyFilter($query, $orderBy = null, $orderByDirection = null)
     {
         $queryFilter = $this->getQueryFilter();
 
@@ -161,8 +175,16 @@ abstract class Repository
             $queryFilter = $this->allElements($queryFilter);
         }
 
+        if ($orderBy) {
+            if ($orderByDirection) {
+                $query->orderBy($orderBy);
+            } else {
+                $query->orderBy($orderBy, $orderByDirection);
+            }
+        }
+
         return $query->paginate(
-            isset($this->paginate) && $this->paginate ? 10 : 10000,
+            isset($this->paginate) && $this->paginate ? $this->perPage : 10000,
             ['*'],
             'page',
             $queryFilter->get('pagination') && $queryFilter->get('pagination')['current_page']

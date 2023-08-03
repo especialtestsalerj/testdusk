@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 class Visitor extends Model
 {
     protected $fillable = [
@@ -27,6 +28,11 @@ class Visitor extends Model
     protected static function booted()
     {
         static::creating(fn(Visitor $visitor) => ($visitor->uuid = (string) Uuid::uuid4()));
+    }
+
+    public static function findByUuid($uuid)
+    {
+        return self::where('uuid', $uuid)->first();
     }
 
     public function person()
@@ -95,5 +101,45 @@ class Visitor extends Model
                     ])
                 )
         );
+    }
+
+    public function checkout($checkoutTime = null)
+    {
+        $success = false;
+
+        if (!$this->exited_at) {
+            $this->exited_at = $checkoutTime ?? now();
+            $this->save();
+            $success = true;
+        }
+
+        return $success;
+    }
+
+    public function scopeWasThereBetweenDates(Builder $query, $startDate, $endDate): void
+    {
+        // Check if both $startDate and $endDate are provided
+        if ($startDate && $endDate) {
+            $query->whereRaw(
+                '(("entranced_at" >= ? and "entranced_at" <= ?) or ("exited_at" >= ? and "exited_at" <= ?))',
+                [$startDate, $endDate, $startDate, $endDate]
+            );
+        }
+        // Check if only $startDate is provided
+        elseif ($startDate) {
+            $query->where(
+                fn($query) => $query
+                    ->orWhere('entranced_at', '>=', $startDate)
+                    ->orWhere('exited_at', '>=', $startDate)
+            );
+        }
+        // Check if only $endDate is provided
+        elseif ($endDate) {
+            $query->where(
+                fn($query) => $query
+                    ->orWhere('entranced_at', '<=', $endDate)
+                    ->orWhere('exited_at', '<=', $endDate)
+            );
+        }
     }
 }

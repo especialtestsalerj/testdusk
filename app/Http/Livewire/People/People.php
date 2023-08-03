@@ -92,6 +92,18 @@ class People extends BaseForm
     //        }
     //    }
 
+    public function updated($name, $value)
+    {
+        $person = new Person();
+        $person->fill([
+            'full_name' => $this->full_name,
+            'social_name' => $this->social_name,
+            'document_number' => $this->document_number,
+            'document_type_id' => $this->document_type_id,
+        ]);
+        $this->emit('personModified', $person);
+    }
+
     public function searchDocumentNumber()
     {
         if (!is_null($this->document_number) && $this->document_number != '') {
@@ -110,6 +122,8 @@ class People extends BaseForm
                 $this->readonly = false;
             }
         }
+
+        $this->updated('document_number', $this->document_number);
     }
 
     public function fillModel()

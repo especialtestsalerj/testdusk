@@ -11,6 +11,14 @@ class Visitors extends Repository
      */
     protected $model = Visitor::class;
 
+    public function getLatestCheckouts()
+    {
+        return $this->model
+            ::whereNotNull('exited_at')
+            ->orderBy('exited_at', 'desc')
+            ->paginate();
+    }
+
     public function allNotExited()
     {
         return $this->model
