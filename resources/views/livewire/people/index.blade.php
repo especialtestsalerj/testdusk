@@ -30,7 +30,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
+                <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
                     <div class="view-actions">
                         <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
                             title="List View">
