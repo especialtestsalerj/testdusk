@@ -11,6 +11,7 @@ trait Badgeable
     public $printVisitor;
     public function  generateBadge($visitor_id)
     {
+
         $this->printVisitor = null;
 
         if (!empty($visitor_id)) {
