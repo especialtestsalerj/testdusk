@@ -194,7 +194,7 @@
         .zoom {
             /*background-color: #E6E9ED;*/
             z-index: 1;
-            zoom: 1.5; /* Adjust the zoom value as per your requirement */
+            zoom: 2; /* Adjust the zoom value as per your requirement */
         }
     </style>
 @endIf
