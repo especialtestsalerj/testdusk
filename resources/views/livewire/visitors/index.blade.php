@@ -24,8 +24,8 @@
                 </div>
             </div>
 
-            <div class="row mb-4" >
-                <div class="col-12">
+            <div class="row mb-4 d-flex align-items-center">
+                <div class="col-12 col-lg-9">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..." wire:model.debounce.500ms="searchString" value="">
                         <span class="input-group-text">
@@ -38,13 +38,13 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-11 mt-4" style="padding-left: 5%;">
-                    <span>
+                <div class="col-10 mt-2 mt-lg-0 col-lg-9 d-flex justify-content-start justify-content-lg-center">
+                    <span class="fw-bold fs-5">
                         <input type="checkbox" name="exited_at"
                                wire:model="exited_at"> Somente Saída em Aberto
                     </span>
                 </div>
-                <div class="col-1 mt-2 mt-lg-0">
+                <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
                     <div class="view-actions">
                         <button class="view-btn list-view" title="List View">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
