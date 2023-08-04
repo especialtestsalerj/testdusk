@@ -12,7 +12,7 @@ abstract class BaseIndex extends Component
     protected $repository;
     protected $paginationTheme = 'bootstrap';
     public $searchString = '';
-    public $pageSize = 10;
+    public $pageSize = 12;
     protected $refreshFields = ['searchString'];
     protected $paginationEnabled = true;
 
