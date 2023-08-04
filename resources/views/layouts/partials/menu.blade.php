@@ -36,12 +36,12 @@
 
                     @can('visitors:show')
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a>
+                            <a class="nav-link {{ (request()->routeIs('visitors.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a>
                         </li>
                     @endCan
 
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.checkout') }}">Checkout</a>
+                        <a class="nav-link {{ (request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.checkout') }}">Checkout</a>
                     </li>
 
                     <li class="nav-item dropdown">
