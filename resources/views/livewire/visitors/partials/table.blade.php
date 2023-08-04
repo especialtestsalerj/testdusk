@@ -3,12 +3,30 @@
     @forelse ($visitors as $visitor)
         <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
             <div class="card">
+                <div class="card-header">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-10 fw-bolder">
+                            <div data-label="Visitante">
+                                {{ $visitor->person->name }}
+                            </div>
+                        </div>
+                        <div class="col-2 d-flex justify-content-end">
+                            @if(!$visitor->exited_at)
+                                @can('visitors:checkout')
+                                    <span class="btn btn-link px-0 py-0" wire:click="prepareForCheckout({{$visitor->id}})" title="Registrar Saída">
+                                                    <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
+                                                </span>
+                                @endCan
+                            @endIf
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-3 col-lg-4" data-label="Foto">
+                        <div class="col-3" data-label="Foto">
                             <img class="w-100" src="{{$visitor->photo}}">
                         </div>
-                        <div class="col-8 col-lg-7">
+                        <div class="col-8">
                             <div class="row">
                                 <div class="col-12">
                                     <div data-label="Entrada">
@@ -16,9 +34,6 @@
                                     </div>
                                     <div data-label="Saída">
                                         Saida: @if(isset($visitor?->exited_at)) {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!} @else <span class="badge bg-warning text-black">EM ABERTO</span> @endif</div>
-                                    <div data-label="Visitante">
-                                        {{ $visitor->person->name }}
-                                    </div>
                                     <div data-label="Documento">
                                         {{$visitor->document?->documentType?->name}}: {{$visitor?->document?->number}}</div>
                                     <div data-label="Setor de Destino">
@@ -45,15 +60,7 @@
                                         <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                     @endCan
                                 </div>
-                                <div class="col-12">
-                                    @if(!$visitor->exited_at)
-                                        @can('visitors:checkout')
-                                            <span class="btn btn-link px-0 pt-0 pb-1" wire:click="prepareForCheckout({{$visitor->id}})" title="Registrar Saída">
-                                                    <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
-                                                </span>
-                                        @endCan
-                                    @endIf
-                                </div>
+
                             </div>
                         </div>
                     </div>
