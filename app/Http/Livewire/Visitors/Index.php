@@ -7,12 +7,13 @@ use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Livewire\BaseIndex;
 use App\Http\Livewire\Traits\Badgeable;
+use App\Http\Livewire\Traits\ChangeViewType;
 use App\Http\Livewire\Traits\Checkoutable;
 use App\Models\Visitor;
 
 class Index extends BaseIndex
 {
-    use Checkoutable, Badgeable;
+    use Checkoutable, Badgeable, ChangeViewType;
 
     protected $repository = VisitorsRepository::class;
 

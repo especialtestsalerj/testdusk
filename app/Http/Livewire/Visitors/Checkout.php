@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Visitors;
 
 use App\Data\Repositories\Visitors;
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\ChangeViewType;
 use App\Models\Visitor;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +13,8 @@ use Ramsey\Uuid\Uuid;
 
 class Checkout extends BaseIndex
 {
+    use ChangeViewType;
+    
     public $searchName;
     public $startDate;
     public $endDate;
