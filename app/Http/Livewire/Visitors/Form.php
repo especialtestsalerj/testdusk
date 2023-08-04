@@ -19,6 +19,7 @@ class Form extends BaseForm
     public Sector $sector;
     public Person $person;
 
+    public $sector_id;
 
     protected $listeners = [
         'personModified' => 'personModified',
@@ -27,6 +28,7 @@ class Form extends BaseForm
 
     protected $rules = [
         'visitor.entranced_at' => 'required',
+        'visitor.exited_at' => '',
         'visitor.sector_id' => 'required',
         'person.full_name' => '',
         'person.social_name' => '',
@@ -34,8 +36,10 @@ class Form extends BaseForm
 
     public function updated($name, $value)
     {
-        if ($name == 'visitor.sector_id') {
+        if ($name == 'sector_id') {
             $this->sector = Sector::find($value);
+            $this->visitor->sector = $this->sector;
+            $this->visitor->sector_id = $value;
         }
     }
 

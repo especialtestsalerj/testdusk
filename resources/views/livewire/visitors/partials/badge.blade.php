@@ -1,89 +1,221 @@
-<style type="text/css" media="screen">
-    #badge {
-        background-color: #FFFFFF;
-        display: block;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 11px;
-        color: #000;
-        width: 72mm;
-        height: 40mm;
+@if($forPrinter)
+    <style type="text/css" media="screen">
+        .conteudo {
+            display: block !important;
+        }
 
-        margin-right: 4mm;
-        margin-left: 5mm;
-        /*margin-top: 2mm;*/
-        /*margin-bottom: 4mm;*/
-        /*padding-top: 4mm;*/
-        padding-right: -8mm;
-        padding-bottom: 0;
-        padding-left: -6mm;
-    }
+        #badge {
+            display: none;
+        }
+    </style>
+    <style type="text/css" media="print">
+        /* reset.css */
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        /* reset.css */
 
-    #badge table {
-        width: 100%;
-    }
+        .bg-danger, .navbar, .conteudo, .conteudo-rodape {
+            display: none !important;
+        }
 
-    #badge table td {
-        padding: 2px 0;
-        vertical-align: middle;
-        line-height: 9px;
-    }
+        body {
+            background: white !important;
+        }
 
-    .photo {
-        width: 20mm;
-        height: 20mm;
-    }
+        #badge {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #000;
+            width: 72mm;
+            height: 40mm;
+            margin-top: 2mm;
+            margin-right: 4mm;
+            margin-bottom: 4mm;
+            margin-left: 5mm;
+            padding-top: 4mm;
+            padding-right: -8mm;
+            padding-bottom: 0;
+            padding-left: -6mm;
+        }
 
-    .badge-bg-title {
-        background-color: #000;
-        color: #000;
-        font-weight: bold;
-    }
+        #badge table {
+            width: 100%;
+        }
 
-    .badge-border-title {
-        border: 1px solid #000;
-    }
+        #badge table td {
+            padding: 2px 0;
+            vertical-align: middle;
+            line-height: 9px;
+        }
 
-    .badge-text {
-        padding-right: 6mm;
-    }
+        .photo {
+            width: 20mm;
+            height: 20mm;
+        }
 
-    .badge-text-sm {
-        font-size: 9px;
-    }
+        .badge-bg-title {
+            background-color: #000;
+            color: #000;
+            font-weight: bold;
+        }
 
-    .badge-font-size-11 {
-        font-size: 11px;
-    }
+        .badge-border-title {
+            border: 1px solid #000;
+        }
 
-    .badge-font-size-10 {
-        font-size: 10px;
-    }
+        .badge-text {
+            padding-right: 6mm;
+        }
 
-    .badge-font-size-9 {
-        font-size: 9px;
-    }
+        .badge-text-sm {
+            font-size: 9px;
+        }
 
-    .zoom {
-        /*background-color: #E6E9ED;*/
-        z-index: 1;
-        zoom: 1.5; /* Adjust the zoom value as per your requirement */
-    }
-</style>
+        .badge-font-size-11 {
+            font-size: 11px;
+        }
 
+        .badge-font-size-10 {
+            font-size: 10px;
+        }
 
-        <div id="badge" x-init="
+        .badge-font-size-9 {
+            font-size: 9px;
+        }
+    </style>
+@else
+    <style type="text/css" media="screen">
+        #badge {
+            background-color: #FFFFFF;
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #000;
+            width: 72mm;
+            height: 40mm;
 
-window.debounce = function (func, timeout = 1000){
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
-}
+            margin-right: 4mm;
+            margin-left: 5mm;
+            /*margin-top: 2mm;*/
+            /*margin-bottom: 4mm;*/
+            /*padding-top: 4mm;*/
+            padding-right: -8mm;
+            padding-bottom: 0;
+            padding-left: -6mm;
+        }
 
-const update = window.debounce(() => window.print());
+        #badge table {
+            width: 100%;
+        }
 
-document.addEventListener('printBadge', update)">
+        #badge table td {
+            padding: 2px 0;
+            vertical-align: middle;
+            line-height: 9px;
+        }
+
+        .photo {
+            width: 20mm;
+            height: 20mm;
+        }
+
+        .badge-bg-title {
+            background-color: #000;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .badge-border-title {
+            border: 1px solid #000;
+        }
+
+        .badge-text {
+            padding-right: 6mm;
+        }
+
+        .badge-text-sm {
+            font-size: 9px;
+        }
+
+        .badge-font-size-11 {
+            font-size: 11px;
+        }
+
+        .badge-font-size-10 {
+            font-size: 10px;
+        }
+
+        .badge-font-size-9 {
+            font-size: 9px;
+        }
+
+        .zoom {
+            /*background-color: #E6E9ED;*/
+            z-index: 1;
+            zoom: 1.5; /* Adjust the zoom value as per your requirement */
+        }
+    </style>
+@endIf
+
+        <div id="badge"
+             @if($forPrinter)
+             x-init="
+            window.debounce = function (func, timeout = 1000){
+              let timer;
+              return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+              };
+            }
+
+            const update = window.debounce(() => window.print());
+
+            document.addEventListener('printBadge', update)
+            "
+             @endIf
+        >
             <table
 
 
@@ -98,9 +230,13 @@ document.addEventListener('printBadge', update)">
                 </tr>
                 <tr>
                     <td class="text-left photo">
-                        {{--                <img class="photo" src="{{$printVisitor->photo ?? ''}}" />--}}
-                        <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
-                        <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
+                        @if($forPrinter)
+                            <img class="photo" src="{{$printVisitor->photo ?? ''}}" />
+                        @else
+                            <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
+                            <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
+                        @endIf
+
                     </td>
                     <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
                     <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>

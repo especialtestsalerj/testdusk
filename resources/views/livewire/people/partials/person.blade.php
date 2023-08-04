@@ -71,14 +71,14 @@
                             </div>
                         </div>
 
-                            <div class="col-md-6 col-lg-3">
+                            <div class="col-md-6 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <label for="country_id">País*</label>
-                                    <select name="country_id" class="form-control text-uppercase"
+                                    <select name="country_id" class="select2 form-control text-uppercase" id="country_id"
                                         wire:model="country_id" x-ref="country_id"
                                         @if ($modal) disabled @endif
                                         @if ($readonly) readonly @endif>
-                                        <option value="">Selecione</option>
+                                        <option value="">SELECIONE</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
@@ -88,16 +88,14 @@
                             </div>
 
 
-                            @if ($country_id == '' || $country_id == $country_br->id)
-
-                                <div class="col-md-6 col-lg-3">
+                                <div class="col-md-6 col-lg-3" wire:ignore id="div-state_id">
                                     <div class="form-group">
                                         <label for="state_id">Estado</label>
-                                        <select class="form-control text-uppercase" name="state_id"
+                                        <select class="select2 form-control text-uppercase" id="state_id" name="state_id"
                                             wire:model="state_id" x-ref="state_id" wire:change="loadCities"
                                             @if ($modal) disabled @endif
                                             @if ($readonly) readonly @endif>
-                                            <option value="">Selecione</option>
+                                            <option value="">SELECIONE</option>
                                             @foreach ($states as $state)
                                                 <option value="{{ $state->id }}">{{ $state->initial }}</option>
                                             @endforeach
@@ -106,22 +104,23 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" wire:ignore id="div-city_id">
                                     <div class="form-group">
                                         <label for="city_id">Cidade</label>
-                                        <select name="city_id" class="select2 form-control text-uppercase"
+                                        <select name="city_id" id="city_id" class="select2 form-control text-uppercase"
                                             wire:model="city_id" x-ref="city_id"
                                             @if ($modal) disabled @endif
                                             @if ($readonly) readonly @endif>
                                             <option value="">SELECIONE</option>
                                             @foreach ($cities as $city)
-                                                <option value="{{ $city->id }}">{{ mb_strtoupper($city->name) }}
+                                                <option value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                            @else
+
+                            @if(!$this->detectIfCountryBrSelected())
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="other_city">Cidade*</label>

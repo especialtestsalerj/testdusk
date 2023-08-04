@@ -31,6 +31,9 @@ class People extends BaseForm
         'cropChanged' => 'cropChanged',
     ];
 
+    public $countryBr;
+    public $countryBrSelected;
+
     public $person;
     public $person_id;
     public $document_number;
@@ -54,6 +57,14 @@ class People extends BaseForm
     public $visitor_id;
 
     public $visitor;
+
+    protected $rules=
+        [
+          'countryBr'=>'',
+          'country_id'=>'',
+          'city_id'=>'',
+          'state_id'=>'',
+        ];
 
     //    public function searchCpf()
     //    {
@@ -116,6 +127,7 @@ class People extends BaseForm
                 $this->fillModel();
                 $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
+                $this->setAddressReadOnly(true);
                 $this->readonly = true;
             } else {
                 $this->person = new Person();
@@ -140,7 +152,7 @@ class People extends BaseForm
                 ? mask_cpf($this->person->cpf) ?? ''
                 : mask_cpf(old('document_number'));
 
-            $this->document_Number = mb_strtoupper(remove_punctuation($document_number));
+            $this->document_number = mb_strtoupper(remove_punctuation($document_number));
         }
 
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
@@ -152,18 +164,27 @@ class People extends BaseForm
             ? mb_strtoupper($this->person->social_name) ?? ''
             : old('social_name');
 
+
+        $this->loadCountryBr();
         $this->country_id = is_null(old('country_id'))
             ? $this->person->country_id ?? ''
             : old('country_id');
+        $this->select2SelectOption('country_id',$this->country_id);
 
-        $this->state_id = is_null(old('state_id'))
-            ? $this->person->state_id ?? ''
-            : old('state_id');
+        if(!$this->detectIfCountryBrSelected()){
+            $this->countryBrNotSelected();
+        }else {
+            $this->state_id = is_null(old('state_id'))
+                ? $this->person->state_id ?? ''
+                : old('state_id');
+            $this->select2SelectOption('state_id', $this->state_id);
 
-        $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
+            if (!empty($this->state_id)) {
+                $this->updatedStateId($this->state_id);
+            }
 
-        if (!empty($this->city_id)) {
-            $this->loadCities();
+            $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
+            $this->select2SelectOption('city_id', $this->city_id);
         }
 
         if (!empty($this->visitor)) {
@@ -187,6 +208,7 @@ class People extends BaseForm
                 array_push($this->alerts, $restriction->message);
             }
         }
+
     }
 
     public function mount()
@@ -209,13 +231,15 @@ class People extends BaseForm
             $this->webcam_data_uri = false;
         }
 
-        $this->fillModel();
 
+        $this->fillModel();
         $this->loadDefault();
     }
 
     public function render()
     {
+        $this->loadCountryBr();
+
         return view('livewire.people.partials.person')->with($this->getViewVariables());
     }
 
@@ -225,7 +249,6 @@ class People extends BaseForm
             'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
             'states' => app(States::class)->allOrderBy('name', 'asc', null),
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
-            'country_br' => Country::where('name', 'ilike', 'Brasil')->first(),
         ];
     }
 
@@ -247,7 +270,36 @@ class People extends BaseForm
 
     public function loadCities()
     {
-        $this->cities = City::where('state_id', $this->state_id)->get();
+        if($this->state_id) {
+            $this->cities = City::where('state_id', $this->state_id)->get();
+        }
+    }
+
+    public function updatedCountryId($newValue)
+    {
+        if ($newValue != $this->countryBr->id) {
+            $this->countryBrNotSelected();
+        }else{
+            $this->countryBrSelected();
+        }
+    }
+
+    public function updatedStateId($newValue)
+    {
+        $this->loadCities();
+
+        $this->cities = collect($this->cities);
+
+        $this->select2ReloadOptions($this->cities->map(function ($city) {
+            return [
+                'name' => $city->name,
+                'value' => $city->id,
+            ];
+        })->toArray(), 'city_id');
+
+        if($this->city_id){
+            $this->select2SelectOption('city_id', $this->city_id);
+        }
     }
 
     function mime2ext($mime)
@@ -439,5 +491,46 @@ class People extends BaseForm
             'text/x-scriptzsh' => 'zsh',
         ];
         return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadCountryBr(): void
+    {
+        $this->countryBr = Country::where('name', 'ilike', 'Brasil')->first();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function detectIfCountryBrSelected(): bool
+    {
+        return !!($this->country_id == $this->countryBr->id);
+    }
+
+    protected function setAddressReadOnly($value): void
+    {
+        $this->select2SetReadOnly('country_id', $value);
+        $this->select2SetReadOnly('state_id', $value);
+        $this->select2SetReadOnly('city_id', $value);
+    }
+
+    /**
+     * @return void
+     */
+    protected function countryBrNotSelected(): void
+    {
+        $this->select2Destroy('city_id');
+        $this->select2Destroy('state_id');
+    }
+
+    /**
+     * @return void
+     */
+    protected function countryBrSelected(): void
+    {
+        $this->select2Reload('city_id');
+        $this->select2Reload('state_id');
     }
 }

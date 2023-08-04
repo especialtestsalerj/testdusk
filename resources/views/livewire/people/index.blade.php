@@ -41,6 +41,6 @@
     </div>
 
     <div>
-        @include('livewire.visitors.partials.badge', [$printVisitor])
+        @include('livewire.visitors.partials.badge', ['printVisitor' => $printVisitor, 'forPrinter'=> false])
     </div>
 </div>

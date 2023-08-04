@@ -1,5 +1,5 @@
 
-<div>
+<div wire:poll.keep-alive>
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row border-bottom border-dark mb-4 pb-2">
@@ -75,7 +75,7 @@
     </div>
 
     <div>
-{{--        @include('livewire.visitors.partials.badge', [$printVisitor])--}}
+        @include('livewire.visitors.partials.badge', ['printVisitor' => $printVisitor, 'forPrinter'=>true])
     </div>
 
 

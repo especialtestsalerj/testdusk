@@ -2,47 +2,7 @@ window.$ = window.jQuery = require('jquery')
 
 require('./bootstrap')
 
-/**
- * Select2
- */
-require('select2/dist/js/select2.min.js')
-
-$(document).ready(function () {
-    $('.select2').select2({
-        theme: 'bootstrap-5',
-        tags: false,
-        width: '100%',
-    })
-
-    document.addEventListener('select2SelectOption', function (event) {
-        $('[data-select2-id="select2-data-' + event.detail.name + '"]')
-            .val(event.detail.value)
-            .trigger('change')
-    })
-
-    $('.select2').on('change', function (e) {
-        var data = e.target.value
-        var name = e.target.name
-
-        const livewireComponents = window.Livewire.all()
-        livewireComponents.forEach((component) => {
-            if (component.get(name) !== undefined) {
-                component.set(name, data)
-            }
-        })
-    })
-})
-
-$(document).on('select2:open', (e) => {
-    const selectId = e.target.id
-
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
-        key,
-        value,
-    ) {
-        value.focus()
-    })
-})
+require('./select2')
 
 // core version + navigation, pagination modules:
 import Swiper, { Navigation } from 'swiper'
