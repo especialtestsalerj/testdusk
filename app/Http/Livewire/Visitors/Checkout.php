@@ -23,7 +23,7 @@ class Checkout extends BaseIndex
 
     protected $queryString = [
         'searchName' => ['except' => ''],
-        'pageSize' => ['except' => 10],
+        'pageSize' => ['except' => 12],
         'page' => ['except' => 1],
         'startDate' => ['except' => ''],
         'endDate' => ['except' => ''],

@@ -30,7 +30,7 @@
                     <div class="col-3 col-lg-2 mt-2 mt-lg-0">
                         <select wire:model="pageSize" class="form-select" aria-label="Default select example">
                             <option value="5">5</option>
-                            <option value="10">10</option>
+                            <option value="12">12</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
