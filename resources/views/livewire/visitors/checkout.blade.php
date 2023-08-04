@@ -80,11 +80,11 @@
                                             <div class="col-9 col-md-8">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        {{ $visitor->person->name }}
+                                                        {{ $visitor->person->name ?? '' }}
                                                         {{--                                            </strong> --}}
                                                     </div>
                                                     <div class="col-12">
-                                                        {{ $visitor->sector->name }}
+                                                        {{ $visitor->sector->name ?? '' }}
                                                         {{--                                            </strong> --}}
                                                     </div>
                                                     <div class="row mt-2">
@@ -98,7 +98,6 @@
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="small fw-bold">
-                                                                {{ is_null($visitor->exited_at) ? dd($visitor) : '' }}
                                                                 <i class="fas fa-calendar-day me-2"></i>Saída
                                                                 <strong>{{ $visitor->exited_at->format('d/m/Y - H:i') }}</strong>
                                                             </div>
