@@ -25,7 +25,7 @@
             </div>
 
             <div class="row mb-4 d-flex align-items-center">
-                <div class="col-12 col-lg-9">
+                <div class="col-12 col-lg-8 col-xxl-9">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..." wire:model.debounce.500ms="searchString" value="">
                         <span class="input-group-text">
@@ -38,10 +38,10 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-10 mt-2 mt-lg-0 col-lg-9 d-flex justify-content-start justify-content-lg-center">
-                    <span class="fw-bold fs-5">
+                <div class="col-10 mt-2 mt-lg-0 col-lg-3 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
+                    <span class="fw-bold fs-5 btn btn-outline-secondary">
                         <input type="checkbox" name="exited_at"
-                               wire:model="exited_at"> Somente Saída em Aberto
+                               wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
                     </span>
                 </div>
                 <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
