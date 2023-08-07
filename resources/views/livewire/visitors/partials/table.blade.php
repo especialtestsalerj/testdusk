@@ -64,15 +64,15 @@
                                         </div>
                                         <div class="col-12">
                                             @can('visitors:show')
-                                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}"
-                                                   class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
+                                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}"
+                                                    class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
                                                         class="fa fa-lg fa-search"></i></a>
                                             @endCan
                                         </div>
                                         <div class="col-12">
                                             @can('visitors:update')
-                                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}"
-                                                   class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
+                                                <a href="{{ route('visitors.show', ['id' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}"
+                                                    class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
                                                         class="fa fa-lg fa-pencil"></i></a>
                                             @endCan
                                         </div>

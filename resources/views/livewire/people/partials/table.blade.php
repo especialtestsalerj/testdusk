@@ -56,14 +56,18 @@
                                                 </span>
                                             </div>
                                         @endif
-                                        <div class="col-12">
-                                            <a href="#" class="btn btn-link py-0" title="Detalhar"><i
-                                                    class="fa fa-search"></i></a>
-                                        </div>
-                                        <div class="col-12">
-                                            <a href="#" class="btn btn-link py-0" title="Alterar"><i
-                                                    class="fa fa-pencil"></i></a>
-                                        </div>
+                                        @can('people:show')
+                                            <div class="col-12">
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link py-0" title="Detalhar"><i
+                                                        class="fa fa-search"></i></a>
+                                            </div>
+                                        @endCan
+                                        @can('people:update')
+                                            <div class="col-12">
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link py-0" title="Alterar"><i
+                                                        class="fa fa-pencil"></i></a>
+                                            </div>
+                                        @endCan
                                         @if (!$person->hasPendingVisitors())
                                             @can('visitors:store')
                                                 <div class="col-12">
