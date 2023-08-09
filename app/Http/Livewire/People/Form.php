@@ -188,6 +188,8 @@ class Form extends BaseForm
             ? $this->person->has_disability ?? ''
             : old('has_disability');
 
+        $this->disabilities =  $this->person->disabilities->pluck('id')->toArray();
+
         $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
 
         if (!empty($this->city_id)) {
@@ -231,6 +233,8 @@ class Form extends BaseForm
 
     public function mount($id)
     {
+
+
         $this->fillModel($id);
     }
 

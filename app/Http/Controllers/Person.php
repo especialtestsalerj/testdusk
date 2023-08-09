@@ -37,19 +37,24 @@ class Person extends Controller
 
     public function update(PersonUpdate $request, $id)
     {
-        app(PeopleRepository::class)->update($id, $request->all());
+        $person =  app(PeopleRepository::class)->update($id, $request->all());
 
-        PersonModel::sync($this)->disabilities(
-            Disability::whereIn('id', $request['disabilities'])->get()
-        );
+//        dd($request['disabilities']);
+
+        $person->disabilities()->sync($request['disabilities']);
+
+//            Disability::whereIn('id', $request['disabilities'])->get()
+//        );
+
+
 
         /*foreach ($request['disabilities'] as $disability) {
             echo $disability;
         }
         dd('ok');*/
-        PersonModel::find($id)
-            ->disabilities()
-            ->sync($request['disabilities']);
+//        PersonModel::find($id)
+//            ->disabilities()
+//            ->sync($request['disabilities']);
 
         return redirect()
             ->route($request['redirect'])

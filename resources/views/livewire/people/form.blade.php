@@ -34,21 +34,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="full_name">Nome Completo*</label>
                             <input type="text" class="form-control text-uppercase" name="full_name" id="full_name" wire:model.defer="full_name" value="{{ is_null(old('full_name')) ? $person->full_name: old('full_name') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="social_name">Nome Social</label>
                             <input type="text" class="form-control text-uppercase" name="social_name" id="social_name" wire:model.defer="social_name" value="{{ is_null(old('social_name')) ? $person->social_name: old('social_name') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                 </div>
+                <div
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -90,8 +89,12 @@
                             <br />
                             @foreach($disabilityTypes as $disabilityType)
                                 <label>
-                                    <input name="disabilities[]" wire:model="disabilities" value="{{$disabilityType->id}}" type="checkbox" />
+                                    <input name="disabilities[]" wire:model="disabilities"
+                                           {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
+
+                                           value="{{$disabilityType->id}}" type="checkbox" />
                                     {{$disabilityType->name}}
+
                                 </label><br />
                             @endforeach
                         </div>
@@ -107,7 +110,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="country_id">País*</label>
                             <select class="form-control text-uppercase" name="country_id" id="country_id" wire:model="country_id" x-ref="country_id" @disabled(request()->query('disabled'))>
@@ -120,7 +123,7 @@
                         </div>
                     </div>
                     @if($country_id == "" || $country_id == $country_br->id)
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="state_id">Estado</label>
                                 <select class="form-control text-uppercase" name="state_id" id="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities" @disabled(request()->query('disabled'))>
@@ -133,7 +136,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="city_id">Cidade</label>
                                 <select class="select2 form-control text-uppercase" name="city_id" id="city_id" wire:model="city_id" x-ref="city_id" @disabled(request()->query('disabled'))>
@@ -145,7 +148,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="other_city">Cidade</label>
                                 <input type="text" name="other_city" class="form-control text-uppercase" wire:model="other_city" x-ref="other_city" @disabled(request()->query('disabled'))/>

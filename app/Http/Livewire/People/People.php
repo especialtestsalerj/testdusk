@@ -213,8 +213,10 @@ class People extends BaseForm
 
     }
 
-    public function mount()
+    public function mount($person_id)
     {
+
+      //  dd($person_id);
         if ($this->mode == 'create') {
             $this->person = new Person();
         }

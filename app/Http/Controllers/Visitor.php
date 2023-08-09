@@ -82,7 +82,7 @@ class Visitor extends Controller
             ->findById($id)
             ->append('photo');
 
-        return $this->view('visitors.form')->with([
+        return $this->view('livewire.visitors.form')->with([
             'visitor' => $visitor,
             'person_id' => $visitor->person_id,
             'people' => app(PeopleRepository::class)

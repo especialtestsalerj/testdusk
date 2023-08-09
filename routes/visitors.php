@@ -25,7 +25,7 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.create')
         ->can('visitors:store');
 
-    Route::get('/{id}/show', [Visitor::class, 'show'])
+    Route::get('/{visitor}/show', VisitorsForm::class)
         ->name('visitors.show')
         ->can('visitors:show');
 

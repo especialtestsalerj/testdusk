@@ -20,8 +20,8 @@ class DisabilityType extends Model
         return $this->belongsTo(User::class, 'updated_by_id');
     }
 
-    public function disabilities()
+    public function person()
     {
-        return $this->hasMany(Disability::class);
+        return $this->belongsToMany(Person::class,'disabilities');
     }
 }

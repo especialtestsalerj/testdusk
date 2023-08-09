@@ -52,7 +52,7 @@ class Person extends Model
 
     public function disabilities()
     {
-        return $this->hasMany(Disability::class);
+        return $this->belongsToMany(DisabilityType::class, 'disabilities');
     }
 
 
