@@ -65,8 +65,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhum Tipo de Ocorrência encontrado.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $eventTypes->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $eventTypes->links() }}
         </div>
     </div>
 </div>

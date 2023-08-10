@@ -77,8 +77,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Restrição encontrada.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $personRestrictions->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $personRestrictions->links() }}
         </div>
     </div>
 </div>

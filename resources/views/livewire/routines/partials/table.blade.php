@@ -115,8 +115,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Rotina encontrada.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $routines->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $routines->links() }}
         </div>
     </div>
 </div>

@@ -81,8 +81,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhum Material encontrado.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $stuffs->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $stuffs->links() }}
         </div>
     </div>
 </div>

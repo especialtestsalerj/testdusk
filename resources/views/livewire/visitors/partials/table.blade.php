@@ -223,7 +223,7 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-center mt-2">
+    <div class="d-flex justify-content-center mt-4">
         {{ $visitors->links() }}
     </div>
 </div>

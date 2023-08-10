@@ -65,8 +65,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhum Setor encontrado.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $sectors->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $sectors->links() }}
         </div>
     </div>
 </div>

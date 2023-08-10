@@ -83,8 +83,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Ocorrência encontrada.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $events->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $events->links() }}
         </div>
     </div>
 </div>

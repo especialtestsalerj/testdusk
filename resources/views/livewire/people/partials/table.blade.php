@@ -158,7 +158,7 @@
             </div>
         @endif
     </div>
-    <div class="d-flex justify-content-center mt-2">
+    <div class="d-flex justify-content-center mt-4">
         {{ $people->links() }}
     </div>
 </div>
