@@ -1,7 +1,7 @@
 <div>
     <div class="py-4 px-4 conteudo">
         <div class="">
-            <div class="row mb-4 pb-2">
+            <div class="row mb-3">
                 <div class="col-md-8">
                     <h3 class="mb-0">Pessoas - Identificação</h3>
                 </div>
