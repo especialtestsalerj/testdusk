@@ -427,7 +427,8 @@ select[readonly].select2 + .select2-container {
 }
 
 .card.bg-white {
-        background: rgba(255, 255, 255, 0.4) !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid #DFE3E6;
 }
 
 body.bg-logo {
