@@ -3,7 +3,7 @@
         <div class="row">
             @forelse ($visitors as $visitor)
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
-                    <div class="card">
+                    <div class="card bg-white">
                         <div class="card-header">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder">

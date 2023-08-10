@@ -426,6 +426,9 @@ select[readonly].select2 + .select2-container {
     min-width: 160px;
 }
 
+
+
+
 .card.bg-white {
     background: rgba(255, 255, 255, 0.4) !important;
     border: 1px solid #DFE3E6;
@@ -479,6 +482,11 @@ body.bg-logo {
 .table-dynamic td {
     padding: 5px 10px;
 }
+/*
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+*/
 
 @media screen and (max-width: 600px) {
     .table-dynamic .actions {

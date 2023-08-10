@@ -2,7 +2,7 @@
 <div wire:poll.keep-alive>
     <div class="py-4 px-4 conteudo">
         <div class="">
-            <div class="row border-bottom border-dark mb-4 pb-2">
+            <div class="row mb-4 d-flex align-items-center">
                 <div class="col-4 col-md-6">
                     <h3 class="mb-0">Visitas</h3>
                 </div>
