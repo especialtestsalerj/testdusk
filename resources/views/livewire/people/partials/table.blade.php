@@ -98,7 +98,7 @@
                         <tbody>
                 @endif
                 @forelse ($people as $person)
-                    <tr>
+                    <tr class="align-middle">
                         <td data-label="Foto">
                             <img class="w-75" src="{{ $person->photo }}">
                         </td>
