@@ -3,21 +3,33 @@
         @forelse ($routines as $routine)
             <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
                 <div class="card">
-                    <div class="card-body py-1">
+                    <div class="card-body py-lg-1">
                         <div class="row d-flex align-items-center">
-                            <div class="col-12 col-lg-3 text-center text-lg-start">
-                                <span class="fw-bold">Rotina:</span> {{ $routine->code }}
-                            </div>
-                            <div class="col-12 col-lg-3 text-center text-lg-start">
-                                <span class="fw-bold">Turno:</span> {{ $routine?->shift?->name }}
-                            </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Status:</span>
-                                @if ($routine->status)
-                                    <label class="badge bg-success"> ABERTA </label>
-                                @else
-                                    <label class="badge bg-danger"> FINALIZADA </label>
-                                @endif
+                            <div class="col-12 col-lg-10">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-4 col-lg-3 text-center text-lg-start">
+                                        <span class="fw-bold">Rotina:</span> {{ $routine->code }}
+                                    </div>
+                                    <div class="col-5 col-lg-3 text-center text-lg-start">
+                                        <span class="fw-bold">Turno:</span> {{ $routine?->shift?->name }}
+                                    </div>
+                                    <div class="col-3 col-lg-4 text-center text-lg-start">
+                                        {{--<span class="fw-bold">Status:</span>--}}
+                                        @if ($routine->status)
+                                            <label class="badge bg-success"> ABERTA </label>
+                                        @else
+                                            <label class="badge bg-danger"> FINALIZADA </label>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                        <span class="fw-bold">Assunção:</span> {{ $routine?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }} {{ $routine?->entrancedUser?->name }}
+                                    </div>
+                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                        <span class="fw-bold">Passagem:</span> {{ $routine?->exited_at?->format('d/m/Y \À\S H:i') }} {{ $routine?->exitedUser?->name }}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
                                 @if ($routine->status)
@@ -34,14 +46,8 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-12 col-lg-6 text-center text-lg-start">
-                                <span class="fw-bold">Assunção:</span> {{ $routine?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }} {{ $routine?->entrancedUser?->name }}
-                            </div>
-                            <div class="col-12 col-lg-6 text-center text-lg-start">
-                                <span class="fw-bold">Passagem:</span> {{ $routine?->exited_at?->format('d/m/Y \À\S H:i') }} {{ $routine?->exitedUser?->name }}
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -83,10 +89,10 @@
                                     <label for="exited_obs">Observações</label>
                                     <textarea class="form-control" name="exited_obs" id="exited_obs" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('exited_obs')) ? $routine->exited_obs: old('exited_obs') }}</textarea>
                                 </div>
-                                <?php
-                                $qtdPendingVisitors = count($routine->getPendingVisitors());
-                                $qtdPendingCautions = count($routine->getPendingCautions());
-                                ?>
+                                    <?php
+                                    $qtdPendingVisitors = count($routine->getPendingVisitors());
+                                    $qtdPendingCautions = count($routine->getPendingCautions());
+                                    ?>
                                 @if($qtdPendingVisitors > 0 || $qtdPendingCautions > 0)
                                     <div class="alert alert-warning" role="alert">
                                         <p><i class="fa fa-triangle-exclamation"></i><strong> Pendências encontradas</strong></p>
