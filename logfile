@@ -34,3 +34,5 @@
 2023-03-09 16:49:07.046 -03 [1816] HINT:  Is another postmaster (PID 1507) running in data directory "/Users/breno/pgdata"?
 2023-04-03 08:36:08.476 -03 [50630] FATAL:  lock file "postmaster.pid" already exists
 2023-04-03 08:36:08.476 -03 [50630] HINT:  Is another postmaster (PID 1143) running in data directory "/Users/breno/pgdata"?
+2023-08-11 09:12:24.803 -03 [1809] FATAL:  lock file "postmaster.pid" already exists
+2023-08-11 09:12:24.803 -03 [1809] HINT:  Is another postmaster (PID 1737) running in data directory "/Users/breno/pgdata"?

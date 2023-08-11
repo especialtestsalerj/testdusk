@@ -85,6 +85,31 @@
             @endforeach
         @else
             <div class="col-md-12">
+                <div class="mx-lg-0 my-1">
+                    <div class="">
+                        <div class="py-lg-1">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-12 col-lg-10">
+                                    <div class="row d-flex align-items-center ps-2">
+                                        <div class="col-4 col-lg-1 text-center fw-bolder">
+                                            Foto
+                                        </div>
+                                        <div class="col-8 col-lg-11">
+                                            <div class="row">
+                                                <div class="col-5 col-lg-6 text-center text-lg-start fw-bolder ps-3">
+                                                    Nome
+                                                </div>
+                                                <div class="col-3 col-lg-6 text-center text-lg-start fw-bolder">
+                                                    Documento(s)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @if (!empty($people))
                     <table class="table-dynamic table table-striped">
                         <thead>
@@ -98,6 +123,68 @@
                         <tbody>
                 @endif
                 @forelse ($people as $person)
+                    <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
+                        <div class="card">
+                            <div class="card-body py-lg-1">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-12 col-lg-10">
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-4 col-lg-1 text-center text-lg-start">
+                                                <img class="w-75" src="{{ $person->photo }}">
+                                            </div>
+                                            <div class="col-8 col-lg-11">
+                                                <div class="row">
+                                                    <div class="col-5 col-lg-6 text-center text-lg-start">
+                                                        {{ $person->name }}
+                                                        @if ($person->hasPendingVisitors())
+                                                            <span class="badge bg-warning text-black">Visita em aberto</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-3 col-lg-6 text-center text-lg-start">
+                                                        @foreach ($person->documents as $document)
+                                                            <span class="fw-bold">{{ $document->documentType->name }}</span>:
+                                                            {{ $document->numberMaskered }}
+                                                            @if ($document->state?->initial)
+                                                                - {{ $document->state->initial }}
+                                                            @endif
+                                                            &nbsp;
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-2 text-center text-lg-end actions">
+                                        @if ($person->hasPendingVisitors())
+                                            <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})"
+                                                  title="Imprimir Etiqueta">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                        @endif
+                                        <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                        @if (!$person->hasPendingVisitors())
+                                            @can('visitors:store')
+                                                <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
+                                                   class="btn btn-link" title="Registrar Entrada">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                            @endCan
+                                        @else
+                                            @can('visitors:checkout')
+                                                <span class="btn btn-link"
+                                                      wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
+                                                      title="Registrar Saida">
+                                        <i class="fa fa-arrow-up-right-from-square"></i>
+                                    </span>
+                                            @endCan
+                                        @endIf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <tr class="align-middle">
                         <td data-label="Foto">
                             <img class="w-75" src="{{ $person->photo }}">
