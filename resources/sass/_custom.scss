@@ -325,8 +325,8 @@
 
 
 body.bg-light {
-    background: rgb(183,192,201);
-    background: linear-gradient(315deg, rgba(183,192,201,1) 0%, rgba(241,243,245,1) 100%);
+    background: #DBDFEB !important;
+    /*background: linear-gradient(315deg, rgba(183,192,201,1) 0%, rgba(241,243,245,1) 100%);*/
     min-height: 100vh;
 }
 
@@ -348,8 +348,6 @@ body.bg-light {
 }
 
 /*
-
-
 .table-striped>tbody>tr:nth-of-type(2n) {
     background-color: rgba(251, 251, 252, 0.8);
 }
@@ -369,12 +367,27 @@ body.bg-light {
 
 .cards-striped {
     .card {
+        transition: 0.3s;
         &:nth-of-type(odd){
             background: rgba(255, 255, 255, 0.3);
         }
         &:nth-of-type(even){
             background: rgba(255, 255, 255, 0.6);
         }
+        &:hover {
+            background: hsla(0,0%,100%,.7) !important;
+        }
+
+        .actions {
+            .btn-link {
+                &:hover {
+                    background: #3490dc;
+                    color: #ffffff;
+                }
+            }
+        }
+
+
     }
 }
 
@@ -426,8 +439,12 @@ select[readonly].select2 + .select2-container {
     min-width: 160px;
 }
 
+
+
+
 .card.bg-white {
-        background: rgba(255, 255, 255, 0.4) !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid #DFE3E6;
 }
 
 body.bg-logo {
@@ -478,6 +495,19 @@ body.bg-logo {
 .table-dynamic td {
     padding: 5px 10px;
 }
+
+/*
+.table-striped {
+    tbody {
+        tr:nth-of-type(odd) {
+            background: hsla(0,0%,100%,.4) !important;
+        }
+    }
+}
+*/
+
+
+
 
 @media screen and (max-width: 600px) {
     .table-dynamic .actions {
@@ -556,3 +586,25 @@ body.bg-logo {
         color: var(--link-color-active);
     }
 }
+
+.pagination {
+    .page-item {
+        &.active {
+            background: #3490dc !important;
+        }
+        .page-link {
+            background: hsla(0,0%,100%,.4) !important;
+            &:hover {
+                background: hsla(0,0%,100%,.1) !important;
+            }
+        }
+    }
+
+
+
+    .page-link {
+     /*   background: hsla(0,0%,100%,.4) !important;*/
+    }
+}
+
+

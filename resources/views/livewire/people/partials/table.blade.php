@@ -3,8 +3,8 @@
         @if ($showCard)
             @foreach ($people as $person)
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card bg-white">
+                        <div class="card-header py-1">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder">
                                     <div data-label="Visitante">
@@ -29,17 +29,16 @@
                                 <div class="col-3" data-label="Foto">
                                     <img class="w-100" src="{{ $person->photo }}">
                                 </div>
-                                <div class="col-8">
+                                <div class="col-8 d-flex align-items-center">
                                     <div class="row">
                                         <div class="col-12">
                                             <div data-label="Documento">
                                                 @foreach ($person->documents as $document)
                                                     <span class="fw-bold">{{ $document->documentType->name }}</span>:
-                                                    {{ $document->numberMaskered }}
+                                                    {{ $document->numberMaskered }}<br>
                                                     @if ($document->state?->initial)
                                                         - {{ $document->state->initial }}
                                                     @endif
-                                                    &nbsp;
                                                 @endforeach
                                             </div>
                                         </div>
@@ -50,7 +49,7 @@
                                     <div class="row">
                                         @if ($person->hasPendingVisitors())
                                             <div class="col-12">
-                                                <span class="btn btn-link"
+                                                <span class="btn btn-link py-0"
                                                     wire:click="generateBadge({{ $person->pendingVisit->id }})"
                                                     title="Imprimir Etiqueta">
                                                     <i class="fa fa-print"></i>
@@ -58,11 +57,11 @@
                                             </div>
                                         @endif
                                         <div class="col-12">
-                                            <a href="#" class="btn btn-link" title="Detalhar"><i
+                                            <a href="#" class="btn btn-link py-0" title="Detalhar"><i
                                                     class="fa fa-search"></i></a>
                                         </div>
                                         <div class="col-12">
-                                            <a href="#" class="btn btn-link" title="Alterar"><i
+                                            <a href="#" class="btn btn-link py-0" title="Alterar"><i
                                                     class="fa fa-pencil"></i></a>
                                         </div>
                                         @if (!$person->hasPendingVisitors())
@@ -86,6 +85,31 @@
             @endforeach
         @else
             <div class="col-md-12">
+                <div class="mx-lg-0 my-1">
+                    <div class="">
+                        <div class="py-lg-1">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-12 col-lg-10">
+                                    <div class="row d-flex align-items-center ps-2">
+                                        <div class="col-4 col-lg-1 text-center fw-bolder">
+                                            Foto
+                                        </div>
+                                        <div class="col-8 col-lg-11">
+                                            <div class="row">
+                                                <div class="col-5 col-lg-6 text-center text-lg-start fw-bolder ps-3">
+                                                    Nome
+                                                </div>
+                                                <div class="col-3 col-lg-6 text-center text-lg-start fw-bolder">
+                                                    Documento(s)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @if (!empty($people))
                     <table class="table-dynamic table table-striped">
                         <thead>
@@ -99,7 +123,69 @@
                         <tbody>
                 @endif
                 @forelse ($people as $person)
-                    <tr>
+                    <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
+                        <div class="card cursor-pointer">
+                            <div class="card-body py-lg-1">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-12 col-lg-10">
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-4 col-lg-1 text-center text-lg-start">
+                                                <img class="w-75" src="{{ $person->photo }}">
+                                            </div>
+                                            <div class="col-8 col-lg-11">
+                                                <div class="row">
+                                                    <div class="col-5 col-lg-6 text-center text-lg-start">
+                                                        {{ $person->name }}
+                                                        @if ($person->hasPendingVisitors())
+                                                            <span class="badge bg-warning text-black">Visita em aberto</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-3 col-lg-6 text-center text-lg-start">
+                                                        @foreach ($person->documents as $document)
+                                                            <span class="fw-bold">{{ $document->documentType->name }}</span>:
+                                                            {{ $document->numberMaskered }}
+                                                            @if ($document->state?->initial)
+                                                                - {{ $document->state->initial }}
+                                                            @endif
+                                                            &nbsp;
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-2 text-center text-lg-end actions">
+                                        @if ($person->hasPendingVisitors())
+                                            <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})"
+                                                  title="Imprimir Etiqueta">
+                                    <i class="fa fa-print"></i>
+                                </span>
+                                        @endif
+                                        <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                        <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                        @if (!$person->hasPendingVisitors())
+                                            @can('visitors:store')
+                                                <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
+                                                   class="btn btn-link" title="Registrar Entrada">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                            @endCan
+                                        @else
+                                            @can('visitors:checkout')
+                                                <span class="btn btn-link"
+                                                      wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
+                                                      title="Registrar Saida">
+                                        <i class="fa fa-arrow-up-right-from-square"></i>
+                                    </span>
+                                            @endCan
+                                        @endIf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <tr class="align-middle">
                         <td data-label="Foto">
                             <img class="w-75" src="{{ $person->photo }}">
                         </td>
@@ -159,7 +245,7 @@
             </div>
         @endif
     </div>
-    <div class="d-flex justify-content-center mt-2">
+    <div class="d-flex justify-content-center mt-4">
         {{ $people->links() }}
     </div>
 </div>

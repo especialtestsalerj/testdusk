@@ -26,6 +26,11 @@
                 <div class="col-md-12 d-md-flex align-md-items-baseline">
                     <div class="col-md-12">
                         <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    Dados do Visitante
+                                </h4>
+                            </div>
                             <div class="col-md-6 col-xl-2 col-xxl-2">
                                 <label for="document_type_id">Tipo de Doc.*</label>
                                 <select name="document_type_id" class="form-control text-uppercase"

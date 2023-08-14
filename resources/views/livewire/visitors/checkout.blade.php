@@ -1,7 +1,7 @@
 <div>
     <div wire:poll.keep-alive x-data="" class="py-4 px-4">
 
-        <div class="row border-bottom border-dark mb-4 pb-2">
+        <div class="row mb-4">
             <div class="col-md-8">
                 <h3 class="mb-0">Visitas - Checkout de Visitante</h3>
             </div>
@@ -70,36 +70,33 @@
                 @if ($showCard)
                     <div class="row">
                         @foreach ($visitors as $visitor)
-                            <div class="col-12 col-xxl-4 mb-2">
-                                <div class="card">
+                            <div class="col-12 col-lg-6 col-xxl-4 mb-2">
+                                <div class="card bg-white">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-3 col-md-4">
+                                            <div class="col-3 col-md-4 col-lg-4">
                                                 <img src="{{ $visitor->photo }}" class="w-100">
                                             </div>
-                                            <div class="col-9 col-md-8">
+                                            <div class="col-9 col-md-8 col-lg-8">
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 fw-bolder lh-sm mb-2">
                                                         {{ $visitor->person->name ?? '' }}
-                                                        {{--                                            </strong> --}}
                                                     </div>
                                                     <div class="col-12">
-                                                        {{ $visitor->sector->name ?? '' }}
-                                                        {{--                                            </strong> --}}
+                                                        <div class="badge rounded-pill bg-secondary ">
+                                                            {{ $visitor->sector->name ?? '' }}
+                                                        </div>
                                                     </div>
                                                     <div class="row mt-2">
                                                         <div class="col-12">
                                                             <div class="small fw-bold">
-                                                                <i class="fas fa-calendar-day me-2"></i>Entrada
-                                                                <strong>
-                                                                    {{ $visitor->entranced_at->format('d/m/Y - H:i') }}
-                                                                </strong>
+                                                                <i class="fas fa-calendar-day me-2"></i>Entrada{{ $visitor->entranced_at->format('d/m/Y - H:i') }}
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="small fw-bold">
                                                                 <i class="fas fa-calendar-day me-2"></i>Saída
-                                                                <strong>{{ $visitor->exited_at->format('d/m/Y - H:i') }}</strong>
+                                                                {{ $visitor->exited_at->format('d/m/Y - H:i') }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -114,7 +111,33 @@
                     </div>
                 @else
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
+
+                            <div class="row ps-3 fw-bold">
+                                <div class="col-md-1 text-center">
+                                    Foto
+                                </div>
+                                <div class="col-md-4">
+                                    Visitante
+                                </div>
+                                <div class="col-md-3">
+                                    Entrada e Saída
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    Destino
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
                             @if (!empty($visitors))
                                 <table class="table-dynamic table table-striped">
                                     <thead>
@@ -130,6 +153,70 @@
                                     <tbody>
                             @endif
                             @forelse ($visitors as $visitor)
+                                <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
+                                    <div class="card cursor-pointer">
+                                        <div class="card-body py-lg-1">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-12">
+                                                    <div class="row d-flex align-items-center">
+                                                        <div class="col-4 col-lg-1 text-center text-lg-start">
+                                                        <span data-label="Foto">
+                                                            <img class="w-75" src="{{ $visitor->photo }}">
+                                                        </span>
+                                                        </div>
+                                                        <div class="col-8 col-lg-11">
+                                                            <div class="row d-flex align-items-center">
+                                                                <div class="col-5 col-lg-4 text-center text-lg-start">
+                                                                    <div class="row">
+                                                                        <div class="col-12 fw-bold">
+                                                                        <span data-label="Visitante">
+                                                                            {{ $visitor->person->name }}
+                                                                        </span>
+
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                        <span data-label="Documento">
+                                                                            {{ $visitor->document?->documentType?->name }}:{{ $visitor?->document?->number }}
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-3">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                        <span data-label="Entrada">
+                                                                            Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
+                                                                        </span>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                        <span data-label="Saída">
+                                                                            @if (isset($visitor?->exited_at))
+                                                                                Saída: {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!}
+                                                                            @else
+                                                                                <span class="badge bg-warning text-black">
+                                                                                    EM ABERTO
+                                                                                </span>
+                                                                            @endif
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 col-lg-5 text-center">
+                                                                <span data-label="Setor de Destino">
+                                                                    {{ $visitor?->sector?->name ?? '-' }}
+                                                                </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+{{--
+
                                 <tr class="align-middle">
                                     <td data-label="Foto">
                                         <img class="w-75" src="{{ $visitor->photo }}">
@@ -146,8 +233,8 @@
                                     <td data-label="Documento">{{ $visitor->document?->documentType?->name }}:
                                         {{ $visitor?->document?->number }}</td>
                                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
-
                                 </tr>
+--}}
 
                             @empty
                                 <div class="alert alert-warning mt-2">

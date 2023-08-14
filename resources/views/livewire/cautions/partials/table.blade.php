@@ -105,8 +105,7 @@
                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-2">
-            {{ $cautions->links() }}
+        <div class="d-flex justify-content-center mt-4">{{ $cautions->links() }}
         </div>
     </div>
 </div>
