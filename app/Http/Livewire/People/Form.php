@@ -7,9 +7,11 @@ use App\Data\Repositories\DisabilityTypes;
 use App\Data\Repositories\Genders;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\States;
+use App\Data\Repositories\Visitors;
 use App\Http\Livewire\BaseForm;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Document;
 use App\Models\Person;
 use App\Data\Repositories\Genders as GendersRepository;
 use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
@@ -46,6 +48,11 @@ class Form extends BaseForm
     public $redirect;
 
     public $showDisabilities = false;
+
+    protected $listeners = [
+        'confirm-delete-document' => 'deleteDocument',
+    ];
+    public $selectedDocument_id;
 
     public function find()
     {
@@ -241,5 +248,36 @@ class Form extends BaseForm
     public function render()
     {
         return view('livewire.people.form')->with($this->getViewVariables());
+    }
+
+
+    public function prepareForDeleteDocument($document_id)
+    {
+        $this->selectedDocument_id = $document_id;
+        $document = Document::find($document_id);
+        if(empty(app(Visitors::class)->findBydocumentId($document_id))) {
+
+
+            $this->emitSwall(
+                'Deseja realmente remover o ' . $document->documentType->name .
+                ': ' . $document->numberMaskered,
+                'A ação não pode ser desfeita',
+                'confirm-delete-document',
+                'delete'
+            );
+        }else{
+            $this->dispatchBrowserEvent('swal-checkout-failure', [
+                'error' => $document->documentType->name .' utilizado em Visita',]);
+        }
+    }
+
+    public function deleteDocument()
+    {
+        $document = Document::find($this->selectedDocument_id);
+        $person_id = $document->person->id;
+
+        $document->delete();
+        $this->fillModel($person_id);
+
     }
 }

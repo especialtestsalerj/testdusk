@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\Swallable;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 abstract class BaseForm extends Component
 {
-    use WithPagination;
+    use WithPagination, Swallable;
 
     public $focus;
     protected $paginationTheme = 'bootstrap';

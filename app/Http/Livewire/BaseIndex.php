@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\Swallable;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 abstract class BaseIndex extends Component
 {
-    use WithPagination;
+    use WithPagination, Swallable;
 
     protected $repository;
     protected $paginationTheme = 'bootstrap';
@@ -129,13 +130,5 @@ abstract class BaseIndex extends Component
         return $this->paginationEnabled ? $query->paginate($this->pageSize) : $query->get();
     }
 
-    public function emitSwall($title, $text, $confirmEvent, $action)
-    {
-        $this->dispatchBrowserEvent('swal', [
-            'title' => $title,
-            'text' => $text,
-            'confirmEvent' => $confirmEvent,
-            'action' => $action,
-        ]);
-    }
+
 }
