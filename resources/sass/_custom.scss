@@ -377,6 +377,17 @@ body.bg-light {
         &:hover {
             background: hsla(0,0%,100%,.7) !important;
         }
+
+        .actions {
+            .btn-link {
+                &:hover {
+                    background: #3490dc;
+                    color: #ffffff;
+                }
+            }
+        }
+
+
     }
 }
 
