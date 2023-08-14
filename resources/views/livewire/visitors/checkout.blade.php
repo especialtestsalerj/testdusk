@@ -111,7 +111,33 @@
                     </div>
                 @else
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
+
+                            <div class="row ps-3 fw-bold">
+                                <div class="col-md-1 text-center">
+                                    Foto
+                                </div>
+                                <div class="col-md-4">
+                                    Visitante
+                                </div>
+                                <div class="col-md-3">
+                                    Entrada e Saída
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    Destino
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
                             @if (!empty($visitors))
                                 <table class="table-dynamic table table-striped">
                                     <thead>
@@ -127,6 +153,70 @@
                                     <tbody>
                             @endif
                             @forelse ($visitors as $visitor)
+                                <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
+                                    <div class="card cursor-pointer">
+                                        <div class="card-body py-lg-1">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-12">
+                                                    <div class="row d-flex align-items-center">
+                                                        <div class="col-4 col-lg-1 text-center text-lg-start">
+                                                        <span data-label="Foto">
+                                                            <img class="w-75" src="{{ $visitor->photo }}">
+                                                        </span>
+                                                        </div>
+                                                        <div class="col-8 col-lg-11">
+                                                            <div class="row d-flex align-items-center">
+                                                                <div class="col-5 col-lg-4 text-center text-lg-start">
+                                                                    <div class="row">
+                                                                        <div class="col-12 fw-bold">
+                                                                        <span data-label="Visitante">
+                                                                            {{ $visitor->person->name }}
+                                                                        </span>
+
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                        <span data-label="Documento">
+                                                                            {{ $visitor->document?->documentType?->name }}:{{ $visitor?->document?->number }}
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-3">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                        <span data-label="Entrada">
+                                                                            Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
+                                                                        </span>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                        <span data-label="Saída">
+                                                                            @if (isset($visitor?->exited_at))
+                                                                                Saída: {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!}
+                                                                            @else
+                                                                                <span class="badge bg-warning text-black">
+                                                                                    EM ABERTO
+                                                                                </span>
+                                                                            @endif
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 col-lg-5 text-center">
+                                                                <span data-label="Setor de Destino">
+                                                                    {{ $visitor?->sector?->name ?? '-' }}
+                                                                </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+{{--
+
                                 <tr class="align-middle">
                                     <td data-label="Foto">
                                         <img class="w-75" src="{{ $visitor->photo }}">
@@ -143,8 +233,8 @@
                                     <td data-label="Documento">{{ $visitor->document?->documentType?->name }}:
                                         {{ $visitor?->document?->number }}</td>
                                     <td data-label="Setor de Destino">{{ $visitor?->sector?->name ?? '-' }}</td>
-
                                 </tr>
+--}}
 
                             @empty
                                 <div class="alert alert-warning mt-2">

@@ -367,11 +367,15 @@ body.bg-light {
 
 .cards-striped {
     .card {
+        transition: 0.3s;
         &:nth-of-type(odd){
             background: rgba(255, 255, 255, 0.3);
         }
         &:nth-of-type(even){
             background: rgba(255, 255, 255, 0.6);
+        }
+        &:hover {
+            background: hsla(0,0%,100%,.7) !important;
         }
     }
 }
@@ -591,3 +595,5 @@ body.bg-logo {
      /*   background: hsla(0,0%,100%,.4) !important;*/
     }
 }
+
+

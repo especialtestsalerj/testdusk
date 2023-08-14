@@ -16,7 +16,7 @@
         </div>
         @forelse ($cautions as $caution)
             <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
-                <div class="card">
+                <div class="card cursor-pointer">
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-2 text-center text-lg-start">
