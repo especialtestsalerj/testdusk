@@ -25,7 +25,6 @@ class Index extends BaseIndex
     public $redirect;
     public $exited_at;
 
-
     public $searchFields = [
         'visitors.entranced_at' => 'date',
         'visitors.exited_at' => 'date',
@@ -38,13 +37,11 @@ class Index extends BaseIndex
 
     public function mount()
     {
-//        $this->loadAnonymousVisitor();
+        //        $this->loadAnonymousVisitor();
     }
 
     public function additionalFilterQuery($query)
     {
-
-
         if (!is_null($this->searchString) && $this->searchString != '') {
             //Busca na tabela de people
             $query = $query->orWhereRaw(
@@ -73,8 +70,6 @@ class Index extends BaseIndex
 
         return $query;
     }
-
-
 
     public function render()
     {

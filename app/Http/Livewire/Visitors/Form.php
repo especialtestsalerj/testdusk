@@ -46,21 +46,30 @@ class Form extends BaseForm
     public function mount(Visitor $visitor)
     {
 
-        $this->visitor = new Visitor();
-        $this->visitor->entranced_at = now();
 
-        $this->person = new Person();
-        $this->sector = new Sector();
+        if(empty($visitor->id)) {
 
-        $this->webcam_data_uri = false;
+            $this->visitor = new Visitor();
+            $this->visitor->entranced_at = now();
+
+            $this->person = new Person();
+            $this->sector = new Sector();
+
+            $this->webcam_data_uri = false;
 
 
-        $this->visitor->append(['photo']);
+            $this->visitor->append(['photo']);
 
-        if ($this->visitor->photo == "/img/no-photo.svg") {
-            $this->webcam_file = "";
-        } else {
-            $this->webcam_file = $this->visitor->photo;
+            if ($this->visitor->photo == "/img/no-photo.svg") {
+                $this->webcam_file = "";
+            } else {
+                $this->webcam_file = $this->visitor->photo;
+            }
+        }else{
+            $this->visitor = $visitor;
+
+            $this->person = $visitor->person;
+            $this->sector = $visitor->sector;
         }
     }
 

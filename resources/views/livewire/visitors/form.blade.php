@@ -49,7 +49,9 @@
                 </div>
 
                 <div class="col-12 col-lg-8">
-                    @livewire('people.people', ['person_id'=>$visitor->person_id, 'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'), 'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
+                    @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
+                    'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
+                    'readonly' => $visitor->hasPending(), 'showRestrictions' => true])
                     <div class="row">
                         <div class="col-12">
                             <h4>
