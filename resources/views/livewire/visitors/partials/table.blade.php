@@ -145,7 +145,7 @@
 
                         @forelse ($visitors as $visitor)
                             <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
-                                <div class="card">
+                                <div class="card cursor-pointer">
                                     <div class="card-body py-lg-1">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-12 col-lg-10">
@@ -290,7 +290,11 @@
                             </div>
                         @endforelse
 
+
+                        {{--
                         @forelse ($visitors as $visitor)
+
+
                             <tr class="align-middle">
                                 <td data-label="Foto">
                                     <img class="w-75" src="{{ $visitor->photo }}">
@@ -360,7 +364,7 @@
                                                            class="form-control text-uppercase" name="exited_at" id="exited_at"
                                                            value="{{ $visitor->exited_at }}" disabled />
                                                 </div>
-                                                {{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true]) --}}
+                                                --}}{{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true]) --}}{{--
                                                 <div class="form-group">
                                                     <label for="sector_id">Setor</label>
                                                     <select class="form-select form-control" name="sector_id" id="sector_id"
@@ -399,6 +403,7 @@
                                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
                             </div>
                         @endforelse
+                        --}}
                         @if (!empty($visitors))
                         </tbody>
                     </table>
