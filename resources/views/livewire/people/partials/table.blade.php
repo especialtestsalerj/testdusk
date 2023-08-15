@@ -190,13 +190,13 @@
                                                 </a>
                                             @endCan
                                         @else
-                                            @can('visitors:checkout')
-                                                <span class="btn btn-link"
-                                                      wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
-                                                      title="Registrar Saida">
-                                        <i class="fa fa-arrow-up-right-from-square"></i>
-                                    </span>
-                                            @endCan
+                                                {{--
+                                                @can('visitors:checkout')
+                                                <span class="btn btn-link" wire:click="prepareForCheckout({{ $person->pendingVisit->id }})" title="Registrar Saida">
+                                                    <i class="fa fa-arrow-up-right-from-square"></i>
+                                                </span>
+                                                @endCan
+                                                --}}
                                         @endIf
                                     </div>
                                 </div>
