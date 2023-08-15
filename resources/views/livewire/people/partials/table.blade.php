@@ -2,6 +2,8 @@
     <div class="row">
         @if ($showCard)
             @foreach ($people as $person)
+
+                <!----- Visão de Cards ------>
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
                     <div class="card bg-white">
                         <div class="card-header py-1">
@@ -11,6 +13,7 @@
                                         {{ $person->name }}
                                     </div>
                                 </div>
+                               {{--
                                 <div class="col-2 d-flex justify-content-end">
                                     @if ($person->hasPendingVisitors())
                                         @can('visitors:checkout')
@@ -22,6 +25,7 @@
                                         @endCan
                                     @endIf
                                 </div>
+                                --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -86,8 +90,11 @@
                         </div>
                     </div>
                 </div>
+                <!----- FIM da Visão de Cards ------>
             @endforeach
         @else
+
+
             <div class="col-md-12">
                 <div class="mx-lg-0 my-1">
                     <div class="">
@@ -114,11 +121,12 @@
                         </div>
                     </div>
                 </div>
+                {{--
                 @if (!empty($people))
                     <table class="table-dynamic table table-striped">
                         <thead>
                             <tr>
-                                <td class="col-md-1">Foto</td>
+                                <td class="col-md-1">Foto2</td>
                                 <td class="col-md-5">Nome</td>
                                 <td class="col-md-4">Documento(s)</td>
                                 <td class="col-md-2"></td>
@@ -126,7 +134,10 @@
                         </thead>
                         <tbody>
                 @endif
+                --}}
                 @forelse ($people as $person)
+
+                    <!----- Visão de Card em Linhas ------>
                     <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
                         <div class="card cursor-pointer">
                             <div class="card-body py-lg-1">
@@ -165,8 +176,12 @@
                                     <i class="fa fa-print"></i>
                                 </span>
                                         @endif
-                                        <a href="#" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                        <a href="#" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                            @can('people:show')
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                            @endCan
+                                            @can('people:update')
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-pencil"></i></a>
+                                            @endCan
                                         @if (!$person->hasPendingVisitors())
                                             @can('visitors:store')
                                                 <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
@@ -188,6 +203,14 @@
                             </div>
                         </div>
                     </div>
+                    <!----- FIM da Visão de Card em Linhas ------>
+
+
+
+
+                    <!-----Visão de Tabela Antiga------>
+           {{--
+
 
                     <tr class="align-middle">
                         <td data-label="Foto">
@@ -240,6 +263,8 @@
                             @endIf
                         </td>
                     </tr>
+                    --}}
+                    <!-----Fim da Visão de Tabela Antiga------>
                 @empty
                     <div class="alert alert-warning mt-2">
                         <i class="fa fa-exclamation-triangle"></i> Nenhuma Pessoa encontrada.
