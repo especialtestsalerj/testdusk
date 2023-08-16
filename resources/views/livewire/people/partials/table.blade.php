@@ -8,12 +8,11 @@
                     <div class="card bg-white">
                         <div class="card-header py-1">
                             <div class="row d-flex align-items-center">
-                                <div class="col-10 fw-bolder">
+                                <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
                                         {{ $person->name }}
                                     </div>
                                 </div>
-                               {{--
                                 <div class="col-2 d-flex justify-content-end">
                                     @if ($person->hasPendingVisitors())
                                         @can('visitors:checkout')
@@ -25,7 +24,6 @@
                                         @endCan
                                     @endIf
                                 </div>
-                                --}}
                             </div>
                         </div>
                         <div class="card-body">
