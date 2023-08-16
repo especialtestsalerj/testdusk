@@ -5,7 +5,7 @@
 
                 <!----- Visão de Cards ------>
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
-                    <div class="card bg-white">
+                    <div class="card people-min-height bg-white">
                         <div class="card-header py-1">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
@@ -34,6 +34,11 @@
                                 <div class="col-8 d-flex align-items-center">
                                     <div class="row">
                                         <div class="col-12">
+
+                                            @if ($person->hasPendingVisitors())
+                                                <span class="badge bg-warning text-black mb-2">VISITA EM ABERTO</span>
+                                            @endif
+
                                             <div data-label="Documento">
                                                 @foreach ($person->documents as $document)
                                                     <span class="fw-bold">{{ $document->documentType->name }}</span>:

@@ -391,6 +391,13 @@ body.bg-light {
     }
 }
 
+.card {
+    &.people-min-height {
+        min-height: 168px;
+    }
+}
+
+
 .text-justify {
     text-align: justify;
 }
