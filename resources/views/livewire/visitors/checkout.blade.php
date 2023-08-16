@@ -90,13 +90,12 @@
                                                     <div class="row mt-2">
                                                         <div class="col-12">
                                                             <div class="small fw-bold">
-                                                                <i class="fas fa-calendar-day me-2"></i>Entrada{{ $visitor->entranced_at->format('d/m/Y - H:i') }}
+                                                                <i class="fas fa-calendar-day me-2"></i>Entrada: {{ $visitor->entranced_at->format('d/m/Y - H:i') }}
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="small fw-bold">
-                                                                <i class="fas fa-calendar-day me-2"></i>Saída
-                                                                {{ $visitor->exited_at->format('d/m/Y - H:i') }}
+                                                                <i class="fas fa-calendar-day me-2"></i>Saída: {{ $visitor->exited_at->format('d/m/Y - H:i') }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -127,16 +126,6 @@
                                     Destino
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
-
 
                             @if (!empty($visitors))
                                 <table class="table-dynamic table table-striped">
