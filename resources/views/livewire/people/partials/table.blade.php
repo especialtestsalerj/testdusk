@@ -20,7 +20,7 @@
                                             <span class="btn btn-link px-0 py-0"
                                                 wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
                                                 title="Registrar Saida">
-                                                <i class="fa fa-arrow-up-right-from-square"></i>
+                                                <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>
                                         @endCan
                                     @endIf
@@ -53,31 +53,31 @@
                                     <div class="row">
                                         @if ($person->hasPendingVisitors())
                                             <div class="col-12">
-                                                <span class="btn btn-link py-0"
+                                                <span class="btn btn-link px-0 pt-0 pb-1"
                                                     wire:click="generateBadge({{ $person->pendingVisit->id }})"
                                                     title="Imprimir Etiqueta">
-                                                    <i class="fa fa-print"></i>
+                                                    <i class="fa fa-lg fa-print"></i>
                                                 </span>
                                             </div>
                                         @endif
                                         @can('people:show')
                                             <div class="col-12">
-                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link py-0" title="Detalhar"><i
-                                                        class="fa fa-search"></i></a>
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
+                                                        class="fa fa-lg fa-search"></i></a>
                                             </div>
                                         @endCan
                                         @can('people:update')
                                             <div class="col-12">
-                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link py-0" title="Alterar"><i
-                                                        class="fa fa-pencil"></i></a>
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
+                                                        class="fa fa-lg fa-pencil"></i></a>
                                             </div>
                                         @endCan
                                         @if (!$person->hasPendingVisitors())
                                             @can('visitors:store')
                                                 <div class="col-12">
                                                     <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
-                                                        class="btn btn-link" title="Registrar Entrada">
-                                                        <i class="fa fa-check"></i>
+                                                        class="btn btn-link px-0 pt-0 pb-1" title="Registrar Entrada">
+                                                        <i class="fa fa-lg fa-check"></i>
                                                     </a>
                                                 </div>
                                             @endCan
@@ -173,27 +173,27 @@
                                         @if ($person->hasPendingVisitors())
                                             <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})"
                                                   title="Imprimir Etiqueta">
-                                    <i class="fa fa-print"></i>
+                                    <i class="fa fa-lg fa-print"></i>
                                 </span>
                                         @endif
                                             @can('people:show')
-                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                             @endCan
                                             @can('people:update')
-                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-lg fa-pencil"></i></a>
                                             @endCan
                                         @if (!$person->hasPendingVisitors())
                                             @can('visitors:store')
                                                 <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
                                                    class="btn btn-link" title="Registrar Entrada">
-                                                    <i class="fa fa-check"></i>
+                                                    <i class="fa fa-lg fa-check"></i>
                                                 </a>
                                             @endCan
                                         @else
                                                 {{--
                                                 @can('visitors:checkout')
                                                 <span class="btn btn-link" wire:click="prepareForCheckout({{ $person->pendingVisit->id }})" title="Registrar Saida">
-                                                    <i class="fa fa-arrow-up-right-from-square"></i>
+                                                    <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                                 </span>
                                                 @endCan
                                                 --}}
@@ -236,20 +236,20 @@
                             @if ($person->hasPendingVisitors())
                                 <span class="btn btn-link" wire:click="generateBadge({{ $person->pendingVisit->id }})"
                                     title="Imprimir Etiqueta">
-                                    <i class="fa fa-print"></i>
+                                    <i class="fa fa-lg fa-print"></i>
                                 </span>
                             @endif
                                 @can('people:show')
-                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true])}}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                 @endCan
                                 @can('people:update')
-                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false])}}" class="btn btn-link" title="Alterar" id="editPerson"><i class="fa fa-lg fa-pencil"></i></a>
                                 @endCan
                             @if (!$person->hasPendingVisitors())
                                 @can('visitors:store')
                                     <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
                                         class="btn btn-link" title="Registrar Entrada">
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-lg fa-check"></i>
                                     </a>
                                 @endCan
                             @else
@@ -257,7 +257,7 @@
                                     <span class="btn btn-link"
                                         wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
                                         title="Registrar Saida">
-                                        <i class="fa fa-arrow-up-right-from-square"></i>
+                                        <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                     </span>
                                 @endCan
                             @endIf
@@ -267,7 +267,7 @@
                     <!-----Fim da Visão de Tabela Antiga------>
                 @empty
                     <div class="alert alert-warning mt-2">
-                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Pessoa encontrada.
+                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Pessoa encontrada.
                     </div>
                 @endforelse
                 @if (!empty($people))

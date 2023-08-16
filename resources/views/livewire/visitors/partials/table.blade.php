@@ -32,11 +32,15 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
+                                            <div data-label="Setor de Destino" class="badge rounded-pill bg-secondary mb-2" {{--class="px-3 lh-base badge rounded-pill bg-secondary"--}}>
+                                                {{ $visitor?->sector?->name ?? '-' }}
+                                            </div>
+
                                             <div data-label="Entrada">
-                                                Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
+                                                <i class="fas fa-calendar-day me-2"></i> Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
                                             </div>
                                             <div data-label="Saída">
-                                                Saida: @if (isset($visitor?->exited_at))
+                                                <i class="fas fa-calendar-day me-2"></i> Saida: @if (isset($visitor?->exited_at))
                                                     {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!}
                                                 @else
                                                     <span class="badge bg-warning text-black">EM ABERTO</span>
@@ -46,9 +50,7 @@
                                                 {{ $visitor->document?->documentType?->name }}:
                                                 {{ $visitor?->document?->number }}</div>
 
-                                            <div data-label="Setor de Destino" class="fw-bold" {{--class="px-3 lh-base badge rounded-pill bg-secondary"--}}>
-                                                {{ $visitor?->sector?->name ?? '-' }}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +141,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         @endif
 
 
