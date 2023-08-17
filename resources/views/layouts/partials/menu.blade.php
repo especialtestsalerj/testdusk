@@ -45,7 +45,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['sectors.*', 'event-types.*', 'person-restrictions.*', 'routines.*', 'events.*', 'stuffs.*', 'cautions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownCadastro" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
@@ -62,7 +62,7 @@
                                 <li><a class="dropdown-item {{ (request()->routeIs('person-restrictions.*')) ? 'active' : '' }}" href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a></li>
                             @endCan
                             @can('routines:show')
-                                <li><a class="dropdown-item {{ (request()->routeIs('routines.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
+                                <li><a class="dropdown-item {{ (request()->routeIs('routines.*', 'events.*', 'stuffs.*', 'cautions.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
                             @endCan
                             @can('visitors:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('visitors.*')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>

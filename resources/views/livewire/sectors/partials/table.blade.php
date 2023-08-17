@@ -17,10 +17,10 @@
                                 @endif
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
-                                <a href="{{ route('sectors.show', ['id' => $sector->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                <a href="{{ route('sectors.show', ['id' => $sector->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                 @if(!$sector->canDelete())
                                     <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#sector-delete-modal{{ $sector->id }}" title="Remover">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fa fa-lg fa-trash"></i>
                                     </button>
                                 @endif
                             </div>

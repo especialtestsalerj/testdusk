@@ -25,9 +25,9 @@
                                 <span class="fw-bold">Mensagem:</span> {{ $personRestriction?->message }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
-                                <a href="{{ route('person-restrictions.show', ['id' => $personRestriction->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                <a href="{{ route('person-restrictions.show', ['id' => $personRestriction->id]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#person-restriction-delete-modal{{ $personRestriction->id }}" title="Remover">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="fa fa-lg fa-trash"></i>
                                 </button>
                             </div>
                         </div>

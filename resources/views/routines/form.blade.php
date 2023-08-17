@@ -12,7 +12,7 @@
             <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h4 class="mb-0">
+                        <h3 class="mb-0">
                             <a href="{{ route('routines.index') }}">Rotinas</a>
 
                             @if(is_null($routine->id))
@@ -21,7 +21,7 @@
                                 > {{ $routine->code }}
                             @endif
 
-                        </h4>
+                        </h3>
                         @if (!Route::is('routines.create') )
                             @if ($routine['status'])
                                 <label class="badge bg-success"> ABERTA </label>
@@ -124,5 +124,5 @@
     </div>
 
     @include('partials.button-to-top')
-    
+
 @endsection

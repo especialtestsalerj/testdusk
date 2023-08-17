@@ -14,7 +14,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h4 class="mb-0">
+                        <h3 class="mb-0">
                             @if(is_null($caution->id))
                                 <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Cautelas de Armas</a>
                                 > Nova
@@ -22,7 +22,7 @@
                                 <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $caution->id]) }}">Cautelas de Armas</a>
                                 > {{ $caution->id }} - {{ $caution?->protocol_number_formatted }}
                             @endif
-                        </h4>
+                        </h3>
                         @if(!is_null($caution->id))
                             @if(!$caution->hasWeapons())
                                 <span class="badge bg-danger text-white"><i class="fa fa-exclamation-triangle"></i> SEM ARMA(S) </span>

@@ -14,7 +14,7 @@
             <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h4 class="mb-0">
+                        <h3 class="mb-0">
                             @if(is_null($event->id))
                                 <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $routine_id]) }}">Ocorrências</a>
                                 > Nova
@@ -22,7 +22,7 @@
                                 <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $event->id]) }}">Ocorrências</a>
                                 > {{ $event->id }} - {{ $event->occurred_at->format('d/m/Y \À\S H:i') }}
                             @endif
-                        </h4>
+                        </h3>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
