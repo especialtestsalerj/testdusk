@@ -12,7 +12,7 @@
             <div class="">
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
-                        <h4 class="mb-0">
+                        <h3 class="mb-0">
                             <a href="{{ route('sectors.index') }}">Setores</a>
 
                             @if(is_null($sector->id))
@@ -20,7 +20,7 @@
                             @else
                                 > {{ $sector->id }} - {{ $sector->name }}
                             @endif
-                        </h4>
+                        </h3>
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">

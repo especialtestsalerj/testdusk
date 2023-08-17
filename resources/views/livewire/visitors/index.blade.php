@@ -11,7 +11,7 @@
                     <div class="float-end">
                         @can('visitors:store')
                             <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
-                                <i class="fa fa-print"></i> &nbsp;Etiqueta Avulsa
+                                <i class="fa fa-print"></i> Etiqueta Avulsa
                             </span>
                         @endCan
 
@@ -39,21 +39,22 @@
                     </div>
                 </div>
                 <div class="col-10 mt-2 mt-lg-0 col-lg-3 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
-                    <span class="fw-bold fs-5 btn btn-outline-secondary">
+                    <span class="fw-bold fs-6 btn btn-outline-secondary">
                         <input type="checkbox" name="exited_at"
-                               wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
+                               wire:model="exited_at"><span class="ms-2">Saídas em Aberto</span>
                     </span>
                 </div>
                 <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
                     <div class="view-actions">
-                        <button wire:click="showTable" class="view-btn list-view {{!$showCard ? 'active' : ''}}" title="List View">
+                        <button wire:click="showTable" class="view-btn list-view {{!$showCard ? 'active' : ''}}" title="Visualização em Lista">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
                                 <line x1="8" y1="6" x2="21" y2="6"></line>
                                 <line x1="8" y1="12" x2="21" y2="12"></line>
                                 <line x1="8" y1="18" x2="21" y2="18"></line>
                                 <line x1="3" y1="6" x2="3.01" y2="6"></line>
                                 <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                <line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
                         </button>
                         <button wire:click="showCard" class="view-btn grid-view {{$showCard ? 'active' : ''}}" title="Grid View">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">

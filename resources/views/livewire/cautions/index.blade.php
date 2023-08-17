@@ -4,7 +4,7 @@
         <div class="">
             <div class="row">
                 <div class="col-md-8">
-                    <h2 class="mb-0">Cautelas de Armas</h2>
+                    <h3 class="mb-0">Cautelas de Armas</h3>
                     Rotina {{ $routine?->code }}
                     @if ($routine?->status)
                         <label class="badge bg-success"> ABERTA </label>

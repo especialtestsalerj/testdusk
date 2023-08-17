@@ -18,11 +18,11 @@
                                 <span class="fw-bold">Plantonista:</span> {{ $stuff->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
-                                <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                     <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#stuff-delete-modal{{ $stuff->id }}" title="Remover">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fa fa-lg fa-trash"></i>
                                     </button>
                                 @endif
                             </div>

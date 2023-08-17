@@ -2,9 +2,9 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-sm-8 align-self-center">
-                <h4 class="mb-0">
+                <h3 class="mb-0">
                     <i class="fas fa-id-card"></i> Documentos
-                </h4>
+                </h3>
             </div>
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
