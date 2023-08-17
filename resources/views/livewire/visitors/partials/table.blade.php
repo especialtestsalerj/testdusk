@@ -32,11 +32,15 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
+                                            <div data-label="Setor de Destino" class="badge rounded-pill bg-secondary mb-2" {{--class="px-3 lh-base badge rounded-pill bg-secondary"--}}>
+                                                {{ $visitor?->sector?->name ?? '-' }}
+                                            </div>
+
                                             <div data-label="Entrada">
-                                                Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
+                                                <i class="fas fa-calendar-day me-2"></i> Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
                                             </div>
                                             <div data-label="Saída">
-                                                Saida: @if (isset($visitor?->exited_at))
+                                                <i class="fas fa-calendar-day me-2"></i> Saida: @if (isset($visitor?->exited_at))
                                                     {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!}
                                                 @else
                                                     <span class="badge bg-warning text-black">EM ABERTO</span>
@@ -46,9 +50,7 @@
                                                 {{ $visitor->document?->documentType?->name }}:
                                                 {{ $visitor?->document?->number }}</div>
 
-                                            <div data-label="Setor de Destino" class="fw-bold" {{--class="px-3 lh-base badge rounded-pill bg-secondary"--}}>
-                                                {{ $visitor?->sector?->name ?? '-' }}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -139,13 +141,14 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         @endif
 
 
 
                         @forelse ($visitors as $visitor)
                             <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
-                                <div class="card">
+                                <div class="card cursor-pointer">
                                     <div class="card-body py-lg-1">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-12 col-lg-10">
@@ -290,7 +293,11 @@
                             </div>
                         @endforelse
 
+
+                        {{--
                         @forelse ($visitors as $visitor)
+
+
                             <tr class="align-middle">
                                 <td data-label="Foto">
                                     <img class="w-75" src="{{ $visitor->photo }}">
@@ -360,7 +367,7 @@
                                                            class="form-control text-uppercase" name="exited_at" id="exited_at"
                                                            value="{{ $visitor->exited_at }}" disabled />
                                                 </div>
-                                                {{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true]) --}}
+                                                --}}{{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true]) --}}{{--
                                                 <div class="form-group">
                                                     <label for="sector_id">Setor</label>
                                                     <select class="form-select form-control" name="sector_id" id="sector_id"
@@ -399,6 +406,7 @@
                                 <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
                             </div>
                         @endforelse
+                        --}}
                         @if (!empty($visitors))
                         </tbody>
                     </table>
