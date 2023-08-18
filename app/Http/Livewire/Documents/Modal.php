@@ -84,7 +84,7 @@ class Modal extends BaseForm
     public function cleanModal()
     {
         $this->person = null;
-        $this->document;
+        $this->document = null;
         $this->document_type_id = null;
         $this->number = null;
         $this->state_id = null;
