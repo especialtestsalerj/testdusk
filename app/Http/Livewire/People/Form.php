@@ -271,6 +271,16 @@ class Form extends BaseForm
         }
     }
 
+    public function editDocument($document)
+    {
+        $this->emit('editDocument', $document);
+    }
+
+    public function createDocument($person)
+    {
+        $this->emit('createDocument', $person);
+    }
+
     public function deleteDocument()
     {
         $document = Document::find($this->selectedDocument_id);
