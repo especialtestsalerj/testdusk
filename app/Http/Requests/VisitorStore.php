@@ -19,15 +19,6 @@ class VisitorStore extends Request
         $visitor = isset($id) ? app(VisitorsRepository::class)->findById($id) : null;
 
         return [
-            'entranced_at' => [
-                'bail',
-                'required',
-            ],
-            'exited_at' => [
-                'bail',
-                'nullable',
-                'after_or_equal:entranced_at',
-            ],
             'document_type_id' => 'required',
             'document_number' => [
                 'bail',
@@ -39,24 +30,31 @@ class VisitorStore extends Request
                 ),
             ],
             'full_name' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required_if:country_id,1',
+            'city_id' => 'required_if:country_id,1',
+            'other_city' => 'required_unless:country_id,1',
+            'entranced_at' => ['bail', 'required'],
+            'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
             'description' => 'required',
         ];
     }
-
+    //currency, !=, 0",
     public function messages()
     {
         return [
-            'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
-            'exited_at.after_or_equal' => 'A Data de Saída deve ser posterior à entrada da visita.',
             'document_type_id.required' => 'Tipo de Documento: preencha o campo corretamente.',
             'document_number.required' => 'Documento: preencha o campo corretamente.',
-            'cpf.required' => 'CPF (Visitante): preencha o campo corretamente.',
-            'cpf.cpf' => 'CPF (Visitante): número inválido.',
-            'full_name.required' => 'Nome (Visitante): preencha o campo corretamente.',
-            'sector_id.required' => 'Setor: preencha o campo corretamente.',
-            'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',
-            'description.required' => 'Observações: preencha o campo corretamente.',
+            'full_name.required' => 'Nome Completo: preencha o campo corretamente.',
+            'country_id.required' => 'País: preencha o campo corretamente.',
+            'state_id.required_if' => 'Estado: preencha o campo corretamente.',
+            'city_id.required_if' => 'Cidade: preencha o campo corretamente.',
+            'other_city.required_unless' => 'Cidade: preencha o campo corretamente.',
+            'entranced_at.required' => 'Entrada: preencha o campo corretamente.',
+            'exited_at.after_or_equal' => 'A Data de Saída deve ser posterior à entrada da visita.',
+            'sector_id.required' => 'Destino: preencha o campo corretamente.',
+            'description.required' => 'Motivo da Visita: preencha o campo corretamente.',
         ];
     }
 

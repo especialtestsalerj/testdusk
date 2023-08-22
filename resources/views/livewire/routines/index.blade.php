@@ -4,7 +4,7 @@
         <div class="">
             <div class="row">
                 <div class="col-md-3">
-                    <h2 class="mb-0">Rotinas</h2>
+                    <h3 class="mb-0">Rotinas</h3>
                 </div>
 
                 <div class="col-md-9">
