@@ -32,10 +32,9 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div data-label="Setor de Destino" class="badge rounded-pill bg-secondary mb-2" {{--class="px-3 lh-base badge rounded-pill bg-secondary"--}}>
+                                            <div data-label="Destino" class="badge rounded-pill bg-secondary mb-2">
                                                 {{ $visitor?->sector?->name ?? '-' }}
                                             </div>
-
                                             <div data-label="Entrada">
                                                 <i class="fas fa-calendar-day me-2"></i> Entrada: {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
                                             </div>
@@ -47,10 +46,9 @@
                                                 @endif
                                             </div>
                                             <div data-label="Documento">
-                                                {{ $visitor->document?->documentType?->name }}:
-                                                {{ $visitor?->document?->number }}</div>
-
-
+                                                <i class="fas fa-id-card me-2"></i> {{ $visitor->document?->documentType?->name }}:
+                                                {{ $visitor?->document?->number }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -87,8 +85,10 @@
                     </div>
                 </div>
             @empty
-                <div class="alert alert-warning mt-2">
-                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                <div class="col-12">
+                    <div class="alert alert-warning mt-2">
+                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                    </div>
                 </div>
             @endforelse
         </div>
@@ -109,13 +109,13 @@
                                         <div class="col-8 col-lg-11">
                                             <div class="row d-flex align-items-center">
                                                 <div class="col-5 col-lg-5 text-center text-lg-start ps-3">
-                                                    Nome e Documentos
+                                                    Identificação
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    Entradas e Saídas
+                                                    Movimentação
                                                 </div>
                                                 <div class="col-3 col-lg-4 text-center">
-                                                    Setor de Destino
+                                                    Destino
                                                 </div>
                                             </div>
                                         </div>
@@ -128,7 +128,7 @@
 
 
                 @if (!empty($visitors))
-                    <table class="table-dynamic table table-striped">
+                    <!--<table class="table-dynamic table table-striped">
                         <thead>
                         <tr>
                             <td class="col-md-1">Foto</td>
@@ -141,8 +141,8 @@
                         </tr>
                         </thead>
                         <tbody>
-
-                        @endif
+-->
+                @endif
 
 
 
@@ -177,12 +177,12 @@
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <div data-label="Entrada">
-                                                                            Entrada: <span class="fw-bold">{!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}</span>
+                                                                            Entrada: <span>{!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}</span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div data-label="Saída">
-                                                                            Saída: <span class="fw-bold">@if (isset($visitor?->exited_at))
+                                                                            Saída: <span>@if (isset($visitor?->exited_at))
                                                                                     {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
                                                                                 @else
                                                                                     <span class="badge bg-warning text-black">EM ABERTO</span>
@@ -192,7 +192,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-3 col-lg-4 text-center">
-                                                                <div data-label="Setor de Destino">
+                                                                <div data-label="Destino">
                                                                     {{ $visitor?->sector?->name ?? '-' }}
                                                                 </div>
                                                             </div>
@@ -229,10 +229,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabelVisitor"><i class="fas fa-trash"></i>
-                                                Remoção de Visitante</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                            <h5 class="modal-title" id="deleteModalLabelVisitor"><i class="fas fa-trash"></i> Remoção de Visitante</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form class="form"
@@ -288,8 +286,10 @@
                             </div>
                             <!-- FIM do Modal -->
                         @empty
-                            <div class="alert alert-warning mt-2">
-                                <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                            <div class="col-12">
+                                <div class="alert alert-warning mt-2">
+                                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                                </div>
                             </div>
                         @endforelse
 
@@ -408,8 +408,8 @@
                         @endforelse
                         --}}
                         @if (!empty($visitors))
-                        </tbody>
-                    </table>
+                        <!--</tbody>
+                    </table>-->
                 @endif
             </div>
         </div>

@@ -17,18 +17,18 @@
                 <div class="row mb-3">
                     <div class="col-lg-5">
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
-                            placeholder="Filtrar por nome" aria-label="default input example">
+                            placeholder="Filtrar por Nome" aria-label="default input example" title="Filtrar por Nome">
                     </div>
                     <div class="col-3 col-lg-2 mt-2 mt-lg-0">
-                        <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
+                        <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59" title="Filtrar por Período de Início (Entrada ou Saída)"
                             class="form-control text-uppercase" />
                     </div>
                     <div class="col-3 col-lg-2 mt-2 mt-lg-0">
-                        <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
+                        <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59" title="Filtrar por Período de Término (Entrada ou Saída)"
                             class="form-control text-uppercase" />
                     </div>
                     <div class="col-3 col-lg-2 mt-2 mt-lg-0">
-                        <select wire:model="pageSize" class="form-select" aria-label="Default select example">
+                        <select wire:model="pageSize" class="form-select" aria-label="Filtrar por Número de registros" title="Filtrar por Número de Registros">
                             <option value="5">5</option>
                             <option value="12">12</option>
                             <option value="20">20</option>
@@ -40,7 +40,7 @@
                     <div class="col-1 mt-2 mt-lg-0">
                         <div class="view-actions">
                             <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
-                                title="List View">
+                                title="Visualização em Lista">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
@@ -53,7 +53,7 @@
                                 </svg>
                             </button>
                             <button wire:click="showCard" class="view-btn grid-view {{ $showCard ? 'active' : '' }}"
-                                title="Grid View">
+                                title="Visualização em Grid">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
@@ -69,9 +69,9 @@
 
                 @if ($showCard)
                     <div class="row">
-                        @foreach ($visitors as $visitor)
+                        @forelse ($visitors as $visitor)
                             <div class="col-12 col-lg-6 col-xxl-4 mb-2">
-                                <div class="card bg-white">
+                                <div class="card people-min-height bg-white">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-3 col-md-4 col-lg-4">
@@ -83,7 +83,7 @@
                                                         {{ $visitor->person->name ?? '' }}
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="badge rounded-pill bg-secondary ">
+                                                        <div class="badge rounded-pill bg-secondary mb-2">
                                                             {{ $visitor->sector->name ?? '' }}
                                                         </div>
                                                     </div>
@@ -106,7 +106,13 @@
                                     </div>
                                 </div>
                             </div>
-                        @endForEach
+                        @empty
+                            <div class="col-12">
+                                <div class="alert alert-warning mt-2">
+                                    <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
                 @else
                     <div class="row">
@@ -120,7 +126,7 @@
                                     Visitante
                                 </div>
                                 <div class="col-md-3">
-                                    Entrada e Saída
+                                    Movimentação
                                 </div>
                                 <div class="col-md-4 text-center">
                                     Destino
@@ -191,7 +197,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-3 col-lg-5 text-center">
-                                                                <span data-label="Setor de Destino">
+                                                                <span data-label="Destino">
                                                                     {{ $visitor?->sector?->name ?? '-' }}
                                                                 </span>
                                                                 </div>
