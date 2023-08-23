@@ -43,8 +43,8 @@
                         <input type="checkbox" name="exited_at" wire:model="exited_at"><span class="ms-2">Saídas em Aberto</span>
                     </span>
                 </div>
-                <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex justify-content-end">
-                    <div class="view-actions">
+                <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-md-block">
+                    <div class="view-actions justify-content-end ">
                         <button wire:click="showTable" class="view-btn list-view {{!$showCard ? 'active' : ''}}" title="Visualização em Lista">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
                                 <line x1="8" y1="6" x2="21" y2="6"></line>
