@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Documents;
 
+use App\Data\Repositories\Documents;
 use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\States;
 use App\Http\Livewire\BaseForm;
@@ -43,16 +44,27 @@ class Modal extends BaseForm
 
     public function createDocument(Person $person)
     {
-        $this->person = $person;        
+        $this->person = $person;
     }
 
     public function storeNewDocument()
     {
-        $this->person->documents()->firstOrCreate([
-            'person_id' => $this->person->id,
-            'document_type_id' => $this->document_type_id,
-        ], [
+        if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
+
+            $cpf = Document::where('person_id',$this->person->id)->
+                where('document_type_id',$this->document_type_id)->first();
+
+            if(!empty($cpf)){
+                $this->swallError('A pessoa já possui um CPF cadastrado');
+                return;
+            }
+
+
+        }
+        $this->person->documents()->create([
             'number' =>  $this->number,
+            'document_type_id' =>  $this->document_type_id,
+            'person_id' =>  $this->person->id,
             'state_id' =>  $this->state_id,
             'created_by_id' => auth()->user()->id,
             'updated_by_id' => auth()->user()->id,
@@ -61,6 +73,7 @@ class Modal extends BaseForm
 
     public function storeEditedDocument()
     {
+
         $this->document->update([
             'number' => $this->number,
             'state_id' =>  $this->state_id,
@@ -68,17 +81,36 @@ class Modal extends BaseForm
         ]);
     }
 
+    private function isValidCpf(){
+        if(!validate_cpf($this->number)) {
+            $this->swallError( 'CPF inválido');
+            return false;
+        }
+        return true;
+    }
+
+
+
     public function store()
     {
+
+        if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
+            if(!$this->isValidCpf()){
+
+                return;
+            }
+        }
         if($this->document) {
             $this->storeEditedDocument();
+            $this->emit('create-document', $this->document->person);
         }
-        
         if($this->person) {
             $this->storeNewDocument();
+            $this->emit('create-document', $this->person);
         }
-     
+
         $this->cleanModal();
+
     }
 
     public function cleanModal()

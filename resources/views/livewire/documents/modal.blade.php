@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <label for="entranced_at">Estado*</label>
                                         <select class="form-control text-uppercase" name="state_id" id="state_id"
-                                            wire:model="state_id" x-ref="document_type_id" @disabled(request()->query('disabled'))>
+                                            wire:model="state_id" x-ref="state_id" @disabled(request()->query('disabled'))>
                                             <option value="">selecione</option>
                                             @foreach ($states as $state)
                                                 <option value="{{ $state->id }}"> {{ $state->name }}</option>
@@ -91,7 +91,7 @@
                         </button>
                         <div>
                             <button type="button" dusk="cancel" wire:click.prevent="cleanModal()"
-                                class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="-modal"
+                                class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"
                                 title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
                         </div>
                     </div>
