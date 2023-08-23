@@ -40,8 +40,7 @@
                 </div>
                 <div class="col-10 mt-2 mt-lg-0 col-lg-3 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
                     <span class="fw-bold fs-6 btn btn-outline-secondary">
-                        <input type="checkbox" name="exited_at"
-                               wire:model="exited_at"><span class="ms-2">Saídas em Aberto</span>
+                        <input type="checkbox" name="exited_at" wire:model="exited_at"><span class="ms-2">Saídas em Aberto</span>
                     </span>
                 </div>
                 <div class="col-2 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-md-block">
@@ -56,12 +55,13 @@
                                 <line x1="3" y1="18" x2="3.01" y2="18"></line>
                             </svg>
                         </button>
-                        <button wire:click="showCard" class="view-btn grid-view {{$showCard ? 'active' : ''}}" title="Grid View">
+                        <button wire:click="showCard" class="view-btn grid-view {{$showCard ? 'active' : ''}}" title="Visualização em Grid">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="14" width="7" height="7"></rect>
-                                <rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -79,7 +79,5 @@
         @include('livewire.visitors.partials.badge', ['printVisitor' => $printVisitor, 'forPrinter'=>true])
     </div>
 
-
     @include('partials.button-to-top')
-
 </div>
