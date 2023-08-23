@@ -19,15 +19,15 @@
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
                             placeholder="Filtrar por nome" aria-label="default input example">
                     </div>
-                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
+                    <div class="col-4 col-md-3 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
                             class="form-control text-uppercase" />
                     </div>
-                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
+                    <div class="col-4 col-md-3  col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
                             class="form-control text-uppercase" />
                     </div>
-                    <div class="col-3 col-lg-2 mt-2 mt-lg-0">
+                    <div class="col-4 col-md-3 col-lg-2 mt-2 mt-lg-0">
                         <select wire:model="pageSize" class="form-select" aria-label="Default select example">
                             <option value="5">5</option>
                             <option value="12">12</option>
@@ -37,7 +37,7 @@
                         </select>
                     </div>
 
-                    <div class="col-1 mt-2 mt-lg-0">
+                    <div class="col-1 col-lg-1 col-md-3 mt-2 mt-lg-0 d-none d-md-block">
                         <div class="view-actions">
                             <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
                                 title="List View">
