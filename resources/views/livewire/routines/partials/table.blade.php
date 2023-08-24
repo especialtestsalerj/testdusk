@@ -33,15 +33,15 @@
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
                                 @if ($routine->status)
-                                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-primary btn-sm text-white mx-2" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
-                                        <i class="fa fa-cog"></i>
+                                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-link btn-sm mx-2" dusk="manageRoutine-{{$routine->id}}" title="Gerenciar Rotina">
+                                        <i class="fa fa-lg fa-cog"></i>
                                     </a>
                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina" dusk="finishRoutine">
                                         <i class="fa fa-check"></i> Finalizar
                                     </button>
                                 @else
-                                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-primary btn-sm text-white" title="Detalhar Rotina">
-                                        <i class="fa fa-search"></i>
+                                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-link btn-sm" title="Detalhar Rotina">
+                                        <i class="fa fa-lg fa-search"></i>
                                     </a>
                                 @endif
                             </div>
