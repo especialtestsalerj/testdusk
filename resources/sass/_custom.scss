@@ -615,3 +615,15 @@ body.bg-logo {
 }
 
 
+
+.bg-dark2 {
+    background: #1b396e;
+}
+
+.bg-button-home {
+    transition: 0.3s;
+    background: #EAECF3;
+    &:hover {
+        background: rgba(255, 255, 255, 0.8);
+    }
+}

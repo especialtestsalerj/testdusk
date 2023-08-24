@@ -103,18 +103,18 @@
                             <div class="row d-flex align-items-center">
                                 <div class="col-12 col-lg-10">
                                     <div class="row d-flex align-items-center fw-bold ps-2">
-                                        <div class="col-4 col-lg-1 text-center">
+                                        <div class="col-3 col-lg-1 text-center">
                                             Foto
                                         </div>
-                                        <div class="col-8 col-lg-11">
+                                        <div class="col-9 col-lg-11">
                                             <div class="row d-flex align-items-center">
-                                                <div class="col-5 col-lg-5 text-center text-lg-start ps-3">
-                                                    Nome e Documentos
+                                                <div class="col-4 col-lg-5 text-center text-lg-start ps-3">
+                                                    Nome e Documentos1
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-4 col-lg-3">
                                                     Entradas e Saídas
                                                 </div>
-                                                <div class="col-3 col-lg-4 text-center">
+                                                <div class="col-4 col-lg-4 text-center">
                                                     Setor de Destino
                                                 </div>
                                             </div>
@@ -144,8 +144,6 @@
 
                         @endif
 
-
-
                         @forelse ($visitors as $visitor)
                             <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
                                 <div class="card cursor-pointer">
@@ -153,12 +151,12 @@
                                         <div class="row d-flex align-items-center">
                                             <div class="col-12 col-lg-10">
                                                 <div class="row d-flex align-items-center">
-                                                    <div class="col-4 col-lg-1 text-center text-lg-start">
+                                                    <div class="col-3 col-lg-1 text-center text-lg-start">
                                                         <img class="w-75" src="/img/no-photo.svg">
                                                     </div>
-                                                    <div class="col-8 col-lg-11">
+                                                    <div class="col-9 col-lg-11">
                                                         <div class="row d-flex align-items-center">
-                                                            <div class="col-5 col-lg-5 text-center text-lg-start">
+                                                            <div class="col-4 col-lg-5 text-center text-lg-start">
                                                                 <div class="row">
                                                                     <div class="col-12 fw-bold">
                                                                         <div data-label="Visitante">
@@ -173,7 +171,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3">
+                                                            <div class="col-4 col-lg-3">
                                                                 <div class="row">
                                                                     <div class="col-12">
                                                                         <div data-label="Entrada">
