@@ -48,9 +48,6 @@
                                                 @foreach ($person->documents as $document)
                                                     <span class="fw-bold">{{ $document->documentType->name }}</span>:
                                                     {{ $document->numberMaskered }}<br>
-                                                    @if ($document->state?->initial)
-                                                        - {{ $document->state->initial }}
-                                                    @endif
                                                 @endforeach
                                             </div>
                                         </div>
