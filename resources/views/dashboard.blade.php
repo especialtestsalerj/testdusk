@@ -11,7 +11,7 @@
                 </h4>
             </div>
         </div>
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center mb-5">
             <div class="col-12 col-lg-8">
                 <div class="row g-2 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
                     @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
@@ -106,11 +106,8 @@
                 </div>
             </div>
         </div>
-
-
     @endCan
     <!-- Slider main container -->
-
     <!---------- FIM DO LAYOUT DO OCORRÊNCIAS  ---------->
 
 @endsection
