@@ -39,13 +39,6 @@
                     </div>
                 </div>
                 <div class="col-6 mt-lg-0 col-md-3 col-lg-2 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
-                    {{--
-                    <span class="fw-bold fs-5 btn btn-outline-secondary">
-                        <input type="checkbox" name="exited_at"
-                               wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
-                    </span>
-                    --}}
-
                     <span class="fw-bold btn btn-outline-secondary">
                         <input type="checkbox" name="exited_at"
                                wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
