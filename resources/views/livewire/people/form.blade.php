@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="has_disability">Possui deficiência?*</label>
@@ -140,68 +140,78 @@
                                 </select>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-md-2">
                         @if($has_disability == 'true')
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="disabilities">Tipos de Deficiências*</label>
-                                        <br/>
-                                        @foreach($disabilityTypes as $disabilityType)
-                                            <label>
-                                                <input name="disabilities[]" wire:model="disabilities"
-                                                       {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
 
-                                                       value="{{$disabilityType->id}}" type="checkbox"/>
-                                                {{$disabilityType->name}}
 
-                                            </label><br/>
-                                        @endforeach
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="disabilities">Tipos de Deficiências*</label>
+                                <br/>
+                                @foreach($disabilityTypes as $disabilityType)
+                                    <label>
+                                        <input name="disabilities[]" wire:model="disabilities"
+                                               {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
+
+                                               value="{{$disabilityType->id}}" type="checkbox"/>
+                                        {{$disabilityType->name}}
+
+                                    </label><br/>
+                                @endforeach
                             </div>
+
+
                         @endif
                     </div>
-                    <div class="col-md-4  bg-light border rounded-3">
-                        <table class="table">
-                            <tr>
-                                <th colspan="3" class="text-center">Documentos</th>
-                            </tr>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Número</th>
-                                <th>Ação</th>
-                            </tr>
-                        @foreach($person->documents as $document)
-                            <tr>
-                                <td>{{$document->documentType->name}} </td>
-                                <td>{{$document->numberMaskered}}</td>
-                                <td>
-                                    <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
-                                    <i class="fa fa-pencil"></i>
-                                    </span>
-                                    <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
-                                    <i class="fa fa-trash"></i>
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-                            <tr>
-                                <td colspan="2"></td>
-                                <td class="text-right align-content-end">
-                                    <span class="btn btn-link px-0 py-0" wire:click="createDocument({{$person->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
+                    <div class="col-md-6">
+                        <div class=" rounded-3">
+                            <table class="table bg-light border">
+                                <tr>
+                                    <th colspan="2" class="text-center">Documentos</th>
+                                    <th class="text-end">
+                                        <span class="btn btn-primary " wire:click="createDocument({{$person->id}})"
+                                              data-bs-toggle="modal" data-bs-target="#document-modal">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </th>
 
-                                        <i class="fa fa-plus"></i> Novo
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                                </tr>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Número</th>
+                                    <th class="text-end">Ação</th>
+                                </tr>
+                            @foreach($person->documents as $document)
+                                <tr>
+                                    <td>{{$document->documentType->name}} </td>
+                                    <td>{{$document->numberMaskered}}</td>
+                                    <td class="text-end">
+                                        <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
+                                        <i class="fa fa-pencil"></i>
+                                        </span>
+                                        <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
+                                        <i class="fa fa-trash"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+    {{--                            <tr>--}}
+    {{--                                <td colspan="2"></td>--}}
+    {{--                                <td class="text-right align-content-end">--}}
+    {{--                                    <span class="btn btn-link px-0 py-0" wire:click="createDocument({{$person->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">--}}
+
+    {{--                                        <i class="fa fa-plus"></i> Novo--}}
+    {{--                                    </span>--}}
+    {{--                                </td>--}}
+    {{--                            </tr>--}}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    
+
   @livewire('documents.modal')
 
 </div>

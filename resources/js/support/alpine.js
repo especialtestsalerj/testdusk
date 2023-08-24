@@ -74,7 +74,14 @@ window.addEventListener('swal-checkout-success', function (e) {
             '</div>'
     })
 })
-
+window.addEventListener('swall-error', function (e){
+    const options = e.detail
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: options.text,
+    })
+})
 window.addEventListener('swal', function (e) {
     const options = e.detail
 

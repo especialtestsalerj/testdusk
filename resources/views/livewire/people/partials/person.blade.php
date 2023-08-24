@@ -39,7 +39,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-8 col-xl-8">
+            <div class="col-lg-4 col-xl-4">
                 <div class="form-group">
                     <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
                     <label for="document_number">Documento*</label>
@@ -49,6 +49,22 @@
                            id="document_number" wire:model.lazy="document_number" x-ref="document_number"
                            wire:blur="searchDocumentNumber" />
                 </div>
+            </div>
+            <div class="col-lg-4 col-xl-4">
+                @if($document_type_id == 2)
+                    <div class="form-group">
+                        <label for="document_number">UF do Documento*</label>
+                        <select name="state_document_id" class="select2 form-control text-uppercase" id="state_document_id"
+                                wire:model="state_document_id" x-ref="state_document_id"
+                                @if ($modal) disabled @endif
+                                @if ($readonly) readonly @endif>
+                            <option value="">SELECIONE</option>
+                            @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
             </div>
             <div class="col-lg-6 col-xl-6">
                 <div class="form-group">

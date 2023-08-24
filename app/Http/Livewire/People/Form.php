@@ -51,6 +51,7 @@ class Form extends BaseForm
 
     protected $listeners = [
         'confirm-delete-document' => 'deleteDocument',
+        'create-document' => '$refresh',
     ];
     public $selectedDocument_id;
 
@@ -266,8 +267,8 @@ class Form extends BaseForm
                 'delete'
             );
         }else{
-            $this->dispatchBrowserEvent('swal-checkout-failure', [
-                'error' => $document->documentType->name .' utilizado em Visita',]);
+            $this->dispatchBrowserEvent('swall-error', [
+                'text' => $document->documentType->name .' utilizado em Visita',]);
         }
     }
 

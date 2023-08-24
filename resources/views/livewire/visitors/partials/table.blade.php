@@ -48,8 +48,8 @@
                                             </div>
                                             <div data-label="Documento">
                                                 <i class="fas fa-id-card me-2"></i>
-                                                {{ $visitor->document?->documentType?->name }}:
-                                                {{ $visitor?->document?->number }}
+                                                <strong>{{ $visitor->document?->documentType?->name }}:</strong>
+                                                {{ $visitor?->document?->numberMaskered }}
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@
                                     <div class="col-12 col-lg-10">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-4 col-lg-1 text-center text-lg-start">
-                                                <img class="w-75" src="/img/no-photo.svg">
+                                                <img class="w-75" src="{{ $visitor->photo }}">
                                             </div>
                                             <div class="col-8 col-lg-11">
                                                 <div class="row d-flex align-items-center">

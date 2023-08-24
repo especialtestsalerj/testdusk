@@ -37,6 +37,7 @@ class People extends BaseForm
     public $person;
     public $person_id;
     public $document_number;
+    public $state_document_id;
     public $full_name;
     public $social_name;
     public $country_id;
@@ -111,6 +112,7 @@ class People extends BaseForm
             'social_name' => $this->social_name,
             'document_number' => $this->document_number,
             'document_type_id' => $this->document_type_id,
+            'state_document_id' => $this->state_document_id,
         ]);
         $this->emit('personModified', $person);
     }
@@ -128,6 +130,7 @@ class People extends BaseForm
                 $this->fillModel();
                 $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
+                $this->state_document_id = $document->state_document_id;
                 $this->setAddressReadOnly(true);
                 $this->readonly = true;
             } else {

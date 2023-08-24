@@ -13,4 +13,11 @@ trait Swallable
             'action' => $action,
         ]);
     }
+
+    public function swallError($text)
+    {
+        $this->dispatchBrowserEvent('swall-error',[
+            'text'=>$text
+        ]);
+    }
 }
