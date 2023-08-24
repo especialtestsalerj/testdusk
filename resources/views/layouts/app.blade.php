@@ -28,19 +28,12 @@
     <div id="app">
         @include('layouts.partials.menu')
 
+
         <main class="py-0" >
             <div class="container-fluid px-0">
                 <div class="row justify-content-center">
                     <div class="col">
-
-                        <div class="row">
-                            <div class="col-md-12">
-
-                            </div>
-                        </div>
-
                         @yield('content')
-
                         <div>
                             @if(isset($slot))
                                 {{ $slot }}
@@ -48,12 +41,6 @@
                         </div>
                     </div>
                 </div>
-
-<!--                <div class="row text-center mt-5">
-                    <div class="col">
-{{--                        @version--}}
-                    </div>
-                </div>-->
             </div>
         </main>
 
