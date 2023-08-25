@@ -85,7 +85,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-body px-5 py-5 border-bottom rounded">
-                                                        <div class="row mt-3 mb-3 text-center">
+                                                        <div class="row mt-3 mb-3 text-center d-flex justify-content-center">
                                                             @include('partials.dashboard-button-swipper', ['url' => route('events.index', $routine->id), 'permission' => 'events:show', 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
                                                             @include('partials.dashboard-button-swipper', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
                                                             @include('partials.dashboard-button-swipper', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-gun', 'count' => $routine->cautions()->count()])
