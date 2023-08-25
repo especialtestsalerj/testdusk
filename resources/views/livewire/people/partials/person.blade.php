@@ -53,7 +53,7 @@
             <div class="col-lg-4 col-xl-4">
                 @if($document_type_id == 2)
                     <div class="form-group">
-                        <label for="document_number">UF do Documento*</label>
+                        <label for="state_document_id">UF do Documento*</label>
                         <select name="state_document_id" class="select2 form-control text-uppercase" id="state_document_id"
                                 wire:model="state_document_id" x-ref="state_document_id"
                                 @if ($modal) disabled @endif

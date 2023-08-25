@@ -38,10 +38,9 @@ class CpfAvailableOnVisit implements Rule
     {
         $documentType = app(DocumentTypes::class)->getByName('CPF');
 
-        if ($this->document_type_id == $documentType->id) {
+//        if ($this->document_type_id == $documentType->id) {
             $query = DB::table('visitors')
-                ->join('people', 'visitors.person_id', '=', 'people.id')
-                ->join('documents', 'visitors.person_id', '=', 'documents.person_id')
+                ->join('documents', 'visitors.document_id', '=', 'documents.id')
                 ->where('documents.number', $this->document_number)
                 ->where('documents.document_type_id', $this->document_type_id)
                 ->whereNull('visitors.exited_at');
@@ -51,10 +50,10 @@ class CpfAvailableOnVisit implements Rule
             }
 
             return $query->doesntExist();
-        } else {
-            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
-            return true;
-        }
+//        } else {
+//            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
+//            return true;
+//        }
     }
 
     /**

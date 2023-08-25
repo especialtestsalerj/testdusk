@@ -124,13 +124,15 @@ class People extends BaseForm
                 remove_punctuation($this->document_number)
             );
 
+           // dd($document);
+
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
                 $this->fillModel();
-                $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
+                $this->document_number = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
-                $this->state_document_id = $document->state_document_id;
+                $this->state_document_id = $document->state_id;
                 $this->setAddressReadOnly(true);
                 $this->readonly = true;
             } else {
