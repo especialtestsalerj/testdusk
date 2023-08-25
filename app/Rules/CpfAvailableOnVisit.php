@@ -63,7 +63,7 @@ class CpfAvailableOnVisit implements Rule
      */
     public function message()
     {
-        return 'CPF (Visitante): possui visita em aberto.';
+        return 'Documento (Visitante): possui visita em aberto.';
     }
 
     /**
