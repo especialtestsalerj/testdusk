@@ -124,13 +124,15 @@ class People extends BaseForm
                 remove_punctuation($this->document_number)
             );
 
+           // dd($document);
+
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
                 $this->fillModel();
-                $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
+                $this->document_number = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
-                $this->state_document_id = $document->state_document_id;
+                $this->state_document_id = $document->state_id;
                 $this->setAddressReadOnly(true);
                 $this->readonly = true;
             } else {
@@ -151,6 +153,8 @@ class People extends BaseForm
                 remove_punctuation($this->person->documents[0]->number)
             );
             $this->readonly = true;
+
+
         } else {
             $document_number = is_null(old('document_number'))
                 ? mask_cpf($this->person->cpf) ?? ''
@@ -158,7 +162,8 @@ class People extends BaseForm
 
             $this->document_number = mb_strtoupper(remove_punctuation($document_number));
         }
-
+        $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+        $this->state_document_id = is_null(old('state_document_id')) ? $this->state_document_id: old('state_document_id');
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
         $this->full_name = is_null(old('full_name'))
             ? mb_strtoupper($this->person->full_name) ?? ''
@@ -272,6 +277,7 @@ class People extends BaseForm
     private function loadDefault()
     {
         if (empty($this->document_type_id)) {
+//            dd('vazio', $this->document_type_id );
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
