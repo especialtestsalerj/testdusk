@@ -9,6 +9,7 @@ use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\States;
 use App\Data\Repositories\Visitors;
 use App\Http\Livewire\BaseForm;
+use App\Http\Livewire\Traits\Addressable;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Document;
@@ -20,6 +21,8 @@ use function view;
 
 class Form extends BaseForm
 {
+    use Addressable;
+
     public Person $person;
     public $selectedId;
 
@@ -29,15 +32,15 @@ class Form extends BaseForm
     public $birthdate;
     public $gender_id;
     public $has_disability;
-    public $city_id;
-    public $other_city;
-    public $state_id;
-    public $country_id;
+//    public $city_id;
+//    public $other_city;
+//    public $state_id;
+//    public $country_id;
     public $email;
 
     public $disabilities = [];
 
-    public $cities = [];
+//    public $cities = [];
 
     public $edit;
     public $modalMode;
@@ -48,6 +51,14 @@ class Form extends BaseForm
     public $redirect;
 
     public $showDisabilities = false;
+
+    protected $rules=
+        [
+            'countryBr'=>'',
+            'country_id'=>'',
+            'city_id'=>'',
+            'state_id'=>'',
+        ];
 
     protected $listeners = [
         'confirm-delete-document' => 'deleteDocument',
@@ -104,29 +115,7 @@ class Form extends BaseForm
         $this->country_id = null;
         $this->email = null;
     }
-    /*
-    public function prepareForUpdate($id, $readonly = false)
-    {
-        $this->selectedId = $id;
-        $person = Person::find($id);
 
-        $this->modalMode = $readonly ? 'detail' : 'update';
-        $this->readonly = $readonly;
-
-        $this->person_id = $id;
-        $this->full_name = mb_strtoupper($person?->full_name);
-        $this->social_name = mb_strtoupper($person?->social_name);
-        $this->birthdate = $person?->birthdate?->format('Y-m-d');
-        $this->gender_id = $person?->gender_id;
-        $this->has_disability = $person?->has_disability;
-        $this->city_id = $person?->city_id;
-        $this->other_city = mb_strtoupper($person?->other_city);
-        $this->state_id = $person?->state_id;
-        $this->country_id = $person?->country_id;
-        $this->email = mb_strtolower($person?->email);
-
-        $this->dispatchBrowserEvent('show-modal', ['target' => 'person-modal']);
-    }*/
 
     public function store()
     {
@@ -198,23 +187,7 @@ class Form extends BaseForm
 
         $this->disabilities =  $this->person->disabilities->pluck('id')->toArray();
 
-        $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
-
-        if (!empty($this->city_id)) {
-            $this->loadCities();
-        }
-
-        $this->other_city = is_null(old('other_city'))
-            ? $this->person->other_city ?? ''
-            : old('other_city');
-
-        $this->state_id = is_null(old('state_id'))
-            ? $this->person->state_id ?? ''
-            : old('state_id');
-
-        $this->country_id = is_null(old('country_id'))
-            ? $this->person->country_id ?? ''
-            : old('country_id');
+        $this->fillAddress();
 
         $this->email = is_null(old('email')) ? $this->person->email ?? '' : old('email');
     }
@@ -248,6 +221,8 @@ class Form extends BaseForm
 
     public function render()
     {
+        $this->loadCountryBr();
+
         return view('livewire.people.form')->with($this->getViewVariables());
     }
 
