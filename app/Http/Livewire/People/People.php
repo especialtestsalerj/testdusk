@@ -120,6 +120,8 @@ class People extends BaseForm
             $this->document_number = mb_strtoupper(remove_punctuation($document_number));
         }
         $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+
+
         $this->state_document_id = is_null(old('state_document_id')) ? $this->state_document_id: old('state_document_id');
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
         $this->full_name = is_null(old('full_name'))
@@ -170,7 +172,7 @@ class People extends BaseForm
             $this->webcam_data_uri = false;
         }
 
-
+        //TODO: O método fillModel está sobrescrevendo o document_type_id, name e document_number
         $this->fillModel();
         $this->loadDefault();
     }

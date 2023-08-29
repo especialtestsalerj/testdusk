@@ -45,7 +45,7 @@ class Form extends BaseForm
 
     public function mount(Visitor $visitor)
     {
-
+//        dd(request()->get('searchString'));
 
         if(empty($visitor->id)) {
 
@@ -53,6 +53,15 @@ class Form extends BaseForm
             $this->visitor->entranced_at = now();
 
             $this->person = new Person();
+
+            if($cpfParameter = request()->get('cpf')){
+                $this->person->cpf = $cpfParameter;
+            }
+
+            if($nameParameter = request()->get('name')){
+                $this->person->name = $nameParameter;
+            }
+
             $this->sector = new Sector();
 
             $this->webcam_data_uri = false;
