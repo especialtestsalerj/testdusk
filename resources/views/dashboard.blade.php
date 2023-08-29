@@ -53,12 +53,12 @@
                                                         <div class="row mx-0 mx-lg-3 mt-3 mb-2">
                                                             <div class="col-6 col-lg-3 text-center text-lg-start">
                                                                 <h4>
-                                                                    @can('cautions:show')
+                                                                    @can('routine:show')
                                                                         <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
                                                                             Rotina {{ $routine->code }}
                                                                         </a>
                                                                     @endcan
-                                                                    @cannot('cautions:show')
+                                                                    @cannot('routine:show')
                                                                         Rotina {{ $routine?->code }}
                                                                     @endcannot
                                                                 </h4>
