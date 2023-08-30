@@ -18,13 +18,13 @@
 @can($permission)
 <div class="col-4">
     <a href="{{$url}}">
-        <div class="p-3 py-0 mx-3 mb-0 bg-button-home text-center shadow rounded" type="button">
-            <div class="py-5">
-                                <span class="fa-stack fa-5x dashboard-active-icons">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa {{$ico}} fa-stack-1x fa-inverse"></i>
-                                </span>
-                <h5 class="mt-4 fs-3 fw-bold">
+        <div class="px-0 px-lg-3 py-0 py-md-3 py-lg-0 mx-2 mx-lg-3 mb-0 bg-button-home text-center shadow rounded" type="button">
+            <div class="py-2 py-lg-5">
+                <span class="fa-stack fa-5x dashboard-active-icons">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa {{$ico}} fa-stack-1x fa-inverse"></i>
+                </span>
+                <h5 class="mt-2 mt-lg-5 fs-3 fw-bold">
                     {{$title}}
                 </h5>
             </div>
