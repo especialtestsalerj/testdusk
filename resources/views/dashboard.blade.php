@@ -41,7 +41,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-10">
                             <!-- Slider main container -->
-                            <div dir="rtl" class="swiper mt-5">
+                            <div dir="rtl" class="swiper mb-5 mt-lg-5">
                                 <!-- Additional required wrapper -->
                                 <div class="swiper-wrapper">
                                     <!-- Slides -->
