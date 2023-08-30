@@ -106,7 +106,7 @@ class Visitor extends Controller
         app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
-            ->route($request['redirect'])
+            ->route('visitors.index')
             ->with('message', 'Visitante alterado/a com sucesso!');
     }
 

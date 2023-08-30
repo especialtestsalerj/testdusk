@@ -45,10 +45,6 @@ class CpfAvailableOnVisit implements Rule
                 ->where('documents.document_type_id', $this->document_type_id)
                 ->whereNull('visitors.exited_at');
 
-            if ($this->isUpdating()) {
-                $query->where('visitors.id', '<>', $this->id);
-            }
-
             return $query->doesntExist();
 //        } else {
 //            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
