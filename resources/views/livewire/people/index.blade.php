@@ -11,7 +11,7 @@
                         <a id="novo" href="{{ route('visitors.create',
                             $this->searchStringIsCpf ?
                                 ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
-                                : ['name' => $searchString]
+                                : ['full_name' => $searchString]
                             ) }}" class="btn btn-primary text-white float-end"
                             title="Nova Visita">
                             <i class="fa fa-plus"></i> Novo/a Visitante
