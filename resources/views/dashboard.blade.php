@@ -13,7 +13,7 @@
         </div>
         <div class="row d-flex justify-content-center mb-5">
             <div class="col-12 col-lg-8">
-                <div class="row g-2 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
+                <div class="row g-0 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
                     @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
                     @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitas', 'ico' => 'fa-people-roof'])
                     @include('partials.dashboard-button', ['url' => route('visitors.checkout'), 'permission' => 'visitors:show', 'title' => 'checkout', 'ico' => 'fa-arrow-up-right-from-square'])
@@ -41,7 +41,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-10">
                             <!-- Slider main container -->
-                            <div dir="rtl" class="swiper mt-5">
+                            <div dir="rtl" class="swiper mb-5 mt-lg-5">
                                 <!-- Additional required wrapper -->
                                 <div class="swiper-wrapper">
                                     <!-- Slides -->
