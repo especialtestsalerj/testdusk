@@ -39,9 +39,12 @@
                     </select>
                 </div>
             </div>
+
+            <input name="person_id" type="hidden" wire:model.defer="person_id">
+
             <div class="col-lg-4 col-xl-4">
                 <div class="form-group">
-                    <input name="person_id" id="person_id" type="hidden" wire:model.defer="document_number">
+                    <input name="document_number" id="document_number" type="hidden" wire:model.defer="document_number">
                     <label for="document_number">Documento*</label>
                     <input @if ($modal) disabled @endif
                     @if ($readonly) readonly @endif type="text"

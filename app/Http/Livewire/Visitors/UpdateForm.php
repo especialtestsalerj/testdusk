@@ -11,7 +11,7 @@ use Livewire\WithFileUploads;
 
 class UpdateForm extends Form
 {
-    public $mode = 'update';
+    public $mode = 'show';
 
     public function mount(Visitor $visitor)
     {
