@@ -331,7 +331,7 @@ class Timer
 function validate_cpf($string)
 {
     return Validator::make(
-        ['string' => $string],
+        ['string' => (string)$string],
         [
             'string' => 'required|cpf',
         ]

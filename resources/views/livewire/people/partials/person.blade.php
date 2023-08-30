@@ -41,7 +41,7 @@
             </div>
             <div class="col-lg-4 col-xl-4">
                 <div class="form-group">
-                    <input name="person_id" id="person_id" type="hidden" wire:model.defer="person_id">
+                    <input name="person_id" id="person_id" type="hidden" wire:model.defer="document_number">
                     <label for="document_number">Documento*</label>
                     <input @if ($modal) disabled @endif
                     @if ($readonly) readonly @endif type="text"

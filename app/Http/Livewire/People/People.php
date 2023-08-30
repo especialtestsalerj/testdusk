@@ -101,6 +101,10 @@ class People extends BaseForm
         $this->updated('document_number', $this->document_number);
     }
 
+    public function isPreFilled($fieldName) //filled by prop in query string
+    {
+        return is_null(old($fieldName)) && $this->{$fieldName};
+    }
     public function fillModel()
     {
         $this->alerts = [];
@@ -113,18 +117,27 @@ class People extends BaseForm
 
 
         } else {
-            $document_number = is_null(old('document_number'))
-                ? mask_cpf($this->person->cpf) ?? ''
-                : mask_cpf(old('document_number'));
+            if(!$this->isPreFilled('document_number')) {
+                $document_number = is_null(old('document_number'))
+                    ? (mask_cpf($this->person->cpf) ?? '')
+                    : mask_cpf(old('document_number'));
 
-            $this->document_number = mb_strtoupper(remove_punctuation($document_number));
+                $this->document_number = mb_strtoupper(remove_punctuation($document_number));
+            }
         }
-        $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+
+        if(!$this->isPreFilled('document_type_id')) {
+            $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+        }
+
         $this->state_document_id = is_null(old('state_document_id')) ? $this->state_document_id: old('state_document_id');
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
-        $this->full_name = is_null(old('full_name'))
-            ? mb_strtoupper($this->person->full_name) ?? ''
-            : old('full_name');
+
+        if(!$this->isPreFilled('full_name')) {
+            $this->full_name = is_null(old('full_name'))
+                ? mb_strtoupper($this->person->full_name) ?? ''
+                : old('full_name');
+        }
 
         $this->social_name = is_null(old('social_name'))
             ? mb_strtoupper($this->person->social_name) ?? ''
@@ -170,7 +183,7 @@ class People extends BaseForm
             $this->webcam_data_uri = false;
         }
 
-
+        //TODO: O método fillModel está sobrescrevendo o document_type_id, name e document_number
         $this->fillModel();
         $this->loadDefault();
     }
