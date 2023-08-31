@@ -11,9 +11,7 @@
     <style type="text/css" media="print">
         @page {
             size: A4;
-            /* Define o tamanho da página como A4 */
             margin: 0;
-            /* Remove as margens padrão da impressora */
         }
 
         /* reset.css */
@@ -128,7 +126,8 @@
             display: none !important;
         }
 
-        #badge {
+        body.bg-light, #badge {
+            background-color: #FFFFFF !important;
             line-height: 1;
         }
 
@@ -293,9 +292,9 @@
             }
         @endif
     </style>
-
-    <div id="badge"
-        @if ($forPrinter) x-init="
+@endIf
+<div id="badge"
+    @if ($forPrinter) x-init="
             window.debounce = function (func, timeout = 1000){
               let timer;
               return (...args) => {
@@ -308,86 +307,85 @@
 
             document.addEventListener('printCautionReceipt', update)
             " @endif>
-        @for ($i = 0; $i < 2; $i++)
-            <table class="table">
-                <tr class="header">
-                    <td class="left logo">
-                        <img alt="Logo Alerj" src="data:image/png;base64,{{ $logoBlob ?? '' }}" />
-                    </td>
-                    <td class="bold">
-                        <p>{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</p>
-                        <p>DEPARTAMENTO DE SEGURANÇA</p>
-                        <p>ÓRGÃO DA PRESIDÊNCIA</p>
-                    </td>
-                    <td class="right">
-                        <p>{{ $caution?->started_at?->format('d/m/Y') ?? '-' }}</p>
-                        <p>{{ $caution?->started_at?->format('H:i') ?? '-' }}</p>
-                    </td>
-                </tr>
-                <tr class="subject">
-                    <td class="center bold" colspan="3">CAUTELA DE ARMA Nº
-                        {{ $caution?->protocol_number_formatted ?? '' }}</td>
-                </tr>
-                <tr class="content">
-                    <td colspan="3">
-                        <table>
-                            <tr>
-                                <td class="bold">NOME: </td>
-                                <td>{{ $caution->visitor->person->name ?? '' }} -
-                                    {{ $caution->visitor->document->type ?? '' }}
-                                    {{ $caution->visitor->document->number ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="bold">DESTINO: </td>
-                                <td>{{ $caution->visitor?->sector?->name ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="bold">ARMA(S): </td>
-                                <td>
-                                    <?php
-                                    $j = 0;
-                                    ?>
-                                    <ul>
-                                        @if ($cautionWeapons)
-                                            @foreach ($cautionWeapons as $cautionWeapon)
-                                                <?php
-                                                $j++;
-                                                ?>
-                                                <li>
-                                                    {{ str_pad($j, 2, '0', STR_PAD_LEFT) }})
-                                                    {{ $cautionWeapon->weaponType->name }}
-                                                    {{ $cautionWeapon->weapon_description }}
-                                                    {{ strlen($cautionWeapon->weapon_number) > 0 ? ' NÚM. ' . $cautionWeapon->weapon_number : '' }}
-                                                    {{ strlen($cautionWeapon->register_number) > 0 ? ' (Nº REG. SINARM ' . $cautionWeapon->register_number . ')' : '' }}
-                                                    {{ ' ' . $cautionWeapon->cabinet->name }}
-                                                    {{ '/ BOX ' . $cautionWeapon->shelf->name }}
-                                                </li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </td>
-                            </tr>
-                        </table>
-                        @if (config('app.draft_document'))
-                            <div class="watermark">RASCUNHO</div>
-                        @endif
-                    </td>
-                </tr>
-                <tr class="content signature">
-                    <td class="center" colspan="3">
-                        <p>________________________________________________</p>
-                        <p>ASSINATURA DO/A RESPONSÁVEL PELA(S) ARMA(S)</p>
-                    </td>
-                </tr>
-                <tr class="footer">
-                    <td class="left">
-                        <p>© {{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</p>
-                    </td>
-                    <td class="right" colspan="2">
-                        <p>{{ mb_strtoupper(env('APP_NAME', 'Laravel')) }}</p>
-                    </td>
-                </tr>
-            </table>
-        @endfor
-    </div>
-@endif
+    @for ($i = 0; $i < 2; $i++)
+        <table class="table">
+            <tr class="header">
+                <td class="left logo">
+                    <img alt="Logo Alerj" src="data:image/png;base64,{{ $logoBlob ?? '' }}" />
+                </td>
+                <td class="bold">
+                    <p>{{ config('app.company') }}</p>
+                    <p>DEPARTAMENTO DE SEGURANÇA</p>
+                    <p>ÓRGÃO DA PRESIDÊNCIA</p>
+                </td>
+                <td class="right">
+                    <p>{{ $caution?->started_at?->format('d/m/Y') ?? '-' }}</p>
+                    <p>{{ $caution?->started_at?->format('H:i') ?? '-' }}</p>
+                </td>
+            </tr>
+            <tr class="subject">
+                <td class="center bold" colspan="3">CAUTELA DE ARMA Nº
+                    {{ $caution?->protocol_number_formatted ?? '' }}</td>
+            </tr>
+            <tr class="content">
+                <td colspan="3">
+                    <table>
+                        <tr>
+                            <td class="bold">NOME: </td>
+                            <td>{{ $caution->visitor->person->name ?? '' }} -
+                                {{ $caution->visitor->document->type ?? '' }}
+                                {{ $caution->visitor->document->number ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">DESTINO: </td>
+                            <td>{{ $caution->visitor?->sector?->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">ARMA(S): </td>
+                            <td>
+                                <?php
+                                $j = 0;
+                                ?>
+                                <ul>
+                                    @if ($cautionWeapons)
+                                        @foreach ($cautionWeapons as $cautionWeapon)
+                                            <?php
+                                            $j++;
+                                            ?>
+                                            <li>
+                                                {{ str_pad($j, 2, '0', STR_PAD_LEFT) }})
+                                                {{ $cautionWeapon->weaponType->name }}
+                                                {{ $cautionWeapon->weapon_description }}
+                                                {{ strlen($cautionWeapon->weapon_number) > 0 ? ' NÚM. ' . $cautionWeapon->weapon_number : '' }}
+                                                {{ strlen($cautionWeapon->register_number) > 0 ? ' (Nº REG. SINARM ' . $cautionWeapon->register_number . ')' : '' }}
+                                                {{ ' ' . $cautionWeapon->cabinet->name }}
+                                                {{ '/ BOX ' . $cautionWeapon->shelf->name }}
+                                            </li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                    @if (config('app.draft_document'))
+                        <div class="watermark">RASCUNHO</div>
+                    @endif
+                </td>
+            </tr>
+            <tr class="content signature">
+                <td class="center" colspan="3">
+                    <p>________________________________________________</p>
+                    <p>ASSINATURA DO/A RESPONSÁVEL PELA(S) ARMA(S)</p>
+                </td>
+            </tr>
+            <tr class="footer">
+                <td class="left">
+                    <p>© {{ config('app.owner') }}</p>
+                </td>
+                <td class="right" colspan="2">
+                    <p>{{ config('app.name') }}</p>
+                </td>
+            </tr>
+        </table>
+    @endfor
+</div>
