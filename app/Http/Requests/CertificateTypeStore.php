@@ -29,7 +29,7 @@ class CertificateTypeStore extends Request
         $input = $all;
 
         if (!empty($this->get('name'))) {
-            $input['name'] = mb_strtoupper($input['name']);
+            $input['name'] = convert_case($input['name'], MB_CASE_UPPER);
             $this->replace($input);
         }
 

@@ -221,7 +221,7 @@
 
             >
                 <tr>
-                    <td colspan="3" class="text-center badge-text-sm">{{ mb_strtoupper(env('APP_COMPANY', 'Laravel')) }}</td>
+                    <td colspan="3" class="text-center badge-text-sm">{{ config('app.company') }}</td>
                 </tr>
                 <tr>
                     <td class="badge-bg-title text-center badge-border-title"></td>

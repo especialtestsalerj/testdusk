@@ -61,7 +61,10 @@ class Visitor extends Controller
 
         $document = Document::firstOrCreate([
             'person_id' => $request->get('person_id'),
-            'number' => mb_strtoupper(remove_punctuation($request->get('document_number'))),
+            'number' => convert_case(
+                remove_punctuation($request->get('document_number')),
+                MB_CASE_UPPER
+            ),
             'document_type_id' => $request->get('document_type_id'),
             'state_id' => $request->get('state_document_id'),
         ]);
@@ -151,7 +154,7 @@ class Visitor extends Controller
         if ($photo) {
             $avatar = app(Avatars::class)->store($photo);
             $request->merge(['avatar_id' => $avatar->id]);
-        }else{
+        } else {
             $request->merge(['avatar_id' => null]);
         }
         return $request;

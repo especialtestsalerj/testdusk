@@ -68,12 +68,7 @@ class VisitorStore extends Request
         }
 
         if (!empty($this->get('full_name'))) {
-            $input['full_name'] = mb_strtoupper($input['full_name']);
-            $this->replace($input);
-        }
-
-        if (!empty($this->get('origin'))) {
-            $input['origin'] = mb_strtoupper($input['origin']);
+            $input['full_name'] = convert_case($input['full_name'], MB_CASE_UPPER);
             $this->replace($input);
         }
 

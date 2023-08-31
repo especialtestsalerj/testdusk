@@ -18,6 +18,10 @@ return [
 
     'description' => env('APP_DESCRIPTION'),
 
+    'owner' => env('APP_OWNER'),
+
+    'company' => env('APP_COMPANY'),
+
     'live_reload' => env('LIVE_RELOAD_PORT'),
 
     /*
