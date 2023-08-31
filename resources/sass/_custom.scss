@@ -377,17 +377,6 @@ body.bg-light {
         &:hover {
             background: hsla(0,0%,100%,.7) !important;
         }
-
-        .actions {
-            .btn-link {
-                &:hover {
-                    background: #3490dc;
-                    color: #ffffff;
-                }
-            }
-        }
-
-
     }
 }
 
@@ -615,3 +604,40 @@ body.bg-logo {
 }
 
 
+
+.bg-dark2 {
+    background: #1b396e;
+}
+
+.bg-button-home {
+    transition: 0.3s;
+    background: #EAECF3;
+    &:hover {
+        background: rgba(255, 255, 255, 0.8);
+    }
+}
+
+
+// X-Small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+    .fa-stack.fa-5x {
+        font-size: 2em;
+    }
+    h5.fs-3 {
+        font-size: 11px !important;
+    }
+
+    .swiper-home {
+        .card-header{
+            .col-6 {
+                h4 {
+                    font-size: 13px !important;
+                }
+            }
+        }
+    }
+
+
+
+
+}

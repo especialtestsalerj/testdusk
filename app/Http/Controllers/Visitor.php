@@ -63,6 +63,7 @@ class Visitor extends Controller
             'person_id' => $request->get('person_id'),
             'number' => mb_strtoupper(remove_punctuation($request->get('document_number'))),
             'document_type_id' => $request->get('document_type_id'),
+            'state_id' => $request->get('state_document_id'),
         ]);
 
         $request->merge(['document_id' => $document->id]);
@@ -105,7 +106,7 @@ class Visitor extends Controller
         app(VisitorsRepository::class)->update($id, $request->all());
 
         return redirect()
-            ->route($request['redirect'])
+            ->route('visitors.index')
             ->with('message', 'Visitante alterado/a com sucesso!');
     }
 

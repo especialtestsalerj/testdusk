@@ -8,6 +8,7 @@ use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Data\Repositories\States;
 use App\Http\Livewire\BaseForm;
+use App\Http\Livewire\Traits\Addressable;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
@@ -25,27 +26,23 @@ class People extends BaseForm
 {
     use WithFileUploads;
     use WithWebcam;
+    use Addressable;
 
     protected $listeners = [
         'snapshotTaken' => 'updatePJFile',
         'cropChanged' => 'cropChanged',
     ];
 
-    public $countryBr;
-    public $countryBrSelected;
-
     public $person;
     public $person_id;
     public $document_number;
+    public $state_document_id;
     public $full_name;
     public $social_name;
-    public $country_id;
-    public $state_id;
-    public $city_id;
-    public $other_city;
+
     public $document_type_id;
 
-    public $cities = [];
+
 
     public $origin;
     public $routineStatus;
@@ -66,43 +63,6 @@ class People extends BaseForm
           'state_id'=>'',
         ];
 
-    //    public function searchCpf()
-    //    {
-    //        try {
-    //            $this->resetErrorBag('cpf');
-    //            $this->alerts = [];
-    //
-    //            if (!validate_cpf(only_numbers($this->cpf))) {
-    //                $this->person_id = null;
-    //                $this->full_name = null;
-    //                $this->origin = null;
-    //
-    //                $this->addError('cpf', 'CPF não encontrado');
-    //            } elseif ($result = app(PeopleRepository::class)->findByCpf(only_numbers($this->cpf))) {
-    //                $this->person_id = $result['id'];
-    //                $this->full_name = $result['full_name'];
-    //                $this->origin = $result['origin'];
-    //
-    //                if ($this->showRestrictions) {
-    //                    $restrictions = app(PersonRestrictionsRepository::class)->getRestrictions(
-    //                        only_numbers($this->cpf)
-    //                    );
-    //
-    //                    foreach ($restrictions as $restriction) {
-    //                        array_push($this->alerts, $restriction->message);
-    //                    }
-    //                }
-    //            } else {
-    //                $this->person_id = null;
-    //                $this->full_name = null;
-    //                $this->origin = null;
-    //            }
-    //        } catch (\Exception $e) {
-    //            $this->focus('cpf');
-    //            info('Exception no CPF');
-    //        }
-    //    }
-
     public function updated($name, $value)
     {
         $person = new Person();
@@ -111,6 +71,7 @@ class People extends BaseForm
             'social_name' => $this->social_name,
             'document_number' => $this->document_number,
             'document_type_id' => $this->document_type_id,
+            'state_document_id' => $this->state_document_id,
         ]);
         $this->emit('personModified', $person);
     }
@@ -126,8 +87,9 @@ class People extends BaseForm
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
                 $this->fillModel();
-                $this->documentNumber = mb_strtoupper(remove_punctuation($document->number));
+                $this->document_number = mb_strtoupper(remove_punctuation($document->number));
                 $this->document_type_id = $document->document_type_id;
+                $this->state_document_id = $document->state_id;
                 $this->setAddressReadOnly(true);
                 $this->readonly = true;
             } else {
@@ -139,6 +101,10 @@ class People extends BaseForm
         $this->updated('document_number', $this->document_number);
     }
 
+    public function isPreFilled($fieldName) //filled by prop in query string
+    {
+        return is_null(old($fieldName)) && $this->{$fieldName};
+    }
     public function fillModel()
     {
         $this->alerts = [];
@@ -148,54 +114,38 @@ class People extends BaseForm
                 remove_punctuation($this->person->documents[0]->number)
             );
             $this->readonly = true;
-        } else {
-            $document_number = is_null(old('document_number'))
-                ? mask_cpf($this->person->cpf) ?? ''
-                : mask_cpf(old('document_number'));
 
-            $this->document_number = mb_strtoupper(remove_punctuation($document_number));
+
+        } else {
+            if(!$this->isPreFilled('document_number')) {
+                $document_number = is_null(old('document_number'))
+                    ? (mask_cpf($this->person->cpf) ?? '')
+                    : mask_cpf(old('document_number'));
+
+                $this->document_number = mb_strtoupper(remove_punctuation($document_number));
+            }
         }
 
+        if(!$this->isPreFilled('document_type_id')) {
+            $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+        }
+
+        $this->state_document_id = is_null(old('state_document_id')) ? $this->state_document_id: old('state_document_id');
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
-        $this->full_name = is_null(old('full_name'))
-            ? mb_strtoupper($this->person->full_name) ?? ''
-            : old('full_name');
+
+        if(!$this->isPreFilled('full_name')) {
+            $this->full_name = is_null(old('full_name'))
+                ? mb_strtoupper($this->person->full_name) ?? ''
+                : old('full_name');
+        }
 
         $this->social_name = is_null(old('social_name'))
             ? mb_strtoupper($this->person->social_name) ?? ''
             : old('social_name');
 
 
-        $this->loadCountryBr();
-        $this->country_id = is_null(old('country_id'))
-            ? $this->person->country_id ?? ''
-            : old('country_id');
-        $this->select2SelectOption('country_id',$this->country_id);
+        $this->fillAddress();
 
-        if(!$this->detectIfCountryBrSelected()){
-            $this->countryBrNotSelected();
-        }else {
-            $this->state_id = is_null(old('state_id'))
-                ? $this->person->state_id ?? ''
-                : old('state_id');
-            $this->select2SelectOption('state_id', $this->state_id);
-
-            if (!empty($this->state_id)) {
-                $this->updatedStateId($this->state_id);
-            }
-
-            $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
-            $this->select2SelectOption('city_id', $this->city_id);
-        }
-
-        if (!empty($this->visitor)) {
-            //???
-            //$this->document_number = mb_strtoupper($this->visitor->document->number);
-        }
-
-        $this->other_city = is_null(old('other_city'))
-            ? mb_strtoupper($this->person->other_city) ?? ''
-            : old('other_city');
 
         $this->origin = is_null(old('origin'))
             ? mb_strtoupper($this->person->origin) ?? ''
@@ -215,8 +165,6 @@ class People extends BaseForm
 
     public function mount($person_id)
     {
-
-      //  dd($person_id);
         if ($this->mode == 'create') {
             $this->person = new Person();
         }
@@ -235,7 +183,7 @@ class People extends BaseForm
             $this->webcam_data_uri = false;
         }
 
-
+        //TODO: O método fillModel está sobrescrevendo o document_type_id, name e document_number
         $this->fillModel();
         $this->loadDefault();
     }
@@ -249,16 +197,9 @@ class People extends BaseForm
 
     protected function formVariables()
     {
-        return [
-            'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
-            'states' => app(States::class)->allOrderBy('name', 'asc', null),
+        return array_merge($this->addressFormVariables(),[
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
-            'country_br' => Country::where(
-                'id',
-                '=',
-                mb_strtoupper(env('APP_COUNTRY_BR'))
-            )->first(),
-        ];
+        ]);
     }
 
     public function openModal()
@@ -272,48 +213,10 @@ class People extends BaseForm
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
-        if (empty($this->country_id)) {
-            $this->country_id = Country::where(
-                'id',
-                '=',
-                mb_strtoupper(env('APP_COUNTRY_BR'))
-            )->first()->id;
-        }
+        $this->loadDefaultCountry();
     }
 
-    public function loadCities()
-    {
-        if($this->state_id) {
-            $this->cities = City::where('state_id', $this->state_id)->get();
-        }
-    }
 
-    public function updatedCountryId($newValue)
-    {
-        if ($newValue != $this->countryBr->id) {
-            $this->countryBrNotSelected();
-        }else{
-            $this->countryBrSelected();
-        }
-    }
-
-    public function updatedStateId($newValue)
-    {
-        $this->loadCities();
-
-        $this->cities = collect($this->cities);
-
-        $this->select2ReloadOptions($this->cities->map(function ($city) {
-            return [
-                'name' => $city->name,
-                'value' => $city->id,
-            ];
-        })->toArray(), 'city_id');
-
-        if($this->city_id){
-            $this->select2SelectOption('city_id', $this->city_id);
-        }
-    }
 
     function mime2ext($mime)
     {
@@ -509,41 +412,16 @@ class People extends BaseForm
     /**
      * @return void
      */
-    protected function loadCountryBr(): void
+    protected function loadDefaultCountry(): void
     {
-        $this->countryBr = Country::where('name', 'ilike', 'Brasil')->first();
+        if (empty($this->country_id)) {
+            $this->country_id = Country::where(
+                'id',
+                '=',
+                mb_strtoupper(env('APP_COUNTRY_BR'))
+            )->first()->id;
+        }
     }
 
-    /**
-     * @return bool
-     */
-    protected function detectIfCountryBrSelected(): bool
-    {
-        return !!($this->country_id == $this->countryBr->id);
-    }
 
-    protected function setAddressReadOnly($value): void
-    {
-        $this->select2SetReadOnly('country_id', $value);
-        $this->select2SetReadOnly('state_id', $value);
-        $this->select2SetReadOnly('city_id', $value);
-    }
-
-    /**
-     * @return void
-     */
-    protected function countryBrNotSelected(): void
-    {
-        $this->select2Destroy('city_id');
-        $this->select2Destroy('state_id');
-    }
-
-    /**
-     * @return void
-     */
-    protected function countryBrSelected(): void
-    {
-        $this->select2Reload('city_id');
-        $this->select2Reload('state_id');
-    }
 }

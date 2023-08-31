@@ -73,56 +73,69 @@
                         </div>
                     </div>
                 </div>
+
+
+
+
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="country_id">País*</label>
-                            <select class="form-control text-uppercase select2" name="country_id" id="country_id" wire:model="country_id" x-ref="country_id" @disabled(request()->query('disabled'))>
-                                <option value="">SELECIONE O PAÍS</option>
-                                @foreach($countries as $country)
-                                    <option value="{{$country->id}}">{{$country->name}}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
+                <div class="col-md-4" wire:ignore>
+                    <div class="form-group">
+                        <label for="country_id">País*</label>
+                        <select name="country_id" class="select2 form-control text-uppercase" id="country_id"
+                                wire:model="country_id" x-ref="country_id"
+                                @if ($readonly) readonly @endif>
+                            <option value="">SELECIONE</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    @if($country_id == "" || $country_id == $country_br->id)
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="state_id">Estado</label>
-                                <select class="form-control text-uppercase select2" name="state_id" id="state_id" wire:model="state_id" x-ref="state_id" wire:change="loadCities" @disabled(request()->query('disabled'))>
-                                    <option value="">SELECIONE O ESTADO</option>
-                                    @foreach($states as $state)
-                                        <option value="{{$state->id}}">{{$state->initial}}</option>
-                                    @endforeach
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="city_id">Cidade</label>
-                                <select class="select2 form-control text-uppercase select2" name="city_id" id="city_id" wire:model="city_id" x-ref="city_id" @disabled(request()->query('disabled'))>
-                                    <option value="">SELECIONE A CIDADE</option>
-                                    @foreach($cities as $city)
-                                        <option value="{{$city->id}}">{{mb_strtoupper($city->name)}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    @else
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="other_city">Cidade</label>
-                                <input type="text" name="other_city" class="form-control text-uppercase" wire:model="other_city" x-ref="other_city" @disabled(request()->query('disabled'))/>
-                            </div>
-                        </div>
-                    @endif
                 </div>
 
-                <div class="row">
+                @if($this->detectIfCountryBrSelected())
+                    <div class="col-md-4" wire:ignore id="div-state_id">
+                        <div class="form-group">
+                            <label for="state_id">Estado*</label>
+                            <select class="select2 form-control text-uppercase" id="state_id" name="state_id"
+                                    wire:model="state_id" x-ref="state_id" wire:change="loadCities"
+                                    @if ($readonly) readonly @endif>
+                                <option value="">SELECIONE</option>
+                                @foreach ($states as $state)
+                                    <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4" wire:ignore id="div-city_id">
+                        <div class="form-group">
+                            <label for="city_id">Cidade*</label>
+                            <select name="city_id" id="city_id" class="select2 form-control text-uppercase"
+                                    wire:model="city_id" x-ref="city_id"
+                                    @if ($readonly) readonly @endif>
+                                <option value="">SELECIONE</option>
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endIf
+
+                @if(!$this->detectIfCountryBrSelected())
                     <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="other_city">Cidade*</label>
+                            <input type="text" name="other_city" class="form-control text-uppercase"
+                                   value="{{ $other_city }}"
+                                   @if ($readonly) readonly @endif />
+                        </div>
+                    </div>
+                @endIf
+            </div>
+
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="has_disability">Possui deficiência?*</label>
@@ -140,62 +153,72 @@
                                 </select>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="col-md-2">
                         @if($has_disability == 'true')
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="disabilities">Tipos de Deficiências*</label>
-                                        <br/>
-                                        @foreach($disabilityTypes as $disabilityType)
-                                            <label>
-                                                <input name="disabilities[]" wire:model="disabilities"
-                                                       {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
 
-                                                       value="{{$disabilityType->id}}" type="checkbox"/>
-                                                {{$disabilityType->name}}
 
-                                            </label><br/>
-                                        @endforeach
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="disabilities">Tipos de Deficiências*</label>
+                                <br/>
+                                @foreach($disabilityTypes as $disabilityType)
+                                    <label>
+                                        <input name="disabilities[]" wire:model="disabilities"
+                                               {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
+
+                                               value="{{$disabilityType->id}}" type="checkbox"/>
+                                        {{$disabilityType->name}}
+
+                                    </label><br/>
+                                @endforeach
                             </div>
+
+
                         @endif
                     </div>
-                    <div class="col-md-4  bg-light border rounded-3">
-                        <table class="table">
-                            <tr>
-                                <th colspan="3" class="text-center">Documentos</th>
-                            </tr>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Número</th>
-                                <th>Ação</th>
-                            </tr>
-                        @foreach($person->documents as $document)
-                            <tr>
-                                <td>{{$document->documentType->name}} </td>
-                                <td>{{$document->numberMaskered}}</td>
-                                <td>
-                                    <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
-                                    <i class="fa fa-pencil"></i>
-                                    </span>
-                                    <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
-                                    <i class="fa fa-trash"></i>
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-                            <tr>
-                                <td colspan="2"></td>
-                                <td class="text-right align-content-end">
-                                    <span class="btn btn-link px-0 py-0" wire:click="createDocument({{$person->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
+                    <div class="col-md-6">
+                        <div class=" rounded-3">
+                            <table class="table bg-light border">
+                                <tr>
+                                    <th colspan="2" class="text-center">Documentos</th>
+                                    <th class="text-end">
+                                        <span class="btn btn-primary " wire:click="createDocument({{$person->id}})"
+                                              data-bs-toggle="modal" data-bs-target="#document-modal">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </th>
 
-                                        <i class="fa fa-plus"></i> Novo
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                                </tr>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Número</th>
+                                    <th class="text-end">Ação</th>
+                                </tr>
+                            @foreach($person->documents as $document)
+                                <tr>
+                                    <td>{{$document->documentType->name}} </td>
+                                    <td>{{$document->numberMaskered}}</td>
+                                    <td class="text-end">
+                                        <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
+                                        <i class="fa fa-pencil"></i>
+                                        </span>
+                                        <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
+                                        <i class="fa fa-trash"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+    {{--                            <tr>--}}
+    {{--                                <td colspan="2"></td>--}}
+    {{--                                <td class="text-right align-content-end">--}}
+    {{--                                    <span class="btn btn-link px-0 py-0" wire:click="createDocument({{$person->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">--}}
+
+    {{--                                        <i class="fa fa-plus"></i> Novo--}}
+    {{--                                    </span>--}}
+    {{--                                </td>--}}
+    {{--                            </tr>--}}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

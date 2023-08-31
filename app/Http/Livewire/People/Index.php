@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\People;
 
+use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\People as PeopleRepository;
 
 use App\Http\Livewire\BaseIndex;
@@ -28,6 +29,19 @@ class Index extends BaseIndex
     protected $listeners = [
         'confirm-checkout-visitor' => 'confirmCheckout',
     ];
+
+    public function getSearchStringIsCpfProperty()
+    {
+        return !!validate_cpf($this->searchString);
+    }
+
+    public function getSearchStringDocumentTypeProperty()
+    {
+        return !!validate_cpf($this->searchString) ? app(DocumentTypes::class)->getByName('CPF') : '';
+    }
+
+
+
     public function additionalFilterQuery($query)
     {
 

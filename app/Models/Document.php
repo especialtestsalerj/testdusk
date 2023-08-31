@@ -61,6 +61,10 @@ class Document extends Model
         if($this->documentType()->get()[0]->name == 'CPF'){
             return mask_cpf($this->number);
         }
+      else if($this->documentType()->get()[0]->name == 'RG'){
+
+            return is_null($this->state) ? $this->number  : $this->number  .  ' - ' .$this->state->initial;
+        }
         return $this->number;
     }
 }

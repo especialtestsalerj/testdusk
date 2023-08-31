@@ -8,7 +8,11 @@
 
                 <div class="col-6 col-md-6">
                     <div class="float-end">
-                        <a id="novo" href="{{ route('visitors.create') }}" class="btn btn-primary text-white float-end"
+                        <a id="novo" href="{{ route('visitors.create',
+                            $this->searchStringIsCpf ?
+                                ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
+                                : ['full_name' => $searchString]
+                            ) }}" class="btn btn-primary text-white float-end"
                             title="Nova Visita">
                             <i class="fa fa-plus"></i> Novo/a Visitante
                         </a>
@@ -20,7 +24,7 @@
                 <div class="col-12 col-lg-11">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..."
-                            wire:model.debounce.500ms="searchString" value="">
+                            wire:model.debounce.200ms="searchString" value="">
                         <span class="input-group-text">
                             <i class="fa fa-search"></i>
                         </span>
