@@ -3,6 +3,7 @@ window.$ = window.jQuery = require('jquery')
 require('./bootstrap')
 
 require('./select2')
+$.fn.select2.amd.define('select2/i18n/pt-BR',[],require("select2/src/js/select2/i18n/pt-BR"));
 
 // core version + navigation, pagination modules:
 import Swiper, { Navigation } from 'swiper'
