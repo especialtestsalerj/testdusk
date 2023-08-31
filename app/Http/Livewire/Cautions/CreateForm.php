@@ -22,6 +22,8 @@ class CreateForm extends BaseForm
     public $caution_id;
     public $selectedId;
 
+    public $sector;
+
     public $started_at;
     public $concluded_at;
     public $visitor_id;
@@ -32,7 +34,6 @@ class CreateForm extends BaseForm
     public $duty_user_id;
     public $description;
 
-    public $personCertificates = [];
     public $person_certificate;
 
     public $disabled;
@@ -57,19 +58,36 @@ class CreateForm extends BaseForm
         $this->resetErrorBag();
     }
 
+    public function getDestinySectorNameProperty()
+    {
+        return $this->sector?->name ?? '';
+    }
+
+    public function updatedVisitorId()
+    {
+        $this->loadVisitorInfo();
+    }
+
+    public function updatedPersonCertificate()
+    {
+        $this->loadPersonCertificateInfo();
+    }
+
     public function loadVisitorInfo()
     {
         $this->msg_visitor = null;
-        $this->destiny_sector_name = null;
         $this->personCertificates = [];
         $this->person_certificate = null;
         $this->certificate_type_id = null;
+        $this->select2SelectOption('certificate_type_id', $this->certificate_type_id);
         $this->certificate_number = null;
         $this->certificate_valid_until = null;
 
         if (!empty($this->visitor_id)) {
+//            $this->select2SelectOption('visitor_id', $this->visitor_id);
             $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
-            $this->destiny_sector_name = $visitor?->sector?->name;
+            $this->sector = $visitor->sector;
+
 
             $this->loadCertificates($visitor);
 
@@ -84,7 +102,7 @@ class CreateForm extends BaseForm
     public function loadCertificates($visitor)
     {
         if ($this->mode == 'create') {
-            $this->personCertificates = Caution::select(
+            $personCertificates = Caution::select(
                 'cautions.certificate_type_id',
                 'cautions.certificate_number',
                 'cautions.certificate_valid_until'
@@ -92,7 +110,12 @@ class CreateForm extends BaseForm
                 ->join('visitors', 'cautions.visitor_id', '=', 'visitors.id')
                 ->where('visitors.person_id', $visitor->person->id)
                 ->distinct()
-                ->get();
+                ->get()
+                ->load('certificateType')->map(function($item){
+                    return ['value' => $item->certificateType->id, 'name' => $item->certificateType->name];
+                });
+
+            $this->select2ReloadOptions($personCertificates,'person_certificate');
         }
     }
 
@@ -114,6 +137,8 @@ class CreateForm extends BaseForm
 
         if ($result) {
             $this->certificate_type_id = $result?->certificate_type_id;
+            $this->select2SelectOption('certificate_type_id', $this->certificate_type_id);
+
             $this->certificate_number = $result?->certificate_number;
             $this->certificate_valid_until = $result?->certificate_valid_until?->format('Y-m-d');
         } else {
@@ -121,8 +146,6 @@ class CreateForm extends BaseForm
             $this->certificate_number = null;
             $this->certificate_valid_until = null;
         }
-
-        $this->loadCertificates($visitor);
     }
 
     public function fillModel()
