@@ -79,6 +79,6 @@ class User extends Authenticatable
 
     protected function name(): Attribute
     {
-        return Attribute::make(get: fn($value) => mb_strtoupper($value));
+        return Attribute::make(get: fn($value) => convert_case($value, MB_CASE_UPPER));
     }
 }

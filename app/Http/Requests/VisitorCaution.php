@@ -9,12 +9,15 @@ class VisitorCaution extends VisitorUpdate
         $input = $all;
 
         if (!empty($this->get('id_card'))) {
-            $input['id_card'] = mb_strtoupper($input['id_card']);
+            $input['id_card'] = convert_case($input['id_card'], MB_CASE_UPPER);
             $this->replace($input);
         }
 
         if (!empty($this->get('certificate_number'))) {
-            $input['certificate_number'] = mb_strtoupper($input['certificate_number']);
+            $input['certificate_number'] = convert_case(
+                $input['certificate_number'],
+                MB_CASE_UPPER
+            );
             $this->replace($input);
         }
 

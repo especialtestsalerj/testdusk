@@ -23,14 +23,14 @@
         <!---------- FIM DO NOVO LAYOUT DO PORTARIA - LARAVELIZAR ---------->
     @endcanany
 
-    <!---------- LAYOUT DO OCORRÊNCIAS  ---------->
+    <!---------- LAYOUT DO SEGURANCA  ---------->
 
     @can('routines:show')
 
         <div class="row mt-0 mb-3 bg-dark2 text-white">
             <div class="col pt-2 ps-5">
                 <h4>
-                    Ocorrências
+                    Segurança
                 </h4>
             </div>
         </div>
@@ -108,6 +108,6 @@
         </div>
     @endCan
     <!-- Slider main container -->
-    <!---------- FIM DO LAYOUT DO OCORRÊNCIAS  ---------->
+    <!---------- FIM DO LAYOUT DO SEGURANCA  ---------->
 
 @endsection
