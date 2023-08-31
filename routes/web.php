@@ -32,6 +32,7 @@ Route::group(
         });
 
         require __DIR__ . '/eventTypes.php';
+        require __DIR__ . '/certificateTypes.php';
         require __DIR__ . '/sectors.php';
         require __DIR__ . '/people.php';
         require __DIR__ . '/person-restrictions.php';
@@ -41,7 +42,6 @@ Route::group(
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
             require __DIR__ . '/events.php';
-
             require __DIR__ . '/stuffs.php';
             require __DIR__ . '/cautions.php';
         });

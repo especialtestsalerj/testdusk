@@ -567,3 +567,8 @@ function mime2ext($mime)
     ];
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
+
+function convert_case($text, $type)
+{
+    return is_null($text) ? $text : mb_convert_case($text, $type);
+}

@@ -58,6 +58,9 @@
                             @can('event-types:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('event-types.*')) ? 'active' : '' }}" href="{{ route('event-types.index') }}">Tipos de Ocorrência</a></li>
                             @endCan
+
+                                <li><a class="dropdown-item {{ (request()->routeIs('certificate-types.*')) ? 'active' : '' }}" href="{{ route('certificate-types.index') }}">Tipos de Porte</a></li>
+
                             @can('person-restrictions:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('person-restrictions.*')) ? 'active' : '' }}" href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a></li>
                             @endCan

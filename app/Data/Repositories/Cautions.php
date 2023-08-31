@@ -24,11 +24,26 @@ class Cautions extends Repository
         return $new_number;
     }
 
-    public function findOld($old_id)
+    public function findOld($oldId)
     {
         return $this->model
-            ::where('old_id', $old_id)
+            ::where('old_id', $oldId)
             ->whereNotNull('old_id')
             ->get();
+    }
+
+    public function findByCertificate($personId, $certificateTypeId)
+    {
+        return $this->model
+            ::select(
+                'cautions.certificate_type_id',
+                'cautions.certificate_number',
+                'cautions.certificate_valid_until'
+            )
+            ->join('visitors', 'cautions.visitor_id', '=', 'visitors.id')
+            ->where('visitors.person_id', $personId)
+            ->where('cautions.certificate_type_id', $certificateTypeId)
+            ->distinct()
+            ->first();
     }
 }

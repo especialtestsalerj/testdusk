@@ -45,10 +45,9 @@ class CautionStore extends Request
                 'required',
                 new VisitorHasNoOpenCaution($this->get('visitor_id'), $this->get('id')),
             ],
-            'certificate_type' => 'required',
-            'id_card' => 'required_if:certificate_type,2',
-            'certificate_number' => 'required_if:certificate_type,2',
-            'certificate_valid_until' => 'required_if:certificate_type,2',
+            'certificate_type_id' => 'required',
+            'certificate_number' => 'required',
+            'certificate_valid_until' => 'required_if:certificate_type_id,1',
             'duty_user_id' => 'required',
         ];
     }
@@ -60,9 +59,9 @@ class CautionStore extends Request
             'concluded_at.after_or_equal' =>
                 'A Data do Fechamento deve ser posterior à abertura da cautela.',
             'visitor_id.required' => 'Visitante: preencha o campo corretamente.',
-            'certificate_type.required' => 'Tipo de Porte: preencha o campo corretamente.',
-            'id_card.required_if' => 'RG: preencha o campo corretamente.',
-            'certificate_number.required_if' => 'Núm. Certificado: preencha o campo corretamente.',
+            'certificate_type_id.required' => 'Tipo de Porte: preencha o campo corretamente.',
+            'certificate_number.required' =>
+                'Núm. Certificado/Matrícula: preencha o campo corretamente.',
             'certificate_valid_until.required_if' =>
                 'Validade Certificado: preencha o campo corretamente.',
             'duty_user_id.required' => 'Plantonista: preencha o campo corretamente.',

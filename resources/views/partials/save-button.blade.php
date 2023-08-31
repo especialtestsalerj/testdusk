@@ -11,8 +11,9 @@
 @endIf
 
 {{--<a href="{{ isset($id) ? route($backUrl, $id) : route($backUrl) }}"--}}
+{{--url()->previous()--}}
 @if(!isset($showCancel) || $showCancel)
-    <a href="{{ url()->previous() }}"
+    <a href="{{ isset($id) ? route($backUrl, $id) : route($backUrl) }}"
        id="cancelButton"
        title="Cancelar"
        class="btn btn-danger text-white ml-1"

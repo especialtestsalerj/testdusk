@@ -24,13 +24,23 @@ class Index extends BaseIndex
 
     public function mount()
     {
-        $params = \Route::getCurrentRoute()->parameters();
-        $this->routine_id = $params['routine_id'];
         $this->routine = app(RoutinesRepository::class)->findById([$this->routine_id]);
     }
 
     public function additionalFilterQuery($query)
     {
+        if (!is_null($this->searchString) && $this->searchString != '') {
+            $query = $query->WhereRaw(
+                "cautions.visitor_id in (select v.id from visitors v inner join people p on v.person_id = p.id
+                                         where p.full_name ILIKE '%'||unaccent('" .
+                    pg_escape_string($this->searchString) .
+                    "')||'%'
+                                        or p.social_name ILIKE '%'||unaccent('" .
+                    pg_escape_string($this->searchString) .
+                    "')||'%' )"
+            );
+        }
+
         return $query->where('routine_id', $this->routine_id);
     }
 

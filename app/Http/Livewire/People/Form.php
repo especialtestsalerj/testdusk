@@ -195,7 +195,7 @@ class Form extends BaseForm
             ? $this->person->has_disability ?? ''
             : old('has_disability');
 
-        $this->disabilities =  $this->person->disabilities->pluck('id')->toArray();
+        $this->disabilities = $this->person->disabilities->pluck('id')->toArray();
 
         $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
 
@@ -240,8 +240,6 @@ class Form extends BaseForm
 
     public function mount($id)
     {
-
-
         $this->fillModel($id);
     }
 
@@ -250,24 +248,24 @@ class Form extends BaseForm
         return view('livewire.people.form')->with($this->getViewVariables());
     }
 
-
     public function prepareForDeleteDocument($document_id)
     {
         $this->selectedDocument_id = $document_id;
         $document = Document::find($document_id);
-        if(empty(app(Visitors::class)->findBydocumentId($document_id))) {
-
-
+        if (empty(app(Visitors::class)->findBydocumentId($document_id))) {
             $this->emitSwall(
-                'Deseja realmente remover o ' . $document->documentType->name .
-                ': ' . $document->numberMaskered,
+                'Deseja realmente remover o ' .
+                    $document->documentType->name .
+                    ': ' .
+                    $document->numberMaskered,
                 'A ação não pode ser desfeita',
                 'confirm-delete-document',
                 'delete'
             );
-        }else{
+        } else {
             $this->dispatchBrowserEvent('swal-checkout-failure', [
-                'error' => $document->documentType->name .' utilizado em Visita',]);
+                'error' => $document->documentType->name . ' utilizado em Visita',
+            ]);
         }
     }
 
@@ -288,6 +286,5 @@ class Form extends BaseForm
 
         $document->delete();
         $this->fillModel($person_id);
-
     }
 }

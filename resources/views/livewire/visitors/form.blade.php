@@ -6,8 +6,8 @@
             @if (isset($visitor->id))
                 <input type="hidden" name="id" value="{{ $visitor->id }}">
             @endif
-
             <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
+
             <div class="">
                 <div class="row mb-4 pb-2">
                     <div class="col-sm-8 align-self-center">
@@ -44,7 +44,7 @@
 
                 <div class="col-12 col-lg-8">
                     <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+                        <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
                     </div>
                     @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                     'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),

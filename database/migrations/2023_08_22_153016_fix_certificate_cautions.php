@@ -29,10 +29,6 @@ return new class extends Migration {
                 certificate_number = (select pe.certificate_number from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id),
                 certificate_valid_until = (select pe.certificate_valid_until from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id) '
         );
-
-        Schema::table('people2', function (Blueprint $table) {
-            $table->dropColumn('origin');
-        });
     }
 
     /**
@@ -46,10 +42,6 @@ return new class extends Migration {
             $table->dropColumn('certificate_type_id');
             $table->dropColumn('certificate_number');
             $table->dropColumn('certificate_valid_until');
-        });
-
-        Schema::table('people2', function (Blueprint $table) {
-            $table->integer('origin')->nullable();
         });
     }
 };

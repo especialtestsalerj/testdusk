@@ -7,11 +7,9 @@
                 </h3>
             </div>
             <div  class="col-sm-4 align-self-center d-flex justify-content-end">
-                @if($routine->status)
-                    <a href="{{ route('visitors.create', ['routine_id' => $routine->id, 'redirect' => $redirect]) }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" id="newVisitor">
-                        <i class="fa fa-plus"></i> Novo/a
-                    </a>
-                @endif
+                <a href="{{ route('visitors.create') }}" class="btn btn-primary text-white float-end" title="Novo/a Visitante" id="newVisitor">
+                    <i class="fa fa-plus"></i> Novo/a
+                </a>
             </div>
         </div>
         @forelse ($visitors as $visitor)
@@ -38,14 +36,14 @@
                                 @if($visitor->hasPending())
                                     <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
                                 @endif
-                                <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
-                                @if($routine->status)
-                                    <a href="{{ route('visitors.show', ['routine_id' => $routine_id, 'visitor' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="alterarVisitor"><i class="fa fa-pencil"></i></a>
-                                    @if(!$visitor->hasPending())
-                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover" id="removerVisitor">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    @endif
+                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+
+                                <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="alterarVisitor"><i class="fa fa-pencil"></i></a>
+
+                                @if(!$visitor->hasPending())
+                                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#visitor-delete-modal{{ $visitor->id }}" title="Remover" id="removerVisitor">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 @endif
                             </div>
                         </div>
@@ -61,7 +59,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="form" action="{{ route('visitors.destroy', ['routine_id' => $routine_id, 'id' => $visitor->id]) }}" method="post">
+                            <form class="form" action="{{ route('visitors.destroy', ['id' => $visitor->id]) }}" method="post">
                                 @csrf
                                 <input type="hidden" name="redirect" value="{{ $redirect }}">
                                 <div class="form-group">
@@ -72,7 +70,7 @@
                                     <label for="exited_at">Saída</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ $visitor->exited_at }}" disabled/>
                                 </div>
-                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true])
+                                @livewire('people.people', ['person' => $visitor->person, 'mode' => formMode(), 'modal' => true])
                                 <div class="form-group">
                                     <label for="sector_id">Setor</label>
                                     <select class="form-select form-control" name="sector_id" id="sector_id" disabled>

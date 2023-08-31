@@ -23,7 +23,7 @@ class Form extends BaseForm
 
     protected $listeners = [
         'personModified' => 'personModified',
-        'cropChanged' => 'cropChanged'
+        'cropChanged' => 'cropChanged',
     ];
 
     protected $rules = [
@@ -45,10 +45,7 @@ class Form extends BaseForm
 
     public function mount(Visitor $visitor)
     {
-
-
-        if(empty($visitor->id)) {
-
+        if (empty($visitor->id)) {
             $this->visitor = new Visitor();
             $this->visitor->entranced_at = now();
 
@@ -57,15 +54,14 @@ class Form extends BaseForm
 
             $this->webcam_data_uri = false;
 
-
             $this->visitor->append(['photo']);
 
-            if ($this->visitor->photo == "/img/no-photo.svg") {
-                $this->webcam_file = "";
+            if ($this->visitor->photo == '/img/no-photo.svg') {
+                $this->webcam_file = '';
             } else {
                 $this->webcam_file = $this->visitor->photo;
             }
-        }else{
+        } else {
             $this->visitor = $visitor;
 
             $this->person = $visitor->person;

@@ -2,11 +2,10 @@
 
 namespace App\Models;
 use App\Services\QrCode\Service;
-use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+
 class Visitor extends Model
 {
     protected $fillable = [
