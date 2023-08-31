@@ -16,7 +16,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'live_reload'=>env('LIVE_RELOAD_PORT'),
+    'description' => env('APP_DESCRIPTION'),
+
+    'live_reload' => env('LIVE_RELOAD_PORT'),
 
     /*
     |--------------------------------------------------------------------------
@@ -203,4 +205,8 @@ return [
         ->toArray(),
 
     'draft_document' => filter_var(env('APP_DRAFT_DOCUMENT', true), FILTER_VALIDATE_BOOLEAN),
+
+    'country_br' => env('APP_COUNTRY_BR', '1'),
+
+    'state_rj' => env('APP_STATE_RJ', '33'),
 ];

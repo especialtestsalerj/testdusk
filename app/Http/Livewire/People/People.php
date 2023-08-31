@@ -42,8 +42,6 @@ class People extends BaseForm
 
     public $document_type_id;
 
-
-
     public $origin;
     public $routineStatus;
     public $modal;
@@ -55,13 +53,12 @@ class People extends BaseForm
 
     public $visitor;
 
-    protected $rules=
-        [
-          'countryBr'=>'',
-          'country_id'=>'',
-          'city_id'=>'',
-          'state_id'=>'',
-        ];
+    protected $rules = [
+        'countryBr' => '',
+        'country_id' => '',
+        'city_id' => '',
+        'state_id' => '',
+    ];
 
     public function updated($name, $value)
     {
@@ -101,8 +98,9 @@ class People extends BaseForm
         $this->updated('document_number', $this->document_number);
     }
 
-    public function isPreFilled($fieldName) //filled by prop in query string
+    public function isPreFilled($fieldName)
     {
+        //filled by prop in query string
         return is_null(old($fieldName)) && $this->{$fieldName};
     }
     public function fillModel()
@@ -114,26 +112,28 @@ class People extends BaseForm
                 remove_punctuation($this->person->documents[0]->number)
             );
             $this->readonly = true;
-
-
         } else {
-            if(!$this->isPreFilled('document_number')) {
+            if (!$this->isPreFilled('document_number')) {
                 $document_number = is_null(old('document_number'))
-                    ? (mask_cpf($this->person->cpf) ?? '')
+                    ? mask_cpf($this->person->cpf) ?? ''
                     : mask_cpf(old('document_number'));
 
                 $this->document_number = mb_strtoupper(remove_punctuation($document_number));
             }
         }
 
-        if(!$this->isPreFilled('document_type_id')) {
-            $this->document_type_id = is_null(old('document_type_id')) ? $this->document_type_id : old('document_type_id');
+        if (!$this->isPreFilled('document_type_id')) {
+            $this->document_type_id = is_null(old('document_type_id'))
+                ? $this->document_type_id
+                : old('document_type_id');
         }
 
-        $this->state_document_id = is_null(old('state_document_id')) ? $this->state_document_id: old('state_document_id');
+        $this->state_document_id = is_null(old('state_document_id'))
+            ? $this->state_document_id
+            : old('state_document_id');
         $this->person_id = is_null(old('person_id')) ? $this->person->id ?? '' : old('person_id');
 
-        if(!$this->isPreFilled('full_name')) {
+        if (!$this->isPreFilled('full_name')) {
             $this->full_name = is_null(old('full_name'))
                 ? mb_strtoupper($this->person->full_name) ?? ''
                 : old('full_name');
@@ -143,9 +143,7 @@ class People extends BaseForm
             ? mb_strtoupper($this->person->social_name) ?? ''
             : old('social_name');
 
-
         $this->fillAddress();
-
 
         $this->origin = is_null(old('origin'))
             ? mb_strtoupper($this->person->origin) ?? ''
@@ -160,7 +158,6 @@ class People extends BaseForm
                 array_push($this->alerts, $restriction->message);
             }
         }
-
     }
 
     public function mount($person_id)
@@ -173,8 +170,8 @@ class People extends BaseForm
             $this->visitor = Visitor::where('id', $this->visitor_id)
                 ->first()
                 ->append('photo');
-            if ($this->visitor->photo == "/img/no-photo.svg") {
-                $this->webcam_file = "";
+            if ($this->visitor->photo == '/img/no-photo.svg') {
+                $this->webcam_file = '';
             } else {
                 $this->webcam_file = $this->visitor->photo;
             }
@@ -197,7 +194,7 @@ class People extends BaseForm
 
     protected function formVariables()
     {
-        return array_merge($this->addressFormVariables(),[
+        return array_merge($this->addressFormVariables(), [
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
         ]);
     }
@@ -215,8 +212,6 @@ class People extends BaseForm
 
         $this->loadDefaultCountry();
     }
-
-
 
     function mime2ext($mime)
     {
@@ -415,13 +410,7 @@ class People extends BaseForm
     protected function loadDefaultCountry(): void
     {
         if (empty($this->country_id)) {
-            $this->country_id = Country::where(
-                'id',
-                '=',
-                mb_strtoupper(env('APP_COUNTRY_BR'))
-            )->first()->id;
+            $this->country_id = Country::where('id', '=', config('app.country_br'))->first()->id;
         }
     }
-
-
 }
