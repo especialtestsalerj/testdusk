@@ -18,7 +18,7 @@
 @can($permission)
 <div class="col-4">
     <a href="{{$url}}">
-        <div class="px-0 px-lg-3 py-0 py-md-3 py-lg-0 mx-2 mx-lg-3 mb-0 bg-button-home text-center shadow rounded" type="button">
+        <div class="px-0 px-lg-3 py-0 py-md-3 py-lg-0 mx-2 mx-lg-0 mx-xxl-4 mb-0 bg-button-home text-center shadow rounded" type="button">
             <div class="py-2 py-lg-5">
                 <span class="fa-stack fa-5x dashboard-active-icons">
                     <i class="fa fa-circle fa-stack-2x"></i>
