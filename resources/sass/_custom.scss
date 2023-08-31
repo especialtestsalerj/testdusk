@@ -614,6 +614,9 @@ body.bg-logo {
     background: #EAECF3;
     &:hover {
         background: rgba(255, 255, 255, 0.8);
+        .fa-circle:before {
+            color: #b57d18 !important;
+        }
     }
 }
 
