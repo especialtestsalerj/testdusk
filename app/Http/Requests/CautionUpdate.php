@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Data\Repositories\Cautions as CautionsRepository;
 use App\Rules\ValidPeriodOnRoutine;
+use App\Rules\VisitorHasNoOpenCaution;
 
 class CautionUpdate extends CautionStore
 {
@@ -39,11 +40,14 @@ class CautionUpdate extends CautionStore
                 ),
                 'after_or_equal:started_at',
             ],
-            'visitor_id' => ['bail', 'required'],
-            'certificate_type' => 'required',
-            'id_card' => 'required_if:certificate_type,2',
-            'certificate_number' => 'required_if:certificate_type,2',
-            'certificate_valid_until' => 'required_if:certificate_type,2',
+            'visitor_id' => [
+                'bail',
+                'required',
+                new VisitorHasNoOpenCaution($this->get('visitor_id'), $this->get('id')),
+            ],
+            'certificate_type_id' => 'required',
+            'certificate_number' => 'required',
+            'certificate_valid_until' => 'required_if:certificate_type_id,1',
             'duty_user_id' => 'required',
         ];
     }

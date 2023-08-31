@@ -19,11 +19,13 @@ class Visitors extends Repository
             ->paginate();
     }
 
-    public function allNotExited()
+    public function allNotExited($visitor_id = null)
     {
         return $this->model
             ::with('person')
-            ->whereNull('exited_at')
+            ->where(function ($query) use ($visitor_id) {
+                $query->where('id', '=', isset($visitor_id) ?? 0)->orWhereNull('exited_at');
+            })
             ->get()
             ->sortBy(function ($row) {
                 return $row->person->full_name;

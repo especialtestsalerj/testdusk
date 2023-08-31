@@ -41,7 +41,7 @@ class IndexForm extends BaseForm
     public $modalMode;
 
     public $cautionWeapons;
-    public $personWeapons;
+    public $personWeapons = [];
     public $routine;
     public $disabled;
     public $readonly;
@@ -118,9 +118,9 @@ class IndexForm extends BaseForm
         $this->entranced_at = $cautionWeapon?->entranced_at?->format('Y-m-d H:i');
         $this->exited_at = $cautionWeapon?->exited_at?->format('Y-m-d H:i');
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
-        $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
-        $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
-        $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
+        $this->weapon_description = $cautionWeapon?->weapon_description;
+        $this->weapon_number = $cautionWeapon?->weapon_number;
+        $this->register_number = $cautionWeapon?->register_number;
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
         $this->old_id = $cautionWeapon?->old_id;
@@ -140,9 +140,9 @@ class IndexForm extends BaseForm
         $this->entranced_at = $cautionWeapon?->entranced_at?->format('Y-m-d H:i');
         $this->exited_at = $cautionWeapon?->exited_at?->format('Y-m-d H:i');
         $this->weapon_type_id = $cautionWeapon?->weapon_type_id;
-        $this->weapon_description = mb_strtoupper($cautionWeapon?->weapon_description);
-        $this->weapon_number = mb_strtoupper($cautionWeapon?->weapon_number);
-        $this->register_number = mb_strtoupper($cautionWeapon?->register_number);
+        $this->weapon_description = $cautionWeapon?->weapon_description;
+        $this->weapon_number = $cautionWeapon?->weapon_number;
+        $this->register_number = $cautionWeapon?->register_number;
         $this->cabinet_id = $cautionWeapon?->cabinet_id;
         $this->shelf_id = $cautionWeapon?->shelf_id;
         $this->old_id = $cautionWeapon?->old_id;
@@ -199,11 +199,13 @@ class IndexForm extends BaseForm
         ]);
         $values = array_merge($values, ['weapon_type_id' => $this->weapon_type_id]);
         $values = array_merge($values, [
-            'weapon_description' => mb_strtoupper($this->weapon_description),
+            'weapon_description' => convert_case($this->weapon_description, MB_CASE_UPPER),
         ]);
-        $values = array_merge($values, ['weapon_number' => mb_strtoupper($this->weapon_number)]);
         $values = array_merge($values, [
-            'register_number' => mb_strtoupper($this->register_number),
+            'weapon_number' => convert_case($this->weapon_number, MB_CASE_UPPER),
+        ]);
+        $values = array_merge($values, [
+            'register_number' => convert_case($this->register_number, MB_CASE_UPPER),
         ]);
         $values = array_merge($values, ['cabinet_id' => $this->cabinet_id]);
         $values = array_merge($values, ['shelf_id' => $this->shelf_id]);
@@ -345,7 +347,9 @@ class IndexForm extends BaseForm
 
     public function mount()
     {
-        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
+        $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)
+            ->orderBy('id', 'asc')
+            ->get();
 
         $this->caution = app(CautionsRepository::class)->findById($this->caution_id);
 

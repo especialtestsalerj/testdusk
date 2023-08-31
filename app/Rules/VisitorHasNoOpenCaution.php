@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use App\Data\Repositories\Visitors as VisitorsRepository;
+use App\Data\Repositories\Cautions as CautionsRepository;
 use Illuminate\Contracts\Validation\Rule;
 
 class VisitorHasNoOpenCaution implements Rule
@@ -30,8 +31,11 @@ class VisitorHasNoOpenCaution implements Rule
     public function passes($attribute, $value)
     {
         $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
+        $caution = app(CautionsRepository::class)->findById($this->caution_id);
 
-        return !$visitor?->hasOpenCaution($this->caution_id) ?? false;
+        return $caution?->hasPending()
+            ? true
+            : !$visitor?->hasOpenCaution($this->caution_id) ?? false;
     }
 
     /**

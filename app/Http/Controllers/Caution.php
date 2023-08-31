@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
+use App\Data\Repositories\CertificateTypes as CertificateTypesRepository;
 use App\Data\Repositories\Cautions as CautionsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
@@ -20,44 +21,9 @@ use Illuminate\Support\Facades\DB;
 
 class Caution extends Controller
 {
-    public function create($routine_id)
-    {
-        formMode(Constants::FORM_MODE_CREATE);
-
-        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
-
-        $visitors = app(VisitorsRepository::class)->findByRoutineWithoutPending($routine_id);
-
-        return $this->view('cautions.form')->with([
-            'routine_id' => $routine_id,
-            'routine' => $routine,
-            'caution' => app(CautionsRepository::class)->new(),
-            'visitors' => $visitors,
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
-            'users' => app(UsersRepository::class)
-                ->disablePagination()
-                ->all(),
-        ]);
-    }
-
     public function store(CautionStore $request, $routine_id)
     {
         $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
-
-        $personRequest = new FormRequest();
-        $personRequest->merge(['certificate_type' => $request->certificate_type]);
-        $personRequest->merge(['id_card' => $request->id_card]);
-        $personRequest->merge(['certificate_number' => $request->certificate_number]);
-        $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
-
-        app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
-
-        $request->request->remove('certificate_type');
-        $request->request->remove('id_card');
-        $request->request->remove('certificate_number');
-        $request->request->remove('certificate_valid_until');
 
         $values = $request->all();
         $ano = substr($values['started_at'], 0, 4);
@@ -70,35 +36,10 @@ class Caution extends Controller
         return redirect()
             ->route('cautions.show', [
                 'routine_id' => $routine_id,
-                'id' => $caution->id,
+                'caution' => $caution->id,
                 'redirect' => $request['redirect'],
             ])
             ->with('message', 'Cautela adicionada com sucesso! Agora informe pelo menos uma arma.');
-    }
-
-    public function show($routine_id, $id)
-    {
-        formMode(Constants::FORM_MODE_SHOW);
-
-        $caution = app(CautionsRepository::class)->findById($id);
-        $routine = app(RoutinesRepository::class)->findById($routine_id);
-        $cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($caution->id);
-
-        return $this->view('cautions.form')->with([
-            'routine_id' => $routine_id,
-            'routine' => $routine,
-            'caution' => $caution,
-            'users' => app(UsersRepository::class)
-                ->disablePagination()
-                ->all(),
-            'cabinets' => app(CabinetsRepository::class)
-                ->disablePagination()
-                ->all(),
-            'shelves' => app(ShelvesRepository::class)
-                ->disablePagination()
-                ->all(),
-            'cautionWeapons' => $cautionWeapons,
-        ]);
     }
 
     public function update(CautionUpdate $request, $routine_id, $id)
@@ -107,13 +48,6 @@ class Caution extends Controller
             $currentCaution = app(CautionsRepository::class)->findById($id);
 
             $this->syncronize_cautions($request, $currentCaution);
-
-            $this->update_visitor($request);
-
-            $request->request->remove('certificate_type');
-            $request->request->remove('id_card');
-            $request->request->remove('certificate_number');
-            $request->request->remove('certificate_valid_until');
 
             app(CautionsRepository::class)->update($id, $request->all());
 
@@ -150,19 +84,6 @@ class Caution extends Controller
                 }
             }
         }
-    }
-
-    public function update_visitor($request)
-    {
-        $visitor = app(VisitorsRepository::class)->findById($request->visitor_id);
-
-        $personRequest = new FormRequest();
-        $personRequest->merge(['certificate_type' => $request->certificate_type]);
-        $personRequest->merge(['id_card' => $request->id_card]);
-        $personRequest->merge(['certificate_number' => $request->certificate_number]);
-        $personRequest->merge(['certificate_valid_until' => $request->certificate_valid_until]);
-
-        app(PeopleRepository::class)->update($visitor->person_id, $personRequest->all());
     }
 
     public function update_weapons($caution_id, $concluded_at)

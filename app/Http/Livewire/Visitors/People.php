@@ -47,7 +47,7 @@ class People extends BaseForm
             $people2Person = \DB::table('people2')
                 ->where('id', $this->person_id)
                 ->first();
-
+            /*
             $this->select2SelectOption('certificate_type', $people2Person->certificate_type);
 
             $this->id_card = $people2Person->id_card;
@@ -55,7 +55,7 @@ class People extends BaseForm
             $this->certificate_valid_until = $people2Person->certificate_valid_until;
             //END Trocar isso aqui de acordo com a tabela certa
 
-            $this->destiny_sector_name = $result?->sector?->name;
+            $this->destiny_sector_name = $result?->sector?->name;*/
             if ($result->hasOpenCaution($this->caution_id)) {
                 $this->addError('msg_visitor', 'Visitante possui cautela em aberto.');
             }

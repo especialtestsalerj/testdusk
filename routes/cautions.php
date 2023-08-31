@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Caution;
+use App\Http\Livewire\Cautions\CreateForm as CautionsCreateForm;
+use App\Http\Livewire\Cautions\UpdateForm as CautionsUpdateForm;
 use App\Http\Livewire\Cautions\Index as CautionsIndex;
 
 Route::group(['prefix' => '/cautions'], function () {
@@ -8,11 +10,11 @@ Route::group(['prefix' => '/cautions'], function () {
         ->name('cautions.index')
         ->can('cautions:show');
 
-    Route::get('/create', [Caution::class, 'create'])
+    Route::get('/create', CautionsCreateForm::class)
         ->name('cautions.create')
         ->can('cautions:store');
 
-    Route::get('/{id}', [Caution::class, 'show'])
+    Route::get('/{caution}', CautionsUpdateForm::class)
         ->name('cautions.show')
         ->can('cautions:show');
 

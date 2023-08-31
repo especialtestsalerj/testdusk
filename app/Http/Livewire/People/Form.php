@@ -32,15 +32,15 @@ class Form extends BaseForm
     public $birthdate;
     public $gender_id;
     public $has_disability;
-//    public $city_id;
-//    public $other_city;
-//    public $state_id;
-//    public $country_id;
+    //    public $city_id;
+    //    public $other_city;
+    //    public $state_id;
+    //    public $country_id;
     public $email;
 
     public $disabilities = [];
 
-//    public $cities = [];
+    //    public $cities = [];
 
     public $edit;
     public $modalMode;
@@ -52,13 +52,12 @@ class Form extends BaseForm
 
     public $showDisabilities = false;
 
-    protected $rules=
-        [
-            'countryBr'=>'',
-            'country_id'=>'',
-            'city_id'=>'',
-            'state_id'=>'',
-        ];
+    protected $rules = [
+        'countryBr' => '',
+        'country_id' => '',
+        'city_id' => '',
+        'state_id' => '',
+    ];
 
     protected $listeners = [
         'confirm-delete-document' => 'deleteDocument',
@@ -115,7 +114,6 @@ class Form extends BaseForm
         $this->country_id = null;
         $this->email = null;
     }
-
 
     public function store()
     {
@@ -185,7 +183,7 @@ class Form extends BaseForm
             ? $this->person->has_disability ?? ''
             : old('has_disability');
 
-        $this->disabilities =  $this->person->disabilities->pluck('id')->toArray();
+        $this->disabilities = $this->person->disabilities->pluck('id')->toArray();
 
         $this->fillAddress();
 
@@ -214,8 +212,6 @@ class Form extends BaseForm
 
     public function mount($id)
     {
-
-
         $this->fillModel($id);
     }
 
@@ -226,24 +222,24 @@ class Form extends BaseForm
         return view('livewire.people.form')->with($this->getViewVariables());
     }
 
-
     public function prepareForDeleteDocument($document_id)
     {
         $this->selectedDocument_id = $document_id;
         $document = Document::find($document_id);
-        if(empty(app(Visitors::class)->findBydocumentId($document_id))) {
-
-
+        if (empty(app(Visitors::class)->findBydocumentId($document_id))) {
             $this->emitSwall(
-                'Deseja realmente remover o ' . $document->documentType->name .
-                ': ' . $document->numberMaskered,
+                'Deseja realmente remover o ' .
+                    $document->documentType->name .
+                    ': ' .
+                    $document->numberMaskered,
                 'A ação não pode ser desfeita',
                 'confirm-delete-document',
                 'delete'
             );
-        }else{
+        } else {
             $this->dispatchBrowserEvent('swall-error', [
-                'text' => $document->documentType->name .' utilizado em Visita',]);
+                'text' => $document->documentType->name . ' utilizado em Visita',
+            ]);
         }
     }
 
@@ -264,6 +260,5 @@ class Form extends BaseForm
 
         $document->delete();
         $this->fillModel($person_id);
-
     }
 }

@@ -33,7 +33,7 @@
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
-                        <span class="badge bg-warning text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios </span>
+                        <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
                     </div>
                 </div>
                 <div class="row">
@@ -46,7 +46,13 @@
                                 <option value="">SELECIONE</option>
                                 @foreach ($people as $key => $person)
                                     <option value="{{ $person->id }}" @if($person->id == $personRestriction->person_id) selected="selected" @endif>
-                                        {{ $person->name . ($person->cpf ? (' - CPF '.$person->cpf.'') : '') }}
+                                        {{ $person->name }}
+                                        @foreach ($person->documents as $document)
+                                            - {{ $document->documentType->name }}: {{ $document->numberMaskered }}
+                                            @if ($document->state?->initial)
+                                                - {{ $document->state->initial }}
+                                            @endif
+                                        @endforeach
                                     </option>
                                 @endforeach
                             </select>
