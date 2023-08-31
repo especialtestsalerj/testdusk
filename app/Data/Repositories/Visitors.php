@@ -24,7 +24,9 @@ class Visitors extends Repository
         return $this->model
             ::with('person')
             ->where(function ($query) use ($visitor_id) {
-                $query->where('id', '=', isset($visitor_id) ?? 0)->orWhereNull('exited_at');
+                $query->when(isset($visitor_id), function($query) use($visitor_id){
+                    $query->orWhere('id', '=', $visitor_id);
+                })->orWhereNull('exited_at');
             })
             ->get()
             ->sortBy(function ($row) {

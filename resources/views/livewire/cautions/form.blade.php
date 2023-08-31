@@ -55,14 +55,15 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" wire:ignore>
                         <div class="form-group">
                             <label for="visitor_id">Visitante*</label>
-                            <select class="form-select select2" name="visitor_id" id="visitor_id" wire:model="visitor_id" wire:change="loadVisitorInfo" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
+                            <select class="form-select select2" name="visitor_id" id="visitor_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                 <option value="">SELECIONE</option>
                                 @foreach ($visitors as $key => $visitor)
-                                    <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>
+                                    <option value="{{ $visitor->id }}" @if($visitor->id == $caution->visitor_id) selected="selected" @endif>
                                         {{ $visitor->person->name }} - {{ $visitor->document->documentType->name }}: {{ $visitor->document->numberMaskered }}
                                         @if ($visitor->document->state?->initial)
                                             - {{ $document->state->initial }}
@@ -90,7 +91,7 @@
                                 class="form-control text-uppercase"
                                 name="destiny_sector_name"
                                 id="destiny_sector_name"
-                                wire:model.defer="destiny_sector_name"
+                                value="{{$this->destinySectorName}}"
                                 @disabled(true)
                             >
                         </div>
@@ -98,19 +99,16 @@
                 </div>
                 <div class="row">
                     @if ($mode == 'create')
-                        <div class="col-md-4">
+                        <div class="col-md-4" wire:ignore>
                             <div class="form-group">
                                 <label for="person_certificate">Certificados</label>
-                                <select class="form-select" name="person_certificate" id="person_certificate" wire:model="person_certificate" wire:change="loadPersonCertificateInfo" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
-                                    <option value=""></option>
-                                    @foreach ($personCertificates as $key => $personCertificate)
-                                        <option value="{{ $personCertificate?->certificate_type_id }}">{{ $personCertificate?->certificateType?->name }} - {{ $personCertificate?->certificate_number }} - {{ $personCertificate?->certificate_valid_until_formatted }}</option>
-                                    @endforeach
+                                <select class="form-select select2" name="person_certificate" id="person_certificate" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
+                                    <option value="">SELECIONE</option>
                                 </select>
                             </div>
                         </div>
                     @endif
-                    <div class="col-md-3">
+                    <div class="col-md-3" wire:ignore>
                         <div class="form-group">
                             <label for="certificate_type_id">Tipo de Porte*</label>
                             <select class="select2 form-control" name="certificate_type_id" id="certificate_type_id" wire:model.defer="certificate_type_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
@@ -153,7 +151,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" wire:ignore>
                         <div class="form-group">
                             <label for="duty_user_id">Plantonista*</label>
                             <select class="select2 form-control" name="duty_user_id" id="duty_user_id" wire:model.defer="duty_user_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
