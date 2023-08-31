@@ -1,4 +1,4 @@
-# Ocorrências - Sistema de Gestão de Ocorrências (DEPS) 
+# SIG-VISITAS - Sistema Integrado de Gestão de Visitas 
 
 ## [https://ocorrencias.alerj.rj.gov.br/](https://ocorrencias.alerj.rj.gov.br/)
 

@@ -28,22 +28,22 @@ class PersonUpdate extends Request
         $input = $all;
 
         if (!empty($this->get('full_name'))) {
-            $input['full_name'] = mb_strtoupper($input['full_name']);
+            $input['full_name'] = convert_case($input['full_name'], MB_CASE_UPPER);
             $this->replace($input);
         }
 
         if (!empty($this->get('social_name'))) {
-            $input['social_name'] = mb_strtoupper($input['social_name']);
+            $input['social_name'] = convert_case($input['social_name'], MB_CASE_UPPER);
             $this->replace($input);
         }
 
         if (!empty($this->get('email'))) {
-            $input['email'] = mb_strtolower($input['email']);
+            $input['email'] = convert_case($input['email'], MB_CASE_LOWER);
             $this->replace($input);
         }
 
         if (!empty($this->get('other_city'))) {
-            $input['other_city'] = mb_strtoupper($input['other_city']);
+            $input['other_city'] = convert_case($input['other_city'], MB_CASE_UPPER);
             $this->replace($input);
         }
 

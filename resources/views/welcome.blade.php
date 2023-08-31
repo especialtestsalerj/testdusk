@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Ocorrências</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
 </nav>
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Ocorrências - Sistema de Gestão de Ocorrências (DEPS) </h1>
+      <h1 class="display-4">{{ config('app.name') }} - {{ config('app.description') }}</h1>
 </div>
 
 </body>

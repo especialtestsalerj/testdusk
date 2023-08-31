@@ -31,9 +31,9 @@ class VisitorStore extends Request
             ],
             'full_name' => 'required',
             'country_id' => 'required',
-            'state_id' => 'required_if:country_id,'.env('APP_COUNTRY_BR'),
-            'city_id' => 'required_if:country_id,'.env('APP_COUNTRY_BR'),
-            'other_city' => 'required_unless:country_id,'.env('APP_COUNTRY_BR'),
+            'state_id' => 'required_if:country_id,' . config('app.country_br'),
+            'city_id' => 'required_if:country_id,' . config('app.country_br'),
+            'other_city' => 'required_unless:country_id,' . config('app.country_br'),
             'entranced_at' => ['bail', 'required'],
             'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
@@ -68,12 +68,7 @@ class VisitorStore extends Request
         }
 
         if (!empty($this->get('full_name'))) {
-            $input['full_name'] = mb_strtoupper($input['full_name']);
-            $this->replace($input);
-        }
-
-        if (!empty($this->get('origin'))) {
-            $input['origin'] = mb_strtoupper($input['origin']);
+            $input['full_name'] = convert_case($input['full_name'], MB_CASE_UPPER);
             $this->replace($input);
         }
 

@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="mb-0 text-center">
-                    <span class="mb-3 mb-md-0 text-muted">Copyright © 2023 Intranet - {{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</span>
+                    <span class="mb-3 mb-md-0 text-muted">Copyright © 2023 Intranet - {{ config('app.owner') }}</span>
                 </div>
             </form>
         </div>

@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
 
-    <title>{{ config('app.name') }} - {{ mb_strtoupper(env('APP_OWNER', 'Laravel')) }}</title>
+    <title>{{ config('app.name') }} - {{ config('app.owner') }}</title>
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
