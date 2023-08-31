@@ -14,13 +14,13 @@
                         <h3 class="mb-0">
                             <a href="{{ route('visitors.index')  }}">Visitas</a>
                             @if(is_null($visitor->id))
-                                > Novo/a
+                                > Nova
                             @else
                                 > {{ $visitor->id }} - {{ $visitor->entranced_at->format('d/m/Y \À\S H:i') }}
                             @endif
                         </h3>
                         @if($visitor->hasPending())
-                            <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
+                            <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR</span>
                         @endif
                     </div>
                 </div>
