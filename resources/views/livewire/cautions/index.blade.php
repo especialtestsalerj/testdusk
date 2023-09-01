@@ -1,8 +1,8 @@
 <div>
     <div class="py-4 px-4 conteudo">
         <div class="">
-            <div class="row">
-                <div class="col-md-8">
+            <div class="row mb-lg-3">
+                <div class="col-lg-6">
                     <h3 class="mb-0">Cautelas de Armas</h3>
                     Rotina {{ $routine?->code }}
                     @if ($routine?->status)
@@ -12,7 +12,7 @@
                     @endif
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-6">
                     @if ($routine?->status)
                         @include('livewire.partials.search-form', [
                             'btnNovoLabel' => 'Nova',
