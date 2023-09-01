@@ -18,7 +18,7 @@
             </div>
         </div>
         @if (isset($routeCreate))
-            <div class="col-3 col-md-4 col-lg-2">
+            <div class="col-3 col-md-4 col-lg-2 d-grid">
                 <a id="novo" href="{{ route($routeCreate, $routeCreateParams ?? []) }}" class="btn btn-primary text-white float-end" title="{{ $btnNovoTitle }}">
                     <i class="fa fa-plus"></i> {{ $btnNovoLabel }}
                 </a>
