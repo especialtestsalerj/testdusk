@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label for="full_name">Nome Completo*</label>
                     <input type="text" class="form-control text-uppercase" name="full_name"
-                           id="full_name" wire:model.debounce.500ms="full_name"
+                           id="full_name" wire:model="full_name"
                            @if ($modal) disabled @endif
                            @if ($readonly) readonly @endif />
                 </div>
