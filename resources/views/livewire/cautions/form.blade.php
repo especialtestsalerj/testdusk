@@ -174,7 +174,7 @@
             </div>
         </form>
         @if ($mode == 'show')
-            <div class="p-4 bg-light border rounded-3">
+            <div class="">
                 <livewire:caution-weapons.index-form :caution_id="$caution->id" :routine="$routine" :disabled="(!$routine->status || request()->query('disabled'))" />
             </div>
         @else
