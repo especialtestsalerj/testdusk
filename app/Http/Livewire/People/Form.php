@@ -115,49 +115,6 @@ class Form extends BaseForm
         $this->email = null;
     }
 
-    public function store()
-    {
-        $this->validate(
-            [
-                'full_name' => ['required'],
-                'social_name' => ['nullable', 'bail', 'string|min:3|max:255'],
-            ],
-            [
-                'full_name.required' => 'Nome Completo: preencha o campo corretamente.',
-                'social_name.min' => 'Nome Social: deve ter pelo menos 3 caracteres.',
-            ]
-        );
-
-        $values = ['redirect' => $this->redirect];
-        $values = array_merge($values, ['id' => $this->person_id]);
-        $values = array_merge($values, ['full_name' => $this->full_name]);
-        $values = array_merge($values, ['social_name' => $this->social_name]);
-        $values = array_merge($values, [
-            'birthdate' => $this?->birthdate == '' ? null : $this?->birthdate,
-        ]);
-        $values = array_merge($values, ['gender_id' => $this->gender_id]);
-        $values = array_merge($values, ['has_disability' => $this->has_disability]);
-        $values = array_merge($values, ['city_id' => $this->city_id]);
-        $values = array_merge($values, ['other_city' => $this->other_city]);
-        $values = array_merge($values, ['state_id' => $this->state_id]);
-        $values = array_merge($values, ['country_id' => $this->country_id]);
-        $values = array_merge($values, ['email' => $this->email]);
-
-        if ($this->selectedId) {
-            $row = Person::find($this->selectedId);
-            $row->fill($values);
-            $row->save();
-        } else {
-            Person::create($values);
-        }
-
-        //trocar validacao acima para usar direto do request
-        //trocar isso por submit
-
-        $this->clearPerson();
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'person-modal']);
-    }
-
     public function fillModel($id)
     {
         $this->selectedId = $id;
