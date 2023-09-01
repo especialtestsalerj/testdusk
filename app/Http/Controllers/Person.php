@@ -11,50 +11,10 @@ use App\Models\Person as PersonModel;
 
 class Person extends Controller
 {
-    /*public function show($id)
-    {
-        formMode(Constants::FORM_MODE_SHOW);
-
-        $person = app(PeopleRepository::class)->findById($id);
-
-        return $this->view('livewire.people.form')->with([
-            'person' => $person,
-            'genders' => app(GendersRepository::class)
-                ->disablePagination()
-                ->all(),
-            'disabilities' => app(DisabilityTypesRepository::class)
-                ->disablePagination()
-                ->all(),
-            //'sectors' => app(SectorsRepository::class)
-            //  ->disablePagination()
-            //->all(),
-            //'users' => app(UsersRepository::class)
-            //  ->disablePagination()
-            //->all(),
-            'mode' => 'show' . (request()->query('disabled') ? '-read-only' : ''),
-        ]);
-    }*/
-
     public function update(PersonUpdate $request, $id)
     {
         $person =  app(PeopleRepository::class)->update($id, $request->all());
-
-//        dd($request['disabilities']);
-
         $person->disabilities()->sync($request['disabilities']);
-
-//            Disability::whereIn('id', $request['disabilities'])->get()
-//        );
-
-
-
-        /*foreach ($request['disabilities'] as $disability) {
-            echo $disability;
-        }
-        dd('ok');*/
-//        PersonModel::find($id)
-//            ->disabilities()
-//            ->sync($request['disabilities']);
 
         return redirect()
             ->route($request['redirect'])
