@@ -1,6 +1,5 @@
-
 <div>
-    <div class="py-4 px-4">
+    <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row">
                 <div class="col-md-8">
@@ -15,27 +14,21 @@
 
                 <div class="col-md-4">
                     @if ($routine?->status)
-                        @include(
-                            'livewire.partials.search-form',
-                            [
-                                'btnNovoLabel' => 'Nova',
-                                'btnNovoTitle' => 'Nova Cautela de Arma',
-                                'routeSearch' => 'cautions.index',
-                                'routeSearchParams' => ['routine_id' => $routine_id],
-                                'routeCreate' => 'cautions.create',
-                                'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
-                            ]
-                        )
+                        @include('livewire.partials.search-form', [
+                            'btnNovoLabel' => 'Nova',
+                            'btnNovoTitle' => 'Nova Cautela de Arma',
+                            'routeSearch' => 'cautions.index',
+                            'routeSearchParams' => ['routine_id' => $routine_id],
+                            'routeCreate' => 'cautions.create',
+                            'routeCreateParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
+                        ])
                     @else
-                        @include(
-                            'livewire.partials.search-form',
-                            [
-                                'btnNovoLabel' => 'Nova',
-                                'btnNovoTitle' => 'Nova Cautela de Arma',
-                                'routeSearch' => 'cautions.index',
-                                'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
-                            ]
-                        )
+                        @include('livewire.partials.search-form', [
+                            'btnNovoLabel' => 'Nova',
+                            'btnNovoTitle' => 'Nova Cautela de Arma',
+                            'routeSearch' => 'cautions.index',
+                            'routeSearchParams' => ['routine_id' => $routine_id, 'redirect' => 'cautions.index'],
+                        ])
                     @endif
                 </div>
             </div>
@@ -47,6 +40,8 @@
             @include('livewire.cautions.partials.table', ['redirect' => 'cautions.index'])
         </div>
     </div>
+
+    @include('livewire.cautions.partials.receipt', ['caution' => $caution, 'forPrinter' => true])
 
     @include('partials.button-to-top')
 </div>
