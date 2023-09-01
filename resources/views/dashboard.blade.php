@@ -23,14 +23,14 @@
         <!---------- FIM DO NOVO LAYOUT DO PORTARIA - LARAVELIZAR ---------->
     @endcanany
 
-    <!---------- LAYOUT DO OCORRÊNCIAS  ---------->
+    <!---------- LAYOUT DO SEGURANCA  ---------->
 
     @can('routines:show')
 
         <div class="row mt-0 mb-3 bg-dark2 text-white">
             <div class="col pt-2 ps-5">
                 <h4>
-                    Ocorrências
+                    Segurança
                 </h4>
             </div>
         </div>
@@ -53,12 +53,12 @@
                                                         <div class="row mx-0 mx-lg-3 mt-3 mb-2">
                                                             <div class="col-6 col-lg-3 text-center text-lg-start">
                                                                 <h4>
-                                                                    @can('cautions:show')
+                                                                    @can('routines:show')
                                                                         <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
                                                                             Rotina {{ $routine->code }}
                                                                         </a>
                                                                     @endcan
-                                                                    @cannot('cautions:show')
+                                                                    @cannot('routine:show')
                                                                         Rotina {{ $routine?->code }}
                                                                     @endcannot
                                                                 </h4>
@@ -108,6 +108,6 @@
         </div>
     @endCan
     <!-- Slider main container -->
-    <!---------- FIM DO LAYOUT DO OCORRÊNCIAS  ---------->
+    <!---------- FIM DO LAYOUT DO SEGURANCA  ---------->
 
 @endsection

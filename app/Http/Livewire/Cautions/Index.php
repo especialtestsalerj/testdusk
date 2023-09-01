@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Cautions;
 use App\Data\Repositories\Cautions as CautionsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\CautionReceipt;
 
 class Index extends BaseIndex
 {
+    use CautionReceipt;
+    
     protected $repository = CautionsRepository::class;
 
     public $orderByField = ['protocol_number'];

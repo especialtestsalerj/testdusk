@@ -8,6 +8,7 @@ $(document).ready(function () {
         theme: 'bootstrap-5',
         tags: false,
         width: '100%',
+        language:'pt-BR',
     })
 
     document.addEventListener('select2SelectOption', function (event) {

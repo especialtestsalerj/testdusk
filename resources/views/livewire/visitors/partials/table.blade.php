@@ -48,7 +48,7 @@
                                             </div>
                                             <div data-label="Documento">
                                                 <i class="fas fa-id-card me-2"></i>
-                                                <strong>{{ $visitor->document?->documentType?->name }}:</strong>
+                                                {{ $visitor->document?->documentType?->name }}:
                                                 {{ $visitor?->document?->numberMaskered }}
                                             </div>
                                         </div>

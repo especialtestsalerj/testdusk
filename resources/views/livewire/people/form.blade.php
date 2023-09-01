@@ -182,10 +182,12 @@
                                 <tr>
                                     <th colspan="2" class="text-center">Documentos</th>
                                     <th class="text-end">
+                                        @if(!request()->query('disabled'))
                                         <span class="btn btn-primary " wire:click="createDocument({{$person->id}})"
                                               data-bs-toggle="modal" data-bs-target="#document-modal">
                                             <i class="fa fa-plus"></i>
                                         </span>
+                                        @endif
                                     </th>
 
                                 </tr>
@@ -199,12 +201,14 @@
                                     <td>{{$document->documentType->name}} </td>
                                     <td>{{$document->numberMaskered}}</td>
                                     <td class="text-end">
-                                        <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
-                                        <i class="fa fa-pencil"></i>
-                                        </span>
-                                        <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
-                                        <i class="fa fa-trash"></i>
-                                        </span>
+                                        @if(!request()->query('disabled'))
+                                            <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
+                                            <i class="fa fa-pencil"></i>
+                                            </span>
+                                            <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
+                                            <i class="fa fa-trash"></i>
+                                            </span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

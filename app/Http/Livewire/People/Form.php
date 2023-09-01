@@ -202,11 +202,7 @@ class Form extends BaseForm
             'disabilityTypes' => app(DisabilityTypes::class)->allOrderBy('name', 'asc', null),
             'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
             'states' => app(States::class)->allOrderBy('name', 'asc', null),
-            'country_br' => Country::where(
-                'id',
-                '=',
-                mb_strtoupper(env('APP_COUNTRY_BR'))
-            )->first(),
+            'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }
 

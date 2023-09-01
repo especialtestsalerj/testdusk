@@ -9,14 +9,13 @@ use App\Models\Country;
 
 trait Addressable
 {
-//    protected $rules=
-//        [
-//            'countryBr'=>'',
-//            'country_id'=>'',
-//            'city_id'=>'',
-//            'state_id'=>'',
-//        ];
-
+    //    protected $rules=
+    //        [
+    //            'countryBr'=>'',
+    //            'country_id'=>'',
+    //            'city_id'=>'',
+    //            'state_id'=>'',
+    //        ];
 
     public $country_id;
     public $state_id;
@@ -49,7 +48,9 @@ trait Addressable
                 $this->updatedStateId($this->state_id);
             }
 
-            $this->city_id = is_null(old('city_id')) ? $this->person->city_id ?? '' : old('city_id');
+            $this->city_id = is_null(old('city_id'))
+                ? $this->person->city_id ?? ''
+                : old('city_id');
             $this->select2SelectOption('city_id', $this->city_id);
         }
 
@@ -57,7 +58,6 @@ trait Addressable
             ? mb_strtoupper($this->person->other_city) ?? ''
             : old('other_city');
     }
-
 
     /**
      * @return void
@@ -102,7 +102,7 @@ trait Addressable
 
     public function loadCities()
     {
-        if($this->state_id) {
+        if ($this->state_id) {
             $this->cities = City::where('state_id', $this->state_id)->get();
         }
     }
@@ -111,7 +111,7 @@ trait Addressable
     {
         if ($newValue != $this->countryBr->id) {
             $this->countryBrNotSelected();
-        }else{
+        } else {
             $this->countryBrSelected();
         }
     }
@@ -122,27 +122,29 @@ trait Addressable
 
         $this->cities = collect($this->cities);
 
-        $this->select2ReloadOptions($this->cities->map(function ($city) {
-            return [
-                'name' => $city->name,
-                'value' => $city->id,
-            ];
-        })->toArray(), 'city_id');
+        $this->select2ReloadOptions(
+            $this->cities
+                ->map(function ($city) {
+                    return [
+                        'name' => $city->name,
+                        'value' => $city->id,
+                    ];
+                })
+                ->toArray(),
+            'city_id'
+        );
 
-        if($this->city_id){
+        if ($this->city_id) {
             $this->select2SelectOption('city_id', $this->city_id);
         }
     }
 
     public function addressFormVariables()
     {
-        return ['countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
+        return [
+            'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
             'states' => app(States::class)->allOrderBy('name', 'asc', null),
-            'country_br' => Country::where(
-        'id',
-        '=',
-        mb_strtoupper(env('APP_COUNTRY_BR'))
-    )->first(),];
+            'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
+        ];
     }
-
 }
