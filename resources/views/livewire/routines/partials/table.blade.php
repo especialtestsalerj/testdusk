@@ -56,7 +56,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="finishModalLabel"><i class="fas fa-check"></i> Finalizar Rotina</h5>
+                            <h5 class="modal-title" id="finishModalLabel"><i class="fa fa-check"></i> Finalização de Rotina</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -109,7 +109,7 @@
                                 @endif
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>
                         </div>
@@ -118,7 +118,7 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhuma Rotina encontrada.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Rotina encontrada.
             </div>
         @endforelse
         <div class="d-flex justify-content-center mt-4">{{ $routines->links() }}

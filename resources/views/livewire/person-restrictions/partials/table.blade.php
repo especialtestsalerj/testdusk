@@ -1,4 +1,4 @@
-<div class="row">
+    <div class="row">
     <div class="col-md-12">
         @forelse ($personRestrictions as $personRestriction)
             <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
@@ -39,7 +39,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fas fa-trash"></i> Remoção de Restrição</h5>
+                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fa fa-trash"></i> Remoção de Restrição</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -74,7 +74,7 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhuma Restrição encontrada.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Restrição encontrada.
             </div>
         @endforelse
         <div class="d-flex justify-content-center mt-4">{{ $personRestrictions->links() }}

@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="">
+        <div class="p-0">
             @include('layouts.msg')
 
             @include('livewire.events.partials.table', ['redirect' => 'events.index'])

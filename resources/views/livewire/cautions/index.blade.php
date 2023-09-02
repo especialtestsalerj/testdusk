@@ -3,7 +3,7 @@
         <div class="">
             <div class="row mb-lg-3">
                 <div class="col-lg-6">
-                    <h3 class="mb-0">Cautelas de Armas</h3>
+                    <h3 class="mb-0"><i class="fas fa-person-rifle"></i> Cautelas de Armas</h3>
                     Rotina {{ $routine?->code }}
                     @if ($routine?->status)
                         <label class="badge bg-success"> ABERTA </label>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="">
+        <div class="p-0">
             @include('layouts.msg')
 
             @include('livewire.cautions.partials.table', ['redirect' => 'cautions.index'])

@@ -3,7 +3,7 @@
         <div class="row my-4">
             <div class="col-sm-8 align-self-center">
                 <h3 class="mb-0">
-                    <i class="fas fa-gun"></i> Cautelas de Armas
+                    <i class="fas fa-person-rifle"></i> Cautelas de Armas
                 </h3>
             </div>
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
@@ -64,7 +64,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fas fa-trash"></i> Remoção de Cautela</h5>
+                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de Cautela</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -115,7 +115,7 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
             </div>
         @endforelse
     </div>

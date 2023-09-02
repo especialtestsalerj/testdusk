@@ -2,20 +2,18 @@
 
 namespace App\Http\Livewire\People;
 
-use App\Data\Repositories\Countries;
-use App\Data\Repositories\DisabilityTypes;
-use App\Data\Repositories\Genders;
+use App\Data\Repositories\Countries as CountriesRepository;
+use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
+use App\Data\Repositories\Genders as GendersRepository;
 use App\Data\Repositories\People as PeopleRepository;
-use App\Data\Repositories\States;
-use App\Data\Repositories\Visitors;
+use App\Data\Repositories\States as StatesRepository;
+use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Document;
 use App\Models\Person;
-use App\Data\Repositories\Genders as GendersRepository;
-use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
 
 use function view;
 
@@ -32,15 +30,9 @@ class Form extends BaseForm
     public $birthdate;
     public $gender_id;
     public $has_disability;
-    //    public $city_id;
-    //    public $other_city;
-    //    public $state_id;
-    //    public $country_id;
     public $email;
 
     public $disabilities = [];
-
-    //    public $cities = [];
 
     public $edit;
     public $modalMode;
@@ -130,18 +122,26 @@ class Form extends BaseForm
 
         $values = ['redirect' => $this->redirect];
         $values = array_merge($values, ['id' => $this->person_id]);
-        $values = array_merge($values, ['full_name' => $this->full_name]);
-        $values = array_merge($values, ['social_name' => $this->social_name]);
+        $values = array_merge($values, [
+            'full_name' => convert_case($this->full_name, MB_CASE_UPPER),
+        ]);
+        $values = array_merge($values, [
+            'social_name' => convert_case($this->social_name, MB_CASE_UPPER),
+        ]);
         $values = array_merge($values, [
             'birthdate' => $this?->birthdate == '' ? null : $this?->birthdate,
         ]);
         $values = array_merge($values, ['gender_id' => $this->gender_id]);
         $values = array_merge($values, ['has_disability' => $this->has_disability]);
         $values = array_merge($values, ['city_id' => $this->city_id]);
-        $values = array_merge($values, ['other_city' => $this->other_city]);
+        $values = array_merge($values, [
+            'other_city' => convert_case($this->other_city, MB_CASE_UPPER),
+        ]);
         $values = array_merge($values, ['state_id' => $this->state_id]);
         $values = array_merge($values, ['country_id' => $this->country_id]);
-        $values = array_merge($values, ['email' => $this->email]);
+        $values = array_merge($values, [
+            'email' => convert_case($this->email, MB_CASE_LOWER),
+        ]);
 
         if ($this->selectedId) {
             $row = Person::find($this->selectedId);
@@ -151,8 +151,8 @@ class Form extends BaseForm
             Person::create($values);
         }
 
-        //trocar validacao acima para usar direto do request
-        //trocar isso por submit
+        //TODO: trocar validacao acima para usar direto do request
+        //TODO: trocar isso por submit
 
         $this->clearPerson();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'person-modal']);
@@ -163,31 +163,31 @@ class Form extends BaseForm
         $this->selectedId = $id;
         $this->person = Person::find($id);
 
-        $this->person_id = is_null(old('id')) ? $this->person->id ?? '' : old('id');
-        //dd($this->person_id);
+        $this->person_id = is_null(old('id')) ? $this->person->id : old('id');
+
         $this->full_name = is_null(old('full_name'))
-            ? $this->person->full_name ?? ''
+            ? convert_case($this->person->full_name, MB_CASE_UPPER)
             : old('full_name');
 
         $this->social_name = is_null(old('social_name'))
-            ? $this->person->social_name ?? ''
+            ? convert_case($this->person->social_name, MB_CASE_UPPER)
             : old('social_name');
 
         $this->birthdate = is_null(old('birthdate')) ? $this?->person->birthdate : old('birthdate');
 
-        $this->gender_id = is_null(old('gender_id'))
-            ? $this->person->gender_id ?? ''
-            : old('gender_id');
+        $this->gender_id = is_null(old('gender_id')) ? $this->person->gender_id : old('gender_id');
 
         $this->has_disability = is_null(old('has_disability'))
-            ? $this->person->has_disability ?? ''
+            ? $this->person->has_disability
             : old('has_disability');
 
         $this->disabilities = $this->person->disabilities->pluck('id')->toArray();
 
         $this->fillAddress();
 
-        $this->email = is_null(old('email')) ? $this->person->email ?? '' : old('email');
+        $this->email = is_null(old('email'))
+            ? convert_case($this->person->email, MB_CASE_LOWER)
+            : old('email');
     }
 
     public function loadCities()
@@ -197,11 +197,12 @@ class Form extends BaseForm
 
     protected function getComponentVariables()
     {
+        //todo: passar lista por parametro e tratar no AllActive dd($this->person->disabilities->pluck('id')->toArray());
         return [
-            'genders' => app(Genders::class)->allOrderBy('id', 'asc', null),
-            'disabilityTypes' => app(DisabilityTypes::class)->allOrderBy('name', 'asc', null),
-            'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
-            'states' => app(States::class)->allOrderBy('name', 'asc', null),
+            'genders' => app(GendersRepository::class)->allActive($this->gender_id),
+            'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive(),
+            'countries' => app(CountriesRepository::class)->allActive($this->country_id),
+            'states' => app(StatesRepository::class)->allActive($this->state_id),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }
@@ -222,13 +223,14 @@ class Form extends BaseForm
     {
         $this->selectedDocument_id = $document_id;
         $document = Document::find($document_id);
-        if (empty(app(Visitors::class)->findBydocumentId($document_id))) {
+        if (empty(app(VisitorsRepository::class)->findBydocumentId($document_id))) {
             $this->emitSwall(
                 'Deseja realmente remover o ' .
                     $document->documentType->name .
                     ': ' .
-                    $document->numberMaskered,
-                'A ação não pode ser desfeita',
+                    $document->numberMaskered .
+                    '?',
+                'A ação não poderá ser desfeita.',
                 'confirm-delete-document',
                 'delete'
             );

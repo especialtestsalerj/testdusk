@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            Cautelas de Armas
+                            <i class="fas fa-person-rifle"></i> Cautelas de Armas
                         </h3>
                         @if(!is_null($caution_id))
                             @if(!$caution->hasWeapons())
@@ -65,9 +65,6 @@
                                 @foreach ($visitors as $key => $visitor)
                                     <option value="{{ $visitor->id }}" @if($visitor->id == $caution->visitor_id) selected="selected" @endif>
                                         {{ $visitor->person->name }} - {{ $visitor->document->documentType->name }}: {{ $visitor->document->numberMaskered }}
-                                        @if ($visitor->document->state?->initial)
-                                            - {{ $document->state->initial }}
-                                        @endif
                                     </option>
                                 @endforeach
                             </select>

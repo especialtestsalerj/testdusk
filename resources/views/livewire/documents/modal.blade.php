@@ -6,7 +6,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            <i class="fa fa-plus"></i> {{ $this->person ? 'Novo Documento' : 'Editar Documento'}}
+                            <i class="fa fa-{{ $this->person ? 'plus' : 'pencil'}}"></i> {{ $this->person ? 'Novo Documento' : 'Alteração de Documento'}}
                         </h5>
                         <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>

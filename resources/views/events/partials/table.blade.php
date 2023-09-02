@@ -32,11 +32,11 @@
                                 <span class="fw-bold">Plantonista:</span> {{ $event->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
-                                <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editEvent"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('events.show', ['routine_id' => $routine_id, 'id' => $event->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editEvent"><i class="fa fa-lg fa-pencil"></i></a>
                                     <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#event-delete-modal{{ $event->id }}" title="Remover" id="removerEvent">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fa fa-lg fa-trash"></i>
                                     </button>
                                 @endif
                             </div>
@@ -49,7 +49,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fas fa-trash"></i> Remoção de Ocorrência</h5>
+                            <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fa fa-trash"></i> Remoção de Ocorrência</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -85,7 +85,7 @@
 
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverEvent"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
                                 </div>
                             </form>
                         </div>
@@ -94,7 +94,7 @@
             </div>
         @empty
             <div class="alert alert-warning">
-                <i class="fa fa-exclamation-triangle"></i> Nenhuma Ocorrência encontrada.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Ocorrência encontrada.
             </div>
         @endforelse
     </div>

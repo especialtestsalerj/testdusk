@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('sectors.index') }}">Setores</a>
+                            <a href="{{ route('sectors.index') }}"><i class="fa fa-location-dot"></i> Setores</a>
 
                             @if(is_null($sector->id))
                                 > Novo

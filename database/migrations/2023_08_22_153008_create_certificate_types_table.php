@@ -53,6 +53,10 @@ return new class extends Migration {
             ['id' => 20, 'name' => 'SEAP', 'status' => true],
             ['id' => 21, 'name' => 'VISITANTE', 'status' => true],
         ]);
+
+        DB::statement(
+            "SELECT setval('certificate_types_id_seq', (SELECT max(id) FROM certificate_types))"
+        );
     }
 
     /**

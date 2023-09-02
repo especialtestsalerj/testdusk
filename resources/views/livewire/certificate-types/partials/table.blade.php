@@ -33,7 +33,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCertificateType"><i class="fas fa-trash"></i> Remoção de Tipo de Porte</h5>
+                            <h5 class="modal-title" id="deleteModalLabelCertificateType"><i class="fa fa-trash"></i> Remoção de Tipo de Porte</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -62,7 +62,7 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhum Tipo de Porte encontrado.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhum Tipo de Porte encontrado.
             </div>
         @endforelse
         <div class="d-flex justify-content-center mt-4">{{ $certificateTypes->links() }}

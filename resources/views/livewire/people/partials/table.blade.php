@@ -58,7 +58,7 @@
                                     <div class="row">
                                         @if ($person->hasPendingVisitors())
                                             <div class="col-12">
-                                                <span class="btn btn-link px-0 pt-0 pb-1"
+                                                <span class="btn btn-link px-3 py-1"
                                                     wire:click="generateBadge({{ $person->pendingVisit->id }})"
                                                     title="Imprimir Etiqueta">
                                                     <i class="fa fa-lg fa-print"></i>
@@ -147,12 +147,8 @@
                                                     </div>
                                                     <div class="col-3 col-lg-6 text-center text-lg-start">
                                                         @foreach ($person->documents as $document)
-                                                            <span
-                                                                class="fw-bold">{{ $document->documentType->name }}</span>:
+                                                            <span class="fw-bold">{{ $document->documentType->name }}</span>:
                                                             {{ $document->numberMaskered }}
-                                                            @if ($document->state?->initial)
-                                                                - {{ $document->state->initial }}
-                                                            @endif
                                                             &nbsp;
                                                         @endforeach
                                                     </div>

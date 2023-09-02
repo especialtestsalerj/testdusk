@@ -23,12 +23,8 @@ class Event extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'event' => app(EventsRepository::class)->new(),
-            'eventTypes' => app(EventTypesRepository::class)
-                ->disablePagination()
-                ->all(),
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
+            'eventTypes' => app(EventTypesRepository::class)->allActive(),
+            'sectors' => app(SectorsRepository::class)->allActive(),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -55,12 +51,8 @@ class Event extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'event' => $event,
-            'eventTypes' => app(EventTypesRepository::class)
-                ->disablePagination()
-                ->all(),
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
+            'eventTypes' => app(EventTypesRepository::class)->allActive($event?->eventType?->id),
+            'sectors' => app(SectorsRepository::class)->allActive($event?->sector?->id),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),

@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('people.index') }}">Pessoas</a>
+                            <a href="{{ route('people.index') }}"><i class="fa fa-users"></i> Pessoas</a>
 
                             @if(is_null($person->id))
                                 > Novo
@@ -86,7 +86,7 @@
                                 @if ($readonly) readonly @endif>
                             <option value="">SELECIONE</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                <option value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -114,7 +114,7 @@
                                     @if ($readonly) readonly @endif>
                                 <option value="">SELECIONE</option>
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
+                                    <option value="{{ $city->id ?? $city['id'] }}">{{ convert_case($city->name ?? $city['name'], MB_CASE_UPPER) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -138,7 +138,7 @@
                     <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="has_disability">Possui deficiência?*</label>
+                                <label for="has_disability">Possui deficiência?</label>
                                 <select class="form-control text-uppercase" name="has_disability" id="has_disability"
                                         wire:model="has_disability"
                                         x-ref="has_disability" @disabled(request()->query('disabled'))>
@@ -154,12 +154,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         @if($has_disability == 'true')
-
-
                             <div class="form-group">
-                                <label for="disabilities">Tipos de Deficiências*</label>
+                                <label for="disabilities">Tipos de Deficiência*</label>
                                 <br/>
                                 @foreach($disabilityTypes as $disabilityType)
                                     <label>
@@ -168,59 +166,48 @@
 
                                                value="{{$disabilityType->id}}" type="checkbox"/>
                                         {{$disabilityType->name}}
-
                                     </label><br/>
                                 @endforeach
                             </div>
-
-
                         @endif
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class=" rounded-3">
-                            <table class="table bg-light border">
+                            <table class="table bg-light border rounded-3">
                                 <tr>
-                                    <th colspan="2" class="text-center">Documentos</th>
+                                    <th colspan="2" class="text-left">
+                                        <h4><i class="fa fa-id-card"></i> Documentos</h4>
+                                    </th>
                                     <th class="text-end">
                                         @if(!request()->query('disabled'))
-                                        <span class="btn btn-primary " wire:click="createDocument({{$person->id}})"
-                                              data-bs-toggle="modal" data-bs-target="#document-modal">
+                                        <span class="btn btn-sm btn-primary text-white" wire:click="createDocument({{$person->id}})"
+                                              data-bs-toggle="modal" data-bs-target="#document-modal" title="Novo Documento">
                                             <i class="fa fa-plus"></i>
                                         </span>
                                         @endif
                                     </th>
-
                                 </tr>
                                 <tr>
                                     <th>Tipo</th>
                                     <th>Número</th>
-                                    <th class="text-end">Ação</th>
+                                    <th></th>
                                 </tr>
-                            @foreach($person->documents as $document)
-                                <tr>
-                                    <td>{{$document->documentType->name}} </td>
-                                    <td>{{$document->numberMaskered}}</td>
-                                    <td class="text-end">
-                                        @if(!request()->query('disabled'))
-                                            <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">
-                                            <i class="fa fa-pencil"></i>
-                                            </span>
-                                            <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})">
-                                            <i class="fa fa-trash"></i>
-                                            </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-    {{--                            <tr>--}}
-    {{--                                <td colspan="2"></td>--}}
-    {{--                                <td class="text-right align-content-end">--}}
-    {{--                                    <span class="btn btn-link px-0 py-0" wire:click="createDocument({{$person->id}})" data-bs-toggle="modal" data-bs-target="#document-modal">--}}
-
-    {{--                                        <i class="fa fa-plus"></i> Novo--}}
-    {{--                                    </span>--}}
-    {{--                                </td>--}}
-    {{--                            </tr>--}}
+                                @foreach($person->documents as $document)
+                                    <tr>
+                                        <td>{{$document->documentType->name}} </td>
+                                        <td>{{$document->numberMaskered}}</td>
+                                        <td class="text-end">
+                                            @if(!request()->query('disabled'))
+                                                <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal" title="Alterar">
+                                                <i class="fa fa-lg fa-pencil"></i>
+                                                </span>
+                                                <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})" title="Remover">
+                                                <i class="fa fa-lg fa-trash"></i>
+                                                </span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </table>
                         </div>
                     </div>

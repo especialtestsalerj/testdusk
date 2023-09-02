@@ -23,9 +23,7 @@ class PersonRestrictionStore extends Request
     public function messages()
     {
         return [
-            'cpf.required' => 'CPF: preencha o campo corretamente.',
-            'cpf.cpf' => 'CPF: número inválido.',
-            'full_name.required' => 'Nome: preencha o campo corretamente.',
+            'person_id.required' => 'Pessoa: preencha o campo corretamente.',
             'started_at.required' => 'Início: preencha o campo corretamente.',
             'ended_at.after_or_equal' => 'A Data de Término deve ser posterior à data de início.',
             'message.required' => 'Mensagem: preencha o campo corretamente.',

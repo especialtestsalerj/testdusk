@@ -19,7 +19,6 @@ Alpine.start()
 
 window.Swal = require('sweetalert2')
 
-
 window.addEventListener('swal-checkout-failure', function (e) {
     Swal.fire({
         toast: true,
@@ -35,10 +34,12 @@ window.addEventListener('swal-checkout-failure', function (e) {
         },
         html:
             '<div class="row">' +
-                '<div class="d-flex justify-content-center">' +
-                    '<h3>'+e.detail.error+'</h3>'+
-                '</div>'+
-            '</div>'
+            '<div class="d-flex justify-content-center">' +
+            '<h3>' +
+            e.detail.error +
+            '</h3>' +
+            '</div>' +
+            '</div>',
     })
 })
 
@@ -57,24 +58,26 @@ window.addEventListener('swal-checkout-success', function (e) {
         },
         html:
             '<div class="row">' +
-                '<div class="d-flex justify-content-center">' +
-                    '<h3>Checkout realizado</h3>'+
-                '</div>'+
-            '</div>'+
-            '<hr class="my-1"/>'+
+            '<div class="d-flex justify-content-center">' +
+            '<h3>Checkout realizado</h3>' +
+            '</div>' +
+            '</div>' +
+            '<hr class="my-1"/>' +
             '<div class="row">' +
-                '<div class="col-4">' +
-                    '<img class="w-100" src="'+e.detail.photo+'">' +
-                '</div>' +
-                '<div class="col-8 d-flex">' +
-                    '<div class="align-self-center">' +
-                        e.detail.name +
-                    '</div>' +
-                '</div>' +
-            '</div>'
+            '<div class="col-4">' +
+            '<img class="w-100" src="' +
+            e.detail.photo +
+            '">' +
+            '</div>' +
+            '<div class="col-8 d-flex">' +
+            '<div class="align-self-center">' +
+            e.detail.name +
+            '</div>' +
+            '</div>' +
+            '</div>',
     })
 })
-window.addEventListener('swall-error', function (e){
+window.addEventListener('swall-error', function (e) {
     const options = e.detail
     Swal.fire({
         icon: 'error',
@@ -92,8 +95,8 @@ window.addEventListener('swal', function (e) {
         showConfirmButton: true,
         cancelButtonColor: '#E3352E',
         confirmButtonColor: '#38c172',
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
+        confirmButtonText: '<i class="fa fa-save"></i> Confirmar',
+        cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
         showCancelButton: true,
     }).then((result) => {
         if (result.isConfirmed) {

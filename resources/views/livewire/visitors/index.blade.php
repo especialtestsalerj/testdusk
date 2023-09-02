@@ -4,7 +4,7 @@
         <div class="">
             <div class="row mb-4 d-flex align-items-center">
                 <div class="col-4 col-md-6">
-                    <h3 class="mb-0">Visitas</h3>
+                    <h3 class="mb-0"><i class="fa fa-people-roof"></i> Visitas</h3>
                 </div>
 
                 <div class="col-8 col-md-6">
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="">
+        <div class="p-0">
             @include('layouts.msg')
 
             @include('livewire.visitors.partials.table', ['redirect' => 'visitors.index'])

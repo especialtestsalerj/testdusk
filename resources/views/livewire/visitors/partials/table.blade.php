@@ -89,7 +89,7 @@
             @empty
                 <div class="col-12">
                     <div class="alert alert-warning mt-2">
-                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
                     </div>
                 </div>
             @endforelse
@@ -212,7 +212,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabelVisitor"><i class="fas fa-trash"></i>
+                                    <h5 class="modal-title" id="deleteModalLabelVisitor"><i class="fa fa-trash"></i>
                                         Remoção de Visitante</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -273,7 +273,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning mt-2">
-                            <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                            <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
                         </div>
                     </div>
                 @endforelse

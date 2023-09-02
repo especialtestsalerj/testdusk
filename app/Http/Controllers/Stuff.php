@@ -16,15 +16,13 @@ class Stuff extends Controller
     {
         formMode(Constants::FORM_MODE_CREATE);
 
-        $routine = app(RoutinesRepository::class)->findById([$routine_id]);
+        $routine = app(RoutinesRepository::class)->findById($routine_id);
 
         return $this->view('stuffs.form')->with([
             'routine_id' => $routine_id,
             'routine' => $routine,
             'stuff' => app(StuffsRepository::class)->new(),
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
+            'sectors' => app(SectorsRepository::class)->allActive($routine?->sector?->id),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),
@@ -51,9 +49,7 @@ class Stuff extends Controller
             'routine_id' => $routine_id,
             'routine' => $routine,
             'stuff' => $stuff,
-            'sectors' => app(SectorsRepository::class)
-                ->disablePagination()
-                ->all(),
+            'sectors' => app(SectorsRepository::class)->allActive($routine?->sector?->id),
             'users' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),

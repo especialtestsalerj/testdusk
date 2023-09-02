@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('certificate-types.index') }}">Tipos de Porte</a>
+                            <a href="{{ route('certificate-types.index') }}"><i class="fa fa-list-ol"></i> Tipos de Porte</a>
 
                             @if(is_null($certificateType->id))
                                 > Novo
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">
