@@ -25,32 +25,32 @@
     @livewireStyles
 </head>
 <body class="bg-light">
-    <div id="app">
-        @include('layouts.partials.menu')
+<div id="app">
+    @include('layouts.partials.menu')
 
 
-        <main class="py-0" >
-            <div class="container-fluid px-0">
-                <div class="row justify-content-center">
-                    <div class="col">
-                        @yield('content')
-                        <div>
-                            @if(isset($slot))
-                                {{ $slot }}
-                            @endIf
-                        </div>
-                    </div>
+    <main class="py-0" >
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col">
+                    @yield('content')
+
+                    @if(isset($slot))
+                        {{ $slot }}
+                    @endIf
+
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        @include('layouts.partials.footer')
-    </div>
+    @include('layouts.partials.footer')
+</div>
 
-    @include('layouts.partials.livereload')
-    @include('layouts.partials.google-analytics')
-    @livewireScripts
-    <script src="{{ mix('js/alpine.js') }}" defer></script>
+@include('layouts.partials.livereload')
+@include('layouts.partials.google-analytics')
+@livewireScripts
+<script src="{{ mix('js/alpine.js') }}" defer></script>
 </body>
 
 
