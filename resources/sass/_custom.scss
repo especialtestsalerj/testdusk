@@ -620,6 +620,29 @@ body.bg-logo {
     }
 }
 
+.dashboard-button-swipper {
+    transition: 0.3s;
+    &:hover {
+        .fa-circle:before {
+            color: #b57d18 !important;
+        }
+    }
+}
+
+.modal-header {
+        background-color: #142b53;
+        color: #fff;
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+}
+
+.modal-footer {
+    background: #d7e2f5;
+}
+
+
+
 
 // X-Small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) {
