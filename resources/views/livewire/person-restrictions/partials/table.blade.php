@@ -8,7 +8,7 @@
                             <div class="col-12 col-lg-6 text-center text-lg-start">
                                 <span class="fw-bold">Pessoa:</span> {{ $personRestriction?->person?->name }} -
                                 @foreach($personRestriction?->person->documents as $document)
-                                    {{$document->documentType->name}}: {{$document->number}}
+                                    {{$document->documentType->name}}: {{$document->numberMaskered}}
                                     @if($document->state?->initial)
                                         - {{$document->state->initial}}
                                     @endif
