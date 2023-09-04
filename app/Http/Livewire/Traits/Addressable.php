@@ -9,6 +9,14 @@ use App\Models\Country;
 
 trait Addressable
 {
+    //    protected $rules=
+    //        [
+    //            'countryBr'=>'',
+    //            'country_id'=>'',
+    //            'city_id'=>'',
+    //            'state_id'=>'',
+    //        ];
+
     public $country_id;
     public $state_id;
     public $city_id;
@@ -24,20 +32,25 @@ trait Addressable
     {
         $this->loadCountryBr();
         $this->country_id = is_null(old('country_id'))
-            ? $this->person->country_id
+            ? $this->person->country_id ?? ''
             : old('country_id');
         $this->select2SelectOption('country_id', $this->country_id);
 
         if (!$this->detectIfCountryBrSelected()) {
-            $this->select2Destroy('city_id');
-            $this->select2Destroy('state_id');
+            $this->countryBrNotSelected();
         } else {
-            $this->state_id = is_null(old('state_id')) ? $this->person->state_id : old('state_id');
+            $this->state_id = is_null(old('state_id'))
+                ? $this->person->state_id ?? ''
+                : old('state_id');
             $this->select2SelectOption('state_id', $this->state_id);
 
-            $this->updatedStateId($this->state_id);
+            if (!empty($this->state_id)) {
+                $this->updatedStateId($this->state_id);
+            }
 
-            $this->city_id = is_null(old('city_id')) ? $this->person->city_id : old('city_id');
+            $this->city_id = is_null(old('city_id'))
+                ? $this->person->city_id ?? ''
+                : old('city_id');
             $this->select2SelectOption('city_id', $this->city_id);
         }
 
@@ -51,7 +64,7 @@ trait Addressable
      */
     protected function loadCountryBr(): void
     {
-        $this->countryBr = Country::where('id', '=', config('app.country_br'))->first();
+        $this->countryBr = Country::where('name', 'ilike', 'Brasil')->first();
     }
 
     /**
@@ -72,6 +85,17 @@ trait Addressable
     /**
      * @return void
      */
+    protected function countryBrNotSelected(): void
+    {
+        $this->select2Destroy('city_id');
+        $this->select2Disable('city_id');
+        $this->select2Destroy('state_id');
+        $this->select2Disable('state_id');
+    }
+
+    /**
+     * @return void
+     */
     protected function countryBrSelected(): void
     {
         $this->select2Reload('city_id');
@@ -82,29 +106,36 @@ trait Addressable
 
     public function loadCities()
     {
-        $city_id = empty($this->city_id) ? null : $this->city_id;
-        $state_id = empty($this->state_id) ? null : $this->state_id;
+        if ($this->state_id) {
+            $city_id = empty($this->city_id) ? null : $this->city_id;
+            $state_id = empty($this->state_id) ? null : $this->state_id;
 
-        if (isset($this->state_id)) {
-            $this->cities = City::where('state_id', $state_id)
-                ->where(function ($query) use ($city_id) {
-                    $query
-                        ->when(isset($id), function ($query) use ($city_id) {
-                            $query->orWhere('id', '=', $city_id);
-                        })
-                        ->orWhere('status', true);
-                })
-                ->orderBy('name')
-                ->get();
+            if (isset($this->state_id)) {
+                $this->cities = City::where('state_id', $state_id)
+                    ->where(function ($query) use ($city_id) {
+                        $query
+                            ->when(isset($id), function ($query) use ($city_id) {
+                                $query->orWhere('id', '=', $city_id);
+                            })
+                            ->orWhere('status', true);
+                    })
+                    ->orderBy('name')
+                    ->get();
+            }
+        }
+    }
+
+    public function updatedCountryId($newValue)
+    {
+        if ($newValue != $this->countryBr->id) {
+            $this->countryBrNotSelected();
+        } else {
+            $this->countryBrSelected();
         }
     }
 
     public function updatedStateId($newValue)
     {
-        if (is_null($newValue)) {
-            return;
-        }
-
         $this->loadCities();
 
         $this->cities = collect($this->cities);
@@ -129,8 +160,8 @@ trait Addressable
     public function addressFormVariables()
     {
         return [
-            'countries' => app(Countries::class)->allActive($this->country_id),
-            'states' => app(States::class)->allActive($this->state_id),
+            'countries' => app(Countries::class)->allActive('name', 'asc', null),
+            'states' => app(States::class)->allActive('name', 'asc', null),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }

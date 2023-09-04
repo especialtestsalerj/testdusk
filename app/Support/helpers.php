@@ -187,6 +187,10 @@ function capitalizeBrazilian($name)
     return $string;
 }
 
+function to_upper($string){
+    return convert_case($string, MB_CASE_UPPER);
+}
+
 function permission_slug($string)
 {
     $string = str_replace(':', $replace = 'xxxxxxxxxx', $string);
