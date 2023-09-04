@@ -82,6 +82,7 @@ window.addEventListener('swall-error', function (e) {
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
+        confirmButtonColor: '#38c172',
         text: options.text,
     })
 })
