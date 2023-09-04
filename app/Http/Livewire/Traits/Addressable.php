@@ -107,7 +107,21 @@ trait Addressable
     public function loadCities()
     {
         if ($this->state_id) {
-            $this->cities = City::where('state_id', $this->state_id)->get();
+            $city_id = empty($this->city_id) ? null : $this->city_id;
+            $state_id = empty($this->state_id) ? null : $this->state_id;
+
+            if (isset($this->state_id)) {
+                $this->cities = City::where('state_id', $state_id)
+                    ->where(function ($query) use ($city_id) {
+                        $query
+                            ->when(isset($id), function ($query) use ($city_id) {
+                                $query->orWhere('id', '=', $city_id);
+                            })
+                            ->orWhere('status', true);
+                    })
+                    ->orderBy('name')
+                    ->get();
+            }
         }
     }
 
@@ -130,7 +144,7 @@ trait Addressable
             $this->cities
                 ->map(function ($city) {
                     return [
-                        'name' => $city->name,
+                        'name' => convert_case($city->name, MB_CASE_UPPER),
                         'value' => $city->id,
                     ];
                 })
@@ -146,8 +160,8 @@ trait Addressable
     public function addressFormVariables()
     {
         return [
-            'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
-            'states' => app(States::class)->allOrderBy('name', 'asc', null),
+            'countries' => app(Countries::class)->allActive('name', 'asc', null),
+            'states' => app(States::class)->allActive('name', 'asc', null),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }
