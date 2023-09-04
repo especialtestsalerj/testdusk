@@ -15,6 +15,11 @@
                 @endif
             </div>
 
+
+            @include('livewire.caution-weapons.modal')
+
+            {{--
+            @include('')
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="weapon-modal" tabindex="-1" role="dialog" aria-labelledby="weaponModalLabel" aria-hidden="true">
                 <form wire:submit.prevent="store">
@@ -205,6 +210,8 @@
                     </div>
                 </form>
             </div>
+
+            --}}
         </div>
 
         <div class="row">

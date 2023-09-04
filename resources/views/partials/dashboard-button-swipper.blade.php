@@ -1,6 +1,6 @@
 <div class="col-6 col-lg-3">
     @can($permission)
-    <a href="{{$url}}">
+    <a href="{{$url}}" class="dashboard-button-swipper">
     @endcan
         <span @can($permission)class="fa-stack fa-3x dashboard-active-icons"@else class="fa-stack fa-3x dashboard-inactive-icons"@endcan @can($permission) @if(isset($count)) data-count="{{$count}}" @endIf @endcan>
             <i class="fa fa-circle fa-stack-2x"></i>
