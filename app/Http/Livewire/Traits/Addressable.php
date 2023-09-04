@@ -9,14 +9,6 @@ use App\Models\Country;
 
 trait Addressable
 {
-    //    protected $rules=
-    //        [
-    //            'countryBr'=>'',
-    //            'country_id'=>'',
-    //            'city_id'=>'',
-    //            'state_id'=>'',
-    //        ];
-
     public $country_id;
     public $state_id;
     public $city_id;
@@ -32,30 +24,26 @@ trait Addressable
     {
         $this->loadCountryBr();
         $this->country_id = is_null(old('country_id'))
-            ? $this->person->country_id ?? ''
+            ? $this->person->country_id
             : old('country_id');
         $this->select2SelectOption('country_id', $this->country_id);
 
         if (!$this->detectIfCountryBrSelected()) {
             $this->countryBrNotSelected();
         } else {
-            $this->state_id = is_null(old('state_id'))
-                ? $this->person->state_id ?? ''
-                : old('state_id');
+            $this->state_id = is_null(old('state_id')) ? $this->person->state_id : old('state_id');
             $this->select2SelectOption('state_id', $this->state_id);
 
             if (!empty($this->state_id)) {
                 $this->updatedStateId($this->state_id);
             }
 
-            $this->city_id = is_null(old('city_id'))
-                ? $this->person->city_id ?? ''
-                : old('city_id');
+            $this->city_id = is_null(old('city_id')) ? $this->person->city_id : old('city_id');
             $this->select2SelectOption('city_id', $this->city_id);
         }
 
         $this->other_city = is_null(old('other_city'))
-            ? mb_strtoupper($this->person->other_city) ?? ''
+            ? convert_case($this->person->other_city, MB_CASE_UPPER)
             : old('other_city');
     }
 
@@ -64,7 +52,7 @@ trait Addressable
      */
     protected function loadCountryBr(): void
     {
-        $this->countryBr = Country::where('name', 'ilike', 'Brasil')->first();
+        $this->countryBr = Country::where('id', '=', config('app.country_br'))->first();
     }
 
     /**
@@ -106,22 +94,20 @@ trait Addressable
 
     public function loadCities()
     {
-        if ($this->state_id) {
-            $city_id = empty($this->city_id) ? null : $this->city_id;
-            $state_id = empty($this->state_id) ? null : $this->state_id;
-
-            if (isset($this->state_id)) {
-                $this->cities = City::where('state_id', $state_id)
-                    ->where(function ($query) use ($city_id) {
-                        $query
-                            ->when(isset($id), function ($query) use ($city_id) {
-                                $query->orWhere('id', '=', $city_id);
-                            })
-                            ->orWhere('status', true);
-                    })
-                    ->orderBy('name')
-                    ->get();
-            }
+        $city_id = empty($this->city_id) ? null : $this->city_id;
+        $state_id = empty($this->state_id) ? null : $this->state_id;
+        $this->other_city = null;
+        if (isset($this->state_id)) {
+            $this->cities = City::where('state_id', $state_id)
+                ->where(function ($query) use ($city_id) {
+                    $query
+                        ->when(isset($id), function ($query) use ($city_id) {
+                            $query->orWhere('id', '=', $city_id);
+                        })
+                        ->orWhere('status', true);
+                })
+                ->orderBy('name')
+                ->get();
         }
     }
 
@@ -136,6 +122,10 @@ trait Addressable
 
     public function updatedStateId($newValue)
     {
+        if (is_null($newValue)) {
+            return;
+        }
+
         $this->loadCities();
 
         $this->cities = collect($this->cities);
@@ -160,8 +150,8 @@ trait Addressable
     public function addressFormVariables()
     {
         return [
-            'countries' => app(Countries::class)->allActive('name', 'asc', null),
-            'states' => app(States::class)->allActive('name', 'asc', null),
+            'countries' => app(Countries::class)->allActive($this->country_id),
+            'states' => app(States::class)->allActive($this->state_id),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }

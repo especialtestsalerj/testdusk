@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2 {{!$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
+                <div class="col-md-4 {{!$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
                     <div class="form-group">
                         <label for="other_city">Cidade*</label>
                         <input type="text" id="other_city" name="other_city" class="form-control text-uppercase"
