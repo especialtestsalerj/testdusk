@@ -117,6 +117,7 @@ class People extends BaseForm
                 remove_punctuation($this->person->documents[0]->number),
                 MB_CASE_UPPER
             );
+
             $this->readonly = true;
         } else {
             if (!$this->isPreFilled('document_number')) {
@@ -186,9 +187,9 @@ class People extends BaseForm
             $this->webcam_data_uri = false;
         }
 
-        //TODO: O método fillModel está sobrescrevendo o document_type_id, name e document_number
         $this->fillModel();
         $this->loadDefault();
+
     }
 
     public function render()

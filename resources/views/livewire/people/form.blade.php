@@ -92,46 +92,46 @@
                     </div>
                 </div>
 
-                @if($this->detectIfCountryBrSelected())
-                    <div class="col-md-4" wire:ignore id="div-state_id">
-                        <div class="form-group">
-                            <label for="state_id">Estado*</label>
-                            <select class="select2 form-control text-uppercase" id="state_id" name="state_id"
-                                    wire:model="state_id" x-ref="state_id" wire:change="loadCities"
-                                    @if ($readonly) readonly @endif>
-                                <option value="">SELECIONE</option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ $state->initial }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore id="div-state_id">
+                    <div class="form-group">
+                        <label for="state_id">Estado*</label>
+                        <select class="select2 form-control text-uppercase" id="state_id" name="state_id"
+                                wire:model="state_id" x-ref="state_id" wire:change="loadCities"
+                                @if ($readonly) readonly @endif
+                        >
+                            <option value="">SELECIONE</option>
+                            @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="col-md-4" wire:ignore id="div-city_id">
-                        <div class="form-group">
-                            <label for="city_id">Cidade*</label>
-                            <select name="city_id" id="city_id" class="select2 form-control text-uppercase"
-                                    wire:model="city_id" x-ref="city_id"
-                                    @if ($readonly) readonly @endif>
-                                <option value="">SELECIONE</option>
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city->id ?? $city['id'] }}">{{ convert_case($city->name ?? $city['name'], MB_CASE_UPPER) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                </div>
+                <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore id="div-city_id">
+                    <div class="form-group">
+                        <label for="city_id">Cidade*</label>
+                        <select name="city_id" id="city_id" class="select2 form-control text-uppercase"
+                                wire:model="city_id" x-ref="city_id"
+                                @if ($readonly) readonly @endif
+                        >
+                            <option value="">SELECIONE</option>
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                @endIf
+                </div>
 
-                @if(!$this->detectIfCountryBrSelected())
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="other_city">Cidade*</label>
-                            <input type="text" name="other_city" class="form-control text-uppercase"
-                                   value="{{ $other_city }}"
-                                   @if ($readonly) readonly @endif />
-                        </div>
+                <div class="col-md-2 {{!$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
+                    <div class="form-group">
+                        <label for="other_city">Cidade*</label>
+                        <input type="text" id="other_city" name="other_city" class="form-control text-uppercase"
+                               value="{{ $other_city }}"
+                               @if ($readonly) readonly @endif
+                                {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }}
+                        />
                     </div>
-                @endIf
+                </div>
             </div>
 
                 <div class="row">

@@ -76,6 +76,8 @@ trait Addressable
     {
         $this->select2Reload('city_id');
         $this->select2Reload('state_id');
+        $this->select2Enable('city_id');
+        $this->select2Enable('state_id');
     }
 
     public function loadCities()
