@@ -64,7 +64,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="gender_id">Gênero</label>
-                            <select class="form-control text-uppercase" name="gender_id" id="gender_id" wire:model="gender_id" x-ref="gender_id" @disabled(request()->query('disabled'))>
+                            <select class="form-select text-uppercase" name="gender_id" id="gender_id" wire:model="gender_id" x-ref="gender_id" @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach($genders as $gender)
                                     <option value="{{$gender->id}}">{{$gender->name}}</option>
@@ -139,7 +139,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="has_disability">Possui deficiência?</label>
-                                <select class="form-control text-uppercase" name="has_disability" id="has_disability"
+                                <select class="form-select text-uppercase" name="has_disability" id="has_disability"
                                         wire:model="has_disability"
                                         x-ref="has_disability" @disabled(request()->query('disabled'))>
                                     <option {{ is_null($person->has_disability) ? ' selected' : '' }} value="">
