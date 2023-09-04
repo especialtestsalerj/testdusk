@@ -142,6 +142,7 @@ class Modal extends BaseForm
         $this->document_type_id = null;
         $this->number = null;
         $this->state_id = null;
+        $this->resetErrorBag();
     }
 
 }
