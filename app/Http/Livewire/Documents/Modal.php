@@ -23,6 +23,23 @@ class Modal extends BaseForm
         'createDocument'
     ];
 
+    public $rules = [
+        'document_type_id' => 'required',
+        'number' => 'required',
+        'state_id' => 'required_if:document_type_id,2',
+    ];
+
+    protected $messages = [
+        'required' => 'O campo :attribute é obrigatório.',
+        'required_if' => 'O campo :attribute é obrigatório.',
+    ];
+
+    protected $validationAttributes = [
+        'document_type_id' => 'Tipo de Documento',
+        'number' => 'Número',
+        'state_id' => 'Estado',
+    ];
+
     public function render()
     {
        return view('livewire.documents.modal')->with($this->getViewVariables());
@@ -49,6 +66,10 @@ class Modal extends BaseForm
 
     public function storeNewDocument()
     {
+        $this->validate();
+
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
+
         if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
 
             $cpf = Document::where('person_id',$this->person->id)->
@@ -58,7 +79,6 @@ class Modal extends BaseForm
                 $this->swallError('A pessoa já possui um CPF cadastrado');
                 return;
             }
-
 
         }
         $this->person->documents()->create([
@@ -73,6 +93,9 @@ class Modal extends BaseForm
 
     public function storeEditedDocument()
     {
+        $this->validate();
+
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
 
         $this->document->update([
             'number' => $this->number,
@@ -93,7 +116,6 @@ class Modal extends BaseForm
 
     public function store()
     {
-
         if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
             if(!$this->isValidCpf()){
 

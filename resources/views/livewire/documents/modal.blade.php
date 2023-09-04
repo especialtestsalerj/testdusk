@@ -17,21 +17,23 @@
                             @isset($this->person)
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="entranced_at">Tipo de Documento*</label>
+                                        <label for="document_type_id">Tipo de Documento*</label>
                                         <select class="form-control text-uppercase" name="document_type_id"
-                                            id="document_type_id" wire:model="document_type_id" x-ref="document_type_id">
+                                                id="document_type_id" wire:model="document_type_id"
+                                                x-ref="document_type_id">
                                             <option value="">selecione</option>
                                             @foreach ($documentTypes as $documentType)
-                                                <option value="{{ $documentType->id }}"> {{ $documentType->name }}</option>
+                                                <option
+                                                    value="{{ $documentType->id }}"> {{ $documentType->name }}</option>
                                             @endforeach
 
                                         </select>
                                         <div>
-                                            @error('entranced_at')
-                                                <small class="text-danger">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-
-                                                </small>
+                                            @error('document_type_id')
+                                            <small class="text-danger">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                {{ $message }}
+                                            </small>
                                             @endError
                                         </div>
                                     </div>
@@ -39,15 +41,15 @@
                             @endisset
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exited_at">Número</label>
+                                    <label for="number">Número</label>
                                     <input type="text" max="3000-01-01T23:59" class="form-control text-uppercase"
-                                        name='number' wire:model="number" x-ref="number" />
+                                           name="number" wire:model="number" x-ref="number"/>
                                     <div>
-                                        @error('exited_at')
-                                            <small class="t ext-danger">
-                                                <i class="fas fa-exclamation-triangle"></i>
-
-                                            </small>
+                                        @error('number')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
                                         @endError
                                     </div>
                                 </div>
@@ -58,9 +60,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="entranced_at">Estado*</label>
+                                        <label for="state_id">Estado*</label>
                                         <select class="form-control text-uppercase" name="state_id" id="state_id"
-                                            wire:model="state_id" x-ref="state_id" @disabled(request()->query('disabled'))>
+                                                wire:model="state_id"
+                                                x-ref="state_id" @disabled(request()->query('disabled'))>
                                             <option value="">selecione</option>
                                             @foreach ($states as $state)
                                                 <option value="{{ $state->id }}"> {{ $state->name }}</option>
@@ -68,11 +71,11 @@
 
                                         </select>
                                         <div>
-                                            @error('entranced_at')
-                                                <small class="text-danger">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-
-                                                </small>
+                                            @error('state_id')
+                                            <small class="text-danger">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                {{ $message }}
+                                            </small>
                                             @endError
                                         </div>
                                     </div>
@@ -81,7 +84,7 @@
                         @endif
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" dusk="submit" data-bs-dismiss="modal" class="btn btn-success btn-sm text-white close-modal" title="Salvar Documento" id="submitSalvarDocumento"><i class="fa fa-save"></i> Salvar</button>
+                        <button type="submit" dusk="submit" class="btn btn-success btn-sm text-white close-modal" title="Salvar Documento" id="submitSalvarDocumento"><i class="fa fa-save"></i> Salvar</button>
                         <button type="button" dusk="cancel" wire:click.prevent="cleanModal()" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
                     </div>
                 </form>
