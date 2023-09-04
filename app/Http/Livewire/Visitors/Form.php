@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Livewire\Traits\WithWebcam;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
@@ -82,7 +83,9 @@ class Form extends BaseForm
 
     protected function formVariables()
     {
-        return ['sectors' => Sector::all()];
+        return [
+            'sectors' => app(SectorsRepository::class)->allActive($this->visitor->sector_id),
+        ];
     }
 
     public function render()

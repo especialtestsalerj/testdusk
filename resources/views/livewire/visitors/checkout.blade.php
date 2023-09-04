@@ -3,7 +3,7 @@
 
         <div class="row mb-4">
             <div class="col-md-8">
-                <h3 class="mb-0">Visitas - Checkout de Visitante</h3>
+                <h3 class="mb-0"><i class="fa fa-people-roof"></i> Visitas - Checkout de Visitante</h3>
             </div>
         </div>
 
@@ -89,13 +89,13 @@
                                                     </div>
                                                     <div class="row mt-2">
                                                         <div class="col-12">
-                                                            <div class="small fw-bold">
+                                                            <div class="small">
                                                                 <i class="fas fa-calendar-day me-2"></i>Entrada:
                                                                 {{ $visitor->entranced_at->format('d/m/Y - H:i') }}
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
-                                                            <div class="small fw-bold">
+                                                            <div class="small">
                                                                 <i class="fas fa-calendar-day me-2"></i>Saída:
                                                                 {{ $visitor->exited_at->format('d/m/Y - H:i') }}
                                                             </div>
@@ -127,7 +127,7 @@
                                 <div class="col-md-4">
                                     Visitante
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 text-left">
                                     Movimentação
                                 </div>
                                 <div class="col-md-4 text-center">
@@ -200,7 +200,7 @@
 
                             @empty
                                 <div class="alert alert-warning mt-2">
-                                    <i class="fa fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                                    <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
                                 </div>
                             @endforelse
                             @if (!empty($visitors))

@@ -38,18 +38,18 @@ class CpfAvailableOnVisit implements Rule
     {
         $documentType = app(DocumentTypes::class)->getByName('CPF');
 
-//        if ($this->document_type_id == $documentType->id) {
-            $query = DB::table('visitors')
-                ->join('documents', 'visitors.document_id', '=', 'documents.id')
-                ->where('documents.number', $this->document_number)
-                ->where('documents.document_type_id', $this->document_type_id)
-                ->whereNull('visitors.exited_at');
+        //        if ($this->document_type_id == $documentType->id) {
+        $query = DB::table('visitors')
+            ->join('documents', 'visitors.document_id', '=', 'documents.id')
+            ->where('documents.number', $this->document_number)
+            ->where('documents.document_type_id', $this->document_type_id)
+            ->whereNull('visitors.exited_at');
 
-            return $query->doesntExist();
-//        } else {
-//            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
-//            return true;
-//        }
+        return $query->doesntExist();
+        //        } else {
+        //            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
+        //            return true;
+        //        }
     }
 
     /**
@@ -59,7 +59,7 @@ class CpfAvailableOnVisit implements Rule
      */
     public function message()
     {
-        return 'Documento (Visitante): possui visita em aberto.';
+        return 'Visitante possui visita em aberto.';
     }
 
     /**

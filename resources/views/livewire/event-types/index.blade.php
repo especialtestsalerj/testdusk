@@ -4,7 +4,7 @@
         <div class="">
             <div class="row">
                 <div class="col-md-3">
-                    <h3 class="mb-0">Tipos de Ocorrência</h3>
+                    <h3 class="mb-0"><i class="fas fa-list"></i> Tipos de Ocorrência</h3>
                 </div>
 
                 <div class="col-md-9">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="card-body my-2">
+        <div class="p-0">
             @include('layouts.msg')
 
             @include('livewire.event-types.partials.table')

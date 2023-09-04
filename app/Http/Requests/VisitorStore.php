@@ -40,7 +40,7 @@ class VisitorStore extends Request
             'description' => 'required',
         ];
     }
-    //currency, !=, 0",
+
     public function messages()
     {
         return [

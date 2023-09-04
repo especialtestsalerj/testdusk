@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a>
+                            <a href="{{ route('person-restrictions.index') }}"><i class="fas fa-person-circle-exclamation"></i> Restrições de Acesso</a>
 
                             @if(is_null($personRestriction->id))
                                 > Nova
@@ -49,9 +49,6 @@
                                         {{ $person->name }}
                                         @foreach ($person->documents as $document)
                                             - {{ $document->documentType->name }}: {{ $document->numberMaskered }}
-                                            @if ($document->state?->initial)
-                                                - {{ $document->state->initial }}
-                                            @endif
                                         @endforeach
                                     </option>
                                 @endforeach

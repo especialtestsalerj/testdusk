@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('routines.index') }}">Rotinas</a>
+                            <a href="{{ route('routines.index') }}"><i class="fa fa-clipboard-list"></i> Rotinas</a>
 
                             @if(is_null($routine->id))
                                 > Nova

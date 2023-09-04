@@ -38,7 +38,7 @@
                                     <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i>
                                         ROTINA ANTERIOR </span>
                                 @endif
-                                <span class="btn btn-link px-0 pt-0 pb-1"
+                                <span class="btn btn-link px-3 py-1"
                                     wire:click="generateCautionReceipt({{ $caution->id }})" title="Imprimir Etiqueta">
                                     <i class="fa fa-lg fa-print"></i>
                                 </span>
@@ -65,7 +65,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fas fa-trash"></i> Remoção de
+                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de
                                 Cautela</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -132,7 +132,7 @@
             </div>
         @empty
             <div class="alert alert-warning mt-2">
-                <i class="fa fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
+                <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Cautela encontrada.
             </div>
         @endforelse
         <div class="d-flex justify-content-center mt-4">{{ $cautions->links() }}

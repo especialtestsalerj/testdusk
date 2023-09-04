@@ -44,15 +44,9 @@ class Routine extends Controller
 
         return $this->view('routines.form')->with([
             'routine' => $routine,
-            'shifts' => app(ShiftsRepository::class)
-                ->disablePagination()
-                ->all(),
-            'entrancedUsers' => app(UsersRepository::class)
-                ->disablePagination()
-                ->all(),
-            'exitedUsers' => app(UsersRepository::class)
-                ->disablePagination()
-                ->all(),
+            'shifts' => app(ShiftsRepository::class)->allActive(),
+            'entrancedUsers' => app(UsersRepository::class)->allActive(),
+            'exitedUsers' => app(UsersRepository::class)->allActive(),
         ]);
     }
 
@@ -83,11 +77,11 @@ class Routine extends Controller
     {
         formMode(Constants::FORM_MODE_SHOW);
 
+        $routine = app(RoutinesRepository::class)->findById($id);
+
         return $this->view('routines.form')->with([
-            'routine' => app(RoutinesRepository::class)->findById($id),
-            'shifts' => app(ShiftsRepository::class)
-                ->disablePagination()
-                ->all(),
+            'routine' => $routine,
+            'shifts' => app(ShiftsRepository::class)->allActive($routine?->shift?->id),
             'entrancedUsers' => app(UsersRepository::class)
                 ->disablePagination()
                 ->all(),

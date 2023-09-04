@@ -353,22 +353,23 @@ class IndexForm extends BaseForm
 
         $this->caution = app(CautionsRepository::class)->findById($this->caution_id);
 
-        $this->personWeapons = CautionWeapon::select(
-            'caution_weapons.id',
-            'caution_weapons.entranced_at',
-            'caution_weapons.exited_at',
-            'caution_weapons.weapon_type_id',
-            'caution_weapons.weapon_description',
-            'caution_weapons.weapon_number',
-            'caution_weapons.register_number'
-        )
-            ->join('cautions', 'caution_weapons.caution_id', '=', 'cautions.id')
-            ->join('visitors', 'cautions.visitor_id', '=', 'visitors.id')
-            ->where('visitors.person_id', $this->caution->visitor->person->id)
-            ->get();
-
         if ($this->mode == 'create') {
             $this->cautionWeapon = new CautionWeapon();
+
+            $this->personWeapons = CautionWeapon::select(
+                'caution_weapons.id',
+                'caution_weapons.entranced_at',
+                'caution_weapons.exited_at',
+                'caution_weapons.weapon_type_id',
+                'caution_weapons.weapon_description',
+                'caution_weapons.weapon_number',
+                'caution_weapons.register_number'
+            )
+                ->join('cautions', 'caution_weapons.caution_id', '=', 'cautions.id')
+                ->join('visitors', 'cautions.visitor_id', '=', 'visitors.id')
+                ->where('visitors.person_id', $this->caution->visitor->person->id)
+                ->where('cautions.id', '<>', $this->caution->id)
+                ->get();
         }
 
         $this->fillModel();

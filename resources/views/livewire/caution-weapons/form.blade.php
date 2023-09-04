@@ -9,7 +9,7 @@
 
             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                 @if ($routine->status && !$disabled && !isset($this->caution?->old_id))
-                    <button type="button" class="btn btn-primary" wire:click="prepareForCreate" id='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
+                    <button type="button" class="btn btn-sm btn-primary text-white" wire:click="prepareForCreate" id='newWeapon' title="Nova Arma" data-bs-toggle="modal" data-bs-target="#weapon-modal">
                         <i class="fa fa-plus"></i>
                     </button>
                 @endif
@@ -24,16 +24,16 @@
                                 <h5 class="modal-title" id="weaponModalLabel">
                                     @switch($modalMode)
                                         @case('create')
-                                            <i class="fas fa-plus"></i> Nova Arma
+                                            <i class="fa fa-plus"></i> Nova Arma
                                             @break
                                         @case('update')
-                                            <i class="fas fa-pencil"></i> Alteração de Arma
+                                            <i class="fa fa-pencil"></i> Alteração de Arma
                                             @break
                                         @case('delete')
-                                            <i class="fas fa-trash"></i> Remoção de Arma
+                                            <i class="fa fa-trash"></i> Remoção de Arma
                                             @break
                                         @default
-                                            <i class="fas fa-gun"></i> Arma
+                                            <i class="fa fa-gun"></i> Arma
                                     @endswitch
                                 </h5>
                                 @if($modalMode == 'update')
@@ -55,11 +55,11 @@
                                         </div>
                                     @endif
 
-                                    @if($modalMode == 'create')
+                                    @if($modalMode == 'create' && count($personWeapons) > 0)
                                         <div class="form-group">
                                             <label for="person_weapon">Lista de Armas do/a Visitante</label>
                                             <select class="form-select" name="person_weapon" id="person_weapon" wire:model="person_weapon" wire:change="find" @disabled($disabled || $readonly)>
-                                                <option value=""></option>
+                                                <option value="">&nbsp;</option>
                                                 @foreach ($personWeapons as $key => $personWeapon)
                                                     <option value="{{ $personWeapon?->id }}">{{ $personWeapon?->weaponType?->name }} - {{ $personWeapon?->weapon_description }} - {{ $personWeapon?->weapon_number }}</option>
                                                 @endforeach
@@ -236,15 +236,15 @@
                                         <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR</span>
                                     @endif
                                     <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }}, {{ true }})" title="Detalhar Arma">
-                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-lg fa-search"></i>
                                     </button>
                                     @if ($routine->status && !$disabled)
                                         <button type="button" class="btn btn-link" wire:click="prepareForUpdate({{ $weapon->id }})" title="Alterar Arma" id="editWeapon{{ $weapon->id }}">
-                                            <i class="fa fa-pencil"></i>
+                                            <i class="fa fa-lg fa-pencil"></i>
                                         </button>
                                         @if (!isset($weapon?->old_id))
                                             <button type="button" class="btn btn-link" wire:click="prepareForDelete({{ $weapon->id }}, {{ true }})" title="Remover Arma" id="removeWeapon{{ $weapon->id }}">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-lg fa-trash"></i>
                                             </button>
                                         @endif
                                     @endif
@@ -255,8 +255,8 @@
                 </div>
             @empty
                 <div class="col-md-12">
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
+                    <div class="alert alert-warning mt-2">
+                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
                     </div>
                 </div>
             @endforelse

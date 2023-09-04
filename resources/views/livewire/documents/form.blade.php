@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-8 align-self-center">
                 <h3 class="mb-0">
-                    <i class="fas fa-id-card"></i> Documentos
+                    <i class="fa fa-id-card"></i> Documentos
                 </h3>
             </div>
 
@@ -27,16 +27,16 @@
                                 <h5 class="modal-title" id="documentModalLabel">
                                     @switch($modalMode)
                                         @case('create')
-                                            <i class="fas fa-plus"></i> Nova Arma
+                                            <i class="fa fa-plus"></i> Nova Arma
                                             @break
                                         @case('update')
-                                            <i class="fas fa-pencil"></i> Alteração de Arma
+                                            <i class="fa fa-pencil"></i> Alteração de Arma
                                             @break
                                         @case('delete')
-                                            <i class="fas fa-trash"></i> Remoção de Arma
+                                            <i class="fa fa-trash"></i> Remoção de Arma
                                             @break
                                         @default
-                                            <i class="fas fa-gun"></i> Arma
+                                            <i class="fa fa-gun"></i> Arma
                                     @endswitch
                                 </h5>
                                 @if($modalMode == 'update')
@@ -217,7 +217,7 @@
             @empty
                 <div class="col-md-12">
                     <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
+                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Arma encontrada.
                     </div>
                 </div>
             @endforelse

@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="sector_id">Setor</label>
                             <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(!$routine->status || request()->query('disabled'))>
-                                <option value=""></option>
+                                <option value="">&nbsp;</option>
                                 @foreach ($sectors as $key => $sector)
                                     @if(((!is_null($event->id)) && (!is_null($event->sector_id) && $event->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
                                         <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>

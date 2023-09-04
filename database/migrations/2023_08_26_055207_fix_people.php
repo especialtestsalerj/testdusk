@@ -12,9 +12,19 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::dropIfExists('people2');
+        //droping people2
+        DB::statement('DROP SEQUENCE IF EXISTS people_id_seq CASCADE');
+        //DB::statement('DROP TABLE people2');
+
+        //changing people
+        DB::statement('ALTER SEQUENCE people_id_seq1 RENAME TO people_id_seq');
+
+        DB::statement("SELECT setval('people_id_seq', (SELECT max(id) FROM people))");
+
+        DB::statement("ALTER TABLE people ALTER COLUMN id SET DEFAULT nextval('people_id_seq')");
 
         Schema::table('people', function (Blueprint $table) {
+            $table->dropColumn('id_card');
             $table->dropColumn('certificate_type');
             $table->dropColumn('certificate_number');
             $table->dropColumn('certificate_valid_until');
@@ -51,9 +61,16 @@ return new class extends Migration {
         });
 
         Schema::table('people', function (Blueprint $table) {
+            $table->string('id_card')->nullable();
             $table->string('certificate_type')->nullable();
             $table->string('certificate_number')->nullable();
             $table->date('certificate_valid_until')->nullable();
         });
+
+        DB::statement('CREATE SEQUENCE IF NOT EXISTS people_id_seq2');
+
+        DB::statement("SELECT setval('people_id_seq2', (SELECT max(id) FROM people2))");
+
+        DB::statement("ALTER TABLE people2 ALTER COLUMN id SET DEFAULT nextval('people_id_seq2')");
     }
 };

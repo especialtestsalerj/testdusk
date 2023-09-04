@@ -22,4 +22,21 @@ class Routines extends Repository
     {
         return Routine::where('status', true)->count() > 0;
     }
+
+    public function allActive($id = null)
+    {
+        $tmpId = empty($id) ? null : $id;
+
+        return $this->model
+            ::where(function ($query) use ($tmpId) {
+                $query
+                    ->when(isset($tmpId), function ($query) use ($tmpId) {
+                        $query->orWhere('id', '=', $tmpId);
+                    })
+                    ->orWhere('status', true);
+            })
+            ->orderBy('entranced_at')
+            ->orderBy('id')
+            ->get();
+    }
 }

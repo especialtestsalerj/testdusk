@@ -2,20 +2,18 @@
 
 namespace App\Http\Livewire\People;
 
-use App\Data\Repositories\Countries;
-use App\Data\Repositories\DisabilityTypes;
-use App\Data\Repositories\Genders;
+use App\Data\Repositories\Countries as CountriesRepository;
+use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
+use App\Data\Repositories\Genders as GendersRepository;
 use App\Data\Repositories\People as PeopleRepository;
-use App\Data\Repositories\States;
-use App\Data\Repositories\Visitors;
+use App\Data\Repositories\States as StatesRepository;
+use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Document;
 use App\Models\Person;
-use App\Data\Repositories\Genders as GendersRepository;
-use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
 
 use function view;
 
@@ -32,15 +30,9 @@ class Form extends BaseForm
     public $birthdate;
     public $gender_id;
     public $has_disability;
-    //    public $city_id;
-    //    public $other_city;
-    //    public $state_id;
-    //    public $country_id;
     public $email;
 
     public $disabilities = [];
-
-    //    public $cities = [];
 
     public $edit;
     public $modalMode;
@@ -120,45 +112,60 @@ class Form extends BaseForm
         $this->selectedId = $id;
         $this->person = Person::find($id);
 
-        $this->person_id = is_null(old('id')) ? $this->person->id ?? '' : old('id');
-        //dd($this->person_id);
+        $this->person_id = is_null(old('id')) ? $this->person->id : old('id');
+
         $this->full_name = is_null(old('full_name'))
-            ? $this->person->full_name ?? ''
+            ? convert_case($this->person->full_name, MB_CASE_UPPER)
             : old('full_name');
 
         $this->social_name = is_null(old('social_name'))
-            ? $this->person->social_name ?? ''
+            ? convert_case($this->person->social_name, MB_CASE_UPPER)
             : old('social_name');
 
         $this->birthdate = is_null(old('birthdate')) ? $this?->person->birthdate : old('birthdate');
 
-        $this->gender_id = is_null(old('gender_id'))
-            ? $this->person->gender_id ?? ''
-            : old('gender_id');
+        $this->gender_id = is_null(old('gender_id')) ? $this->person->gender_id : old('gender_id');
 
         $this->has_disability = is_null(old('has_disability'))
-            ? $this->person->has_disability ?? ''
+            ? $this->person->has_disability
             : old('has_disability');
 
         $this->disabilities = $this->person->disabilities->pluck('id')->toArray();
 
         $this->fillAddress();
 
-        $this->email = is_null(old('email')) ? $this->person->email ?? '' : old('email');
+        $this->email = is_null(old('email'))
+            ? convert_case($this?->person?->email, MB_CASE_LOWER)
+            : old('email');
     }
 
     public function loadCities()
     {
-        $this->cities = City::where('state_id', $this->state_id)->get();
+        $city_id = empty($this->city_id) ? null : $this->city_id;
+        $state_id = empty($this->state_id) ? null : $this->state_id;
+
+        if (isset($this->state_id)) {
+            $this->cities = City::where('state_id', $state_id)
+                ->where(function ($query) use ($city_id) {
+                    $query
+                        ->when(isset($id), function ($query) use ($city_id) {
+                            $query->orWhere('id', '=', $city_id);
+                        })
+                        ->orWhere('status', true);
+                })
+                ->orderBy('name')
+                ->get();
+        }
     }
 
     protected function getComponentVariables()
     {
+        //todo: passar lista por parametro e tratar no AllActive dd($this->person->disabilities->pluck('id')->toArray());
         return [
-            'genders' => app(Genders::class)->allOrderBy('id', 'asc', null),
-            'disabilityTypes' => app(DisabilityTypes::class)->allOrderBy('name', 'asc', null),
-            'countries' => app(Countries::class)->allOrderBy('name', 'asc', null),
-            'states' => app(States::class)->allOrderBy('name', 'asc', null),
+            'genders' => app(GendersRepository::class)->allActive($this->gender_id),
+            'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive(),
+            'countries' => app(CountriesRepository::class)->allActive($this->country_id),
+            'states' => app(StatesRepository::class)->allActive($this->state_id),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }
@@ -179,13 +186,14 @@ class Form extends BaseForm
     {
         $this->selectedDocument_id = $document_id;
         $document = Document::find($document_id);
-        if (empty(app(Visitors::class)->findBydocumentId($document_id))) {
+        if (empty(app(VisitorsRepository::class)->findBydocumentId($document_id))) {
             $this->emitSwall(
                 'Deseja realmente remover o ' .
                     $document->documentType->name .
                     ': ' .
-                    $document->numberMaskered,
-                'A ação não pode ser desfeita',
+                    $document->numberMaskered .
+                    '?',
+                'A ação não poderá ser desfeita.',
                 'confirm-delete-document',
                 'delete'
             );

@@ -13,6 +13,10 @@ class PersonUpdate extends Request
     {
         return [
             'full_name' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required_if:country_id,' . config('app.country_br'),
+            'city_id' => 'required_if:country_id,' . config('app.country_br'),
+            'other_city' => 'required_unless:country_id,' . config('app.country_br'),
         ];
     }
 
@@ -20,6 +24,10 @@ class PersonUpdate extends Request
     {
         return [
             'full_name.required' => 'Nome Completo: preencha o campo corretamente.',
+            'country_id.required' => 'País: preencha o campo corretamente.',
+            'state_id.required_if' => 'Estado: preencha o campo corretamente.',
+            'city_id.required_if' => 'Cidade: preencha o campo corretamente.',
+            'other_city.required_unless' => 'Cidade: preencha o campo corretamente.',
         ];
     }
 

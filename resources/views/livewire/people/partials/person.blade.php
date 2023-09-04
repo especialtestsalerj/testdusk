@@ -26,7 +26,7 @@
                     Dados do/a Visitante
                 </h4>
             </div>
-            <div class="col-lg-4 col-xl-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="document_type_id">Tipo de Documento*</label>
                     <select name="document_type_id" class="form-control text-uppercase"
@@ -42,7 +42,7 @@
 
             <input name="person_id" type="hidden" wire:model.defer="person_id">
 
-            <div class="col-lg-4 col-xl-4">
+            <div class="col-4">
                 <div class="form-group">
                     <input name="document_number" id="document_number" type="hidden" wire:model.defer="document_number">
                     <label for="document_number">Documento*</label>
@@ -53,7 +53,7 @@
                            wire:blur="searchDocumentNumber" />
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-4">
+            <div class="col-4">
                 @if($document_type_id == 2)
                     <div class="form-group">
                         <label for="state_document_id">UF do Documento*</label>
@@ -69,7 +69,7 @@
                     </div>
                 @endif
             </div>
-            <div class="col-lg-6 col-xl-6">
+            <div class="col-6">
                 <div class="form-group">
                     <label for="full_name">Nome Completo*</label>
                     <input type="text" class="form-control text-uppercase" name="full_name"
@@ -78,7 +78,7 @@
                            @if ($readonly) readonly @endif />
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6">
+            <div class="col-6">
                 <div class="form-group">
                     <label for="social_name">Nome Social</label>
                     <input type="text" class="form-control text-uppercase" name="social_name"
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-xl-6" wire:ignore>
+            <div class="col-6" wire:ignore>
                 <div class="form-group">
                     <label for="country_id">País*</label>
                     <select name="country_id" class="select2 form-control text-uppercase" id="country_id"
@@ -97,7 +97,7 @@
                             @if ($readonly) readonly @endif>
                         <option value="">SELECIONE</option>
                         @foreach ($countries as $country)
-                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                            <option value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
                         @endforeach
                     </select>
                 </div>

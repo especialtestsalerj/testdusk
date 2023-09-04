@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-sm-8 align-self-center">
                         <h3 class="mb-0">
-                            <a href="{{ route('event-types.index') }}">Tipos de Ocorrência</a>
+                            <a href="{{ route('event-types.index') }}"><i class="fas fa-list"></i> Tipos de Ocorrência</a>
 
                             @if(is_null($eventType->id))
                                 > Novo
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="mx-4 my-2">
+            <div class="card-body my-2">
                 @include('layouts.msg')
                 <div class="row">
                     <div class="col-12 d-flex justify-content-end">

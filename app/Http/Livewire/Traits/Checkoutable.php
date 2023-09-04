@@ -18,7 +18,8 @@ trait Checkoutable
             'Marcar a saída de ' .
                 $visitor->person->abbreviated_name .
                 ' para ' .
-                now()->format('d/m/Y H:i'),
+                now()->format('d/m/Y H:i') .
+                '?',
             '',
             'confirm-checkout-visitor',
             'checkout'

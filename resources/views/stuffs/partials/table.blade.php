@@ -49,7 +49,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelStuff"><i class="fas fa-trash"></i> Remoção de Material</h5>
+                            <h5 class="modal-title" id="deleteModalLabelStuff"><i class="fa fa-trash"></i> Remoção de Material</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -93,7 +93,7 @@
         @empty
             <div class="col-md-12">
                 <div class="alert alert-warning">
-                    <i class="fa fa-exclamation-triangle"></i> Nenhum Material encontrado.
+                    <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhum Material encontrado.
                 </div>
             </div>
         @endforelse
