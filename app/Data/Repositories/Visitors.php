@@ -21,12 +21,16 @@ class Visitors extends Repository
 
     public function allNotExited($visitor_id = null)
     {
+        $tmpId = empty($visitor_id) ? null : $visitor_id;
+
         return $this->model
             ::with('person')
-            ->where(function ($query) use ($visitor_id) {
-                $query->when(isset($visitor_id), function($query) use($visitor_id){
-                    $query->orWhere('id', '=', $visitor_id);
-                })->orWhereNull('exited_at');
+            ->where(function ($query) use ($tmpId) {
+                $query
+                    ->when(isset($tmpId), function ($query) use ($tmpId) {
+                        $query->orWhere('id', '=', $tmpId);
+                    })
+                    ->orWhereNull('exited_at');
             })
             ->get()
             ->sortBy(function ($row) {

@@ -84,10 +84,9 @@ class CreateForm extends BaseForm
         $this->certificate_valid_until = null;
 
         if (!empty($this->visitor_id)) {
-//            $this->select2SelectOption('visitor_id', $this->visitor_id);
+            //            $this->select2SelectOption('visitor_id', $this->visitor_id);
             $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
             $this->sector = $visitor->sector;
-
 
             $this->loadCertificates($visitor);
 
@@ -111,11 +110,15 @@ class CreateForm extends BaseForm
                 ->where('visitors.person_id', $visitor->person->id)
                 ->distinct()
                 ->get()
-                ->load('certificateType')->map(function($item){
-                    return ['value' => $item->certificateType->id, 'name' => $item->certificateType->name];
+                ->load('certificateType')
+                ->map(function ($item) {
+                    return [
+                        'value' => $item->certificateType->id,
+                        'name' => $item->certificateType->name,
+                    ];
                 });
 
-            $this->select2ReloadOptions($personCertificates,'person_certificate');
+            $this->select2ReloadOptions($personCertificates, 'person_certificate');
         }
     }
 

@@ -98,7 +98,7 @@
                     @if ($mode == 'create')
                         <div class="col-md-4" wire:ignore>
                             <div class="form-group">
-                                <label for="person_certificate">Certificados</label>
+                                <label for="person_certificate">Certificados do/a Visitante</label>
                                 <select class="form-select select2" name="person_certificate" id="person_certificate" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                     <option value="">SELECIONE</option>
                                 </select>

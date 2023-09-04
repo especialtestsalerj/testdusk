@@ -32,14 +32,15 @@
             <div class="modal fade" id="sector-delete-modal{{ $sector->id }}" tabindex="-1" aria-labelledby="deleteModalLabelSector" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fa fa-trash"></i> Remoção de Setor</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('sectors.destroy', ['id' => $sector->id]) }}" method="post">
-                                @csrf
-                                <input name="id" type="hidden" value="{{ $sector->id }}">
+                        <form class="form" action="{{ route('sectors.destroy', ['id' => $sector->id]) }}" method="post">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ $sector->id }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelSector"><i class="fa fa-trash"></i> Remoção de Setor</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="name">Nome</label>
                                     <input class="form-control" name="name" id="name" value="{{ $sector->name }}" disabled/>
@@ -50,13 +51,12 @@
                                         <option value="{{ $sector->status }}" selected="selected">{{ ($sector->status ? 'ATIVO' : 'INATIVO') }}</option>
                                     </select>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverSetor" title="Remover Setor"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

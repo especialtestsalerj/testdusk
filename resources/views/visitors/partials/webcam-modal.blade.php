@@ -151,7 +151,7 @@
                 </div>
             @endif
             <div class="modal-footer">
-                <button data-bs-dismiss="modal" type="button" class="btn btn-secondary">Fechar</button>
+                <button data-bs-dismiss="modal" type="button" class="btn btn-secondary" title="Fechar Formulário"><i class="fas fa-ban"></i> Fechar</button>
             </div>
         </div>
     </div>

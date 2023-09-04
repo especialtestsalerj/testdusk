@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-4">
-                @if($document_type_id == 2)
+                @if ($document_type_id == config('app.document_type_rg'))
                     <div class="form-group">
                         <label for="state_document_id">UF do Documento*</label>
                         <select name="state_document_id" class="select2 form-control text-uppercase" id="state_document_id"

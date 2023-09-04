@@ -64,18 +64,17 @@
                 aria-labelledby="deleteModalLabelCaution" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de
-                                Cautela</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form"
-                                action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}"
-                                method="post">
-                                @csrf
-                                <input type="hidden" name="redirect" value="{{ $redirect }}">
+                        <form class="form" action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="redirect" value="{{ $redirect }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de
+                                    Cautela</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="protocol_number">Protocolo</label>
                                     <input type="text" class="form-control text-uppercase" name="protocol_number"
@@ -118,15 +117,12 @@
                                     <label for="description">Observações</label>
                                     <textarea class="form-control" name="description" id="description" disabled>{{ $caution->description }}</textarea>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i
-                                            class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn"
-                                        data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverCautela" title="Remover Cautela"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
