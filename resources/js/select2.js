@@ -3,16 +3,26 @@
  */
 require('select2/dist/js/select2.min.js')
 
+const defaultConfig = {
+    theme: 'bootstrap-5',
+    width: '100%',
+    language:'pt-BR',
+}
+
+window.getSelect2OptionsForElement = (element) => {
+    return { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
+};
+
+window.initSelect2 = () => {
+    $( '.select2' ).each(function(key, value) {
+        $(this).select2(window.getSelect2OptionsForElement(value))
+    });
+}
+
 $(document).ready(function () {
-    $('.select2').select2({
-        theme: 'bootstrap-5',
-        tags: false,
-        width: '100%',
-        language:'pt-BR',
-    })
+    window.initSelect2();
 
     document.addEventListener('select2SelectOption', function (event) {
-        // console.log('select2SelectOption '+ event.detail.name)
         $('[data-select2-id="select2-data-' + event.detail.name + '"]')
             .val(event.detail.value)
             .trigger('change')
@@ -48,11 +58,11 @@ $(document).ready(function () {
     document.addEventListener('select2Reload', function (event) {
         // console.log('select2Reload'+ event.detail.name)
         $('#div-'+event.detail.name)[0].classList.remove('d-none');
-        $('#'+event.detail.name).select2({
-            theme: 'bootstrap-5',
-            tags: false,
-            width: '100%',
-        });
+
+        const selector = $('#'+event.detail.name)
+        const options = window.getSelect2OptionsForElement(selector[0])
+        
+        selector.select2(options);
     })
 
     document.addEventListener('select2Destroy', function (event) {

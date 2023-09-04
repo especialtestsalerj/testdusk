@@ -18,6 +18,7 @@ use App\Services\PDF\Service as PDF;
 use App\Support\Constants;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
+use App\Models\CertificateType;
 
 class Caution extends Controller
 {
@@ -31,7 +32,13 @@ class Caution extends Controller
             'protocol_number' => app(CautionsRepository::class)->makeProtocolNumber($ano),
         ]);
 
+
+        $values['certificate_type_id'] = $this->handleNewCertificateType($request);
+
+
         $caution = app(CautionsRepository::class)->create($values);
+
+
 
         return redirect()
             ->route('cautions.show', [
@@ -49,7 +56,11 @@ class Caution extends Controller
 
             $this->syncronize_cautions($request, $currentCaution);
 
-            app(CautionsRepository::class)->update($id, $request->all());
+            $values = $request->all();
+            $values['certificate_type_id'] = $this->handleNewCertificateType($request);
+
+            app(CautionsRepository::class)->update($id, $values);
+
 
             if (isset($request['concluded_at'])) {
                 $this->update_weapons($id, $request['concluded_at']);
@@ -134,5 +145,24 @@ class Caution extends Controller
                 'portrait'
             )
             ->download(make_pdf_filename('Cautela' . $caution?->protocol_number));
+    }
+
+    /**
+     * @param $request
+     */
+    protected function handleNewCertificateType($request)
+    {
+        if (!is_numeric($certificateType = $request->get('certificate_type_id'))) { //check if it is an id or string
+            if(!($newCertificateType = CertificateType::where('name','ilike', $certificateType)->first())){
+                $newCertificateType = new CertificateType;
+                $newCertificateType->name = to_upper($certificateType);
+                $newCertificateType->status = true;
+                $newCertificateType->save();
+            };
+
+            return $newCertificateType->id;
+        }else{
+            return $certificateType;
+        }
     }
 }
