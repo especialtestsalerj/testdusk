@@ -24,25 +24,20 @@ trait Addressable
     {
         $this->loadCountryBr();
         $this->country_id = is_null(old('country_id'))
-            ? $this->person->country_id ?? ''
+            ? $this->person->country_id
             : old('country_id');
         $this->select2SelectOption('country_id', $this->country_id);
 
         if (!$this->detectIfCountryBrSelected()) {
-            $this->countryBrNotSelected();
+            $this->select2Destroy('city_id');
+            $this->select2Destroy('state_id');
         } else {
-            $this->state_id = is_null(old('state_id'))
-                ? $this->person->state_id ?? ''
-                : old('state_id');
+            $this->state_id = is_null(old('state_id')) ? $this->person->state_id : old('state_id');
             $this->select2SelectOption('state_id', $this->state_id);
 
-            if (!empty($this->state_id)) {
-                $this->updatedStateId($this->state_id);
-            }
+            $this->updatedStateId($this->state_id);
 
-            $this->city_id = is_null(old('city_id'))
-                ? $this->person->city_id ?? ''
-                : old('city_id');
+            $this->city_id = is_null(old('city_id')) ? $this->person->city_id : old('city_id');
             $this->select2SelectOption('city_id', $this->city_id);
         }
 
@@ -77,15 +72,6 @@ trait Addressable
     /**
      * @return void
      */
-    protected function countryBrNotSelected(): void
-    {
-        $this->select2Destroy('city_id');
-        $this->select2Destroy('state_id');
-    }
-
-    /**
-     * @return void
-     */
     protected function countryBrSelected(): void
     {
         $this->select2Reload('city_id');
@@ -94,9 +80,11 @@ trait Addressable
 
     public function loadCities()
     {
-        $city_id = $this->city_id;
-        if ($this->state_id) {
-            $this->cities = City::where('state_id', $this->state_id)
+        $city_id = empty($this->city_id) ? null : $this->city_id;
+        $state_id = empty($this->state_id) ? null : $this->state_id;
+
+        if (isset($this->state_id)) {
+            $this->cities = City::where('state_id', $state_id)
                 ->where(function ($query) use ($city_id) {
                     $query
                         ->when(isset($id), function ($query) use ($city_id) {
@@ -109,17 +97,12 @@ trait Addressable
         }
     }
 
-    public function updatedCountryId($newValue)
-    {
-        if ($newValue != $this->countryBr->id) {
-            $this->countryBrNotSelected();
-        } else {
-            $this->countryBrSelected();
-        }
-    }
-
     public function updatedStateId($newValue)
     {
+        if (is_null($newValue)) {
+            return;
+        }
+
         $this->loadCities();
 
         $this->cities = collect($this->cities);

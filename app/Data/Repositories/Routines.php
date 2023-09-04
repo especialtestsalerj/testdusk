@@ -25,11 +25,13 @@ class Routines extends Repository
 
     public function allActive($id = null)
     {
+        $tmpId = empty($id) ? null : $id;
+
         return $this->model
-            ::where(function ($query) use ($id) {
+            ::where(function ($query) use ($tmpId) {
                 $query
-                    ->when(isset($id), function ($query) use ($id) {
-                        $query->orWhere('id', '=', $id);
+                    ->when(isset($tmpId), function ($query) use ($tmpId) {
+                        $query->orWhere('id', '=', $tmpId);
                     })
                     ->orWhere('status', true);
             })

@@ -123,7 +123,7 @@
                 @endIf
 
                 @if(!$this->detectIfCountryBrSelected())
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="other_city">Cidade*</label>
                             <input type="text" name="other_city" class="form-control text-uppercase"

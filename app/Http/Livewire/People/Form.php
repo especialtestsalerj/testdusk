@@ -186,13 +186,27 @@ class Form extends BaseForm
         $this->fillAddress();
 
         $this->email = is_null(old('email'))
-            ? convert_case($this->person->email, MB_CASE_LOWER)
+            ? convert_case($this?->person?->email, MB_CASE_LOWER)
             : old('email');
     }
 
     public function loadCities()
     {
-        $this->cities = City::where('state_id', $this->state_id)->get();
+        $city_id = empty($this->city_id) ? null : $this->city_id;
+        $state_id = empty($this->state_id) ? null : $this->state_id;
+
+        if (isset($this->state_id)) {
+            $this->cities = City::where('state_id', $state_id)
+                ->where(function ($query) use ($city_id) {
+                    $query
+                        ->when(isset($id), function ($query) use ($city_id) {
+                            $query->orWhere('id', '=', $city_id);
+                        })
+                        ->orWhere('status', true);
+                })
+                ->orderBy('name')
+                ->get();
+        }
     }
 
     protected function getComponentVariables()

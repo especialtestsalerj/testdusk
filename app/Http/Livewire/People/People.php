@@ -47,20 +47,26 @@ class People extends BaseForm
     public $visitor_id;
 
     public $visitor;
+    /*'countryBr' => '',
+            'country_id' => '',
+            'city_id' => '',
+            'state_id' => '',
+
+    'state_id' => 'required_if:country_id,' . config('app.country_br'),
+        'city_id' => 'required_if:country_id,' . config('app.country_br'),
+        'other_city' => 'required_unless:country_id,' . config('app.country_br'),*/
 
     protected $rules = [
-        'countryBr' => '',
-        'country_id' => '',
-        'city_id' => '',
-        'state_id' => '',
+        'country_id' => 'required',
+        'other_city' => 'required',
     ];
 
     public function updated($name, $value)
     {
         $person = new Person();
         $person->fill([
-            'full_name' => $this->full_name,
-            'social_name' => $this->social_name,
+            'full_name' => convert_case($this->full_name, MB_CASE_UPPER),
+            'social_name' => convert_case($this->social_name, MB_CASE_UPPER),
             'document_number' => $this->document_number,
             'document_type_id' => $this->document_type_id,
             'state_document_id' => $this->state_document_id,
@@ -105,7 +111,7 @@ class People extends BaseForm
     public function fillModel()
     {
         $this->alerts = [];
-        if (!empty($this->person_id)) {
+        if (!is_null($this->person_id)) {
             $this->person = Person::where('id', $this->person_id)->first();
             $this->document_number = $document_number = convert_case(
                 remove_punctuation($this->person->documents[0]->number),
@@ -166,7 +172,7 @@ class People extends BaseForm
             $this->person = new Person();
         }
 
-        if (!empty($this->visitor_id)) {
+        if (!is_null($this->visitor_id)) {
             $this->visitor = Visitor::where('id', $this->visitor_id)
                 ->first()
                 ->append('photo');
@@ -206,7 +212,7 @@ class People extends BaseForm
 
     private function loadDefault()
     {
-        if (empty($this->document_type_id)) {
+        if (is_null($this->document_type_id)) {
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
@@ -409,7 +415,7 @@ class People extends BaseForm
      */
     protected function loadDefaultCountry(): void
     {
-        if (empty($this->country_id)) {
+        if (is_null($this->country_id)) {
             $this->country_id = Country::where('id', '=', config('app.country_br'))->first()->id;
         }
     }
