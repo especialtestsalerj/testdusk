@@ -1,5 +1,10 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=39eae6f7dfd0c7a54c93f9940a7e6a64",
     "/js/alpine.js": "/js/alpine.js?id=0b211bd02682f44f22677cea418d3978",
+=======
+    "/js/app.js": "/js/app.js?id=426e2cd7b9a6ba0ea241c41b40b7d370",
+    "/js/alpine.js": "/js/alpine.js?id=6aa224374ef3217eb4a8f4a778d51ac7",
+>>>>>>> 40e7d66 (Issue #301)
     "/css/app.css": "/css/app.css?id=29add485a764886b95519db8faec7a4e"
 }
