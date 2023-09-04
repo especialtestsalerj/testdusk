@@ -107,8 +107,8 @@
                     @endif
                     <div class="col-md-3" wire:ignore>
                         <div class="form-group">
-                            <label for="certificate_type_id">Tipo de Porte*</label>
-                            <select class="select2 form-control" name="certificate_type_id" id="certificate_type_id" wire:model.defer="certificate_type_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
+                            <label for="certificate_type_id">Tipo de Portes*</label>
+                            <select class="select2 select2-tags form-control" name="certificate_type_id" id="certificate_type_id" wire:model.defer="certificate_type_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                 <option value="">SELECIONE</option>
                                 @foreach ($certificateTypes as $key => $certificateType)
                                     @if(((!is_null($caution_id)) && (!is_null($caution->certificate_type_id) && $caution->duty_user_id === $certificateType->id) || (!is_null(old('certificate_type_id'))) && old('certificate_type_id') == $certificateType->id))
