@@ -36,18 +36,18 @@
                                                 {{ $visitor?->sector?->name ?? '-' }}
                                             </div>
                                             <div data-label="Entrada">
-                                                <i class="fas fa-calendar-day me-2"></i> Entrada:
-                                                {!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}
+                                                Entrada:
+                                                {!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}
                                             </div>
                                             <div data-label="Saída">
-                                                <i class="fas fa-calendar-day me-2"></i> Saida: @if (isset($visitor?->exited_at))
-                                                    {!! $visitor?->exited_at?->format('d/m/Y  H:i') !!}
+                                                Saida: @if (isset($visitor?->exited_at))
+                                                    {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
                                                 @else
                                                     <span class="badge bg-warning text-black">EM ABERTO</span>
                                                 @endif
                                             </div>
                                             <div data-label="Documento">
-                                                <i class="fas fa-id-card me-2"></i>
+
                                                 {{ $visitor->document?->documentType?->name }}:
                                                 {{ $visitor?->document?->numberMaskered }}
                                             </div>

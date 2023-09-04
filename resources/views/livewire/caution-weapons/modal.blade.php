@@ -2,7 +2,7 @@
 <!-- Modal -->
 <div wire:ignore.self class="modal fade" id="weapon-modal" tabindex="-1" role="dialog" aria-labelledby="weaponModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content">
+        <div class="modal-content">
             <form wire:submit.prevent="store">
                 @csrf
                 <input type="hidden" class="form-control" name="caution_id" id="caution_id" wire:model.defer="caution_id">

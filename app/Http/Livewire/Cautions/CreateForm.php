@@ -178,7 +178,7 @@ class CreateForm extends BaseForm
             : old('certificate_number');
 
         $this->certificate_valid_until = is_null(old('certificate_valid_until'))
-            ? $this?->caution->certificate_valid_until
+            ? $this?->caution->certificate_valid_until?->format('Y-m-d')
             : old('certificate_valid_until');
 
         $this->duty_user_id = is_null(old('duty_user_id'))
