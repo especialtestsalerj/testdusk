@@ -659,8 +659,17 @@ body.bg-logo {
             }
         }
     }
+}
 
 
 
+.bg-blue-light {
+    background: #3490dc !important;
 
+}
+
+.btn-checkout {
+    &:hover {
+        color: #142b53 !important;
+    }
 }

@@ -5,7 +5,7 @@
             @forelse ($visitors as $visitor)
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
                     <div class="card bg-white">
-                        <div class="card-header">
+                        <div class="card-header bg-blue-light text-white">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
@@ -15,7 +15,7 @@
                                 <div class="col-2 d-flex justify-content-end">
                                     @if (!$visitor->exited_at)
                                         @can('visitors:checkout')
-                                            <span class="btn btn-link px-0 py-0"
+                                            <span class="btn btn-primary btn-checkout px-0 py-0"
                                                 wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>

@@ -5,7 +5,7 @@
                 <!----- Visão de Cards ------>
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
                     <div class="card people-min-height bg-white">
-                        <div class="card-header py-1">
+                        <div class="card-header py-1 bg-blue-light text-white">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
@@ -15,7 +15,7 @@
                                 <div class="col-2 d-flex justify-content-end">
                                     @if ($person->hasPendingVisitors())
                                         @can('visitors:checkout')
-                                            <span class="btn btn-link px-0 py-0"
+                                            <span class="btn btn-primary px-0 py-0 btn-checkout"
                                                 wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
                                                 title="Registrar Saida">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>

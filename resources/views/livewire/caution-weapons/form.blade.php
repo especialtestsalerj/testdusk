@@ -16,7 +16,7 @@
             </div>
 
             @include('livewire.caution-weapons.modal')
-            
+
         </div>
 
         <div class="row">
