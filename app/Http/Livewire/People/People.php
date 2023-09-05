@@ -196,7 +196,6 @@ class People extends BaseForm
     public function render()
     {
         $this->loadCountryBr();
-        Session::put('person_id_out', $this->person_id);
 
         return view('livewire.people.partials.person')->with($this->getViewVariables()
         );
@@ -206,7 +205,6 @@ class People extends BaseForm
     {
         return array_merge($this->addressFormVariables(), [
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
-            'person_id_out'=>$this->person_id
         ]);
     }
 
