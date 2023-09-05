@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" wire:ignore>
     <div class="col-md-12">
         @if (isset($errors) && $errors->any())
             <div class="alert alert-danger">

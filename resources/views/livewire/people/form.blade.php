@@ -1,4 +1,4 @@
-<div>
+<div wire:keep-alive>
     <div class="py-4 px-4">
         <form name="formulario" id="formulario" action="{{ route('people.update', ['id' => $person->id]) }}" method="POST">
             @csrf
