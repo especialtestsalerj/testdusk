@@ -97,14 +97,14 @@
                                                     <div class="row mt-2">
                                                         <div class="col-12">
                                                             <div class="small">
-                                                                <i class="fas fa-calendar-day me-2"></i>Entrada:
-                                                                {{ $visitor->entranced_at->format('d/m/Y - H:i') }}
+                                                                Entrada:
+                                                                {{ $visitor->entranced_at->format('d/m/Y H:i') }}
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="small">
-                                                                <i class="fas fa-calendar-day me-2"></i>Saída:
-                                                                {{ $visitor->exited_at->format('d/m/Y - H:i') }}
+                                                                Saída:
+                                                                {{ $visitor->exited_at->format('d/m/Y H:i') }}
                                                             </div>
                                                         </div>
                                                     </div>

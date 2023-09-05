@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Data\Repositories\Avatars;
-use App\Data\Repositories\Documents;
-use App\Data\Repositories\Visitors;
+use App\Data\Repositories\Avatars as AvatarsRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
-use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\People as PeopleRepository;
 use App\Http\Requests\VisitorStore;
 use App\Http\Requests\VisitorUpdate;
@@ -15,7 +12,6 @@ use App\Http\Requests\VisitorDestroy;
 use App\Models\Document;
 use App\Models\Visitor as VisitorModel;
 use App\Support\Constants;
-use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -135,7 +131,7 @@ class Visitor extends Controller
             }
         } else {
             if ($timestamp = $request->query('timestamp')) {
-                return $visitor = app(Visitors::class)->getAnonymousVisitor(
+                return $visitor = app(VisitorsRepository::class)->getAnonymousVisitor(
                     Carbon::createFromTimestamp($timestamp)
                 );
             } else {
@@ -152,7 +148,7 @@ class Visitor extends Controller
     {
         $photo = $request->get('photo');
         if ($photo) {
-            $avatar = app(Avatars::class)->store($photo);
+            $avatar = app(AvatarsRepository::class)->store($photo);
             $request->merge(['avatar_id' => $avatar->id]);
         } else {
             $request->merge(['avatar_id' => null]);

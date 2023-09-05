@@ -1,14 +1,17 @@
 
 <!-- Modal -->
 <div wire:ignore.self class="modal fade" id="weapon-modal" tabindex="-1" role="dialog" aria-labelledby="weaponModalLabel" aria-hidden="true">
-    <form wire:submit.prevent="store">
-        <div class="modal-dialog">
-            <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form wire:submit.prevent="store">
+                @csrf
+                <input type="hidden" class="form-control" name="caution_id" id="caution_id" wire:model.defer="caution_id">
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="weaponModalLabel">
                         @switch($modalMode)
                             @case('create')
-                                <i class="fas fa-plus me-2"></i> <i class="fas fa-gun me-3"></i>Nova Arma
+                                <i class="fas fa-plus"></i> Nova Arma
                                 @break
                             @case('update')
                                 <i class="fas fa-pencil"></i> Alteração de Arma
@@ -28,9 +31,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @csrf
-                    <input type="hidden" class="form-control" name="caution_id" id="caution_id" wire:model.defer="caution_id">
-
                     @if($modalMode != 'delete')
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end">
@@ -134,7 +134,6 @@
                             @endError
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="cabinet_id">Armário{{ ($modalMode == 'delete') ? '' : '*' }}</label>
                         <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" @disabled($disabled || $readonly)>
@@ -171,21 +170,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    @if($modalMode != 'delete')
-                        <button type="submit" dusk='submit' class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly) id="salvarWeapon"><i class="fa fa-save"></i> Salvar</button>
-                    @endif
-
                     @if($modalMode == 'delete')
-                        <div>
-                            <button dusk='delete' wire:click.prevent="delete" class="btn btn-success btn-sm text-white close-modal" title="Remover" id="removerWeapon"><i class="fas fa-check"></i> Remover</button>
-                        </div>
+                        <button dusk='delete' wire:click.prevent="delete" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverArma" title="Remover Arma"><i class="fas fa-check"></i> Remover</button>
+                    @else
+                        <button type="submit" dusk='submit' class="btn btn-success btn-sm text-white close-modal" title="Salvar" @disabled($disabled || $readonly) id="submitSalvarArma" title="Salvar Arma"><i class="fa fa-save"></i> Salvar</button>
                     @endif
 
-                    <div>
-                        <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
-                    </div>
+                    <button type="button" dusk='cancel' wire:click.prevent="clearWeapon" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

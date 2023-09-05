@@ -32,14 +32,15 @@
             <div class="modal fade" id="event-type-delete-modal{{ $eventType->id }}" tabindex="-1" aria-labelledby="deleteModalLabelEventType" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelEventType"><i class="fa fa-trash"></i> Remoção de Tipo de Ocorrência</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('event-types.destroy', ['id' => $eventType->id]) }}" method="post">
-                                @csrf
-                                <input name="id" type="hidden" value="{{ $eventType->id }}">
+                        <form class="form" action="{{ route('event-types.destroy', ['id' => $eventType->id]) }}" method="post">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ $eventType->id }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelEventType"><i class="fa fa-trash"></i> Remoção de Tipo de Ocorrência</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="name">Nome</label>
                                     <input class="form-control" name="name" id="name" value="{{ $eventType->name }}" disabled/>
@@ -50,13 +51,12 @@
                                         <option value="{{ $eventType->status }}" selected="selected">{{ ($eventType->status ? 'ATIVO' : 'INATIVO') }}</option>
                                     </select>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverTipoOcorrencia" title="Remover Tipo de Ocorrência"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

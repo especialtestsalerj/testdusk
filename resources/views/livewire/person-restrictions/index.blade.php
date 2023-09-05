@@ -3,11 +3,11 @@
     <div class="py-4 px-4">
         <div class="">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <h3 class="mb-0"><i class="fas fa-person-circle-exclamation"></i> Restrições de Acesso</h3>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-6">
                     @include(
                         'livewire.partials.search-form',
                         [

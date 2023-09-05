@@ -34,14 +34,15 @@
             <div class="modal fade" id="event-delete-modal{{ $event->id }}" tabindex="-1" aria-labelledby="deleteModalLabelEvent" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fa fa-trash"></i> Remoção de Ocorrência</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="redirect" value="{{ $redirect }}">
+                        <form class="form" action="{{ route('events.destroy', ['routine_id' => $routine_id, 'id' => $event->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="redirect" value="{{ $redirect }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelEvent"><i class="fa fa-trash"></i> Remoção de Ocorrência</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="event_type_id">Tipo</label>
                                     <select class="form-select form-control" name="event_type_id" id="event_type_id" disabled>
@@ -68,13 +69,12 @@
                                     <label for="description">Observações</label>
                                     <textarea class="form-control" name="description" id="description" disabled>{{ $event->description }}</textarea>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverOcorrencia" title="Remover Ocorrência"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
