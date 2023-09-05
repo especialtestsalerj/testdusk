@@ -49,4 +49,13 @@ class Visitors extends Repository
         $visitor->entranced_at = $entrance ?? now();
         return $visitor;
     }
+
+    public function allPending()
+    {
+        return $this->model
+            ::whereNull('exited_at')
+            ->orderBy('entranced_at')
+            ->orderBy('id')
+            ->get();
+    }
 }

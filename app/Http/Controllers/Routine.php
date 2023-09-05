@@ -5,12 +5,10 @@ use App\Data\Repositories\CautionWeapons as CautionWeaponsRepository;
 use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Shifts as ShiftsRepository;
 use App\Data\Repositories\Users as UsersRepository;
-use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Requests\RoutineStore;
 use App\Http\Requests\RoutineUpdate;
 use App\Http\Requests\RoutineFinish;
 use App\Support\Constants;
-use App\Models\Visitor;
 use App\Models\Caution;
 use Illuminate\Support\Facades\DB;
 use App\Models\CautionWeapon;
@@ -45,8 +43,12 @@ class Routine extends Controller
         return $this->view('routines.form')->with([
             'routine' => $routine,
             'shifts' => app(ShiftsRepository::class)->allActive(),
-            'entrancedUsers' => app(UsersRepository::class)->allActive(),
-            'exitedUsers' => app(UsersRepository::class)->allActive(),
+            'entrancedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
+            'exitedUsers' => app(UsersRepository::class)
+                ->disablePagination()
+                ->all(),
         ]);
     }
 

@@ -15,7 +15,7 @@
                                 <div class="col-2 d-flex justify-content-end">
                                     @if ($person->hasPendingVisitors())
                                         @can('visitors:checkout')
-                                            <span class="btn btn-primary px-0 py-0 btn-checkout"
+                                            <span class="btn btn-primary px-0 py-0 btn-visit-action"
                                                 wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
                                                 title="Registrar Saida">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
@@ -24,7 +24,7 @@
                                     @else
                                         @can('visitors:store')
                                             <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
-                                                class="btn btn-link px-0 py-0" title="Registrar Entrada">
+                                                class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
                                                 <i class="fa fa-lg fa-check"></i>
                                             </a>
                                         @endCan
