@@ -16,7 +16,7 @@ class DisabilityTypes extends Repository
         return $this->model
             ::where(function ($query) use ($ids) {
                 $query
-                    ->when(isset($ids), function ($query) use ($ids) {
+                    ->when(!empty($ids), function ($query) use ($ids) {
                         $query->whereIn('id', $ids);
                     })
                     ->orWhere('status', true);
