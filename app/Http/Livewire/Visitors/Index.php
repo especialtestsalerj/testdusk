@@ -56,7 +56,7 @@ class Index extends BaseIndex
             //busca na tabela de documentos
             $query = $query->orWhereRaw(
                 "visitors.person_id in (select person_id from documents d
-             where d.number ILIKE '%'||unaccent('" .
+             where regexp_replace(d.number, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
                     pg_escape_string(remove_punctuation($this->searchString)) .
                     "')||'%')"
             );

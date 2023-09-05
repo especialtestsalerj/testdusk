@@ -1,4 +1,3 @@
-
 <div wire:poll.keep-alive>
     <div class="py-4 px-4 conteudo">
         <div class="">

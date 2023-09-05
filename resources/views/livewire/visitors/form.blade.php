@@ -1,5 +1,5 @@
 <div>
-    <div class="py-4 px-4">
+    <div class="py-4 px-4" wire:keep-alive>
         <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
             @if (isset($visitor->id))
@@ -66,7 +66,7 @@
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
                         'readonly' => $visitor->hasPending(), 'showRestrictions' => true, 'document_number'=> request()->query('document_number'),
-                        'document_type_id'=> request()->query('document_type_id'), 'full_name'=> request()->query('full_name')])
+                        'document_type_id'=> request()->query('document_type_id'), 'full_name'=> request()->query('full_name'), 'photo'=>$visitor->photo ?? ''])
                         <div class="row">
                             <div class="col-12">
                                 <h4>
@@ -88,7 +88,8 @@
                             <div class="col-lg-12 col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="sector_id">Destino*</label>
-                                    <select class="select2 form-control" name="sector_id" id="sector_id" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
+                                    <select class="select2 form-control" name="sector_id" id="sector_id"
+                                            @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif>
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $key => $sector)
                                             @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
@@ -103,7 +104,8 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">Motivo da Visita*</label>
-                                    <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" wire:ignore
+                                        @disabled(request()->query('disabled')) >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>

@@ -39,6 +39,7 @@ class People extends BaseForm
 
     public $document_type_id;
 
+    public $photo;
     public $routineStatus;
     public $modal;
     public $readonly;
@@ -46,16 +47,7 @@ class People extends BaseForm
     public $alerts = [];
 
     public $visitor_id;
-
     public $visitor;
-    /*'countryBr' => '',
-            'country_id' => '',
-            'city_id' => '',
-            'state_id' => '',
-
-    'state_id' => 'required_if:country_id,' . config('app.country_br'),
-        'city_id' => 'required_if:country_id,' . config('app.country_br'),
-        'other_city' => 'required_unless:country_id,' . config('app.country_br'),*/
 
     protected $rules = [
         'country_id' => 'required',
@@ -132,6 +124,10 @@ class People extends BaseForm
                 );
             }
         }
+
+        $this->photo = is_null(old('photo'))
+            ? $this->photo
+            : old('photo');
 
         if (!$this->isPreFilled('document_type_id')) {
             $this->document_type_id = is_null(old('document_type_id'))
