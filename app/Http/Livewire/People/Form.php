@@ -163,7 +163,7 @@ class Form extends BaseForm
         $disabilityIds = $this->person->disabilities->pluck('id')->toArray();
 
         return [
-            'genders' => app(GendersRepository::class)->allActive(),
+            'genders' => app(GendersRepository::class)->allActive($this->gender_id),
             'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive($disabilityIds),
             'countries' => app(CountriesRepository::class)->allActive($this->country_id),
             'states' => app(StatesRepository::class)->allActive($this->state_id),
