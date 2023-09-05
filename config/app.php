@@ -213,4 +213,6 @@ return [
     'country_br' => env('APP_COUNTRY_BR', '1'),
 
     'state_rj' => env('APP_STATE_RJ', '33'),
+
+    'document_type_rg' => env('APP_DOCUMENT_TYPE_RG', '2'),
 ];

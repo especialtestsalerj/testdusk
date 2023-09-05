@@ -44,13 +44,13 @@
                                 @if($caution->hasPending())
                                     <span class="badge bg-warning text-black"><i class="fa fa-exclamation-triangle"></i> ROTINA ANTERIOR </span>
                                 @endif
-                                <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-print"></i></a>
-                                <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'caution' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('cautions.receipt', ['routine_id' => $routine->id, 'id' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Gerar comprovante"><i class="fa fa-lg fa-print"></i></a>
+                                <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'caution' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'caution' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editCautela"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'caution' => $caution->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editCautela"><i class="fa fa-lg fa-pencil"></i></a>
                                     @if(!$caution->hasPending())
                                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#caution-delete-modal{{ $caution->id }}" title="Remover" id="removeCautela">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-lg fa-trash"></i>
                                         </button>
                                     @endif
                                 @endif
@@ -63,14 +63,15 @@
             <div class="modal fade" id="caution-delete-modal{{ $caution->id }}" tabindex="-1" aria-labelledby="deleteModalLabelCaution" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de Cautela</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="redirect" value="{{ $redirect }}">
+                        <form class="form" action="{{ route('cautions.destroy', ['routine_id' => $routine_id, 'id' => $caution->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="redirect" value="{{ $redirect }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelCaution"><i class="fa fa-trash"></i> Remoção de Cautela</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="protocol_number">Protocolo</label>
                                     <input type="text" class="form-control text-uppercase" name="protocol_number" id="protocol_number" value="{{ $caution?->protocol_number_formatted }}" disabled/>
@@ -103,13 +104,12 @@
                                     <label for="description">Observações</label>
                                     <textarea class="form-control" name="description" id="description" disabled>{{ $caution->description }}</textarea>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="removerCautela"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverCautela" title="Remover Cautela"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

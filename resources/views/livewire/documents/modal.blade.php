@@ -1,26 +1,18 @@
 <div>
-    <div wire:ignore.self class="modal fade" id="document-modal" tabindex="-1" role="dialog"
-         aria-labelledby="weaponModalLabel" aria-hidden="true">
-        <form wire:submit.prevent="store">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <div wire:ignore.self class="modal fade" id="document-modal" tabindex="-1" role="dialog" aria-labelledby="documentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form wire:submit.prevent="store">
+                    @csrf
+                    <input type="hidden" name="person_id" wire:model="person_id">
+
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fa fa-{{ $this->person ? 'plus' : 'pencil'}}"></i> {{ $this->person ? 'Novo Documento' : 'Alteração de Documento'}}
                         </h5>
-                        <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
                     <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-end">
-                                <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="person_id" wire:model="person_id">
-
                         <div class="row">
                             @isset($this->person)
                                 <div class="col-md-6">
@@ -49,7 +41,7 @@
                             @endisset
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="number">Número*</label>
+                                    <label for="number">Número</label>
                                     <input type="text" max="3000-01-01T23:59" class="form-control text-uppercase"
                                            name="number" wire:model="number" x-ref="number"/>
                                     <div>
@@ -64,7 +56,7 @@
                             </div>
                         </div>
 
-                        @if ($document_type_id == 2)
+                        @if ($document_type_id == config('app.document_type_rg'))
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -90,24 +82,13 @@
                                 </div>
                             </div>
                         @endif
-
                     </div>
-
                     <div class="modal-footer">
-                        <button type="submit" dusk="submit"
-                                class="btn btn-success btn-sm text-white close-modal" title="Salvar" id="salvarWeapon">
-                            <i
-                                class="fa fa-save"></i> Salvar
-                        </button>
-                        <div>
-                            <button type="button" dusk="cancel" wire:click.prevent="cleanModal()"
-                                    class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"
-                                    title="Fechar formulário"><i class="fas fa-ban"></i> Cancelar
-                            </button>
-                        </div>
+                        <button type="submit" dusk="submit" class="btn btn-success btn-sm text-white close-modal" title="Salvar Documento" id="submitSalvarDocumento"><i class="fa fa-save"></i> Salvar</button>
+                        <button type="button" dusk="cancel" wire:click.prevent="cleanModal()" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>

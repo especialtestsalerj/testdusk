@@ -32,11 +32,11 @@
                                 <span class="fw-bold">Plantonista:</span> {{ $stuff->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">
-                                <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-search"></i></a>
+                                <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                 @if($routine->status)
-                                    <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editMaterial"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('stuffs.show', ['routine_id' => $routine_id, 'id' => $stuff->id, 'redirect' => $redirect]) }}" class="btn btn-link" title="Alterar" id="editMaterial"><i class="fa fa-lg fa-pencil"></i></a>
                                     <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#stuff-delete-modal{{ $stuff->id }}" title="Remover" id="removerMaterial">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fa fa-lg fa-trash"></i>
                                     </button>
                                 @endif
                             </div>
@@ -48,14 +48,15 @@
             <div class="modal fade" id="stuff-delete-modal{{ $stuff->id }}" tabindex="-1" aria-labelledby="deleteModalLabelStuff" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelStuff"><i class="fa fa-trash"></i> Remoção de Material</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('stuffs.destroy', ['routine_id' => $routine_id, 'id' => $stuff->id]) }}" method="post">
-                                @csrf
-                                <input type="hidden" name="redirect" value="{{ $redirect }}">
+                        <form class="form" action="{{ route('stuffs.destroy', ['routine_id' => $routine_id, 'id' => $stuff->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="redirect" value="{{ $redirect }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelStuff"><i class="fa fa-trash"></i> Remoção de Material</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" value="{{ $stuff->entranced_at }}" disabled/>
@@ -80,13 +81,12 @@
                                     <label for="description">Observações</label>
                                     <textarea class="form-control" name="description" id="description" disabled>{{ $stuff->description }}</textarea>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverStuff"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverMaterial" title="Remover Material"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

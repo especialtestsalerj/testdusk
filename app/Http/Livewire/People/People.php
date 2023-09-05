@@ -12,6 +12,7 @@ use App\Models\DocumentType;
 use App\Models\Person;
 use App\Http\Livewire\Traits\WithWebcam;
 use App\Models\Visitor;
+use Illuminate\Support\Facades\Session;
 use Livewire\WithFileUploads;
 
 use function app;
@@ -196,7 +197,8 @@ class People extends BaseForm
     {
         $this->loadCountryBr();
 
-        return view('livewire.people.partials.person')->with($this->getViewVariables());
+        return view('livewire.people.partials.person')->with($this->getViewVariables()
+        );
     }
 
     protected function formVariables()

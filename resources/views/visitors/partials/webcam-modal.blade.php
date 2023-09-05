@@ -30,21 +30,21 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Webcam</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Foto</h5>
                 <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label="Close"></button>
             </div>
 
             <div class="d-flex justify-content-evenly pt-3">
-                <div>
-                    <label for="webcam_file" class="btn btn-outline-primary">
-                        <i class="fas fa-upload"></i>
-                    </label>
-                </div>
                 <div class="{{ $webcam_file ? 'd-none' : ''}}">
                     <button type="button" wire:click="takeSnapshot" onclick="take_snapshot()"
                             class="btn btn-outline-primary">
                         <i class="fa-solid fa-camera"></i>
                     </button>
+                </div>
+                <div>
+                    <label for="webcam_file" class="btn btn-outline-primary">
+                        <i class="fas fa-upload"></i>
+                    </label>
                 </div>
                 <div class="{{ $webcam_file ? '' : 'd-none' }}">
                     <button wire:click.prevent="removeWebcamFile" type="button" class="btn btn-outline-primary">
@@ -58,7 +58,7 @@
                     <div class="row control-group" transition="expand" wire:ignore>
                         <div class="form-group col-12 floating-label-form-group controls">
                             <div class="card text-center">
-                                <div class="card-header">Webcam</div>
+                                <div class="card-header">Câmera</div>
                                 <div class="card-body d-flex justify-content-center">
                                     <div id="webcam"></div>
                                 </div>
@@ -98,7 +98,7 @@
                     <div class="row control-group" transition="expand" data-instance="{{ $iteration }}">
                         <div class="form-group col-12 floating-label-form-group controls">
                             <div class="card text-center">
-                                <div class="card-header">Recortar foto</div>
+                                <div class="card-header">Recortar Foto</div>
                                 <div class="card-body">
                                     <div class="d-flex flex-column justify-content-center" wire:ignore
                                          wire:key="force-rerender" x-data="{
@@ -151,7 +151,7 @@
                 </div>
             @endif
             <div class="modal-footer">
-                <button data-bs-dismiss="modal" type="button" class="btn btn-secondary">Fechar</button>
+                <button data-bs-dismiss="modal" type="button" class="btn btn-secondary" title="Fechar Formulário"><i class="fas fa-check"></i> Fechar</button>
             </div>
         </div>
     </div>

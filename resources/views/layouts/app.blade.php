@@ -34,11 +34,9 @@
             <div class="row justify-content-center">
                 <div class="col">
                     @yield('content')
-
                     @if(isset($slot))
                         {{ $slot }}
                     @endIf
-
                 </div>
             </div>
         </div>

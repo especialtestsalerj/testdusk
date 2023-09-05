@@ -8,7 +8,7 @@
                             <div class="col-12 col-lg-6 text-center text-lg-start">
                                 <span class="fw-bold">Pessoa:</span> {{ $personRestriction?->person?->name }} -
                                 @foreach($personRestriction?->person->documents as $document)
-                                    {{$document->documentType->name}}: {{$document->number}}
+                                    {{$document->documentType->name}}: {{$document->numberMaskered}}
                                     @if($document->state?->initial)
                                         - {{$document->state->initial}}
                                     @endif
@@ -38,14 +38,15 @@
             <div class="modal fade" id="person-restriction-delete-modal{{ $personRestriction->id }}" tabindex="-1" aria-labelledby="deleteModalLabelPersonRestriction" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelSector"><i class="fa fa-trash"></i> Remoção de Restrição</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('person-restrictions.destroy', ['id' => $personRestriction->id]) }}" method="post">
-                                @csrf
-                                <input name="id" type="hidden" value="{{ $personRestriction->id }}">
+                        <form class="form" action="{{ route('person-restrictions.destroy', ['id' => $personRestriction->id]) }}" method="post">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ $personRestriction->id }}">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabelSector"><i class="fa fa-trash"></i> Remoção de Restrição</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="started_at">Início</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="started_at" id="started_at" value="{{is_null(old('started_at')) ? $personRestriction->started_at?->format('Y-m-d H:i') : old('started_at')}}" disabled/>
@@ -62,13 +63,12 @@
                                     <label for="description">Descrição</label>
                                     <textarea class="form-control" name="description" id="description" rows="10" disabled>{{ is_null(old('description')) ? $personRestriction->description : old('description') }}</textarea>
                                 </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-check"></i> Remover</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverRestricao" title="Remover Restrição"><i class="fa fa-check"></i> Remover</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

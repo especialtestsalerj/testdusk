@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <div class="form-group" wire:ignore>
                             <label for="visitor_id">Pessoa*</label>
                             <select class="form-select select2" name="person_id" id="person_id"
@@ -63,6 +63,17 @@
                             </div>
                         </div>
                     </div>
+                    @can('people:store')
+                    <div class="col-md-1 mt-md-4">
+                        <div class="form-group">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
+                               class="btn btn-primary text-white float-left" title="Nova Pessoa">
+                                <i class="fa fa-plus"></i> Nova
+                            </button>
+                        </div>
+
+                    </div>
+                    @endcan
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -90,5 +101,9 @@
                 </div>
             </div>
         </form>
+
+        @can('people:store')
+            @include('person-restrictions.partials.modal')
+        @endcan
     </div>
 @endsection

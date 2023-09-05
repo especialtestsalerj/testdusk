@@ -55,14 +55,14 @@
             <div class="modal fade" id="finishModal{{$routine->id}}" tabindex="-1" aria-labelledby="finishModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="finishModalLabel"><i class="fa fa-check"></i> Finalização de Rotina</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form" action="{{ route('routines.finish', ['id' => $routine->id]) }}" method="post">
-                                @csrf
+                        <form class="form" action="{{ route('routines.finish', ['id' => $routine->id]) }}" method="post">
+                            @csrf
 
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="finishModalLabel"><i class="fa fa-check"></i> Finalização de Rotina</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
@@ -107,12 +107,12 @@
                                         <p class="text-justify">Caso deseje finalizar esta rotina, as pendências serão repassadas para a próxima rotina a ser criada, ou seja, serão repassados visitantes e/ou cautelas para serem finalizados na rotina seguinte.</p>
                                     </div>
                                 @endif
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-sm text-white close-modal"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
-                                    <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitFinalizarCautela" title="Finalizar Cautela"><i class="fa fa-save" dusk="finishRoutine"></i> Finalizar</button>
+                                <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fa fa-ban"></i> Cancelar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

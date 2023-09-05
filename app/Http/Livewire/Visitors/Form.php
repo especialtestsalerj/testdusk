@@ -39,9 +39,12 @@ class Form extends BaseForm
     public function updated($name, $value)
     {
         if ($name == 'sector_id') {
-            $this->sector = Sector::find($value);
-            $this->visitor->sector = $this->sector;
-            $this->visitor->sector_id = $value;
+            $sector = empty($value) ? null : $value;
+            if (!is_null($sector)) {
+                $this->sector = Sector::find($sector);
+                $this->visitor->sector = $this->sector;
+                $this->visitor->sector_id = $sector;
+            }
         }
     }
 

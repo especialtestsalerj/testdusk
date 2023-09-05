@@ -32,13 +32,9 @@ class Caution extends Controller
             'protocol_number' => app(CautionsRepository::class)->makeProtocolNumber($ano),
         ]);
 
-
         $values['certificate_type_id'] = $this->handleNewCertificateType($request);
 
-
         $caution = app(CautionsRepository::class)->create($values);
-
-
 
         return redirect()
             ->route('cautions.show', [
@@ -60,7 +56,6 @@ class Caution extends Controller
             $values['certificate_type_id'] = $this->handleNewCertificateType($request);
 
             app(CautionsRepository::class)->update($id, $values);
-
 
             if (isset($request['concluded_at'])) {
                 $this->update_weapons($id, $request['concluded_at']);
@@ -152,16 +147,23 @@ class Caution extends Controller
      */
     protected function handleNewCertificateType($request)
     {
-        if (!is_numeric($certificateType = $request->get('certificate_type_id'))) { //check if it is an id or string
-            if(!($newCertificateType = CertificateType::where('name','ilike', $certificateType)->first())){
-                $newCertificateType = new CertificateType;
+        if (!is_numeric($certificateType = $request->get('certificate_type_id'))) {
+            //check if it is an id or string
+            if (
+                !($newCertificateType = CertificateType::where(
+                    'name',
+                    'ilike',
+                    $certificateType
+                )->first())
+            ) {
+                $newCertificateType = new CertificateType();
                 $newCertificateType->name = to_upper($certificateType);
                 $newCertificateType->status = true;
                 $newCertificateType->save();
-            };
+            }
 
             return $newCertificateType->id;
-        }else{
+        } else {
             return $certificateType;
         }
     }
