@@ -3,7 +3,7 @@ window.$ = window.jQuery = require('jquery')
 require('./bootstrap')
 
 require('./select2')
-$.fn.select2.amd.define('select2/i18n/pt-BR',[],require("select2/src/js/select2/i18n/pt-BR"));
+$.fn.select2.amd.define('select2/i18n/pt-BR', [], require('select2/src/js/select2/i18n/pt-BR'))
 
 // core version + navigation, pagination modules:
 import Swiper, { Navigation } from 'swiper'
@@ -37,12 +37,12 @@ Webcam.set({
     jpeg_quality: 90,
     force_flash: false,
     flip_horiz: true,
-});
+})
 
-window.remove_snapshot = function() {
-    window.Webcam.snap( function(data_uri) {
-        document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-    } );
+window.remove_snapshot = function () {
+    window.Webcam.snap(function (data_uri) {
+        document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>'
+    })
 }
 
 import 'cropperjs/dist/cropper.css'
@@ -87,3 +87,4 @@ window.base64ToFile = function (dataUrl, filename) {
 require('./support/broadcast')
 
 import './support/qrCodeScanner'
+require('./support/webcam')
