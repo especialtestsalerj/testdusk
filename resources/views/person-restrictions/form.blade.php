@@ -63,6 +63,7 @@
                             </div>
                         </div>
                     </div>
+                    @can('people:store')
                     <div class="col-md-1 mt-md-4">
                         <div class="form-group">
                             <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
@@ -72,6 +73,7 @@
                         </div>
 
                     </div>
+                    @endcan
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -100,6 +102,8 @@
             </div>
         </form>
 
-        @include('person-restrictions.partials.modal')
+        @can('people:store')
+            @include('person-restrictions.partials.modal')
+        @endcan
     </div>
 @endsection
