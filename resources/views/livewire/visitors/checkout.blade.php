@@ -94,18 +94,16 @@
                                                             {{ $visitor->sector->name ?? '' }}
                                                         </div>
                                                     </div>
-                                                    <div class="row mt-2">
-                                                        <div class="col-12">
-                                                            <div class="small">
-                                                                Entrada:
-                                                                {{ $visitor->entranced_at->format('d/m/Y H:i') }}
-                                                            </div>
+                                                    <div class="col-12">
+                                                        <div class="small">
+                                                            Entrada:
+                                                            {{ $visitor->entranced_at->format('d/m/Y H:i') }}
                                                         </div>
-                                                        <div class="col-12">
-                                                            <div class="small">
-                                                                Saída:
-                                                                {{ $visitor->exited_at->format('d/m/Y H:i') }}
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="small">
+                                                            Saída:
+                                                            {{ $visitor->exited_at->format('d/m/Y H:i') }}
                                                         </div>
                                                     </div>
                                                 </div>
