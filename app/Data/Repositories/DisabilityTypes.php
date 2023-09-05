@@ -13,12 +13,10 @@ class DisabilityTypes extends Repository
 
     public function allActive(array $ids = [])
     {
-        $tmpId = empty($id) ? null : $id;
-
         return $this->model
             ::where(function ($query) use ($ids) {
                 $query
-                    ->when(!empty($ids), function ($query) use ($ids) {
+                    ->when(isset($ids), function ($query) use ($ids) {
                         $query->whereIn('id', $ids);
                     })
                     ->orWhere('status', true);
