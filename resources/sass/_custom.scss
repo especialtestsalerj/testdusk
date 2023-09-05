@@ -680,3 +680,46 @@ body.bg-logo {
         border-width: 1px;
     }
 }
+
+.nav-tabs {
+    .nav-link {
+        margin-bottom: 0 !important;
+        &.active {
+            background: #dbdfea;
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            color: #142B53;
+        }
+        &:hover {
+            background: #254e97 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            color:#fff !important;;
+        }
+        &:focus {
+            background: #142B53;
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            color:#fff !important;
+        }
+        &:focus-visible {
+            background: #142B53 !important;
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            color:#fff !important;
+            outline: none !important;
+        }
+        &:focus-within {
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            outline: none !important;
+        }
+
+    }
+}
+
