@@ -30,8 +30,8 @@ class Modal extends BaseForm
     ];
 
     protected $messages = [
-        'required' => 'O campo :attribute é obrigatório.',
-        'required_if' => 'O campo :attribute é obrigatório.',
+        'required' => ':attribute: preencha o campo corretamente.',
+        'required_if' => ':attribute: preencha o campo corretamente.',
     ];
 
     protected $validationAttributes = [

@@ -14,6 +14,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
+                            </div>
+                        </div>
+                        <div class="row">
                             @isset($this->person)
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -41,7 +46,7 @@
                             @endisset
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="number">Número</label>
+                                    <label for="number">Número*</label>
                                     <input type="text" max="3000-01-01T23:59" class="form-control text-uppercase"
                                            name="number" wire:model="number" x-ref="number"/>
                                     <div>
