@@ -157,7 +157,7 @@
                     <div class="col-md-3">
                         @if($has_disability == 'true')
                             <div class="form-group">
-                                <label for="disabilities">Tipos de Deficiência*</label>
+                                <label for="disabilities">Tipo de Deficiência*</label>
                                 <br/>
                                 @foreach($disabilityTypes as $disabilityType)
                                     <label>

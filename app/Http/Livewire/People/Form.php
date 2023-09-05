@@ -160,10 +160,15 @@ class Form extends BaseForm
 
     protected function getComponentVariables()
     {
+        $disabilities = [];
+        foreach ($this->person->disabilities as $disability) {
+            array_push($disabilities , $disability->id);
+        }
+
         //todo: passar lista por parametro e tratar no AllActive dd($this->person->disabilities->pluck('id')->toArray());
         return [
-            'genders' => app(GendersRepository::class)->allActive($this->gender_id),
-            'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive(),
+            'genders' => app(GendersRepository::class)->allActive(),
+            'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive($disabilities),
             'countries' => app(CountriesRepository::class)->allActive($this->country_id),
             'states' => app(StatesRepository::class)->allActive($this->state_id),
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),

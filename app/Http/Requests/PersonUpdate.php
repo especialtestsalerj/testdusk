@@ -17,17 +17,28 @@ class PersonUpdate extends Request
             'state_id' => 'required_if:country_id,' . config('app.country_br'),
             'city_id' => 'required_if:country_id,' . config('app.country_br'),
             'other_city' => 'required_unless:country_id,' . config('app.country_br'),
+            'disabilities' => 'required_if:has_disability,true',
         ];
     }
 
     public function messages()
     {
         return [
-            'full_name.required' => 'Nome Completo: preencha o campo corretamente.',
-            'country_id.required' => 'País: preencha o campo corretamente.',
-            'state_id.required_if' => 'Estado: preencha o campo corretamente.',
-            'city_id.required_if' => 'Cidade: preencha o campo corretamente.',
-            'other_city.required_unless' => 'Cidade: preencha o campo corretamente.',
+           'required' => ':attribute: preencha o campo corretamente.',
+            'required_if' => ':attribute: preencha o campo corretamente.',
+            'required_unless' => ':attribute: preencha o campo corretamente.',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'full_name' => 'Nome Completo',
+            'country_id' => 'País',
+            'state_id' => 'Estado',
+            'city_id' => 'Cidade',
+            'other_city' => 'Cidade',
+            'disabilities' => 'Tipo de Deficiência',
         ];
     }
 
