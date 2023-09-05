@@ -34,7 +34,7 @@
         @endcanany
             @can('routines:show')
                 @if(!empty($routines))
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+        <div class="tab-pane fade @cannot(['visitors:show', 'people:show']) show active @endcannot" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
 
                     <div class="row">
                         <div class="col-12">
