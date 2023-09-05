@@ -9,7 +9,7 @@
                     Portaria
                 </h4>
             </button>
-            <button class="nav-link px-5" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+            <button class="nav-link px-5" id="nav-security-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                 <h4>
                     Segurança
                 </h4>
@@ -74,7 +74,7 @@
             </div>
 
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
             <div class="row">
                 <div class="col-12">
                     <div class="container">

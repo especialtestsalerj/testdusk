@@ -683,6 +683,7 @@ body.bg-logo {
 
 .nav-tabs {
     .nav-link {
+        margin-bottom: 0 !important;
         &.active {
             background: #dbdfea;
             border-radius: 0 !important;
@@ -710,7 +711,15 @@ body.bg-logo {
             border: none !important;
             margin-bottom: 0 !important;
             color:#fff !important;
+            outline: none !important;
         }
+        &:focus-within {
+            border-radius: 0 !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            outline: none !important;
+        }
+
     }
 }
 
