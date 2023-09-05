@@ -112,10 +112,6 @@
     </div>
     @endif
     @endCan
-    <!---------- LAYOUT DO SEGURANCA  ---------->
 
-
-    <!-- Slider main container -->
-    <!---------- FIM DO LAYOUT DO SEGURANCA  ---------->
 
 @endsection
