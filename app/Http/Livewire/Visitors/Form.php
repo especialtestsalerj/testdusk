@@ -54,21 +54,15 @@ class Form extends BaseForm
             $this->visitor = new Visitor();
             $this->visitor->entranced_at = now();
 
+
+
             $this->person = new Person();
 
             $this->fillByQueryString();
 
             $this->sector = new Sector();
 
-            $this->webcam_data_uri = false;
-
-            $this->visitor->append(['photo']);
-
-            if ($this->visitor->photo == '/img/no-photo.svg') {
-                $this->webcam_file = '';
-            } else {
-                $this->webcam_file = $this->visitor->photo;
-            }
+            $this->loadPhoto();
         } else {
             $this->visitor = $visitor;
 
@@ -125,5 +119,19 @@ class Form extends BaseForm
         if ($personId = request()->get('person_id')) {
             $this->personModified(Person::findOrFail($personId));
         }
+    }
+
+    /**
+     * @return void
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    protected function loadPhoto(): void
+    {
+        if ($person_id = request()->get('person_id')) {
+            $this->visitor->person_id = $person_id;
+        }
+        $this->visitor->loadLatestPhoto();
+        $this->webcam_data_uri = true;
     }
 }

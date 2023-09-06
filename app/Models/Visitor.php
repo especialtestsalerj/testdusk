@@ -77,6 +77,18 @@ class Visitor extends Model
         return $this->belongsTo(Document::class);
     }
 
+    public function loadLatestPhoto()
+    {
+        if($this->person_id){
+            $this->avatar_id = Visitor::where('person_id', $this->person_id)->orderBy('created_at','desc')->first()->avatar_id;
+        }
+    }
+
+    public function hasPhoto(): Attribute
+    {
+        return Attribute::make(get: fn($value) => !!$this->avatar_id);
+    }
+
     public function photo(): Attribute
     {
         $avatar = $this->avatar;
