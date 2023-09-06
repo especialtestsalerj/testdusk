@@ -5,7 +5,7 @@
                 <!----- Visão de Cards ------>
                 <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
                     <div class="card people-min-height bg-white">
-                        <div class="card-header py-1 bg-blue-light text-white">
+                        <div class="card-header bg-blue-light text-white">
                             <div class="row d-flex align-items-center">
                                 <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
