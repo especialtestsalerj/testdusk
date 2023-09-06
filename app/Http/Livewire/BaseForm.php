@@ -68,4 +68,16 @@ abstract class BaseForm extends Component
     {
         return $this->formVariables() + $this->getComponentVariables();
     }
+
+    public function getDocumentMask()
+    {
+        $documentType = $this->document_type_id;
+
+        switch ($documentType) {
+            case 1:
+                return '999.999.999-99';
+            default:
+                return '';
+        }
+    }
 }

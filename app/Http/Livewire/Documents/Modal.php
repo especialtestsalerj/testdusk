@@ -30,8 +30,8 @@ class Modal extends BaseForm
     ];
 
     protected $messages = [
-        'required' => 'O campo :attribute é obrigatório.',
-        'required_if' => 'O campo :attribute é obrigatório.',
+        'required' => ':attribute: preencha o campo corretamente.',
+        'required_if' => ':attribute: preencha o campo corretamente.',
     ];
 
     protected $validationAttributes = [
@@ -82,7 +82,7 @@ class Modal extends BaseForm
 
         }
         $this->person->documents()->create([
-            'number' =>  $this->number,
+            'number' =>  remove_punctuation($this->number),
             'document_type_id' =>  $this->document_type_id,
             'person_id' =>  $this->person->id,
             'state_id' =>  $this->state_id,
@@ -98,7 +98,7 @@ class Modal extends BaseForm
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
 
         $this->document->update([
-            'number' => $this->number,
+            'number' => remove_punctuation($this->number),
             'state_id' =>  $this->state_id,
             'updated_by_id' => auth()->user()->id,
         ]);
@@ -142,6 +142,7 @@ class Modal extends BaseForm
         $this->document_type_id = null;
         $this->number = null;
         $this->state_id = null;
+        $this->resetErrorBag();
     }
 
 }

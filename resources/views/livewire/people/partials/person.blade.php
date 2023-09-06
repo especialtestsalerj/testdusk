@@ -1,24 +1,11 @@
 <div class="form-group">
-    <div x-init="//VMasker($refs.cpf).maskPattern(cpfmask);
+    <div x-init="
+        Webcam.attach('#webcam')
 
-    Webcam.attach('#webcam');
+        //loadOldPhoto
+        window.update_photo('{{$photo}}')
 
-    window.take_snapshot = function() {
-        window.Webcam.snap(function(data_uri) {
-            const fileInput = document.querySelector('input[type=file]');
-            const myFile = base64ToFile(data_uri, 'webcam-picture.jpg');
-
-            // Now let's create a DataTransfer to get a FileList
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(myFile);
-            fileInput.files = dataTransfer.files;
-
-            var inputEvent = new Event('input');
-            fileInput.dispatchEvent(inputEvent);
-            var changeEvent = new Event('change');
-            fileInput.dispatchEvent(changeEvent);
-        });
-    }" x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
+    " x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
 
         <div class="row">
             <div class="col-12">
@@ -29,7 +16,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="document_type_id">Tipo de Documento*</label>
-                    <select name="document_type_id" class="form-control text-uppercase"
+                    <select id="document_type_id" name="document_type_id" class="form-control text-uppercase"
                             wire:model="document_type_id" @if ($modal) disabled @endif
                             @if ($readonly) readonly @endif x-ref="document_type_id">
                         <option value="">Selecione</option>
@@ -48,6 +35,7 @@
                     <label for="document_number">Documento*</label>
                     <input @if ($modal) disabled @endif
                     @if ($readonly) readonly @endif type="text"
+                           x-mask="{{$this->getDocumentMask()}}"
                            class="form-control @error('cpf') is-invalid @endError" name="document_number"
                            id="document_number" wire:model.lazy="document_number" x-ref="document_number"
                            wire:blur="searchDocumentNumber" />

@@ -1,4 +1,4 @@
-<div>
+<div wire:keep-alive>
     <div class="py-4 px-4">
         <form name="formulario" id="formulario" action="{{ route('people.update', ['id' => $person->id]) }}" method="POST">
             @csrf
@@ -51,7 +51,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control text-lowercase" name="email" id="email" wire:model="email" value="{{ is_null(old('email')) ? $person->email: old('email') }}" @disabled(request()->query('disabled'))/>
+                            <input type="email" class="form-control text-lowercase" name="email" id="email" wire:model.defer="email" value="{{ is_null(old('email')) ? $person->email: old('email') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -157,7 +157,7 @@
                     <div class="col-md-3">
                         @if($has_disability == 'true')
                             <div class="form-group">
-                                <label for="disabilities">Tipos de Deficiência*</label>
+                                <label for="disabilities">Tipo de Deficiência*</label>
                                 <br/>
                                 @foreach($disabilityTypes as $disabilityType)
                                     <label>
