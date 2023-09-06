@@ -80,6 +80,10 @@
             padding-left: -6mm;
         }
 
+        body.bg-light, #badge {
+            background-color: #FFFFFF !important;
+        }
+
         #badge table {
             width: 100%;
         }
@@ -216,10 +220,7 @@
             "
              @endIf
         >
-            <table
-
-
-            >
+            <table>
                 <tr>
                     <td colspan="3" class="text-center badge-text-sm">{{ config('app.company') }}</td>
                 </tr>
