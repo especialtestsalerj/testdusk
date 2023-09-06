@@ -214,5 +214,7 @@ return [
 
     'state_rj' => env('APP_STATE_RJ', '33'),
 
+    'city_rio' => env('APP_CITY_RIO', '3304557'),
+
     'document_type_rg' => env('APP_DOCUMENT_TYPE_RG', '2'),
 ];
