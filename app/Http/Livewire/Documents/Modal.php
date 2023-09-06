@@ -82,7 +82,7 @@ class Modal extends BaseForm
 
         }
         $this->person->documents()->create([
-            'number' =>  $this->number,
+            'number' =>  remove_punctuation($this->number),
             'document_type_id' =>  $this->document_type_id,
             'person_id' =>  $this->person->id,
             'state_id' =>  $this->state_id,
@@ -98,7 +98,7 @@ class Modal extends BaseForm
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
 
         $this->document->update([
-            'number' => $this->number,
+            'number' => remove_punctuation($this->number),
             'state_id' =>  $this->state_id,
             'updated_by_id' => auth()->user()->id,
         ]);
