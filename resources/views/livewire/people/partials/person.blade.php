@@ -16,7 +16,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="document_type_id">Tipo de Documento*</label>
-                    <select name="document_type_id" class="form-control text-uppercase"
+                    <select id="document_type_id" name="document_type_id" class="form-control text-uppercase"
                             wire:model="document_type_id" @if ($modal) disabled @endif
                             @if ($readonly) readonly @endif x-ref="document_type_id">
                         <option value="">Selecione</option>
@@ -35,6 +35,7 @@
                     <label for="document_number">Documento*</label>
                     <input @if ($modal) disabled @endif
                     @if ($readonly) readonly @endif type="text"
+                           x-mask="{{$this->getDocumentMask()}}"
                            class="form-control @error('cpf') is-invalid @endError" name="document_number"
                            id="document_number" wire:model.lazy="document_number" x-ref="document_number"
                            wire:blur="searchDocumentNumber" />

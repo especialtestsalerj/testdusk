@@ -50,7 +50,7 @@
                             <div class="form-group">
                                 <label for="number">Número*</label>
                                 <input type="text" max="3000-01-01T23:59" class="form-control text-uppercase"
-                                       name="number" wire:model="number" x-ref="number"/>
+                                       id="number" name="number" wire:model="number" x-mask="{{$this->getDocumentMask()}}"/>
                                 <div>
                                     @error('number')
                                     <small class="text-danger">
