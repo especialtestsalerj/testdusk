@@ -684,42 +684,32 @@ body.bg-logo {
 .nav-tabs {
     .nav-link {
         margin-bottom: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
         &.active {
             background: #dbdfea;
-            border-radius: 0 !important;
-            border: none !important;
             margin-bottom: 0 !important;
             color: #142B53;
         }
         &:hover {
             background: #254e97 !important;
-            border-radius: 0 !important;
-            border: none !important;
             margin-bottom: 0 !important;
             color:#fff !important;;
         }
         &:focus {
-            background: #142B53;
-            border-radius: 0 !important;
-            border: none !important;
+            background: #dbdfea;
             margin-bottom: 0 !important;
-            color:#fff !important;
+            color: #142B53 !important;
         }
         &:focus-visible {
-            background: #142B53 !important;
-            border-radius: 0 !important;
-            border: none !important;
+            background: #254e97 !important;
             margin-bottom: 0 !important;
-            color:#fff !important;
+            color: #fff !important;
             outline: none !important;
         }
         &:focus-within {
-            border-radius: 0 !important;
-            border: none !important;
             margin-bottom: 0 !important;
             outline: none !important;
         }
-
     }
 }
-
