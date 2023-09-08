@@ -4,10 +4,8 @@
             <form method="post" action="{{route('people.create')}}">
                 @csrf
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Inclusão de Pessoa</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> Nova Pessoa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <span id="#webcam" class="d-none"></span>
             <div class="modal-body">
@@ -20,11 +18,11 @@
                 <input type="hidden" name="redirect" value="person-restrictions.create" />
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success text-white ml-1">
-                    <i class="fa fa-save"></i> Criar
+                <button type="submit" class="btn btn-success text-white ml-1" title="Salvar Pessoa">
+                    <i class="fa fa-save"></i> Salvar
                 </button>
-                <button type="button" class="btn btn-danger text-white ml-1" data-bs-dismiss="modal">
-                    <i class="fas fa-ban"></i> Fechar
+                <button type="button" class="btn btn-danger text-white ml-1" data-bs-dismiss="modal" title="Fechar formulário">
+                    <i class="fas fa-ban"></i> Cancelar
                 </button>
             </div>
             </form>

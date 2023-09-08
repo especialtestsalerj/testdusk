@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mb-5">
     <div class="col-sm-8 align-self-center">
         <h3 class="mb-0">
             <i class="fas fa-gun"></i> Armas

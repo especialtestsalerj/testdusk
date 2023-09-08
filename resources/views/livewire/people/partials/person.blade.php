@@ -8,11 +8,7 @@
     " x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
 
         <div class="row">
-            <div class="col-12">
-                <h4>
-                    Dados do/a Visitante
-                </h4>
-            </div>
+
             <div class="col-4">
                 <div class="form-group">
                     <label for="document_type_id">Tipo de Documento*</label>

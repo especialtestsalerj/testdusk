@@ -48,8 +48,8 @@ class Person extends Controller
             'state_id' => $request->get('state_document_id'),
         ]);
 
-       return redirect()
+        return redirect()
             ->route($request['redirect'])
-            ->with('message', 'Pessoa Adicionada com sucesso!');
+            ->with('message', 'Pessoa adicionada com sucesso!');
     }
 }
