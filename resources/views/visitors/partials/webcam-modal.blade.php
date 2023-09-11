@@ -1,24 +1,8 @@
 <div
-    x-init="//VMasker($refs.cpf).maskPattern(cpfmask);
-
+    x-init="
+    //VMasker($refs.cpf).maskPattern(cpfmask);
     window.Webcam.attach('#webcam');
-
-    window.take_snapshot = function() {
-        window.Webcam.snap(function(data_uri) {
-            const fileInput = document.querySelector('input[type=file]');
-            const myFile = base64ToFile(data_uri, 'webcam-picture.jpg');
-
-            // Now let's create a DataTransfer to get a FileList
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(myFile);
-            fileInput.files = dataTransfer.files;
-
-            var inputEvent = new Event('input');
-            fileInput.dispatchEvent(inputEvent);
-            var changeEvent = new Event('change');
-            fileInput.dispatchEvent(changeEvent);
-        });
-    }"
+"
 >
 
 </div>
@@ -35,25 +19,26 @@
             </div>
 
             <div class="d-flex justify-content-evenly pt-3">
-                <div class="{{ $webcam_file ? 'd-none' : ''}}">
+                <div class="{{ $hasWebcamPhoto ? 'd-none' : ''}}">
                     <button type="button" wire:click="takeSnapshot" onclick="take_snapshot()"
                             class="btn btn-outline-primary">
                         <i class="fa-solid fa-camera"></i>
                     </button>
                 </div>
-                <div>
+                <div class="{{ $hasWebcamPhoto ? 'd-none' : ''}}">
                     <label for="webcam_file" class="btn btn-outline-primary">
                         <i class="fas fa-upload"></i>
                     </label>
                 </div>
-                <div class="{{ $webcam_file ? '' : 'd-none' }}">
-                    <button wire:click.prevent="removeWebcamFile" type="button" class="btn btn-outline-primary">
+                <div class="{{ $hasWebcamPhoto ? '' : 'd-none' }}">
+                    <button wire:click.prevent="removeWebcamFile" onclick="remove_snapshot()" type="button" class="btn btn-outline-primary">
                         <i class="fas fa-eraser"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="modal-body {{ $webcam_file ? 'd-none' : '' }}">
+
+            <div class="modal-body {{ $hasWebcamPhoto ? 'd-none' : '' }}">
                 <div style="height: 100%">
                     <div class="row control-group" transition="expand" wire:ignore>
                         <div class="form-group col-12 floating-label-form-group controls">
@@ -72,8 +57,10 @@
                                 <div class="custom-file">
 
                                     <input type="file" name="webcam_file"
-                                           class="custom-file-input" id="webcam_file" wire:model="webcam_file"
-                                           wire:change="removeWebcamFile" style="display: none;">
+                                           class="custom-file-input" id="webcam_file"
+                                           wire:model="webcam_file"
+                                           wire:change="imageUploaded"
+                                           style="display: none;">
                                 </div>
 
                                 <div>
@@ -93,8 +80,10 @@
                 </div>
 
             </div>
-            @if ($webcam_file)
+
                 <div class="modal-body">
+
+                    @if ($hasWebcamPhoto  && $webcam_file)
                     <div class="row control-group" transition="expand" data-instance="{{ $iteration }}">
                         <div class="form-group col-12 floating-label-form-group controls">
                             <div class="card text-center">
@@ -119,6 +108,7 @@
                                              }
                                          }" x-intersect="setUp()">
                                         <div>
+
                                             <img id="preview_webcam_file"
                                                  src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}"
                                                  class="img-fluid" style="max-height: 300px">
@@ -128,28 +118,66 @@
                             </div>
                         </div>
                     </div>
+                    @endIf
 
-                    <div class="row" x-init="window.canvas = document.getElementById('canvas');
+                    <div class="row" x-init="
+                    window.canvas = document.getElementById('canvas');
                      window.canvasBadge = document.getElementById('canvas-badge');
                      window.base64Input = document.getElementById('photo');
 
                      var ctx = canvas.getContext('2d');
                      var ctxBadge = canvasBadge.getContext('2d');
                      var image = new Image();
-                     image.src = '{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}'; // Replace with your image source
+
+                    console.log('Comeceu')
+                    console.log('{{$webcam_file}}')
+                    console.log('{{$webcam_data_uri}}')
+                    console.log({{ !!$hasWebcamPhoto }})
+
+
+                     // Replace with your image source
+
+
+
 
                      // When the image has loaded
-                     image.onload = function() {
-                         // Draw the image on the canvas, applying the crop
-                         ctx.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvas.width, canvas.height);
-                         ctxBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvasBadge.width, canvasBadge.height);
-                         base64Input.value = canvas.toDataURL()
-                     };">
+
+
+                     @if($hasWebcamPhoto && $webcam_file)
+
+                        console.log('beginPath1')
+                        console.log('{{$webcam_file}}')
+                        image.src = '{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}';
+                         image.onload = function() {
+                             // Draw the image on the canvas, applying the crop
+                             ctx.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvas.width, canvas.height);
+                             ctxBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvasBadge.width, canvasBadge.height);
+                             base64Input.value = canvas.toDataURL()
+                         };
+                     @else
+                        console.log('beginPath2')
+
+                        ctx.fillStyle = 'white'; // You can replace 'white' with your desired background color
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+                        ctxBadge.fillStyle = 'white'; // You can replace 'white' with your desired background color
+                        ctxBadge.fillRect(0, 0, canvasBadge.width, canvasBadge.height);
+
+                    @endIf
+
+                    console.log('Acabou')
+"
+                    >
                         {{--        <canvas wire:ignore id="canvas" width="400" height="400"></canvas> --}}
-                        <input wire:ignore id="photo" name="photo" type="hidden">
+{{--                        @if ($hasWebcamPhoto)--}}
+                            <input wire:ignore id="photo" name="photo" type="hidden">
+{{--                        @endif--}}
                     </div>
                 </div>
-            @endif
+
+
+
             <div class="modal-footer">
                 <button data-bs-dismiss="modal" type="button" class="btn btn-secondary" title="Fechar Formulário"><i class="fas fa-check"></i> Fechar</button>
             </div>

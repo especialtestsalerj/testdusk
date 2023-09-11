@@ -6,6 +6,7 @@ trait WithWebcam
 {
     public $webcam_file;
     public $webcam_data_uri;
+    public $hasWebcamPhoto;
 
     public $x;
     public $y;
@@ -22,6 +23,18 @@ trait WithWebcam
         $this->width = 400;
         $this->height = 400;
         $this->webcam_data_uri = false;
+        $this->hasWebcamPhoto = false;
+        $this->photo = null;
+        $this->visitor->photo = null;
+
+        //Force update of crop panel
+        $this->iteration = $this->iteration + 1;
+    }
+
+    public function imageUploaded()
+    {
+        $this->webcam_data_uri = false;
+        $this->hasWebcamPhoto = true;
     }
 
     public function takeSnapshot()
@@ -31,9 +44,10 @@ trait WithWebcam
         $this->width = 400;
         $this->height = 400;
 
-        $this->removeWebcamFile();
+        $this->webcam_data_uri = false;
+        $this->hasWebcamPhoto = true;
 
-        //Force update of crop panel
+//        Force update of crop panel
         $this->iteration = $this->iteration + 1;
     }
 

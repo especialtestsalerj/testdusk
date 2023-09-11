@@ -11,15 +11,15 @@ class UpdateForm extends Form
     {
         $this->visitor = $visitor;
         $this->person = $visitor->person;
-        $this->webcam_data_uri = true;
 
-        $this->visitor->append(['photo']);
+        $this->loadPhoto();
 
-        if ($this->visitor->photo == "/img/no-photo.svg") {
-            $this->webcam_file = "";
-        } else {
-            $this->webcam_file = $this->visitor->photo;
-        }
+//        if ($this->visitor->photo == '/img/no-photo.svg') {
+//            $this->webcam_file = '/img/no-photo.svg';
+//        } else {
+//            $this->webcam_file = $this->visitor->photo;
+//            $this->webcam_data_uri = false;
+//        }
 
     }
 }
