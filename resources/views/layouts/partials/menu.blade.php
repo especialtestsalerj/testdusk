@@ -31,7 +31,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['people.*', 'visitors.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['people.*', 'visitors.*', 'person-restrictions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Portaria
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownPortaria">
@@ -41,8 +41,12 @@
                             @can('visitors:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('visitors.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
                             @endCan
-
+                            @can('visitors:checkout')
                             <li><a class="dropdown-item {{ (request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.checkout') }}">Checkout</a></li>
+                            @endCan
+                            @can('person-restrictions:show')
+                                <li><a class="dropdown-item {{ (request()->routeIs('person-restrictions.*')) ? 'active' : '' }}" href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a></li>
+                            @endCan
                         </ul>
                     </li>
 

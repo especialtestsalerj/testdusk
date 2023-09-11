@@ -7,12 +7,13 @@ use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
 use App\Models\Person;
+use App\Models\State;
 use App\Http\Livewire\Traits\WithWebcam;
 use App\Models\Visitor;
-use Illuminate\Support\Facades\Session;
 use Livewire\WithFileUploads;
 
 use function app;
@@ -125,9 +126,7 @@ class People extends BaseForm
             }
         }
 
-        $this->photo = is_null(old('photo'))
-            ? $this->photo
-            : old('photo');
+        $this->photo = is_null(old('photo')) ? $this->photo : old('photo');
 
         if (!$this->isPreFilled('document_type_id')) {
             $this->document_type_id = is_null(old('document_type_id'))
@@ -186,15 +185,13 @@ class People extends BaseForm
 
         $this->fillModel();
         $this->loadDefault();
-
     }
 
     public function render()
     {
         $this->loadCountryBr();
 
-        return view('livewire.people.partials.person')->with($this->getViewVariables()
-        );
+        return view('livewire.people.partials.person')->with($this->getViewVariables());
     }
 
     protected function formVariables()
@@ -215,7 +212,7 @@ class People extends BaseForm
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
-        $this->loadDefaultCountry();
+        $this->loadDefaultLocation();
     }
 
     function mime2ext($mime)
@@ -412,10 +409,17 @@ class People extends BaseForm
     /**
      * @return void
      */
-    protected function loadDefaultCountry(): void
+    protected function loadDefaultLocation(): void
     {
         if (is_null($this->country_id)) {
             $this->country_id = Country::where('id', '=', config('app.country_br'))->first()->id;
+        }
+        if (is_null($this->state_id)) {
+            $this->state_id = State::where('id', '=', config('app.state_rj'))->first()->id;
+        }
+        if (is_null($this->city_id)) {
+            $this->city_id = City::where('id', '=', config('app.city_rio'))->first()->id;
+            $this->loadCities();
         }
     }
 }

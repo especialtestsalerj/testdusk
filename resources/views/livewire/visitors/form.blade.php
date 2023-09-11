@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="row d-flex justify-content-center">
-                                        <div class="d-grid gap-2 col-7 col-xxl-9 mt-2">
+                                        <div class="d-grid gap-2 col-7 col-xxl-9 mt-2 mb-5">
                                             @include('visitors.partials.webcam-button')
                                         </div>
                                     </div>
@@ -63,6 +63,11 @@
                     </div>
 
                     <div class="col-12 col-xl-8 g-1">
+                        <div class="col-12">
+                            <h4>
+                                Dados do/a Visitante
+                            </h4>
+                        </div>
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
                         'readonly' => $visitor->hasPending(), 'showRestrictions' => true, 'document_number'=> request()->query('document_number'),

@@ -18,10 +18,7 @@ class Modal extends BaseForm
     public $number;
     public $state_id;
 
-    protected $listeners = [
-        'editDocument',
-        'createDocument'
-    ];
+    protected $listeners = ['editDocument', 'createDocument'];
 
     public $rules = [
         'document_type_id' => 'required',
@@ -42,13 +39,15 @@ class Modal extends BaseForm
 
     public function render()
     {
-       return view('livewire.documents.modal')->with($this->getViewVariables());
+        return view('livewire.documents.modal')->with($this->getViewVariables());
     }
 
     public function formVariables()
     {
-        return ['documentTypes' => app(DocumentTypes::class)->all(),
-            'states' => app(States::class)->all()];
+        return [
+            'documentTypes' => app(DocumentTypes::class)->all(),
+            'states' => app(States::class)->all(),
+        ];
     }
 
     public function editDocument(Document $document)
@@ -70,24 +69,21 @@ class Modal extends BaseForm
 
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
 
-        if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
+        if (intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id) {
+            $cpf = Document::where('person_id', $this->person->id)
+                ->where('document_type_id', $this->document_type_id)
+                ->first();
 
-            $cpf = Document::where('person_id',$this->person->id)->
-                where('document_type_id',$this->document_type_id)->first();
-
-            if(!empty($cpf)){
+            if (!empty($cpf)) {
                 $this->swallError('A pessoa já possui um CPF cadastrado');
                 return;
             }
-
         }
         $this->person->documents()->create([
-            'number' =>  remove_punctuation($this->number),
-            'document_type_id' =>  $this->document_type_id,
-            'person_id' =>  $this->person->id,
-            'state_id' =>  $this->state_id,
-            'created_by_id' => auth()->user()->id,
-            'updated_by_id' => auth()->user()->id,
+            'number' => convert_case(remove_punctuation($this->number), MB_CASE_UPPER),
+            'document_type_id' => $this->document_type_id,
+            'person_id' => $this->person->id,
+            'state_id' => $this->state_id,
         ]);
     }
 
@@ -99,40 +95,36 @@ class Modal extends BaseForm
 
         $this->document->update([
             'number' => remove_punctuation($this->number),
-            'state_id' =>  $this->state_id,
-            'updated_by_id' => auth()->user()->id,
+            'state_id' => $this->state_id,
         ]);
     }
 
-    private function isValidCpf(){
-        if(!validate_cpf($this->number)) {
-            $this->swallError( 'CPF inválido');
+    private function isValidCpf()
+    {
+        if (!validate_cpf($this->number)) {
+            $this->swallError('CPF inválido');
             return false;
         }
         return true;
     }
 
-
-
     public function store()
     {
-        if(intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id){
-            if(!$this->isValidCpf()){
-
+        if (intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id) {
+            if (!$this->isValidCpf()) {
                 return;
             }
         }
-        if($this->document) {
+        if ($this->document) {
             $this->storeEditedDocument();
             $this->emit('create-document', $this->document->person);
         }
-        if($this->person) {
+        if ($this->person) {
             $this->storeNewDocument();
             $this->emit('create-document', $this->person);
         }
 
         $this->cleanModal();
-
     }
 
     public function cleanModal()
@@ -144,5 +136,4 @@ class Modal extends BaseForm
         $this->state_id = null;
         $this->resetErrorBag();
     }
-
 }
