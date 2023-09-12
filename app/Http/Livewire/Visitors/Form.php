@@ -60,6 +60,7 @@ class Form extends BaseForm
         $this->sector = new Sector();
 
         $this->fillByQueryString();
+
         $this->loadPhoto();
     }
 
@@ -122,9 +123,11 @@ class Form extends BaseForm
     {
         if ($person_id = request()->get('person_id')) {
             $this->visitor->person_id = $person_id;
+            $this->visitor->loadLatestPhoto();
+        }else{
+            $this->visitor->append(['photo']);
         }
 
-        $this->visitor->append(['photo']);
         $this->webcamFile = is_null(old('photo')) ? $this->visitor->photo : old('photo');
 
         $this->hasWebcamPhoto = $this->webcamFile != no_photo();
