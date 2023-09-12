@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>ALERJ - ERRO 403</title>
+    <title>ALERJ - ERRO 400</title>
     <style type="text/css">
         html, body{
             height:100%;
@@ -30,6 +30,7 @@
             display:inline-block;
             max-width: 450px;
         }
+
         .logo img{
             width: 90%;
         }
@@ -43,15 +44,16 @@
             color:#eef7f5;
             font-size:28px;
             text-shadow: 1px 1px 5px #20272e;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
         }
         .message{
             font-size:20px;
+            color:#eef7f5;
             /*text-shadow: 1px 1px 10px #4b5a69;*/
         }
         .cog-faint{
             /*position:absolute;*/
-            font-size:150px!important;
+            font-size:120px !important;
             color:#eef7f5;
             text-shadow: 1px 1px 10px #2f3841;
             /*opacity:0.1;*/
@@ -79,19 +81,30 @@
 </head>
 <body>
 <script src="https://use.fontawesome.com/87f6f824d6.js"></script>
-<!-- erro 403 -->
+<!-- erro 400 -->
 <div class="error-container">
     <div class="error">
         <div class="logo">
             <img src="img/logo-alerj-grande-branco-90.png">
         </div>
         <div class="row">
-            <div class="column-1"><i class="fa fa-ban cog-faint" aria-hidden="true"></i></div>
-            <div class="column"><div class="number">403</div></div>
+            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
+            </div>
+            <div class="column"><div class="number">400</div></div>
         </div>
-        <div class="title">Você não tem permissão para acessar a página solicitada.</div>
-     </div>
+        <div class="title">
+            Bad Request
+        </div>
+        <div class="message">
+            A solicitação do cliente é inválida ou malformada.
+        </div>
+    </div>
 </div>
-<!-- erro 403 - end -->
+<!-- erro 400 - end -->
 </body>
 </html>
+
+
+
+
+
