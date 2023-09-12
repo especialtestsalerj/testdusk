@@ -12,10 +12,8 @@
         body{
             background: rgb(20,43,83);
             background: linear-gradient(0deg, rgba(20,43,83,1) 0%, rgba(37,78,151,1) 100%);
-
             /*background: #1a6d62;
             background: radial-gradient(ellipse at center,  #2d9c8e 0%,#1d4641 100%);*/
-
             /*background: #b7c0c9;
             background: linear-gradient(315deg,#b7c0c9,#f1f3f5);*/
         }
@@ -32,11 +30,9 @@
             display:inline-block;
             max-width: 450px;
         }
-
         .logo img{
             width: 90%;
         }
-
         .number{
             font-size:160px;
             color:#eef7f5;
@@ -60,8 +56,6 @@
             text-shadow: 1px 1px 10px #2f3841;
             /*opacity:0.1;*/
         }
-
-
         .row {
             display: flex;
             align-items: center;
@@ -75,14 +69,12 @@
             float: left;
             width: 65%;
         }
-
         /* Clear floats after the columns */
         .row:after {
             content: "";
             display: table;
             clear: both;
         }
-
     </style>
 </head>
 <body>
@@ -93,17 +85,10 @@
         <div class="logo">
             <img src="img/logo-alerj-grande-branco-90.png">
         </div>
-
-
         <div class="row">
             <div class="column-1"><i class="fa fa-ban cog-faint" aria-hidden="true"></i></div>
             <div class="column"><div class="number">403</div></div>
         </div>
-
-
-
-
-
         <div class="title">Você não tem permissão para acessar a página solicitada.</div>
      </div>
 </div>

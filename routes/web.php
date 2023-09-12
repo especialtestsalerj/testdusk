@@ -15,7 +15,7 @@ use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
 |
 */
 
-abort(403);
+abort(404);
 
 Route::get('/logout', [
     \Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class,
@@ -39,7 +39,6 @@ Route::group(
         require __DIR__ . '/people.php';
         require __DIR__ . '/person-restrictions.php';
         require __DIR__ . '/routines.php';
-
         require __DIR__ . '/visitors.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
@@ -49,5 +48,4 @@ Route::group(
         });
     }
 );
-
 Route::get('visitors/card/{uuid?}', VisitorsCard::class)->name('visitors.card');
