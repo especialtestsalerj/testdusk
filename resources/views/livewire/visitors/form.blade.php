@@ -1,5 +1,5 @@
 <div>
-    <div class="py-4 px-4" wire:keep-alive>
+    <div class="py-4 px-4" wire:poll.keep-alive>
         <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
             @if (isset($visitor->id))
@@ -118,9 +118,7 @@
                 </div>
             </div>
             <div
-            x-init="
-                Webcam.attach('#webcam')
-            "
+            x-init="Webcam.attach('#webcam')"
             >
 
             </div>

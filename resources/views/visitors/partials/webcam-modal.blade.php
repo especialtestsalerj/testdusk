@@ -1,8 +1,5 @@
 <div
-    x-init="
-    //VMasker($refs.cpf).maskPattern(cpfmask);
-    window.Webcam.attach('#webcam');
-"
+    x-init="window.Webcam.attach('#webcam');"
 >
 
 </div>
@@ -58,13 +55,13 @@
 
                                     <input type="file" name="webcam_file"
                                            class="custom-file-input" id="webcam_file"
-                                           wire:model="webcam_file"
+                                           wire:model="webcamFile"
                                            wire:change="imageUploaded"
                                            style="display: none;">
                                 </div>
 
                                 <div>
-                                    @error('webcam_file')
+                                    @error('webcamFile')
                                     <small class="text-danger">
                                         <i class="fas fa-exclamation-triangle"></i>
                                         {{ $message }}
@@ -83,7 +80,7 @@
 
                 <div class="modal-body">
 
-                    @if ($hasWebcamPhoto  && $webcam_file)
+                    @if($hasWebcamPhoto && $webcamFile != no_photo())
                     <div class="row control-group" transition="expand" data-instance="{{ $iteration }}">
                         <div class="form-group col-12 floating-label-form-group controls">
                             <div class="card text-center">
@@ -110,8 +107,9 @@
                                         <div>
 
                                             <img id="preview_webcam_file"
-                                                 src="{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}"
+                                                 src="{{ $webcamDataUri ? $webcamFile : $webcamFile->temporaryUrl() }}"
                                                  class="img-fluid" style="max-height: 300px">
+
                                         </div>
                                     </div>
                                 </div>
@@ -121,58 +119,36 @@
                     @endIf
 
                     <div class="row" x-init="
-                    window.canvas = document.getElementById('canvas');
-                     window.canvasBadge = document.getElementById('canvas-badge');
-                     window.base64Input = document.getElementById('photo');
+                    window.dataCanvas = document.getElementById('canvas');
+                    window.visibleCanvasBadge = document.getElementById('canvas-visible-badge');
+                    window.base64Input = document.getElementById('photo');
 
-                     var ctx = canvas.getContext('2d');
-                     var ctxBadge = canvasBadge.getContext('2d');
-                     var image = new Image();
+                    var ctxDataBadge = dataCanvas.getContext('2d');
+                    var ctxVisibleBadge = visibleCanvasBadge.getContext('2d');
+                    var image = new Image();
 
-                    console.log('Comeceu')
-                    console.log('{{$webcam_file}}')
-                    console.log('{{$webcam_data_uri}}')
-                    console.log({{ !!$hasWebcamPhoto }})
+                    window.clearCanvas('canvas')
+                    window.clearCanvas('canvas-visible-badge')
 
+                    @if($hasWebcamPhoto && $webcamFile != no_photo()) //has photo
+                        image.src = '{{ $webcamDataUri ? $webcamFile : $webcamFile->temporaryUrl() }}';
+                        image.onload = function() {
+                            ctxDataBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, dataCanvas.width, dataCanvas.height);
+                            ctxVisibleBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 75 }}, {{ $height ?? 75 }}, 0, 0, visibleCanvasBadge.width, visibleCanvasBadge.height);
 
-                     // Replace with your image source
-
-
-
-
-                     // When the image has loaded
-
-
-                     @if($hasWebcamPhoto && $webcam_file)
-
-                        console.log('beginPath1')
-                        console.log('{{$webcam_file}}')
-                        image.src = '{{ $webcam_data_uri ? $webcam_file : $webcam_file->temporaryUrl() }}';
-                         image.onload = function() {
-                             // Draw the image on the canvas, applying the crop
-                             ctx.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvas.width, canvas.height);
-                             ctxBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 400 }}, {{ $height ?? 400 }}, 0, 0, canvasBadge.width, canvasBadge.height);
-                             base64Input.value = canvas.toDataURL()
-                         };
+                            base64Input.value = dataCanvas.toDataURL() //fill image data transfered through the request
+                        };
                      @else
-                        console.log('beginPath2')
-
-                        ctx.fillStyle = 'white'; // You can replace 'white' with your desired background color
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-
-                        ctxBadge.fillStyle = 'white'; // You can replace 'white' with your desired background color
-                        ctxBadge.fillRect(0, 0, canvasBadge.width, canvasBadge.height);
-
+                        base64Input.value = null //clear image data transfered through the request
+                        image.src = '{{ no_photo() }}'
+                        image.onload = function() {
+                            ctxVisibleBadge.drawImage(image, {{ $x ?? 0 }}, {{ $y ?? 0 }}, {{ $width ?? 75 }}, {{ $height ?? 75 }}, 0, 0, visibleCanvasBadge.width, visibleCanvasBadge.height);
+                        }
                     @endIf
-
-                    console.log('Acabou')
 "
                     >
-                        {{--        <canvas wire:ignore id="canvas" width="400" height="400"></canvas> --}}
-{{--                        @if ($hasWebcamPhoto)--}}
+{{--                            Photo in base64, that will be transfered through the request--}}
                             <input wire:ignore id="photo" name="photo" type="hidden">
-{{--                        @endif--}}
                     </div>
                 </div>
 

@@ -35,6 +35,8 @@ class Form extends BaseForm
         'person.full_name' => '',
         'person.social_name' => '',
         'hasWebcamPhoto' => '',
+        'webcamFile' => '',
+        'webcamDataUri' => '',
     ];
 
     public function updated($name, $value)
@@ -51,25 +53,14 @@ class Form extends BaseForm
 
     public function mount(Visitor $visitor)
     {
-        if (empty($visitor->id)) {
-            $this->visitor = new Visitor();
-            $this->visitor->entranced_at = now();
+        $this->visitor = new Visitor();
+        $this->visitor->entranced_at = now();
 
-            $this->person = new Person();
+        $this->person = new Person();
+        $this->sector = new Sector();
 
-            $this->fillByQueryString();
-
-            $this->sector = new Sector();
-
-            $this->loadPhoto();
-        } else {
-            $this->visitor = $visitor;
-
-            $this->loadPhoto();
-
-            $this->person = $visitor->person;
-            $this->sector = $visitor->sector;
-        }
+        $this->fillByQueryString();
+        $this->loadPhoto();
     }
 
     public function personModified($person)
@@ -88,7 +79,6 @@ class Form extends BaseForm
 
     public function render()
     {
-
         $this->visitor->person = $this->person;
         return view('livewire.visitors.form')->with($this->getViewVariables());
     }
@@ -135,13 +125,11 @@ class Form extends BaseForm
         }
 
         $this->visitor->append(['photo']);
+        $this->webcamFile = is_null(old('photo')) ? $this->visitor->photo : old('photo');
 
-        $this->webcam_file = $this->photo = is_null(old('photo'))
-            ? $this->visitor->photo
-            : old('photo');
+        $this->hasWebcamPhoto = $this->webcamFile != no_photo();
+        $this->webcamDataUri = !!$this->webcamFile;
 
-        $this->hasWebcamPhoto = (bool)$this->photo;
-
-        $this->webcam_data_uri = ($this->photo ? true : false);
+        $this->mountCoordinates();
     }
 }

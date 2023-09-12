@@ -5,30 +5,9 @@ window.take_snapshot = function () {
 }
 
 window.remove_snapshot = function () {
-        const fileInput = document.querySelector('input[type=file]')
-
-        console.log('remove_snapshot')
-
-        const dataTransfer = new DataTransfer()
-        fileInput.files = dataTransfer.files
-
-        var inputEvent = new Event('input')
-        fileInput.dispatchEvent(inputEvent)
-        var changeEvent = new Event('change')
-        fileInput.dispatchEvent(changeEvent)
-}
-
-window.attachPhoto = function(myFile) {
-        const dataTransfer = new DataTransfer()
-        const fileInput = document.querySelector('input[type=file]')
-
-        dataTransfer.items.add(myFile)
-        fileInput.files = dataTransfer.files
-
-        var inputEvent = new Event('input')
-        fileInput.dispatchEvent(inputEvent)
-        var changeEvent = new Event('change')
-        fileInput.dispatchEvent(changeEvent)
+    const fileInput = document.querySelector('input[type=file]')
+    window.removeFilesFromInput(fileInput);
+    window.dispatchAttachEvents(fileInput);
 }
 
 window.update_photo = function (data_uri) {
@@ -43,4 +22,35 @@ window.update_photo = function (data_uri) {
             window.attachPhoto(myFile)
         }
     }
+}
+
+window.removeFilesFromInput = function(fileInput) {
+    const dataTransfer = new DataTransfer()
+    fileInput.files = dataTransfer.files
+}
+
+window.attachFileIntoPhotoInput = function(myFile, fileInput) {
+    const dataTransfer = new DataTransfer()
+    dataTransfer.items.add(myFile)
+    fileInput.files = dataTransfer.files
+}
+
+window.dispatchAttachEvents = function(fileInput) {
+    var inputEvent = new Event('input')
+    fileInput.dispatchEvent(inputEvent)
+    var changeEvent = new Event('change')
+    fileInput.dispatchEvent(changeEvent)
+}
+
+window.attachPhoto = function(myFile) {
+    const fileInput = document.querySelector('input[type=file]')
+    window.attachFileIntoPhotoInput(myFile, fileInput);
+    window.dispatchAttachEvents(fileInput);
+}
+
+window.clearCanvas = function (id){
+    const element = document.getElementById(id)
+    var ctx = element.getContext('2d')
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, element.width, element.height)
 }

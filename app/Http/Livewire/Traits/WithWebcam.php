@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Traits;
 
 trait WithWebcam
 {
-    public $webcam_file;
-    public $webcam_data_uri;
+    public $webcamFile;
+    public $webcamDataUri;
     public $hasWebcamPhoto;
 
     public $x;
@@ -15,40 +15,39 @@ trait WithWebcam
 
     public $iteration = 0;
 
-    public function removeWebcamFile()
+    public function mountCoordinates()
     {
-        $this->webcam_file = '';
         $this->x = 0;
         $this->y = 0;
-        $this->width = 400;
-        $this->height = 400;
-        $this->webcam_data_uri = false;
-        $this->hasWebcamPhoto = false;
-        $this->photo = null;
-        $this->visitor->photo = null;
 
-        //Force update of crop panel
-        $this->iteration = $this->iteration + 1;
+        if ($this->hasWebcamPhoto) {
+            $this->width = 400;
+            $this->height = 400;
+        } else {
+            $this->width = 75;
+            $this->height = 75;
+        }
+    }
+
+    public function removeWebcamFile()
+    {
+        $this->webcamFile = no_photo();
+        $this->webcamDataUri = false;
+        $this->hasWebcamPhoto = false;
+        $this->visitor->photo = null;
+        $this->mountCoordinates();
     }
 
     public function imageUploaded()
     {
-        $this->webcam_data_uri = false;
+        $this->webcamDataUri = false;
         $this->hasWebcamPhoto = true;
     }
 
     public function takeSnapshot()
     {
-        $this->x = 0;
-        $this->y = 0;
-        $this->width = 400;
-        $this->height = 400;
-
-        $this->webcam_data_uri = false;
         $this->hasWebcamPhoto = true;
-
-//        Force update of crop panel
-        $this->iteration = $this->iteration + 1;
+        $this->webcamDataUri = false;
     }
 
     public function cropChanged($event)
