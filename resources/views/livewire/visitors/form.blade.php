@@ -1,5 +1,5 @@
 <div>
-    <div class="py-4 px-4" wire:keep-alive>
+    <div class="py-4 px-4" wire:poll.keep-alive>
         <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
             @if (isset($visitor->id))
@@ -71,7 +71,7 @@
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
                         'readonly' => $visitor->hasPending(), 'showRestrictions' => true, 'document_number'=> request()->query('document_number'),
-                        'document_type_id'=> request()->query('document_type_id'), 'full_name'=> request()->query('full_name'), 'photo'=>$visitor->photo ?? ''])
+                        'document_type_id'=> request()->query('document_type_id'), 'full_name'=> request()->query('full_name')])
                         <div class="row">
                             <div class="col-12">
                                 <h4>
@@ -116,6 +116,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div
+            x-init="Webcam.attach('#webcam')"
+            >
+
             </div>
             @include('visitors.partials.webcam-modal')
         </form>

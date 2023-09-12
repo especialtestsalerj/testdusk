@@ -22,13 +22,10 @@ use function view;
 
 class People extends BaseForm
 {
-    use WithFileUploads;
-    use WithWebcam;
     use Addressable;
 
     protected $listeners = [
         'snapshotTaken' => 'updatePJFile',
-        'cropChanged' => 'cropChanged',
     ];
 
     public $person;
@@ -40,7 +37,6 @@ class People extends BaseForm
 
     public $document_type_id;
 
-    public $photo;
     public $routineStatus;
     public $modal;
     public $readonly;
@@ -126,8 +122,6 @@ class People extends BaseForm
             }
         }
 
-        $this->photo = is_null(old('photo')) ? $this->photo : old('photo');
-
         if (!$this->isPreFilled('document_type_id')) {
             $this->document_type_id = is_null(old('document_type_id'))
                 ? $this->document_type_id
@@ -167,20 +161,6 @@ class People extends BaseForm
     {
         if ($this->mode == 'create') {
             $this->person = new Person();
-        }
-
-        if (!is_null($this->visitor_id)) {
-            $this->visitor = Visitor::where('id', $this->visitor_id)
-                ->first()
-                ->append('photo');
-            if ($this->visitor->photo == '/img/no-photo.svg') {
-                $this->webcam_file = '';
-            } else {
-                $this->webcam_file = $this->visitor->photo;
-            }
-            $this->webcam_data_uri = true;
-        } else {
-            $this->webcam_data_uri = false;
         }
 
         $this->fillModel();

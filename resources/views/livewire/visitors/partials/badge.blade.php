@@ -234,7 +234,7 @@
                         @if($forPrinter)
                             <img class="photo" src="{{$printVisitor->photo ?? ''}}" />
                         @else
-                            <canvas wire:ignore id="canvas-badge" width="75px" height="75px"></canvas>
+                            <canvas wire:ignore id="canvas-visible-badge" width="75px" height="75px"></canvas>
                             <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
                         @endIf
 

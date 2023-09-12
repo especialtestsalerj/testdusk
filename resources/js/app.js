@@ -39,12 +39,6 @@ Webcam.set({
     flip_horiz: true,
 })
 
-window.remove_snapshot = function () {
-    window.Webcam.snap(function (data_uri) {
-        document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>'
-    })
-}
-
 import 'cropperjs/dist/cropper.css'
 window.Cropper = require('cropperjs')
 
@@ -82,6 +76,29 @@ window.base64ToFile = function (dataUrl, filename) {
     const file = new File([blob], filename, { type: 'image/jpeg', lastModified: new Date() })
 
     return file
+}
+
+window.urlToFile = async function(url, filename) {
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], filename, { type: 'image/jpeg' });
+    } catch (error) {
+        console.error('Error converting URL to File:', error);
+        return null;
+    }
+}
+
+window.isPromise = function(p) {
+    return p && Object.prototype.toString.call(p) === "[object Promise]";
+}
+
+window.isDataURI = function(str) {
+    // Regular expression to match a Data URI
+    const dataURIPattern = /^data:[\w\/\+]+;[\w=]+(,[\w\/\+;=]+)*$/;
+
+    // Test the string against the pattern
+    return dataURIPattern.test(str);
 }
 
 require('./support/broadcast')

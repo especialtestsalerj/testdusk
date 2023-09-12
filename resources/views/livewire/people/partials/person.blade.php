@@ -1,11 +1,5 @@
 <div class="form-group">
-    <div x-init="
-        Webcam.attach('#webcam')
-
-        //loadOldPhoto
-        window.update_photo('{{$photo}}')
-
-    " x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
+    <div x-init="" x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}, cpfmask: '999.999.999-99' }" @focus-field.window="$refs[$event.detail.field].focus()">
 
         <div class="row">
 
