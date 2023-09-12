@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <title>ALERJ - ERRO 404</title>
+    <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
+
+    <title>{{ config('app.name') }} - ERRO 404</title>
+
     <style type="text/css">
         html, body{
             height:100%;
@@ -85,18 +87,17 @@
 <div class="error-container">
     <div class="error">
         <div class="logo">
-            <img src="img/logo-alerj-grande-branco-90.png">
+            <img src="{{ asset('img/logo-alerj-grande-branco-90.png') }}">
         </div>
         <div class="row">
-            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
-            </div>
+            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i></div>
             <div class="column"><div class="number">404</div></div>
         </div>
         <div class="title">
             Página não encontrada
         </div>
         <div class="message">
-            A URL requisitada /fimdaURL não foi encontrada no servidor. É tudo que sabemos até agora.
+            A URL requisitada não foi encontrada no servidor.
         </div>
     </div>
 </div>

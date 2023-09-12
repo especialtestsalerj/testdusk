@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <title>ALERJ - ERRO 403</title>
+    <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
+
+    <title>{{ config('app.name') }} - ERRO 403</title>
+
     <style type="text/css">
         html, body{
             height:100%;
@@ -47,7 +49,7 @@
         }
         .message{
             font-size:20px;
-            /*text-shadow: 1px 1px 10px #4b5a69;*/
+            color:#eef7f5;
         }
         .cog-faint{
             /*position:absolute;*/
@@ -83,14 +85,19 @@
 <div class="error-container">
     <div class="error">
         <div class="logo">
-            <img src="img/logo-alerj-grande-branco-90.png">
+            <img src="{{ asset('img/logo-alerj-grande-branco-90.png') }}">
         </div>
         <div class="row">
             <div class="column-1"><i class="fa fa-ban cog-faint" aria-hidden="true"></i></div>
             <div class="column"><div class="number">403</div></div>
         </div>
-        <div class="title">Você não tem permissão para acessar a página solicitada.</div>
-     </div>
+        <div class="title">
+            Acesso não autorizado
+        </div>
+        <div class="message">
+            Você não tem permissão para acessar a página solicitada
+        </div>
+    </div>
 </div>
 <!-- erro 403 - end -->
 </body>

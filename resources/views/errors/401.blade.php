@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <title>ALERJ - ERRO 401</title>
+    <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
+
+    <title>{{ config('app.name') }} - ERRO 401</title>
+
     <style type="text/css">
         html, body{
             height:100%;
@@ -30,7 +32,6 @@
             display:inline-block;
             max-width: 450px;
         }
-
         .logo img{
             width: 90%;
         }
@@ -49,7 +50,6 @@
         .message{
             font-size:20px;
             color:#eef7f5;
-            /*text-shadow: 1px 1px 10px #4b5a69;*/
         }
         .cog-faint{
             /*position:absolute;*/
@@ -85,15 +85,14 @@
 <div class="error-container">
     <div class="error">
         <div class="logo">
-            <img src="img/logo-alerj-grande-branco-90.png">
+            <img src="{{ asset('img/logo-alerj-grande-branco-90.png') }}">
         </div>
         <div class="row">
-            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
-            </div>
+            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i></div>
             <div class="column"><div class="number">401</div></div>
         </div>
         <div class="title">
-            Unauthorized
+            Acesso sem autenticação
         </div>
         <div class="message">
             O acesso ao recurso requer autenticação.
@@ -103,8 +102,3 @@
 <!-- erro 401 - end -->
 </body>
 </html>
-
-
-
-
-
