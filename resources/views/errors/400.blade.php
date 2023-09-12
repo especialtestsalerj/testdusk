@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>ALERJ - ERRO 503</title>
+    <title>ALERJ - ERRO 400</title>
     <style type="text/css">
         html, body{
             height:100%;
@@ -81,26 +81,26 @@
 </head>
 <body>
 <script src="https://use.fontawesome.com/87f6f824d6.js"></script>
-<!-- erro 404 -->
+<!-- erro 400 -->
 <div class="error-container">
     <div class="error">
         <div class="logo">
             <img src="img/logo-alerj-grande-branco-90.png">
         </div>
         <div class="row">
-            <div class="column-1"><i class="fa fa-ban cog-faint" aria-hidden="true"></i>
+            <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
             </div>
-            <div class="column"><div class="number">503</div></div>
+            <div class="column"><div class="number">400</div></div>
         </div>
         <div class="title">
-            Service Unavailable
+            Bad Request
         </div>
         <div class="message">
-            O servidor não está disponível para processar a solicitação no momento, geralmente devido a sobrecarga ou manutenção.
+            A solicitação do cliente é inválida ou malformada.
         </div>
     </div>
 </div>
-<!-- erro 404 - end -->
+<!-- erro 400 - end -->
 </body>
 </html>
 

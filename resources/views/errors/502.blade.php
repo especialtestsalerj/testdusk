@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>ALERJ - ERRO 501</title>
+    <title>ALERJ - ERRO 502</title>
     <style type="text/css">
         html, body{
             height:100%;
@@ -90,13 +90,13 @@
         <div class="row">
             <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
             </div>
-            <div class="column"><div class="number">501</div></div>
+            <div class="column"><div class="number">502</div></div>
         </div>
         <div class="title">
-            Não implementado
+            Bad Gateway
         </div>
         <div class="message">
-            O servidor não suporta a funcionalidade necessária para atender à solicitação.
+            O servidor atuou como um gateway ou proxy e recebeu uma resposta inválida do servidor upstream.
         </div>
     </div>
 </div>

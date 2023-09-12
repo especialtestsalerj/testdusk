@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>ALERJ - ERRO 500</title>
+    <title>ALERJ - ERRO 501</title>
     <style type="text/css">
         html, body{
             height:100%;
@@ -90,13 +90,13 @@
         <div class="row">
             <div class="column-1"><i class="fa fa-exclamation-triangle cog-faint" aria-hidden="true"></i>
             </div>
-            <div class="column"><div class="number">500</div></div>
+            <div class="column"><div class="number">501</div></div>
         </div>
         <div class="title">
-            Erro interno do servidor
+            Não implementado
         </div>
         <div class="message">
-            O servidor encontrou um erro interno e não pode atender à solicitação.
+            O servidor não suporta a funcionalidade necessária para atender à solicitação.
         </div>
     </div>
 </div>
