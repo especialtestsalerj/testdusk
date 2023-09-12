@@ -39,12 +39,6 @@ Webcam.set({
     flip_horiz: true,
 })
 
-// window.remove_snapshot = function () {
-//     window.Webcam.snap(function (data_uri) {
-//         document.getElementById('my_result').innerHTML = '<img src="' + data_uri + '"/>'
-//     })
-// }
-
 import 'cropperjs/dist/cropper.css'
 window.Cropper = require('cropperjs')
 
