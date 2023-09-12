@@ -15,6 +15,8 @@ use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
 |
 */
 
+abort(403);
+
 Route::get('/logout', [
     \Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class,
     'destroy',
