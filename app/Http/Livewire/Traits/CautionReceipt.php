@@ -18,7 +18,9 @@ trait CautionReceipt
 
         $this->logoBlob = base64_encode(file_get_contents(public_path('img/logo-alerj.png')));
         $this->caution = app(CautionsRepository::class)->findById($id);
-        $this->cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId($this->caution->id);
+        $this->cautionWeapons = app(CautionWeaponsRepository::class)->getByCautionId(
+            $this->caution->id
+        );
 
         $this->dispatchBrowserEvent('printCautionReceipt');
     }

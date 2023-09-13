@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 class Checkout extends BaseIndex
 {
     use ChangeViewType;
-    
+
     public $searchName;
     public $startDate;
     public $endDate;

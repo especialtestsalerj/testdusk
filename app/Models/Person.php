@@ -55,13 +55,13 @@ class Person extends Model
         return $this->belongsToMany(DisabilityType::class, 'disabilities');
     }
 
-
     protected function cpf(): Attribute
     {
         $documentType = app(DocumentTypes::class)->getCPF();
 
-        $documentWithCPF = $this->documents()->where('document_type_id', $documentType->id)
-        ->first();
+        $documentWithCPF = $this->documents()
+            ->where('document_type_id', $documentType->id)
+            ->first();
 
         return Attribute::make(get: fn($value) => $documentWithCPF->number ?? null);
     }

@@ -21,8 +21,6 @@ class VisitorsCard extends Component
     public $visitorPhoto;
     public $alreadyExited;
 
-
-
     public $exitedDisabled;
     public $showSaveButton;
 
@@ -44,8 +42,6 @@ class VisitorsCard extends Component
             }
         }
 
-
-
         $this->visitorId = $visitor->id ?? '';
         $this->name = $visitor->person->name ?? '';
         $this->document = $visitor->document ?? '';
@@ -59,12 +55,16 @@ class VisitorsCard extends Component
 
     public function initializeExited($visitor)
     {
-
         if ($visitor->exited_at) {
             $this->alreadyExited = true;
             $this->exited = $visitor->exited_at->format('Y-m-d\TH:i');
         } else {
-            if (auth()->user()?->can('visitors:checkout') && $this->visitorId) {
+            if (
+                auth()
+                    ->user()
+                    ?->can('visitors:checkout') &&
+                $this->visitorId
+            ) {
                 $this->exited = now()->format('Y-m-d\TH:i');
             } else {
                 $this->exited = null;
@@ -73,9 +73,18 @@ class VisitorsCard extends Component
         }
 
         $this->showSaveButton =
-            $this->visitorId && (auth()->user()?->can('visitors:checkout') && !$this->alreadyExited);
+            $this->visitorId &&
+            (auth()
+                ->user()
+                ?->can('visitors:checkout') &&
+                !$this->alreadyExited);
 
-        $this->exitedDisabled = !$this->visitorId || (!auth()->user()?->can('visitors:checkout') || $this->alreadyExited);
+        $this->exitedDisabled =
+            !$this->visitorId ||
+            (!auth()
+                ->user()
+                ?->can('visitors:checkout') ||
+                $this->alreadyExited);
     }
     public function finishVisit()
     {

@@ -19,7 +19,7 @@ class Document extends Model
         'updated_by_id',
     ];
 
-    protected $appends = [ 'type'];
+    protected $appends = ['type'];
 
     public function person()
     {
@@ -58,12 +58,12 @@ class Document extends Model
 
     public function getNumberMaskeredAttribute()
     {
-        if($this->documentType()->get()[0]->name == 'CPF'){
+        if ($this->documentType()->get()[0]->name == 'CPF') {
             return mask_cpf($this->number);
-        }
-      else if($this->documentType()->get()[0]->name == 'RG'){
-
-            return is_null($this->state) ? $this->number  : $this->number  .  ' - ' .$this->state->initial;
+        } elseif ($this->documentType()->get()[0]->name == 'RG') {
+            return is_null($this->state)
+                ? $this->number
+                : $this->number . ' - ' . $this->state->initial;
         }
         return $this->number;
     }
