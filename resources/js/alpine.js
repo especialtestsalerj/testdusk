@@ -1,1 +1,1 @@
-require('./support/alpine')
+require('./alpine/alpine')

@@ -22,6 +22,6 @@ class DisabilityType extends Model
 
     public function person()
     {
-        return $this->belongsToMany(Person::class,'disabilities');
+        return $this->belongsToMany(Person::class, 'disabilities');
     }
 }

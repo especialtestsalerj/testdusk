@@ -9,16 +9,6 @@ use App\Support\Constants;
 
 class CertificateType extends Controller
 {
-    public function index()
-    {
-        return $this->view('certificate-types.index')->with(
-            'certificateTypes',
-            app(CertificateTypesRepository::class)
-                ->disablePagination()
-                ->all()
-        );
-    }
-
     public function create()
     {
         formMode(Constants::FORM_MODE_CREATE);

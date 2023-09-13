@@ -9,16 +9,6 @@ use App\Support\Constants;
 
 class EventType extends Controller
 {
-    public function index()
-    {
-        return $this->view('event-types.index')->with(
-            'eventTypes',
-            app(EventTypesRepository::class)
-                ->disablePagination()
-                ->all()
-        );
-    }
-
     public function create()
     {
         formMode(Constants::FORM_MODE_CREATE);

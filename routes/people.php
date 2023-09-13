@@ -13,12 +13,9 @@ Route::group(['prefix' => '/people'], function () {
         ->name('people.form')
         ->can('people:show');
 
-    Route::post('/create', [Person::class, 'create'])
-        ->name('people.create');
+    Route::post('/store', [Person::class, 'store'])->name('people.store');
 
     Route::post('/{id}', [Person::class, 'update'])
         ->name('people.update')
         ->can('people:update');
-
-
 });

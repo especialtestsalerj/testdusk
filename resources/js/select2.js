@@ -61,7 +61,7 @@ $(document).ready(function () {
 
         const selector = $('#'+event.detail.name)
         const options = window.getSelect2OptionsForElement(selector[0])
-        
+
         selector.select2(options);
     })
 
@@ -109,3 +109,5 @@ $(document).on('select2:open', (e) => {
         value.focus()
     })
 })
+
+$.fn.select2.amd.define('select2/i18n/pt-BR', [], require('select2/src/js/select2/i18n/pt-BR'))

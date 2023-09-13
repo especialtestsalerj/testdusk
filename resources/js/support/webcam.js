@@ -1,3 +1,16 @@
+import Webcam from 'webcamjs'
+window.Webcam = Webcam
+
+Webcam.set({
+    width: 380,
+    height: 290,
+    dest_width: 640,
+    dest_height: 480,
+    jpeg_quality: 90,
+    force_flash: false,
+    flip_horiz: true,
+})
+
 window.take_snapshot = function () {
     window.Webcam.snap(function (data_uri) {
         window.update_photo(data_uri)

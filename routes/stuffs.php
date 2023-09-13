@@ -12,7 +12,7 @@ Route::group(['prefix' => '/stuffs'], function () {
         ->name('stuffs.create')
         ->can('stuffs:store');
 
-    Route::get('/{id}', [Stuff::class, 'show'])
+    Route::get('/{id}/show', [Stuff::class, 'show'])
         ->name('stuffs.show')
         ->can('stuffs:show');
 

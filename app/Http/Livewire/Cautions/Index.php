@@ -10,7 +10,7 @@ use App\Http\Livewire\Traits\CautionReceipt;
 class Index extends BaseIndex
 {
     use CautionReceipt;
-    
+
     protected $repository = CautionsRepository::class;
 
     public $orderByField = ['protocol_number'];
