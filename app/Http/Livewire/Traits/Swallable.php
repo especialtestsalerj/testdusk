@@ -20,4 +20,11 @@ trait Swallable
             'text'=>$text
         ]);
     }
+
+    public function swallSuccess($text)
+    {
+        $this->dispatchBrowserEvent('swall-success',[
+            'text'=>$text
+        ]);
+    }
 }
