@@ -196,7 +196,8 @@
                                         class="col-lg-6 col-xl-6 {{!$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
                                         <div class="form-group">
                                             <label for="other_city">Cidade*</label>
-                                            <input wire:model="other_city" type="text" name="other_city" class="form-control text-uppercase"
+                                            <input wire:model="other_city" type="text" name="other_city"
+                                                   class="form-control text-uppercase"
                                                    value="{{ $other_city }}"
                                                    @if ($modal) disabled @endif
                                                    @if ($readonly) readonly @endif
@@ -235,13 +236,13 @@
 
                     <div class="modal-footer">
                         @if(!$person_id)
-                        <button type="submit" class="btn btn-success text-white ml-1" title="Salvar Pessoa">
-                            <i class="fa fa-save"></i> Salvar
-                        </button>
+                            <button type="submit" class="btn btn-success text-white ml-1" title="Salvar Pessoa">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
                         @endif
-{{--                        <button type="button" class="btn btn-danger text-white ml-1" title="Fechar formulário"  wire:click="resetModal">--}}
-{{--                            <i class="fas fa-ban"></i> Cancelar--}}
-{{--                        </button>--}}
+                        {{--                        <button type="button" class="btn btn-danger text-white ml-1" title="Fechar formulário"  wire:click="resetModal">--}}
+                        {{--                            <i class="fas fa-ban"></i> Cancelar--}}
+                        {{--                        </button>--}}
                     </div>
                 </form>
             </div>
