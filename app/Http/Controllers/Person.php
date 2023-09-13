@@ -30,7 +30,7 @@ class Person extends Controller
             ->with('message', 'Pessoa alterada com sucesso!');
     }
 
-    public function create(PersonCreate $request)
+    public function store(PersonCreate $request)
     {
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 

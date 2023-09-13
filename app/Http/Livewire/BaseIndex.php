@@ -129,6 +129,4 @@ abstract class BaseIndex extends Component
 
         return $this->paginationEnabled ? $query->paginate($this->pageSize) : $query->get();
     }
-
-
 }

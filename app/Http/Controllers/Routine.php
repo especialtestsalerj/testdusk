@@ -15,16 +15,6 @@ use App\Models\CautionWeapon;
 
 class Routine extends Controller
 {
-    public function index()
-    {
-        return $this->view('routines.index')->with(
-            'routines',
-            app(RoutinesRepository::class)
-                ->disablePagination()
-                ->all()
-        );
-    }
-
     public function create()
     {
         if (app(RoutinesRepository::class)->hasRoutineOpened()) {

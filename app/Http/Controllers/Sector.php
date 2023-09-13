@@ -9,16 +9,6 @@ use App\Support\Constants;
 
 class Sector extends Controller
 {
-    public function index()
-    {
-        return $this->view('sectors.index')->with(
-            'sectors',
-            app(SectorsRepository::class)
-                ->disablePagination()
-                ->all()
-        );
-    }
-
     public function create()
     {
         formMode(Constants::FORM_MODE_CREATE);

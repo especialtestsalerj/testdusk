@@ -16,8 +16,8 @@ trait Swallable
 
     public function swallError($text)
     {
-        $this->dispatchBrowserEvent('swall-error',[
-            'text'=>$text
+        $this->dispatchBrowserEvent('swall-error', [
+            'text' => $text,
         ]);
     }
 

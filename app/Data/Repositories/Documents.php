@@ -11,7 +11,4 @@ class Documents extends Repository
      * @var string
      */
     protected $model = Document::class;
-
-
-
 }

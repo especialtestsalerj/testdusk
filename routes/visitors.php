@@ -30,8 +30,4 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/{id}', [Visitor::class, 'update'])
         ->name('visitors.update')
         ->can('visitors:update');
-
-    Route::post('/delete/{id}', [Visitor::class, 'destroy'])
-        ->name('visitors.destroy')
-        ->can('visitors:destroy');
 });

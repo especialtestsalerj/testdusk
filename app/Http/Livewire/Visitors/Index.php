@@ -62,7 +62,7 @@ class Index extends BaseIndex
             );
         }
 
-        if($this->exited_at){
+        if ($this->exited_at) {
             $query = $query->whereNull('exited_at');
         }
 

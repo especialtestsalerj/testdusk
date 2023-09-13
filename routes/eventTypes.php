@@ -16,7 +16,7 @@ Route::group(['prefix' => '/event-types'], function () {
         ->name('event-types.store')
         ->can('event-types:store');
 
-    Route::get('/{id}', [EventType::class, 'show'])
+    Route::get('/{id}/show', [EventType::class, 'show'])
         ->name('event-types.show')
         ->can('event-types:show');
 

@@ -32,7 +32,7 @@ abstract class BaseForm extends Component
 
     public function select2SetReadOnly($name, $value)
     {
-        $this->dispatchBrowserEvent('select2SetReadOnly', ['name' => $name, 'value'=>$value]);
+        $this->dispatchBrowserEvent('select2SetReadOnly', ['name' => $name, 'value' => $value]);
     }
 
     public function select2Disable($name)
@@ -47,7 +47,7 @@ abstract class BaseForm extends Component
 
     public function select2ReloadOptions($items, $name)
     {
-        $this->dispatchBrowserEvent('select2ReloadOptions', ['data'=>$items,'name' => $name]);
+        $this->dispatchBrowserEvent('select2ReloadOptions', ['data' => $items, 'name' => $name]);
     }
 
     protected function focus($ref)
