@@ -16,7 +16,7 @@ Route::group(['prefix' => '/routines'], function () {
         ->name('routines.store')
         ->can('routines:store');
 
-    Route::get('/{id}', [Routine::class, 'show'])
+    Route::get('/{id}/show', [Routine::class, 'show'])
         ->name('routines.show')
         ->can('routines:show');
 

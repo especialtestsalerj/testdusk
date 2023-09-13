@@ -16,7 +16,7 @@ Route::group(['prefix' => '/sectors'], function () {
         ->name('sectors.store')
         ->can('sectors:store');
 
-    Route::get('/{id}', [Sector::class, 'show'])
+    Route::get('/{id}/show', [Sector::class, 'show'])
         ->name('sectors.show')
         ->can('sectors:show');
 

@@ -109,17 +109,6 @@ class Visitor extends Controller
             ->with('message', 'Visitante alterado/a com sucesso!');
     }
 
-    public function destroy(VisitorDestroy $request, $routine_id, $id)
-    {
-        $visitor = app(VisitorsRepository::class)->findById($id);
-
-        $visitor->delete($id);
-
-        return redirect()
-            ->route($request['redirect'], $routine_id)
-            ->with('message', 'Visitante removido/a com sucesso!');
-    }
-
     public function card(Request $request, $uuid = null)
     {
         if ($uuid) {

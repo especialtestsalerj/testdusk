@@ -16,7 +16,7 @@ Route::group(['prefix' => '/certificate-types'], function () {
         ->name('certificate-types.store')
         ->can('certificate-types:store');
 
-    Route::get('/{id}', [CertificateType::class, 'show'])
+    Route::get('/{id}/show', [CertificateType::class, 'show'])
         ->name('certificate-types.show')
         ->can('certificate-types:show');
 
