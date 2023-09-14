@@ -10,7 +10,14 @@ const defaultConfig = {
 }
 
 window.getSelect2OptionsForElement = (element) => {
-    return { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
+    var dropdownParent = element.getAttribute('dropdown-parent')
+    var json = { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
+
+    if(dropdownParent){
+        json.dropdownParent = $('#'+dropdownParent)
+    }
+
+    return json
 };
 
 window.initSelect2 = () => {

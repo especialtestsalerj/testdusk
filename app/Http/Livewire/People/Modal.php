@@ -80,9 +80,15 @@ class Modal extends People
 
     public function resetModal()
     {
-        $this->resetExcept(['document_type_id', 'state_id', 'city_id', 'country_id']);
+        $this->reset();
         $this->resetErrorBag();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'peopleModal']);
+
+        $this->select2SetReadOnly('city_id', false);
+        $this->select2SetReadOnly('state_id', false);
+        $this->select2SetReadOnly('country_id', false);
+
+        $this->loadDefault();
     }
 
     private function isValidCpf()

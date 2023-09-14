@@ -3,7 +3,8 @@
         wire:ignore.self
         class="modal fade" id="peopleModal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+         aria-hidden="true"
+    >
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <form wire:submit.prevent="save">
@@ -67,7 +68,9 @@
                                         @if ($document_type_id == config('app.document_type_rg'))
                                             <div class="form-group">
                                                 <label for="state_document_id">UF do Documento*</label>
-                                                <select name="state_document_id"
+                                                <select
+
+                                                        name="state_document_id"
                                                         class="select2 form-control text-uppercase"
                                                         id="state_document_id"
                                                         wire:model="state_document_id" x-ref="state_document_id"
@@ -128,6 +131,7 @@
                                         <div class="form-group">
                                             <label for="country_id">País*</label>
                                             <select name="country_id" class="select2 form-control text-uppercase"
+                                                    dropdown-parent="peopleModal"
                                                     id="country_id"
                                                     wire:model="country_id" x-ref="country_id"
                                                     @if ($modal) disabled @endif
@@ -147,6 +151,7 @@
                                         <div class="form-group">
                                             <label for="state_id">Estado*</label>
                                             <select class="select2 form-control text-uppercase" id="state_id"
+                                                    dropdown-parent="peopleModal"
                                                     name="state_id"
                                                     wire:model="state_id" x-ref="state_id" wire:change="loadCities"
                                                     @if ($modal) disabled @endif
@@ -172,6 +177,7 @@
                                         <div class="form-group">
                                             <label for="city_id">Cidade*</label>
                                             <select name="city_id" id="city_id"
+                                                    dropdown-parent="peopleModal"
                                                     class="select2 form-control text-uppercase"
                                                     wire:model="city_id" x-ref="city_id"
                                                     @if ($modal) disabled @endif
