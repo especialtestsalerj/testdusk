@@ -67,6 +67,20 @@ window.addEventListener('swall-error', function (e) {
         text: options.text,
     })
 })
+
+window.addEventListener('swall-success', function (e) {
+    const options = e.detail
+    Swal.fire({
+        icon: 'success',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        width: 500,
+        timerProgressBar: true,
+        title: 'Salvo com sucesso',
+        text: options.text,
+    })
+})
 window.addEventListener('swal', function (e) {
     const options = e.detail
 

@@ -186,7 +186,7 @@ class People extends BaseForm
         $this->dispatchBrowserEvent('openDocumentModalFOrm');
     }
 
-    private function loadDefault()
+    public function loadDefault()
     {
         if (is_null($this->document_type_id)) {
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
@@ -198,13 +198,15 @@ class People extends BaseForm
     /**
      * @return void
      */
-    protected function loadDefaultLocation(): void
+    public function loadDefaultLocation(): void
     {
         if (is_null($this->country_id)) {
             $this->country_id = Country::where('id', '=', config('app.country_br'))->first()->id;
+            $this->select2SelectOption('country_id', $this->country_id);
         }
         if (is_null($this->state_id)) {
             $this->state_id = State::where('id', '=', config('app.state_rj'))->first()->id;
+            $this->select2SelectOption('state_id', $this->state_id);
         }
         if (is_null($this->city_id)) {
             $this->city_id = City::where('id', '=', config('app.city_rio'))->first()->id;
