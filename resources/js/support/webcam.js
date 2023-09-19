@@ -1,5 +1,6 @@
 import Webcam from 'webcamjs'
 window.Webcam = Webcam
+window.Swal = require('sweetalert2')
 
 Webcam.set({
     width: 380,
@@ -67,3 +68,13 @@ window.clearCanvas = function (id){
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, element.width, element.height)
 }
+
+Webcam.on('error', function(err) {
+    Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Nenhuma câmera foi encontrada',
+        showConfirmButton: false,
+        timer: 2000
+    })
+});

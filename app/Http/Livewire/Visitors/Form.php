@@ -123,8 +123,10 @@ class Form extends BaseForm
     {
         if ($person_id = request()->get('person_id')) {
             $this->visitor->person_id = $person_id;
-            $this->visitor->loadLatestPhoto();
-        }else{
+            if ($this->visitor->person->photo !== no_photo()) {
+                $this->visitor->loadLatestPhoto();
+            }
+        } else {
             $this->visitor->append(['photo']);
         }
 

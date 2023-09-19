@@ -78,6 +78,13 @@ class Modal extends People
 
     }
 
+    public function updated($name, $value)
+    {
+        if($name == 'document_type_id' &&  $value !== 2) {
+            $this->state_document_id = null;
+        }
+    }
+
     public function resetModal()
     {
         $this->reset();
