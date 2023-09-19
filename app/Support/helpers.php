@@ -187,7 +187,8 @@ function capitalizeBrazilian($name)
     return $string;
 }
 
-function to_upper($string){
+function to_upper($string)
+{
     return convert_case($string, MB_CASE_UPPER);
 }
 
@@ -335,7 +336,7 @@ class Timer
 function validate_cpf($string)
 {
     return Validator::make(
-        ['string' => (string)$string],
+        ['string' => (string) $string],
         [
             'string' => 'required|cpf',
         ]

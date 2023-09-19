@@ -1,7 +1,7 @@
 <div class="modal fade" id="peopleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <form method="post" action="{{route('people.create')}}">
+            <form method="post" action="{{route('people.store')}}">
                 @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> Nova Pessoa</h5>

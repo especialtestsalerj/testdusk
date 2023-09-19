@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Index extends BaseIndex
 {
-    use Checkoutable,  Badgeable, ChangeViewType;
+    use Checkoutable, Badgeable, ChangeViewType;
 
     protected $repository = PeopleRepository::class;
 
@@ -37,14 +37,13 @@ class Index extends BaseIndex
 
     public function getSearchStringDocumentTypeProperty()
     {
-        return !!validate_cpf($this->searchString) ? app(DocumentTypes::class)->getByName('CPF') : '';
+        return !!validate_cpf($this->searchString)
+            ? app(DocumentTypes::class)->getByName('CPF')
+            : '';
     }
-
-
 
     public function additionalFilterQuery($query)
     {
-
         //dump($this->searchString);
 
         if (!is_null($this->searchString) && $this->searchString != '') {
@@ -52,8 +51,8 @@ class Index extends BaseIndex
             $query = $query->orWhereRaw(
                 "people.id in (select person_id from documents d
              where regexp_replace(d.number, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
-                pg_escape_string(remove_punctuation($this->searchString)) .
-                "')||'%' )"
+                    pg_escape_string(remove_punctuation($this->searchString)) .
+                    "')||'%' )"
             );
         }
 

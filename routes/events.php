@@ -12,7 +12,7 @@ Route::group(['prefix' => '/events'], function () {
         ->name('events.create')
         ->can('events:store');
 
-    Route::get('/{id}', [Event::class, 'show'])
+    Route::get('/{id}/show', [Event::class, 'show'])
         ->name('events.show')
         ->can('events:show');
 

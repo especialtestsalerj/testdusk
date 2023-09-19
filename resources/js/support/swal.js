@@ -1,24 +1,3 @@
-import VMasker from 'vanilla-masker'
-window.VMasker = VMasker
-
-window.inputHandler = (masks, max, event) => {
-    var c = event.target
-    var v = c.value.replace(/\D/g, '')
-    var m = c.value.length > max ? 1 : 0
-    VMasker(c).unMask()
-    VMasker(c).maskPattern(masks[m])
-    c.value = VMasker.toPattern(v, masks[m])
-}
-
-import Alpine from 'alpinejs'
-window.Alpine = Alpine
-import intersect from '@alpinejs/intersect'
-import mask from '@alpinejs/mask'
-
-Alpine.plugin(intersect)
-Alpine.plugin(mask)
-Alpine.start()
-
 window.Swal = require('sweetalert2')
 
 window.addEventListener('swal-checkout-failure', function (e) {
@@ -88,6 +67,20 @@ window.addEventListener('swall-error', function (e) {
         text: options.text,
     })
 })
+
+window.addEventListener('swall-success', function (e) {
+    const options = e.detail
+    Swal.fire({
+        icon: 'success',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        width: 500,
+        timerProgressBar: true,
+        title: 'Salvo com sucesso',
+        text: options.text,
+    })
+})
 window.addEventListener('swal', function (e) {
     const options = e.detail
 
@@ -116,12 +109,4 @@ window.addEventListener('swal', function (e) {
             })
         }
     })
-})
-
-window.addEventListener('show-modal', function (e) {
-    $('#' + e.detail.target).modal('show')
-})
-
-window.addEventListener('hide-modal', (e) => {
-    $('#' + e.detail.target).modal('hide')
 })

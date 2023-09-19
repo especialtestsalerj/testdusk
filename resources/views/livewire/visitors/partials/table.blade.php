@@ -219,64 +219,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="visitor-delete-modal{{ $visitor->id }}" tabindex="-1"
-                        aria-labelledby="deleteModalLabelVisitor" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form class="form" action="{{ route('visitors.destroy', ['routine_id' => $routine_id, 'id' => $visitor->id]) }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="redirect" value="{{ $redirect }}">
-
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabelVisitor"><i class="fa fa-trash"></i> Remoção de Visita</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="entranced_at">Entrada</label>
-                                            <input type="datetime-local" max="3000-01-01T23:59"
-                                                class="form-control text-uppercase" name="entranced_at"
-                                                id="entranced_at" value="{{ $visitor->entranced_at }}" disabled />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exited_at">Saída</label>
-                                            <input type="datetime-local" max="3000-01-01T23:59"
-                                                class="form-control text-uppercase" name="exited_at" id="exited_at"
-                                                value="{{ $visitor->exited_at }}" disabled />
-                                        </div>
-                                        {{--                                @livewire('people.people', ['person' => $visitor->person, 'routineStatus' => $routine->status, 'mode' => formMode(), 'modal' => true]) --}}
-                                        <div class="form-group">
-                                            <label for="sector_id">Setor</label>
-                                            <select class="form-select form-control" name="sector_id" id="sector_id"
-                                                disabled>
-                                                <option value="{{ $visitor->sector?->id }}" selected="selected">
-                                                    {{ $visitor->sector?->name }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="duty_user_id">Plantonista</label>
-                                            <select class="form-select form-control" name="duty_user_id"
-                                                id="duty_user_id" disabled>
-                                                <option value="{{ $visitor->dutyUser?->id }}" selected="selected">
-                                                    {{ $visitor->dutyUser?->name }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Observações</label>
-                                            <textarea class="form-control" name="description" id="description" disabled>{{ $visitor->description }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitRemoverVisita" title="Remover Visita"><i class="fa fa-check"></i> Remover</button>
-                                        <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fas fa-ban"></i> Cancelar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FIM do Modal -->
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning mt-2">

@@ -9,9 +9,8 @@ use App\Models\Visitor;
 trait Badgeable
 {
     public $printVisitor;
-    public function  generateBadge($visitor_id)
+    public function generateBadge($visitor_id)
     {
-
         $this->printVisitor = null;
 
         if (!empty($visitor_id)) {
@@ -20,7 +19,7 @@ trait Badgeable
             $this->loadAnonymousVisitor();
         }
 
-        $this->printVisitor->append(['photo','qr_code_uri']);
+        $this->printVisitor->append(['photo', 'qr_code_uri']);
 
         $this->dispatchBrowserEvent('printBadge');
     }
@@ -28,7 +27,5 @@ trait Badgeable
     private function loadAnonymousVisitor()
     {
         $this->printVisitor = app(Visitors::class)->getAnonymousVisitor();
-
     }
-
 }

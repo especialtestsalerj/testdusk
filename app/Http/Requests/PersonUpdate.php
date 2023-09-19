@@ -24,7 +24,7 @@ class PersonUpdate extends Request
     public function messages()
     {
         return [
-           'required' => ':attribute: preencha o campo corretamente.',
+            'required' => ':attribute: preencha o campo corretamente.',
             'required_if' => ':attribute: preencha o campo corretamente.',
             'required_unless' => ':attribute: preencha o campo corretamente.',
         ];

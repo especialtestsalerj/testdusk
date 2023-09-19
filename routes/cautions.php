@@ -14,7 +14,7 @@ Route::group(['prefix' => '/cautions'], function () {
         ->name('cautions.create')
         ->can('cautions:store');
 
-    Route::get('/{caution}', CautionsUpdateForm::class)
+    Route::get('/{caution}/show', CautionsUpdateForm::class)
         ->name('cautions.show')
         ->can('cautions:show');
 

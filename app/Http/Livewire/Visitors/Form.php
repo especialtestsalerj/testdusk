@@ -34,6 +34,9 @@ class Form extends BaseForm
         'visitor.person.*' => '',
         'person.full_name' => '',
         'person.social_name' => '',
+        'hasWebcamPhoto' => '',
+        'webcamFile' => '',
+        'webcamDataUri' => '',
     ];
 
     public function updated($name, $value)
@@ -50,25 +53,15 @@ class Form extends BaseForm
 
     public function mount(Visitor $visitor)
     {
-        if (empty($visitor->id)) {
-            $this->visitor = new Visitor();
-            $this->visitor->entranced_at = now();
+        $this->visitor = new Visitor();
+        $this->visitor->entranced_at = now();
 
+        $this->person = new Person();
+        $this->sector = new Sector();
 
+        $this->fillByQueryString();
 
-            $this->person = new Person();
-
-            $this->fillByQueryString();
-
-            $this->sector = new Sector();
-
-            $this->loadPhoto();
-        } else {
-            $this->visitor = $visitor;
-
-            $this->person = $visitor->person;
-            $this->sector = $visitor->sector;
-        }
+        $this->loadPhoto();
     }
 
     public function personModified($person)
@@ -130,8 +123,18 @@ class Form extends BaseForm
     {
         if ($person_id = request()->get('person_id')) {
             $this->visitor->person_id = $person_id;
+            if ($this->visitor->person->photo !== no_photo()) {
+                $this->visitor->loadLatestPhoto();
+            }
+        } else {
+            $this->visitor->append(['photo']);
         }
-        $this->visitor->loadLatestPhoto();
-        $this->webcam_data_uri = true;
+
+        $this->webcamFile = is_null(old('photo')) ? $this->visitor->photo : old('photo');
+
+        $this->hasWebcamPhoto = $this->webcamFile != no_photo();
+        $this->webcamDataUri = !!$this->webcamFile;
+
+        $this->mountCoordinates();
     }
 }

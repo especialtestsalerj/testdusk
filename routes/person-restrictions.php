@@ -16,7 +16,7 @@ Route::group(['prefix' => '/person-restrictions'], function () {
         ->name('person-restrictions.store')
         ->can('person-restrictions:store');
 
-    Route::get('/{id}', [PersonRestriction::class, 'show'])
+    Route::get('/{id}/show', [PersonRestriction::class, 'show'])
         ->name('person-restrictions.show')
         ->can('person-restrictions:show');
 

@@ -103,7 +103,7 @@
         </form>
 
         @can('people:store')
-            @include('person-restrictions.partials.modal')
+            @livewire('people.modal',['person_id' => null])
         @endcan
     </div>
 @endsection

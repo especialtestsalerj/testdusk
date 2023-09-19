@@ -24,7 +24,8 @@ class PersonCreate extends Request
                     $this->get('id'),
                     $this->get('document_number'),
                     $this->get('document_type_id')
-                )],
+                ),
+            ],
             'state_id' => 'required_if:country_id,' . config('app.country_br'),
             'city_id' => 'required_if:country_id,' . config('app.country_br'),
             'other_city' => 'required_unless:country_id,' . config('app.country_br'),
@@ -39,7 +40,7 @@ class PersonCreate extends Request
             'state_id.required_if' => 'Estado: preencha o campo corretamente.',
             'city_id.required_if' => 'Cidade: preencha o campo corretamente.',
             'other_city.required_unless' => 'Cidade: preencha o campo corretamente.',
-            'document_number.unique'=>'Pessoa Já Cadastrada no sistema.',
+            'document_number.unique' => 'Pessoa Já Cadastrada no sistema.',
         ];
     }
 

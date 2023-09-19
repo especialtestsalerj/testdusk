@@ -10,7 +10,14 @@ const defaultConfig = {
 }
 
 window.getSelect2OptionsForElement = (element) => {
-    return { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
+    var dropdownParent = element.getAttribute('dropdown-parent')
+    var json = { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
+
+    if(dropdownParent){
+        json.dropdownParent = $('#'+dropdownParent)
+    }
+
+    return json
 };
 
 window.initSelect2 = () => {
@@ -61,7 +68,7 @@ $(document).ready(function () {
 
         const selector = $('#'+event.detail.name)
         const options = window.getSelect2OptionsForElement(selector[0])
-        
+
         selector.select2(options);
     })
 
@@ -109,3 +116,5 @@ $(document).on('select2:open', (e) => {
         value.focus()
     })
 })
+
+$.fn.select2.amd.define('select2/i18n/pt-BR', [], require('select2/src/js/select2/i18n/pt-BR'))
