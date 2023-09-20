@@ -52,12 +52,12 @@ class Modal extends People
         $request = [
             'state_document_id' => $this->state_document_id,
             'document_type_id' => $this->document_type_id,
-            'full_name' =>  $this->full_name,
-            'social_name' => $this->social_name,
+            'full_name' =>  convert_case($this->full_name, MB_CASE_UPPER),
+            'social_name' => convert_case($this->social_name, MB_CASE_UPPER),
             'country_id' => $this->country_id,
             'state_id' => $this->state_id,
             'city_id' => $this->city_id,
-            'other_city' => $this->other_city,
+            'other_city' => convert_case($this->other_city, MB_CASE_UPPER),
         ];
 
         $person = Person::create($request);
@@ -80,7 +80,7 @@ class Modal extends People
 
     public function updated($name, $value)
     {
-        if($name == 'document_type_id' &&  $value !== 2) {
+        if($name == 'document_type_id' &&  $value !== config('app.document_type_rg')) {
             $this->state_document_id = null;
         }
     }
