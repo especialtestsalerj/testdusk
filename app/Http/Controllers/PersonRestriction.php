@@ -47,7 +47,6 @@ class PersonRestriction extends Controller
 
         return $this->view('person-restrictions.form')->with([
             'personRestriction' => app(PersonRestrictionsRepository::class)->findById($id),
-            'people' => Person::all()->sortBy('name'),
         ]);
     }
 
