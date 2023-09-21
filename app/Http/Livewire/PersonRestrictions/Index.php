@@ -14,7 +14,7 @@ class Index extends BaseIndex
     public $paginationEnabled = true;
 
     public $searchFields = [
-        'personRestrictions.started_at' => 'date',
+        'person_restrictions.started_at' => 'date',
     ];
 
     public function render()
