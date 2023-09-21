@@ -1,6 +1,7 @@
 <div wire:keep-alive>
     <div class="py-4 px-4">
-        <form name="formulario" id="formulario" action="{{ route('people.update', ['id' => $person->id]) }}" method="POST">
+        <form name="formulario" id="formulario" action="{{ route('people.update', ['id' => $person->id]) }}"
+              method="POST">
             @csrf
 
             <input type="hidden" name="id" value="{{ $person->id }}">
@@ -37,13 +38,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="full_name">Nome Completo*</label>
-                            <input type="text" class="form-control text-uppercase" name="full_name" id="full_name" wire:model.defer="full_name" value="{{ is_null(old('full_name')) ? $person->full_name: old('full_name') }}" @disabled(request()->query('disabled'))/>
+                            <input type="text" class="form-control text-uppercase" name="full_name" id="full_name"
+                                   wire:model.defer="full_name"
+                                   value="{{ is_null(old('full_name')) ? $person->full_name: old('full_name') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="social_name">Nome Social</label>
-                            <input type="text" class="form-control text-uppercase" name="social_name" id="social_name" wire:model.defer="social_name" value="{{ is_null(old('social_name')) ? $person->social_name: old('social_name') }}" @disabled(request()->query('disabled'))/>
+                            <input type="text" class="form-control text-uppercase" name="social_name" id="social_name"
+                                   wire:model.defer="social_name"
+                                   value="{{ is_null(old('social_name')) ? $person->social_name: old('social_name') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                 </div>
@@ -51,19 +56,24 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control text-lowercase" name="email" id="email" wire:model.defer="email" value="{{ is_null(old('email')) ? $person->email: old('email') }}" @disabled(request()->query('disabled'))/>
+                            <input type="email" class="form-control text-lowercase" name="email" id="email"
+                                   wire:model.defer="email"
+                                   value="{{ is_null(old('email')) ? $person->email: old('email') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="birthdate">Nascimento</label>
-                            <input type="date" max="3000-01-01" class="form-control text-uppercase" name="birthdate" id="birthdate" wire:model.defer="birthdate" value="{{ is_null(old('birthdate')) ? $person->birthdate : old('birthdate') }}" @disabled(request()->query('disabled'))/>
+                            <input type="date" max="3000-01-01" class="form-control text-uppercase" name="birthdate"
+                                   id="birthdate" wire:model.defer="birthdate"
+                                   value="{{ is_null(old('birthdate')) ? $person->birthdate : old('birthdate') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="gender_id">Gênero</label>
-                            <select class="form-select text-uppercase" name="gender_id" id="gender_id" wire:model="gender_id" x-ref="gender_id" @disabled(request()->query('disabled'))>
+                            <select class="form-select text-uppercase" name="gender_id" id="gender_id"
+                                    wire:model="gender_id" x-ref="gender_id" @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach($genders as $gender)
                                     <option value="{{$gender->id}}">{{$gender->name}}</option>
@@ -79,21 +89,23 @@
                             <select name="country_id" class="select2 form-control text-uppercase" id="country_id"
                                     wire:model="country_id" x-ref="country_id"
                                     @if ($readonly) readonly @endif
-                                    @disabled(request()->query('disabled'))>
+                                @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
+                                    <option
+                                        value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore id="div-state_id">
+                    <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore
+                         id="div-state_id">
                         <div class="form-group">
                             <label for="state_id">Estado*</label>
                             <select class="select2 form-control text-uppercase" id="state_id" name="state_id"
                                     wire:model="state_id" x-ref="state_id" wire:change="loadCities"
                                     @if ($readonly) readonly @endif
-                                    @disabled(request()->query('disabled'))>
+                                @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}">{{ $state->initial }}</option>
@@ -101,16 +113,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore id="div-city_id">
+                    <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" wire:ignore
+                         id="div-city_id">
                         <div class="form-group">
                             <label for="city_id">Cidade*</label>
                             <select name="city_id" id="city_id" class="select2 form-control text-uppercase"
                                     wire:model="city_id" x-ref="city_id"
                                     @if ($readonly) readonly @endif
-                                    @disabled(request()->query('disabled'))>
+                                @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
+                                    <option
+                                        value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -122,7 +136,7 @@
                             <input type="text" id="other_city" name="other_city" class="form-control text-uppercase"
                                    value="{{ $other_city }}"
                                    @if ($readonly) readonly @endif
-                                    {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }}
+                                {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }}
                             />
                         </div>
                     </div>
@@ -173,8 +187,10 @@
                                     </th>
                                     <th class="text-end">
                                         @if(!request()->query('disabled'))
-                                        <span class="btn btn-sm btn-primary text-white" wire:click="createDocument({{$person->id}})"
-                                              data-bs-toggle="modal" data-bs-target="#document-modal" title="Novo Documento">
+                                            <span class="btn btn-sm btn-primary text-white"
+                                                  wire:click="createDocument({{$person->id}})"
+                                                  data-bs-toggle="modal" data-bs-target="#document-modal"
+                                                  title="Novo Documento">
                                             <i class="fa fa-plus"></i>
                                         </span>
                                         @endif
@@ -191,10 +207,15 @@
                                         <td>{{$document->numberMaskered}}</td>
                                         <td class="text-end">
                                             @if(!request()->query('disabled'))
-                                                <span class="btn btn-link px-0 py-0" wire:click="editDocument({{$document->id}})" data-bs-toggle="modal" data-bs-target="#document-modal" title="Alterar">
+                                                <span class="btn btn-link px-0 py-0"
+                                                      wire:click="editDocument({{$document->id}})"
+                                                      data-bs-toggle="modal" data-bs-target="#document-modal"
+                                                      title="Alterar">
                                                 <i class="fa fa-lg fa-pencil"></i>
                                                 </span>
-                                                <span class="btn btn-link px-0 py-0" wire:click="prepareForDeleteDocument({{$document->id}})" title="Remover">
+                                                <span class="btn btn-link px-0 py-0"
+                                                      wire:click="prepareForDeleteDocument({{$document->id}})"
+                                                      title="Remover">
                                                 <i class="fa fa-lg fa-trash"></i>
                                                 </span>
                                             @endif
@@ -204,11 +225,84 @@
                             </table>
                         </div>
                     </div>
+
+
+                    <div class="col-md-12">
+
+                        <div class="row my-4">
+                            <div class="col-sm-8 align-self-center">
+                                <h3 class="mb-0"><i class="fas fa-person-circle-exclamation"></i>
+                                    Restrições de Acesso
+                                </h3>
+                            </div>
+                            <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                               <span class="btn btn-sm btn-primary text-white"
+                                     wire:click="createRestriction({{$person->id}})"
+                                     data-bs-toggle="modal" data-bs-target="#restriction-modal"
+                                     title="Nova Restrição">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                @forelse ($person->restrictions as $personRestriction)
+                                    <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
+                                        <div class="card">
+                                            <div class="card-body py-1">
+                                                <div class="row d-flex align-items-center">
+                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
+                                                    <span
+                                                        class="fw-bold">Início:</span> {{ $personRestriction?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
+                                                    <span
+                                                        class="fw-bold">Término:</span> {{ $personRestriction?->ended_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-10 text-center text-lg-start">
+                                                    <span
+                                                        class="fw-bold">Mensagem:</span> {{ $personRestriction?->message }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-2 text-center text-lg-end">
+                                                         <span class="btn btn-link px-0 py-0"
+                                                               wire:click="editRestriction({{$personRestriction->id}})"
+                                                               data-bs-toggle="modal"
+                                                               data-bs-target="#restriction-modal"
+                                                               title="Nova Restrição">
+                                                                <i class="fa fa-lg fa-pencil"></i>
+                                                        </span>
+
+                                                        <span class="btn btn-link px-0 py-0"
+                                                              wire:click="prepareForDeleteRestriction({{$personRestriction->id}})"
+                                                              title="Remover">
+                                                             <i class="fa fa-lg fa-trash"></i>
+                                                        </span>
+
+                                                    </div>
+                                                    <div class="col-12 col-lg-10 text-center text-lg-start">
+                                                    <span
+                                                        class="fw-bold">Descrição:</span> {{ $personRestriction?->description }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="alert alert-warning mt-2">
+                                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Restrição encontrada.
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </form>
     </div>
 
-  @livewire('documents.modal')
+    @livewire('documents.modal')
+    @livewire('person-restrictions.modal-form')
 
 </div>

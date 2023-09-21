@@ -14,7 +14,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Document;
 use App\Models\Person;
-
+use App\Models\PersonRestriction;
 use function view;
 
 class Form extends BaseForm
@@ -53,9 +53,12 @@ class Form extends BaseForm
 
     protected $listeners = [
         'confirm-delete-document' => 'deleteDocument',
+        'confirm-delete-restriction' => 'deleteRestriction',
         'create-document' => '$refresh',
     ];
     public $selectedDocument_id;
+
+    public $selectedRestriction_id;
 
     public function find()
     {
@@ -205,6 +208,21 @@ class Form extends BaseForm
         }
     }
 
+    public function prepareForDeleteRestriction($restriction_id)
+    {
+        $this->selectedRestriction_id = $restriction_id;
+        $restriction = PersonRestriction::find($restriction_id);
+        $this->emitSwall(
+            'Deseja realmente remover a restrição ' .
+            ': ' .
+            $restriction->message .
+            '?',
+            'A ação não poderá ser desfeita.',
+            'confirm-delete-restriction',
+            'delete'
+        );
+    }
+
     public function editDocument($document)
     {
         $this->emit('editDocument', $document);
@@ -215,6 +233,16 @@ class Form extends BaseForm
         $this->emit('createDocument', $person);
     }
 
+    public function createRestriction($person)
+    {
+        $this->emit('createRestriction', $person);
+    }
+
+    public function editRestriction($personRestriction)
+    {
+        $this->emit('editRestriction', $personRestriction);
+    }
+
     public function deleteDocument()
     {
         $document = Document::find($this->selectedDocument_id);
@@ -223,4 +251,10 @@ class Form extends BaseForm
         $document->delete();
         $this->fillModel($person_id);
     }
+    public function deleteRestriction()
+    {
+        $restriction = PersonRestriction::find($this->selectedRestriction_id);
+        $restriction->delete();
+    }
+
 }

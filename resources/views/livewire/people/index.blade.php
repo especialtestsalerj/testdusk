@@ -6,17 +6,25 @@
                     <h3 class="mb-0"><i class="fa fa-users"></i> Pessoas - Identificação</h3>
                 </div>
 
-                <div class="col-6 col-md-6">
-                    <div class="float-end">
+                <div class="col-6 col-md-6 text-end">
+                    <div class="pl-2">
                         <a id="novo" href="{{ route('visitors.create',
                             $this->searchStringIsCpf ?
                                 ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
                                 : ['full_name' => $searchString]
                             ) }}" class="btn btn-primary text-white float-end"
-                            title="Nova Visita">
+                           title="Nova Visita">
                             <i class="fa fa-plus"></i> Novo/a Visitante
                         </a>
                     </div>
+                    @can('people:store')
+                        <div class="pr-2">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
+                                    class="btn btn-primary text-white" title="Nova Pessoa">
+                                <i class="fa fa-plus"></i> Nova Pessoa
+                            </button>
+                        </div>
+                    @endcan
                 </div>
             </div>
 
@@ -24,12 +32,12 @@
                 <div class="col-12 col-lg-11">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..."
-                            wire:model.debounce.200ms="searchString" value="">
+                               wire:model.debounce.200ms="searchString" value="">
                         <span class="input-group-text">
                             <i class="fa fa-search"></i>
                         </span>
                         <span class="input-group-text"
-                            onClick="javascript:document.getElementById('searchForm').submit();">
+                              onClick="javascript:document.getElementById('searchForm').submit();">
                             <a href="{{ route('people.index') }}">
                                 <i class="fas fa-eraser"></i>
                             </a>
@@ -38,8 +46,11 @@
                 </div>
                 <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-md-block">
                     <div class="view-actions justify-content-end">
-                        <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}" title="Visualização em Lista">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+                        <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
+                                title="Visualização em Lista">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-list">
                                 <line x1="8" y1="6" x2="21" y2="6"></line>
                                 <line x1="8" y1="12" x2="21" y2="12"></line>
                                 <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -49,10 +60,10 @@
                             </svg>
                         </button>
                         <button wire:click="showCard" class="view-btn grid-view {{ $showCard ? 'active' : '' }}"
-                            title="Visualização em Grid">
+                                title="Visualização em Grid">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-grid">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-grid">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="14" width="7" height="7"></rect>
@@ -80,4 +91,10 @@
             'forPrinter' => true,
         ])
     </div>
+
+    @can('people:store')
+        <div>
+            @livewire('people.modal',['person_id' => null])
+        </div>
+    @endcan
 </div>
