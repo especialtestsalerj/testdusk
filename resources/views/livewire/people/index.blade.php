@@ -6,24 +6,20 @@
                     <h3 class="mb-0"><i class="fa fa-users"></i> Pessoas - Identificação</h3>
                 </div>
 
-                <div class="col-6 col-md-6 text-end">
-                    <div class="pl-2">
-                        <a id="novo" href="{{ route('visitors.create',
-                            $this->searchStringIsCpf ?
-                                ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
-                                : ['full_name' => $searchString]
-                            ) }}" class="btn btn-primary text-white float-end"
-                           title="Nova Visita">
-                            <i class="fa fa-plus"></i> Novo/a Visitante
-                        </a>
-                    </div>
+                <div class="col-6 col-md-6 align-self-center d-flex justify-content-end gap-4">
+                    <a id="novo" href="{{ route('visitors.create',
+                        $this->searchStringIsCpf ?
+                            ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
+                            : ['full_name' => $searchString]
+                        ) }}" class="btn btn-primary text-white float-end"
+                       title="Nova Visita">
+                        <i class="fa fa-plus"></i> Nova Visita
+                    </a>
                     @can('people:store')
-                        <div class="pr-2">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
-                                    class="btn btn-primary text-white" title="Nova Pessoa">
-                                <i class="fa fa-plus"></i> Nova Pessoa
-                            </button>
-                        </div>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
+                                class="btn btn-primary text-white" title="Nova Pessoa">
+                            <i class="fa fa-plus"></i> Nova Pessoa
+                        </button>
                     @endcan
                 </div>
             </div>

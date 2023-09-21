@@ -6,20 +6,18 @@
                     <h3 class="mb-0"><i class="fa fa-people-roof"></i> Visitas</h3>
                 </div>
 
-                <div class="col-8 col-md-6">
-                    <div class="float-end">
-                        @can('visitors:store')
-                            <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
-                                <i class="fa fa-print"></i> Etiqueta Avulsa
-                            </span>
-                        @endCan
+                <div class="col-8 col-md-6 align-self-center d-flex justify-content-end gap-4">
+                    @can('visitors:store')
+                        <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
+                            <i class="fa fa-print"></i> Etiqueta Avulsa
+                        </span>
+                    @endCan
 
-                        @can('people:show')
-                            <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
-                                <i class="fa fa-plus"></i> Nova
-                            </a>
-                        @endCan
-                    </div>
+                    @can('people:show')
+                        <a id="novo" href="{{ route('people.index') }}" class="btn btn-primary text-white float-right" title="Nova Visita">
+                            <i class="fa fa-plus"></i> Nova
+                        </a>
+                    @endCan
                 </div>
             </div>
 

@@ -97,14 +97,11 @@
                                     <div class="alert alert-warning" role="alert">
                                         <p><i class="fa fa-triangle-exclamation"></i><strong> Pendências encontradas</strong></p>
                                         <hr>
-                                        @if($qtdPendingVisitors > 0)
-                                            <p>Visitantes sem encerramento: {{ $qtdPendingVisitors }}</p>
-                                        @endif
                                         @if($qtdPendingCautions > 0)
                                             <p>Cautelas de Armas sem encerramento: {{ $qtdPendingCautions }}</p>
                                         @endif
                                         <hr>
-                                        <p class="text-justify">Caso deseje finalizar esta rotina, as pendências serão repassadas para a próxima rotina a ser criada, ou seja, serão repassados visitantes e/ou cautelas para serem finalizados na rotina seguinte.</p>
+                                        <p class="text-justify">Caso deseje finalizar esta rotina, as pendências serão repassadas para a próxima rotina a ser criada, ou seja, serão repassadas as cautelas para serem finalizadas numa rotina seguinte.</p>
                                     </div>
                                 @endif
                             </div>

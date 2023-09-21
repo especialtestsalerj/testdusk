@@ -94,7 +94,7 @@ class Modal extends BaseForm
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'document-modal']);
 
         $this->document->update([
-            'number' => remove_punctuation($this->number),
+            'number' => convert_case(remove_punctuation($this->number), MB_CASE_UPPER),
             'state_id' => $this->state_id,
         ]);
     }

@@ -80,7 +80,7 @@
                             </div>
                             <div class="col-lg-6 col-xl-3">
                                 <div class="form-group">
-                                    <label for="entranced_at">Entrada</label>
+                                    <label for="entranced_at">Entrada*</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.lazy="visitor.entranced_at" @disabled(request()->query('disabled')) @if($visitor->hasPending()) readonly @endif/>
                                 </div>
                             </div>
