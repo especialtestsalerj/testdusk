@@ -11,11 +11,11 @@ class VisitorUpdate extends VisitorStore
     }
     public function rules()
     {
-        $id = $this->get('id');
+        $id = $this->get('visitor_id');
         $visitor = app(VisitorsRepository::class)->findById($id);
 
         return [
-            'id' => 'required',
+            'visitor_id' => 'required',
             'document_type_id' => 'required',
             'document_number' => ['bail', 'required'],
             'full_name' => 'required',

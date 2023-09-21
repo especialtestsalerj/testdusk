@@ -84,6 +84,7 @@ class Visitor extends Model
                 ->orderBy('created_at', 'desc')
                 ->first()->avatar_id;
         }
+        return $this;
     }
 
     public function hasPhoto(): Attribute

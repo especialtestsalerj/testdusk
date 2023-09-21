@@ -31,7 +31,9 @@ class Form extends BaseForm
         'visitor.entranced_at' => 'required',
         'visitor.exited_at' => '',
         'visitor.sector_id' => 'required',
+        'visitor.avatar_id' => 'required',
         'visitor.person.*' => '',
+        'visitor.person_id' => '',
         'person.full_name' => '',
         'person.social_name' => '',
         'hasWebcamPhoto' => '',
@@ -49,6 +51,10 @@ class Form extends BaseForm
                 $this->visitor->sector_id = $sector;
             }
         }
+
+//        if(){
+
+//        }
     }
 
     public function mount(Visitor $visitor)
@@ -69,6 +75,10 @@ class Form extends BaseForm
         $this->person = new Person();
         $this->person->fill(is_array($person) ? $person : $person->toArray());
         $this->visitor->person = $person;
+
+        $this->visitor->person_id = $person['id'];
+
+        $this->loadPhoto();
     }
 
     protected function formVariables()
@@ -127,6 +137,7 @@ class Form extends BaseForm
                 $this->visitor->loadLatestPhoto();
             }
         } else {
+            $this->visitor->loadLatestPhoto();
             $this->visitor->append(['photo']);
         }
 

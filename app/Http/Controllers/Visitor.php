@@ -100,6 +100,10 @@ class Visitor extends Controller
 
     public function update(VisitorUpdate $request, $id)
     {
+        if($request->get('visitor_id') != $id){
+            abort(400);
+        }
+
         $request = $this->storeAvatar($request);
 
         app(VisitorsRepository::class)->update($id, $request->all());
