@@ -22,6 +22,8 @@ return [
 
     'company' => env('APP_COMPANY'),
 
+    'company_abbreviation' => env('APP_COMPANY_ABBREVIATION'),
+
     'live_reload' => env('LIVE_RELOAD_PORT'),
 
     /*

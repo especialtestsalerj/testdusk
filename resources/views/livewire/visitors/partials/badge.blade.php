@@ -99,6 +99,10 @@
             height: 20mm;
         }
 
+        .entranced {
+            line-height: 15px !important;
+        }
+
         .badge-bg-title {
             background-color: #000;
             color: #000;
@@ -165,6 +169,10 @@
             height: 20mm;
         }
 
+        .entranced {
+            line-height: 15px !important;
+        }
+
         .badge-bg-title {
             background-color: #000;
             color: #000;
@@ -222,7 +230,7 @@
         >
             <table>
                 <tr>
-                    <td colspan="3" class="text-center badge-text-sm">{{ config('app.company') }}</td>
+                    <td colspan="3" class="text-center">{{ config('app.company_abbreviation') }}</td>
                 </tr>
                 <tr>
                     <td class="badge-bg-title text-center badge-border-title"></td>
@@ -230,17 +238,16 @@
                     <td class="badge-bg-title text-center badge-border-title"></td>
                 </tr>
                 <tr>
-                    <td class="text-left photo">
+                    <td class="text-right photo">
                         @if($forPrinter)
                             <img class="photo" src="{{$printVisitor->photo ?? ''}}" />
                         @else
                             <canvas wire:ignore id="canvas-visible-badge" width="75px" height="75px"></canvas>
                             <canvas wire:ignore id="canvas" style="display: none;" width="400px" height="400px"></canvas>
                         @endIf
-
                     </td>
-                    <td class="text-center">ENTRADA<br /><br />{{ $printVisitor?->entranced_at?->format('d/m/Y \À\S H:i') }}</td>
-                    <td class="text-center photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
+                    <td class="text-center entranced">ENTRADA<br />{{ $printVisitor?->entranced_at?->format('d/m/Y') }}<br />{{ $printVisitor?->entranced_at?->format('H:i') }}</td>
+                    <td class="text-left photo"><img src="{{$printVisitor->qr_code_uri ?? ''}}" class="qr" /></td>
                 </tr>
                 <tr>
                     <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->name)) }}">{{ mount_text($printVisitor?->person?->name) }}</td>
