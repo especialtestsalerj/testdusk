@@ -11,10 +11,7 @@
                     @include(
                         'livewire.partials.search-form',
                         [
-                            'btnNovoLabel' => 'Nova',
-                            'btnNovoTitle' => 'Nova Restrição',
                             'routeSearch' => 'person-restrictions.index',
-                            'routeCreate' => 'person-restrictions.create',
                         ]
                     )
                 </div>

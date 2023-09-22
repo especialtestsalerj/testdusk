@@ -5,12 +5,24 @@
             <div class="modal-content">
                 <form wire:submit.prevent="store">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabelSector">
-                            {{ $this->restriction ? 'Editar' : 'Nova' }} Restrição</h5>
+                        @if(empty($this->restriction))
+                        <h5 class="modal-title">
+                            <i class="fa fa-plus"></i> Nova Restrição
+                        </h5>
+                        @else
+                            <h5 class="modal-title">
+                                <i class="fa fa-pencil"></i> Alteração de Restrição
+                            </h5>
+                        @endif
                         <button type="button" class="btn-close" wire:click="cleanModal"
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="started_at">Início*</label>
                             <input type="datetime-local" max="3000-01-01T23:59"
