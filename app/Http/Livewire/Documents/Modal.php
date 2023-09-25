@@ -2,16 +2,17 @@
 
 namespace App\Http\Livewire\Documents;
 
-use App\Data\Repositories\Documents;
 use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\States;
 use App\Http\Livewire\BaseForm;
-use Livewire\Component;
+use App\Http\Livewire\Traits\Maskable;
 use App\Models\Document;
 use App\Models\Person;
 
 class Modal extends BaseForm
 {
+    use Maskable;
+
     public $person;
     public $document;
     public $document_type_id;
@@ -39,6 +40,7 @@ class Modal extends BaseForm
 
     public function render()
     {
+        $this->applyMasks();
         return view('livewire.documents.modal')->with($this->getViewVariables());
     }
 
@@ -129,11 +131,12 @@ class Modal extends BaseForm
 
     public function cleanModal()
     {
-        $this->person = null;
-        $this->document = null;
-        $this->document_type_id = null;
-        $this->number = null;
-        $this->state_id = null;
+        $this->reset();
         $this->resetErrorBag();
+    }
+
+    public function updatedDocumentTypeId()
+    {
+        $this->reset('number', 'state_id');
     }
 }

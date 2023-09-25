@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\People;
 
-use App\Data\Repositories\People as PeopleRepository;
+use App\Data\Repositories\DocumentTypes;
 use App\Models\Document;
-use App\Models\DocumentType;
 use App\Models\Person;
 
 
@@ -34,6 +33,7 @@ class Modal extends People
 
     public function render()
     {
+        $this->applyMasks();
         $this->loadCountryBr();
         return view('livewire.people.partials.modal')->with($this->getViewVariables());
     }
@@ -41,7 +41,11 @@ class Modal extends People
 
     public function save()
     {
-        $this->isValidCpf();
+        if (intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id) {
+            if (!$this->isValidCpf()) {
+                return;
+            }
+        }
         $this->validate();
         $this->createPerson();
         $this->swallSuccess('Pessoa adicionada com sucesso');
@@ -78,13 +82,6 @@ class Modal extends People
 
     }
 
-    public function updated($name, $value)
-    {
-        if($name == 'document_type_id' &&  $value !== config('app.document_type_rg')) {
-            $this->state_document_id = null;
-        }
-    }
-
     public function resetModal()
     {
         $this->reset();
@@ -98,14 +95,6 @@ class Modal extends People
         $this->loadDefault();
     }
 
-    private function isValidCpf()
-    {
-        if ($this->document_type_id == DocumentType::class::where('name','CPF')->first()->id && !validate_cpf($this->document_number)) {
-            $this->swallError('CPF inválido');
-            return false;
-        }
-        return true;
-    }
 
 
 }

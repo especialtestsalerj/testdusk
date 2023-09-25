@@ -1,4 +1,25 @@
-<div>
+<div
+    x-init=""
+    x-data=""
+    @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
+    @change-mask.window="
+     setTimeout(() => {
+        // console.log($event); console.log($refs[$event.detail.ref]);
+        if($refs[$event.detail.ref]) {
+            if($event.detail.mask){
+                //console.log('changed mask of '+$refs[$event.detail.ref]+' to '+$event.detail.mask)
+                VMasker($refs[$event.detail.ref]).maskPattern($event.detail.mask);
+            }else{
+                var fieldValue = $refs[$event.detail.ref].value;
+                VMasker($refs[$event.detail.ref]).unMask();
+
+                // Set the stored value back into the input field
+                $refs[$event.detail.ref].value = fieldValue;
+            }
+         }
+        }, 500);
+     "
+>
     <div wire:ignore.self class="modal fade" id="document-modal" tabindex="-1" role="dialog"
          aria-labelledby="documentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -49,8 +70,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="number">Número*</label>
-                                <input type="text" max="3000-01-01T23:59" class="form-control text-uppercase"
-                                       id="number" name="number" wire:model="number" x-mask="{{$this->getDocumentMask()}}"/>
+                                <input type="text" class="form-control text-uppercase"
+                                       id="number" name="number" wire:model="number" x-ref="document_number"/>
                                 <div>
                                     @error('number')
                                     <small class="text-danger">
