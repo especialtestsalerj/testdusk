@@ -4,7 +4,7 @@
      @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
      @change-mask.window="
      setTimeout(() => {
-         console.log($event); console.log($refs[$event.detail.ref]);
+         //console.log($event); console.log($refs[$event.detail.ref]);
         if($refs[$event.detail.ref]) {
             if($event.detail.mask){
                 //console.log('changed mask of '+$refs[$event.detail.ref]+' to '+$event.detail.mask)
