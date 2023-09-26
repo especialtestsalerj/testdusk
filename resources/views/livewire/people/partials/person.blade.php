@@ -1,8 +1,8 @@
-<div class="form-group"
-     x-init=""
-     x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}}"
-     @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
-     @change-mask.window="
+<div class="form-group">
+    <div x-init=""
+         x-data="{ isEditing: {{ !$modal ? 'true' : 'false' }}}"
+         @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
+         @change-mask.window="
      setTimeout(() => {
          //console.log($event); console.log($refs[$event.detail.ref]);
         if($refs[$event.detail.ref]) {
@@ -19,7 +19,6 @@
          }
         }, 500);
      ">
-    <div >
 
         <div class="row">
 

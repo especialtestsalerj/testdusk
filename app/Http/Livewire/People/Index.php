@@ -65,4 +65,9 @@ class Index extends BaseIndex
     {
         return view('livewire.people.index')->with('people', $this->filter());
     }
+
+    public function redirectToVisitorsForm()
+    {
+        $this->swalConfirmation('ATENÇÃO', 'Você realmente não encontrou a pessoa pesquisada?', route('visitors.create'));
+    }
 }

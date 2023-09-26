@@ -45,6 +45,12 @@ class CpfAvailableOnVisit implements Rule
             ->where('documents.document_type_id', $this->document_type_id)
             ->whereNull('visitors.exited_at');
 
+        if ($this->document_type_id == $documentType->id) {
+            if (!validate_cpf($this->document_number)) {
+                return false;
+            }
+        }
+
         return $query->doesntExist();
         //        } else {
         //            //TODO: Uma mesma pessoa pode entrar com dois documentos diferentes sem ter que dar baixa na visita anterior
@@ -59,7 +65,11 @@ class CpfAvailableOnVisit implements Rule
      */
     public function message()
     {
-        return 'Visitante possui visita em aberto.';
+        if (!validate_cpf($this->document_number)) {
+            return 'CPF inválido';
+        } else {
+            return 'Visitante possui visita em aberto.';
+        }
     }
 
     /**

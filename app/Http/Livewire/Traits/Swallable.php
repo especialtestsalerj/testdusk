@@ -27,4 +27,13 @@ trait Swallable
             'text'=>$text
         ]);
     }
+
+    public function swalConfirmation($title, $text, $route)
+    {
+        $this->dispatchBrowserEvent('swal-confirmation',[
+            'title' => $title,
+            'text' => $text,
+            'route' => $route,
+        ]);
+    }
 }

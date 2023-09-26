@@ -8,6 +8,7 @@ use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\Document;
 use App\Models\Person;
+use Illuminate\Validation\Rule;
 
 class Modal extends BaseForm
 {
@@ -21,11 +22,18 @@ class Modal extends BaseForm
 
     protected $listeners = ['editDocument', 'createDocument'];
 
-    public $rules = [
-        'document_type_id' => 'required',
-        'number' => 'required',
-        'state_id' => 'required_if:document_type_id,2',
-    ];
+    public function rules()
+    {
+        return [
+            'document_type_id' => 'required',
+            'number' => 'required',
+            'state_id' => [
+                Rule::requiredIf(function () {
+                    return $this->document_type_id == config('app.document_type_rg');
+                }),
+            ],
+        ];
+    }
 
     protected $messages = [
         'required' => ':attribute: preencha o campo corretamente.',
