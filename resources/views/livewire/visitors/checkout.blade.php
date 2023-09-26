@@ -74,7 +74,7 @@
                             <div class="col-12 col-lg-6 col-xxl-4 mb-2">
                                 <div class="card people-min-height bg-white">
                                     <div class="card-header bg-blue-light text-white">
-                                        <div class="col-12 fw-bolder">
+                                        <div class="col-12 fw-bolder text-truncate">
                                             {{ $visitor->person->name ?? '' }}
                                         </div>
                                     </div>
