@@ -97,6 +97,6 @@ class VisitorsCard extends Component
 
     public function render()
     {
-        return view('livewire.visitors.visitors-card');
+        return view('visitors.partials.visitors-card');
     }
 }
