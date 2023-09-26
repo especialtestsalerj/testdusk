@@ -22,7 +22,7 @@
             </div>
 
             <div class="row mb-4 d-flex align-items-center">
-                <div class="col-6 col-md-9 col-lg-8 col-xxl-9 pe-0">
+                <div class="col-6 col-md-8 col-lg-7 col-xxl-9 pe-0">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar..." wire:model.debounce.500ms="searchString" value="">
                         <span class="input-group-text">
@@ -35,7 +35,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-6 mt-lg-0 col-md-3 col-lg-2 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
+                <div class="col-6 mt-lg-0 col-md-4 col-lg-3 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
                     <span class="fw-bold btn btn-outline-secondary">
                         <input type="checkbox" name="exited_at"
                                wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
