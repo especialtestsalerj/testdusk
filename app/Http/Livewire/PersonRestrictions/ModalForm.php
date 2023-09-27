@@ -41,6 +41,7 @@ class ModalForm extends Component
     public function createRestriction(Person $person)
     {
         $this->person = $person;
+        $this->started_at = date('Y-m-d H:i');
     }
 
     public function editRestriction(PersonRestriction $personRestriction)

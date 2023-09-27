@@ -110,3 +110,23 @@ window.addEventListener('swal', function (e) {
         }
     })
 })
+
+window.addEventListener('swal-confirmation', function (e) {
+    const options = e.detail
+
+    Swal.fire({
+        title: options.title,
+        text: options.text,
+        icon: 'warning',
+        showConfirmButton: true,
+        cancelButtonColor: '#E3352E',
+        confirmButtonColor: '#38c172',
+        confirmButtonText: '<i class="fa fa-save"></i> Confirmar',
+        cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+        showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = options.route;
+        }
+    })
+})

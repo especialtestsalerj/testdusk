@@ -1,4 +1,26 @@
-<div>
+<div
+    x-init=""
+    x-data=""
+    @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
+    @change-mask.window="
+     setTimeout(() => {
+        // console.log($event); console.log($refs[$event.detail.ref]);
+        if($refs[$event.detail.ref]) {
+            if($event.detail.mask){
+                //console.log('changed mask of '+$refs[$event.detail.ref]+' to '+$event.detail.mask)
+                VMasker($refs[$event.detail.ref]).maskPattern($event.detail.mask);
+            }else{
+                var fieldValue = $refs[$event.detail.ref].value;
+                VMasker($refs[$event.detail.ref]).unMask();
+
+                // Set the stored value back into the input field
+                $refs[$event.detail.ref].value = fieldValue;
+            }
+         }
+
+        }, 500);
+     "
+>
     <div
         wire:ignore.self
         class="modal fade" id="peopleModal" tabindex="-1" role="dialog"
@@ -47,10 +69,9 @@
                                             <label for="document_number">Documento*</label>
                                             <input @if ($modal) disabled @endif
                                             @if ($readonly) readonly @endif type="text"
-                                                   x-mask="{{$this->getDocumentMask()}}"
                                                    class="form-control @error('cpf') is-invalid @endError"
                                                    name="document_number"
-                                                   id="document_number" wire:model.lazy="document_number"
+                                                   id="document_number" wire:model="document_number"
                                                    x-ref="document_number"
                                                    wire:blur="searchDocumentNumber"/>
                                             <div>

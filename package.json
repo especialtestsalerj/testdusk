@@ -30,7 +30,6 @@
     },
     "dependencies": {
         "@alpinejs/intersect": "^3.12.3",
-        "@alpinejs/mask": "^3.13.0",
         "cropperjs": "^1.5.13",
         "jquery": "^3.6.1",
         "laravel-echo": "^1.15.1",

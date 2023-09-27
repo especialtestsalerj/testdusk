@@ -7,11 +7,7 @@
                 </div>
 
                 <div class="col-6 col-md-6 align-self-center d-flex justify-content-end gap-4">
-                    <a id="novo" href="{{ route('visitors.create',
-                        $this->searchStringIsCpf ?
-                            ['document_number' => $searchString, 'document_type_id' => $this->searchStringDocumentType ]
-                            : ['full_name' => $searchString]
-                        ) }}" class="btn btn-primary text-white float-end"
+                    <a id="novo" wire:click="redirectToVisitorsForm" class="btn btn-primary text-white float-end"
                        title="Nova Visita">
                         <i class="fa fa-plus"></i> Nova Visita
                     </a>
@@ -48,7 +44,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-md-block">
+                <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-lg-block">
                     <div class="view-actions justify-content-end">
                         <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
                                 title="Visualização em Lista">
