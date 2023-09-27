@@ -54,7 +54,6 @@ class People extends BaseForm
 
     public function updated($name, $value)
     {
-
         $array = [
             'id' => $this->person->id,
             'full_name' => convert_case($this->full_name, MB_CASE_UPPER),
@@ -62,9 +61,10 @@ class People extends BaseForm
             'document_number' => $this->document_number,
             'document_type_id' => $this->document_type_id,
             'state_document_id' => $this->state_document_id,
+            'refreshPhoto' => $name == 'person_id',
         ];
 
-        $this->emit('personModified', $array);
+        $this->emit('personModified', $array );
     }
 
     public function searchDocumentNumber()

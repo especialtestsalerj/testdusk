@@ -36,6 +36,8 @@ class Form extends BaseForm
         'visitor.person_id' => '',
         'person.full_name' => '',
         'person.social_name' => '',
+        'sector_id' => '',
+        'entranced_at' => '',
         'hasWebcamPhoto' => '',
         'webcamFile' => '',
         'webcamDataUri' => '',
@@ -51,16 +53,13 @@ class Form extends BaseForm
                 $this->visitor->sector_id = $sector;
             }
         }
-
-//        if(){
-
-//        }
     }
 
     public function mount(Visitor $visitor)
     {
         $this->visitor = new Visitor();
-        $this->visitor->entranced_at = now();
+
+        $this->visitor->entranced_at = old('entranced_at') ?: now();
 
         $this->person = new Person();
         $this->sector = new Sector();
@@ -70,15 +69,21 @@ class Form extends BaseForm
         $this->loadPhoto();
     }
 
-    public function personModified($person)
+    public function personModified($array)
     {
+        $refreshPhoto = $array['refreshPhoto'];
+        unset($array['refreshPhoto']);
+        $person = $array;
+
         $this->person = new Person();
         $this->person->fill(is_array($person) ? $person : $person->toArray());
         $this->visitor->person = $person;
 
         $this->visitor->person_id = $person['id'];
 
-        $this->loadPhoto();
+        if($refreshPhoto) {
+            $this->loadPhoto();
+        }
     }
 
     protected function formVariables()
