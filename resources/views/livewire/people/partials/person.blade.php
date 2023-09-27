@@ -44,7 +44,7 @@
                     <label for="document_number">Número do Documento*</label>
                     <input @if ($modal) disabled @endif
                     @if ($readonly) readonly @endif type="text"
-                           class="form-control @error('cpf') is-invalid @endError" name="document_number"
+                           class="form-control text-uppercase @error('cpf') is-invalid @endError" name="document_number"
                            id="document_number" wire:model="document_number" x-ref="document_number"
                            wire:blur="searchDocumentNumber" />
                 </div>
