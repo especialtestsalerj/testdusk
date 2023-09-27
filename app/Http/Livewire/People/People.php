@@ -198,7 +198,9 @@ class People extends BaseForm
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
-        $this->loadDefaultLocation();
+        if (!$this->readonly) {
+            $this->loadDefaultLocation();
+        }
     }
 
     /**

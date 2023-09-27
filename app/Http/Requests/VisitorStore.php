@@ -45,7 +45,7 @@ class VisitorStore extends Request
     {
         return [
             'document_type_id.required' => 'Tipo de Documento: preencha o campo corretamente.',
-            'document_number.required' => 'Documento: preencha o campo corretamente.',
+            'document_number.required' => 'Número do Documento: preencha o campo corretamente.',
             'full_name.required' => 'Nome Completo: preencha o campo corretamente.',
             'country_id.required' => 'País: preencha o campo corretamente.',
             'state_id.required_if' => 'Estado: preencha o campo corretamente.',
