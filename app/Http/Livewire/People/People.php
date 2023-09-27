@@ -104,15 +104,17 @@ class People extends BaseForm
         if (!is_null($this->person_id)) {
             $this->person = Person::where('id', $this->person_id)->first();
 
-            $getDocument = $this->person->documents()->where('document_type_id', '=', 1)->firstOr(function () {
-                return $this->person->documents()->first();
-            });
+            $getDocument = $this->person
+                ->documents()
+                ->where('document_type_id', '=', 1)
+                ->firstOr(function () {
+                    return $this->person->documents()->first();
+                });
 
             $this->document_type_id = $getDocument->document_type_id;
             $this->document_number = $getDocument->number;
             $this->state_document_id = $getDocument->state_id ?? null;
             $this->readonly = true;
-
         } else {
             if (!$this->isPreFilled('document_number')) {
                 $document_number = is_null(old('document_number'))
