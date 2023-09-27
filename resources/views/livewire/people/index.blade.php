@@ -40,7 +40,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-md-block">
+                <div class="col-12 mt-2 mt-lg-0 col-lg-1 mt-2 mt-lg-0 d-flex d-none d-lg-block">
                     <div class="view-actions justify-content-end">
                         <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
                                 title="Visualização em Lista">

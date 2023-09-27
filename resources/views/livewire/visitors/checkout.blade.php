@@ -16,19 +16,20 @@
             <div class="col-md-7 col-lg-9">
                 <div class="row mb-3">
 
-                    <div class="col-lg-5">
+                    <div class="col-lg-4 col-xxl-5">
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
                             placeholder="Filtrar por Nome" aria-label="default input example" title="Filtrar por Nome">
                     </div>
-                    <div class="col-4 col-md-3 col-lg-2 mt-2 mt-lg-0">
+
+                    <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
                             class="form-control text-uppercase" />
                     </div>
-                    <div class="col-4 col-md-3 col-lg-2 mt-2 mt-lg-0">
+                    <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
                             class="form-control text-uppercase" />
                     </div>
-                    <div class="col-4 col-md-3 col-lg-1 mt-2 mt-lg-0">
+                    <div class="col-4 col-lg-2 col-xxl-1 mt-2 mt-lg-0">
                         <select wire:model="pageSize" class="form-select" aria-label="Default select example">
                             <option value="5">5</option>
                             <option value="12">12</option>
@@ -37,7 +38,7 @@
                             <option value="100">100</option>
                         </select>
                     </div>
-                    <div class="col-1 col-lg-2 col-md-3 mt-2 mt-lg-0 d-flex justify-content-end">
+                    <div class="col-1 col-lg-2 col-md-3 mt-2 mt-lg-0 d-flex d-none d-lg-block justify-content-end">
                         <div class="view-actions">
                             <button wire:click="showTable" class="view-btn list-view {{ !$showCard ? 'active' : '' }}"
                                 title="Visualização em Lista">
@@ -73,7 +74,7 @@
                             <div class="col-12 col-lg-6 col-xxl-4 mb-2">
                                 <div class="card people-min-height bg-white">
                                     <div class="card-header bg-blue-light text-white">
-                                        <div class="col-12 fw-bolder">
+                                        <div class="col-12 fw-bolder text-truncate">
                                             {{ $visitor->person->name ?? '' }}
                                         </div>
                                     </div>
