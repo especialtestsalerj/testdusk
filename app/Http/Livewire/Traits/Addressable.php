@@ -96,7 +96,7 @@ trait Addressable
     {
         $city_id = empty($this->city_id) ? null : $this->city_id;
         $state_id = empty($this->state_id) ? null : $this->state_id;
-        $this->other_city = null;
+
         if (isset($this->state_id)) {
             $this->cities = City::where('state_id', $state_id)
                 ->where(function ($query) use ($city_id) {
