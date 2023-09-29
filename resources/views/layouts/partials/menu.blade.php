@@ -1,16 +1,8 @@
-<div class="container-fluid">
-    <div class="row long-name text-center">
-        <div class="col-12">
-            {{ config('app.long_name') }}
-        </div>
-    </div>
-
-</div>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
 
         <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >
-            <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="Alerj" alt="Alerj">
+            <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="{{ config('app.description') }}" alt="{{ config('app.name') }}">
         </a>
 
         <div class="d-flex ml-auto">

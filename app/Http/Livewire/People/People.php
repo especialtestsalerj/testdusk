@@ -7,14 +7,12 @@ use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
+use App\Http\Livewire\Traits\Maskable;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\DocumentType;
 use App\Models\Person;
 use App\Models\State;
-use App\Http\Livewire\Traits\WithWebcam;
-use App\Models\Visitor;
-use Livewire\WithFileUploads;
 
 use function app;
 use function info;
@@ -23,6 +21,7 @@ use function view;
 class People extends BaseForm
 {
     use Addressable;
+    use Maskable;
 
     protected $listeners = [
         'snapshotTaken' => 'updatePJFile',
@@ -62,6 +61,11 @@ class People extends BaseForm
             'state_document_id' => $this->state_document_id,
         ]);
         $this->emit('personModified', $person);
+    }
+
+    public function updatedDocumentTypeId()
+    {
+        $this->reset('document_number', 'state_document_id');
     }
 
     public function searchDocumentNumber()
@@ -104,15 +108,17 @@ class People extends BaseForm
         if (!is_null($this->person_id)) {
             $this->person = Person::where('id', $this->person_id)->first();
 
-            $getDocument = $this->person->documents()->where('document_type_id', '=', 1)->firstOr(function () {
-                return $this->person->documents()->first();
-            });
+            $getDocument = $this->person
+                ->documents()
+                ->where('document_type_id', '=', 1)
+                ->firstOr(function () {
+                    return $this->person->documents()->first();
+                });
 
             $this->document_type_id = $getDocument->document_type_id;
-            $this->document_number = $getDocument->number;
+            $this->document_number = $getDocument->number_maskered;
             $this->state_document_id = $getDocument->state_id ?? null;
             $this->readonly = true;
-
         } else {
             if (!$this->isPreFilled('document_number')) {
                 $document_number = is_null(old('document_number'))
@@ -173,6 +179,7 @@ class People extends BaseForm
 
     public function render()
     {
+        $this->applyMasks();
         $this->loadCountryBr();
 
         return view('livewire.people.partials.person')->with($this->getViewVariables());
@@ -196,7 +203,9 @@ class People extends BaseForm
             $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
         }
 
-        $this->loadDefaultLocation();
+        if (!$this->readonly) {
+            $this->loadDefaultLocation();
+        }
     }
 
     /**
@@ -216,5 +225,14 @@ class People extends BaseForm
             $this->city_id = City::where('id', '=', config('app.city_rio'))->first()->id;
             $this->loadCities();
         }
+    }
+
+    protected function isValidCpf()
+    {
+        if (!validate_cpf($this->document_number)) {
+            $this->swallError('CPF inválido');
+            return false;
+        }
+        return true;
     }
 }
