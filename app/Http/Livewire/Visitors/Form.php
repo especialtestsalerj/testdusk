@@ -61,6 +61,8 @@ class Form extends BaseForm
 
         $this->visitor->entranced_at = old('entranced_at') ?: now();
 
+        $this->fillByOld();
+
         $this->person = new Person();
         $this->sector = new Sector();
 
@@ -114,7 +116,7 @@ class Form extends BaseForm
             $this->person->name = $nameParameter;
         }
 
-        $this->fillPersonByQueryString();
+        $this->fillPersonByQueryStringOrOld();
     }
 
     /**
@@ -122,10 +124,14 @@ class Form extends BaseForm
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    protected function fillPersonByQueryString(): void
+    protected function fillPersonByQueryStringOrOld(): void
     {
         if ($personId = request()->get('person_id')) {
             $this->personModified(Person::findOrFail($personId));
+        }else{
+            if($personId = old('person_id')) {
+                $this->personModified(Person::findOrFail($personId));
+            }
         }
     }
 
@@ -152,5 +158,19 @@ class Form extends BaseForm
         $this->webcamDataUri = !!$this->webcamFile;
 
         $this->mountCoordinates();
+    }
+
+    /**
+     * @return void
+     */
+    protected function fillByOld(): void
+    {
+        if ($oldValue = old('sector_id')) {
+            $this->sector_id = $oldValue;
+            $this->visitor->sector_id = $oldValue;
+        }
+        if ($oldValue = old('description')) {
+            $this->visitor->description = $oldValue;
+        }
     }
 }
