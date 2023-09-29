@@ -156,4 +156,9 @@ class Visitor extends Model
             );
         }
     }
+
+    public function hasPendingVisit()
+    {
+        return Visitor::where('person_id', $this->person_id)->whereNull('exited_at')->exists();
+    }
 }
