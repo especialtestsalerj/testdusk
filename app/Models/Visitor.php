@@ -84,6 +84,7 @@ class Visitor extends Model
                 ->orderBy('created_at', 'desc')
                 ->first()->avatar_id;
         }
+        return $this;
     }
 
     public function hasPhoto(): Attribute
@@ -154,5 +155,10 @@ class Visitor extends Model
                     ->orWhere('exited_at', '<=', $endDate)
             );
         }
+    }
+
+    public function hasPendingVisit()
+    {
+        return Visitor::where('person_id', $this->person_id)->whereNull('exited_at')->exists();
     }
 }
