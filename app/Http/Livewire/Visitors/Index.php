@@ -25,6 +25,12 @@ class Index extends BaseIndex
     public $redirect;
     public $exited_at;
 
+    protected $queryString = [
+        'searchString' => ['except' => ''],
+        'exited_at' => ['except' => false],
+        'page' => ['except' => 1],
+    ];
+
     public $searchFields = [
         'visitors.entranced_at' => 'date',
         'visitors.exited_at' => 'date',
