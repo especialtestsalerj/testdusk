@@ -39,7 +39,7 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div data-label="Destino" class="badge rounded-pill bg-secondary mb-2">
+                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-2">
                                                 {{ $visitor?->sector?->name ?? '-' }}
                                             </div>
                                             <div data-label="Entrada">

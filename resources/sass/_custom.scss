@@ -717,3 +717,7 @@ body.bg-logo {
 .select2-container--bootstrap-5.select2-container--disabled .select2-selection, .select2-container--bootstrap-5.select2-container--disabled.select2-container--focus .select2-selection {
     cursor: default;
 }
+
+.badge.text-truncate {
+    max-width: 100%;
+}
