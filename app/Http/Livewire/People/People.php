@@ -46,6 +46,7 @@ class People extends BaseForm
     public $visitor;
 
     protected $rules = [
+        'person_id' => '',
         'country_id' => 'required',
         'other_city' => 'required',
     ];
@@ -58,15 +59,17 @@ class People extends BaseForm
 
     public function updated($name, $value)
     {
-        $person = new Person();
-        $person->fill([
+        $array = [
+            'id' => $this->person->id,
             'full_name' => convert_case($this->full_name, MB_CASE_UPPER),
             'social_name' => convert_case($this->social_name, MB_CASE_UPPER),
             'document_number' => $this->document_number,
             'document_type_id' => $this->document_type_id,
             'state_document_id' => $this->state_document_id,
-        ]);
-        $this->emit('personModified', $person);
+            'refreshPhoto' => $name == 'person_id',
+        ];
+
+        $this->emit('personModified', $array );
     }
 
     public function updatedDocumentTypeId()
@@ -84,6 +87,8 @@ class People extends BaseForm
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
+
+
                 $this->fillModel();
                 $this->document_number = convert_case(
                     remove_punctuation($document->number),
@@ -99,7 +104,7 @@ class People extends BaseForm
             }
         }
 
-        $this->updated('document_number', $this->document_number);
+        $this->updated('person_id', $this->person_id);
     }
 
     public function isPreFilled($fieldName)

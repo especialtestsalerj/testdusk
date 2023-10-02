@@ -21,12 +21,14 @@
                                             </span>
                                         @endCan
                                     @else
-                                        @can('visitors:store')
-                                            <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
-                                               class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
-                                                <i class="fa fa-lg fa-check"></i>
-                                            </a>
-                                        @endCan
+                                        @if(!$visitor->hasPendingVisit())
+                                            @can('visitors:store')
+                                                <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
+                                                   class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
+                                                    <i class="fa fa-lg fa-check"></i>
+                                                </a>
+                                            @endCan
+                                        @endIf
                                     @endIf
                                 </div>
                             </div>
@@ -39,7 +41,7 @@
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div data-label="Destino" class="badge rounded-pill bg-secondary mb-2">
+                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-2">
                                                 {{ $visitor?->sector?->name ?? '-' }}
                                             </div>
                                             <div data-label="Entrada">
@@ -207,12 +209,14 @@
                                                 </span>
                                             @endCan
                                         @else
-                                            @can('visitors:store')
-                                                <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
-                                                   class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </a>
-                                            @endCan
+                                            @if(!$visitor->hasPendingVisit())
+                                                @can('visitors:store')
+                                                    <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
+                                                       class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
+                                                        <i class="fa fa-lg fa-check"></i>
+                                                    </a>
+                                                @endCan
+                                            @endIf
                                         @endIf
                                     </div>
                                 </div>

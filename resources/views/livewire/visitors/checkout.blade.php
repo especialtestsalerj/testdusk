@@ -91,7 +91,7 @@
                                                         {{ $visitor->person->name ?? '' }}
                                                     </div>--}}
                                                     <div class="col-12">
-                                                        <div class="badge rounded-pill bg-secondary mb-2">
+                                                        <div class="badge text-truncate rounded-pill bg-secondary mb-2">
                                                             {{ $visitor->sector->name ?? '' }}
                                                         </div>
                                                     </div>
