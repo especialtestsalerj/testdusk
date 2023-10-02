@@ -11,16 +11,16 @@
                     <h5 class="modal-title" id="weaponModalLabel">
                         @switch($modalMode)
                             @case('create')
-                                <i class="fas fa-plus"></i> Nova Arma
+                                <i class="fa fa-plus"></i> Nova Arma
                                 @break
                             @case('update')
-                                <i class="fas fa-pencil"></i> Alteração de Arma
+                                <i class="fa fa-pencil"></i> Alteração de Arma
                                 @break
                             @case('delete')
-                                <i class="fas fa-trash"></i> Remoção de Arma
+                                <i class="fa fa-trash"></i> Remoção de Arma
                                 @break
                             @default
-                                <i class="fas fa-gun"></i> Arma
+                                <i class="fa fa-gun"></i> Arma
                         @endswitch
                     </h5>
                     @if($modalMode == 'update')

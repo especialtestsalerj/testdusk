@@ -236,6 +236,11 @@ class Form extends BaseForm
         $this->emit('createRestriction', $person);
     }
 
+    public function detailRestriction($personRestriction)
+    {
+        $this->emit('detailRestriction', $personRestriction);
+    }
+
     public function editRestriction($personRestriction)
     {
         $this->emit('editRestriction', $personRestriction);
@@ -253,5 +258,6 @@ class Form extends BaseForm
     {
         $restriction = PersonRestriction::find($this->selectedRestriction_id);
         $restriction->delete();
+        $this->emit('deleteRestriction');
     }
 }
