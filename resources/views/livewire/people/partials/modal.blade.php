@@ -66,7 +66,7 @@
                                         <div class="form-group">
                                             <input name="document_number" id="document_number" type="hidden"
                                                    wire:model.defer="document_number">
-                                            <label for="document_number">Documento*</label>
+                                            <label for="document_number">Número do Documento*</label>
                                             <input @if ($modal) disabled @endif
                                             @if ($readonly) readonly @endif type="text"
                                                    class="form-control @error('cpf') is-invalid @endError"
@@ -148,40 +148,52 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6" wire:ignore>
+                                    <div class="col-6">
                                         <div class="form-group">
-                                            <label for="country_id">País*</label>
-                                            <select name="country_id" class="select2 form-control text-uppercase"
-                                                    dropdown-parent="peopleModal"
-                                                    id="country_id"
-                                                    wire:model="country_id" x-ref="country_id"
-                                                    @if ($modal) disabled @endif
-                                                    @if ($readonly) readonly @endif>
-                                                <option value="">SELECIONE</option>
-                                                @foreach ($countries as $country)
-                                                    <option
-                                                        value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div wire:ignore>
+                                                <label for="country_id">País*</label>
+                                                <select name="country_id" class="select2 form-control text-uppercase"
+                                                        dropdown-parent="peopleModal"
+                                                        id="country_id"
+                                                        wire:model="country_id" x-ref="country_id"
+                                                        @if ($modal) disabled @endif
+                                                        @if ($readonly) readonly @endif>
+                                                    <option value="">SELECIONE</option>
+                                                    @foreach ($countries as $country)
+                                                        <option
+                                                            value="{{ $country->id }}">{{ convert_case($country->name, MB_CASE_UPPER) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div>
+                                                @error('country_id')
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
+                                                @endError
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div
                                         class="col-lg-6 col-xl-6 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
-                                        wire:ignore id="div-state_id">
+                                         id="div-state_id">
                                         <div class="form-group">
-                                            <label for="state_id">Estado*</label>
-                                            <select class="select2 form-control text-uppercase" id="state_id"
-                                                    dropdown-parent="peopleModal"
-                                                    name="state_id"
-                                                    wire:model="state_id" x-ref="state_id" wire:change="loadCities"
-                                                    @if ($modal) disabled @endif
-                                                    @if ($readonly) readonly @endif>
-                                                <option value="">SELECIONE</option>
-                                                @foreach ($states as $state)
-                                                    <option value="{{ $state->id }}">{{ $state->initial }}</option>
-                                                @endforeach
-                                            </select>
+                                            <div wire:ignore>
+                                                <label for="state_id">Estado*</label>
+                                                <select class="select2 form-control text-uppercase" id="state_id"
+                                                        dropdown-parent="peopleModal"
+                                                        name="state_id"
+                                                        wire:model="state_id" x-ref="state_id" wire:change="loadCities"
+                                                        @if ($modal) disabled @endif
+                                                        @if ($readonly) readonly @endif>
+                                                    <option value="">SELECIONE</option>
+                                                    @foreach ($states as $state)
+                                                        <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <div>
                                                 @error('state_id')
                                                 <small class="text-danger">
@@ -194,22 +206,24 @@
                                     </div>
                                     <div
                                         class="col-lg-6 col-xl-6 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
-                                        wire:ignore id="div-city_id">
+                                        id="div-city_id">
                                         <div class="form-group">
-                                            <label for="city_id">Cidade*</label>
-                                            <select name="city_id" id="city_id"
-                                                    dropdown-parent="peopleModal"
-                                                    class="select2 form-control text-uppercase"
-                                                    wire:model="city_id" x-ref="city_id"
-                                                    @if ($modal) disabled @endif
-                                                    @if ($readonly) readonly @endif>
-                                                <option value="">SELECIONE</option>
-                                                @foreach ($cities as $city)
-                                                    <option
-                                                        value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <div wire:ignore>
+                                                <label for="city_id">Cidade*</label>
+                                                <select name="city_id" id="city_id"
+                                                        dropdown-parent="peopleModal"
+                                                        class="select2 form-control text-uppercase"
+                                                        wire:model="city_id" x-ref="city_id"
+                                                        @if ($modal) disabled @endif
+                                                        @if ($readonly) readonly @endif>
+                                                    <option value="">SELECIONE</option>
+                                                    @foreach ($cities as $city)
+                                                        <option
+                                                            value="{{ $city->id ?? $city['id'] }}">{{ mb_strtoupper($city->name ?? $city['name']) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <div>
                                                 @error('city_id')
                                                 <small class="text-danger">

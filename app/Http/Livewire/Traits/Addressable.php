@@ -113,6 +113,8 @@ trait Addressable
 
     public function updatedCountryId($newValue)
     {
+        $this->reset('state_id', 'city_id', 'other_city');
+
         if ($newValue != $this->countryBr->id) {
             $this->countryBrNotSelected();
         } else {
@@ -122,6 +124,8 @@ trait Addressable
 
     public function updatedStateId($newValue)
     {
+        $this->reset('city_id', 'other_city');
+
         if (is_null($newValue)) {
             return;
         }
