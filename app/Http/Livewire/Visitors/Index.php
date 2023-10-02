@@ -40,7 +40,7 @@ class Index extends BaseIndex
         //        $this->loadAnonymousVisitor();
     }
 
-    public function additionalFilterQuery($query)
+    public function additionalOrFilterQuery($query)
     {
         if (!is_null($this->searchString) && $this->searchString != '') {
             //Busca na tabela de people
@@ -62,12 +62,16 @@ class Index extends BaseIndex
             );
         }
 
+        $query->with('document.documentType');
+
+        return $query;
+    }
+
+    public function additionalFilterQuery($query)
+    {
         if ($this->exited_at) {
             $query = $query->whereNull('exited_at');
         }
-
-        $query->with('document.documentType');
-
         return $query;
     }
 
