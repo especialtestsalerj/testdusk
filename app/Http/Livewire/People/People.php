@@ -50,6 +50,12 @@ class People extends BaseForm
         'other_city' => 'required',
     ];
 
+    protected $messages = [
+        'required' => ':attribute: preencha o campo corretamente.',
+        'required_if' => ':attribute: preencha o campo corretamente.',
+        'required_unless' => ':attribute: preencha o campo corretamente.',
+    ];
+
     public function updated($name, $value)
     {
         $person = new Person();

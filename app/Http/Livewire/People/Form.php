@@ -56,6 +56,7 @@ class Form extends BaseForm
         'confirm-delete-restriction' => 'deleteRestriction',
         'create-document' => '$refresh',
     ];
+
     public $selectedDocument_id;
 
     public $selectedRestriction_id;
@@ -213,10 +214,7 @@ class Form extends BaseForm
         $this->selectedRestriction_id = $restriction_id;
         $restriction = PersonRestriction::find($restriction_id);
         $this->emitSwall(
-            'Deseja realmente remover a restrição ' .
-            ': ' .
-            $restriction->message .
-            '?',
+            'Deseja realmente remover a restrição ' . ': ' . $restriction->message . '?',
             'A ação não poderá ser desfeita.',
             'confirm-delete-restriction',
             'delete'
@@ -256,5 +254,4 @@ class Form extends BaseForm
         $restriction = PersonRestriction::find($this->selectedRestriction_id);
         $restriction->delete();
     }
-
 }
