@@ -54,7 +54,7 @@ class People extends BaseForm
     public function updated($name, $value)
     {
         $array = [
-            'id' => $this->person->id,
+            'id' => $this->person->id ?? null,
             'full_name' => convert_case($this->full_name, MB_CASE_UPPER),
             'social_name' => convert_case($this->social_name, MB_CASE_UPPER),
             'document_number' => $this->document_number,
