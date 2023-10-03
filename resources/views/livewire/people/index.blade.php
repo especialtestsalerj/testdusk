@@ -22,11 +22,13 @@
                 </div>
             </div>
 
+            @if (url()->previous() == route('visitors.index'))
             <div class="row mb-4">
                 <div class="col-12 d-flex justify-content-center">
                     <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> Pesquisar pessoa pelo nome e verificar documentos desejados.</span>
                 </div>
             </div>
+            @endif
 
             <div class="row mb-4 d-flex align-items-center">
                 <div class="col-12 col-lg-11">
