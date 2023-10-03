@@ -31,9 +31,13 @@ class Form extends BaseForm
         'visitor.entranced_at' => 'required',
         'visitor.exited_at' => '',
         'visitor.sector_id' => 'required',
+        'visitor.avatar_id' => 'required',
         'visitor.person.*' => '',
+        'visitor.person_id' => '',
         'person.full_name' => '',
         'person.social_name' => '',
+        'sector_id' => '',
+        'entranced_at' => '',
         'hasWebcamPhoto' => '',
         'webcamFile' => '',
         'webcamDataUri' => '',
@@ -54,7 +58,10 @@ class Form extends BaseForm
     public function mount(Visitor $visitor)
     {
         $this->visitor = new Visitor();
-        $this->visitor->entranced_at = now();
+
+        $this->visitor->entranced_at = old('entranced_at') ?: now();
+
+        $this->fillByOld();
 
         $this->person = new Person();
         $this->sector = new Sector();
@@ -64,11 +71,21 @@ class Form extends BaseForm
         $this->loadPhoto();
     }
 
-    public function personModified($person)
+    public function personModified($array)
     {
+        $refreshPhoto = $array['refreshPhoto'];
+        unset($array['refreshPhoto']);
+        $person = $array;
+
         $this->person = new Person();
         $this->person->fill(is_array($person) ? $person : $person->toArray());
         $this->visitor->person = $person;
+
+        $this->visitor->person_id = $person['id'];
+
+        if($refreshPhoto) {
+            $this->loadPhoto();
+        }
     }
 
     protected function formVariables()
@@ -99,7 +116,7 @@ class Form extends BaseForm
             $this->person->name = $nameParameter;
         }
 
-        $this->fillPersonByQueryString();
+        $this->fillPersonByQueryStringOrOld();
     }
 
     /**
@@ -107,10 +124,14 @@ class Form extends BaseForm
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    protected function fillPersonByQueryString(): void
+    protected function fillPersonByQueryStringOrOld(): void
     {
         if ($personId = request()->get('person_id')) {
             $this->personModified(Person::findOrFail($personId));
+        }else{
+            if($personId = old('person_id')) {
+                $this->personModified(Person::findOrFail($personId));
+            }
         }
     }
 
@@ -127,6 +148,7 @@ class Form extends BaseForm
                 $this->visitor->loadLatestPhoto();
             }
         } else {
+            $this->visitor->loadLatestPhoto();
             $this->visitor->append(['photo']);
         }
 
@@ -136,5 +158,19 @@ class Form extends BaseForm
         $this->webcamDataUri = !!$this->webcamFile;
 
         $this->mountCoordinates();
+    }
+
+    /**
+     * @return void
+     */
+    protected function fillByOld(): void
+    {
+        if ($oldValue = old('sector_id')) {
+            $this->sector_id = $oldValue;
+            $this->visitor->sector_id = $oldValue;
+        }
+        if ($oldValue = old('description')) {
+            $this->visitor->description = $oldValue;
+        }
     }
 }
