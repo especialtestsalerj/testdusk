@@ -31,7 +31,7 @@
             <div class="modal-content">
                 <form wire:submit.prevent="save">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> Nova Pessoa</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-plus"></i> Nova Pessoa</h5>
                         <button type="button" wire:click="resetModal" class="btn-close" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
