@@ -7,5 +7,5 @@ require('./support/swiper')
 require('./support/cropper')
 require('./support/image-uri-and-file-manipulation')
 require('./support/broadcast')
-import './support/qr-code-scanner'
+import './support/qr-code-scanner/qr-code-scanner'
 require('./support/webcam')

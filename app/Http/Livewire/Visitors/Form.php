@@ -172,5 +172,8 @@ class Form extends BaseForm
         if ($oldValue = old('description')) {
             $this->visitor->description = $oldValue;
         }
+        if ($oldValue = old('exited_at')) {
+            $this->visitor->exited_at = $oldValue;
+        }
     }
 }
