@@ -76,7 +76,7 @@
                                     wire:model="gender_id" x-ref="gender_id" @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach($genders as $gender)
-                                    <option value="{{$gender->id}}">{{$gender->name}}</option>
+                                    <option value="{{ $gender->id }}">{{ $gender->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -136,7 +136,7 @@
                             <input type="text" id="other_city" name="other_city" class="form-control text-uppercase"
                                    value="{{ $other_city }}"
                                    @if ($readonly) readonly @endif
-                                {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }}
+                                {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled' }}
                             />
                         </div>
                     </div>
@@ -161,83 +161,102 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-8">
                         @if($has_disability == 'true')
                             <div class="form-group">
                                 <label for="disabilities">Tipo de Deficiência*</label>
                                 <br/>
+                                <ul class="disability-list list-unstyled">
                                 @foreach($disabilityTypes as $disabilityType)
-                                    <label>
-                                        <input name="disabilities[]" wire:model="disabilities"
-                                               {{$person->disabilities->contains($disabilityType->id) ? 'checked' : ''}}
+                                    <li>
+                                        <label>
+                                            <input name="disabilities[]" wire:model="disabilities"
+                                                   {{ $person->disabilities->contains($disabilityType->id) ? 'checked' : '' }}
 
-                                               value="{{$disabilityType->id}}" type="checkbox"/>
-                                        {{$disabilityType->name}}
-                                    </label><br/>
+                                                   value="{{ $disabilityType->id }}" type="checkbox"/>
+                                            {{ $disabilityType->name }}
+                                        </label>
+                                    </li>
                                 @endforeach
+                                </ul>
                             </div>
                         @endif
                     </div>
-                    <div class="col-md-5">
-                        <div class=" rounded-3">
-                            <table class="table bg-light border rounded-3">
-                                <tr>
-                                    <th colspan="2" class="text-left">
-                                        <h4><i class="fa fa-id-card"></i> Documentos</h4>
-                                    </th>
-                                    <th class="text-end">
-                                        @if(!request()->query('disabled'))
-                                            <span class="btn btn-sm btn-primary text-white"
-                                                  wire:click="createDocument({{$person->id}})"
-                                                  data-bs-toggle="modal" data-bs-target="#document-modal"
-                                                  title="Novo Documento">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="row my-2">
+                            <div class="col-sm-8 align-self-center">
+                                <h3 class="mb-0"><i class="fa fa-id-card"></i>
+                                    Documentos
+                                </h3>
+                            </div>
+
+                            <div class="col-sm-4 align-self-center d-flex justify-content-end">
+                                @if(!request()->query('disabled'))
+                                    <span class="btn btn-sm btn-primary text-white"
+                                          wire:click="createDocument({{ $person->id }})"
+                                          data-bs-toggle="modal" data-bs-target="#document-modal"
+                                          title="Novo Documento">
                                             <i class="fa fa-plus"></i>
                                         </span>
-                                        @endif
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>Tipo</th>
-                                    <th>Número</th>
-                                    <th></th>
-                                </tr>
-                                @foreach($person->documents as $document)
-                                    <tr>
-                                        <td>{{$document->documentType->name}} </td>
-                                        <td>{{$document->numberMaskered}}</td>
-                                        <td class="text-end">
-                                            @if(!request()->query('disabled'))
-                                                <span class="btn btn-link px-0 py-0"
-                                                      wire:click="editDocument({{$document->id}})"
-                                                      data-bs-toggle="modal" data-bs-target="#document-modal"
-                                                      title="Alterar">
-                                                <i class="fa fa-lg fa-pencil"></i>
-                                                </span>
-                                                <span class="btn btn-link px-0 py-0"
-                                                      wire:click="prepareForDeleteDocument({{$document->id}})"
-                                                      title="Remover">
-                                                <i class="fa fa-lg fa-trash"></i>
-                                                </span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            @forelse($person->documents as $document)
+                            <div class="col-md-12">
+                                <div class="cards-striped mx-lg-0 mt-lg-2">
+                                    <div class="card">
+                                        <div class="card-body py-1">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-12 col-lg-3 text-center text-lg-start">
+                                                    <span class="fw-bold">Tipo:</span> {{ $document->documentType->name }}
+                                                </div>
+                                                <div class="col-12 col-lg-6 text-center text-lg-start">
+                                                    <span class="fw-bold">Número:</span> {{ $document->numberMaskered }}
+                                                </div>
+                                                <div class="col-12 col-lg-3 text-center text-lg-end">
+                                                    @if(!request()->query('disabled'))
+                                                        <span class="btn btn-link"
+                                                              wire:click="editDocument({{ $document->id }})"
+                                                              data-bs-toggle="modal" data-bs-target="#document-modal"
+                                                              title="Alterar Documento">
+                                                        <i class="fa fa-lg fa-pencil"></i>
+                                                        </span>
+                                                        <span class="btn btn-link"
+                                                              wire:click="prepareForDeleteDocument({{ $document->id }})"
+                                                              title="Remover Documento">
+                                                        <i class="fa fa-lg fa-trash"></i>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @empty
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning mt-2">
+                                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhum Documento encontrado.
+                                    </div>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
 
-
-                    <div class="col-md-12">
-
-                        <div class="row my-4">
+                    <div class="col-md-6 mb-2">
+                        <div class="row my-2">
                             <div class="col-sm-8 align-self-center">
-                                <h3 class="mb-0"><i class="fas fa-person-circle-exclamation"></i>
+                                <h3 class="mb-0"><i class="fa fa-person-circle-exclamation"></i>
                                     Restrições de Acesso
                                 </h3>
                             </div>
                             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                                <span class="btn btn-sm btn-primary text-white"
-                                     wire:click="createRestriction({{$person->id}})"
+                                     wire:click="createRestriction({{ $person->id }})"
                                      data-bs-toggle="modal" data-bs-target="#restriction-modal"
                                      title="Nova Restrição">
                                             <i class="fa fa-plus"></i>
@@ -252,37 +271,36 @@
                                         <div class="card">
                                             <div class="card-body py-1">
                                                 <div class="row d-flex align-items-center">
-                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
-                                                    <span
-                                                        class="fw-bold">Início:</span> {{ $personRestriction?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                                        <span class="fw-bold">Início:</span> {{ $personRestriction?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                                     </div>
-                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
-                                                    <span
-                                                        class="fw-bold">Término:</span> {{ $personRestriction?->ended_at?->format('d/m/Y \À\S H:i') ?? '-' }}
+                                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                                        <span  class="fw-bold">Término:</span> {{ $personRestriction?->ended_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                                     </div>
-                                                    <div class="col-12 col-lg-10 text-center text-lg-start">
-                                                    <span
-                                                        class="fw-bold">Mensagem:</span> {{ $personRestriction?->message }}
+                                                    <div class="col-12 col-lg-9 text-center text-lg-start">
+                                                        <span class="fw-bold">Mensagem:</span> {{ $personRestriction?->message }}
                                                     </div>
-                                                    <div class="col-12 col-lg-2 text-center text-lg-end">
-                                                         <span class="btn btn-link px-0 py-0"
-                                                               wire:click="editRestriction({{$personRestriction->id}})"
+                                                    <div class="col-12 col-lg-3 text-center text-lg-end">
+                                                         <span class="btn btn-link"
+                                                               wire:click="detailRestriction({{ $personRestriction->id }})"
                                                                data-bs-toggle="modal"
                                                                data-bs-target="#restriction-modal"
-                                                               title="Nova Restrição">
+                                                               title="Detalhar Restrição">
+                                                                <i class="fa fa-lg fa-search"></i>
+                                                        </span>
+                                                        <span class="btn btn-link"
+                                                              wire:click="editRestriction({{ $personRestriction->id }})"
+                                                              data-bs-toggle="modal"
+                                                              data-bs-target="#restriction-modal"
+                                                              title="Alterar Restrição">
                                                                 <i class="fa fa-lg fa-pencil"></i>
                                                         </span>
-
-                                                        <span class="btn btn-link px-0 py-0"
-                                                              wire:click="prepareForDeleteRestriction({{$personRestriction->id}})"
-                                                              title="Remover">
+                                                        <span class="btn btn-link"
+                                                              wire:click="prepareForDeleteRestriction({{ $personRestriction->id }})"
+                                                              title="Remover Restrição">
                                                              <i class="fa fa-lg fa-trash"></i>
                                                         </span>
 
-                                                    </div>
-                                                    <div class="col-12 col-lg-10 text-center text-lg-start">
-                                                    <span
-                                                        class="fw-bold">Descrição:</span> {{ $personRestriction?->description }}
                                                     </div>
                                                 </div>
                                             </div>

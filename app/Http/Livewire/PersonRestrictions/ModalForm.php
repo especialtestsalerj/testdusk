@@ -11,7 +11,12 @@ class ModalForm extends Component
 {
     use Swallable;
 
-    protected $listeners = ['createRestriction', 'editRestriction'];
+    protected $listeners = [
+        'createRestriction',
+        'editRestriction',
+        'detailRestriction',
+        'deleteRestriction',
+    ];
 
     public $person;
     public $restriction;
@@ -20,6 +25,8 @@ class ModalForm extends Component
     public $message;
     public $description;
     public $personRestriction;
+    public $modalMode;
+    public $readonly = false;
 
     public $rules = [
         'started_at' => 'required:date',
@@ -37,20 +44,35 @@ class ModalForm extends Component
         'description' => 'Descrição',
     ];
 
-
     public function createRestriction(Person $person)
     {
+        $this->modalMode = 'create';
         $this->person = $person;
         $this->started_at = date('Y-m-d H:i');
     }
 
+    public function detailRestriction(PersonRestriction $personRestriction)
+    {
+        $this->editRestriction($personRestriction);
+        $this->modalMode = 'detail';
+        $this->readonly = true;
+    }
+
     public function editRestriction(PersonRestriction $personRestriction)
     {
+        $this->modalMode = 'update';
         $this->restriction = $personRestriction;
         $this->message = $personRestriction->message;
         $this->description = $personRestriction->description;
         $this->started_at = $personRestriction->started_at->format('Y-m-d H:i');
         $this->ended_at = $personRestriction->ended_at?->format('Y-m-d H:i');
+    }
+
+    public function deleteRestriction()
+    {
+        $this->cleanModal();
+        //return redirect()->to('/people/' . $this->restriction->person_id . '/show');
+        return redirect()->to('/people/15/show');
     }
 
     public function updatedEndedAt()
@@ -60,20 +82,21 @@ class ModalForm extends Component
         }
     }
 
-
     public function store()
     {
         $this->validate();
 
         if ($this->restriction) {
             $this->storeEditedRestriction();
+            //$this->swallSuccess('Restrição alterada com sucesso');
         } else {
             $this->storeNewRestriction();
+            //$this->swallSuccess('Restrição adicionada com sucesso');
         }
 
-        $this->swallSuccess('Restrição adicionada com sucesso');
         $this->cleanModal();
-
+        //return redirect()->to('/people/' . $this->restriction->person_id . '/show');
+        return redirect()->to('/people/15/show');
     }
 
     public function storeNewRestriction()
