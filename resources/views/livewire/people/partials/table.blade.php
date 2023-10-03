@@ -37,7 +37,7 @@
                                 <div class="col-3" data-label="Foto">
                                     <img class="w-100" src="{{ $person->photo }}">
                                 </div>
-                                <div class="col-8 d-flex align-items-center">
+                                <div class="col-8 d-flex align-items-start">
                                     <div class="row">
                                         <div class="col-12">
                                             @if ($person->hasPendingVisitors())
@@ -46,7 +46,7 @@
 
                                             <div data-label="Documento">
                                                 @foreach ($person->documents as $document)
-                                                    <span class="fw-bold">{{ $document->documentType->name }}</span>:
+                                                    <span>{{ $document->documentType->name }}</span>:
                                                     {{ $document->numberMaskered }}<br>
                                                 @endforeach
                                             </div>
@@ -147,7 +147,7 @@
                                                     </div>
                                                     <div class="col-3 col-lg-6 text-center text-lg-start">
                                                         @foreach ($person->documents as $document)
-                                                            <span class="fw-bold">{{ $document->documentType->name }}</span>:
+                                                            <span>{{ $document->documentType->name }}</span>:
                                                             {{ $document->numberMaskered }}
                                                             &nbsp;
                                                         @endforeach

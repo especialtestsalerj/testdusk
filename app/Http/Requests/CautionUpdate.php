@@ -47,7 +47,8 @@ class CautionUpdate extends CautionStore
             ],
             'certificate_type_id' => 'required',
             'certificate_number' => 'required',
-            'certificate_valid_until' => 'required_if:certificate_type_id,1',
+            'certificate_valid_until' =>
+                'required_if:certificate_type_id,' . config('app.certificate_type_particular'),
             'duty_user_id' => 'required',
         ];
     }

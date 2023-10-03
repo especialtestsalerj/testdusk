@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="certificate_number">{{ ($certificate_type_id == 1) ? 'Núm. Certificado*' : 'Matrícula*' }}</label>
+                            <label for="certificate_number">{{ ($certificate_type_id == config('app.certificate_type_particular')) ? 'Núm. Certificado*' : 'Matrícula*' }}</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="certificate_valid_until">Validade{{ ($certificate_type_id == 1) ? '*' : '' }}</label>
+                            <label for="certificate_valid_until">Validade{{ ($certificate_type_id == config('app.certificate_type_particular')) ? '*' : '' }}</label>
                             <input
                                 type="date"
                                 class="form-control text-uppercase"
