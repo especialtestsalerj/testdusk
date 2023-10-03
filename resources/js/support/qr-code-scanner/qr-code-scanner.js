@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash'
 window.$ = window.jQuery = require('jquery')
 
 // To use Html5QrcodeScanner (more info below)
@@ -11,7 +11,7 @@ window.Html5Qrcode = Html5Qrcode
 
 window.isProcessingQRCode = []
 
-window.qrCodeScanned = function qrCodeScanned(decodedText, decodedResult){
+window.qrCodeScanned = function qrCodeScanned(decodedText, decodedResult) {
     isProcessingQRCode[decodedText] = true
     // console.log(`Code matched = ${decodedText}`, decodedResult)
 
@@ -19,15 +19,18 @@ window.qrCodeScanned = function qrCodeScanned(decodedText, decodedResult){
         bubbles: true,
         cancelable: true,
         detail: { decodedText: decodedText, decodedResult: decodedResult },
-    });
+    })
 
-    $('#reader')[0].dispatchEvent(event);
+    $('#reader')[0].dispatchEvent(event)
 
-    setTimeout(()=>isProcessingQRCode[decodedText] = false, 3000)
+    setTimeout(() => (isProcessingQRCode[decodedText] = false), 3000)
 }
 
 function onScanSuccess(decodedText, decodedResult) {
-    if(!isProcessingQRCode.hasOwnProperty(decodedText) || isProcessingQRCode[decodedText] == false) {
+    if (
+        !isProcessingQRCode.hasOwnProperty(decodedText) ||
+        isProcessingQRCode[decodedText] == false
+    ) {
         window.qrCodeScanned(decodedText, decodedResult)
     }
 }
@@ -40,17 +43,15 @@ function onScanFailure(error) {
 
 let config = {
     fps: 10,
-    qrbox: {width: 600, height: 600},
+    qrbox: { width: 600, height: 600 },
     rememberLastUsedCamera: true,
     // Only support camera scan type.
-    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-};
+    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+}
 
-if($('#reader')[0]) {
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-        'reader',
-        config,
-        /* verbose= */ false,
-    )
+if ($('#reader')[0]) {
+    let html5QrcodeScanner = new Html5QrcodeScanner('reader', config, /* verbose= */ false)
     html5QrcodeScanner.render(onScanSuccess, onScanFailure)
 }
+
+import './translator'

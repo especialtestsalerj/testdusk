@@ -80,9 +80,10 @@ class Visitor extends Model
     public function loadLatestPhoto()
     {
         if ($this->person_id) {
-            $this->avatar_id = Visitor::where('person_id', $this->person_id)
-                ->orderBy('created_at', 'desc')
-                ->first()->avatar_id;
+            $latestVisitor = Visitor::where('person_id', $this->person_id)
+                ->orderBy('created_at', 'desc')->first();
+
+            $this->avatar_id = ($latestVisitor->avatar_id ?? null);
         }
         return $this;
     }
