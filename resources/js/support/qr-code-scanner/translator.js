@@ -92,7 +92,7 @@ function scannerTranslator() {
     // Función para traducir los nodos de texto
     function traducirNodosDeTexto(nodo) {
         if (nodo.nodeType === Node.TEXT_NODE) {
-            nodo.textContent = traducirTexto(nodo.textContent.trim())
+            nodo.textContent = traducirTexto(nodo.textContent)
         } else {
             for (let i = 0; i < nodo.childNodes.length; i++) {
                 traducirNodosDeTexto(nodo.childNodes[i])
