@@ -57,6 +57,10 @@ abstract class BaseIndex extends Component
         return $query;
     }
 
+    public function additionalOrFilterQuery($query)
+    {
+        return $query;
+    }
     protected $orderByField = ['updated_at'];
     protected $orderByDirection = ['desc'];
 
@@ -121,9 +125,11 @@ abstract class BaseIndex extends Component
                             break;
                     }
                 });
+                $query = $this->additionalOrFilterQuery($query);
             });
 
         $query = $this->additionalFilterQuery($query);
+
 
         $query = $this->orderBy($query);
 

@@ -25,6 +25,12 @@ class Index extends BaseIndex
     public $redirect;
     public $exited_at;
 
+    protected $queryString = [
+        'searchString' => ['except' => ''],
+        'exited_at' => ['except' => false],
+        'page' => ['except' => 1],
+    ];
+
     public $searchFields = [
         'visitors.entranced_at' => 'date',
         'visitors.exited_at' => 'date',
@@ -40,7 +46,7 @@ class Index extends BaseIndex
         //        $this->loadAnonymousVisitor();
     }
 
-    public function additionalFilterQuery($query)
+    public function additionalOrFilterQuery($query)
     {
         if (!is_null($this->searchString) && $this->searchString != '') {
             //Busca na tabela de people
@@ -62,12 +68,16 @@ class Index extends BaseIndex
             );
         }
 
+        $query->with('document.documentType');
+
+        return $query;
+    }
+
+    public function additionalFilterQuery($query)
+    {
         if ($this->exited_at) {
             $query = $query->whereNull('exited_at');
         }
-
-        $query->with('document.documentType');
-
         return $query;
     }
 
