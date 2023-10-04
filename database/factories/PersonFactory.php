@@ -19,16 +19,31 @@ class PersonFactory extends Factory
 
     public function definition()
     {
+        $faker = $this->faker;
+
+        if (rand(1, 100) < 200) { //TODO: acertar essa probabilidade
+            $country = Country::find(config('app.country_br'));
+            $state = State::inRandomOrder()->first();
+            $city = City::inRandomOrder()->where('state_id', $state->id)->first();
+            $isBr = true;
+        } else {
+            $country = Country::inRandomOrder()->where('id', '<>', config('app.country_br'))->first();
+            $city = $faker->name;
+            $isBr = false;
+        }
+
+        $socialName = (rand(1, 100) < 30 ? $faker->name : null);
+
         return [
             'full_name' => convert_case($this->faker->name, MB_CASE_UPPER),
             'social_name' => convert_case($this->faker->optional()->name, MB_CASE_UPPER),
             'birthdate' => $this->faker->date,
             'gender_id' => Gender::inRandomOrder()->first()->id,
             'has_disability' => $this->faker->boolean,
-            'city_id' => City::inRandomOrder()->first()->id,
-            'other_city' => convert_case($this->faker->optional()->city, MB_CASE_UPPER),
-            'state_id' => State::inRandomOrder()->first()->id,
-            'country_id' => Country::inRandomOrder()->first()->id,
+            'city_id' => $city->id ?? null,
+            'other_city' => $socialName,
+            'state_id' => $state->id ?? null,
+            'country_id' => $country->id,
             'email' => $this->faker->unique()->safeEmail,
             'created_by_id' => User::inRandomOrder()->first()->id,
             'updated_by_id' => User::inRandomOrder()->first()->id,
@@ -38,6 +53,8 @@ class PersonFactory extends Factory
             'certificate_type' => $this->faker->optional()->word,
             'certificate_number' => $this->faker->optional()->numerify('##########'),
             'certificate_valid_until' => $this->faker->optional()->date,
+            'isBr' => $isBr
         ];
     }
 }
+

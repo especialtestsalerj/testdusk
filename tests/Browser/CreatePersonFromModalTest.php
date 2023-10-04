@@ -24,18 +24,6 @@ class CreatePersonFromModalTest extends TestCase
     public function it_can_create_a_person()
     {
         // Arrange
-
-
-        if(rand(1,100) < 200){ //TODO: acertar essa probabilidade
-            $country = Country::find(config('app.country_br'));
-            $state = State::inRandomOrder()->first();
-            $city = City::inRandomOrder()->where('state_id',$state->id)->first();
-        }else{
-            Country::inRandomOrder()->where('id','<>',config('app.country_br'))->first();
-            $city = $faker->name;
-        }
-
-
         $person = Person::factory()->make();
         $document = Document::factory()->make();
 
@@ -45,9 +33,9 @@ class CreatePersonFromModalTest extends TestCase
             ->set('document_number', $document->number) // Set your desired document number
             ->set('state_document_id', $state->id)
             ->set('full_name', $person->full_name) // Set your desired full name
-            ->set('country_id', $country->id)
-            ->set('state_id', $state->id)
-            ->set('city_id', $city->id) // Set your desired city ID
+            ->set('country_id', $person->country_id)
+            ->set('state_id', $person->state_id)
+            ->set('city_id', $person->city_id) // Set your desired city ID
 //            ->set('other_city', 'Other City') // Set your desired other city name
             ->call('save');
 
