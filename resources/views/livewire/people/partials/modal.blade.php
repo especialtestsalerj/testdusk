@@ -63,6 +63,34 @@
                                     </div>
 
                                     <div class="col-4">
+                                        @if ($document_type_id == config('app.document_type_rg'))
+                                            <div class="form-group">
+                                                <label for="state_document_id">Estado do Documento*</label>
+                                                <select
+                                                        name="state_document_id"
+                                                        class="select2 form-control text-uppercase"
+                                                        id="state_document_id"
+                                                        wire:model="state_document_id" x-ref="state_document_id"
+                                                        @if ($modal) disabled @endif
+                                                        @if ($readonly) readonly @endif>
+                                                    <option value="">SELECIONE</option>
+                                                    @foreach ($states as $state)
+                                                        <option value="{{ $state->id }}">{{ convert_case($state->name, MB_CASE_UPPER) }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div>
+                                                    @error('state_document_id')
+                                                    <small class="text-danger">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @endError
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <input name="document_number" id="document_number" type="hidden"
                                                    wire:model.defer="document_number">
@@ -85,34 +113,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
-                                        @if ($document_type_id == config('app.document_type_rg'))
-                                            <div class="form-group">
-                                                <label for="state_document_id">UF do Documento*</label>
-                                                <select
-
-                                                        name="state_document_id"
-                                                        class="select2 form-control text-uppercase"
-                                                        id="state_document_id"
-                                                        wire:model="state_document_id" x-ref="state_document_id"
-                                                        @if ($modal) disabled @endif
-                                                        @if ($readonly) readonly @endif>
-                                                    <option value="">SELECIONE</option>
-                                                    @foreach ($states as $state)
-                                                        <option value="{{ $state->id }}">{{ $state->initial }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div>
-                                                    @error('state_document_id')
-                                                    <small class="text-danger">
-                                                        <i class="fas fa-exclamation-triangle"></i>
-                                                        {{ $message }}
-                                                    </small>
-                                                    @endError
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="full_name">Nome Completo*</label>
@@ -190,7 +190,7 @@
                                                         @if ($readonly) readonly @endif>
                                                     <option value="">SELECIONE</option>
                                                     @foreach ($states as $state)
-                                                        <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                                                        <option value="{{ $state->id }}">{{ convert_case($state->name, MB_CASE_UPPER) }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

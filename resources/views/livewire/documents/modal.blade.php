@@ -67,6 +67,32 @@
                                 </div>
                             </div>
                         @endisset
+
+                        @if ($document_type_id == config('app.document_type_rg'))
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="state_id">Estado*</label>
+                                    <select class="form-select text-uppercase" name="state_id" id="state_id"
+                                            wire:model="state_id"
+                                            x-ref="state_id" @disabled(request()->query('disabled'))>
+                                        <option value="">selecione</option>
+                                        @foreach ($states as $state)
+                                            <option value="{{ $state->id }}"> {{ convert_case($state->name, MB_CASE_UPPER) }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    <div>
+                                        @error('state_id')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="number">Número*</label>
@@ -82,34 +108,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        @if ($document_type_id == config('app.document_type_rg'))
-
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="state_id">Estado*</label>
-                                    <select class="form-select text-uppercase" name="state_id" id="state_id"
-                                            wire:model="state_id"
-                                            x-ref="state_id" @disabled(request()->query('disabled'))>
-                                        <option value="">selecione</option>
-                                        @foreach ($states as $state)
-                                            <option value="{{ $state->id }}"> {{ $state->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                    <div>
-                                        @error('state_id')
-                                        <small class="text-danger">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            {{ $message }}
-                                        </small>
-                                        @endError
-                                    </div>
-                                </div>
-                            </div>
-
-                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="submit" dusk="submit" class="btn btn-success btn-sm text-white close-modal"

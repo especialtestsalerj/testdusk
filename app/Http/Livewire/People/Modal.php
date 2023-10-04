@@ -13,8 +13,8 @@ class Modal extends People
     {
         return [
             'document_type_id' => 'required',
-            'document_number' => 'required',
             'state_document_id' => 'required_if:document_type_id,' . config('app.document_type_rg'),
+            'document_number' => 'required',
             'full_name' => 'required',
             'country_id' => 'required',
             'state_id' => 'required_if:country_id,' . config('app.country_br'),
@@ -25,8 +25,8 @@ class Modal extends People
 
     protected $validationAttributes = [
         'document_type_id' => 'Tipo de Documento',
+        'state_document_id' => 'Estado do Documento',
         'document_number' => 'Número do Documento',
-        'state_document_id' => 'UF do Documento',
         'full_name' => 'Nome Completo',
         'country_id' => 'País',
         'state_id' => 'Estado',

@@ -83,7 +83,7 @@ class Form extends BaseForm
 
         $this->visitor->person_id = $person['id'];
 
-        if($refreshPhoto) {
+        if ($refreshPhoto) {
             $this->loadPhoto();
         }
     }
@@ -128,8 +128,8 @@ class Form extends BaseForm
     {
         if ($personId = request()->get('person_id')) {
             $this->personModified(Person::findOrFail($personId));
-        }else{
-            if($personId = old('person_id')) {
+        } else {
+            if ($personId = old('person_id')) {
                 $this->personModified(Person::findOrFail($personId));
             }
         }

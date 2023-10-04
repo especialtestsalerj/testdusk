@@ -108,7 +108,7 @@
                                 @disabled(request()->query('disabled'))>
                                 <option value="">SELECIONE</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ $state->initial }}</option>
+                                    <option value="{{ $state->id }}">{{ convert_case($state->name, MB_CASE_UPPER) }}</option>
                                 @endforeach
                             </select>
                         </div>

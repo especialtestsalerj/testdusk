@@ -6,28 +6,28 @@ require('select2/dist/js/select2.min.js')
 const defaultConfig = {
     theme: 'bootstrap-5',
     width: '100%',
-    language:'pt-BR',
+    language: 'pt-BR',
 }
 
 window.getSelect2OptionsForElement = (element) => {
     var dropdownParent = element.getAttribute('dropdown-parent')
     var json = { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
 
-    if(dropdownParent){
-        json.dropdownParent = $('#'+dropdownParent)
+    if (dropdownParent) {
+        json.dropdownParent = $('#' + dropdownParent)
     }
 
     return json
-};
+}
 
 window.initSelect2 = () => {
-    $( '.select2' ).each(function(key, value) {
+    $('.select2').each(function (key, value) {
         $(this).select2(window.getSelect2OptionsForElement(value))
-    });
+    })
 }
 
 $(document).ready(function () {
-    window.initSelect2();
+    window.initSelect2()
 
     document.addEventListener('select2SelectOption', function (event) {
         $('[data-select2-id="select2-data-' + event.detail.name + '"]')
@@ -36,61 +36,69 @@ $(document).ready(function () {
     })
 
     function refreshSelectOptions(eventData, selectId) {
-        const selectElement = $('#'+selectId); // Replace with appropriate selector
-        const newData = eventData;
+        const selectElement = $('#' + selectId) // Replace with appropriate selector
+        const newData = eventData
 
         // Get the Select2 instance
-        const select2Instance = selectElement.data('select2');
+        const select2Instance = selectElement.data('select2')
 
-        // Clear existing options
-        selectElement.empty();
+        var itemSelecione = ''
+
+        if (selectElement[0].length > 0) {
+            if (selectElement[0][0].text === 'SELECIONE') {
+                itemSelecione = selectElement[0][0]
+            }
+            selectElement.empty()
+
+            if (itemSelecione !== '') {
+                selectElement.append(itemSelecione)
+            }
+        }
 
         // Add new options
+        //selectElement.append(new Option('SELECIONE', null, false, false))
         selectElement.append(
-            new Option('SELECIONE', null, false, false)
-        );
-        selectElement.append(newData.map(option => {
-            return new Option(option.name, option.value, false, false);
-        }));
+            newData.map((option) => {
+                return new Option(option.name, option.value, false, false)
+            }),
+        )
 
         // Trigger an update
-        select2Instance.trigger('change');
+        select2Instance.trigger('change')
     }
 
     document.addEventListener('select2ReloadOptions', function (event) {
         // console.log('select2ReloadOptions'+ event.detail.name)
-        refreshSelectOptions(event.detail.data, event.detail.name);
+        refreshSelectOptions(event.detail.data, event.detail.name)
     })
 
     document.addEventListener('select2Reload', function (event) {
         // console.log('select2Reload'+ event.detail.name)
-        $('#div-'+event.detail.name)[0].classList.remove('d-none');
+        $('#div-' + event.detail.name)[0].classList.remove('d-none')
 
-        const selector = $('#'+event.detail.name)
+        const selector = $('#' + event.detail.name)
         const options = window.getSelect2OptionsForElement(selector[0])
 
-        selector.select2(options);
+        selector.select2(options)
     })
 
     document.addEventListener('select2Destroy', function (event) {
         // console.log('select2Destroy'+ event.detail.name)
-        $('#'+event.detail.name).select2('destroy');
-        $('#div-'+event.detail.name)[0].classList.add('d-none');
+        $('#' + event.detail.name).select2('destroy')
+        $('#div-' + event.detail.name)[0].classList.add('d-none')
     })
 
     document.addEventListener('select2Disable', function (event) {
-        $('#'+event.detail.name).prop("disabled", true);
+        $('#' + event.detail.name).prop('disabled', true)
     })
 
     document.addEventListener('select2Enable', function (event) {
-        $('#'+event.detail.name).prop("disabled", false);
+        $('#' + event.detail.name).prop('disabled', false)
     })
 
     document.addEventListener('select2SetReadOnly', function (event) {
-        if (event.detail.value === true)
-            $('#'+event.detail.name).attr("readonly", "readonly");
-        else
-            $('#'+event.detail.name).removeAttr('readonly');
+        if (event.detail.value === true) $('#' + event.detail.name).attr('readonly', 'readonly')
+        else $('#' + event.detail.name).removeAttr('readonly')
     })
 
     $('.select2').on('change', function (e) {
