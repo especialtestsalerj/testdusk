@@ -124,13 +124,16 @@ class Modal extends BaseForm
         if ($this->document) {
             $this->storeEditedDocument();
             $this->emit('create-document', $this->document->person);
+            $this->swallSuccess('Documento alterado com sucesso');
         }
         if ($this->person) {
             $this->storeNewDocument();
             $this->emit('create-document', $this->person);
+            $this->swallSuccess('Documento criado com sucesso');
         }
 
         $this->cleanModal();
+
     }
 
     public function cleanModal()

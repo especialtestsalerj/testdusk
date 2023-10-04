@@ -68,11 +68,11 @@ class ModalForm extends Component
         $this->ended_at = $personRestriction->ended_at?->format('Y-m-d H:i');
     }
 
-    public function deleteRestriction()
+    public function deleteRestriction(PersonRestriction $personRestriction)
     {
         $this->cleanModal();
         //return redirect()->to('/people/' . $this->restriction->person_id . '/show');
-        return redirect()->to('/people/15/show');
+//        return redirect()->to('/people/15/show');
     }
 
     public function updatedEndedAt()
@@ -88,15 +88,15 @@ class ModalForm extends Component
 
         if ($this->restriction) {
             $this->storeEditedRestriction();
-            //$this->swallSuccess('Restrição alterada com sucesso');
+            $this->swallSuccess('Restrição alterada com sucesso');
         } else {
             $this->storeNewRestriction();
-            //$this->swallSuccess('Restrição adicionada com sucesso');
+            $this->swallSuccess('Restrição adicionada com sucesso');
         }
 
         $this->cleanModal();
-        //return redirect()->to('/people/' . $this->restriction->person_id . '/show');
-        return redirect()->to('/people/15/show');
+//        return redirect()->to('/people/' . $this->restriction->person_id . '/show');
+       // return redirect()->to('/people/15/show');
     }
 
     public function storeNewRestriction()
