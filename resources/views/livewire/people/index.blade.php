@@ -11,7 +11,8 @@
                        title="Nova Visita">
                         <i class="fa fa-plus"></i> Nova Visita
                     </a>
-                    @if (url()->previous() == route('dashboard'))
+
+                    @if (url()->previous() != route('visitors.index'))
                         @can('people:store')
                             <button type="button" data-bs-toggle="modal" data-bs-target="#peopleModal"
                                     class="btn btn-primary text-white" title="Nova Pessoa">
@@ -22,7 +23,7 @@
                 </div>
             </div>
 
-            @if (url()->previous() != route('dashboard'))
+            @if (url()->previous() == route('visitors.index'))
             <div class="row mb-4">
                 <div class="col-12 d-flex justify-content-center">
                     <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> Pesquisar pessoa pelo nome e verificar documentos desejados.</span>
