@@ -30,6 +30,9 @@ trait Addressable
 
         if (!$this->detectIfCountryBrSelected()) {
             $this->countryBrNotSelected();
+            $this->other_city = is_null(old('other_city'))
+                ? convert_case($this->person->other_city, MB_CASE_UPPER)
+                : old('other_city');
         } else {
             $this->state_id = is_null(old('state_id')) ? $this->person->state_id : old('state_id');
             $this->select2SelectOption('state_id', $this->state_id);
@@ -40,11 +43,9 @@ trait Addressable
 
             $this->city_id = is_null(old('city_id')) ? $this->person->city_id : old('city_id');
             $this->select2SelectOption('city_id', $this->city_id);
-        }
 
-        $this->other_city = is_null(old('other_city'))
-            ? convert_case($this->person->other_city, MB_CASE_UPPER)
-            : old('other_city');
+            $this->other_city = null;
+        }
     }
 
     /**
@@ -65,6 +66,7 @@ trait Addressable
 
     protected function setAddressReadOnly($value): void
     {
+        $this->select2SetReadOnly('state_document_id', $value);
         $this->select2SetReadOnly('country_id', $value);
         $this->select2SetReadOnly('state_id', $value);
         $this->select2SetReadOnly('city_id', $value);
@@ -79,6 +81,8 @@ trait Addressable
         $this->select2Disable('city_id');
         $this->select2Destroy('state_id');
         $this->select2Disable('state_id');
+
+        $this->reset('state_id', 'city_id');
     }
 
     /**
@@ -90,6 +94,8 @@ trait Addressable
         $this->select2Reload('state_id');
         $this->select2Enable('city_id');
         $this->select2Enable('state_id');
+
+        $this->reset('other_city');
     }
 
     public function loadCities()
@@ -113,8 +119,6 @@ trait Addressable
 
     public function updatedCountryId($newValue)
     {
-        $this->reset('state_id', 'city_id', 'other_city');
-
         if ($newValue != $this->countryBr->id) {
             $this->countryBrNotSelected();
         } else {

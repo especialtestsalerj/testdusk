@@ -5,6 +5,8 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\DocumentTypes;
 use App\Models\Document;
 use App\Models\Person;
+use App\Rules\ValidCPF;
+use Illuminate\Support\MessageBag;
 use Illuminate\Validation\Rule;
 
 class Modal extends People
@@ -13,8 +15,8 @@ class Modal extends People
     {
         return [
             'document_type_id' => 'required',
-            'document_number' => 'required',
             'state_document_id' => 'required_if:document_type_id,' . config('app.document_type_rg'),
+            'document_number' => ['bail', 'required', new ValidCPF()],
             'full_name' => 'required',
             'country_id' => 'required',
             'state_id' => 'required_if:country_id,' . config('app.country_br'),
@@ -25,8 +27,8 @@ class Modal extends People
 
     protected $validationAttributes = [
         'document_type_id' => 'Tipo de Documento',
+        'state_document_id' => 'Estado do Documento',
         'document_number' => 'Número do Documento',
-        'state_document_id' => 'UF do Documento',
         'full_name' => 'Nome Completo',
         'country_id' => 'País',
         'state_id' => 'Estado',
@@ -43,11 +45,6 @@ class Modal extends People
 
     public function save()
     {
-        if (intval($this->document_type_id) == app(DocumentTypes::class)->getCPF()->id) {
-            if (!$this->isValidCpf()) {
-                return;
-            }
-        }
         $this->validate();
         $this->createPerson();
         $this->swallSuccess('Pessoa adicionada com sucesso');

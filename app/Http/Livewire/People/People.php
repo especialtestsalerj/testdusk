@@ -10,7 +10,6 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\DocumentType;
 use App\Models\Person;
 use App\Models\State;
 
@@ -45,12 +44,6 @@ class People extends BaseForm
     public $visitor_id;
     public $visitor;
 
-    protected $rules = [
-        'person_id' => '',
-        'country_id' => 'required',
-        'other_city' => 'required',
-    ];
-
     protected $messages = [
         'required' => ':attribute: preencha o campo corretamente.',
         'required_if' => ':attribute: preencha o campo corretamente.',
@@ -69,27 +62,39 @@ class People extends BaseForm
             'refreshPhoto' => $name == 'person_id',
         ];
 
-        $this->emit('personModified', $array );
+        $this->emit('personModified', $array);
     }
 
     public function updatedDocumentTypeId()
     {
         $this->reset('document_number', 'state_document_id');
+        $this->resetErrorBag();
+    }
+
+    public function updatedStateDocumentId()
+    {
+        $this->searchDocumentNumber();
     }
 
     public function searchDocumentNumber()
     {
+        $document_type = $this->document_type_id;
+        $document_number = convert_case(remove_punctuation($this->document_number), MB_CASE_UPPER);
+        $document_state = $this->state_document_id;
+
         if (!is_null($this->document_number) && $this->document_number != '') {
-            $document = app(Documents::class)->findByNumber(
-                remove_punctuation($this->document_number)
+            $document = app(Documents::class)->findByDocumentNumber(
+                $document_type,
+                $document_number,
+                $document_state
             );
 
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
 
-
                 $this->fillModel();
+
                 $this->document_number = convert_case(
                     remove_punctuation($document->number),
                     MB_CASE_UPPER
@@ -127,7 +132,7 @@ class People extends BaseForm
                 });
 
             $this->document_type_id = $getDocument->document_type_id;
-            $this->document_number = $getDocument->number_maskered;
+            $this->document_number = $getDocument->number;
             $this->state_document_id = $getDocument->state_id ?? null;
             $this->readonly = true;
         } else {
@@ -211,7 +216,8 @@ class People extends BaseForm
     public function loadDefault()
     {
         if (is_null($this->document_type_id)) {
-            $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
+            $this->document_type_id = config('app.document_type_cpf');
+            $this->state_document_id = config('app.state_rj');
         }
 
         if (!$this->readonly) {

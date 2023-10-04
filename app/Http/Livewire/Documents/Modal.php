@@ -26,8 +26,8 @@ class Modal extends BaseForm
     {
         return [
             'document_type_id' => 'required',
-            'number' => 'required',
             'state_id' => 'required_if:document_type_id,' . config('app.document_type_rg'),
+            'number' => 'required',
         ];
     }
 
@@ -38,8 +38,8 @@ class Modal extends BaseForm
 
     protected $validationAttributes = [
         'document_type_id' => 'Tipo de Documento',
-        'number' => 'Número',
         'state_id' => 'Estado',
+        'number' => 'Número',
     ];
 
     public function render()
