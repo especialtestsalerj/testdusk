@@ -42,6 +42,7 @@ $(document).ready(function () {
         // Get the Select2 instance
         const select2Instance = selectElement.data('select2')
 
+        //Capturar o item SELECIONE do componente quando houver, limpar e recolocá-lo
         var itemSelecione = ''
 
         if (selectElement[0].length > 0) {
