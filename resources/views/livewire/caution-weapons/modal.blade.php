@@ -45,7 +45,9 @@
                             <select class="form-select" name="person_weapon" id="person_weapon" wire:model="person_weapon" wire:change="find" @disabled($disabled || $readonly)>
                                 <option value=""></option>
                                 @foreach ($personWeapons as $key => $personWeapon)
-                                    <option value="{{ $personWeapon?->id }}">{{ $personWeapon?->weaponType?->name }} - {{ $personWeapon?->weapon_description }} - {{ $personWeapon?->weapon_number }}</option>
+                                    <option value="{{ $personWeapon?->id }}">
+                                        {{ $personWeapon?->weaponType?->name }} - {{ $personWeapon?->weapon_description }} - {{ $personWeapon?->weapon_number }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,7 +57,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="entranced_at">Entrada*</label>
-                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.defer="entranced_at" @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
+                                <input type="datetime-local" class="form-control text-uppercase @error('entranced_at') is-invalid @endError"
+                                       max="3000-01-01T23:59" name="entranced_at" id="entranced_at"
+                                       wire:model.defer="entranced_at"
+                                       @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
                                 <div>
                                     @error('entranced_at')
                                     <small class="text-danger">
@@ -69,7 +74,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exited_at">Saída</label>
-                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" wire:model.defer="exited_at" @disabled($disabled || $readonly)/>
+                                <input type="datetime-local" class="form-control text-uppercase @error('exited_at') is-invalid @endError"
+                                       max="3000-01-01T23:59" name="exited_at" id="exited_at"
+                                       wire:model.defer="exited_at" @disabled($disabled || $readonly)/>
                                 <div>
                                     @error('exited_at')
                                     <small class="text-danger">
@@ -83,10 +90,15 @@
                     </div>
                     <div class="form-group">
                         <label for="weapon_type_id">Tipo de Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                        <select class="form-select" name="weapon_type_id" id="weapon_type_id" wire:model.defer="weapon_type_id" @disabled($disabled || $readonly) @readonly(isset($this->old_id))>
+                        <select class="form-select @error('weapon_type_id') is-invalid @endError"
+                                name="weapon_type_id" id="weapon_type_id"
+                                wire:model.defer="weapon_type_id"
+                                @disabled($disabled || $readonly) @readonly(isset($this->old_id))>
                             <option value="">SELECIONE</option>
                             @foreach ($weaponTypes as $key => $weaponType)
-                                <option value="{{ $weaponType->id }}">{{ $weaponType->name }}</option>
+                                <option value="{{ $weaponType->id }}">
+                                    {{ $weaponType->name }}
+                                </option>
                             @endforeach
                         </select>
                         <div>
@@ -100,7 +112,10 @@
                     </div>
                     <div class="form-group">
                         <label for="weapon_description">Descrição da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                        <input type="text" class="form-control text-uppercase" name="weapon_description" dusk='formWeaponDescription' id="weapon_description" wire:model.defer="weapon_description" @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
+                        <input type="text" class="form-control text-uppercase @error('weapon_description') is-invalid @endError"
+                               name="weapon_description" dusk='formWeaponDescription' id="weapon_description"
+                               wire:model.defer="weapon_description"
+                               @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
                         <div>
                             @error('weapon_description')
                             <small class="text-danger">
@@ -112,7 +127,10 @@
                     </div>
                     <div class="form-group">
                         <label for="weapon_number">Numeração da Arma{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                        <input type="text" class="form-control text-uppercase" name="weapon_number" id="weapon_number" wire:model.defer="weapon_number" @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
+                        <input type="text" class="form-control text-uppercase @error('weapon_number') is-invalid @endError"
+                               name="weapon_number" id="weapon_number"
+                               wire:model.defer="weapon_number"
+                               @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
                         <div>
                             @error('weapon_number')
                             <small class="text-danger">
@@ -124,7 +142,10 @@
                     </div>
                     <div class="form-group">
                         <label for="register_number">Número de Registro (Sinarm)</label>
-                        <input type="text" class="form-control text-uppercase" name="register_number" id="register_number" wire:model.defer="register_number" @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
+                        <input type="text" class="form-control text-uppercase @error('register_number') is-invalid @endError"
+                               name="register_number" id="register_number"
+                               wire:model.defer="register_number"
+                               @disabled($disabled || $readonly) @readonly(isset($this->old_id))/>
                         <div>
                             @error('register_number')
                             <small class="text-danger">
@@ -136,10 +157,15 @@
                     </div>
                     <div class="form-group">
                         <label for="cabinet_id">Armário{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                        <select class="form-select" name="cabinet_id" id="cabinet_id" wire:model.defer="cabinet_id" @disabled($disabled || $readonly)>
+                        <select class="form-select @error('cabinet_id') is-invalid @endError"
+                                name="cabinet_id" id="cabinet_id"
+                                wire:model.defer="cabinet_id"
+                                @disabled($disabled || $readonly)>
                             <option value="">SELECIONE</option>
                             @foreach ($cabinets as $key => $cabinet)
-                                <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
+                                <option value="{{ $cabinet->id }}">
+                                    {{ $cabinet->name }}
+                                </option>
                             @endforeach
                         </select>
                         <div>
@@ -153,10 +179,15 @@
                     </div>
                     <div class="form-group">
                         <label for="shelf_id">Box{{ ($modalMode == 'delete') ? '' : '*' }}</label>
-                        <select class="form-select" name="shelf_id" id="shelf_id" wire:model.defer="shelf_id" @disabled($disabled || $readonly)>
+                        <select class="form-select @error('shelf_id') is-invalid @endError"
+                                name="shelf_id" id="shelf_id"
+                                wire:model.defer="shelf_id"
+                                @disabled($disabled || $readonly)>
                             <option value="">SELECIONE</option>
                             @foreach ($shelves as $key => $shelf)
-                                <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
+                                <option value="{{ $shelf->id }}">
+                                    {{ $shelf->name }}
+                                </option>
                             @endforeach
                         </select>
                         <div>

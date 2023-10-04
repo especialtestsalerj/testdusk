@@ -38,7 +38,7 @@ class Index extends BaseIndex
     public function getSearchStringDocumentTypeProperty()
     {
         return !!validate_cpf($this->searchString)
-            ? app(DocumentTypes::class)->getByName('CPF')
+            ? app(DocumentTypes::class)->getById(config('app.document_type_cpf'))
             : '';
     }
 
@@ -68,6 +68,10 @@ class Index extends BaseIndex
 
     public function redirectToVisitorsForm()
     {
-        $this->swalConfirmation('ATENÇÃO', 'Você realmente não encontrou a pessoa pesquisada?', route('visitors.create'));
+        $this->swalConfirmation(
+            'ATENÇÃO',
+            'Você realmente não encontrou a pessoa pesquisada?',
+            route('visitors.create')
+        );
     }
 }

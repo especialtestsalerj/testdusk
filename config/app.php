@@ -218,6 +218,8 @@ return [
 
     'city_rio' => env('APP_CITY_RIO', '3304557'),
 
+    'document_type_cpf' => env('APP_DOCUMENT_TYPE_CPF', '1'),
+
     'document_type_rg' => env('APP_DOCUMENT_TYPE_RG', '2'),
 
     'certificate_type_particular' => env('APP_CERTIFICATE_TYPE_PARTICULAR', '1'),

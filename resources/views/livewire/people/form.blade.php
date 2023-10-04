@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="social_name">Nome Social</label>
                             <input type="text" class="form-control text-uppercase" name="social_name" id="social_name"
-                                   wire:model.defer="social_name"
+                                   wire:model.defer="social_name" placeholder="Designação usada por travestis ou transexuais"
                                    value="{{ is_null(old('social_name')) ? $person->social_name: old('social_name') }}" @disabled(request()->query('disabled'))/>
                         </div>
                     </div>

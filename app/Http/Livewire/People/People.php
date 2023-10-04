@@ -10,7 +10,6 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\DocumentType;
 use App\Models\Person;
 use App\Models\State;
 
@@ -45,12 +44,6 @@ class People extends BaseForm
     public $visitor_id;
     public $visitor;
 
-    protected $rules = [
-        'person_id' => '',
-        'country_id' => 'required',
-        'other_city' => 'required',
-    ];
-
     protected $messages = [
         'required' => ':attribute: preencha o campo corretamente.',
         'required_if' => ':attribute: preencha o campo corretamente.',
@@ -75,6 +68,7 @@ class People extends BaseForm
     public function updatedDocumentTypeId()
     {
         $this->reset('document_number', 'state_document_id');
+        $this->resetErrorBag();
     }
 
     public function updatedStateDocumentId()
@@ -222,7 +216,8 @@ class People extends BaseForm
     public function loadDefault()
     {
         if (is_null($this->document_type_id)) {
-            $this->document_type_id = DocumentType::where('name', '=', 'CPF')->first()->id;
+            $this->document_type_id = config('app.document_type_cpf');
+            $this->state_document_id = config('app.state_rj');
         }
 
         if (!$this->readonly) {
