@@ -66,6 +66,12 @@ class Index extends BaseIndex
                     pg_escape_string(remove_punctuation($this->searchString)) .
                     "')||'%')"
             );
+            $query = $query->orWhereRaw(
+                "visitors.sector_id in (select id from sectors s
+             where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
+                pg_escape_string(remove_punctuation($this->searchString)) .
+                "')||'%')"
+            );
         }
 
         $query->with('document.documentType');

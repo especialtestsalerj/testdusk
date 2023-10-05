@@ -128,8 +128,6 @@ trait Addressable
 
     public function updatedStateId($newValue)
     {
-        $this->reset('city_id', 'other_city');
-
         if (is_null($newValue)) {
             return;
         }

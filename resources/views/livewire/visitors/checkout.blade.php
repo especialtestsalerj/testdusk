@@ -18,19 +18,19 @@
 
                     <div class="col-lg-4 col-xxl-5">
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
-                            placeholder="Filtrar por Nome" aria-label="default input example" title="Filtrar por Nome">
+                            placeholder="Filtrar por Nome ou Destino" aria-label="default input example" title="Filtrar por Nome ou Destino">
                     </div>
 
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
-                            class="form-control text-uppercase" />
+                               placeholder="Filtrar por Início de Entrada ou Saída" title="Filtrar por Início de Entrada ou Saída" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
-                            class="form-control text-uppercase" />
+                               placeholder="Filtrar por Término de Entrada ou Saída" title="Filtrar por Término de Entrada ou Saída" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 col-xxl-1 mt-2 mt-lg-0">
-                        <select wire:model="pageSize" class="form-select" aria-label="Default select example">
+                        <select placeholder="Quantidade de Registros" title="Quantidade de Registros" wire:model="pageSize" class="form-select" aria-label="Default select example">
                             <option value="5">5</option>
                             <option value="12">12</option>
                             <option value="20">20</option>
