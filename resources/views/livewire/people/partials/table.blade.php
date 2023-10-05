@@ -48,7 +48,10 @@
                                                     <div class="col-2">
                                                         @if (!$person->hasPendingVisitors())
                                                             @can('visitors:store')
-                                                                <span class="btn btn-link px-0 py-0"><i class="fa fa-lg fa-check"></i></span>
+                                                                <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
+                                                                   class="btn btn-link px-0 py-0" title="Registrar Entrada">
+                                                                    <i class="fa fa-lg fa-check"></i>
+                                                                </a>
                                                             @endCan
                                                         @endIf
                                                     </div>
