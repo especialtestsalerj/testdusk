@@ -46,7 +46,7 @@ class Checkout extends BaseIndex
 
     public function additionalFilterQuery($query)
     {
-        $query = $this->filterPersonName($query);
+        $query = $this->filterPersonNameAndSectorName($query);
         $query = $this->filterDates($query);
 
         return $query->whereNotNull('visitors.exited_at');
@@ -142,11 +142,13 @@ class Checkout extends BaseIndex
      * @param $query
      * @return mixed
      */
-    protected function filterPersonName($query): mixed
+    protected function filterPersonNameAndSectorName($query): mixed
     {
         if ($this->searchName) {
             $query = $query
                 ->join('people', 'visitors.person_id', '=', 'people.id')
+                ->join('sectors', 'visitors.sector_id', '=', 'sectors.id')
+
                 ->where(function ($query) {
                     $query
                         ->orWhereRaw(
@@ -158,6 +160,11 @@ class Checkout extends BaseIndex
                             "\"people\".\"social_name\" ILIKE '%' || unaccent('" .
                                 pg_escape_string($this->searchName) .
                                 "') || '%'"
+                        )
+                        ->orWhereRaw(
+                            "\"sectors\".\"name\" ILIKE '%' || unaccent('" .
+                            pg_escape_string($this->searchName) .
+                            "') || '%'"
                         );
                 });
         }
