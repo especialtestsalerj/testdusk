@@ -83,6 +83,10 @@ class Index extends BaseIndex
 
     public function render()
     {
-        return view('livewire.visitors.index')->with(['visitors' => $this->filter()]);
+        //return view('livewire.visitors.index')->with(['visitors' => $this->filter()]);
+        return view('livewire.visitors.index')->with([
+            'pendingVisitors' => app(VisitorsRepository::class)->allPending(),
+            'visitors' => $this->filter(),
+        ]);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Visitor;
-use App\Http\Livewire\People\Index as PeopleIndex;
 use App\Http\Livewire\Visitors\Index as VisitorsIndex;
 use App\Http\Livewire\Visitors\Form as VisitorsForm;
 use App\Http\Livewire\Visitors\UpdateForm as VisitorsUpdateForm;
@@ -30,4 +29,8 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/{id}', [Visitor::class, 'update'])
         ->name('visitors.update')
         ->can('visitors:update');
+
+    Route::post('/checkout-all', [Visitor::class, 'checkout_all'])
+        ->name('visitors.checkout_all')
+        ->can('visitors:checkout-all');
 });
