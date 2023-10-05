@@ -94,7 +94,7 @@ class People extends BaseForm
                 $this->person_id = $this->person->id;
 
                 $this->fillModel();
-
+                $this->resetErrorBag();
                 $this->document_number = convert_case(
                     remove_punctuation($document->number),
                     MB_CASE_UPPER
@@ -108,7 +108,6 @@ class People extends BaseForm
                 $this->readonly = false;
             }
         }
-
         $this->updated('person_id', $this->person_id);
     }
 
