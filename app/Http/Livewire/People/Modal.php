@@ -86,6 +86,7 @@ class Modal extends People
         $this->select2SetReadOnly('city_id', false);
         $this->select2SetReadOnly('state_id', false);
         $this->select2SetReadOnly('country_id', false);
+        $this->select2SetReadOnly('state_document_id', false);
 
         $this->loadDefault();
     }
