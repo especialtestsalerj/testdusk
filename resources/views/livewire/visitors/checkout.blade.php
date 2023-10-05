@@ -18,12 +18,12 @@
 
                     <div class="col-lg-4 col-xxl-5">
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
-                            placeholder="Filtrar por Nome ou Destino" aria-label="default input example" title="Filtrar por Nome ou Destino">
+                               placeholder="Filtrar por Nome ou Destino" aria-label="default input example" title="Filtrar por Nome ou Destino" />
                     </div>
 
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
-                               placeholder="Filtrar por Início de Entrada ou Saída" title="Filtrar por Início de Entrada ou Saída" class="form-control text-uppercase" />
+                               placeholder="Filtrar por Entrada" title="Filtrar por Saída" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
