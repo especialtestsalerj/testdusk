@@ -68,7 +68,7 @@
                                             <label for="state_document_id">Estado do Documento*</label>
                                             <div wire:ignore>
                                                 <select class="select2 form-control text-uppercase @error('state_document_id') is-invalid @endError"
-                                                        name="state_document_id" id="state_document_id"
+                                                        name="state_document_id" id="state_document_id" dropdown-parent="peopleModal"
                                                         wire:model="state_document_id" x-ref="state_document_id"
                                                         @if ($modal) disabled @endif
                                                         @if ($readonly) readonly @endif>
