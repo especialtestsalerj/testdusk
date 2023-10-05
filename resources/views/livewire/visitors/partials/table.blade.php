@@ -7,15 +7,35 @@
                     <div class="card bg-white">
                         <div class="card-header bg-blue-light text-white">
                             <div class="row d-flex align-items-center">
-                                <div class="col-10 fw-bolder d-inline-block d-inline-block text-truncate">
+
+                                <div class="col-8 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
                                         {{ $visitor->person->name }}
                                     </div>
                                 </div>
-                                <div class="col-2 d-flex justify-content-end">
+                                <div class="col-4 d-flex justify-content-end pe-1">
+
+                                    <span class="btn btn-primary px-1 py-0" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
+                                        <i class="fa fa-lg fa-print"></i>
+                                    </span>
+
+                                    @can('visitors:show')
+                                        <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-primary px-1 py-0" title="Detalhar">
+                                            <i class="fa fa-lg fa-search"></i>
+                                        </a>
+                                    @endCan
+
+                                    @can('visitors:update')
+                                        <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
+                                           class="btn btn-primary px-1 py-0" title="Alterar"><i
+                                                class="fa fa-lg fa-pencil"></i>
+                                        </a>
+                                    @endCan
+
+
                                     @if (!$visitor->exited_at)
                                         @can('visitors:checkout')
-                                            <span class="btn btn-primary btn-checkout px-0 py-0"
+                                            <span class="btn btn-primary px-1 py-0"
                                                 wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>
@@ -24,7 +44,7 @@
                                         @if(!$visitor->hasPendingVisit())
                                             @can('visitors:store')
                                                 <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
-                                                   class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
+                                                   class="btn btn-primary px-1 py-0 btn-visit-action" title="Registrar Entrada">
                                                     <i class="fa fa-lg fa-check"></i>
                                                 </a>
                                             @endCan
@@ -38,10 +58,11 @@
                                 <div class="col-3" data-label="Foto">
                                     <img class="w-100" src="{{ $visitor->photoTable }}">
                                 </div>
-                                <div class="col-8">
+                                <div class="col-9">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-2">
+
+                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
                                                 {{ $visitor?->sector?->name ?? '-' }}
                                             </div>
                                             <div data-label="Entrada">
@@ -63,6 +84,7 @@
                                     </div>
                                 </div>
 
+                                {{--
                                 <div class="col-1 actions px-0 d-flex justify-content-center text-sm-center">
                                     <div class="row">
                                         <div class="col-12">
@@ -76,19 +98,22 @@
                                             @can('visitors:show')
                                                 <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                     class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
-                                                        class="fa fa-lg fa-search"></i></a>
+                                                        class="fa fa-lg fa-search"></i>
+                                                </a>
                                             @endCan
                                         </div>
                                         <div class="col-12">
                                             @can('visitors:update')
                                                 <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                     class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
-                                                        class="fa fa-lg fa-pencil"></i></a>
+                                                        class="fa fa-lg fa-pencil"></i>
+                                                </a>
                                             @endCan
                                         </div>
-
                                     </div>
                                 </div>
+--}}
+
                             </div>
 
                         </div>

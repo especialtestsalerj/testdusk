@@ -23,11 +23,11 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
-    public $exited_at;
+    public $openedExitFilter;
 
     protected $queryString = [
         'searchString' => ['except' => ''],
-        'exited_at' => ['except' => false],
+        'openedExitFilter' => ['except' => false],
         'page' => ['except' => 1],
     ];
 
@@ -75,7 +75,7 @@ class Index extends BaseIndex
 
     public function additionalFilterQuery($query)
     {
-        if ($this->exited_at) {
+        if ($this->openedExitFilter) {
             $query = $query->whereNull('exited_at');
         }
         return $query;

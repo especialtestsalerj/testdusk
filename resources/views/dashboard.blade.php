@@ -4,18 +4,20 @@
 
     <nav class="row mt-0 mb-3 bg-dark2 text-white">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            @canany(['visitors:show', 'people:show'])
+            @canany(['people:show', 'visitors:show', 'visitors:checkout'])
             <button class="nav-link active px-5" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                 <h4>
                     Portaria
                 </h4>
             </button>
             @endcanany
+            @canany(['routines:show', 'sectors:show', 'event-types:show', 'certificate-types:show'])
             <button class="nav-link px-5" id="nav-security-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                 <h4>
                     Segurança
                 </h4>
             </button>
+            @endcanany
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">

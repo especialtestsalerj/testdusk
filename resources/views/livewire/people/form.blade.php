@@ -264,7 +264,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-md-12">
                                 @forelse ($person->restrictions as $personRestriction)
                                     <div class="cards-striped mx-lg-0 mt-lg-2 my-2">

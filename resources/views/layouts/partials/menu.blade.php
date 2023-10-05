@@ -22,6 +22,7 @@
                         <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">Painel</a>
                     </li>
 
+                    @canany(['people:show', 'visitors:show', 'visitors:checkout'])
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ (request()->routeIs(['people.*', 'visitors.*', 'person-restrictions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Portaria
@@ -41,7 +42,9 @@
                             @endCan
                         </ul>
                     </li>
+                    @endcanany
 
+                    @canany(['routines:show', 'sectors:show', 'event-types:show', 'certificate-types:show'])
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ (request()->routeIs(['routines.*', 'sectors.*', 'event-types.*', 'person-restrictions.*', 'certificate-types.*', 'events.*', 'stuffs.*', 'cautions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Segurança
@@ -64,6 +67,7 @@
                             @endCan
                         </ul>
                     </li>
+                    @endcanany
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">

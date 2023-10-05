@@ -51,8 +51,8 @@
                 </div>
                 <div class="col-6 mt-lg-0 col-md-4 col-lg-3 col-xxl-2 d-flex justify-content-start justify-content-lg-end">
                     <span class="fw-bold btn btn-outline-secondary">
-                        <input type="checkbox" name="exited_at"
-                               wire:model="exited_at"><span class="ms-2">Saída em Aberto</span>
+                        <input type="checkbox" name="openedExitFilter"
+                               wire:model="openedExitFilter"><span class="ms-2">Saída em Aberto</span>
                     </span>
                 </div>
                 <div class="col-2 mt-2 mt-lg-0 col-lg-2 col-xxl-1 mt-2 mt-lg-0 d-flex justify-content-end d-none d-lg-block">
