@@ -729,3 +729,31 @@ body.bg-logo {
     border: 1px solid #CED4DA;
     padding: 5px;
 }
+
+
+.card-document-list {
+    width: 100%;
+}
+
+.bg-line-details {
+    background: rgba(223, 226, 237, 0.4);
+}
+/*
+
+.card-document-list {
+    .row {
+        border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+    }
+    &:last-of-type {
+        .row {
+            border-bottom: none !important;
+        }
+    }
+}
+*/
+
+.foto-card {
+    border-radius: 0 0 0 7px;
+}
+
+
