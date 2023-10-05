@@ -382,6 +382,11 @@ function no_photo()
     return '/img/no-photo.svg';
 }
 
+function no_photo_table()
+{
+    return '/img/no-photo-table.svg';
+}
+
 function mime2ext($mime)
 {
     $mime_map = [

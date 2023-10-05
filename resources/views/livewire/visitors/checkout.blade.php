@@ -83,7 +83,7 @@
 
                                         <div class="row">
                                             <div class="col-3 col-md-4 col-lg-4">
-                                                <img src="{{ $visitor->photo }}" class="w-100">
+                                                <img src="{{ $visitor->photoTable }}" class="w-100">
                                             </div>
                                             <div class="col-9 col-md-8 col-lg-8">
                                                 <div class="row">
@@ -149,7 +149,7 @@
                                                     <div class="row d-flex align-items-center">
                                                         <div class="col-4 col-lg-1 text-center text-lg-start">
                                                             <span data-label="Foto">
-                                                                <img class="w-75" src="{{ $visitor->photo }}">
+                                                                <img class="w-75" src="{{ $visitor->photoTable }}">
                                                             </span>
                                                         </div>
                                                         <div class="col-8 col-lg-11">

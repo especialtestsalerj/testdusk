@@ -127,6 +127,11 @@ class Person extends Model
         return Attribute::make(get: fn($value) => $this->lastVisit->photo ?? no_photo());
     }
 
+    public function photoTable(): Attribute
+    {
+        return Attribute::make(get: fn($value) => $this->lastVisit->photoTable ?? no_photo_table());
+    }
+
     public function restrictions()
     {
         return $this->HasMany(PersonRestriction::class);

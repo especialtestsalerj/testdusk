@@ -35,7 +35,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-3" data-label="Foto">
-                                    <img class="w-100" src="{{ $person->photo }}">
+                                    <img class="w-100" src="{{ $person->photoTable }}">
                                 </div>
                                 <div class="col-8 d-flex align-items-start">
                                     <div class="row">
@@ -134,7 +134,7 @@
                                     <div class="col-12 col-lg-10">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-4 col-lg-1 text-center text-lg-start">
-                                                <img class="w-75" src="{{ $person->photo }}">
+                                                <img class="w-75" src="{{ $person->photoTable }}">
                                             </div>
                                             <div class="col-8 col-lg-11">
                                                 <div class="row">
