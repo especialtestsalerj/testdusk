@@ -7,12 +7,15 @@
                     <div class="card people-min-height bg-white">
                         <div class="card-header bg-blue-light text-white">
                             <div class="row d-flex align-items-center pe-0">
-                                <div class="col-8 fw-bolder d-inline-block d-inline-block text-truncate">
+                                <div class="col-9 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
                                         {{ $person->name }}
                                     </div>
                                 </div>
-                                <div class="col-4 d-flex justify-content-end">
+                                <div class="col-3 d-flex justify-content-end">
+
+{{--
+
                                     @if ($person->hasPendingVisitors())
                                         <span class="btn btn-primary px-1 py-0" wire:click="generateBadge({{ $person->pendingVisit->id }})" title="Imprimir Etiqueta">
                                             <i class="fa fa-lg fa-print"></i>
@@ -29,6 +32,7 @@
                                             <i class="fa fa-lg fa-pencil"></i>
                                         </a>
                                     @endCan
+--}}
 
                                     @if ($person->hasPendingVisitors())
                                         @can('visitors:checkout')
@@ -54,10 +58,8 @@
                                 <div class="col-5" data-label="Foto">
                                     <img class="w-100 foto-card" src="{{ $person->photo }}">
                                 </div>
-
-
-                                <div class="col-7 pt-3">
-                                    <div class="row">
+                                <div class="col-7 d-flex flex-wrap pt-3">
+                                    <div class="row flex-wrap">
                                         <div class="col-12">
                                             @if ($person->hasPendingVisitors())
                                                 <span class="badge bg-warning text-black mb-2">VISITA EM ABERTO</span>
@@ -72,6 +74,32 @@
                                             </div>
                                         @endforeach
                                     </div>
+
+                                    <div class="row card-buttons mt-auto ms-auto justify-content-end mb-1 me-1">
+                                        @if ($person->hasPendingVisitors())
+                                            <div class="col-3">
+                                                <span class="btn btn-link px-2 py-1" wire:click="generateBadge({{ $person->pendingVisit->id }})" title="Imprimir Etiqueta">
+                                                    <i class="fa fa-lg fa-print"></i>
+                                                </span>
+                                            </div>
+                                        @endif
+                                        @can('people:show')
+                                            <div class="col-3">
+
+                                                <a href="{{ route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link px-2 py-1" title="Detalhar">
+                                                    <i class="fa fa-lg fa-search"></i>
+                                                </a>
+                                            </div>
+                                        @endCan
+                                        @can('people:update')
+                                            <div class="col-3">
+                                                <a href="{{ route('people.form', ['id' => $person->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-2 py-1" title="Alterar">
+                                                <i class="fa fa-lg fa-pencil"></i>
+                                                </a>
+                                            </div>
+                                        @endCan
+                                    </div>
+
                                 </div>
                                 {{--
                                                                 <div class="col-1 actions px-0 d-flex justify-content-center text-sm-center">
