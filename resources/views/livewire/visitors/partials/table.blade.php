@@ -7,7 +7,6 @@
                     <div class="card bg-white">
                         <div class="card-header bg-blue-light text-white">
                             <div class="row d-flex align-items-center">
-
                                 <div class="col-8 fw-bolder d-inline-block d-inline-block text-truncate">
                                     <div data-label="Visitante">
                                         {{ $visitor->person->name }}
@@ -15,6 +14,7 @@
                                 </div>
                                 <div class="col-4 d-flex justify-content-end pe-1">
 
+                                    {{--
                                     <span class="btn btn-primary px-1 py-0" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
                                         <i class="fa fa-lg fa-print"></i>
                                     </span>
@@ -31,7 +31,7 @@
                                                 class="fa fa-lg fa-pencil"></i>
                                         </a>
                                     @endCan
-
+--}}
 
                                     @if (!$visitor->exited_at)
                                         @can('visitors:checkout')
@@ -53,13 +53,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body py-0 ps-0">
                             <div class="row">
-                                <div class="col-3" data-label="Foto">
-                                    <img class="w-100" src="{{ $visitor->photoTable }}">
+                                <div class="col-5 d-flex" data-label="Foto">
+                                    <div class="photo-bg align-items-stretch">
+                                        <img class="w-100 photo-card" src="{{ $visitor->photoTable }}">
+                                    </div>
                                 </div>
-                                <div class="col-9">
-                                    <div class="row">
+
+                                <div class="col-7 d-flex flex-column">
+                                    <div class="row mt-2">
                                         <div class="col-12">
 
                                             <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
@@ -78,41 +81,50 @@
                                             </div>
                                             <div data-label="Documento">
                                                 {{ $visitor->document?->documentType?->name }}:
-                                                {{ $visitor?->document?->numberMaskered }}
+                                                <strong>
+                                                    {{ $visitor?->document?->numberMaskered }}
+                                                </strong>
                                             </div>
+
                                         </div>
                                     </div>
-                                </div>
 
-                                {{--
-                                <div class="col-1 actions px-0 d-flex justify-content-center text-sm-center">
-                                    <div class="row">
-                                        <div class="col-12">
+                                    <div class="row card-buttons mt-auto d-flex">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="col-3 justify-content-center">
                                             <span class="btn btn-link px-0 pt-0 pb-1"
-                                                wire:click="generateBadge({{ $visitor->id }})"
-                                                title="Imprimir Etiqueta">
+                                                  wire:click="generateBadge({{ $visitor->id }})"
+                                                  title="Imprimir Etiqueta">
                                                 <i class="fa fa-lg fa-print"></i>
                                             </span>
+                                            </div>
+                                            <div class="col-3 justify-content-center">
+                                                @can('visitors:show')
+                                                    <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
+                                                       class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
+                                                            class="fa fa-lg fa-search"></i>
+                                                    </a>
+                                                @endCan
+                                            </div>
+                                            <div class="col-3 justify-content-center">
+                                                @can('visitors:update')
+                                                    <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
+                                                       class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
+                                                            class="fa fa-lg fa-pencil"></i>
+                                                    </a>
+                                                @endCan
+                                            </div>
+
                                         </div>
-                                        <div class="col-12">
-                                            @can('visitors:show')
-                                                <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
-                                                    class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
-                                                        class="fa fa-lg fa-search"></i>
-                                                </a>
-                                            @endCan
-                                        </div>
-                                        <div class="col-12">
-                                            @can('visitors:update')
-                                                <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
-                                                    class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
-                                                        class="fa fa-lg fa-pencil"></i>
-                                                </a>
-                                            @endCan
-                                        </div>
+
                                     </div>
+
+
                                 </div>
---}}
+
+
+
+
 
                             </div>
 
