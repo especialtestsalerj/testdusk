@@ -758,3 +758,28 @@ body.bg-logo {
 .photo-card {
     border-radius: 0 0 0 7px;
 }
+
+.html5-qrcode-element {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid #3490dc;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+    color: #fff;
+    background-color: #3490dc;
+}
+
+
+.html5-qrcode-element:hover {
+    color: #fff;
+    background-color: #52A1E1;
+    border-color: #52A1E1;
+}
