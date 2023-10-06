@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Visitors;
 
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Livewire\Traits\WithWebcam;
+use App\Models\Document;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
 use App\Models\Sector;
@@ -19,7 +20,9 @@ class Form extends BaseForm
     public $mode = 'create';
     public Sector $sector;
     public Person $person;
+    public Document $document;
 
+    public $person_id;
     public $sector_id;
 
     protected $listeners = [
@@ -126,12 +129,22 @@ class Form extends BaseForm
      */
     protected function fillPersonByQueryStringOrOld(): void
     {
-        if ($personId = request()->get('person_id')) {
-            $this->personModified(Person::findOrFail($personId));
-        } else {
-            if ($personId = old('person_id')) {
-                $this->personModified(Person::findOrFail($personId));
-            }
+        $documentId = request()->get('document_id') ?? old('document_id');
+
+        if ($documentId) {
+            $this->document = Document::findOrFail($documentId);
+
+            $this->person_id = $this->document->person_id;
+
+            //$array = Person::findOrFail($this->person_id)->toArray();
+            /*
+            $array = array_merge($array, [
+                'document_number' => $document->document_number,
+                'document_type_id' => $document->document_type_id,
+                'state_document_id' => $document->state_document_id,
+            ]);*/
+
+            $this->personModified(Person::findOrFail($this->person_id));
         }
     }
 
@@ -142,7 +155,7 @@ class Form extends BaseForm
      */
     protected function loadPhoto(): void
     {
-        if ($person_id = request()->get('person_id')) {
+        if ($person_id = $this->person_id) {
             $this->visitor->person_id = $person_id;
             if ($this->visitor->person->photo !== no_photo()) {
                 $this->visitor->loadLatestPhoto();
