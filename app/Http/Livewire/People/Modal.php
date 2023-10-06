@@ -16,7 +16,7 @@ class Modal extends People
         return [
             'document_type_id' => 'required',
             'state_document_id' => 'required_if:document_type_id,' . config('app.document_type_rg'),
-            'document_number' => ['bail', 'required', new ValidCPF()],
+            'document_number' => ['bail', 'required', Rule::when($this->document_type_id == config('app.document_type_cpf'), [new ValidCPF()])],
             'full_name' => 'required',
             'country_id' => 'required',
             'state_id' => 'required_if:country_id,' . config('app.country_br'),
