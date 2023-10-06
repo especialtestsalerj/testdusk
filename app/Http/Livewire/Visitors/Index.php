@@ -25,6 +25,8 @@ class Index extends BaseIndex
     public $redirect;
     public $openedExitFilter;
 
+    public $exited_at;
+
     protected $queryString = [
         'searchString' => ['except' => ''],
         'openedExitFilter' => ['except' => false],
@@ -69,8 +71,8 @@ class Index extends BaseIndex
             $query = $query->orWhereRaw(
                 "visitors.sector_id in (select id from sectors s
              where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
-                pg_escape_string(remove_punctuation($this->searchString)) .
-                "')||'%')"
+                    pg_escape_string(remove_punctuation($this->searchString)) .
+                    "')||'%')"
             );
         }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Rules\PersonOnVisit;
-use App\Data\Repositories\Visitors as VisitorsRepository;
 use Illuminate\Validation\Rule;
 
 class VisitorStore extends Request

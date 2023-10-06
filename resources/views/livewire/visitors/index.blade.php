@@ -100,7 +100,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exited_at">Saída*</label>
-                                {{-- <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $exited_at?->format('Y-m-d H:i') : old('exited_at')}}"/> --}}
+                                <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{ is_null(old('exited_at')) ? $exited_at?->format('Y-m-d H:i') : old('exited_at') }}"/>
                             </div>
                             <div class="alert alert-warning" role="alert">
                                 <p><i class="fa fa-triangle-exclamation"></i><strong> Atenção</strong></p>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitCheckoutPendingVisitors" title="Confirmar Finalização"><i class="fa fa-save" dusk="confirmCheckoutPendingVisitors"></i> Confirmar</button>
+                            <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitCheckoutPendingVisitors" title="Confirmar Finalização"><i class="fa fa-save"></i> Confirmar</button>
                             <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fa fa-ban"></i> Cancelar</button>
                         </div>
                     </form>

@@ -22,6 +22,10 @@ Route::group(['prefix' => '/visitors'], function () {
         ->name('visitors.show')
         ->can('visitors:show');
 
+    Route::post('/checkout-all', [Visitor::class, 'checkoutAll'])
+        ->name('visitors.checkout_all')
+        ->can('visitors:checkout-all');
+
     Route::post('', [Visitor::class, 'store'])
         ->name('visitors.store')
         ->can('visitors:store');
@@ -29,8 +33,4 @@ Route::group(['prefix' => '/visitors'], function () {
     Route::post('/{id}', [Visitor::class, 'update'])
         ->name('visitors.update')
         ->can('visitors:update');
-
-    Route::post('/checkout-all', [Visitor::class, 'checkout_all'])
-        ->name('visitors.checkout_all')
-        ->can('visitors:checkout-all');
 });

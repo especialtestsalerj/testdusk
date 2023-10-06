@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Data\Repositories\Visitors as VisitorsRepository;
+
 class VisitorUpdate extends VisitorStore
 {
     public function authorize()
@@ -11,9 +12,6 @@ class VisitorUpdate extends VisitorStore
     }
     public function rules()
     {
-        $id = $this->get('visitor_id');
-        $visitor = app(VisitorsRepository::class)->findById($id);
-
         return [
             'visitor_id' => 'required',
             'document_type_id' => 'required',

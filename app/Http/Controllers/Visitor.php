@@ -149,12 +149,12 @@ class Visitor extends Controller
         return $request;
     }
 
-    public function checkout_all(VisitorCheckoutAll $request, $exited_at)
+    public function checkoutAll(VisitorCheckoutAll $request)
     {
         foreach (app(VisitorsRepository::class)->allPending() as $visitor) {
-            if (is_null($visitor->exited_at)) {
+            if (!is_null($request->get('exited_at'))) {
                 $array = [];
-                $array = array_add($array, 'exited_at', $exited_at);
+                $array = array_add($array, 'exited_at', $request->get('exited_at'));
                 app(VisitorsRepository::class)->update($visitor->id, $array);
             }
         }
