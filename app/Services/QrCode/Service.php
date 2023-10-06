@@ -23,7 +23,7 @@ class Service
             ->setEncoding(new Encoding('UTF-8'))
             ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
             ->setSize(80)
-            ->setMargin(-5)
+            ->setMargin(-2)
             ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
             ->setForegroundColor(new Color(0, 0, 0))
             ->setBackgroundColor(new Color(255, 255, 255));
