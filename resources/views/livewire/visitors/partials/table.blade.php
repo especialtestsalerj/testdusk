@@ -43,7 +43,7 @@
                                     @else
                                         @if(!$visitor->hasPendingVisit())
                                             @can('visitors:store')
-                                                <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
+                                                <a href="{{ route('visitors.create', ['document_id' => $visitor->document?->id]) }}"
                                                    class="btn btn-primary px-1 py-0 btn-visit-action" title="Registrar Entrada">
                                                     <i class="fa fa-lg fa-check"></i>
                                                 </a>
@@ -183,7 +183,7 @@
                                                             <div class="col-12">
                                                                 <div data-label="Documento">
                                                                     {{ $visitor->document?->documentType?->name }}:
-                                                                    {{ $visitor?->document?->number }}
+                                                                    {{ $visitor?->document?->numberMaskered }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -192,12 +192,12 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div data-label="Entrada">
-                                                                    Entrada: <span class="fw-bold">{!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}</span>
+                                                                    Entrada: <span>{!! $visitor?->entranced_at?->format('d/m/Y  H:i') ?? '-' !!}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div data-label="Saída">
-                                                                    Saída: <span class="fw-bold">@if (isset($visitor?->exited_at))
+                                                                    Saída: <span>@if (isset($visitor?->exited_at))
                                                                             {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
                                                                         @else
                                                                             <span class="badge bg-warning text-black">EM ABERTO</span>
@@ -236,8 +236,8 @@
                                         @else
                                             @if(!$visitor->hasPendingVisit())
                                                 @can('visitors:store')
-                                                    <a href="{{ route('visitors.create', ['person_id' => $visitor->person->id]) }}"
-                                                       class="btn btn-primary px-0 py-0 btn-visit-action" title="Registrar Entrada">
+                                                    <a href="{{ route('visitors.create', ['document_id' => $visitor->document->id]) }}"
+                                                       class="btn btn-link px-0 py-0" title="Registrar Entrada">
                                                         <i class="fa fa-lg fa-check"></i>
                                                     </a>
                                                 @endCan
