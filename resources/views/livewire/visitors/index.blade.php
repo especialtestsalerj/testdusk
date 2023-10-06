@@ -1,12 +1,26 @@
-<div wire:poll.keep-alive>
+<div wire:poll.5000ms>
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row mb-4 d-flex align-items-center">
-                <div class="col-4 col-md-6">
+                <div class="col-4 col-md-4">
                     <h3 class="mb-0"><i class="fa fa-people-roof"></i> Visitas</h3>
                 </div>
 
-                <div class="col-8 col-md-6 align-self-center d-flex justify-content-end gap-4">
+                <?php
+                    $qtdPendingVisitors = $pendingVisitors->count();
+                ?>
+
+                <div class="col-4 col-md-4 align-self-center d-flex justify-content-center">
+                    @if($qtdPendingVisitors > 0)
+                        @can('visitors:checkout-all')
+                            <button type="button" class="btn btn-secondary text-white float-right" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Finalizar Visitas em Aberto" dusk="CheckoutPendingVisitors">
+                                <i class="fa fa-check-double"></i> Finalizar Visitas em Aberto
+                            </button>
+                        @endCan
+                    @endif
+                </div>
+
+                <div class="col-4 col-md-4 align-self-center d-flex justify-content-end gap-4">
                     @can('visitors:store')
                         <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
                             <i class="fa fa-print"></i> Etiqueta Avulsa
@@ -65,6 +79,48 @@
                 </div>
             </div>
         </div>
+
+        @if($qtdPendingVisitors > 0)
+        <!-- Modal -->
+        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true" wire:ignore>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form class="form" action="{{ route('visitors.checkout_all') }}" method="post">
+                        @csrf
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="checkoutModalLabel"><i class="fa fa-check-double"></i> Finalização de Visitas em Aberto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exited_at">Saída*</label>
+                                {{-- <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at" value="{{is_null(old('exited_at')) ? $exited_at?->format('Y-m-d H:i') : old('exited_at')}}"/> --}}
+                            </div>
+                            <div class="alert alert-warning" role="alert">
+                                <p><i class="fa fa-triangle-exclamation"></i><strong> Atenção</strong></p>
+                                <hr>
+                                @if($qtdPendingVisitors > 0)
+                                    <p>Total de Visitas em Aberto: {{ $qtdPendingVisitors }}</p>
+                                @endif
+                                <hr>
+                                <p class="text-justify">Ao salvar, todas as visitas serão finalizadas com a data de saída informada acima.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success btn-sm text-white close-modal" id="submitCheckoutPendingVisitors" title="Confirmar Finalização"><i class="fa fa-save" dusk="confirmCheckoutPendingVisitors"></i> Confirmar</button>
+                            <button type="button" class="btn btn-danger btn-sm text-white close-btn" data-bs-dismiss="modal" title="Fechar Formulário"><i class="fa fa-ban"></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="p-0">
             @include('layouts.msg')

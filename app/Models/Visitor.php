@@ -81,9 +81,10 @@ class Visitor extends Model
     {
         if ($this->person_id) {
             $latestVisitor = Visitor::where('person_id', $this->person_id)
-                ->orderBy('created_at', 'desc')->first();
+                ->orderBy('created_at', 'desc')
+                ->first();
 
-            $this->avatar_id = ($latestVisitor->avatar_id ?? null);
+            $this->avatar_id = $latestVisitor->avatar_id ?? null;
         }
         return $this;
     }
@@ -98,6 +99,15 @@ class Visitor extends Model
         $avatar = $this->avatar;
 
         return Attribute::make(get: fn($value) => $this->avatar ? $avatar->base64Uri : no_photo());
+    }
+
+    public function photoTable(): Attribute
+    {
+        $avatar = $this->avatar;
+
+        return Attribute::make(
+            get: fn($value) => $this->avatar ? $avatar->base64Uri : no_photo_table()
+        );
     }
 
     public function avatar()
@@ -160,6 +170,8 @@ class Visitor extends Model
 
     public function hasPendingVisit()
     {
-        return Visitor::where('person_id', $this->person_id)->whereNull('exited_at')->exists();
+        return Visitor::where('person_id', $this->person_id)
+            ->whereNull('exited_at')
+            ->exists();
     }
 }

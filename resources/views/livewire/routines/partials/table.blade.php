@@ -37,7 +37,7 @@
                                         <i class="fa fa-lg fa-cog"></i>
                                     </a>
                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#finishModal{{$routine->id}}" title="Finalizar Rotina" dusk="finishRoutine">
-                                        <i class="fa fa-check"></i> Finalizar
+                                        <i class="fa fa-check-double"></i> Finalizar
                                     </button>
                                 @else
                                     <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'routines.index']) }}" class="btn btn-link btn-sm" title="Detalhar Rotina">
@@ -59,7 +59,7 @@
                             @csrf
 
                             <div class="modal-header">
-                                <h5 class="modal-title" id="finishModalLabel"><i class="fa fa-check"></i> Finalização de Rotina</h5>
+                                <h5 class="modal-title" id="finishModalLabel"><i class="fa fa-check-double"></i> Finalização de Rotina</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">

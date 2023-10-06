@@ -18,16 +18,16 @@
 
                     <div class="col-lg-4 col-xxl-5">
                         <input wire:model.debounce.500ms="searchName" class="form-control" type="text"
-                            placeholder="Filtrar por Nome ou Destino" aria-label="default input example" title="Filtrar por Nome ou Destino">
+                               placeholder="Filtrar por Nome ou Destino" aria-label="default input example" title="Filtrar por Nome ou Destino" />
                     </div>
 
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
-                               placeholder="Filtrar por Início de Entrada ou Saída" title="Filtrar por Início de Entrada ou Saída" class="form-control text-uppercase" />
+                               itle="Filtrar por Entrada" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
-                               placeholder="Filtrar por Término de Entrada ou Saída" title="Filtrar por Término de Entrada ou Saída" class="form-control text-uppercase" />
+                               title="Filtrar por Saída" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 col-xxl-1 mt-2 mt-lg-0">
                         <select placeholder="Quantidade de Registros" title="Quantidade de Registros" wire:model="pageSize" class="form-select" aria-label="Default select example">
@@ -83,7 +83,7 @@
 
                                         <div class="row">
                                             <div class="col-3 col-md-4 col-lg-4">
-                                                <img src="{{ $visitor->photo }}" class="w-100">
+                                                <img src="{{ $visitor->photoTable }}" class="w-100">
                                             </div>
                                             <div class="col-9 col-md-8 col-lg-8">
                                                 <div class="row">
@@ -149,7 +149,7 @@
                                                     <div class="row d-flex align-items-center">
                                                         <div class="col-4 col-lg-1 text-center text-lg-start">
                                                             <span data-label="Foto">
-                                                                <img class="w-75" src="{{ $visitor->photo }}">
+                                                                <img class="w-75" src="{{ $visitor->photoTable }}">
                                                             </span>
                                                         </div>
                                                         <div class="col-8 col-lg-11">

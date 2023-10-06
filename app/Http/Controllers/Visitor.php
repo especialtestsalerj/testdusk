@@ -6,9 +6,9 @@ use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\People as PeopleRepository;
+use App\Http\Requests\VisitorCheckoutAll;
 use App\Http\Requests\VisitorStore;
 use App\Http\Requests\VisitorUpdate;
-use App\Http\Requests\VisitorDestroy;
 use App\Models\Document;
 use App\Models\Visitor as VisitorModel;
 use App\Support\Constants;
@@ -100,7 +100,7 @@ class Visitor extends Controller
 
     public function update(VisitorUpdate $request, $id)
     {
-        if($request->get('visitor_id') != $id){
+        if ($request->get('visitor_id') != $id) {
             abort(400);
         }
 
@@ -147,5 +147,20 @@ class Visitor extends Controller
             $request->merge(['avatar_id' => null]);
         }
         return $request;
+    }
+
+    public function checkout_all(VisitorCheckoutAll $request, $exited_at)
+    {
+        foreach (app(VisitorsRepository::class)->allPending() as $visitor) {
+            if (is_null($visitor->exited_at)) {
+                $array = [];
+                $array = array_add($array, 'exited_at', $exited_at);
+                app(VisitorsRepository::class)->update($visitor->id, $array);
+            }
+        }
+
+        return redirect()
+            ->route('visitors.index')
+            ->with('message', 'Visitas finalizadas com sucesso!');
     }
 }
