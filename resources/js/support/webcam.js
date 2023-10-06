@@ -75,6 +75,8 @@ Webcam.on('error', function(err) {
         icon: 'error',
         title: 'Nenhuma câmera foi encontrada',
         showConfirmButton: false,
-        timer: 2000
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        timer: 1500,
     })
 });
