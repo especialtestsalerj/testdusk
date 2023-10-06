@@ -23,7 +23,7 @@
 
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="startDate" type="datetime-local" max="3000-01-01T23:59"
-                               itle="Filtrar por Entrada" class="form-control text-uppercase" />
+                               title="Filtrar por Entrada" class="form-control text-uppercase" />
                     </div>
                     <div class="col-4 col-lg-2 mt-2 mt-lg-0">
                         <input wire:model.debounce.200ms="endDate" type="datetime-local" max="3000-01-01T23:59"
