@@ -70,11 +70,13 @@
                                             </div>
                                             <div data-label="Entrada">
                                                 Entrada:
-                                                {!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}
+                                                <strong>{!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}</strong>
                                             </div>
                                             <div data-label="Saída">
                                                 Saida: @if (isset($visitor?->exited_at))
-                                                    {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
+                                                    <strong>
+                                                        {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
+                                                    </strong>
                                                 @else
                                                     <span class="badge bg-warning text-black">EM ABERTO</span>
                                                 @endif
