@@ -13,7 +13,7 @@
                 <div class="col-4 col-md-4 align-self-center d-flex justify-content-center">
                     @if($qtdPendingVisitors > 0)
                         @can('visitors:checkout-all')
-                            <button type="button" class="btn btn-secondary text-white float-right" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Finalizar Visitas em Aberto" dusk="CheckoutPendingVisitors">
+                            <button type="button" class="btn btn-secondary text-white float-right" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Finalizar todas as visitas em aberto" dusk="CheckoutPendingVisitors">
                                 <i class="fa fa-check-double"></i> Finalizar Visitas em Aberto
                             </button>
                         @endCan
