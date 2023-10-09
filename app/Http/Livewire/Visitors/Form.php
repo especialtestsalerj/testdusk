@@ -136,14 +136,6 @@ class Form extends BaseForm
 
             $this->person_id = $this->document->person_id;
 
-            //$array = Person::findOrFail($this->person_id)->toArray();
-            /*
-            $array = array_merge($array, [
-                'document_number' => $document->document_number,
-                'document_type_id' => $document->document_type_id,
-                'state_document_id' => $document->state_document_id,
-            ]);*/
-
             $this->personModified(Person::findOrFail($this->person_id));
         }
     }

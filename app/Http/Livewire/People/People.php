@@ -110,12 +110,13 @@ class People extends BaseForm
                 $this->state_document_id = $document->state_id;
                 $this->setAddressReadOnly(true);
                 $this->readonly = true;
+                $this->updated('person_id', $this->person_id);
             } else {
                 $this->person = new Person();
                 $this->readonly = false;
+                $this->updated('person', null);
             }
         }
-        $this->updated('person_id', $this->person_id);
     }
 
     public function isPreFilled($fieldName)
