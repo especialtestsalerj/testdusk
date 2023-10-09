@@ -151,11 +151,19 @@
                 <div class="form-group">
                     <label for="other_city">@if (is_null($person_id)) Cidade* @else Cidade @endif</label>
                     <input type="text" class="form-control text-uppercase"
-                           name="other_city" id="other_city"
+                           name="other_city" id="other_city" wire:model="other_city"
                            @if ($modal) disabled @endif
                            @if ($readonly) readonly @endif
                            {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
                 </div>
+            </div>
+
+            <div class="col-lg-6 col-xl-6">
+                @foreach($this->alerts as $alert)
+                    <div class="col-12">
+                        <span class="text-danger"><i class="fa fa-ban cog-faint" aria-hidden="true"></i> {{$alert }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

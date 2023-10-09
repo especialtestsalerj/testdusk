@@ -33,6 +33,7 @@ class People extends BaseForm
     public $full_name;
     public $social_name;
 
+
     public $document_type_id;
 
     public $routineStatus;
