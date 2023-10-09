@@ -35,7 +35,7 @@
 
                                     @if (!$visitor->exited_at)
                                         @can('visitors:checkout')
-                                            <span class="btn btn-primary px-1 py-0"
+                                            <span class="btn btn-primary px-1 py-0 btn-visit-action"
                                                 wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>
