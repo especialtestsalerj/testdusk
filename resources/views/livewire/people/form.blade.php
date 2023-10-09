@@ -255,12 +255,14 @@
                                 </h3>
                             </div>
                             <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                               <span class="btn btn-sm btn-primary text-white"
+                                @if(!request()->query('disabled'))
+                                    <span class="btn btn-sm btn-primary text-white"
                                      wire:click="createRestriction({{ $person->id }})"
                                      data-bs-toggle="modal" data-bs-target="#restriction-modal"
                                      title="Nova Restrição">
                                             <i class="fa fa-plus"></i>
-                                        </span>
+                                    </span>
+                                @endIf
                             </div>
                         </div>
 
