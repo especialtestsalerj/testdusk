@@ -70,8 +70,8 @@
                         </div>
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
-                        'readonly' => $visitor->hasPending(), 'showRestrictions' => true, 'document_number'=> request()->query('document_number'),
-                        'document_type_id'=> request()->query('document_type_id'), 'full_name'=> request()->query('full_name')])
+                        'readonly' => $visitor->hasPending(), 'showRestrictions' => true,
+                        'document_type_id'=> $document->document_type_id ?? null, 'document_number'=> $document->number ?? null, 'state_document_id'=> $document->state_id ?? null])
                         <div class="row">
                             <div class="col-12">
                                 <h4>

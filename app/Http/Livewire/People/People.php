@@ -67,12 +67,11 @@ class People extends BaseForm
 
     public function updatedDocumentTypeId()
     {
-        if($this->document_type_id != config('app.document_type_rg'))
-        {
+        if ($this->document_type_id != config('app.document_type_rg')) {
             $this->reset('document_number', 'state_document_id');
         } else {
             $this->state_document_id = config('app.state_rj');
-            $this->select2SelectOption('state_document_id', $this->state_document_id );
+            $this->select2SelectOption('state_document_id', $this->state_document_id);
             $this->reset('document_number');
         }
         $this->resetErrorBag();
@@ -130,16 +129,6 @@ class People extends BaseForm
         if (!is_null($this->person_id)) {
             $this->person = Person::where('id', $this->person_id)->first();
 
-            $getDocument = $this->person
-                ->documents()
-                ->where('document_type_id', '=', 1)
-                ->firstOr(function () {
-                    return $this->person->documents()->first();
-                });
-
-            $this->document_type_id = $getDocument->document_type_id;
-            $this->document_number = $getDocument->number;
-            $this->state_document_id = $getDocument->state_id ?? null;
             $this->readonly = true;
         } else {
             if (!$this->isPreFilled('document_number')) {
@@ -247,8 +236,6 @@ class People extends BaseForm
             $this->city_id = City::where('id', '=', config('app.city_rio'))->first()->id;
             $this->loadCities();
             $this->select2SelectOption('city_id', $this->city_id);
-//            3304557
-//            dd($this->city_id);
         }
     }
 

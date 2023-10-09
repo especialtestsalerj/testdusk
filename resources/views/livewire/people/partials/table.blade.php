@@ -48,7 +48,7 @@
                                                     <div class="col-2">
                                                         @if (!$person->hasPendingVisitors())
                                                             @can('visitors:store')
-                                                                <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
+                                                                <a href="{{ route('visitors.create', ['document_id' => $document->id]) }}"
                                                                    class="btn btn-link px-0 py-0" title="Registrar Entrada">
                                                                     <i class="fa fa-lg fa-check"></i>
                                                                 </a>
@@ -151,6 +151,14 @@
                                                     <div class="col-3 col-lg-6 text-center text-lg-start">
                                                         @foreach ($person->documents as $document)
                                                             <span>{{ $document->documentType->name }}</span>: <span class="fw-bold">{{ $document->numberMaskered }}</span>
+                                                            @if (!$person->hasPendingVisitors())
+                                                                @can('visitors:store')
+                                                                    <a href="{{ route('visitors.create', ['document_id' => $document->id]) }}"
+                                                                       class="btn btn-link" title="Registrar Entrada">
+                                                                        <i class="fa fa-lg fa-check"></i>
+                                                                    </a>
+                                                                @endCan
+                                                            @endIf
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -174,14 +182,6 @@
                                                class="btn btn-link" title="Alterar" id="editPerson"><i
                                                     class="fa fa-lg fa-pencil"></i></a>
                                         @endCan
-                                        @if (!$person->hasPendingVisitors())
-                                            @can('visitors:store')
-                                                <a href="{{ route('visitors.create', ['person_id' => $person->id]) }}"
-                                                   class="btn btn-link" title="Registrar Entrada">
-                                                    <i class="fa fa-lg fa-check"></i>
-                                                </a>
-                                            @endCan
-                                        @endIf
                                     </div>
                                 </div>
                             </div>

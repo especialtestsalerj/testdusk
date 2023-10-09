@@ -2,8 +2,13 @@
 
 namespace App\Http\Requests;
 
-class VisitorCheckoutAll extends VisitorUpdate
+class VisitorCheckoutAll extends Request
 {
+    public function authorize()
+    {
+        return allows('visitors:update');
+    }
+
     public function rules()
     {
         return [
