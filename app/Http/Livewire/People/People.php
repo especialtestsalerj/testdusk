@@ -10,6 +10,7 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Document;
 use App\Models\Person;
 use App\Models\State;
 
@@ -62,6 +63,11 @@ class People extends BaseForm
             'state_document_id' => $this->state_document_id,
             'refreshPhoto' => $name == 'person_id',
         ];
+
+        if($name == 'person_id'){
+//            dd($array);
+//            dd($this->person->id);
+        }
 
         $this->emit('personModified', $array);
     }
@@ -129,13 +135,13 @@ class People extends BaseForm
     {
         $this->alerts = [];
         if (!is_null($this->person_id)) {
-            $this->person = Person::where('id', $this->person_id)->first();
-
+            $this->person = Person::find($this->person_id);
             $this->readonly = true;
         } else {
             if (!$this->isPreFilled('document_number')) {
+                //Fill CPF
                 $document_number = is_null(old('document_number'))
-                    ? mask_cpf($this->person->cpf) ?? ''
+                    ? (mask_cpf($this->person->cpf ?? request()->query('document_number'))) ?? ''
                     : mask_cpf(old('document_number'));
 
                 $this->document_number = convert_case(
@@ -147,8 +153,15 @@ class People extends BaseForm
 
         if (!$this->isPreFilled('document_type_id')) {
             $this->document_type_id = is_null(old('document_type_id'))
-                ? $this->document_type_id
+                ? ($this->document_type_id ?? request()->query('document_type_id'))
                 : old('document_type_id');
+        }
+
+        if($this->document_type_id == config('app.document_type_cpf') && $this->document_number){
+            if($document = Document::where('document_type_id', config('app.document_type_cpf'))->where('number', $this->document_number)->first()) {
+                $this->person = $document->person;
+                $this->readonly = true;
+            }
         }
 
         $this->state_document_id = is_null(old('state_document_id'))
@@ -156,10 +169,11 @@ class People extends BaseForm
             : old('state_document_id');
 
         $this->person_id = is_null(old('person_id')) ? $this->person->id : old('person_id');
+        $this->updated('person_id', $this->person_id);
 
         if (!$this->isPreFilled('full_name')) {
             $this->full_name = is_null(old('full_name'))
-                ? convert_case($this->person->full_name, MB_CASE_UPPER)
+                ? (convert_case($this->person->full_name, MB_CASE_UPPER) ?? request()->query('full_name'))
                 : old('full_name');
         }
 

@@ -71,7 +71,11 @@ class Index extends BaseIndex
         $this->swalConfirmation(
             'ATENÇÃO',
             'Você realmente não encontrou a pessoa pesquisada?',
-            route('visitors.create')
+            route('visitors.create',
+                $this->getSearchStringIsCpfProperty() ?
+                    ['document_type_id'=>$this->getSearchStringDocumentTypeProperty()[0]->id, 'document_number'=>$this->searchString]
+                    : ['full_name'=>$this->searchString]
+            )
         );
     }
 }
