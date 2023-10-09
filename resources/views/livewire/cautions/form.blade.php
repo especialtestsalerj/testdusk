@@ -63,7 +63,7 @@
                             <select class="form-select select2" name="visitor_id" id="visitor_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                 <option value="">SELECIONE</option>
                                 @foreach ($visitors as $key => $visitor)
-                                    <option value="{{ $visitor->id }}" @if($visitor->id == $caution->visitor_id) selected="selected" @endif>
+                                    <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>
                                         {{ $visitor->person->name }} - {{ $visitor->document->documentType->name }}: {{ $visitor->document->numberMaskered }}
                                     </option>
                                 @endforeach
