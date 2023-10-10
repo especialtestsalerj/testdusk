@@ -739,6 +739,17 @@ body.bg-logo {
     background: rgba(223, 226, 237, 0.4);
 }
 
+
+.visitor-data-checkout {
+    /*font-size: 1.3rem;*/
+}
+
+@media (min-width: 1401px) and (max-width: 1474px) {
+    .visitor-data-checkout {
+        font-size: 0.8rem;
+    }
+}
+
 @media (min-width: 769px) and (max-width: 784px) {
     .visitor-data {
         font-size: 0.8rem;

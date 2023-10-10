@@ -96,13 +96,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="small">
+                                                        <div class="">
                                                             Entrada:
                                                             <span class="fw-bold">{{ $visitor->entranced_at->format('d/m/Y H:i') }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="small">
+                                                        <div class="">
                                                             Saída:
                                                             <span class="fw-bold">{{ $visitor->exited_at->format('d/m/Y H:i') }}</span>
                                                         </div>
