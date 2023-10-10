@@ -55,13 +55,13 @@
                         </div>
                         <div class="card-body py-0 ps-0">
                             <div class="row">
-                                <div class="col-5 d-flex" data-label="Foto">
+                                <div class="col-5 d-flex pe-0" data-label="Foto">
                                     <div class="photo-bg align-items-stretch">
                                         <img class="w-100 photo-card" src="{{ $visitor->photoTable }}">
                                     </div>
                                 </div>
 
-                                <div class="col-7 d-flex flex-column">
+                                <div class="col-7 d-flex flex-column visitor-data">
                                     <div class="row mt-2">
                                         <div class="col-12">
 
