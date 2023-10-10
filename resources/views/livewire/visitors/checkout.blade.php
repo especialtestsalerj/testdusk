@@ -83,7 +83,9 @@
 
                                         <div class="row">
                                             <div class="col-5 d-flex pe-0">
-                                                <img class="w-100 photo-card" src="{{ $visitor->photoTable }}">
+                                                <div class="photo-bg align-items-stretch">
+                                                    <img class="w-100 photo-card" src="{{ $visitor->photoTable }}">
+                                                </div>
                                             </div>
                                             <div class="col-7 d-flex flex-column pt-2 visitor-data-checkout">
                                                 <div class="row">
