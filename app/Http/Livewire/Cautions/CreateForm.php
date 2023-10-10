@@ -111,6 +111,9 @@ class CreateForm extends BaseForm
                 ->distinct()
                 ->get()
                 ->load('certificateType')
+                ->filter(
+                    fn($item) => !is_null($item->certificate_type_id)
+                )
                 ->map(function ($item) {
                     return [
                         'value' => $item->certificateType->id,

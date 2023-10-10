@@ -79,13 +79,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="card-body">
+                                    <div class="card-body py-0 ps-0">
 
                                         <div class="row">
-                                            <div class="col-3 col-md-4 col-lg-4">
-                                                <img src="{{ $visitor->photoTable }}" class="w-100">
+                                            <div class="col-5 d-flex pe-0">
+                                                <img class="w-100 photo-card" src="{{ $visitor->photoTable }}">
                                             </div>
-                                            <div class="col-9 col-md-8 col-lg-8">
+                                            <div class="col-7 d-flex flex-column pt-2 visitor-data-checkout">
                                                 <div class="row">
                                                     {{--<div class="col-12 fw-bolder lh-sm mb-2">
                                                         {{ $visitor->person->name ?? '' }}
@@ -96,15 +96,15 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="small">
+                                                        <div class="">
                                                             Entrada:
-                                                            {{ $visitor->entranced_at->format('d/m/Y H:i') }}
+                                                            <span class="fw-bold">{{ $visitor->entranced_at->format('d/m/Y H:i') }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <div class="small">
+                                                        <div class="">
                                                             Saída:
-                                                            {{ $visitor->exited_at->format('d/m/Y H:i') }}
+                                                            <span class="fw-bold">{{ $visitor->exited_at->format('d/m/Y H:i') }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
