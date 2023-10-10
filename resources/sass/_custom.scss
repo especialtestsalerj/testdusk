@@ -738,6 +738,27 @@ body.bg-logo {
 .bg-line-details {
     background: rgba(223, 226, 237, 0.4);
 }
+
+@media (min-width: 769px) and (max-width: 784px) {
+    .visitor-data {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1139px) {
+    .visitor-data {
+        font-size: 0.7rem;
+    }
+}
+
+@media (min-width: 1401px) and (max-width: 1518px) {
+    .visitor-data {
+        font-size: 0.8rem;
+    }
+}
+
+
+
 /*
 
 .card-document-list {
