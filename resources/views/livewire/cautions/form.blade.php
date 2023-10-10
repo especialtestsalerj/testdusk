@@ -125,7 +125,7 @@
                             <label for="certificate_number">{{ ($certificate_type_id == config('app.certificate_type_particular')) ? 'Núm. Certificado*' : 'Matrícula*' }}</label>
                             <input
                                 type="text"
-                                class="form-control"
+                                class="form-control text-uppercase"
                                 name="certificate_number"
                                 id="certificate_number"
                                 wire:model.defer="certificate_number"
