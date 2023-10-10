@@ -43,7 +43,7 @@
 
             <div class="col-4 {{ $document_type_id == config('app.document_type_rg') ? '' : 'd-none' }}">
                 <div class="form-group">
-                    <label for="state_document_id">Estado do Documento*</label>
+                    <label for="state_document_id">@if (is_null($person_id)) Estado do Documento* @else Estado do Documento @endif</label>
                     <div wire:ignore>
                         <select class="select2 form-control text-uppercase"
                                 name="state_document_id" id="state_document_id"

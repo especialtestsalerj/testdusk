@@ -16,7 +16,12 @@ class VisitorStore extends Request
     {
         return [
             'document_type_id' => 'required',
-            'state_document_id' => 'required_if:document_type_id,' . config('app.document_type_rg'),
+            'state_document_id' => [
+                Rule::requiredIf(function () {
+                    return $this->person_id == null &&
+                        $this->document_type_id == config('app.document_type_rg');
+                }),
+            ],
             'document_number' => ['bail', 'required', new PersonOnVisit($this->get('person_id'))],
             'full_name' => 'required',
             'country_id' => [
