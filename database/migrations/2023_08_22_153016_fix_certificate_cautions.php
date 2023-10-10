@@ -26,7 +26,7 @@ return new class extends Migration {
         DB::update(
             'update cautions set
                 certificate_type_id = (select ct.id from people2 pe inner join visitors v on pe.id = v.person_id inner join certificate_types ct on pe.origin = ct.name where v.id = visitor_id),
-                certificate_number = (select pe.certificate_number from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id),
+                certificate_number = (select UPPER(pe.certificate_number) from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id),
                 certificate_valid_until = (select pe.certificate_valid_until from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id) '
         );
     }

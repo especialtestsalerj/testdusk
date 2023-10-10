@@ -21,10 +21,10 @@ return new class extends Migration {
                    SELECT id, 1, cpf, created_by_id, updated_by_id, created_at, updated_at FROM people2 ORDER BY id'
         );
 
-        DB::update(
+        /*DB::update(
             'INSERT INTO documents (person_id, document_type_id, number, created_by_id, updated_by_id, created_at, updated_at)
                    SELECT id, 2, id_card, created_by_id, updated_by_id, created_at, updated_at FROM people2 WHERE id_card IS NOT NULL ORDER BY id'
-        );
+        );*/
     }
 
     /**

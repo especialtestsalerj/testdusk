@@ -38,7 +38,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::create('people2', function (Blueprint $table) {
+        /*Schema::create('people2', function (Blueprint $table) {
             $table->id();
             $table->char('cpf', 11);
             $table->string('full_name');
@@ -58,7 +58,7 @@ return new class extends Migration {
                 ->unsigned()
                 ->nullable();
             $table->timestamps();
-        });
+        });*/
 
         Schema::table('people', function (Blueprint $table) {
             $table->string('id_card')->nullable();
