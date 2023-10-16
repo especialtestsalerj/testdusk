@@ -13,7 +13,9 @@ return new class extends Migration {
     public function up()
     {
         DB::transaction(function () {
-            $maxSector = DB::select('SELECT MAX(id) FROM sectors');
+            $arrayMaxSector = DB::select('SELECT MAX(id) FROM sectors')[0];
+            
+            $maxSector = $arrayMaxSector->max;
 
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
                 $maxSector + 1,
@@ -1405,12 +1407,16 @@ return new class extends Migration {
     public function down()
     {
         DB::transaction(function () {
-            $minSector = DB::select('SELECT id FROM sectors WHERE name LIKE ?', [
+            $arrayMinSector = DB::select('SELECT id FROM sectors WHERE name LIKE ?', [
                 'SUBSOLO 3 - SUBESTAÇÃO',
             ]);
-            $maxSector = DB::select('SELECT id FROM sectors WHERE name LIKE ?', [
+            $minSector = $arrayMinSector[0]->id;
+
+            $arrayMaxSector = DB::select('SELECT id FROM sectors WHERE name LIKE ?', [
                 'ELEVADOR DE SERVIÇO',
             ]);
+
+            $maxSector =  $arrayMaxSector[0]->id;
 
             DB::delete('DELETE FROM sectors WHERE id BETWEEN ? AND ?', [$minSector, $maxSector]);
 
