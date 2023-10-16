@@ -145,7 +145,7 @@ class CreateForm extends BaseForm
             $this->certificate_type_id = $result?->certificate_type_id;
             $this->select2SelectOption('certificate_type_id', $this->certificate_type_id);
 
-            $this->certificate_number = $result?->certificate_number;
+            $this->certificate_number = convert_case($result?->certificate_number, MB_CASE_UPPER);
             $this->certificate_valid_until = $result?->certificate_valid_until?->format('Y-m-d');
         } else {
             $this->certificate_type_id = null;
@@ -177,7 +177,7 @@ class CreateForm extends BaseForm
             : old('certificate_type_id');
 
         $this->certificate_number = is_null(old('certificate_number'))
-            ? $this?->caution->certificate_number
+            ? convert_case($this?->caution->certificate_number, MB_CASE_UPPER)
             : old('certificate_number');
 
         $this->certificate_valid_until = is_null(old('certificate_valid_until'))
