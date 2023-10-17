@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         DB::transaction(function () {
             $arrayMaxSector = DB::select('SELECT MAX(id) FROM sectors')[0];
-            
+
             $maxSector = $arrayMaxSector->max;
 
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
@@ -132,7 +132,7 @@ return new class extends Migration {
                 8,
             ]);
             DB::update('UPDATE sectors SET name = ?, paviment_id =  ? WHERE id = ?', [
-                'TÉRREO - HALL DE ELEVADORES PORTARIA RUA MEXICO',
+                'TÉRREO - HALL DE ELEVADORES PORTARIA RUA MÉXICO',
                 1,
                 7,
             ]);
@@ -1169,7 +1169,7 @@ return new class extends Migration {
                 135,
             ]);
             DB::update('UPDATE sectors SET name = ?, paviment_id =  ? WHERE id = ?', [
-                '28º ANDAR - 2803 - ',
+                '28º ANDAR - 2803 - TELEFONIA',
                 28,
                 138,
             ]);
@@ -1190,7 +1190,13 @@ return new class extends Migration {
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
                 $maxSector + 67,
-                '28º ANDAR - 2807 - DESENVOLVIMENTO',
+                '28º ANDAR - 2807 - INFORMÁTICA / DESENVOLVIMENTO',
+                true,
+                28,
+            ]);
+            DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
+                $maxSector + 68,
+                '28º ANDAR - INFORMÁTICA / DATACENTER',
                 true,
                 28,
             ]);
@@ -1230,19 +1236,19 @@ return new class extends Migration {
                 145,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 68,
+                $maxSector + 69,
                 '29º ANDAR - 2908 - CONTROLE PREDIAL / ELEVADORES',
                 true,
                 29,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 69,
+                $maxSector + 70,
                 '29º ANDAR - 2909 - APOIO / MANUTENÇÃO',
                 true,
                 29,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 70,
+                $maxSector + 71,
                 '29º ANDAR - 2910 - ADMINISTRAÇÃO DE PESSOAL',
                 true,
                 29,
@@ -1253,121 +1259,121 @@ return new class extends Migration {
                 126,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 71,
+                $maxSector + 72,
                 '30º ANDAR - 3002 - TV ALERJ / REUNIÃO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 72,
+                $maxSector + 73,
                 '30º ANDAR - 3003 - TV ALERJ / SWITCHER / ESTÚDIO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 73,
+                $maxSector + 74,
                 '30º ANDAR - 3004 - TV ALERJ / ESTÚDIO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 74,
+                $maxSector + 75,
                 '30º ANDAR - 3005 - TV ALERJ / RÁDIO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 75,
+                $maxSector + 76,
                 '30º ANDAR - 3006 - TV ALERJ / ARQUIVO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 76,
+                $maxSector + 77,
                 '30º ANDAR - 3007 - TV ALERJ / DESCANSO',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 77,
+                $maxSector + 78,
                 '30º ANDAR - 3008 - TV ALERJ / ÁREA TÉCNICA',
                 true,
                 30,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 78,
+                $maxSector + 79,
                 'ELEVADOR A',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 79,
+                $maxSector + 80,
                 'ELEVADOR B',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 80,
+                $maxSector + 81,
                 'ELEVADOR C',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 81,
+                $maxSector + 82,
                 'ELEVADOR D',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 82,
+                $maxSector + 83,
                 'ELEVADOR E',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 83,
+                $maxSector + 84,
                 'ELEVADOR F',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 84,
+                $maxSector + 85,
                 'ELEVADOR G',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 85,
+                $maxSector + 86,
                 'ELEVADOR H',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 86,
+                $maxSector + 87,
                 'ELEVADOR I',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 87,
+                $maxSector + 88,
                 'ELEVADOR J',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 88,
+                $maxSector + 89,
                 'ELEVADOR K',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 89,
+                $maxSector + 90,
                 'ELEVADOR L',
                 true,
                 null,
             ]);
             DB::insert('INSERT INTO sectors (id, name, status, paviment_id) values (?, ?, ?, ?)', [
-                $maxSector + 90,
+                $maxSector + 91,
                 'ELEVADOR DE SERVIÇO',
                 true,
                 null,
@@ -1416,7 +1422,7 @@ return new class extends Migration {
                 'ELEVADOR DE SERVIÇO',
             ]);
 
-            $maxSector =  $arrayMaxSector[0]->id;
+            $maxSector = $arrayMaxSector[0]->id;
 
             DB::delete('DELETE FROM sectors WHERE id BETWEEN ? AND ?', [$minSector, $maxSector]);
 

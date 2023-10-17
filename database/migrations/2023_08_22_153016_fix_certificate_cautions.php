@@ -29,6 +29,12 @@ return new class extends Migration {
                 certificate_number = (select UPPER(pe.certificate_number) from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id),
                 certificate_valid_until = (select pe.certificate_valid_until from people2 pe inner join visitors v on pe.id = v.person_id where v.id = visitor_id) '
         );
+
+        DB::update(
+            "UPDATE cautions
+                   SET certificate_number = (SELECT pe2.id_card FROM people2 pe2 WHERE pe2.id IN (SELECT person_id FROM visitors v WHERE v.id = visitor_id))
+                   WHERE certificate_number IN ('0', '00', '000', '0000', '00000', '0001', '123')"
+        );
     }
 
     /**
