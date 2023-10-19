@@ -9,6 +9,42 @@ const defaultConfig = {
     language: 'pt-BR',
 }
 
+function formatRepo(repo) {
+    if (repo.loading) {
+        return repo.text
+    }
+
+    var $container = $(
+        "<div class='select2-result-repository clearfix'>" +
+            "<div class='select2-result-repository__avatar row'>" +
+            "<img class='col-2' src='" +
+            repo.photo +
+            "' />" +
+            "<div class='select2-result-repository__meta col-10'>" +
+            repo.person.name +
+            '</div>' +
+            '</div>' +
+            '</div>',
+    )
+    return $container
+}
+
+function formatRepoSelection(repo) {
+    if (repo.id) {
+        return (
+            repo.person.name +
+            ' - ' +
+            repo.document.type +
+            ': ' +
+            repo.document.number_maskered +
+            ' - Entrada: ' +
+            repo.entranced_at_br_formatted
+        )
+    } else {
+        return 'SELECIONE'
+    }
+}
+
 window.getSelect2OptionsForElement = (element) => {
     var dropdownParent = element.getAttribute('dropdown-parent')
     var json = { ...defaultConfig, tags: !!element.classList.contains('select2-tags') }
@@ -20,10 +56,50 @@ window.getSelect2OptionsForElement = (element) => {
     return json
 }
 
+window.initCustomSelect2 = () => {
+    $('.js-example-data-ajax').select2({
+        theme: 'bootstrap-5',
+        width: '100%',
+        language: 'pt-BR',
+        ajax: {
+            url: 'https://ocorrencias.test/api/v1/visitors/open',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page,
+                }
+            },
+            processResults: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1
+
+                return {
+                    results: data,
+                    pagination: {
+                        more: params.page * 30 < data.total_count,
+                    },
+                }
+            },
+            cache: true,
+        },
+        placeholder: 'Search for a repository',
+        minimumInputLength: 1,
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection,
+    })
+}
+
 window.initSelect2 = () => {
     $('.select2').each(function (key, value) {
         $(this).select2(window.getSelect2OptionsForElement(value))
     })
+
+    window.initCustomSelect2()
 }
 
 $(document).ready(function () {
@@ -118,12 +194,11 @@ $(document).ready(function () {
 $(document).on('select2:open', (e) => {
     const selectId = e.target.id
 
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
-        key,
-        value,
-    ) {
-        value.focus()
-    })
+    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(
+        function (key, value) {
+            value.focus()
+        },
+    )
 })
 
 $.fn.select2.amd.define('select2/i18n/pt-BR', [], require('select2/src/js/select2/i18n/pt-BR'))

@@ -54,6 +54,11 @@ class Visitor extends Model
         return $this->entranced_at?->format('Y-m-d H:i');
     }
 
+    public function getEntrancedAtBrFormattedAttribute()
+    {
+        return $this->entranced_at?->format('d/m/Y H:i');
+    }
+
     public function getExitedAtFormattedAttribute()
     {
         return $this->exited_at?->format('Y-m-d H:i');
