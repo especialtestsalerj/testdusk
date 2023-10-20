@@ -15,6 +15,8 @@ class Service
                 'version' => '1.0', //Version::format('compact'),
             ],
 
+            'accessToken' => access_token(),
+
             'broadcast' => [
                 'driver' => config('broadcasting.default', 'pusher'),
             ],

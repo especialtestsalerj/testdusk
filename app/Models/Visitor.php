@@ -173,6 +173,11 @@ class Visitor extends Model
         }
     }
 
+    public function scopeOpen(Builder $query): void
+    {
+        $query->whereNull('exited_at');
+    }
+
     public function hasPendingVisit()
     {
         return Visitor::where('person_id', $this->person_id)

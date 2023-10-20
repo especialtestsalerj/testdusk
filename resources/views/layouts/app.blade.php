@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="access-token" content="{{ access_token() }}">
     <link rel="shortcut icon" href="{{ url('img/favicon.ico') }}">
 
     <title>{{ config('app.name') }} - {{ config('app.owner') }}</title>

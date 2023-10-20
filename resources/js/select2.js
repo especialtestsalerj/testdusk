@@ -2,47 +2,12 @@
  * Select2
  */
 require('select2/dist/js/select2.min.js')
+import './support/ajax-select2'
 
 const defaultConfig = {
     theme: 'bootstrap-5',
     width: '100%',
     language: 'pt-BR',
-}
-
-function formatRepo(repo) {
-    if (repo.loading) {
-        return repo.text
-    }
-
-    var $container = $(
-        "<div class='select2-result-repository clearfix'>" +
-            "<div class='select2-result-repository__avatar row'>" +
-            "<img class='col-2' src='" +
-            repo.photo +
-            "' />" +
-            "<div class='select2-result-repository__meta col-10'>" +
-            repo.person.name +
-            '</div>' +
-            '</div>' +
-            '</div>',
-    )
-    return $container
-}
-
-function formatRepoSelection(repo) {
-    if (repo.id) {
-        return (
-            repo.person.name +
-            ' - ' +
-            repo.document.type +
-            ': ' +
-            repo.document.number_maskered +
-            ' - Entrada: ' +
-            repo.entranced_at_br_formatted
-        )
-    } else {
-        return 'SELECIONE'
-    }
 }
 
 window.getSelect2OptionsForElement = (element) => {
@@ -57,14 +22,17 @@ window.getSelect2OptionsForElement = (element) => {
 }
 
 window.initCustomSelect2 = () => {
-    $('.js-example-data-ajax').select2({
+    $('.open-visitors-select2').select2({
         theme: 'bootstrap-5',
         width: '100%',
         language: 'pt-BR',
         ajax: {
-            url: 'https://ocorrencias.test/api/v1/visitors/open',
+            url: 'https://ocorrencias.test/api/visitors/open',
             dataType: 'json',
             delay: 250,
+            headers: {
+                Authorization: `Bearer ${window.laravel.accessToken}`,
+            },
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -89,8 +57,8 @@ window.initCustomSelect2 = () => {
         },
         placeholder: 'Search for a repository',
         minimumInputLength: 1,
-        templateResult: formatRepo,
-        templateSelection: formatRepoSelection,
+        templateResult: formatVisitor,
+        templateSelection: formatVisitorSelection,
     })
 }
 

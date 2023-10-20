@@ -11,7 +11,7 @@ class Visitor extends Controller
     {
         $searchString = request()->query('q');
 
-        return VisitorModel::with(['person', 'document'])->when($searchString, fn($query) =>
+        return VisitorModel::with(['person', 'document'])->open()->when($searchString, fn($query) =>
         $query->whereRaw(
             "visitors.person_id in (select id from people p
              where p.full_name ILIKE '%'||unaccent('" .

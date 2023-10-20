@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//TODO: PROTEGER ROTA
-Route::get('open-visitors', [VisitorApi::class, 'openVisitors']
-)->name('visitors.open')->can('visitors.show');
+Route::get('visitors/open',
+    [VisitorApi::class, 'openVisitors']
+)->middleware(['auth:sanctum', 'abilities:visitors:show'])->name('visitors.open');
