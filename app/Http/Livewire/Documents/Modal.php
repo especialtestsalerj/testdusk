@@ -51,8 +51,8 @@ class Modal extends BaseForm
     public function formVariables()
     {
         return [
-            'documentTypes' => app(DocumentTypes::class)->all(),
-            'states' => app(States::class)->all(),
+            'documentTypes' => app(DocumentTypes::class)->allActive(),
+            'states' => app(States::class)->allActive(),
         ];
     }
 
@@ -133,7 +133,6 @@ class Modal extends BaseForm
         }
 
         $this->cleanModal();
-
     }
 
     public function cleanModal()
