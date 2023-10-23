@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alerj/alerj-auth",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:alerj/alerj-auth.git",
-                "reference": "9e4ce0171134d6bc7c47d876a9ef247ddca86ae6"
+                "reference": "4b6b5dadf0875d7caa64d24e2d72cf1d15098e53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alerj/alerj-auth/zipball/9e4ce0171134d6bc7c47d876a9ef247ddca86ae6",
-                "reference": "9e4ce0171134d6bc7c47d876a9ef247ddca86ae6",
+                "url": "https://api.github.com/repos/alerj/alerj-auth/zipball/4b6b5dadf0875d7caa64d24e2d72cf1d15098e53",
+                "reference": "4b6b5dadf0875d7caa64d24e2d72cf1d15098e53",
                 "shasum": ""
             },
             "type": "library",
@@ -35,10 +35,10 @@
             },
             "description": "Authenticator for ALERJ structure",
             "support": {
-                "source": "https://github.com/alerj/alerj-auth/tree/1.0.3",
+                "source": "https://github.com/alerj/alerj-auth/tree/1.0.4",
                 "issues": "https://github.com/alerj/alerj-auth/issues"
             },
-            "time": "2022-04-29T20:34:16+00:00"
+            "time": "2023-10-23T19:28:16+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
