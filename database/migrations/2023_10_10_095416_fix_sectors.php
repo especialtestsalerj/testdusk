@@ -1037,7 +1037,7 @@ return new class extends Migration {
                 128,
             ]);
             DB::update('UPDATE sectors SET name = ?, paviment_id =  ? WHERE id = ?', [
-                '24º ANDAR - 2405 - EXPEDIENTE E COMUNICAÇÃO',
+                '24º ANDAR - 2405 - PROTOCOLO GERAL',
                 24,
                 169,
             ]);

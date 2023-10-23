@@ -1,4 +1,4 @@
-<div wire:poll.5000ms>
+<div>
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row mb-4 d-flex align-items-center">

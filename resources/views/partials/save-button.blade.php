@@ -1,9 +1,9 @@
 @if(!isset($showSave) || $showSave)
     <button
-        type="submit"
         class="btn btn-success text-white ml-1"
         id="submitButton"
         title="Salvar"
+        onclick="this.disabled=true; this.form.submit();"
         @include('partials.disabled', ['model' => $model ?? null, ''])
     >
         <i class="fa fa-save"></i> Salvar
