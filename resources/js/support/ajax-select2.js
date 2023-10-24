@@ -6,18 +6,14 @@ window.formatVisitor = function (visitor) {
     var $container = $(
         "<div class='select2-result-repository clearfix'>" +
             "<div class='select2-result-repository__avatar row'>" +
-            "<img class='col-2' src='" +
+            "<img class='col-1' src='" +
             visitor.photo +
             "' />" +
-            "<div class='select2-result-repository__meta col-10'>" +
-            visitor.person.name +
-            ' - ' +
-            visitor.document.type +
-            ': ' +
-            visitor.document.number_maskered +
-            ' - Entrada: ' +
-            visitor.entranced_at_br_formatted +
-            '</div>' +
+            "<div class=\"select2-result-repository__meta col-10 pt-3\">\n" +
+        "<div class=\"fw-bold fs-5 \"> ADRIANO LUCIO </div>\n" +
+        "<div>CPF: 076.732.047-62  </div>\n" +
+        "<div> Entrada: <span class='fw-bold'> 02/02/2023 16:46 </span>  </div>\n" +
+        "</div>" +
             '</div>' +
             '</div>',
     )
