@@ -2,13 +2,23 @@
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row mb-4 d-flex align-items-center">
-                <div class="col-4 col-md-4">
-                    <h3 class="mb-0"><i class="fa fa-people-roof"></i> Visitas</h3>
-                </div>
 
-                <?php
+                @php
                     $qtdPendingVisitors = $pendingVisitors->count();
-                ?>
+                @endphp
+
+                <div class="col-4 col-md-4 d-flex align-items-center">
+                    <h3 class="mb-0 me-2">
+                        <i class="fa fa-people-roof"></i> Visitas
+                    </h3>
+                    <span class="mt-1 p-2 badge bg-danger text-white">
+                        @if(!$openedExitFilter)
+                            ({{$countVisitors}})
+                        @else
+                            ({{$qtdPendingVisitors}})
+                        @endif
+                    </span>
+                </div>
 
                 <div class="col-4 col-md-4 align-self-center d-flex justify-content-center">
                     @if($qtdPendingVisitors > 0)
