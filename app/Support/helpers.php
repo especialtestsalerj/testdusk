@@ -351,6 +351,9 @@ function mask_protocol_number($protocol_number)
     return $codigo . '/' . $ano;
 }
 
+function access_token(){
+    return session()->get('access-token');
+}
 function protocol_number_masked_to_bigint($protocol_number_masked)
 {
     $protocol_number = only_numbers($protocol_number_masked);

@@ -58,8 +58,11 @@
 
                 <div class="row">
                     <div class="col-md-12" wire:ignore>
+
+                        <select class="open-visitors-select2"></select>
+
                         <div class="form-group">
-                            <label for="visitor_id">Visitante*</label>
+                            <label for="visitor_id">Visitante* ({{\App\Models\Visitor::open()->count()}} em aberto)</label>
                             <select class="form-select select2" name="visitor_id" id="visitor_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                 <option value="">SELECIONE</option>
                                 @foreach ($visitors as $key => $visitor)
