@@ -58,11 +58,4 @@ class Visitors extends Repository
             ->orderBy('id')
             ->get();
     }
-
-    public function countVisitors()
-    {
-        return $this->model
-            ::get()
-            ->count();
-    }
 }

@@ -2,11 +2,15 @@
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row mb-4 d-flex align-items-center">
-                <div class="col-6 col-md-6">
-                    <h3 class="mb-0"><i class="fa fa-users"></i> Pessoas - Identificação</h3>
+                <div class="col-6 col-sm-5 col-md-6 d-flex align-items-center">
+                    <h3 class="mb-0 me-2"><i class="fa fa-users"></i> Pessoas - Identificação</h3>
+                    <span class="mt-1 p-2 badge bg-danger text-white">
+                            ({{$countPeople}})
+                    </span>
                 </div>
 
-                <div class="col-6 col-md-6 align-self-center d-flex justify-content-end gap-4">
+
+                <div class="col-6 col-sm-7 col-md-6 align-self-center d-flex justify-content-end gap-4">
                     <a id="novo" wire:click="redirectToVisitorsForm" class="btn btn-primary text-white float-end"
                        title="Nova Visita">
                         <i class="fa fa-plus"></i> Nova Visita

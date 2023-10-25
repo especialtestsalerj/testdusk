@@ -23,6 +23,7 @@ class Index extends BaseIndex
     public $routine_id;
     public $routine;
     public $redirect;
+    public $countResults;
     public $openedExitFilter;
 
     public $exited_at;
@@ -86,16 +87,18 @@ class Index extends BaseIndex
         if ($this->openedExitFilter) {
             $query = $query->whereNull('exited_at');
         }
+
+        $this->countResults = $query->count();
+
         return $query;
     }
 
     public function render()
     {
-        //return view('livewire.visitors.index')->with(['visitors' => $this->filter()]);
         return view('livewire.visitors.index')->with([
             'pendingVisitors' => app(VisitorsRepository::class)->allPending(),
             'visitors' => $this->filter(),
-            'countVisitors' => app(VisitorsRepository::class)->countVisitors(),
+            'countVisitors' => $this->countResults,
         ]);
     }
 }

@@ -12,11 +12,7 @@
                         <i class="fa fa-people-roof"></i> Visitas
                     </h3>
                     <span class="mt-1 p-2 badge bg-danger text-white">
-                        @if(!$openedExitFilter)
                             ({{$countVisitors}})
-                        @else
-                            ({{$qtdPendingVisitors}})
-                        @endif
                     </span>
                 </div>
 
