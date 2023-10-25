@@ -10,9 +10,11 @@ window.formatVisitor = function (visitor) {
             visitor.photo +
             "' />" +
             "<div class=\"select2-result-repository__meta col-10 pt-3\">\n" +
-        "<div class=\"fw-bold fs-5 \"> ADRIANO LUCIO </div>\n" +
-        "<div>CPF: 076.732.047-62  </div>\n" +
-        "<div> Entrada: <span class='fw-bold'> 02/02/2023 16:46 </span>  </div>\n" +
+        "<div class=\"fw-bold fs-5 \">"+ visitor.person.name + "</div>\n" +
+        "<div>"+visitor.document.type +
+        ': ' +
+        visitor.document.number_maskered+"</div>\n" +
+        "<div> Entrada: <span class='fw-bold'>"+ visitor.entranced_at_br_formatted +"</span>  </div>\n" +
         "</div>" +
             '</div>' +
             '</div>',
@@ -21,6 +23,10 @@ window.formatVisitor = function (visitor) {
 }
 
 window.formatVisitorSelection = function (visitor) {
+    if(visitor.hasOwnProperty('selected') && visitor.selected && visitor.hasOwnProperty('text')){
+        visitor = JSON.parse(visitor.text)
+    }
+
     if (visitor.id) {
         return (
             visitor.person.name +
