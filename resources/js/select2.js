@@ -27,7 +27,7 @@ window.initCustomSelect2 = () => {
         width: '100%',
         language: 'pt-BR',
         ajax: {
-            url: 'https://ocorrencias.test/api/visitors/open',
+            url: window.laravel.app.app_url+'/api/visitors/open',
             dataType: 'json',
             delay: 250,
             headers: {
@@ -55,7 +55,6 @@ window.initCustomSelect2 = () => {
             },
             cache: true,
         },
-        placeholder: 'Search for a repository',
         minimumInputLength: 1,
         templateResult: formatVisitor,
         templateSelection: formatVisitorSelection,
