@@ -10,6 +10,7 @@ class UpdateForm extends CreateForm
 {
     public $mode = 'show';
 
+    public $selectedVisitor;
     protected function getComponentVariables()
     {
         return [
@@ -18,5 +19,12 @@ class UpdateForm extends CreateForm
             'certificateTypes' => app(CertificateTypesRepository::class)->all(),
             'users' => app(UsersRepository::class)->all(),
         ];
+    }
+
+    public function mount()
+    {
+        $this->selectedVisitor = $this->caution->visitor->load(['person','document'])->append(['photo', 'entranced_at_br_formatted']);
+        $this->selectedVisitor->document->append('number_maskered');
+        parent::mount();
     }
 }
