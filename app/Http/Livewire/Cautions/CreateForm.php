@@ -40,6 +40,10 @@ class CreateForm extends BaseForm
     public $redirect;
     public $msg_visitor;
 
+    protected $listeners = [
+        'updateCautionWeaponList' => '$refresh',
+    ];
+
     public function clearCaution()
     {
         $this->selectedId = null;

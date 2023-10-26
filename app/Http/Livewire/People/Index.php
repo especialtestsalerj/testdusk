@@ -20,6 +20,7 @@ class Index extends BaseIndex
     public $orderByField = ['full_name', 'created_at'];
     public $orderByDirection = ['asc'];
     public $paginationEnabled = true;
+    public $countResults;
 
     public $searchFields = [
         'people.full_name' => 'text',
@@ -58,12 +59,14 @@ class Index extends BaseIndex
 
         $query = $query->with('pendingVisit');
 
+        $this->countResults =  $query->count();
+
         return $query;
     }
 
     public function render()
     {
-        return view('livewire.people.index')->with('people', $this->filter());
+        return view('livewire.people.index')->with(['people' => $this->filter(), 'countPeople' => $this->countResults]);
     }
 
     public function redirectToVisitorsForm()
