@@ -11,7 +11,9 @@ class Service
     {
         return [
             'app' => [
+
                 'name' => config('app.name'),
+                'app_url' => config('app.url'),
                 'version' => '1.0', //Version::format('compact'),
             ],
 
