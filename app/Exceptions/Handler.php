@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (\Exception $e) {
             if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpException && $e->getStatusCode() == 419) {
-                return (new Redirector(App::get('url')))->route('login');
+                return (new Redirector(App::get('url')))->route('logout');
             }
         });
     }
