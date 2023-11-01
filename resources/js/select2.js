@@ -2,6 +2,7 @@
  * Select2
  */
 require('select2/dist/js/select2.min.js')
+import './support/ajax-select2'
 
 const defaultConfig = {
     theme: 'bootstrap-5',
@@ -20,10 +21,53 @@ window.getSelect2OptionsForElement = (element) => {
     return json
 }
 
+window.initCustomSelect2 = () => {
+    $('.open-visitors-select2').select2({
+        theme: 'bootstrap-5',
+        width: '100%',
+        language: 'pt-BR',
+        ajax: {
+            url: 'https://ocorrencias.test/api/visitors/open',
+            dataType: 'json',
+            delay: 250,
+            headers: {
+                Authorization: `Bearer ${window.laravel.accessToken}`,
+            },
+            data: function (params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page,
+                }
+            },
+            processResults: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1
+
+                return {
+                    results: data,
+                    pagination: {
+                        more: params.page * 30 < data.total_count,
+                    },
+                }
+            },
+            cache: true,
+        },
+        placeholder: 'Search for a repository',
+        minimumInputLength: 1,
+        templateResult: formatVisitor,
+        templateSelection: formatVisitorSelection,
+    })
+}
+
 window.initSelect2 = () => {
     $('.select2').each(function (key, value) {
         $(this).select2(window.getSelect2OptionsForElement(value))
     })
+
+    window.initCustomSelect2()
 }
 
 $(document).ready(function () {
@@ -118,12 +162,11 @@ $(document).ready(function () {
 $(document).on('select2:open', (e) => {
     const selectId = e.target.id
 
-    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(function (
-        key,
-        value,
-    ) {
-        value.focus()
-    })
+    $(".select2-search__field[aria-controls='select2-" + selectId + "-results']").each(
+        function (key, value) {
+            value.focus()
+        },
+    )
 })
 
 $.fn.select2.amd.define('select2/i18n/pt-BR', [], require('select2/src/js/select2/i18n/pt-BR'))

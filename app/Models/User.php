@@ -81,4 +81,18 @@ class User extends Authenticatable
     {
         return Attribute::make(get: fn($value) => convert_case($value, MB_CASE_UPPER));
     }
+
+    public function removeAccessTokens()
+    {
+        return $this->tokens()->where('personal_access_tokens.name', 'access')->delete();
+    }
+    public function afterAuthentication()
+    {
+        $this->removeAccessTokens();
+        $token = $this->createToken('access', $this->getAbilities()->pluck('name')->toArray())->plainTextToken;
+
+        $this->withAccessToken($token);
+        session()->put('access-token',$token);
+    }
+
 }

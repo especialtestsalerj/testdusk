@@ -177,7 +177,7 @@
 
                 @forelse ($visitors as $visitor)
                     <div class="cards-striped mx-lg-0 mt-lg-1 my-1">
-                        <div class="card cursor-pointer">
+                        <div class="card">
                             <div class="card-body py-lg-1">
                                 <div class="row d-flex align-items-center">
                                     <div class="col-12 col-lg-10">

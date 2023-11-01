@@ -286,6 +286,7 @@ class IndexForm extends BaseForm
         $this->clearWeapon();
         $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
+        $this->emit('updateCautionWeaponList');
     }
 
     public function delete()
@@ -296,6 +297,7 @@ class IndexForm extends BaseForm
 
         $this->cautionWeapons = CautionWeapon::where('caution_id', $this->caution_id)->get();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'weapon-modal']);
+        $this->emit('updateCautionWeaponList');
     }
 
     public function fillModel()

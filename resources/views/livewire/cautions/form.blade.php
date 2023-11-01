@@ -58,15 +58,13 @@
 
                 <div class="row">
                     <div class="col-md-12" wire:ignore>
+
                         <div class="form-group">
-                            <label for="visitor_id">Visitante*</label>
-                            <select class="form-select select2" name="visitor_id" id="visitor_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
-                                <option value="">SELECIONE</option>
-                                @foreach ($visitors as $key => $visitor)
-                                    <option value="{{ $visitor->id }}" @if($visitor->id == $visitor_id) selected="selected" @endif>
-                                        {{ $visitor->person->name }} - {{ $visitor->document->documentType->name }}: {{ $visitor->document->numberMaskered }}
-                                    </option>
-                                @endforeach
+                            <label for="visitor_id">Visitante* ({{\App\Models\Visitor::open()->count()}} em aberto)</label>
+                            <select @disabled(!$routine->status || request()->query('disabled')) id="visitor_id" name="visitor_id" class="open-visitors-select2">
+                                @if($mode == 'show')
+                                    <option value="{{$selectedVisitor->id}}" selected="selected">{{$selectedVisitor}}</option>
+                                @endIf
                             </select>
                             <div>
                                 @if(isset($msg_visitor))
