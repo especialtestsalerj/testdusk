@@ -96,6 +96,14 @@
 --}}
 
 
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="This top tooltip is themed via CSS variables.">
+                                                Custom tooltip
+                                            </button>
+
+
                                             <div class="row d-flex align-items-center">
                                                 <div class="col-10 pe-0 d-flex justify-content-end">
                                                     <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
@@ -103,7 +111,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-2 px-0 text-start text-white fix-align-top">
-                                                   <span class="badge bg-danger ">
+
+
+
+                                                   <span class="badge bg-danger" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top" title="TESTE 1 <BR> TESTE 2">
                                                        @if(count($visitor?->sectors) > 1)
                                                            +{{count($visitor?->sectors) - 1}}
                                                        @endif

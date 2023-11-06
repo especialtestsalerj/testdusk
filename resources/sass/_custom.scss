@@ -825,3 +825,7 @@ body.bg-logo {
 .fix-align-top {
     margin-top: -8px;
 }
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}
