@@ -13,7 +13,7 @@ class VisitorsCard extends Component
 {
     public $name;
     public $document;
-    public $sector;
+    public $sectors;
     public $reason;
     public $entranced;
     public $exited;
@@ -45,7 +45,7 @@ class VisitorsCard extends Component
         $this->visitorId = $visitor->id ?? '';
         $this->name = $visitor->person->name ?? '';
         $this->document = $visitor->document ?? '';
-        $this->sector = $visitor->sector ?? '';
+        $this->sectors = $visitor->sectors ?? '';
         $this->reason = $visitor->description ?? '';
         $this->entranced = $visitor->entranced_at;
         $this->visitorPhoto = $visitor->photo;

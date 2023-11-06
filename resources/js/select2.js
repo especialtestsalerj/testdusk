@@ -59,6 +59,25 @@ window.initCustomSelect2 = () => {
         templateResult: formatVisitor,
         templateSelection: formatVisitorSelection,
     })
+
+    $('.open-visitors-select2').on('change', function (e) {
+        var data = e.target.value
+        var name = e.target.name
+
+        window.updateLivewireField(data,name)
+
+    })
+
+
+}
+
+window.updateLivewireField = function(data, name){
+    const livewireComponents = window.Livewire.all()
+    livewireComponents.forEach((component) => {
+        if (component.get(name) !== undefined) {
+            component.set(name, data)
+        }
+    })
 }
 
 window.initSelect2 = () => {
@@ -149,12 +168,8 @@ $(document).ready(function () {
         var data = e.target.value
         var name = e.target.name
 
-        const livewireComponents = window.Livewire.all()
-        livewireComponents.forEach((component) => {
-            if (component.get(name) !== undefined) {
-                component.set(name, data)
-            }
-        })
+        window.updateLivewireField(data,name)
+
     })
 })
 

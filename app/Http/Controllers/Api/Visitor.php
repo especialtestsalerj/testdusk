@@ -9,6 +9,7 @@ class Visitor extends Controller
 {
     public function openVisitors(BaseRequest $request)
     {
+
         $searchString = request()->query('q');
 
         return VisitorModel::with(['person', 'document'])->open()->when($searchString, fn($query) =>

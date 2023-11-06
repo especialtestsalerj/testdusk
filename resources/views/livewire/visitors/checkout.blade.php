@@ -94,7 +94,7 @@
                                                     </div>--}}
                                                     <div class="col-12">
                                                         <div class="badge text-truncate rounded-pill bg-secondary mb-2">
-                                                            {{ $visitor->sector->name ?? '' }}
+                                                            {{ $visitor->sectorsResumed ?? '' }}
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
@@ -194,7 +194,7 @@
                                                                 </div>
                                                                 <div class="col-3 col-lg-5 text-center">
                                                                     <span data-label="Destino">
-                                                                        {{ $visitor?->sector?->name ?? '-' }}
+                                                                        {{ $visitor?->sectorsResumed ?? '-' }}
                                                                     </span>
                                                                 </div>
                                                             </div>

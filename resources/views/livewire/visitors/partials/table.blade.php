@@ -66,7 +66,11 @@
                                         <div class="col-12">
 
                                             <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
-                                                {{ $visitor?->sector?->name ?? '-' }}
+                                                {{$visitor?->sectors?->first()->name}}
+                                            @if(count($visitor?->sectors) > 1)
+                                                <br />
+                                                +{{count($visitor?->sectors) - 1}}
+                                                @endif
                                             </div>
                                             <div data-label="Entrada">
                                                 Entrada:
@@ -222,7 +226,7 @@
                                                     </div>
                                                     <div class="col-3 col-lg-4 text-center">
                                                         <div data-label="Setor de Destino">
-                                                            {{ $visitor?->sector?->name ?? '-' }}
+                                                            {{ $visitor?->sectorsResumed ?? '-' }}
                                                         </div>
                                                     </div>
                                                 </div>

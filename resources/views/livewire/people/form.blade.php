@@ -341,7 +341,8 @@
                                                     </div>
 
                                                     <div class="col-12 col-lg-5 text-center text-lg-start">
-                                                        <span class="fw-bold">Destino(s):</span> {{ $visitor->sector->name }}
+                                                        <span class="fw-bold">Destino(s):</span>
+                                                        {{ $visitor?->sectorsResumed }}
                                                     </div>
                                                     <div class="col-12 col-lg-3 text-center text-lg-start">
                                                         <span class="fw-bold">Entrada:</span> {{ $visitor->entranced_at->format('d/m/Y H:i')  }}

@@ -15,6 +15,11 @@ class Sector extends Model
     {
         $request = new SectorDestroy($this->toArray());
 
+
         return Validator::make($request->all(), $request->rules())->fails();
+    }
+
+    public function visitors(){
+        return $this->belongsToMany(Visitor::class);
     }
 }

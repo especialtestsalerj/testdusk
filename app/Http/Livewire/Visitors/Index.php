@@ -70,8 +70,8 @@ class Index extends BaseIndex
                     "')||'%')"
             );
             $query = $query->orWhereRaw(
-                "visitors.sector_id in (select id from sectors s
-             where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
+                "visitors.id in (select sv.visitor_id from sectors s, sector_visitor sv
+             where sv.sector_id = s.id and  regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
                     pg_escape_string(remove_punctuation($this->searchString)) .
                     "')||'%')"
             );

@@ -253,7 +253,11 @@
                     <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->person?->name)) }}">{{ mount_text($printVisitor?->person?->name) }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sector?->name)) }}">{{ mount_text($printVisitor?->sector?->name) }}</td>
+{{--                    {{dump($printVisitor?->sectors)}}--}}
+                    <td colspan="3" class="badge-text text-center {{ mount_css_text(mount_text($printVisitor?->sectors?->first()?->name)) }}">
+                        {{ mount_text($printVisitor?->sectors?->first()?->name) }}
+                        @if(!is_null($printVisitor?->sectors) &&  count($printVisitor?->sectors) > 1)&nbsp;+{{count($printVisitor?->sectors) - 1}}@endif
+                    </td>
                 </tr>
             </table>
         </div>
