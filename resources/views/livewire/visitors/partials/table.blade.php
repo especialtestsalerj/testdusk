@@ -65,6 +65,53 @@
                                     <div class="row mt-2">
                                         <div class="col-12">
 
+
+                                            {{--
+                                            <div class="row d-flex mb-3">
+                                                <div class="col-10 align-self-center bd-highlight text-truncate">
+
+                                                    <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
+                                                        {{$visitor?->sectors?->first()->name}}
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-2 align-self-center bd-highlight fix-align-top">
+                                                    <span class="badge bg-danger text-white">
+                                                        @if(count($visitor?->sectors) > 1)
+                                                            +{{count($visitor?->sectors) - 1}}
+                                                        @endif
+                                                   </span>
+                                                </div>
+                                            </div>
+                                             --}}
+                                            {{--
+                                            <button type="button" class="badge text-truncate rounded-pill bg-secondary mb-1">
+                                                {{$visitor?->sectors?->first()->name}}
+                                            </button>
+                                            <span class="badge bg-danger text-white">
+                                                    @if(count($visitor?->sectors) > 1)
+                                                    +{{count($visitor?->sectors) - 1}}
+                                                @endif
+                                            </span>
+--}}
+
+
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-10 pe-0 d-flex justify-content-end">
+                                                    <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
+                                                        {{$visitor?->sectors?->first()->name}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 px-0 text-start text-white fix-align-top">
+                                                   <span class="badge bg-danger ">
+                                                       @if(count($visitor?->sectors) > 1)
+                                                           +{{count($visitor?->sectors) - 1}}
+                                                       @endif
+                                                   </span>
+                                                </div>
+                                            </div>
+
+                                            {{--
                                             <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
                                                 {{$visitor?->sectors?->first()->name}}
                                             @if(count($visitor?->sectors) > 1)
@@ -72,6 +119,8 @@
                                                 +{{count($visitor?->sectors) - 1}}
                                                 @endif
                                             </div>
+                                            --}}
+
                                             <div data-label="Entrada">
                                                 Entrada:
                                                 <strong>{!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}</strong>
