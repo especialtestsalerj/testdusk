@@ -96,12 +96,12 @@
 --}}
 
 
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-custom-class="custom-tooltip"
-                                                    data-bs-title="This top tooltip is themed via CSS variables.">
-                                                Custom tooltip
-                                            </button>
+{{--                                            <button type="button" class="btn btn-secondary"--}}
+{{--                                                    data-bs-toggle="tooltip" data-bs-placement="top"--}}
+{{--                                                    data-bs-custom-class="custom-tooltip"--}}
+{{--                                                    data-bs-title="This top tooltip is themed via CSS variables.">--}}
+{{--                                                Custom tooltip--}}
+{{--                                            </button>--}}
 
 
                                             <div class="row d-flex align-items-center">
@@ -110,27 +110,19 @@
                                                         {{$visitor?->sectors?->first()->name}}
                                                     </div>
                                                 </div>
-                                                <div class="col-2 px-0 text-start text-white fix-align-top">
+                                                @if(count($visitor?->sectors) > 1)
+                                                    <div class="col-2 px-0 text-start text-white fix-align-top">
 
-
-
-                                                   <span class="badge bg-danger" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top" title="TESTE 1 <BR> TESTE 2">
-                                                       @if(count($visitor?->sectors) > 1)
-                                                           +{{count($visitor?->sectors) - 1}}
-                                                       @endif
-                                                   </span>
-                                                </div>
-                                            </div>
-
-                                            {{--
-                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
-                                                {{$visitor?->sectors?->first()->name}}
-                                            @if(count($visitor?->sectors) > 1)
-                                                <br />
-                                                +{{count($visitor?->sectors) - 1}}
+                                                       <span class="badge bg-danger" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top"
+                                                             data-bs-html="true"
+                                                             title="@foreach($visitor?->sectors as $sector)
+{{$sector->name}}
+@endforeach">
+                                                               +{{count($visitor->sectors) - 1}}
+                                                       </span>
+                                                    </div>
                                                 @endif
                                             </div>
-                                            --}}
 
                                             <div data-label="Entrada">
                                                 Entrada:
