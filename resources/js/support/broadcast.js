@@ -4,7 +4,7 @@
 
 import Echo from 'laravel-echo'
 
-if (window.laravel.broadcast) {
+if (window.laravel.broadcast && window.laravel.broadcast.driver == 'pusher') {
     window.Pusher = require('pusher-js')
     // Pusher.logToConsole = true
 
