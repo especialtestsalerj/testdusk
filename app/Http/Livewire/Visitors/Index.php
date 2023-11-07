@@ -50,37 +50,36 @@ class Index extends BaseIndex
     }
 
     public function additionalOrFilterQuery($query)
-    {
-        if (!is_null($this->searchString) && $this->searchString != '') {
-            //Busca na tabela de people
-            $query = $query->orWhereRaw(
-                "visitors.person_id in (select id from people p
-             where p.full_name ILIKE '%'||unaccent('" .
-                    pg_escape_string($this->searchString) .
-                    "')||'%'
-                                        or p.social_name ILIKE '%'||unaccent('" .
-                    pg_escape_string($this->searchString) .
-                    "')||'%' )"
-            );
-            //busca na tabela de documentos
-            $query = $query->orWhereRaw(
-                "visitors.person_id in (select person_id from documents d
-             where regexp_replace(d.number, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
-                    pg_escape_string(remove_punctuation($this->searchString)) .
-                    "')||'%')"
-            );
-            $query = $query->orWhereRaw(
-                "visitors.sector_id in (select id from sectors s
-             where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
-                    pg_escape_string(remove_punctuation($this->searchString)) .
-                    "')||'%')"
-            );
-        }
+{
+    if (!is_null($this->searchString) && $this->searchString != '') {
+        $accentedSearchString = pg_escape_string($this->searchString);
+        $unaccentedSearchString = remove_punctuation($this->searchString);
 
-        $query->with('document.documentType');
+        // Busca na tabela de people
+        $query = $query->orWhereRaw(
+            "visitors.person_id in (select id from people p
+            where unaccent(p.full_name) ILIKE '%'||unaccent('" . $accentedSearchString . "')||'%'
+            or unaccent(p.social_name) ILIKE '%'||unaccent('" . $accentedSearchString . "')||'%' )"
+        );
 
-        return $query;
+        // Busca na tabela de documentos
+        $query = $query->orWhereRaw(
+            "visitors.person_id in (select person_id from documents d
+            where regexp_replace(d.number, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" . $unaccentedSearchString . "')||'%')"
+        );
+
+        // Busca na tabela de setores
+        $query = $query->orWhereRaw(
+            "visitors.sector_id in (select id from sectors s
+            where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" . $unaccentedSearchString . "')||'%')"
+        );
     }
+
+    $query->with('document.documentType');
+
+    return $query;
+}
+
 
     public function additionalFilterQuery($query)
     {
