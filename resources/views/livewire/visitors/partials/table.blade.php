@@ -119,7 +119,7 @@
                                                               data-bs-placement="top"
                                                               data-bs-custom-class="custom-tooltip"
                                                               data-bs-html="true"
-                                                              data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold border-bottom mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
+                                                              data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
                                                             +{{count($visitor->sectors) - 1}}
                                                         </span>
 
