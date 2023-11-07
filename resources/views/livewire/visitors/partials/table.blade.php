@@ -113,13 +113,25 @@
                                                 @if(count($visitor?->sectors) > 1)
                                                     <div class="col-2 px-0 text-start text-white fix-align-top">
 
+
+                                                        <span class="badge bg-danger rounded-circle more-destinys"
+                                                              data-bs-toggle="tooltip"
+                                                              data-bs-placement="top"
+                                                              data-bs-custom-class="custom-tooltip"
+                                                              data-bs-html="true"
+                                                              data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold border-bottom mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
+                                                            +{{count($visitor->sectors) - 1}}
+                                                        </span>
+
+
+{{--
                                                        <span class="badge bg-danger" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top"
                                                              data-bs-html="true"
-                                                             title="@foreach($visitor?->sectors as $sector)
-{{$sector->name}}
-@endforeach">
+                                                             title="@foreach($visitor?->sectors as $sector){{$sector->name}}@endforeach">
                                                                +{{count($visitor->sectors) - 1}}
                                                        </span>
+
+                                                        --}}
                                                     </div>
                                                 @endif
                                             </div>

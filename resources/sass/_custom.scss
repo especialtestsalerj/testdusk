@@ -827,5 +827,19 @@ body.bg-logo {
 }
 
 .custom-tooltip {
-    --bs-tooltip-bg: var(--bs-primary);
+    --bs-tooltip-bg: var(--bs-info);
+    --#{$prefix}tooltip-max-width: 450px;
+    --#{$prefix}tooltip-padding-x: 20px;
+    --#{$prefix}tooltip-padding-y: 20px;
+    font-weight: bold;
+}
+
+.more-destinys {
+    padding: 6px 6px 5px 6px;
+}
+
+.multiple-destiny {
+    &:last-of-type {
+        border-bottom: none !important;
+    }
 }
