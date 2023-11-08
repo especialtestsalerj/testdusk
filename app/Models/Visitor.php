@@ -55,8 +55,7 @@ class Visitor extends Model
         if(count($this->sectors) > 1){
             $othersSectors = ' +'. count($this->sectors) - 1;
         }
-
-        //dd( $this->sectors);
+        
         return $this->sectors?->first()?->name . $othersSectors;
     }
 
