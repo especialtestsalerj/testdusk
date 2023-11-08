@@ -218,7 +218,11 @@
                     </tr>
                     <tr>
                         <td class="bold">DESTINO: </td>
-                        <td>{{ $caution->visitor?->sector?->name }}</td>
+                        <td>
+                            @foreach($caution->visitor?->sectors as $sector)
+                                {{ $sector->name  }}&nbsp;
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td class="bold">ARMA(S): </td>

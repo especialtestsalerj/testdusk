@@ -24,8 +24,10 @@
 
             <div class="col-md-12 mb-3">
                 <label for="sector">Destino</label>
-                <select name="sector" id="sector" class="form-select" disabled>
-                    <option selected value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
+                <select name="sector" id="sector" class="form-select" multiple disabled>
+                    @foreach($sectors as $sector)
+                        <option  value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
+                    @endforeach
                 </select>
             </div>
 

@@ -17,7 +17,7 @@ class SectorDestroy extends SectorStore
             'id' => [
                 'required',
                 Rule::unique('events', 'sector_id'),
-                Rule::unique('visitors', 'sector_id'),
+                Rule::unique('sector_visitor', 'sector_id'),
                 Rule::unique('stuffs', 'sector_id'),
             ],
         ];

@@ -24,7 +24,7 @@
                                 <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Destino:</span> {{ $caution->visitor?->sector?->name }}
+                                <span class="fw-bold">Destino:</span> {{ $caution->visitor?->sectorsResumed }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Plantonista:</span> {{ $caution->dutyUser->name }}
@@ -101,8 +101,8 @@
                                 <div class="form-group">
                                     <label for="sector_id">Destino</label>
                                     <select class="form-select form-control" name="sector_name" id="sector_id" disabled>
-                                        <option value="{{ $caution->visitor?->sector?->name }}" selected="selected">
-                                            {{ $caution->visitor?->sector?->name }}</option>
+                                        <option value="{{ $caution->visitor?->sectorsResumed }}" selected="selected">
+                                            {{ $caution->visitor?->sectorsResumed }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

@@ -48,7 +48,7 @@ class Form extends BaseForm
 
     public function hydrate()
     {
-        $this->visitor->load('sector');
+        $this->visitor->load('sectors');
     }
     public function updated($name, $value)
     {

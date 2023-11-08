@@ -70,8 +70,10 @@ class Index extends BaseIndex
 
         // Busca na tabela de setores
         $query = $query->orWhereRaw(
-            "visitors.sector_id in (select id from sectors s
-            where regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" . $unaccentedSearchString . "')||'%')"
+            "visitors.id in (select sv.visitor_id from sectors s, sector_visitor sv
+             where sv.sector_id = s.id and  regexp_replace(s.name, '[^a-zA-Z0-9]', '', 'g') ILIKE '%'||unaccent('" .
+            pg_escape_string(remove_punctuation($this->searchString)) .
+            "')||'%')"
         );
     }
 

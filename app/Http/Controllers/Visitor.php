@@ -67,7 +67,9 @@ class Visitor extends Controller
 
         $request->merge(['document_id' => $document->id]);
 
-        app(VisitorsRepository::class)->create($request->all());
+        $visitor = app(VisitorsRepository::class)->create($request->all());
+
+        $visitor->sectors()->attach($request->get('sector_id'));
 
         return redirect()
             ->route('visitors.index')
@@ -100,13 +102,17 @@ class Visitor extends Controller
 
     public function update(VisitorUpdate $request, $id)
     {
+
+
         if ($request->get('visitor_id') != $id) {
             abort(400);
         }
 
         $request = $this->storeAvatar($request);
 
-        app(VisitorsRepository::class)->update($id, $request->all());
+        $visitor = app(VisitorsRepository::class)->update($id, $request->all());
+
+        $visitor->sectors()->sync($request->get('sector_id'));
 
         return redirect()
             ->route('visitors.index')
@@ -115,6 +121,7 @@ class Visitor extends Controller
 
     public function card(Request $request, $uuid = null)
     {
+
         if ($uuid) {
             if (Uuid::isValid($uuid)) {
                 $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();

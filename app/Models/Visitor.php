@@ -13,7 +13,6 @@ class Visitor extends Model
         'entranced_at',
         'exited_at',
         'person_id',
-        'sector_id',
         'description',
         'document_id',
         'avatar_id',
@@ -44,9 +43,20 @@ class Visitor extends Model
         return $this->hasMany(Caution::class);
     }
 
-    public function sector()
+
+    public function sectors()
     {
-        return $this->belongsTo(Sector::class, 'sector_id');
+        return $this->belongsToMany(Sector::class);
+    }
+
+    public function getSectorsResumedAttribute()
+    {
+        $othersSectors = '';
+        if(count($this->sectors) > 1){
+            $othersSectors = ' +'. count($this->sectors) - 1;
+        }
+        
+        return $this->sectors?->first()?->name . $othersSectors;
     }
 
     public function getEntrancedAtFormattedAttribute()

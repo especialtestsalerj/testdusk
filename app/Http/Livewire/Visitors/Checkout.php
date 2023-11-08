@@ -147,7 +147,8 @@ class Checkout extends BaseIndex
         if ($this->searchName) {
             $query = $query
                 ->join('people', 'visitors.person_id', '=', 'people.id')
-                ->join('sectors', 'visitors.sector_id', '=', 'sectors.id')
+                ->join('sector_visitor', 'visitors.id', '=', 'sector_visitor.visitor_id')
+                ->join('sectors', 'sector_visitor.sector_id', '=', 'sectors.id')
 
                 ->where(function ($query) {
                     $query

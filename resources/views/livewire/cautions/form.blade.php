@@ -81,14 +81,18 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_name">Destino</label>
-                            <input
-                                type="text"
-                                class="form-control text-uppercase"
-                                name="destiny_sector_name"
-                                id="destiny_sector_name"
-                                value="{{$this->destinySectorName}}"
-                                @disabled(true)
+                            <select class="form-select select2"
+                                    name="destiny_sector_name"
+                                    id="destiny_sector_name"
+                                    multiple
+                            @disabled(true)
                             >
+                                @if(!empty($this->sectors))
+                                @foreach($this->sectors as $sector)
+                                    <option selected>{{$sector->name}}</option>
+                                @endforeach
+                                    @endif
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -64,10 +64,30 @@
                                 <div class="col-7 d-flex flex-column visitor-data">
                                     <div class="row mt-2">
                                         <div class="col-12">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-10 pe-0 d-flex justify-content-end">
+                                                    <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
+                                                        {{$visitor?->sectors?->first()->name}}
+                                                    </div>
+                                                </div>
+                                                @if(count($visitor?->sectors) > 1)
+                                                    <div class="col-2 px-0 text-start text-white fix-align-top">
 
-                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
-                                                {{ $visitor?->sector?->name ?? '-' }}
+
+                                                        <span class="badge bg-danger rounded-circle more-destinys"
+                                                              data-bs-toggle="tooltip"
+                                                              data-bs-placement="top"
+                                                              data-bs-custom-class="custom-tooltip"
+                                                              data-bs-html="true"
+                                                              data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
+                                                            +{{count($visitor->sectors) - 1}}
+                                                        </span>
+
+
+                                                    </div>
+                                                @endif
                                             </div>
+
                                             <div data-label="Entrada">
                                                 Entrada:
                                                 <strong>{!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}</strong>
@@ -222,7 +242,7 @@
                                                     </div>
                                                     <div class="col-3 col-lg-4 text-center">
                                                         <div data-label="Setor de Destino">
-                                                            {{ $visitor?->sector?->name ?? '-' }}
+                                                            {{ $visitor?->sectorsResumed ?? '-' }}
                                                         </div>
                                                     </div>
                                                 </div>

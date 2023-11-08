@@ -22,7 +22,7 @@ class CreateForm extends BaseForm
     public $caution_id;
     public $selectedId;
 
-    public $sector;
+    public $sectors;
 
     public $started_at;
     public $concluded_at;
@@ -64,7 +64,7 @@ class CreateForm extends BaseForm
 
     public function getDestinySectorNameProperty()
     {
-        return $this->sector?->name ?? '';
+        return $this->destiny_sector_name ?? '';
     }
 
     public function updatedVisitorId()
@@ -90,7 +90,8 @@ class CreateForm extends BaseForm
         if (!empty($this->visitor_id)) {
             //            $this->select2SelectOption('visitor_id', $this->visitor_id);
             $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
-            $this->sector = $visitor->sector;
+            $this->destiny_sector_name = $visitor->sectorsResumed;
+            $this->sectors= $visitor->sectors;
 
             $this->loadCertificates($visitor);
 

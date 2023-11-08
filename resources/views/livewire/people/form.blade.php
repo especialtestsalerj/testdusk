@@ -187,7 +187,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <div class="row my-2">
-                            <div class="col-sm-8 align-self-center">
+                            <div class="col-sm-6 align-self-center">
                                 <h3 class="mb-0"><i class="fa fa-id-card"></i>
                                     Documentos
                                 </h3>
@@ -317,6 +317,61 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="row my-2">
+                            <div class="col-sm-8 align-self-center">
+                                <h3 class="mb-0"><i class="fa fa-people-roof"></i>
+                                    Visitas ({{count($person->visitors)}})
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @forelse($person->visitors as $visitor)
+                                <div class="col-md-12">
+                                    <div class="cards-striped mx-lg-0 mt-lg-2">
+                                        <div class="card">
+                                            <div class="card-body py-1">
+                                                <div class="row d-flex align-items-center">
+
+                                                    <div class="col-4 col-lg-1 text-center text-lg-start" data-label="Foto">
+                                                        <img class="w-50" src="{{ $visitor->photoTable }}">
+                                                    </div>
+
+                                                    <div class="col-12 col-lg-5 text-center text-lg-start">
+                                                        <span class="fw-bold">Destino(s):</span>
+                                                        {{ $visitor?->sectorsResumed }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
+                                                        <span class="fw-bold">Entrada:</span> {{ $visitor->entranced_at->format('d/m/Y H:i')  }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-3 text-center text-lg-start">
+                                                        <span class="fw-bold">Saída:</span>
+                                                        @if (isset($visitor?->exited_at))
+                                                                {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
+                                                        @else
+                                                            <span class="badge bg-warning text-black">EM ABERTO</span>
+                                                        @endif
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning mt-2">
+                                        <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhuma Visita encontrada.
+                                    </div>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    </div>
                 </div>
             </div>
         </form>
