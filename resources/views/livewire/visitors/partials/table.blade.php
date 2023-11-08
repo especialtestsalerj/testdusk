@@ -64,10 +64,6 @@
                                 <div class="col-7 d-flex flex-column visitor-data">
                                     <div class="row mt-2">
                                         <div class="col-12">
-
-
-
-
                                             <div class="row d-flex align-items-center">
                                                 <div class="col-10 pe-0 d-flex justify-content-end">
                                                     <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">

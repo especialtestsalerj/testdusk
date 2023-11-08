@@ -49,8 +49,6 @@ class Visitor extends Controller
     {
         $request = $this->storeAvatar($request);
 
-        //dd($request);
-
         $person = app(PeopleRepository::class)->createOrUpdateFromRequest($request->all());
 
         $request->merge(['person_id' => $person->id]);

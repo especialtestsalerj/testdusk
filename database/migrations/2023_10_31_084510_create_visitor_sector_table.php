@@ -39,9 +39,6 @@ return new class extends Migration
             $table->dropColumn('sector_id');
         });
 
-//        dd('fim');
-
-
     }
 
     /**

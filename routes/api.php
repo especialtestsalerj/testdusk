@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('visitors/open',
     [VisitorApi::class, 'openVisitors']
-)//->middleware(['auth:sanctum', 'abilities:visitors:show'])
+)->middleware(['auth:sanctum', 'abilities:visitors:show'])
     ->name('visitors.open');
