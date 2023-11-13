@@ -67,17 +67,17 @@ Utilizar o [SGUS](http://intranet/sgus/) para definir os perfis e usuários.
 ### Atualização
 
 ```
-Executar, para o Ocorrencias de produção, os itens (1), (2) e (3), sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
+Executar, para o SIGVISITAS de produção (pasta sigvisitas do servidor LnxProd01), os itens (1), (2) e (3), sendo executado pelo usuário www-data. Caso seja executado por outro usuário, favor colocar "sudo -u www-data" antes de todos os comandos.
 
 ------------------------------------
 
-(1) Executar o comando a partir da pasta de produção do Ocorrencias para entrar em modo de manutenção
+(1) Executar o comando a partir da pasta de produção do Sigvisitas para entrar em modo de manutenção
 
 php artisan down
 
 ------------------------------------
 
-(2) Atualizar a versão de produção do Ocorrencias. Executar os comandos
+(2) Atualizar a versão de produção do Sigvisitas. Executar os comandos
 
 Após o 'git pull', rodar os comandos:
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
@@ -90,11 +90,11 @@ php artisan route:clear
 
 Reiniciar o Horizon
 
-Dar permissionamento de owner para a pasta e todos os arquivos internos (Exemplo: sudo chown -R www-data:www-data ocorrencias/)
+Dar permissionamento de owner para a pasta e todos os arquivos internos (Exemplo: sudo chown -R www-data:www-data sigvisitas/)
 
 ------------------------------------
 
-(3) Executar o comando a partir da pasta de produção do Ocorrencias para sair do modo de manutenção
+(3) Executar o comando a partir da pasta de produção do Sigvisitas para sair do modo de manutenção
 
 php artisan up
 ```
