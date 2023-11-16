@@ -67,7 +67,7 @@
                                             <div class="row d-flex align-items-center">
                                                 <div class="col-10 pe-0 d-flex justify-content-end">
                                                     <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
-                                                        {{$visitor?->sectors?->first()->name}}
+                                                        {{$visitor?->sectors?->first()?->name}}
                                                     </div>
                                                 </div>
                                                 @if(count($visitor?->sectors) > 1)
