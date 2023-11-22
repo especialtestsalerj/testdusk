@@ -65,15 +65,13 @@
                                     <div class="row mt-2">
                                         <div class="col-12">
                                             <div class="row d-flex align-items-center">
-                                                <div class="col-10 pe-0 d-flex justify-content-end">
+                                                <div class="col-10 pe-0 d-flex justify-content-start">
                                                     <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
                                                         {{$visitor?->sectors?->first()?->name}}
                                                     </div>
                                                 </div>
                                                 @if(count($visitor?->sectors) > 1)
                                                     <div class="col-2 px-0 text-start text-white fix-align-top">
-
-
                                                         <span class="badge bg-danger rounded-circle more-destinys"
                                                               data-bs-toggle="tooltip"
                                                               data-bs-placement="top"
@@ -82,8 +80,6 @@
                                                               data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
                                                             +{{count($visitor->sectors) - 1}}
                                                         </span>
-
-
                                                     </div>
                                                 @endif
                                             </div>
@@ -113,14 +109,12 @@
 
                                     <div class="row card-buttons mt-auto d-flex">
                                         <div class="d-flex justify-content-center">
-                                            <div class="col-3 justify-content-center">
-                                            <span class="btn btn-link px-0 pt-0 pb-1"
-                                                  wire:click="generateBadge({{ $visitor->id }})"
-                                                  title="Imprimir Etiqueta">
+                                            <div class="col-3 text-center">
+                                                <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
                                                 <i class="fa fa-lg fa-print"></i>
-                                            </span>
+                                                </span>
                                             </div>
-                                            <div class="col-3 justify-content-center">
+                                            <div class="col-3 text-center">
                                                 @can('visitors:show')
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
@@ -128,7 +122,7 @@
                                                     </a>
                                                 @endCan
                                             </div>
-                                            <div class="col-3 justify-content-center">
+                                            <div class="col-3 text-center">
                                                 @can('visitors:update')
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
@@ -136,7 +130,6 @@
                                                     </a>
                                                 @endCan
                                             </div>
-
                                         </div>
 
                                     </div>
