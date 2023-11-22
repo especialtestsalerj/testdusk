@@ -68,16 +68,24 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11px;
             color: #000;
-            width: 72mm;
-            height: 40mm;
-            margin-top: 2mm;
+            width: 78mm;
+            height: 46mm;
+            /*margin-top: 2mm;
             margin-right: 4mm;
             margin-bottom: 4mm;
             margin-left: 5mm;
             padding-top: 4mm;
             padding-right: -8mm;
             padding-bottom: 0;
-            padding-left: -6mm;
+            padding-left: -6mm;*/
+            text-align: left !important;
+            /*margin-left: -3mm;
+            margin-bottom: -6mm;*/
+
+            margin-top: 2mm;
+            margin-right: 4mm;
+            margin-bottom: -6mm;
+            margin-left: 2mm;
         }
 
         body.bg-light, #badge {
@@ -85,7 +93,8 @@
         }
 
         #badge table {
-            width: 100%;
+            width: 68mm;
+            height: 40mm;
         }
 
         #badge table td {
@@ -143,12 +152,8 @@
             color: #000;
             width: 72mm;
             height: 40mm;
-
             margin-right: 4mm;
             margin-left: 5mm;
-            /*margin-top: 2mm;*/
-            /*margin-bottom: 4mm;*/
-            /*padding-top: 4mm;*/
             padding-right: -8mm;
             padding-bottom: 0;
             padding-left: -6mm;
