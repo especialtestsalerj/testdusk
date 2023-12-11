@@ -20,6 +20,7 @@ class Routine extends Model
         'exited_user_id',
         'exited_obs',
         'status',
+        'building_id',
     ];
 
     protected $casts = [
@@ -92,5 +93,10 @@ class Routine extends Model
             ->whereNull('concluded_at')
             ->orderBy('protocol_number')
             ->get();
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

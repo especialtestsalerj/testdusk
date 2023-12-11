@@ -16,6 +16,7 @@ class Visitor extends Model
         'description',
         'document_id',
         'avatar_id',
+        'building_id',
     ];
 
     protected $casts = [
@@ -55,7 +56,7 @@ class Visitor extends Model
         if(count($this->sectors) > 1){
             $othersSectors = ' +'. count($this->sectors) - 1;
         }
-        
+
         return $this->sectors?->first()?->name . $othersSectors;
     }
 
@@ -193,5 +194,10 @@ class Visitor extends Model
         return Visitor::where('person_id', $this->person_id)
             ->whereNull('exited_at')
             ->exists();
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }
