@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Sector extends Model
 {
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'building_id'];
 
     protected $filterableColumns = ['name', 'status'];
 
@@ -19,6 +19,10 @@ class Sector extends Model
         return Validator::make($request->all(), $request->rules())->fails();
     }
 
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
+    }
     public function visitors(){
         return $this->belongsToMany(Visitor::class);
     }
