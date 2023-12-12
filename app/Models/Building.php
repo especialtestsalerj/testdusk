@@ -7,20 +7,23 @@ use Illuminate\Support\Facades\Validator;
 
 class Building extends Model
 {
-    protected $fillable = ['name', 'created_by_id', 'updated_by_id'];
+    protected $fillable = ['name', 'slug', 'created_by_id', 'updated_by_id'];
     public function building()
     {
         return $this->belongsTo(Building::class);
     }
-    public function visitors(){
+    public function visitors()
+    {
         return $this->belongsToMany(Visitor::class);
     }
 
-    public function routines(){
+    public function routines()
+    {
         return $this->belongsToMany(Routine::class);
     }
 
-    public function sectors(){
+    public function sectors()
+    {
         return $this->belongsToMany(Sector::class);
     }
 }

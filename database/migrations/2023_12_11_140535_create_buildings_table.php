@@ -18,6 +18,7 @@ return new class extends Migration {
         Schema::create('buildings', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->string('slug');
 
             $table
                 ->bigInteger('created_by_id')
@@ -43,11 +44,11 @@ return new class extends Migration {
 
         login_as_system();
 
-        $building = new Building(['name' => 'Edifício Lúcio Costa']);
+        $building = new Building(['name' => 'Edifício Lúcio Costa', 'slug' => 'lucio-costa']);
         $building->save();
         $lucioCostaId = $building->id;
 
-        $building = new Building(['name' => 'Palácio Tiradentes']);
+        $building = new Building(['name' => 'Palácio Tiradentes', 'slug' => 'palacio-tiradentes']);
         $building->save();
 
         foreach ($this->referenceTables as $table) {

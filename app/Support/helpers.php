@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Data\Repositories\Buildings;
 
 function only_letters_and_space($string)
 {
@@ -351,7 +352,8 @@ function mask_protocol_number($protocol_number)
     return $codigo . '/' . $ano;
 }
 
-function access_token(){
+function access_token()
+{
     return session()->get('access-token');
 }
 function protocol_number_masked_to_bigint($protocol_number_masked)
@@ -581,6 +583,10 @@ function mime2ext($mime)
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
 
+function get_current_building_id()
+{
+    return session()->get('building_id') ?? app(Buildings::class)->getMainBuilding()->id;
+}
 function convert_case($text, $type)
 {
     return is_null($text) ? $text : mb_convert_case($text, $type);
