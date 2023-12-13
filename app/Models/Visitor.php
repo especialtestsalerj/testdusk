@@ -5,6 +5,7 @@ use App\Services\QrCode\Service;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Scopes\InCurrentBuilding;
 
 class Visitor extends Model
 {
@@ -23,6 +24,12 @@ class Visitor extends Model
         'entranced_at' => 'datetime:Y-m-d H:i',
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
 
     protected static function booted()
     {
@@ -44,7 +51,6 @@ class Visitor extends Model
         return $this->hasMany(Caution::class);
     }
 
-
     public function sectors()
     {
         return $this->belongsToMany(Sector::class);
@@ -53,8 +59,8 @@ class Visitor extends Model
     public function getSectorsResumedAttribute()
     {
         $othersSectors = '';
-        if(count($this->sectors) > 1){
-            $othersSectors = ' +'. count($this->sectors) - 1;
+        if (count($this->sectors) > 1) {
+            $othersSectors = ' +' . count($this->sectors) - 1;
         }
 
         return $this->sectors?->first()?->name . $othersSectors;

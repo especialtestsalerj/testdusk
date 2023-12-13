@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\InCurrentBuilding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CautionWeapon extends Model
@@ -19,12 +20,19 @@ class CautionWeapon extends Model
         'cabinet_id',
         'shelf_id',
         'old_id',
+        'building_id',
     ];
 
     protected $casts = [
         'entranced_at' => 'datetime:Y-m-d H:i',
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
 
     public function weaponType()
     {
@@ -54,5 +62,10 @@ class CautionWeapon extends Model
     public function getExitedAtFormattedAttribute()
     {
         return $this->exited_at?->format('Y-m-d H:i');
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

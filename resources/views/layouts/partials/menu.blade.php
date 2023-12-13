@@ -11,6 +11,12 @@
             </button>
         </div>
 
+        <select id="session_building_id" name="session_building_id">
+            @forEach($environment['app']['allowedBuildings'] as $building)
+                <option value="{{ $building->id}}">{{$building->name}}</option>
+            @endForEach
+        </select>
+
         <div class="navbar-collapse collapse" id="navbarGlobal" style="">
             <ul class="navbar-nav mr-auto">
                 @guest

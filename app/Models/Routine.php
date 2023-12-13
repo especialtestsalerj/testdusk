@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\InCurrentBuilding;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,6 +29,11 @@ class Routine extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
     public function shift()
     {
         return $this->belongsTo(Shift::class);
