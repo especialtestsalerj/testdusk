@@ -90,8 +90,9 @@ class CreateForm extends BaseForm
         if (!empty($this->visitor_id)) {
             //            $this->select2SelectOption('visitor_id', $this->visitor_id);
             $visitor = app(VisitorsRepository::class)->findById($this->visitor_id);
+
             $this->destiny_sector_name = $visitor->sectorsResumed;
-            $this->sectors= $visitor->sectors;
+            $this->sectors = $visitor->sectors;
 
             $this->loadCertificates($visitor);
 
@@ -116,9 +117,7 @@ class CreateForm extends BaseForm
                 ->distinct()
                 ->get()
                 ->load('certificateType')
-                ->filter(
-                    fn($item) => !is_null($item->certificate_type_id)
-                )
+                ->filter(fn($item) => !is_null($item->certificate_type_id))
                 ->map(function ($item) {
                     return [
                         'value' => $item->certificateType->id,

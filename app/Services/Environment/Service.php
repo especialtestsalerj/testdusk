@@ -43,6 +43,10 @@ class Service
                     'scheme' => config('broadcasting.connections.pusher.options.scheme', 'http'),
                 ],
             ],
+
+            'session' => [
+                'currentBuilding' => get_current_building(),
+            ],
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\InCurrentBuilding;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Ramsey\Uuid\Uuid;
 
 class Routine extends Model
 {
@@ -29,6 +30,12 @@ class Routine extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function (Routine $routine) {
+            $routine->building_id = get_current_building()->id;
+        });
+    }
     public static function boot()
     {
         parent::boot();

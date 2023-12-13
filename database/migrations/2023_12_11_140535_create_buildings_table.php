@@ -46,6 +46,8 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users');
 
+            $table->boolean('status')->default(true);
+
             // Add other columns as needed
             $table->timestamps();
         });
