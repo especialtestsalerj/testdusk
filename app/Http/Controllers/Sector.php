@@ -15,6 +15,7 @@ class Sector extends Controller
 
         return $this->view('sectors.form')->with([
             'sector' => app(SectorsRepository::class)->new(),
+            'currentBuilding' => get_current_building(),
         ]);
     }
 

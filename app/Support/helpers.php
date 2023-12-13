@@ -583,9 +583,9 @@ function mime2ext($mime)
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
 
-function get_current_building_id()
+function get_current_building()
 {
-    return session()->get('building_id') ?? app(Buildings::class)->getMainBuilding()->id;
+    return session()->get('current_building') ?? app(Buildings::class)->getMainBuilding();
 }
 function convert_case($text, $type)
 {

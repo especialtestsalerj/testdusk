@@ -8,6 +8,9 @@
                             <div class="col-12 col-lg-8 text-center text-lg-start">
                                 <span class="fw-bold">Nome:</span> {{ $sector->name }}
                             </div>
+                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                <span class="fw-bold">Unidade:</span> {{ $sector->building->name }}
+                            </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Status:</span>
                                 @if ($sector->status)
@@ -44,6 +47,10 @@
                                 <div class="form-group">
                                     <label for="name">Nome</label>
                                     <input class="form-control" name="name" id="name" value="{{ $sector->name }}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Unidade</label>
+                                    <input class="form-control" name="building" id="building" value="{{ $sector->building->name }}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status</label>

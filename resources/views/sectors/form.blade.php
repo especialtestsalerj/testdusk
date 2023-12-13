@@ -44,6 +44,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="name">Unidade*</label>
+
+                            <input class="form-control text-uppercase"
+                                   @if(formMode() == 'show')
+                                       value="{{$sector->building->name}}"
+                                   @else
+                                       value="{{$currentBuilding->name}}"
+                                   @endIf
+                                   disabled
+                            />
+                            <input type="hidden" class="form-control text-uppercase" id="building_id" name="building_id"
+                                   @if(formMode() == 'show')
+                                       value="{{is_null(old('building_id')) ? $sector->building_id : old('building_id')}}"
+                                   @else
+                                       value="{{$currentBuilding->id}}"
+                                   @endIf
+                            />
+                        </div>
+
+                        <div class="form-group">
                             <label for="status">Status*</label>
                             <div class="form-check">
                                 <input class="form-control" type="hidden" name="status" value="false">
