@@ -583,11 +583,33 @@ function mime2ext($mime)
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
 
-function get_current_building_id()
+function get_current_building()
 {
-    return session()->get('building_id') ?? app(Buildings::class)->getMainBuilding()->id;
+    return session()->get('current_building') ?? app(Buildings::class)->getMainBuilding();
 }
+
 function convert_case($text, $type)
 {
     return is_null($text) ? $text : mb_convert_case($text, $type);
+}
+
+function extract_client_and_permission($string)
+{
+    $data = collect(explode(' - ', $string))
+        ->map(function ($value) {
+            return permission_slug($value);
+        })
+        ->toArray();
+
+    if (!isset($data[1])) {
+        if (permission_slug($data[0]) === 'administrador') {
+            $data[0] = 'all';
+            $data[1] = 'administrador';
+        } else {
+            $data[1] = $data[0];
+            $data[0] = 'none';
+        }
+    }
+
+    return [$data[0], $data[1]];
 }

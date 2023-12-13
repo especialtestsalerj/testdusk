@@ -13,6 +13,8 @@ class Buildings extends Repository
 
     public function getMainBuilding()
     {
+        //        return Building::where('slug', 'palacio-tiradentes')->first();
+        return Building::where('slug', 'lucio-costa')->first();
         return \Cache::remember('main-building', 60, function () {
             return Building::where('slug', 'lucio-costa')->first();
         });

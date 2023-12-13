@@ -80,9 +80,7 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_SHOW);
 
-        $visitor = app(VisitorsRepository::class)
-            ->findById($id)
-            ->append('photo');
+        $visitor = VisitorModel::findOrFail($id)->append('photo');
 
         return $this->view('livewire.visitors.form')->with([
             'visitor' => $visitor,
@@ -102,8 +100,6 @@ class Visitor extends Controller
 
     public function update(VisitorUpdate $request, $id)
     {
-
-
         if ($request->get('visitor_id') != $id) {
             abort(400);
         }
@@ -121,7 +117,6 @@ class Visitor extends Controller
 
     public function card(Request $request, $uuid = null)
     {
-
         if ($uuid) {
             if (Uuid::isValid($uuid)) {
                 $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();

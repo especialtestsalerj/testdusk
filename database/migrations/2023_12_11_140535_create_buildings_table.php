@@ -6,7 +6,15 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\Building;
 
 return new class extends Migration {
-    public $referenceTables = ['routines', 'visitors', 'sectors'];
+    public $referenceTables = [
+        'routines',
+        'visitors',
+        'sectors',
+        'stuffs',
+        'caution_weapons',
+        'person_restrictions',
+        'events',
+    ];
 
     /**
      * Run the migrations.
