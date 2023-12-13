@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\InCurrentBuilding;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,6 +21,7 @@ class Routine extends Model
         'exited_user_id',
         'exited_obs',
         'status',
+        'building_id',
     ];
 
     protected $casts = [
@@ -27,6 +29,11 @@ class Routine extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
     public function shift()
     {
         return $this->belongsTo(Shift::class);
@@ -92,5 +99,10 @@ class Routine extends Model
             ->whereNull('concluded_at')
             ->orderBy('protocol_number')
             ->get();
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

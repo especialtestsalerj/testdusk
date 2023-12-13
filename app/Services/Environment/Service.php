@@ -11,7 +11,7 @@ class Service
     {
         return [
             'app' => [
-
+                'allowedBuildings' => auth()->user()->allowed_buildings ?? [],
                 'name' => config('app.name'),
                 'app_url' => config('app.url'),
                 'version' => '1.0', //Version::format('compact'),
