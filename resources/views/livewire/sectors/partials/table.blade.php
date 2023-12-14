@@ -9,7 +9,7 @@
                                 <span class="fw-bold">Nome:</span> {{ $sector->name }}
                             </div>
                             <div class="col-12 col-lg-8 text-center text-lg-start">
-                                <span class="fw-bold">Unidade:</span> {{ $sector->building->name }}
+                                <span class="fw-bold">Unidade:</span> {{ convert_case($sector->building->name, MB_CASE_UPPER) }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Status:</span>

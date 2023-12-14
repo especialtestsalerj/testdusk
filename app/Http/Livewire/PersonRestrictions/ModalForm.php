@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\PersonRestrictions;
 
+use App\Data\Repositories\Buildings;
+use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Swallable;
 use App\Models\PersonRestriction;
 use App\Models\Person;
-use Livewire\Component;
 
-class ModalForm extends Component
+class ModalForm extends BaseForm
 {
     use Swallable;
 
@@ -20,6 +21,7 @@ class ModalForm extends Component
 
     public $person;
     public $restriction;
+    public $building_id;
     public $started_at;
     public $ended_at;
     public $message;
@@ -29,6 +31,7 @@ class ModalForm extends Component
     public $readonly = false;
 
     public $rules = [
+        'building_id' => 'required',
         'started_at' => 'required:date',
         'message' => 'required',
         'description' => 'required',
@@ -39,6 +42,7 @@ class ModalForm extends Component
     ];
 
     protected $validationAttributes = [
+        'building_id' => 'Unidade',
         'started_at' => 'Início',
         'message' => 'Mensagem',
         'description' => 'Descrição',
@@ -64,6 +68,7 @@ class ModalForm extends Component
         $this->restriction = $personRestriction;
         $this->message = $personRestriction->message;
         $this->description = $personRestriction->description;
+        $this->building_id = $personRestriction->building_id;
         $this->started_at = $personRestriction->started_at->format('Y-m-d H:i');
         $this->ended_at = $personRestriction->ended_at?->format('Y-m-d H:i');
     }
@@ -71,8 +76,6 @@ class ModalForm extends Component
     public function deleteRestriction(PersonRestriction $personRestriction)
     {
         $this->cleanModal();
-        //return redirect()->to('/people/' . $this->restriction->person_id . '/show');
-//        return redirect()->to('/people/15/show');
     }
 
     public function updatedEndedAt()
@@ -95,13 +98,12 @@ class ModalForm extends Component
         }
 
         $this->cleanModal();
-//        return redirect()->to('/people/' . $this->restriction->person_id . '/show');
-       // return redirect()->to('/people/15/show');
     }
 
     public function storeNewRestriction()
     {
         $this->person->restrictions()->create([
+            'building_id' => $this->building_id,
             'started_at' => $this->started_at,
             'ended_at' => $this->ended_at ?? null,
             'message' => $this->message,
@@ -112,6 +114,7 @@ class ModalForm extends Component
     public function storeEditedRestriction()
     {
         $this->restriction->update([
+            'building_id' => $this->building_id,
             'started_at' => $this->started_at,
             'ended_at' => $this->ended_at,
             'message' => $this->message,
@@ -121,7 +124,14 @@ class ModalForm extends Component
 
     public function render()
     {
-        return view('livewire.person-restrictions.modal-form');
+        return view('livewire.person-restrictions.modal-form')->with($this->getViewVariables());
+    }
+
+    public function formVariables()
+    {
+        return [
+            'buildings' => app(Buildings::class)->all(),
+        ];
     }
 
     public function cleanModal()

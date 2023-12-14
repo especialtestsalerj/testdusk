@@ -335,14 +335,12 @@
                                         <div class="card">
                                             <div class="card-body py-1">
                                                 <div class="row d-flex align-items-center">
-
                                                     <div class="col-4 col-lg-1 text-center text-lg-start" data-label="Foto">
                                                         <img class="w-50" src="{{ $visitor->photoTable }}">
                                                     </div>
-
                                                     <div class="col-12 col-lg-5 text-center text-lg-start">
                                                         <span class="fw-bold">Destino(s):</span>
-                                                        {{ $visitor?->sectorsResumed }}
+                                                        {{ $visitor?->sectorsName }}
                                                     </div>
                                                     <div class="col-12 col-lg-3 text-center text-lg-start">
                                                         <span class="fw-bold">Entrada:</span> {{ $visitor->entranced_at->format('d/m/Y H:i')  }}
@@ -354,7 +352,6 @@
                                                         @else
                                                             <span class="badge bg-warning text-black">EM ABERTO</span>
                                                         @endif
-
                                                     </div>
                                                 </div>
                                             </div>

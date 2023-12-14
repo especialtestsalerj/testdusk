@@ -26,6 +26,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="building_id">Unidade*</label>
+                            <select class="form-select text-uppercase" name="building_id"
+                                    id="building_id" wire:model="building_id"
+                                    x-ref="building_id">
+                                <option value="">selecione</option>
+                                @foreach ($buildings as $building)
+                                    <option
+                                        value="{{ $building->id }}"> {{ $building->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('building_id')
+                            <small class="text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </small>
+                            @endError
+                        </div>
+                        <div class="form-group">
                             <label for="started_at">Início*</label>
                             <input type="datetime-local" max="3000-01-01T23:59"
                                    class="form-control text-uppercase" name="started_at"
