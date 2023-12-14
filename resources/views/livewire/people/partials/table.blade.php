@@ -17,7 +17,7 @@
                                         @can(make_ability_name_with_current_building('visitors:checkout'))
                                             <span class="btn btn-primary px-0 py-0 btn-visit-action"
                                                   wire:click="prepareForCheckout({{ $person->pendingVisit->id }})"
-                                                  title="Registrar Saida">
+                                                  title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>
                                         @endCan

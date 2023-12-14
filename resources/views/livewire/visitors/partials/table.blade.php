@@ -89,7 +89,7 @@
                                                 <strong>{!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}</strong>
                                             </div>
                                             <div data-label="Saída">
-                                                Saida: @if (isset($visitor?->exited_at))
+                                                Saída: @if (isset($visitor?->exited_at))
                                                     <strong>
                                                         {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
                                                     </strong>
