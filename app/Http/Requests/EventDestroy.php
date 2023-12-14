@@ -8,7 +8,7 @@ class EventDestroy extends EventStore
 {
     public function authorize()
     {
-        return allows('events:destroy');
+        return allows_in_current_building('events:destroy');
     }
 
     public function rules()

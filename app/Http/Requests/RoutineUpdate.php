@@ -9,6 +9,6 @@ class RoutineUpdate extends RoutineStore
 {
     public function authorize()
     {
-        return allows('routines:update');
+        return allows_in_current_building('routines:update');
     }
 }

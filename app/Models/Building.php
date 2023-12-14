@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
-use App\Http\Requests\SectorDestroy;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Scopes\Active;
 
 class Building extends Model
 {
     protected $fillable = ['name', 'slug', 'created_by_id', 'updated_by_id'];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new Active());
+    }
     public function building()
     {
         return $this->belongsTo(Building::class);

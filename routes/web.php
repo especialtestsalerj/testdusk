@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
 
@@ -27,6 +28,11 @@ Route::group(
     ],
     function () {
         Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+
+        Route::post('/session/current-building', [Session::class, 'changeCurrentBuilding'])->name(
+            'session.current-building'
+        );
+
         Route::get('/', function () {
             return redirect('dashboard');
         });

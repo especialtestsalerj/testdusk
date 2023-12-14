@@ -6,7 +6,7 @@ class VisitorCheckoutAll extends Request
 {
     public function authorize()
     {
-        return allows('visitors:update');
+        return allows_in_current_building('visitors:checkout-all');
     }
 
     public function rules()

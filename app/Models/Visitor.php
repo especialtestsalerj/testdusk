@@ -33,7 +33,10 @@ class Visitor extends Model
 
     protected static function booted()
     {
-        static::creating(fn(Visitor $visitor) => ($visitor->uuid = (string) Uuid::uuid4()));
+        static::creating(function (Visitor $visitor) {
+            $visitor->uuid = (string) Uuid::uuid4();
+            $visitor->building_id = get_current_building()->id;
+        });
     }
 
     public static function findByUuid($uuid)

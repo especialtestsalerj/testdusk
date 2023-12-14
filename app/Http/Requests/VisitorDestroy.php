@@ -8,7 +8,7 @@ class VisitorDestroy extends VisitorStore
 {
     public function authorize()
     {
-        return allows('visitors:destroy');
+        return allows_in_current_building('visitors:destroy');
     }
 
     public function rules()

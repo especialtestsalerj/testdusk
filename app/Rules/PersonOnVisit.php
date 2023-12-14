@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Visitor;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -32,9 +33,7 @@ class PersonOnVisit implements Rule
             return true;
         }
 
-        $query = DB::table('visitors')
-            ->where('person_id', $this->id)
-            ->whereNull('exited_at');
+        $query = Visitor::where('person_id', $this->id)->whereNull('exited_at');
 
         return $query->doesntExist();
     }

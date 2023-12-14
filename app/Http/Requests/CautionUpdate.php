@@ -10,7 +10,7 @@ class CautionUpdate extends CautionStore
 {
     public function authorize()
     {
-        return allows('cautions:update');
+        return allows_in_current_building('cautions:update');
     }
 
     public function rules()

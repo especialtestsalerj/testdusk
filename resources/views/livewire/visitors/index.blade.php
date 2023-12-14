@@ -2,7 +2,6 @@
     <div class="py-4 px-4 conteudo">
         <div class="">
             <div class="row mb-4 d-flex align-items-center">
-
                 @php
                     $qtdPendingVisitors = $pendingVisitors->count();
                 @endphp
@@ -18,7 +17,7 @@
 
                 <div class="col-4 col-md-4 align-self-center d-flex justify-content-center">
                     @if($qtdPendingVisitors > 0)
-                        @can('visitors:checkout-all')
+                        @can(make_ability_name_with_current_building('visitors:checkout-all'))
                             <button type="button" class="btn btn-secondary text-white float-right" data-bs-toggle="modal" data-bs-target="#checkoutModal" title="Finalizar todas as visitas em aberto" dusk="CheckoutPendingVisitors">
                                 <i class="fa fa-check-double"></i> Finalizar Visitas em Aberto
                             </button>
@@ -27,7 +26,7 @@
                 </div>
 
                 <div class="col-4 col-md-4 align-self-center d-flex justify-content-end gap-4">
-                    @can('visitors:store')
+                    @can(make_ability_name_with_current_building('visitors:store'))
                         <span class="btn btn-secondary text-white float-right" wire:click="generateBadge(null)" title="Imprimir Etiqueta Avulsa">
                             <i class="fa fa-print"></i> Etiqueta Avulsa
                         </span>

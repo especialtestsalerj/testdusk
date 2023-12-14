@@ -62,7 +62,7 @@ class VisitorsCard extends Component
             if (
                 auth()
                     ->user()
-                    ?->can('visitors:checkout') &&
+                    ?->can(make_ability_name_with_current_building('visitors:checkout')) &&
                 $this->visitorId
             ) {
                 $this->exited = now()->format('Y-m-d\TH:i');
@@ -76,14 +76,14 @@ class VisitorsCard extends Component
             $this->visitorId &&
             (auth()
                 ->user()
-                ?->can('visitors:checkout') &&
+                ?->can(make_ability_name_with_current_building('visitors:checkout')) &&
                 !$this->alreadyExited);
 
         $this->exitedDisabled =
             !$this->visitorId ||
             (!auth()
                 ->user()
-                ?->can('visitors:checkout') ||
+                ?->can(make_ability_name_with_current_building('visitors:checkout')) ||
                 $this->alreadyExited);
     }
     public function finishVisit()

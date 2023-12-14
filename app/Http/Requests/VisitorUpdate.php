@@ -8,7 +8,7 @@ class VisitorUpdate extends VisitorStore
 {
     public function authorize()
     {
-        return allows('visitors:update');
+        return allows_in_current_building('visitors:update');
     }
     public function rules()
     {
