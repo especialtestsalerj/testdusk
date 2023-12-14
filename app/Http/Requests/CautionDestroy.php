@@ -8,7 +8,7 @@ class CautionDestroy extends CautionStore
 {
     public function authorize()
     {
-        return allows('cautions:destroy');
+        return allows_in_current_building('cautions:destroy');
     }
 
     public function rules()

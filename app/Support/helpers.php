@@ -612,3 +612,18 @@ function extract_client_and_permission($string)
 
     return [$data[0], $data[1]];
 }
+
+function make_ability_name_with_current_building($ability)
+{
+    return make_ability_name_with_building($ability, get_current_building());
+}
+
+function make_ability_name_with_building($ability, $building)
+{
+    return $building->slug . ' - ' . $ability;
+}
+
+function allows_in_current_building($ability)
+{
+    return allows(make_ability_name_with_current_building($ability));
+}

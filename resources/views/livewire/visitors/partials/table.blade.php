@@ -34,7 +34,7 @@
 --}}
 
                                     @if (!$visitor->exited_at)
-                                        @can('visitors:checkout')
+                                        @can(make_ability_name_with_current_building('visitors:checkout'))
                                             <span class="btn btn-primary px-1 py-0 btn-visit-action"
                                                 wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
@@ -42,7 +42,7 @@
                                         @endCan
                                     @else
                                         @if(!$visitor->hasPendingVisit())
-                                            @can('visitors:store')
+                                            @can(make_ability_name_with_current_building('visitors:store'))
                                                 <a href="{{ route('visitors.create', ['document_id' => $visitor->document?->id]) }}"
                                                    class="btn btn-primary px-1 py-0 btn-visit-action" title="Registrar Entrada">
                                                     <i class="fa fa-lg fa-check"></i>
@@ -115,7 +115,7 @@
                                                 </span>
                                             </div>
                                             <div class="col-3 text-center">
-                                                @can('visitors:show')
+                                                @can(make_ability_name_with_current_building('visitors:show'))
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
                                                             class="fa fa-lg fa-search"></i>
@@ -123,7 +123,7 @@
                                                 @endCan
                                             </div>
                                             <div class="col-3 text-center">
-                                                @can('visitors:update')
+                                                @can(make_ability_name_with_current_building('visitors:update'))
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
                                                             class="fa fa-lg fa-pencil"></i>
@@ -246,23 +246,23 @@
                                         <span class="btn btn-link px-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
                                             <i class="fa fa-lg fa-print"></i>
                                         </span>
-                                        @can('visitors:show')
+                                        @can(make_ability_name_with_current_building('visitors:show'))
                                             <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                class="btn btn-link px-1" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                         @endCan
-                                        @can('visitors:update')
+                                        @can(make_ability_name_with_current_building('visitors:update'))
                                             <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                class="btn btn-link px-1" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                         @endCan
                                         @if (!$visitor->exited_at)
-                                            @can('visitors:checkout')
+                                            @can(make_ability_name_with_current_building('visitors:checkout'))
                                                 <span class="btn btn-link px-1" wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                     <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                                 </span>
                                             @endCan
                                         @else
                                             @if(!$visitor->hasPendingVisit())
-                                                @can('visitors:store')
+                                                @can(make_ability_name_with_current_building('visitors:store'))
                                                     <a href="{{ route('visitors.create', ['document_id' => $visitor->document->id]) }}"
                                                        class="btn btn-link px-0 py-0" title="Registrar Entrada">
                                                         <i class="fa fa-lg fa-check"></i>

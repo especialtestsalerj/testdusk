@@ -8,6 +8,6 @@ class EventUpdate extends EventStore
 {
     public function authorize()
     {
-        return allows('events:update');
+        return allows_in_current_building('events:update');
     }
 }

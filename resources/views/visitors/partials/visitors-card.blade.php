@@ -14,7 +14,7 @@
                        aria-describedby="nameHelp">
             </div>
 
-            @can('visitors:show')
+            @can(make_ability_name_with_current_building('visitors:show'))
                 <div class="col-md-12 mb-3">
                     <label for="document">Documento</label>
                     <input value="{{ $document->documentType->name ?? '' }} - {{ $document->number ?? '' }}"
@@ -31,7 +31,7 @@
                 </select>
             </div>
 
-            @can('visitors:show')
+            @can(make_ability_name_with_current_building('visitors:show'))
                 <div class="form-group">
                     <label for="reason">Motivo da Visita</label>
                     <textarea class="form-control" id="reason" name="reason" rows="3" disabled>{{ $reason }}</textarea>

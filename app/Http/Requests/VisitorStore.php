@@ -9,7 +9,7 @@ class VisitorStore extends Request
 {
     public function authorize()
     {
-        return allows('visitors:store');
+        return allows_in_current_building('visitors:store');
     }
 
     public function rules()

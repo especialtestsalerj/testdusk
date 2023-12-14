@@ -12,7 +12,7 @@ class RoutineStore extends Request
 {
     public function authorize()
     {
-        return allows('routines:store');
+        return allows_in_current_building('routines:store');
     }
 
     public function rules()

@@ -8,7 +8,7 @@ class EventStore extends Request
 {
     public function authorize()
     {
-        return allows('events:store');
+        return allows_in_current_building('events:store');
     }
 
     public function rules()
