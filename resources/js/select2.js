@@ -27,7 +27,7 @@ window.initCustomSelect2 = () => {
         width: '100%',
         language: 'pt-BR',
         ajax: {
-            url: window.laravel.app.app_url+'/api/visitors/open',
+            url: window.laravel.app.app_url + '/api/visitors/open',
             dataType: 'json',
             delay: 250,
             headers: {
@@ -36,6 +36,7 @@ window.initCustomSelect2 = () => {
             data: function (params) {
                 return {
                     q: params.term, // search term
+                    building_id: window.laravel.session.currentBuilding,
                     page: params.page,
                 }
             },
@@ -64,14 +65,11 @@ window.initCustomSelect2 = () => {
         var data = e.target.value
         var name = e.target.name
 
-        window.updateLivewireField(data,name)
-
+        window.updateLivewireField(data, name)
     })
-
-
 }
 
-window.updateLivewireField = function(data, name){
+window.updateLivewireField = function (data, name) {
     const livewireComponents = window.Livewire.all()
     livewireComponents.forEach((component) => {
         if (component.get(name) !== undefined) {
@@ -168,8 +166,7 @@ $(document).ready(function () {
         var data = e.target.value
         var name = e.target.name
 
-        window.updateLivewireField(data,name)
-
+        window.updateLivewireField(data, name)
     })
 })
 

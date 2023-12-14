@@ -4,14 +4,14 @@
 
     <nav class="row mt-0 mb-3 bg-dark2 text-white">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            @canany(['people:show', 'visitors:show', 'visitors:checkout'])
+            @canany([make_ability_name_with_current_building('visitors:show'), 'people:show'])
             <button class="nav-link active px-5" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                 <h4>
                     Portaria
                 </h4>
             </button>
             @endcanany
-            @canany(['routines:show', 'sectors:show', 'event-types:show', 'certificate-types:show'])
+            @canany([make_ability_name_with_current_building('routines:show')])
             <button class="nav-link px-5" id="nav-security-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                 <h4>
                     Segurança
@@ -21,22 +21,22 @@
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        @canany(['visitors:show', 'people:show'])
+        @canany([make_ability_name_with_current_building('visitors:show'), 'people:show'])
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                 <div class="row d-flex justify-content-center mb-5">
                     <div class="col-12 col-lg-8">
                         <div class="row g-0 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
                             @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
-                            @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => 'visitors:show', 'title' => 'Visitas', 'ico' => 'fa-people-roof', 'count' => $pendingVisitors->count()])
-                            @include('partials.dashboard-button', ['url' => route('visitors.checkout'), 'permission' => 'visitors:show', 'title' => 'checkout', 'ico' => 'fa-arrow-up-right-from-square'])
+                            @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => make_ability_name_with_current_building('visitors:show'), 'title' => 'Visitas', 'ico' => 'fa-people-roof', 'count' => $pendingVisitors->count()])
+                            @include('partials.dashboard-button', ['url' => route('visitors.checkout'), 'permission' => make_ability_name_with_current_building('visitors:show'), 'title' => 'checkout', 'ico' => 'fa-arrow-up-right-from-square'])
                         </div>
                     </div>
                 </div>
             </div>
         @endcanany
-            @can('routines:show')
+            @can(make_ability_name_with_current_building('routines:show'))
                 @if(!empty($routines))
-        <div class="tab-pane fade @cannot(['visitors:show', 'people:show']) show active @endcannot" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+        <div class="tab-pane fade @cannot([make_ability_name_with_current_building('visitors:show'), 'people:show']) show active @endcannot" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
 
                     <div class="row">
                         <div class="col-12">
@@ -56,7 +56,7 @@
                                                                     <div class="row mx-0 mx-lg-3 mt-3 mb-2">
                                                                         <div class="col-6 col-lg-3 text-center text-lg-start">
                                                                             <h4>
-                                                                                @can('routines:show')
+                                                                                @can(make_ability_name_with_current_building('routines:show'))
                                                                                     <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
                                                                                         <i class="fa fa-clipboard-list"></i> Rotina {{ $routine->code }}
                                                                                     </a>
@@ -88,9 +88,9 @@
                                                                 </div>
                                                                 <div class="card-body px-5 py-5 border-bottom rounded">
                                                                     <div class="row mt-3 mb-3 text-center d-flex justify-content-center">
-                                                                        @include('partials.dashboard-button-swipper', ['url' => route('events.index', $routine->id), 'permission' => 'events:show', 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
-                                                                        @include('partials.dashboard-button-swipper', ['url' => route('stuffs.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
-                                                                        @include('partials.dashboard-button-swipper', ['url' => route('cautions.index', $routine->id), 'permission' => 'stuffs:show', 'title' => 'Cautelas de Armas', 'ico' => 'fa-person-rifle', 'count' => $routine->cautions()->count()])
+                                                                        @include('partials.dashboard-button-swipper', ['url' => route('events.index', $routine->id), 'permission' => make_ability_name_with_current_building('events:show'), 'title' => 'Ocorrências', 'ico' => 'fa-list-check', 'count' => $routine->events()->count()])
+                                                                        @include('partials.dashboard-button-swipper', ['url' => route('stuffs.index', $routine->id), 'permission' => make_ability_name_with_current_building('stuffs:show'), 'title' => 'Materiais', 'ico' => 'fa-dolly-box', 'count' => $routine->stuffs()->count()])
+                                                                        @include('partials.dashboard-button-swipper', ['url' => route('cautions.index', $routine->id), 'permission' => make_ability_name_with_current_building('stuffs:show'), 'title' => 'Cautelas de Armas', 'ico' => 'fa-person-rifle', 'count' => $routine->cautions()->count()])
                                                                     </div>
                                                                 </div>
                                                             </div>

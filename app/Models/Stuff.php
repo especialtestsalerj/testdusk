@@ -21,6 +21,12 @@ class Stuff extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function (Stuff $stuff) {
+            $stuff->building_id = get_current_building()->id;
+        });
+    }
     public static function boot()
     {
         parent::boot();

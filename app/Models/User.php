@@ -143,4 +143,9 @@ class User extends Authenticatable
 
         return $allowed;
     }
+
+    public function canInCurrentBuilding($ability)
+    {
+        return allows_in_current_building($ability);
+    }
 }

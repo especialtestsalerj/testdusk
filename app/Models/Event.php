@@ -23,6 +23,12 @@ class Event extends Model
         'occurred_at' => 'datetime:Y-m-d H:i',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function (Event $event) {
+            $event->building_id = get_current_building()->id;
+        });
+    }
     public static function boot()
     {
         parent::boot();

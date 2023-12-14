@@ -11,11 +11,7 @@
             </button>
         </div>
 
-        <select id="session_building_id" name="session_building_id">
-            @forEach($environment['app']['allowedBuildings'] as $building)
-                <option value="{{ $building->id}}">{{$building->name}}</option>
-            @endForEach
-        </select>
+        @include('partials.session-building-select')
 
         <div class="navbar-collapse collapse" id="navbarGlobal" style="">
             <ul class="navbar-nav mr-auto">
@@ -37,10 +33,10 @@
                             @can('people:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('people.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
                             @endCan
-                            @can('visitors:show')
+                            @can(make_ability_name_with_current_building('visitors:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('visitors.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
                             @endCan
-                            @can('visitors:checkout')
+                            @can(make_ability_name_with_current_building('visitors:checkout'))
                             <li><a class="dropdown-item {{ (request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.checkout') }}">Checkout</a></li>
                             @endCan
                             @can('person-restrictions:show')
@@ -50,16 +46,16 @@
                     </li>
                     @endcanany
 
-                    @canany(['routines:show', 'sectors:show', 'event-types:show', 'certificate-types:show'])
+                    @canany([make_ability_name_with_current_building('routines:show'), make_ability_name_with_current_building('sectors:show'), 'event-types:show', 'certificate-types:show'])
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ (request()->routeIs(['routines.*', 'sectors.*', 'event-types.*', 'person-restrictions.*', 'certificate-types.*', 'events.*', 'stuffs.*', 'cautions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Segurança
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownSeguranca">
-                            @can('routines:show')
+                            @can(make_ability_name_with_current_building('routines:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*', 'events.*', 'stuffs.*', 'cautions.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
                             @endCan
-                            @can('sectors:show')
+                            @can(make_ability_name_with_current_building('sectors:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('sectors.*')) ? 'active' : '' }}" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan
                             @can('event-types:show')
