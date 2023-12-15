@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\Repositories\Buildings as BuildingsRepository;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
 use App\Http\Requests\PersonRestrictionStore;
 use App\Http\Requests\PersonRestrictionUpdate;
@@ -29,6 +30,7 @@ class PersonRestriction extends Controller
         return $this->view('person-restrictions.form')->with([
             'personRestriction' => app(PersonRestrictionsRepository::class)->new(),
             'people' => Person::all()->sortBy('name'),
+            'buildings' => app(BuildingsRepository::class)->all(),
         ]);
     }
 
@@ -47,6 +49,7 @@ class PersonRestriction extends Controller
 
         return $this->view('person-restrictions.form')->with([
             'personRestriction' => app(PersonRestrictionsRepository::class)->findById($id),
+            'buildings' => app(BuildingsRepository::class)->all(),
         ]);
     }
 

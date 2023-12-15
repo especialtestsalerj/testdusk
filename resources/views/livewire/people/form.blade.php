@@ -187,12 +187,11 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <div class="row my-2">
-                            <div class="col-sm-6 align-self-center">
+                            <div class="col-sm-8 align-self-center">
                                 <h3 class="mb-0"><i class="fa fa-id-card"></i>
                                     Documentos
                                 </h3>
                             </div>
-
                             <div class="col-sm-4 align-self-center d-flex justify-content-end">
                                 @if(!request()->query('disabled'))
                                     <span class="btn btn-sm btn-primary text-white"
@@ -273,16 +272,19 @@
                                         <div class="card">
                                             <div class="card-body py-1">
                                                 <div class="row d-flex align-items-center">
-                                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                                    <div class="col-12 col-lg-4 text-center text-lg-start">
+                                                        <span class="fw-bold">Unidade:</span> {{ convert_case($personRestriction?->building?->name, MB_CASE_UPPER) }}
+                                                    </div>
+                                                    <div class="col-12 col-lg-4 text-center text-lg-start">
                                                         <span class="fw-bold">Início:</span> {{ $personRestriction?->started_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                                     </div>
-                                                    <div class="col-12 col-lg-6 text-center text-lg-start">
+                                                    <div class="col-12 col-lg-4 text-center text-lg-start">
                                                         <span  class="fw-bold">Término:</span> {{ $personRestriction?->ended_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                                     </div>
-                                                    <div class="col-12 col-lg-9 text-center text-lg-start">
+                                                    <div class="col-12 col-lg-12 text-justify">
                                                         <span class="fw-bold">Mensagem:</span> {{ $personRestriction?->message }}
                                                     </div>
-                                                    <div class="col-12 col-lg-3 text-center text-lg-end">
+                                                    <div class="col-12 col-lg-12 text-center text-lg-end">
                                                          <span class="btn btn-link"
                                                                wire:click="detailRestriction({{ $personRestriction->id }})"
                                                                data-bs-toggle="modal"
@@ -335,26 +337,23 @@
                                         <div class="card">
                                             <div class="card-body py-1">
                                                 <div class="row d-flex align-items-center">
-
                                                     <div class="col-4 col-lg-1 text-center text-lg-start" data-label="Foto">
                                                         <img class="w-50" src="{{ $visitor->photoTable }}">
                                                     </div>
-
                                                     <div class="col-12 col-lg-5 text-center text-lg-start">
                                                         <span class="fw-bold">Destino(s):</span>
-                                                        {{ $visitor?->sectorsResumed }}
+                                                        {{ $visitor?->sectorsName }}
                                                     </div>
                                                     <div class="col-12 col-lg-3 text-center text-lg-start">
-                                                        <span class="fw-bold">Entrada:</span> {{ $visitor->entranced_at->format('d/m/Y H:i')  }}
+                                                        <span class="fw-bold">Entrada:</span> {{ $visitor?->entranced_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                                                     </div>
                                                     <div class="col-12 col-lg-3 text-center text-lg-start">
                                                         <span class="fw-bold">Saída:</span>
                                                         @if (isset($visitor?->exited_at))
-                                                                {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
+                                                            {!! $visitor?->exited_at?->format('d/m/Y \À\S H:i') !!}
                                                         @else
                                                             <span class="badge bg-warning text-black">EM ABERTO</span>
                                                         @endif
-
                                                     </div>
                                                 </div>
                                             </div>

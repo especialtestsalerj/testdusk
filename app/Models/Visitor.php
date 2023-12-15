@@ -59,14 +59,24 @@ class Visitor extends Model
         return $this->belongsToMany(Sector::class);
     }
 
+    private function getOtherSectors()
+    {
+        $qtd = count($this->sectors);
+
+        return $qtd > 1 ? ($othersSectors = ' +' . $qtd - 1) : '';
+    }
+
     public function getSectorsResumedAttribute()
     {
-        $othersSectors = '';
-        if (count($this->sectors) > 1) {
-            $othersSectors = ' +' . count($this->sectors) - 1;
-        }
+        return $this->sectors?->first()?->name . $this->getOtherSectors();
+    }
 
-        return $this->sectors?->first()?->name . $othersSectors;
+    public function getSectorsNameAttribute()
+    {
+        return convert_case($this->sectors?->first()?->building->name, MB_CASE_UPPER) .
+            ' - ' .
+            $this->sectors?->first()?->name .
+            $this->getOtherSectors();
     }
 
     public function getEntrancedAtFormattedAttribute()

@@ -55,7 +55,8 @@ class Form extends BaseForm
         'confirm-delete-document' => 'deleteDocument',
         'confirm-delete-restriction' => 'deleteRestriction',
         'create-document' => '$refresh',
-        'echo:person_restrictions,PersonRestrictionsChanged' => '$refresh',];
+        'echo:person_restrictions,PersonRestrictionsChanged' => '$refresh',
+    ];
 
     public $selectedDocument_id;
 

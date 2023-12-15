@@ -17,6 +17,7 @@ class Sector extends Model
         parent::boot();
         static::addGlobalScope(new InCurrentBuilding());
     }
+
     public function canDelete()
     {
         $request = new SectorDestroy($this->toArray());
@@ -28,6 +29,7 @@ class Sector extends Model
     {
         return $this->belongsTo(Building::class);
     }
+
     public function visitors()
     {
         return $this->belongsToMany(Visitor::class);

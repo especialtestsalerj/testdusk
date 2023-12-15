@@ -587,6 +587,7 @@ function get_current_building()
 {
     return session()->get('current_building') ?? app(Buildings::class)->getMainBuilding();
 }
+
 function convert_case($text, $type)
 {
     return is_null($text) ? $text : mb_convert_case($text, $type);
