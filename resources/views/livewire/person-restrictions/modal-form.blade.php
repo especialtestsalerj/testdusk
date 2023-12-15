@@ -29,7 +29,7 @@
                             <label for="building_id">Unidade*</label>
                             <select class="form-select text-uppercase" name="building_id"
                                     id="building_id" wire:model="building_id"
-                                    x-ref="building_id">
+                                    x-ref="building_id" @disabled($readonly)>
                                 <option value="">selecione</option>
                                 @foreach ($buildings as $building)
                                     <option
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" @disabled($readonly)>
+                        <button type="submit" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar Restrição" @disabled($readonly)>
                             <i class="fa fa-save"></i> Salvar
                         </button>
                         <button type="button"
