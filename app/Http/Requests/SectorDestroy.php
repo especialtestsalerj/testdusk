@@ -8,7 +8,7 @@ class SectorDestroy extends SectorStore
 {
     public function authorize()
     {
-        return allows('sectors:destroy');
+        return allows_in_current_building('sectors:destroy');
     }
 
     public function rules()

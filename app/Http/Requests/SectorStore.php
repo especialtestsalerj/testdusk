@@ -6,7 +6,7 @@ class SectorStore extends Request
 {
     public function authorize()
     {
-        return allows('sectors:store');
+        return allows_in_current_building('sectors:store');
     }
 
     public function rules()

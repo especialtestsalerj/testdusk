@@ -26,7 +26,7 @@
                         @include('partials.save-button',
                                 ['model' => $visitor, 'backUrl' => 'visitors.index',
                                 'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
-                                'permission' => !request()->query('disabled') ? (formMode() == 'show' ? 'visitors:update' : 'visitors:store') : ''])
+                                'permission' => !request()->query('disabled') ? (formMode() == 'show' ? make_ability_name_with_current_building('visitors:update') : make_ability_name_with_current_building('visitors:store')) : ''])
                     </div>
                 </div>
             </div>
