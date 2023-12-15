@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-                        @include('partials.save-button', ['model' => $caution, 'backUrl' => $redirect, 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'cautions:update' : 'cautions:store') : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model' => $caution, 'backUrl' => $redirect, 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? make_ability_name_with_current_building('cautions:update') : make_ability_name_with_current_building('cautions:store')) : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>

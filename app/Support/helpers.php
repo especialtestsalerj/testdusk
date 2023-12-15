@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Data\Repositories\Buildings;
+use App\Models\Building;
 
 function only_letters_and_space($string)
 {
@@ -585,7 +585,11 @@ function mime2ext($mime)
 
 function get_current_building()
 {
-    return session()->get('current_building') ?? app(Buildings::class)->getMainBuilding();
+    return session()->get('current_building') ??
+        (auth()
+            ?->user()
+            ?->getMainBuilding() ??
+            null);
 }
 function convert_case($text, $type)
 {

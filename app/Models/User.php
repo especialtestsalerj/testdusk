@@ -148,4 +148,9 @@ class User extends Authenticatable
     {
         return allows_in_current_building($ability);
     }
+
+    public function getMainBuilding()
+    {
+        return $this->allowed_buildings->first() ?? null;
+    }
 }

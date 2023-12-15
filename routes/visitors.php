@@ -10,7 +10,7 @@ use App\Http\Middleware\CanInCurrentBuilding;
 Route::group(['prefix' => '/visitors'], function () {
     Route::get('/checkout', Checkout::class)
         ->name('visitors.checkout')
-        ->middleware('canInCurrentBuilding:checkout');
+        ->middleware('canInCurrentBuilding:visitors:checkout');
     /*->can('visitors:show');*/
 
     Route::get('', VisitorsIndex::class)

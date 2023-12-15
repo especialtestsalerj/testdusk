@@ -14,12 +14,14 @@ class CanInCurrentBuilding
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $ability)
+    public function handle(Request $request, Closure $next, ...$abilities)
     {
-        if (!allows_in_current_building($ability)) {
-            abort(403);
+        foreach ($abilities as $ability) {
+            if (allows_in_current_building($ability)) {
+                return $next($request);
+            }
         }
 
-        return $next($request);
+        abort(403);
     }
 }
