@@ -13,6 +13,7 @@ class Building extends Model
         parent::boot();
         static::addGlobalScope(new Active());
     }
+
     public function building()
     {
         return $this->belongsTo(Building::class);

@@ -25,8 +25,8 @@ class PersonRestriction extends Model
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope(new InCurrentBuilding());
     }
+
     public function getStartedAtFormattedAttribute()
     {
         return $this->started_at?->format('Y-m-d H:i');

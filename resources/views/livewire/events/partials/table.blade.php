@@ -6,7 +6,7 @@
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
                             <div class="col-12 col-lg-2 text-center text-lg-start">
-                                <span class="fw-bold">Data da Ocorrência:</span> {{ $event?->occurred_at?->format('d/m/Y \À\S H:i') ?? '-'}}
+                                <span class="fw-bold">Data:</span> {{ $event?->occurred_at?->format('d/m/Y \À\S H:i') ?? '-'}}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Tipo:</span> {{ $event->eventType->name }}
@@ -44,14 +44,14 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <label for="occurred_at">Data da Ocorrência</label>
+                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ $event->occurred_at }}" disabled/>
+                                </div>
+                                <div class="form-group">
                                     <label for="event_type_id">Tipo</label>
                                     <select class="form-select form-control" name="event_type_id" id="event_type_id" disabled>
                                         <option value="{{ $event->eventType?->id }}" selected="selected">{{ $event->eventType?->name }}</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="occurred_at">Data da Ocorrência</label>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ $event->occurred_at }}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="sector_id">Setor</label>

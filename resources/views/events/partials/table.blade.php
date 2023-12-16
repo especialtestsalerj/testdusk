@@ -64,7 +64,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="occurred_at">Data da Ocorrência</label>
+                                    <label for="occurred_at">Data</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="occurred_at" id="occurred_at" value="{{ $event->occurred_at }}" disabled/>
                                 </div>
                                 <div class="form-group">
