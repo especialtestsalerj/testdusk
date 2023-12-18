@@ -5,7 +5,11 @@
             <div class="text-white username">
                 Olá, {{ Auth::user()->name }} <a href="{{ route('logout') }}"><i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
+
+
             @include('partials.session-building-select')
+
+
         </div>
     </div>
 </div>
