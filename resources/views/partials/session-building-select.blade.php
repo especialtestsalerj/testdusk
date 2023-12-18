@@ -1,4 +1,4 @@
-<div>
+<div class="ms-auto py-2">
     @if(count($environment['app']['allowedBuildings']) > 1)
         <form method="POST" id="session-building-form" action="{{route('session.current-building')}}">
             @csrf
