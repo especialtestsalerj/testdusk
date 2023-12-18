@@ -55,7 +55,7 @@
         }
         /* reset.css */
 
-        .bg-danger, .navbar, .conteudo, .conteudo-rodape {
+        .bg-danger, .navbar, .conteudo, .conteudo-rodape, .login-navbar {
             display: none !important;
         }
 
