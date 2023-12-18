@@ -3,33 +3,9 @@
 
         <div class="d-flex align-items-center">
             <div class="text-white username">
-                Olá, {{ Auth::user()->name }} <i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i>
+                Olá, {{ Auth::user()->name }} <a href="{{ route('logout') }}"><i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
-
-            <div class="ms-auto py-2">
-                <div class="dropdown">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-building me-2"></i>Edifício Lúcio Costa
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Edifício Lúcio Costa
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Palácio Tiradentes
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Edifício XXXXXXXXXX
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @include('partials.session-building-select')
         </div>
     </div>
 </div>
@@ -111,7 +87,7 @@
                     </li>
                     @endcanany
 
-                    <li class="nav-item dropdown">
+                    <!--<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
@@ -129,9 +105,9 @@
                                 </form>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
 
-
+<!--
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Edificio Lucio Costa
@@ -150,7 +126,7 @@
                                 </li>
 
                         </ul>
-                    </li>
+                    </li>-->
                 @endguest
             </ul>
         </div>
