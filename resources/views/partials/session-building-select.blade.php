@@ -21,3 +21,4 @@
         {{ get_current_building()->name }}
     @endIf
 </div>
+

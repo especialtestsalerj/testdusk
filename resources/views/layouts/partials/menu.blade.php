@@ -1,9 +1,49 @@
+<div class="container-fluid topbar-blue">
+    <div class="row">
+
+        <div class="d-flex align-items-center">
+            <div class="text-white username">
+                Olá, {{ Auth::user()->name }} <i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+
+            <div class="ms-auto py-2">
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-building me-2"></i>Edifício Lúcio Costa
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                Edifício Lúcio Costa
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                Palácio Tiradentes
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                Edifício XXXXXXXXXX
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
 
-        <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >
-            <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="{{ config('app.description') }}" alt="{{ config('app.name') }}">
-        </a>
+        <div>
+            <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >
+                <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="{{ config('app.description') }}" alt="{{ config('app.name') }}">
+            </a>
+        </div>
+
 
         <div class="d-flex ml-auto">
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGlobal" aria-controls="navbarGlobal" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +51,7 @@
             </button>
         </div>
 
-        @include('partials.session-building-select')
+       {{-- @include('partials.session-building-select')--}}
 
         <div class="navbar-collapse collapse" id="navbarGlobal" style="">
             <ul class="navbar-nav mr-auto">
@@ -88,6 +128,27 @@
                                     @csrf
                                 </form>
                             </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Edificio Lucio Costa
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownPortaria">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Palácio Tiradentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Edificio Lucio Costa
+                                    </a>
+                                </li>
+
                         </ul>
                     </li>
                 @endguest

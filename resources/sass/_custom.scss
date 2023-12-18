@@ -844,3 +844,19 @@ body.bg-logo {
         border-bottom: none !important;
     }
 }
+
+
+.topbar-blue {
+    background: #112445;
+
+    .btn-secondary {
+        background: #1A396E;
+    }
+    .username {
+        font-size: 90%;
+        @media (max-width: 575.98px) {
+            font-size: 75%;
+        }
+
+    }
+}
