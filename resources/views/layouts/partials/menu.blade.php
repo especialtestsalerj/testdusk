@@ -1,4 +1,4 @@
-<div class="container-fluid topbar-blue">
+<div class="container-fluid topbar-blue login-navbar">
     <div class="row">
 
         <div class="d-flex align-items-center">
