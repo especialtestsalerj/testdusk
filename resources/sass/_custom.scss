@@ -860,3 +860,11 @@ body.bg-logo {
 
     }
 }
+
+@media (min-width: 992px) {
+
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+        position: absolute;
+        left: -105px;
+    }
+}
