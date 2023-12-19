@@ -14,7 +14,7 @@
                        aria-describedby="nameHelp">
             </div>
 
-            @can('visitors:show')
+            @can(make_ability_name_with_current_building('visitors:show'))
                 <div class="col-md-12 mb-3">
                     <label for="document">Documento</label>
                     <input value="{{ $document->documentType->name ?? '' }} - {{ $document->number ?? '' }}"
@@ -24,12 +24,14 @@
 
             <div class="col-md-12 mb-3">
                 <label for="sector">Destino</label>
-                <select name="sector" id="sector" class="form-select" disabled>
-                    <option selected value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
+                <select name="sector" id="sector" class="form-select" multiple disabled>
+                    @foreach($sectors as $sector)
+                        <option  value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
+                    @endforeach
                 </select>
             </div>
 
-            @can('visitors:show')
+            @can(make_ability_name_with_current_building('visitors:show'))
                 <div class="form-group">
                     <label for="reason">Motivo da Visita</label>
                     <textarea class="form-control" id="reason" name="reason" rows="3" disabled>{{ $reason }}</textarea>

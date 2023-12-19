@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 class RoutineFinish extends RoutineUpdate
 {
+    public function authorize()
+    {
+        return allows_in_current_building('routines:update');
+    }
     public function rules()
     {
         return [

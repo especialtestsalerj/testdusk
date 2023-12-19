@@ -34,7 +34,7 @@
 --}}
 
                                     @if (!$visitor->exited_at)
-                                        @can('visitors:checkout')
+                                        @can(make_ability_name_with_current_building('visitors:checkout'))
                                             <span class="btn btn-primary px-1 py-0 btn-visit-action"
                                                 wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
@@ -42,7 +42,7 @@
                                         @endCan
                                     @else
                                         @if(!$visitor->hasPendingVisit())
-                                            @can('visitors:store')
+                                            @can(make_ability_name_with_current_building('visitors:store'))
                                                 <a href="{{ route('visitors.create', ['document_id' => $visitor->document?->id]) }}"
                                                    class="btn btn-primary px-1 py-0 btn-visit-action" title="Registrar Entrada">
                                                     <i class="fa fa-lg fa-check"></i>
@@ -64,16 +64,32 @@
                                 <div class="col-7 d-flex flex-column visitor-data">
                                     <div class="row mt-2">
                                         <div class="col-12">
-
-                                            <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
-                                                {{ $visitor?->sector?->name ?? '-' }}
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-10 pe-0 d-flex justify-content-start">
+                                                    <div data-label="Destino" class="badge text-truncate rounded-pill bg-secondary mb-1">
+                                                        {{$visitor?->sectors?->first()?->name}}
+                                                    </div>
+                                                </div>
+                                                @if(count($visitor?->sectors) > 1)
+                                                    <div class="col-2 px-0 text-start text-white fix-align-top">
+                                                        <span class="badge bg-danger rounded-circle more-destinys"
+                                                              data-bs-toggle="tooltip"
+                                                              data-bs-placement="top"
+                                                              data-bs-custom-class="custom-tooltip"
+                                                              data-bs-html="true"
+                                                              data-bs-title="@foreach($visitor?->sectors as $sector)<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>{{$sector->name}}</div>@endforeach">
+                                                            +{{count($visitor->sectors) - 1}}
+                                                        </span>
+                                                    </div>
+                                                @endif
                                             </div>
+
                                             <div data-label="Entrada">
                                                 Entrada:
                                                 <strong>{!! $visitor?->entranced_at?->format('d/m/Y H:i') ?? '-' !!}</strong>
                                             </div>
                                             <div data-label="Saída">
-                                                Saida: @if (isset($visitor?->exited_at))
+                                                Saída: @if (isset($visitor?->exited_at))
                                                     <strong>
                                                         {!! $visitor?->exited_at?->format('d/m/Y H:i') !!}
                                                     </strong>
@@ -93,30 +109,27 @@
 
                                     <div class="row card-buttons mt-auto d-flex">
                                         <div class="d-flex justify-content-center">
-                                            <div class="col-3 justify-content-center">
-                                            <span class="btn btn-link px-0 pt-0 pb-1"
-                                                  wire:click="generateBadge({{ $visitor->id }})"
-                                                  title="Imprimir Etiqueta">
+                                            <div class="col-3 text-center">
+                                                <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
                                                 <i class="fa fa-lg fa-print"></i>
-                                            </span>
+                                                </span>
                                             </div>
-                                            <div class="col-3 justify-content-center">
-                                                @can('visitors:show')
+                                            <div class="col-3 text-center">
+                                                @can(make_ability_name_with_current_building('visitors:show'))
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
                                                             class="fa fa-lg fa-search"></i>
                                                     </a>
                                                 @endCan
                                             </div>
-                                            <div class="col-3 justify-content-center">
-                                                @can('visitors:update')
+                                            <div class="col-3 text-center">
+                                                @can(make_ability_name_with_current_building('visitors:update'))
                                                     <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                        class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
                                                             class="fa fa-lg fa-pencil"></i>
                                                     </a>
                                                 @endCan
                                             </div>
-
                                         </div>
 
                                     </div>
@@ -222,7 +235,7 @@
                                                     </div>
                                                     <div class="col-3 col-lg-4 text-center">
                                                         <div data-label="Setor de Destino">
-                                                            {{ $visitor?->sector?->name ?? '-' }}
+                                                            {{ $visitor?->sectorsResumed ?? '-' }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -233,23 +246,23 @@
                                         <span class="btn btn-link px-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
                                             <i class="fa fa-lg fa-print"></i>
                                         </span>
-                                        @can('visitors:show')
+                                        @can(make_ability_name_with_current_building('visitors:show'))
                                             <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => true]) }}"
                                                class="btn btn-link px-1" title="Detalhar"><i class="fa fa-lg fa-search"></i></a>
                                         @endCan
-                                        @can('visitors:update')
+                                        @can(make_ability_name_with_current_building('visitors:update'))
                                             <a href="{{ route('visitors.show', ['visitor' => $visitor->id, 'redirect' => $redirect, 'disabled' => false]) }}"
                                                class="btn btn-link px-1" title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                         @endCan
                                         @if (!$visitor->exited_at)
-                                            @can('visitors:checkout')
+                                            @can(make_ability_name_with_current_building('visitors:checkout'))
                                                 <span class="btn btn-link px-1" wire:click="prepareForCheckout({{ $visitor->id }})" title="Registrar Saída">
                                                     <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                                 </span>
                                             @endCan
                                         @else
                                             @if(!$visitor->hasPendingVisit())
-                                                @can('visitors:store')
+                                                @can(make_ability_name_with_current_building('visitors:store'))
                                                     <a href="{{ route('visitors.create', ['document_id' => $visitor->document->id]) }}"
                                                        class="btn btn-link px-0 py-0" title="Registrar Entrada">
                                                         <i class="fa fa-lg fa-check"></i>

@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-                        @include('partials.save-button', ['model' => $sector, 'backUrl' => 'sectors.index', 'permission' => (formMode() == 'show' ? 'sectors:update' : 'sectors:store')])
+                        @include('partials.save-button', ['model' => $sector, 'backUrl' => 'sectors.index', 'permission' => (formMode() == 'show' ? make_ability_name_with_current_building('sectors:update') : make_ability_name_with_current_building('sectors:store'))])
                     </div>
                 </div>
             </div>
@@ -40,14 +40,34 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Nome*</label>
-                            <input class="form-control text-uppercase" id="name" name="name" value="{{is_null(old('name')) ? $sector->name : old('name')}}" @include('partials.disabled', ['model' => $sector, 'permission' => 'sectors:store'])/>
+                            <input class="form-control text-uppercase" id="name" name="name" value="{{is_null(old('name')) ? $sector->name : old('name')}}" @include('partials.disabled', ['model' => $sector, 'permission' => make_ability_name_with_current_building('sectors:store')])/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Unidade*</label>
+
+                            <input class="form-control text-uppercase"
+                                   @if(formMode() == 'show')
+                                       value="{{$sector->building->name}}"
+                                   @else
+                                       value="{{$currentBuilding->name}}"
+                                   @endIf
+                                   disabled
+                            />
+                            <input type="hidden" class="form-control text-uppercase" id="building_id" name="building_id"
+                                   @if(formMode() == 'show')
+                                       value="{{is_null(old('building_id')) ? $sector->building_id : old('building_id')}}"
+                                   @else
+                                       value="{{$currentBuilding->id}}"
+                                   @endIf
+                            />
                         </div>
 
                         <div class="form-group">
                             <label for="status">Status*</label>
                             <div class="form-check">
                                 <input class="form-control" type="hidden" name="status" value="false">
-                                <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $sector->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model' => $sector, 'permission' => 'sectors:store'])>
+                                <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $sector->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model' => $sector, 'permission' => make_ability_name_with_current_building('sectors:store')])>
                                 <label class="form-check-label" for="status">Ativo</label>
                             </div>
                         </div>

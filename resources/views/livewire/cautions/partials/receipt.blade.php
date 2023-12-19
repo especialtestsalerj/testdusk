@@ -338,7 +338,7 @@
                         </tr>
                         <tr>
                             <td class="bold">DESTINO: </td>
-                            <td>{{ $caution->visitor?->sector?->name ?? '' }}</td>
+                            <td>{{ $caution->visitor?->sectorsResumed ?? '' }}</td>
                         </tr>
                         <tr>
                             <td class="bold">ARMA(S): </td>

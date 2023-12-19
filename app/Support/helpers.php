@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Building;
 
 function only_letters_and_space($string)
 {
@@ -351,7 +352,8 @@ function mask_protocol_number($protocol_number)
     return $codigo . '/' . $ano;
 }
 
-function access_token(){
+function access_token()
+{
     return session()->get('access-token');
 }
 function protocol_number_masked_to_bigint($protocol_number_masked)
@@ -581,7 +583,52 @@ function mime2ext($mime)
     return isset($mime_map[$mime]) ? $mime_map[$mime] : false;
 }
 
+function get_current_building()
+{
+    return session()->get('current_building') ??
+        (auth()
+            ?->user()
+            ?->getMainBuilding() ??
+            null);
+}
+
 function convert_case($text, $type)
 {
     return is_null($text) ? $text : mb_convert_case($text, $type);
+}
+
+function extract_client_and_permission($string)
+{
+    $data = collect(explode(' - ', $string))
+        ->map(function ($value) {
+            return permission_slug($value);
+        })
+        ->toArray();
+
+    if (!isset($data[1])) {
+        if (permission_slug($data[0]) === 'administrador') {
+            $data[0] = 'all';
+            $data[1] = 'administrador';
+        } else {
+            $data[1] = $data[0];
+            $data[0] = 'none';
+        }
+    }
+
+    return [$data[0], $data[1]];
+}
+
+function make_ability_name_with_current_building($ability)
+{
+    return make_ability_name_with_building($ability, get_current_building());
+}
+
+function make_ability_name_with_building($ability, $building)
+{
+    return $building->slug . ' - ' . $ability;
+}
+
+function allows_in_current_building($ability)
+{
+    return allows(make_ability_name_with_current_building($ability));
 }

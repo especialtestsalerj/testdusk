@@ -1,15 +1,37 @@
+<div class="container-fluid topbar-blue login-navbar">
+    <div class="row">
+
+        <div class="d-flex align-items-center">
+            <div class="text-white username">
+                Olá, {{ Auth::user()->name }} <a href="{{ route('logout') }}"><i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+
+
+            @include('partials.session-building-select')
+
+
+        </div>
+    </div>
+</div>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
 
-        <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >
-            <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="{{ config('app.description') }}" alt="{{ config('app.name') }}">
-        </a>
+        <div>
+            <a class="py-1 navbar-brand" href="{{ route('dashboard') }}" >
+                <img src="/img/logo-admin.png" class="img-fluid logo-alerj " title="{{ config('app.description') }}" alt="{{ config('app.name') }}">
+            </a>
+        </div>
+
 
         <div class="d-flex ml-auto">
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGlobal" aria-controls="navbarGlobal" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
+
+       {{-- @include('partials.session-building-select')--}}
 
         <div class="navbar-collapse collapse" id="navbarGlobal" style="">
             <ul class="navbar-nav mr-auto">
@@ -31,10 +53,10 @@
                             @can('people:show')
                                 <li><a class="dropdown-item {{ (request()->routeIs('people.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
                             @endCan
-                            @can('visitors:show')
+                            @can(make_ability_name_with_current_building('visitors:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('visitors.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.index') }}">Visitas</a></li>
                             @endCan
-                            @can('visitors:checkout')
+                            @can(make_ability_name_with_current_building('visitors:checkout'))
                             <li><a class="dropdown-item {{ (request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('visitors.checkout') }}">Checkout</a></li>
                             @endCan
                             @can('person-restrictions:show')
@@ -44,16 +66,16 @@
                     </li>
                     @endcanany
 
-                    @canany(['routines:show', 'sectors:show', 'event-types:show', 'certificate-types:show'])
+                    @canany([make_ability_name_with_current_building('routines:show'), make_ability_name_with_current_building('sectors:show'), 'event-types:show', 'certificate-types:show'])
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ (request()->routeIs(['routines.*', 'sectors.*', 'event-types.*', 'person-restrictions.*', 'certificate-types.*', 'events.*', 'stuffs.*', 'cautions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Segurança
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownSeguranca">
-                            @can('routines:show')
+                            @can(make_ability_name_with_current_building('routines:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*', 'events.*', 'stuffs.*', 'cautions.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
                             @endCan
-                            @can('sectors:show')
+                            @can(make_ability_name_with_current_building('sectors:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('sectors.*')) ? 'active' : '' }}" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan
                             @can('event-types:show')
@@ -69,7 +91,7 @@
                     </li>
                     @endcanany
 
-                    <li class="nav-item dropdown">
+                    <!--<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
@@ -87,7 +109,28 @@
                                 </form>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
+
+<!--
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortaria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Edificio Lucio Costa
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownPortaria">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Palácio Tiradentes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Edificio Lucio Costa
+                                    </a>
+                                </li>
+
+                        </ul>
+                    </li>-->
                 @endguest
             </ul>
         </div>

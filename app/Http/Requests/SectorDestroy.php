@@ -8,7 +8,7 @@ class SectorDestroy extends SectorStore
 {
     public function authorize()
     {
-        return allows('sectors:destroy');
+        return allows_in_current_building('sectors:destroy');
     }
 
     public function rules()
@@ -17,7 +17,7 @@ class SectorDestroy extends SectorStore
             'id' => [
                 'required',
                 Rule::unique('events', 'sector_id'),
-                Rule::unique('visitors', 'sector_id'),
+                Rule::unique('sector_visitor', 'sector_id'),
                 Rule::unique('stuffs', 'sector_id'),
             ],
         ];

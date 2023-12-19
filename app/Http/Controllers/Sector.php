@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Sectors as SectorsRepository;
+use App\Models\Sector as SectorModel;
 use App\Http\Requests\SectorStore;
 use App\Http\Requests\SectorUpdate;
 use App\Http\Requests\SectorDestroy;
@@ -15,6 +16,7 @@ class Sector extends Controller
 
         return $this->view('sectors.form')->with([
             'sector' => app(SectorsRepository::class)->new(),
+            'currentBuilding' => get_current_building(),
         ]);
     }
 
@@ -32,7 +34,7 @@ class Sector extends Controller
         formMode(Constants::FORM_MODE_SHOW);
 
         return $this->view('sectors.form')->with([
-            'sector' => app(SectorsRepository::class)->findById($id),
+            'sector' => SectorModel::findOrFail($id),
         ]);
     }
 

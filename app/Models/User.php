@@ -12,6 +12,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
+use App\Data\Repositories\Buildings as BuildingsRepository;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRolesAndAbilities;
+
+    protected static $allowedBuildings;
 
     /**
      * The attributes that are mass assignable.
@@ -84,15 +87,70 @@ class User extends Authenticatable
 
     public function removeAccessTokens()
     {
-        return $this->tokens()->where('personal_access_tokens.name', 'access')->delete();
+        return $this->tokens()
+            ->where('personal_access_tokens.name', 'access')
+            ->delete();
     }
     public function afterAuthentication()
     {
         $this->removeAccessTokens();
-        $token = $this->createToken('access', $this->getAbilities()->pluck('name')->toArray())->plainTextToken;
+        $token = $this->createToken(
+            'access',
+            $this->getAbilities()
+                ->pluck('name')
+                ->toArray()
+        )->plainTextToken;
 
         $this->withAccessToken($token);
-        session()->put('access-token',$token);
+        session()->put('access-token', $token);
     }
 
+    //TODO trabalhar futuramente com uma escolha de o sistema favorito , para que este seja o sistema inicial da aplicação
+    public function getBuildingIdAttribute()
+    {
+        return ($allowed = $this->allowed_buildings)->isEmpty() ? null : $allowed->first()->id;
+    }
+
+    public function getAllowedBuildingsAttribute()
+    {
+        if (static::$allowedBuildings) {
+            return static::$allowedBuildings;
+        }
+
+        $profilesAllowed = $this->makeProfilesList();
+
+        static::$allowedBuildings = app(BuildingsRepository::class)
+            ->all()
+            ->filter(function ($building) use ($profilesAllowed) {
+                return $this->isSuperUser($profilesAllowed) ||
+                    array_has($profilesAllowed, $building->slug);
+            });
+
+        return static::$allowedBuildings;
+    }
+
+    public function isSuperUser($allowed): bool
+    {
+        return isset($allowed['all']) && $allowed['all'] === 'administrador';
+    }
+    protected function makeProfilesList()
+    {
+        $allowed = collect(json_decode($this->roles, true))->mapWithKeys(function ($value, $key) {
+            list($client, $profile) = extract_client_and_permission($value['name']);
+
+            return [$client => $profile];
+        });
+
+        return $allowed;
+    }
+
+    public function canInCurrentBuilding($ability)
+    {
+        return allows_in_current_building($ability);
+    }
+
+    public function getMainBuilding()
+    {
+        return $this->allowed_buildings->first() ?? null;
+    }
 }

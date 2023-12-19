@@ -8,7 +8,7 @@ class StuffStore extends Request
 {
     public function authorize()
     {
-        return allows('stuffs:store');
+        return allows_in_current_building('stuffs:store');
     }
 
     public function rules()

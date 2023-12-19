@@ -8,7 +8,7 @@ class StuffDestroy extends StuffStore
 {
     public function authorize()
     {
-        return allows('stuffs:destroy');
+        return allows_in_current_building('stuffs:destroy');
     }
 
     public function rules()

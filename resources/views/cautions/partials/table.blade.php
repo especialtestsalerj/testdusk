@@ -32,7 +32,7 @@
                                 <span class="fw-bold">Solicitante:</span> {{ $caution->visitor->person->name }}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Destino:</span> {{ $caution->visitor?->sector?->name }}
+                                <span class="fw-bold">Destino:</span> {{$caution->visitor?->sectorsResumed}}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
                                 <span class="fw-bold">Plantonista:</span> {{ $caution->dutyUser->name }}

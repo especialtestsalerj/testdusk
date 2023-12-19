@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\InCurrentBuilding;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
@@ -15,11 +16,24 @@ class Event extends Model
         'sector_id',
         'duty_user_id',
         'description',
+        'building_id',
     ];
 
     protected $casts = [
         'occurred_at' => 'datetime:Y-m-d H:i',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function (Event $event) {
+            $event->building_id = get_current_building()->id;
+        });
+    }
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
 
     public function eventType()
     {
@@ -39,5 +53,10 @@ class Event extends Model
     public function getOccurredAtFormattedAttribute()
     {
         return $this->occurred_at?->format('Y-m-d H:i');
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

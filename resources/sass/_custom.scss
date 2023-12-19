@@ -821,3 +821,42 @@ body.bg-logo {
     background-color: #52A1E1;
     border-color: #52A1E1;
 }
+
+.fix-align-top {
+    margin-top: -8px;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: #142b53;
+    --#{$prefix}tooltip-max-width: 450px;
+    --#{$prefix}tooltip-padding-x: 20px;
+    --#{$prefix}tooltip-padding-y: 20px;
+    font-weight: bold;
+}
+
+.more-destinys {
+    padding: 6px 6px 5px 6px;
+}
+
+.multiple-destiny {
+    border-bottom: solid 1px #4075d1;
+    &:last-of-type {
+        border-bottom: none !important;
+    }
+}
+
+
+.topbar-blue {
+    background: #112445;
+
+    .btn-secondary {
+        background: #1A396E;
+    }
+    .username {
+        font-size: 90%;
+        @media (max-width: 575.98px) {
+            font-size: 75%;
+        }
+
+    }
+}

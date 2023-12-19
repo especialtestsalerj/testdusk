@@ -11,7 +11,9 @@ class Service
     {
         return [
             'app' => [
+                'allowedBuildings' => auth()->user()->allowed_buildings ?? [],
                 'name' => config('app.name'),
+                'app_url' => config('app.url'),
                 'version' => '1.0', //Version::format('compact'),
             ],
 
@@ -40,6 +42,10 @@ class Service
                     'port' => config('broadcasting.connections.pusher.options.port', '6001'),
                     'scheme' => config('broadcasting.connections.pusher.options.scheme', 'http'),
                 ],
+            ],
+
+            'session' => [
+                'currentBuilding' => get_current_building(),
             ],
         ];
     }

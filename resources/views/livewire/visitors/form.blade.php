@@ -26,7 +26,7 @@
                         @include('partials.save-button',
                                 ['model' => $visitor, 'backUrl' => 'visitors.index',
                                 'showSave'=>!(isset($mode) && $mode == 'show-read-only'), //showSave = true if and only if $mode='show-read-only'
-                                'permission' => !request()->query('disabled') ? (formMode() == 'show' ? 'visitors:update' : 'visitors:store') : ''])
+                                'permission' => !request()->query('disabled') ? (formMode() == 'show' ? make_ability_name_with_current_building('visitors:update') : make_ability_name_with_current_building('visitors:store')) : ''])
                     </div>
                 </div>
             </div>
@@ -102,13 +102,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-12 col-xl-6" wire:ignore>
+
+
                                 <div class="form-group">
                                     <label for="sector_id">Destino*</label>
-                                    <select class="select2 form-control" name="sector_id" id="sector_id"
+                                    <select class="select2 form-control" name="sector_id[]" id="sector_id" multiple
                                             @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif>
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $key => $sector)
-                                            @if(((!is_null($visitor->id)) && (!is_null($visitor->sector_id) && $visitor->sector_id === $sector->id) || (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
+                                            @if(((!is_null($visitor->id)) && (!is_null($visitor->sectors) && $visitor->sectors->contains($sector->id) ) ||
+                                            (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
                                                 <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
                                             @else
                                                 <option value="{{ $sector->id }}">{{ $sector->name }}</option>

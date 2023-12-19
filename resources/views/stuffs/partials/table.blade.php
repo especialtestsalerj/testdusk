@@ -25,10 +25,10 @@
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Saída:</span> {{ $stuff?->exited_at?->format('d/m/Y \À\S H:i') ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-2 text-center text-lg-start">
+                            <div class="col-12 col-lg-3 text-center text-lg-start">
                                 <span class="fw-bold">Setor:</span> {{ $stuff?->sector?->name ?? '-' }}
                             </div>
-                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                            <div class="col-12 col-lg-3 text-center text-lg-start">
                                 <span class="fw-bold">Plantonista:</span> {{ $stuff->dutyUser->name }}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-end">

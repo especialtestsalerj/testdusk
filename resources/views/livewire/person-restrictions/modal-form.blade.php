@@ -26,6 +26,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="building_id">Unidade*</label>
+                            <select class="form-select text-uppercase" name="building_id"
+                                    id="building_id" wire:model="building_id"
+                                    x-ref="building_id" @disabled($readonly)>
+                                <option value="">selecione</option>
+                                @foreach ($buildings as $building)
+                                    <option
+                                        value="{{ $building->id }}"> {{ $building->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('building_id')
+                            <small class="text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </small>
+                            @endError
+                        </div>
+                        <div class="form-group">
                             <label for="started_at">Início*</label>
                             <input type="datetime-local" max="3000-01-01T23:59"
                                    class="form-control text-uppercase" name="started_at"
@@ -78,7 +96,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" @disabled($readonly)>
+                        <button type="submit" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar Restrição" @disabled($readonly)>
                             <i class="fa fa-save"></i> Salvar
                         </button>
                         <button type="button"

@@ -67,7 +67,9 @@ class Visitor extends Controller
 
         $request->merge(['document_id' => $document->id]);
 
-        app(VisitorsRepository::class)->create($request->all());
+        $visitor = app(VisitorsRepository::class)->create($request->all());
+
+        $visitor->sectors()->attach($request->get('sector_id'));
 
         return redirect()
             ->route('visitors.index')
@@ -78,9 +80,7 @@ class Visitor extends Controller
     {
         formMode(Constants::FORM_MODE_SHOW);
 
-        $visitor = app(VisitorsRepository::class)
-            ->findById($id)
-            ->append('photo');
+        $visitor = VisitorModel::findOrFail($id)->append('photo');
 
         return $this->view('livewire.visitors.form')->with([
             'visitor' => $visitor,
@@ -106,7 +106,9 @@ class Visitor extends Controller
 
         $request = $this->storeAvatar($request);
 
-        app(VisitorsRepository::class)->update($id, $request->all());
+        $visitor = app(VisitorsRepository::class)->update($id, $request->all());
+
+        $visitor->sectors()->sync($request->get('sector_id'));
 
         return redirect()
             ->route('visitors.index')

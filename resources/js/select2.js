@@ -27,7 +27,7 @@ window.initCustomSelect2 = () => {
         width: '100%',
         language: 'pt-BR',
         ajax: {
-            url: 'https://ocorrencias.test/api/visitors/open',
+            url: window.laravel.app.app_url + '/api/visitors/open',
             dataType: 'json',
             delay: 250,
             headers: {
@@ -36,6 +36,7 @@ window.initCustomSelect2 = () => {
             data: function (params) {
                 return {
                     q: params.term, // search term
+                    building_id: window.laravel.session.currentBuilding,
                     page: params.page,
                 }
             },
@@ -55,10 +56,25 @@ window.initCustomSelect2 = () => {
             },
             cache: true,
         },
-        placeholder: 'Search for a repository',
         minimumInputLength: 1,
         templateResult: formatVisitor,
         templateSelection: formatVisitorSelection,
+    })
+
+    $('.open-visitors-select2').on('change', function (e) {
+        var data = e.target.value
+        var name = e.target.name
+
+        window.updateLivewireField(data, name)
+    })
+}
+
+window.updateLivewireField = function (data, name) {
+    const livewireComponents = window.Livewire.all()
+    livewireComponents.forEach((component) => {
+        if (component.get(name) !== undefined) {
+            component.set(name, data)
+        }
     })
 }
 
@@ -150,12 +166,7 @@ $(document).ready(function () {
         var data = e.target.value
         var name = e.target.name
 
-        const livewireComponents = window.Livewire.all()
-        livewireComponents.forEach((component) => {
-            if (component.get(name) !== undefined) {
-                component.set(name, data)
-            }
-        })
+        window.updateLivewireField(data, name)
     })
 })
 

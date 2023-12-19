@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? (formMode() == 'show' ? 'routines:update' : 'routines:store') : ''), 'id' => $routine->id])
+                        @include('partials.save-button', ['model'=>$routine, 'backUrl' => 'routines.index', 'permission'=>($routine->status ? (formMode() == 'show' ? make_ability_name_with_current_building('routines:update') : make_ability_name_with_current_building('routines:store')) : ''), 'id' => $routine->id])
                     </div>
                 </div>
             </div>

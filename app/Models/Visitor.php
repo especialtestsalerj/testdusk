@@ -5,6 +5,7 @@ use App\Services\QrCode\Service;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Scopes\InCurrentBuilding;
 
 class Visitor extends Model
 {
@@ -13,10 +14,10 @@ class Visitor extends Model
         'entranced_at',
         'exited_at',
         'person_id',
-        'sector_id',
         'description',
         'document_id',
         'avatar_id',
+        'building_id',
     ];
 
     protected $casts = [
@@ -24,9 +25,18 @@ class Visitor extends Model
         'exited_at' => 'datetime:Y-m-d H:i',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new InCurrentBuilding());
+    }
+
     protected static function booted()
     {
-        static::creating(fn(Visitor $visitor) => ($visitor->uuid = (string) Uuid::uuid4()));
+        static::creating(function (Visitor $visitor) {
+            $visitor->uuid = (string) Uuid::uuid4();
+            $visitor->building_id = get_current_building()->id;
+        });
     }
 
     public static function findByUuid($uuid)
@@ -44,9 +54,29 @@ class Visitor extends Model
         return $this->hasMany(Caution::class);
     }
 
-    public function sector()
+    public function sectors()
     {
-        return $this->belongsTo(Sector::class, 'sector_id');
+        return $this->belongsToMany(Sector::class);
+    }
+
+    private function getOtherSectors()
+    {
+        $qtd = count($this->sectors);
+
+        return $qtd > 1 ? ($othersSectors = ' +' . $qtd - 1) : '';
+    }
+
+    public function getSectorsResumedAttribute()
+    {
+        return $this->sectors?->first()?->name . $this->getOtherSectors();
+    }
+
+    public function getSectorsNameAttribute()
+    {
+        return convert_case($this->sectors?->first()?->building->name, MB_CASE_UPPER) .
+            ' - ' .
+            $this->sectors?->first()?->name .
+            $this->getOtherSectors();
     }
 
     public function getEntrancedAtFormattedAttribute()
@@ -183,5 +213,10 @@ class Visitor extends Model
         return Visitor::where('person_id', $this->person_id)
             ->whereNull('exited_at')
             ->exists();
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

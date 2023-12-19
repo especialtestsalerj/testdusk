@@ -11,7 +11,7 @@ class CautionStore extends Request
 {
     public function authorize()
     {
-        return allows('cautions:store');
+        return allows_in_current_building('cautions:store');
     }
 
     public function rules()

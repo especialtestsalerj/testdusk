@@ -178,7 +178,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => [env('HORIZON_QUEUE', 'ocorrencias')],
+            'queue' => [env('HORIZON_QUEUE', 'sigvisitas')],
             'balance' => 'auto',
             'autoScalingStrategy' => 'time',
             'maxProcesses' => 1,
@@ -194,7 +194,7 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'queue' => [env('HORIZON_QUEUE', 'ocorrencias')],
+                'queue' => [env('HORIZON_QUEUE', 'sigvisitas')],
                 'maxProcesses' => 10,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
@@ -203,7 +203,7 @@ return [
 
         'local' => [
             'supervisor-1' => [
-                'queue' => [env('HORIZON_QUEUE', 'ocorrencias')],
+                'queue' => [env('HORIZON_QUEUE', 'sigvisitas')],
                 'maxProcesses' => 3,
             ],
         ],

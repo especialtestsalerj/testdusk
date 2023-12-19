@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-                        @include('partials.save-button', ['model' => $caution, 'backUrl' => $redirect, 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? 'cautions:update' : 'cautions:store') : ''), 'id' =>$routine_id])
+                        @include('partials.save-button', ['model' => $caution, 'backUrl' => $redirect, 'permission'=>($routine->status && !request()->query('disabled') ? (formMode() == 'show' ? make_ability_name_with_current_building('cautions:update') : make_ability_name_with_current_building('cautions:store')) : ''), 'id' =>$routine_id])
                     </div>
                 </div>
             </div>
@@ -81,14 +81,18 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="destiny_sector_name">Destino</label>
-                            <input
-                                type="text"
-                                class="form-control text-uppercase"
-                                name="destiny_sector_name"
-                                id="destiny_sector_name"
-                                value="{{$this->destinySectorName}}"
-                                @disabled(true)
+                            <select class="form-select select2"
+                                    name="destiny_sector_name"
+                                    id="destiny_sector_name"
+                                    multiple
+                            @disabled(true)
                             >
+                                @if(!empty($this->sectors))
+                                @foreach($this->sectors as $sector)
+                                    <option selected>{{$sector->name}}</option>
+                                @endforeach
+                                    @endif
+                            </select>
                         </div>
                     </div>
                 </div>

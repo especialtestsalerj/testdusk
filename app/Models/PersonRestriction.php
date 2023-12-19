@@ -2,9 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\InCurrentBuilding;
+
 class PersonRestriction extends Model
 {
-    protected $fillable = ['person_id', 'started_at', 'ended_at', 'message', 'description'];
+    protected $fillable = [
+        'person_id',
+        'started_at',
+        'ended_at',
+        'message',
+        'description',
+        'building_id',
+    ];
 
     protected $filterableColumns = ['started_at'];
 
@@ -12,6 +21,11 @@ class PersonRestriction extends Model
         'started_at' => 'datetime:Y-m-d H:i',
         'ended_at' => 'datetime:Y-m-d H:i',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+    }
 
     public function getStartedAtFormattedAttribute()
     {
@@ -26,5 +40,10 @@ class PersonRestriction extends Model
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
     }
 }

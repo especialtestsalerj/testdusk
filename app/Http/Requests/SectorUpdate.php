@@ -8,7 +8,7 @@ class SectorUpdate extends SectorStore
 {
     public function authorize()
     {
-        return allows('sectors:update');
+        return allows_in_current_building('sectors:update');
     }
 
     public function rules()
