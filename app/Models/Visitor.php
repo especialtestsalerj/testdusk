@@ -18,6 +18,7 @@ class Visitor extends Model
         'document_id',
         'avatar_id',
         'building_id',
+        'card_id',
     ];
 
     protected $casts = [
@@ -218,5 +219,10 @@ class Visitor extends Model
     public function building()
     {
         return $this->belongsTo(Building::class);
+    }
+
+    public function card()
+    {
+        return $this->belongsTo(Card::class);
     }
 }

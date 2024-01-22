@@ -3,10 +3,11 @@
 namespace App\Http\Livewire\Visitors;
 
 use App\Models\Visitor;
+use App\Models\Visitor as VisitorModel;
 use Livewire\Component;
 use Ramsey\Uuid\Uuid;
 use Carbon\Carbon;
-use App\Models\Visitor as VisitorModel;
+use App\Models\Card as CardModel;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 
 class VisitorsCard extends Component
@@ -24,11 +25,22 @@ class VisitorsCard extends Component
     public $exitedDisabled;
     public $showSaveButton;
 
+    protected function visitorsRoute()
+    {
+        return \Request::route()->getName() == 'visitors.card';
+    }
     public function mount($uuid = null)
     {
         if ($uuid) {
             if (Uuid::isValid($uuid)) {
-                $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
+                if ($this->visitorsRoute()) {
+                    $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
+                } else {
+                    $visitor = CardModel::where('uuid', $uuid)->firstOrFail()->visitor;
+                    if (!$visitor) {
+                        abort(400, 'Cartão não possui visita em aberto');
+                    }
+                }
             } else {
                 abort(404);
             }

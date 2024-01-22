@@ -52,4 +52,8 @@ Route::group(
         });
     }
 );
+
 Route::get('visitors/card/{uuid?}', VisitorsCard::class)->name('visitors.card');
+Route::get('cards/{uuid?}', VisitorsCard::class)
+    ->name('cards.card')
+    ->middleware(['can:use-app', 'canInCurrentBuilding:visitors:show']);
