@@ -43,7 +43,7 @@ return new class extends Migration {
                 ->on('cards');
         });
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 5000; $i++) {
             $card = new Card();
             $card->number = 'A' . str_pad($i, 4, '0', STR_PAD_LEFT);
             $card->uuid = Uuid::uuid4();

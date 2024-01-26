@@ -3,7 +3,6 @@
 namespace App\Services\PDF;
 
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
-
 class Service
 {
     protected $pdf;
@@ -33,7 +32,7 @@ class Service
     public function save($fileName)
     {
         if (!file_exists($path = dirname($fileName))) {
-            mkdir($path);
+            \File::makeDirectory($path, 0755, true, true);
         }
 
         $this->pdf->save($fileName);

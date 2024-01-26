@@ -30,7 +30,9 @@ class Card extends Model
     {
         return Attribute::make(
             get: fn($value) => app(Service::class)->generate(
-                route('cards.card', ['uuid' => $this->uuid])
+                route('cards.card', ['uuid' => $this->uuid]),
+                151.181,
+                -7
             )
         );
     }

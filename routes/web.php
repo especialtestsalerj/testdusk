@@ -44,6 +44,7 @@ Route::group(
         require __DIR__ . '/person-restrictions.php';
         require __DIR__ . '/routines.php';
         require __DIR__ . '/visitors.php';
+        require __DIR__ . '/cards.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
             require __DIR__ . '/events.php';
