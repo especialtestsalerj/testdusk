@@ -13,5 +13,9 @@
 @endsection
 
 @section('message')
-    A solicitação do cliente é inválida ou malformada.
+    @if($exception->getMessage())
+        {{$exception->getMessage()}}
+    @else
+        A solicitação do cliente é inválida ou malformada.
+    @endIf
 @endsection
