@@ -10,11 +10,16 @@ use App\Services\PDF\Service as PDF;
 use Illuminate\Support\Str;
 class Cards extends Controller
 {
+    protected $size;
+    protected $margin;
     public function download(Request $request)
     {
         $this->increaseTimeAndMemoryLimits();
-
         [$startId, $endId] = [$request->query('startId'), $request->query('endId')];
+        [$this->size, $this->margin] = [
+            $request->query('size') ?? 151.181,
+            $request->query('margin') ?? -7,
+        ];
 
         $cards = Card::where('id', '>=', $startId)
             ->where('id', '<=', $endId)
@@ -111,7 +116,7 @@ class Cards extends Controller
         app(PDF::class)
             ->initialize(
                 view('cards.qr-code')
-                    ->with(['uri' => $card->qr_code_uri])
+                    ->with(['uri' => $card->qrCodeUri($this->size, $this->margin)])
                     ->render(),
                 [0, 0, 113.386, 113.386]
             )
