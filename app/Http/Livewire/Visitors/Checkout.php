@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 class Checkout extends BaseIndex
 {
     use ChangeViewType;
-
+    protected $queryWith = ['document.documentType', 'sectors', 'person'];
     public $searchName;
     public $startDate;
     public $endDate;

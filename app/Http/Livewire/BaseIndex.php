@@ -11,6 +11,7 @@ abstract class BaseIndex extends Component
     use WithPagination, Swallable;
 
     protected $repository;
+    protected $queryWith;
     protected $paginationTheme = 'bootstrap';
     public $searchString = '';
     public $pageSize = 12;
@@ -83,10 +84,13 @@ abstract class BaseIndex extends Component
             $repository->disablePagination();
         }
 
-        $query = $repository
-            ->newQuery()
+        $query = $repository->newQuery();
 
-            ->where(function ($query) {
+            if (!empty($this->queryWith)) {
+                $query->with($this->queryWith);
+            }
+
+            $query->where(function ($query) {
                 collect($this->searchFields)->each(function ($key, $field) use ($query) {
                     switch ($key) {
                         case 'text':
