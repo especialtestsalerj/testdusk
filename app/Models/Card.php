@@ -26,14 +26,12 @@ class Card extends Model
         return self::where('uuid', $uuid)->first();
     }
 
-    public function qrCodeUri(): Attribute
+    public function qrCodeUri($size, $margin)
     {
-        return Attribute::make(
-            get: fn($value) => app(Service::class)->generate(
-                route('cards.card', ['uuid' => $this->uuid]),
-                151.181,
-                -7
-            )
+        return app(Service::class)->generate(
+            route('cards.card', ['uuid' => $this->uuid]),
+            $size,
+            $margin
         );
     }
 }
