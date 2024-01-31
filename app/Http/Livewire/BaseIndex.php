@@ -11,6 +11,7 @@ abstract class BaseIndex extends Component
     use WithPagination, Swallable;
 
     protected $repository;
+    protected $model;
     protected $paginationTheme = 'bootstrap';
     public $searchString = '';
     public $pageSize = 12;
@@ -75,6 +76,24 @@ abstract class BaseIndex extends Component
         return $sql;
     }
 
+    public function fullTextFilter()
+    {
+        $query = $this->model::search($this->searchString);
+
+        $query = $this->additionalFilterQuery($query);
+
+        $query = $this->orderBy($query);
+
+        if ($this->paginationEnabled) {
+            $result = $query->paginate($this->pageSize);
+            $this->countResults = $result->total();
+        } else {
+            $result = $query->get();
+            $this->countResults = $result->count();
+        }
+
+        return $result;
+    }
     public function filter()
     {
         $repository = app($this->repository);
@@ -130,6 +149,7 @@ abstract class BaseIndex extends Component
 
         $query = $this->additionalFilterQuery($query);
 
+        $this->countResults = $query->count();
 
         $query = $this->orderBy($query);
 

@@ -17,6 +17,10 @@ class InCurrentBuilding implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where($model->getTable() . '.building_id', get_current_building()->id);
+        if ($building = get_current_building()) {
+            return $builder->where($model->getTable() . '.building_id', $building->id);
+        } else {
+            return $builder;
+        }
     }
 }
