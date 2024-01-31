@@ -245,4 +245,18 @@ abstract class Repository
 
         return $query;
     }
+
+    public function getAllActive($model, $orderBy, $id = null)
+    {
+        return $this->{$model}
+            ::where(function ($query) use ($id) {
+                $query
+                    ->when(isset($id), function ($query) use ($id) {
+                        $query->orWhere('id', '=', $id);
+                    })
+                    ->orWhere('status', true);
+            })
+            ->orderBy($orderBy)
+            ->get();
+    }
 }

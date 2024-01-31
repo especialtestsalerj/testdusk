@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CardDestroy;
+use App\Http\Requests\CardStore;
+use App\Http\Requests\CardUpdate;
 use App\Models\Card;
 use App\Services\QrCode\Service;
+use App\Data\Repositories\Cards as CardsRepository;
+use App\Support\Constants;
+use App\Models\Card as CardModel;
 use File;
 use Illuminate\Http\Request;
 use App\Services\PDF\Service as PDF;
@@ -144,5 +150,53 @@ class Cards extends Controller
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
+    }
+
+    public function create()
+    {
+        formMode(Constants::FORM_MODE_CREATE);
+
+        return $this->view('cards.form')->with([
+            'card' => app(CardsRepository::class)->new(),
+            'currentBuilding' => get_current_building(),
+        ]);
+    }
+
+    public function store(CardStore $request)
+    {
+        app(CardsRepository::class)->create($request->all());
+
+        return redirect()
+            ->route('cards.index')
+            ->with('message', 'Cartão adicionado com sucesso!');
+    }
+
+    public function show($id)
+    {
+        formMode(Constants::FORM_MODE_SHOW);
+
+        return $this->view('cards.form')->with([
+            'card' => CardModel::findOrFail($id),
+        ]);
+    }
+
+    public function update(CardUpdate $request, $id)
+    {
+        app(CardsRepository::class)->update($id, $request->all());
+
+        return redirect()
+            ->route('cards.index')
+            ->with('message', 'Cartão alterado com sucesso!');
+    }
+
+    public function destroy(CardDestroy $request, $id)
+    {
+        $card = app(CardsRepository::class)->findById($id);
+
+        $card->delete($id);
+
+        return redirect()
+            ->route('cards.index')
+            ->with('message', 'Cartão removido com sucesso!');
     }
 }
