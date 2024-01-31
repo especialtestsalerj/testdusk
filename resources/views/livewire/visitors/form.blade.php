@@ -78,7 +78,7 @@
                                     Dados da Visita
                                 </h4>
                             </div>
-                            <div class="col-lg-6 col-xl-3">
+                            <div class="col-lg-6 col-xl-3" wire:ignore>
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada*</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.lazy="visitor.entranced_at"
@@ -87,7 +87,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-xl-3">
+                            <div class="col-lg-6 col-xl-3" wire:ignore>
                                 <div class="form-group">
                                     <label for="exited_at">Saída</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at"
