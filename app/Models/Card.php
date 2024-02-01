@@ -28,7 +28,7 @@ class Card extends Model
 
     public function visitors()
     {
-        return $this->belongsToMany(Visitor::class);
+        return $this->hasMany(Visitor::class);
     }
 
     public function building()

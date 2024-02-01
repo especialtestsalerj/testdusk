@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Data\Repositories\Cards;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Livewire\Traits\WithWebcam;
+use App\Models\Card;
 use App\Models\Document;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;

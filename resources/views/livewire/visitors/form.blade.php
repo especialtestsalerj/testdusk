@@ -71,7 +71,8 @@
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
                         'readonly' => $visitor->hasPending(), 'showRestrictions' => true,
-                        'document_type_id'=> $document->document_type_id ?? null, 'document_number'=> $document->number ?? null, 'state_document_id'=> $document->state_id ?? null])
+                        'document_type_id'=> $document->document_type_id ?? null, 'document_number'=> $document->number ?? null, 'state_document_id'=> $document->state_id ?? null,
+                        'card_id'=> $visitor->card_id ?? null])
                         <div class="row">
                             <div class="col-12">
                                 <h4>

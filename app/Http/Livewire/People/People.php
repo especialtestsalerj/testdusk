@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\People;
 
+use App\Data\Repositories\Cards;
 use App\Data\Repositories\Documents;
 use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
@@ -33,6 +34,7 @@ class People extends BaseForm
     public $state_document_id;
     public $full_name;
     public $social_name;
+    public $card_id;
 
 
     public $document_type_id;
@@ -62,9 +64,10 @@ class People extends BaseForm
             'document_type_id' => $this->document_type_id,
             'state_document_id' => $this->state_document_id,
             'refreshPhoto' => $name == 'person_id',
+            'card_id' => $this->card_id,
         ];
 
-        if($name == 'person_id'){
+        if ($name == 'person_id') {
 //            dd($array);
 //            dd($this->person->id);
         }
@@ -157,8 +160,8 @@ class People extends BaseForm
                 : old('document_type_id');
         }
 
-        if($this->document_type_id == config('app.document_type_cpf') && $this->document_number){
-            if($document = Document::where('document_type_id', config('app.document_type_cpf'))->where('number', $this->document_number)->first()) {
+        if ($this->document_type_id == config('app.document_type_cpf') && $this->document_number) {
+            if ($document = Document::where('document_type_id', config('app.document_type_cpf'))->where('number', $this->document_number)->first()) {
                 $this->person = $document->person;
                 $this->readonly = true;
             }
@@ -216,6 +219,7 @@ class People extends BaseForm
     {
         return array_merge($this->addressFormVariables(), [
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
+            'cards' => app(Cards::class)->allActive($this->card_id),
         ]);
     }
 

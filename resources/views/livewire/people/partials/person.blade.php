@@ -158,6 +158,26 @@
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="card_id">Cartão</label>
+                    <div wire:ignore>
+                        <select class="select2 form-control text-uppercase"
+                                name="card_id" id="card_id"
+                                wire:model="card_id"
+                                @if ($modal) disabled @endif
+                                @if ($readonly) readonly @endif>
+                            <option value="">SELECIONE</option>
+                            @foreach ($cards as $card)
+                                <option value="{{ $card->id }}">
+                                    {{ convert_case($card->number, MB_CASE_UPPER) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-6 col-xl-6">
                 @foreach($this->alerts as $alert)
                     <div class="col-12">
