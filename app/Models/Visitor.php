@@ -232,4 +232,18 @@ class Visitor extends Model
     {
         return $query->with(['person', 'document.documentType', 'sectors']);
     }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'person.full_name' => $this->person->full_name,
+            'person.social_name' => $this->person->social_name,
+            'exited_at' => $this->exited_at?->format('d/m/Y H:i'),
+            'entranced_at' => $this->entranced_at_br_formatted,
+            'entranced_at_original' => $this->getOriginal('entranced_at'),
+            'document.number' => $this->document->number,
+            'sector.name' => $this->sectors_name,
+            'foo' => 'bar', //used to hack some queries
+        ];
+    }
 }

@@ -73,6 +73,7 @@ abstract class BaseIndex extends Component
             $sql->orderBy($field, $this->orderByDirection[$i] ?? 'asc');
             $i++;
         }
+
         return $sql;
     }
 

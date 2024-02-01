@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'algolia'),
+    'driver' => env('SCOUT_DRIVER', 'meilisearch'),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,8 +68,8 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
-        'unsearchable' => 500,
+        'searchable' => 1000,
+        'unsearchable' => 1000,
     ],
 
     /*
@@ -134,7 +134,9 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             \App\Models\Visitor::class => [
-                'sortableAttributes' => ['entranced_at'],
+                'filterableAttributes' => ['exited_at', 'foo'],
+                'sortableAttributes' => ['entranced_at_original'],
+                'pagination' => ['maxTotalHits' => 9999999]
             ],
         ],
     ],
