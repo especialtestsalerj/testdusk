@@ -246,4 +246,14 @@ class Visitor extends Model
             'foo' => 'bar', //used to hack some queries
         ];
     }
+
+    public static function disableGlobalScopes()
+    {
+        InCurrentBuilding::disable();
+    }
+
+    public static function enableGlobalScopes()
+    {
+        InCurrentBuilding::enable();
+    }
 }
