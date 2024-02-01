@@ -29,14 +29,11 @@ class CreateFullTextIndexes extends Command
     public function handle()
     {
         Visitor::disableGlobalScopes();
-
         Artisan::call('scout:sync-index-settings');
-        Artisan::call('scout:index', [
-            'name' => 'App\\Models\\Visitor',
+        Artisan::call('scout:import', [
+            'model' => 'App\\Models\\Visitor',
         ]);
-
-        dump(Artisan::output());
-
+        $this->info(Artisan::output());
         Visitor::enableGlobalScopes();
 
         return Command::SUCCESS;
