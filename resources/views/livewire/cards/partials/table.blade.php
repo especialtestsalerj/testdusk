@@ -11,6 +11,15 @@
                             <div class="col-12 col-lg-8 text-center text-lg-start">
                                 <span class="fw-bold">Unidade:</span> {{ convert_case($card->building->name, MB_CASE_UPPER) }}
                             </div>
+                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                <span class="fw-bold">Visita:</span> {{ convert_case($card->visitors->first()->person->name ?? 'NENHUMA VISITA', MB_CASE_UPPER) }}
+                            </div>
+                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                <span class="fw-bold">Entrada:</span> {{ convert_case($card->visitors->first()?->entranced_at?->format('d/m/Y H:i') ?? 'NENHUMA VISITA', MB_CASE_UPPER) }}
+                            </div>
+                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                <span class="fw-bold">Possui restrição de acesso:</span> {{ convert_case($card->visitors->first()?->person->restrictions->isNotEmpty() ? 'SIM' : 'NÃO' , MB_CASE_UPPER) }}
+                            </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Status:</span>
                                 @if ($card->status)

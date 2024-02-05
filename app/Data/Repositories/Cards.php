@@ -18,7 +18,6 @@ class Cards extends Repository
                     ->when(isset($tmpId), function ($query) use ($tmpId) {
                         $query->orWhere('id', '=', $tmpId);
                     })
-                    ->with('visitors')
                     ->orWhere('status', true);
             })
             ->orderBy('number')

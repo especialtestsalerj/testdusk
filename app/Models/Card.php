@@ -28,7 +28,7 @@ class Card extends Model
 
     public function visitors()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->hasMany(Visitor::class, 'card_id')->whereNull('exited_at');
     }
 
     public function building()
