@@ -31,12 +31,4 @@ Route::group(['prefix' => '/cards'], function () {
     Route::post('/delete/{id}', [Cards::class, 'destroy'])
         ->name('cards.destroy')
         ->middleware('canInCurrentBuilding:cards:destroy');
-
-    Route::post('/disable-all', [Cards::class, 'disableAll'])
-        ->name('cards.disable_all')
-        ->middleware('canInCurrentBuilding:cards:disable-all');
-
-    Route::post('/enable-all', [Cards::class, 'enableAll'])
-        ->name('cards.enable_all')
-        ->middleware('canInCurrentBuilding:cards:enable-all');
 });

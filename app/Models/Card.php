@@ -16,7 +16,7 @@ class Card extends Model
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope(new Active());
+        static::addGlobalScope(new InCurrentBuilding());
     }
 
     protected static function booted()

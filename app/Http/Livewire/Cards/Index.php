@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Cards;
 use App\Data\Repositories\Cards as CardsRepository;
 use App\Http\Livewire\BaseIndex;
 use App\Http\Livewire\Traits\Swallable;
+use App\Models\Card;
 
 class Index extends BaseIndex
 {
@@ -22,13 +23,19 @@ class Index extends BaseIndex
         'cards.number' => 'text',
     ];
 
+    protected $listeners = [
+        'disableAll',
+        'enableAll',
+    ];
+
 
     public function disableAllCards()
     {
         $this->swalConfirmation(
             'ATENÇÃO',
             'Você realmente quer desabilitar todos os cartões?',
-            route('cards.disable_all')
+            null,
+            'disableAll',
         );
     }
 
@@ -37,8 +44,26 @@ class Index extends BaseIndex
         $this->swalConfirmation(
             'ATENÇÃO',
             'Você realmente quer habilitar todos os cartões?',
-            route('cards.enable_all')
+            null,
+            'enableAll',
         );
+    }
+
+    public function disableAll()
+    {
+        $this->enableOrDisableAllFunction(false, 'Cartões desabilitados com sucesso!');
+    }
+
+    public function enableAll()
+    {
+        $this->enableOrDisableAllFunction(true, 'Cartões habilitados com sucesso!');
+    }
+
+    protected function enableOrDisableAllFunction($status, $message)
+    {
+        Card::query()->update(['status' => $status]);
+
+        return to_route('cards.index')->with('message', $message);
     }
 
     public function additionalFilterQuery($query)

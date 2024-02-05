@@ -200,24 +200,4 @@ class Cards extends Controller
             ->with('message', 'Cartão removido com sucesso!');
     }
 
-    public function disableAll()
-    {
-        $this->enableOrDisableAllFunction(false, 'Cartões desabilitados com sucesso!');
-    }
-
-    public function enableAll()
-    {
-        $this->enableOrDisableAllFunction(true, 'Cartões habilitados com sucesso!');
-    }
-
-    protected function enableOrDisableAllFunction($status, $message)
-    {
-        foreach (app(CardsRepository::class)->allActive() as $card) {
-            app(CardsRepository::class)->update($card->id, ['status' => $status]);
-        }
-
-        return redirect()
-            ->route('cards.index')
-            ->with('message', $message);
-    }
 }
