@@ -109,22 +109,10 @@
 
                                     <div class="row card-buttons mt-auto d-flex">
                                         <div class="col-4">
-          {{--                                  <div class="row">
-                                                <div class="col-12 card-number">
-                                                    CARTÃO
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    1234
-                                                </div>
-                                            </div>--}}
-
-
 
                                             <div class="card-number">
                                                 <strong>
-                                                    A0001
+                                                    {{$visitor?->card?->number ?? ''}}
                                                 </strong>
 
                                             </div>
