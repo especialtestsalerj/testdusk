@@ -17,7 +17,6 @@ class CardDestroy extends CardStore
         return [
             'id' => [
                 'required',
-                Rule::unique('visitors', 'card_id'),
             ],
         ];
     }
@@ -25,7 +24,7 @@ class CardDestroy extends CardStore
     public function messages()
     {
         return [
-            'id.unique' => 'Setor está em uso em alguma rotina.',
+            'id.unique' => 'Cartão está em uso.',
         ];
     }
 }

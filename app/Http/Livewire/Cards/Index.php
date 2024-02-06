@@ -16,7 +16,7 @@ class Index extends BaseIndex
     public $orderByField = ['number'];
     public $orderByDirection = [];
     public $paginationEnabled = true;
-    protected $queryWith = ['visitors'];
+    protected $queryWith = ['visitors', 'building'];
     public $hasVisitor;
 
     public $searchFields = [
@@ -69,7 +69,7 @@ class Index extends BaseIndex
     public function additionalFilterQuery($query)
     {
         if ($this->hasVisitor) {
-            $query = $query->orWhereHas('visitors', function ($subQuery) {
+            $query = $query->whereHas('visitors', function ($subQuery) {
                 $subQuery->whereNull('exited_at');
             });
         }
