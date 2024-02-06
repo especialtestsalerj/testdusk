@@ -108,29 +108,55 @@
                                     </div>
 
                                     <div class="row card-buttons mt-auto d-flex">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="col-3 text-center">
-                                                <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
-                                                <i class="fa fa-lg fa-print"></i>
-                                                </span>
+                                        <div class="col-4">
+          {{--                                  <div class="row">
+                                                <div class="col-12 card-number">
+                                                    CARTÃO
+                                                </div>
                                             </div>
-                                            <div class="col-3 text-center">
-                                                @can(make_ability_name_with_current_building('visitors:show'))
-                                                    <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
-                                                       class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
-                                                            class="fa fa-lg fa-search"></i>
-                                                    </a>
-                                                @endCan
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    1234
+                                                </div>
+                                            </div>--}}
+
+
+
+                                            <div class="card-number">
+                                                <strong>
+                                                    A0001
+                                                </strong>
+
                                             </div>
-                                            <div class="col-3 text-center">
-                                                @can(make_ability_name_with_current_building('visitors:update'))
-                                                    <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
-                                                       class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
-                                                            class="fa fa-lg fa-pencil"></i>
-                                                    </a>
-                                                @endCan
+
+                                        </div>
+
+                                        <div class="col-8">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="col-3 text-center">
+                                                    <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
+                                                        <i class="fa fa-lg fa-print"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    @can(make_ability_name_with_current_building('visitors:show'))
+                                                        <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => true]) }}"
+                                                           class="btn btn-link px-0 pt-0 pb-1" title="Detalhar"><i
+                                                                class="fa fa-lg fa-search"></i>
+                                                        </a>
+                                                    @endCan
+                                                </div>
+                                                <div class="col-3 text-center">
+                                                    @can(make_ability_name_with_current_building('visitors:update'))
+                                                        <a href="{{ route('visitors.show', ['visitor' => $visitor, 'redirect' => $redirect, 'disabled' => false]) }}"
+                                                           class="btn btn-link px-0 pt-0 pb-1" title="Alterar"><i
+                                                                class="fa fa-lg fa-pencil"></i>
+                                                        </a>
+                                                    @endCan
+                                                </div>
                                             </div>
                                         </div>
+
 
                                     </div>
 

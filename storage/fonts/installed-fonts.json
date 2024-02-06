@@ -1,0 +1,20 @@
+{
+    "tangerine": {
+        "normal": "tangerine_normal_19ce16c8d386f49ccf94be2beb5587b6"
+    },
+    "montserrat": {
+        "normal": "montserrat_normal_00833106404dc8458cdfb436c759f23d"
+    },
+    "lato": {
+        "100_italic": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_100_italic_44e4c60a7625d0726917c5586600eef3",
+        "300_italic": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_300_italic_5d458a0bea2edc814cad9956eabe8265",
+        "italic": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_italic_b7fa5abebbe1668203ae32668ec9cd2e",
+        "bold_italic": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_bold_italic_6fe97904fa17d2ccdc33faba12fa878c",
+        "900_italic": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_900_italic_9d745788e8b9254eca55b7b9d6642bc8",
+        "100": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_100_70daffc5a0e459436079609c81930e2f",
+        "300": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_300_bfdde39714afa6c7c8803648317f8517",
+        "normal": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_normal_51116b245f08d5e5cdb537d25637e400",
+        "bold": "\/Users\/breno\/Projetos\/ocorrencias\/storage\/fonts\/lato_bold_39c477866ca5e9b58b0b56a69b4bac5a",
+        "900": "lato_900_f2c6fe94dc8549ffc66e6fb626318e87"
+    }
+}
