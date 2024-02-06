@@ -109,15 +109,15 @@
 
                                     <div class="row card-buttons mt-auto d-flex">
                                         @if($visitor->card)
-                                        <div class="col-4">
+                                            <div class="col-4">
 
-                                            <div class="card-number">
-                                                <strong>
-                                                    {{$visitor?->card?->number ?? ''}}
-                                                </strong>
+                                                <div class="card-number">
+                                                    <strong>
+                                                        {{$visitor->card->number ?? ''}}
+                                                    </strong>
 
+                                                </div>
                                             </div>
-                                        </div>
                                         @endif
 
                                         <div class="col">

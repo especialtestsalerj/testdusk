@@ -26,6 +26,7 @@ class Index extends BaseIndex
     protected $listeners = [
         'disableAll',
         'enableAll',
+        'refresh' => '$refresh',
     ];
 
 
@@ -64,6 +65,11 @@ class Index extends BaseIndex
         Card::query()->update(['status' => $status]);
 
         return to_route('cards.index')->with('message', $message);
+    }
+
+    public function createRestriction($person)
+    {
+        $this->emit('createRestriction', $person);
     }
 
     public function additionalFilterQuery($query)

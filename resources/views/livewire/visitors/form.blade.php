@@ -130,7 +130,7 @@
                                                 name="card_id" id="card_id"
                                                 wire:model="card_id"
                                                 @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif>
-                                            <option value="">SELECIONE</option>
+                                            <option value="">SEM CARTÃO</option>
                                             @foreach ($cards as $card)
                                                 <option value="{{ $card->id }}">
                                                     {{ convert_case($card->number, MB_CASE_UPPER) }}

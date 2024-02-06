@@ -1,4 +1,4 @@
-<div>
+<div wire:poll.10000ms>
     <div class="py-4 px-4">
         <div>
 

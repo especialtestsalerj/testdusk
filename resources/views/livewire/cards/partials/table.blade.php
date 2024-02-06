@@ -53,6 +53,14 @@
                                     <a href="{{ route('cards.show', ['id' => $card->id]) }}" class="btn btn-link"
                                        title="Alterar"><i class="fa fa-lg fa-pencil"></i></a>
                                 @endCan
+                                @if ($card->visitors->first())
+                                    <span class="btn btn-sm btn-primary text-white"
+                                          wire:click="createRestriction({{ $card?->visitors?->first()?->person->id }})"
+                                          data-bs-toggle="modal" data-bs-target="#restriction-modal"
+                                          title="Nova Restrição">
+                                            <i class="fa fa-plus"></i>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -63,7 +71,9 @@
                 <i class="fa fa-lg fa-exclamation-triangle"></i> Nenhum Cartão encontrado.
             </div>
         @endforelse
-        <div class="d-flex justify-content-center mt-4">{{ $cards->links() }}
+        <div class="d-flex justify-content-center mt-4">
+            {{ $cards->links() }}
         </div>
     </div>
+    @livewire('person-restrictions.modal-form')
 </div>
