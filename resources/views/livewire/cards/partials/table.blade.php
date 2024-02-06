@@ -12,32 +12,32 @@
                                 <span
                                     class="fw-bold">Unidade:</span> {{ convert_case($card->building->name, MB_CASE_UPPER) }}
                             </div>
-                            <div class="col-12 col-lg-8 text-center text-lg-start" data-label="Saída">
-                                @if ($card->visitors->first())
+                            @if ($card->visitors->first())
+                                <div class="col-12 col-lg-8 text-center text-lg-start" data-label="Saída">
                                     <span class="fw-bold"> Saída: </span>
                                     <span class="badge bg-warning text-black">EM ABERTO</span>
-                                @endif
-                            </div>
-                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                </div>
+                                <div class="col-12 col-lg-8 text-center text-lg-start">
                                 <span
                                     class="fw-bold">Visita:</span> {{ convert_case($card->visitors->first()->person->name ?? 'NÃO POSSUI', MB_CASE_UPPER) }}
-                            </div>
-                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                </div>
+                                <div class="col-12 col-lg-8 text-center text-lg-start">
                                 <span
                                     class="fw-bold">Entrada:</span> {{ convert_case($card->visitors->first()?->entranced_at?->format('d/m/Y H:i') ?? 'NÃO POSSUI', MB_CASE_UPPER) }}
-                            </div>
-                            <div class="col-12 col-lg-8 text-center text-lg-start">
+                                </div>
+                                <div class="col-12 col-lg-8 text-center text-lg-start">
                                 <span
                                     class="fw-bold">Visita possui restrição de acesso:</span> {{ convert_case($card->visitors->first()?->person->restrictions->isNotEmpty() ? 'SIM' : 'NÃO' , MB_CASE_UPPER) }}
-                            </div>
-                            @if($card?->visitors?->first()?->sectors)
-                                <div class="col-12 col-lg-8 text-center text-lg-start">
-                                    <span class="fw-bold">Destino:</span> <br>
-
-                                    @foreach($card?->visitors?->first()?->sectors as $sector)
-                                        {{$sector->name}} <br>
-                                    @endforeach
                                 </div>
+                                @if($card?->visitors?->first()?->sectors)
+                                    <div class="col-12 col-lg-8 text-center text-lg-start">
+                                        <span class="fw-bold">Destino:</span> <br>
+
+                                        @foreach($card?->visitors?->first()?->sectors as $sector)
+                                            {{$sector->name}} <br>
+                                        @endforeach
+                                    </div>
+                                @endif
                             @endif
 
                             <div class="col-12 col-lg-2 text-center text-lg-start">
