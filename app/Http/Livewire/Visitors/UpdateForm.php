@@ -12,7 +12,7 @@ class UpdateForm extends Form
         $this->visitor = $visitor;
         $this->person = $visitor->person;
         $this->document = $visitor->document;
-
+        $this->card_id = $visitor->card_id;
         $this->loadPhoto();
     }
 }

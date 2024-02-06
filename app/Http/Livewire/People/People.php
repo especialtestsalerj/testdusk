@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\People;
 
-use App\Data\Repositories\Cards;
 use App\Data\Repositories\Documents;
 use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\PersonRestrictions as PersonRestrictionsRepository;
@@ -34,8 +33,6 @@ class People extends BaseForm
     public $state_document_id;
     public $full_name;
     public $social_name;
-    public $card_id;
-
 
     public $document_type_id;
 
@@ -64,13 +61,7 @@ class People extends BaseForm
             'document_type_id' => $this->document_type_id,
             'state_document_id' => $this->state_document_id,
             'refreshPhoto' => $name == 'person_id',
-            'card_id' => $this->card_id,
         ];
-
-        if ($name == 'person_id') {
-//            dd($array);
-//            dd($this->person->id);
-        }
 
         $this->emit('personModified', $array);
     }
@@ -219,7 +210,6 @@ class People extends BaseForm
     {
         return array_merge($this->addressFormVariables(), [
             'documentTypes' => app(DocumentTypes::class)->allOrderBy('name', 'asc', null),
-            'cards' => app(Cards::class)->allActive($this->card_id),
         ]);
     }
 
