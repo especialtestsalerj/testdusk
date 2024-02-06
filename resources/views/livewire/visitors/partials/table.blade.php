@@ -108,6 +108,7 @@
                                     </div>
 
                                     <div class="row card-buttons mt-auto d-flex">
+                                        @if($visitor->card)
                                         <div class="col-4">
 
                                             <div class="card-number">
@@ -116,10 +117,10 @@
                                                 </strong>
 
                                             </div>
-
                                         </div>
+                                        @endif
 
-                                        <div class="col-8">
+                                        <div class="col">
                                             <div class="d-flex justify-content-center">
                                                 <div class="col-3 text-center">
                                                     <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">
