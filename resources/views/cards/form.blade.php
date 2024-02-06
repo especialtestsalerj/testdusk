@@ -40,7 +40,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Número*</label>
-                            <input class="form-control text-uppercase" id="number" name="number" value="{{is_null(old('number')) ? $card->number : old('number')}}" @include('partials.disabled', ['model' => $card, 'permission' => make_ability_name_with_current_building('cards:store')])/>
+                            <input class="form-control text-uppercase" id="number" name="number" value="{{is_null(old('number')) ? $card->number : old('number')}}" @if(formMode() == 'show') disabled @endif/>
                         </div>
 
                         <div class="form-group">

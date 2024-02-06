@@ -27,8 +27,4 @@ Route::group(['prefix' => '/cards'], function () {
     Route::post('/{id}', [Cards::class, 'update'])
         ->name('cards.update')
         ->middleware('canInCurrentBuilding:cards:update');
-
-    Route::post('/delete/{id}', [Cards::class, 'destroy'])
-        ->name('cards.destroy')
-        ->middleware('canInCurrentBuilding:cards:destroy');
 });

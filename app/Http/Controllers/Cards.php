@@ -189,15 +189,4 @@ class Cards extends Controller
             ->with('message', 'Cartão alterado com sucesso!');
     }
 
-    public function destroy(CardDestroy $request, $id)
-    {
-        $card = app(CardsRepository::class)->findById($id);
-
-        $card->delete($id);
-
-        return redirect()
-            ->route('cards.index')
-            ->with('message', 'Cartão removido com sucesso!');
-    }
-
 }

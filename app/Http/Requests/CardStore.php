@@ -20,7 +20,7 @@ class CardStore extends Request
     public function messages()
     {
         return [
-            'number.unique' => 'Número: cartão já existente.',
+            'number.unique' => 'Número: Cartão já existente.',
         ];
     }
 

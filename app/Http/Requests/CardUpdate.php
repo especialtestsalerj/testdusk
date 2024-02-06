@@ -14,7 +14,6 @@ class CardUpdate extends SectorStore
     public function rules()
     {
         return [
-            'number' => ['required', Rule::unique('cards')->ignore($this->get('id'))],
             'status' => 'required',
         ];
     }
