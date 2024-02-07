@@ -139,5 +139,6 @@ class ModalForm extends BaseForm
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'restriction-modal']);
         $this->reset();
         $this->resetErrorBag();
+        $this->emit('refresh');
     }
 }

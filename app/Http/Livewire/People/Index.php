@@ -16,7 +16,7 @@ class Index extends BaseIndex
     use Checkoutable, Badgeable, ChangeViewType;
 
     protected $repository = PeopleRepository::class;
-
+    protected $queryWith = ['documents.documentType'];
     public $orderByField = ['full_name', 'created_at'];
     public $orderByDirection = ['asc'];
     public $paginationEnabled = true;

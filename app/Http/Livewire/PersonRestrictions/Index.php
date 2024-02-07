@@ -11,6 +11,7 @@ class Index extends BaseIndex
     protected $repository = PersonRestrictionsRepository::class;
 
     public $orderByField = ['started_at', 'id'];
+    protected $queryWith = ['person.documents.documentType', 'building'];
     public $orderByDirection = [];
     public $paginationEnabled = true;
 

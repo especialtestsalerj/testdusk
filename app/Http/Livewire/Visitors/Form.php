@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Data\Repositories\Cards;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Livewire\Traits\WithWebcam;
+use App\Models\Card;
 use App\Models\Document;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
@@ -21,7 +23,7 @@ class Form extends BaseForm
     public Sector $sector;
     public Person $person;
     public Document $document;
-
+    public $card_id;
     public $person_id;
     public $sector_id;
 
@@ -35,6 +37,7 @@ class Form extends BaseForm
         'visitor.exited_at' => '',
         'visitor.sector_id' => 'required',
         'visitor.avatar_id' => 'required',
+        'visitor.card_id' => '',
         'visitor.person.*' => '',
         'visitor.person_id' => '',
         'person.full_name' => '',
@@ -44,6 +47,7 @@ class Form extends BaseForm
         'hasWebcamPhoto' => '',
         'webcamFile' => '',
         'webcamDataUri' => '',
+        'card_id' => '',
     ];
 
     public function hydrate()
@@ -97,6 +101,7 @@ class Form extends BaseForm
     {
         return [
             'sectors' => app(SectorsRepository::class)->allActive($this->visitor->sector_id),
+            'cards' => app(Cards::class)->allActive($this->visitor->card_id),
         ];
     }
 
