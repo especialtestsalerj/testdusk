@@ -75,7 +75,7 @@
                                     <span class="badge bg-danger py-2 px-3">SIM</span>
                                     <button type="button" class="btn btn-sm btn-primary ms-2">
                                         <strong>
-                                            <i class="fa fa-lg fa-pencil"></i>
+                                            <i class="fa fa-xl fa-plus"></i>
                                         </strong>
                                     </button>
                                 </div>
@@ -162,7 +162,7 @@
                                     <span class="badge bg-success py-2 px-3">NÃO</span>
                                     <button type="button" class="btn btn-sm btn-primary ms-2">
                                         <strong>
-                                            <i class="fa fa-lg fa-pencil"></i>
+                                            <i class="fa fa-xl fa-plus"></i>
                                         </strong>
                                     </button>
                                 </div>
