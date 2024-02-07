@@ -109,7 +109,9 @@
 
                                     <div class="row card-buttons mt-auto d-flex">
                                         <div class="col-4">
-          {{--                                  <div class="row">
+
+                                            {{--
+                                            <div class="row">
                                                 <div class="col-12 card-number">
                                                     CARTÃO
                                                 </div>
@@ -118,15 +120,13 @@
                                                 <div class="col-12">
                                                     1234
                                                 </div>
-                                            </div>--}}
-
-
+                                            </div>
+                                            --}}
 
                                             <div class="card-number">
                                                 <strong>
                                                     A0001
                                                 </strong>
-
                                             </div>
 
                                         </div>
@@ -156,16 +156,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
-
-
                                 </div>
-
-
-
-
 
                             </div>
 
