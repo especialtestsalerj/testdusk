@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Visitors;
 
+use App\Models\Contact;
 use App\Models\Visitor;
 class UpdateForm extends Form
 {
@@ -12,7 +13,7 @@ class UpdateForm extends Form
         $this->visitor = $visitor;
         $this->person = $visitor->person;
         $this->document = $visitor->document;
-
-        $this->loadPhoto();
+        $this->card_id = $visitor->card_id;
+        $this->contact = $this->person?->contacts?->first();
     }
 }

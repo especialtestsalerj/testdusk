@@ -34,7 +34,6 @@ class People extends BaseForm
     public $full_name;
     public $social_name;
 
-
     public $document_type_id;
 
     public $routineStatus;
@@ -45,6 +44,7 @@ class People extends BaseForm
 
     public $visitor_id;
     public $visitor;
+    public $contact;
 
     protected $messages = [
         'required' => ':attribute: preencha o campo corretamente.',
@@ -63,11 +63,6 @@ class People extends BaseForm
             'state_document_id' => $this->state_document_id,
             'refreshPhoto' => $name == 'person_id',
         ];
-
-        if($name == 'person_id'){
-//            dd($array);
-//            dd($this->person->id);
-        }
 
         $this->emit('personModified', $array);
     }
@@ -157,8 +152,8 @@ class People extends BaseForm
                 : old('document_type_id');
         }
 
-        if($this->document_type_id == config('app.document_type_cpf') && $this->document_number){
-            if($document = Document::where('document_type_id', config('app.document_type_cpf'))->where('number', $this->document_number)->first()) {
+        if ($this->document_type_id == config('app.document_type_cpf') && $this->document_number) {
+            if ($document = Document::where('document_type_id', config('app.document_type_cpf'))->where('number', $this->document_number)->first()) {
                 $this->person = $document->person;
                 $this->readonly = true;
             }

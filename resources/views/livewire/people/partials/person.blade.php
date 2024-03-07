@@ -21,7 +21,7 @@
      ">
 
         <div class="row">
-            <div class="col-4">
+            <div class="{{ $document_type_id == config('app.document_type_rg') ? 'col-4' : 'col-6' }}">
                 <div class="form-group">
                     <label for="document_type_id">Tipo de Documento*</label>
                     <select class="form-control text-uppercase"
@@ -41,7 +41,7 @@
 
             <input name="person_id" type="hidden" wire:model.defer="person_id">
 
-            <div class="col-4 {{ $document_type_id == config('app.document_type_rg') ? '' : 'd-none' }}">
+            <div class="col {{ $document_type_id == config('app.document_type_rg') ? '' : 'd-none' }}">
                 <div class="form-group">
                     <label for="state_document_id">@if (is_null($person_id)) Estado do Documento* @else Estado do Documento @endif</label>
                     <div wire:ignore>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col">
                 <div class="form-group">
                     <input type="hidden" name="document_number" id="document_number" wire:model.defer="document_number">
                     <label for="document_number">Número do Documento*</label>
@@ -156,6 +156,11 @@
                            @if ($readonly) readonly @endif
                            {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
                 </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" />
             </div>
 
             <div class="col-lg-6 col-xl-6">

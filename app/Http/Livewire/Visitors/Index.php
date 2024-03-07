@@ -16,7 +16,7 @@ class Index extends BaseIndex
     use Checkoutable, Badgeable, ChangeViewType;
 
     protected $repository = VisitorsRepository::class;
-
+    protected $queryWith = ['document.documentType', 'person', 'card'];
     public $orderByField = ['entranced_at'];
     public $orderByDirection = ['desc'];
     public $paginationEnabled = true;

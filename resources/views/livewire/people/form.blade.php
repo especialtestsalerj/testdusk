@@ -246,7 +246,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 mb-2">
+                    <livewire:contacts.index :person="$person"/>
+
+                    <div class="col-md-12 mb-2">
                         <div class="row my-2">
                             <div class="col-sm-8 align-self-center">
                                 <h3 class="mb-0"><i class="fa fa-person-circle-exclamation"></i>
@@ -372,7 +374,6 @@
 
                     </div>
                 </div>
-            </div>
         </form>
     </div>
 

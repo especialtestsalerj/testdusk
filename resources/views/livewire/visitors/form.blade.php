@@ -71,14 +71,15 @@
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
                         'person' => $visitor->person, 'visitor_id'=>$visitor->id, 'mode' => $mode, 'modal' => request()->query('disabled'),
                         'readonly' => $visitor->hasPending(), 'showRestrictions' => true,
-                        'document_type_id'=> $document->document_type_id ?? null, 'document_number'=> $document->number ?? null, 'state_document_id'=> $document->state_id ?? null])
+                        'document_type_id'=> $document->document_type_id ?? null, 'document_number'=> $document->number ?? null, 'state_document_id'=> $document->state_id ?? null,
+                        'card_id'=> $visitor->card_id ?? null, 'contact' => $this->contact ?? null])
                         <div class="row">
                             <div class="col-12">
                                 <h4>
                                     Dados da Visita
                                 </h4>
                             </div>
-                            <div class="col-lg-6 col-xl-3">
+                            <div class="col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada*</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.lazy="visitor.entranced_at"
@@ -87,7 +88,7 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-xl-3">
+                            <div class="col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="exited_at">Saída</label>
                                     <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at"
@@ -118,6 +119,25 @@
                                             @endif
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label for="card_id">Cartão</label>
+                                    <div wire:ignore>
+                                        <select class="select2 form-control text-uppercase"
+                                                name="card_id" id="card_id"
+                                                wire:model="card_id"
+                                                @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif>
+                                            <option value="">SEM CARTÃO</option>
+                                            @foreach ($cards as $card)
+                                                <option value="{{ $card->id }}">
+                                                    {{ convert_case($card->number, MB_CASE_UPPER) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
