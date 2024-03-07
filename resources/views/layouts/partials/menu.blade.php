@@ -2,14 +2,14 @@
     <div class="row">
 
         <div class="d-flex align-items-center">
-            <div class="text-white username">
-                Olá, {{ Auth::user()->name }} <a href="{{ route('logout') }}"><i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i></a>
-            </div>
 
+            @if(auth()->check())
+                <div class="text-white username">
+                    Olá, {{ Auth::user()->name }} <a href="{{ route('logout') }}"><i class="ms-2 fa-solid fa-arrow-right-from-bracket"></i></a>
+                </div>
 
-            @include('partials.session-building-select')
-
-
+                @include('partials.session-building-select')
+            @endIf
         </div>
     </div>
 </div>
@@ -30,8 +30,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-
-       {{-- @include('partials.session-building-select')--}}
 
         <div class="navbar-collapse collapse" id="navbarGlobal" style="">
             <ul class="navbar-nav mr-auto">
