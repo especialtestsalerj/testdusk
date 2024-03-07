@@ -13,12 +13,15 @@
         "endroid/qr-code": "^4.8",
         "geekcom/validator-docs": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^9.2",
         "laravel/horizon": "^5.21",
         "laravel/jetstream": "^2.7",
         "laravel/sanctum": "^2.14.1",
+        "laravel/scout": "^10.8",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
+        "meilisearch/meilisearch-php": "^1.6",
         "owen-it/laravel-auditing": "^13.0",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
@@ -76,7 +79,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "repositories":[
         {

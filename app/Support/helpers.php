@@ -637,7 +637,7 @@ function make_ability_name_with_current_building($ability)
 
 function make_ability_name_with_building($ability, $building)
 {
-    return $building->slug . ' - ' . $ability;
+    return ($building->slug ?? $building) . ' - ' . $ability;
 }
 
 function allows_in_current_building($ability)
