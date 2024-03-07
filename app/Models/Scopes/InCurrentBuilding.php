@@ -16,9 +16,9 @@ class InCurrentBuilding extends Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        if (static::$enabled) {
+        if (static::$enabled && auth()->check()) {
             return $builder->where($model->getTable() . '.building_id', get_current_building()->id);
-        }else{
+        } else {
             return $builder;
         }
     }
