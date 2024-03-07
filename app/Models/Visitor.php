@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Services\QrCode\Service;
+use Laravel\Scout\Searchable;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,6 +10,7 @@ use App\Models\Scopes\InCurrentBuilding;
 
 class Visitor extends Model
 {
+    use Searchable;
     protected $fillable = [
         'routine_id',
         'entranced_at',
@@ -224,5 +226,34 @@ class Visitor extends Model
     public function card()
     {
         return $this->belongsTo(Card::class);
+    }
+
+    protected function makeAllSearchableUsing($query)
+    {
+        return $query->with(['person', 'document.documentType', 'sectors']);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'person.full_name' => $this->person->full_name,
+            'person.social_name' => $this->person->social_name,
+            'exited_at' => $this->exited_at?->format('d/m/Y H:i'),
+            'entranced_at' => $this->entranced_at_br_formatted,
+            'entranced_at_original' => $this->getOriginal('entranced_at'),
+            'document.number' => $this->document->number,
+            'sector.name' => $this->sectors_name,
+            'foo' => 'bar', //used to hack some queries
+        ];
+    }
+
+    public static function disableGlobalScopes()
+    {
+        InCurrentBuilding::disable();
+    }
+
+    public static function enableGlobalScopes()
+    {
+        InCurrentBuilding::enable();
     }
 }

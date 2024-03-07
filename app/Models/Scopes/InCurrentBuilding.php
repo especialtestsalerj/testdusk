@@ -4,9 +4,8 @@ namespace App\Models\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Scope;
 
-class InCurrentBuilding implements Scope
+class InCurrentBuilding extends Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -17,6 +16,10 @@ class InCurrentBuilding implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where($model->getTable() . '.building_id', get_current_building()->id);
+        if (static::$enabled && auth()->check()) {
+            return $builder->where($model->getTable() . '.building_id', get_current_building()->id);
+        } else {
+            return $builder;
+        }
     }
 }
