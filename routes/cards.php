@@ -10,7 +10,7 @@ Route::group(['prefix' => '/cards'], function () {
 
     Route::get('', CardsIndex::class)
         ->name('cards.index')
-        ->middleware('canInCurrentBuilding:cards:index');
+        ->middleware('canInCurrentBuilding:cards:show');
 
     Route::get('/create', [Cards::class, 'create'])
         ->name('cards.create')
