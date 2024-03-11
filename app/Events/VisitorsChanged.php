@@ -22,7 +22,7 @@ class VisitorsChanged extends Broadcastable
      */
     public function __construct($visitorId)
     {
-        $visitor = Visitor::find($visitorId);
+        $visitor = Visitor::withoutGlobalScopes()->find($visitorId);
         $this->visitorId = $visitor->id;
 
         $this->personId = $visitor->person_id;
