@@ -114,7 +114,7 @@ class Checkout extends BaseIndex
             }
         } else {
             $this->dispatchBrowserEvent('swal-checkout-failure', [
-                'error' => 'QR code não reconhecido',
+                'error' => 'QRcode já usado ou não reconhecido',
             ]);
         }
     }
@@ -164,8 +164,8 @@ class Checkout extends BaseIndex
                         )
                         ->orWhereRaw(
                             "\"sectors\".\"name\" ILIKE '%' || unaccent('" .
-                            pg_escape_string($this->searchName) .
-                            "') || '%'"
+                                pg_escape_string($this->searchName) .
+                                "') || '%'"
                         );
                 });
         }
