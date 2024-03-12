@@ -66,12 +66,15 @@
 
                     @canany([make_ability_name_with_current_building('routines:show'), make_ability_name_with_current_building('sectors:show'), 'event-types:show', 'certificate-types:show'])
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['routines.*', 'sectors.*', 'event-types.*', 'person-restrictions.*', 'certificate-types.*', 'events.*', 'stuffs.*', 'cautions.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{ (request()->routeIs(['routines.*', 'sectors.*', 'event-types.*', 'person-restrictions.*', 'certificate-types.*', 'events.*', 'stuffs.*', 'cautions.*', 'people.*'])) ? 'active' : '' }}" href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Segurança
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownSeguranca">
                             @can(make_ability_name_with_current_building('routines:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*', 'events.*', 'stuffs.*', 'cautions.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
+                            @endCan
+                            @can('people:show')
+                                 <li><a class="dropdown-item {{ (request()->routeIs('people.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}" href="{{ route('people.index') }}">Pessoas</a></li>
                             @endCan
                             @can(make_ability_name_with_current_building('cards:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('cards.*')) ? 'active' : '' }}" href="{{ route('cards.index') }}">Cartões</a></li>
