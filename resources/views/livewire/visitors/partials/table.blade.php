@@ -108,30 +108,19 @@
                                     </div>
 
                                     <div class="row card-buttons mt-auto d-flex">
-                                        <div class="col-4">
-          {{--                                  <div class="row">
-                                                <div class="col-12 card-number">
-                                                    CARTÃO
+                                        @if($visitor->card)
+                                            <div class="col-4">
+
+                                                <div class="card-number">
+                                                    <strong>
+                                                        {{$visitor->card->number ?? ''}}
+                                                    </strong>
+
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    1234
-                                                </div>
-                                            </div>--}}
+                                        @endif
 
-
-
-                                            <div class="card-number">
-                                                <strong>
-                                                    A0001
-                                                </strong>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-8">
+                                        <div class="col">
                                             <div class="d-flex justify-content-center">
                                                 <div class="col-3 text-center">
                                                     <span class="btn btn-link px-0 pt-0 pb-1" wire:click="generateBadge({{ $visitor->id }})" title="Imprimir Etiqueta">

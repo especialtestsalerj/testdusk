@@ -126,7 +126,12 @@ window.addEventListener('swal-confirmation', function (e) {
         showCancelButton: true,
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = options.route;
+            if(options.route) {
+                window.location = options.route;
+            }
+            if(options.event) {
+                Livewire.emit(options.event)
+            }
         }
     })
 })

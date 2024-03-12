@@ -23,6 +23,11 @@ class Building extends Model
         return $this->belongsToMany(Visitor::class);
     }
 
+    public function cards()
+    {
+        return $this->belongsToMany(Card::class);
+    }
+
     public function routines()
     {
         return $this->belongsToMany(Routine::class);

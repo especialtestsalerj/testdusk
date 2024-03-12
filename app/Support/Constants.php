@@ -12,4 +12,5 @@ class Constants
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_GESTOR = 'GESTOR';
     const ROLE_PLANTONISTA = 'PLANTONISTA';
+    const LUCIO_COSTA_BUILDING_ID = 1;
 }

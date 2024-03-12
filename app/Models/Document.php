@@ -58,9 +58,15 @@ class Document extends Model
 
     public function getNumberMaskeredAttribute()
     {
-        if ($this->documentType()->get()[0]->id == config('app.document_type_cpf')) {
+        $documentType = $this->documentType;
+        if (!$documentType) {
+            return $this->number;
+        }
+        $documentTypeId = $documentType->id;
+
+        if ($documentTypeId == config('app.document_type_cpf')) {
             return mask_cpf($this->number);
-        } elseif ($this->documentType()->get()[0]->id == config('app.document_type_rg')) {
+        } elseif ($documentTypeId == config('app.document_type_rg')) {
             return is_null($this->state)
                 ? $this->number
                 : $this->number . ' - ' . $this->state->initial;
