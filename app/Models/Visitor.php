@@ -87,6 +87,11 @@ class Visitor extends Model
         return $this->entranced_at?->format('Y-m-d H:i');
     }
 
+    public function getEntrancedAtOriginalAttribute()
+    {
+        return $this->entranced_at?->format('Y-m-d H:i:s');
+    }
+
     public function getEntrancedAtBrFormattedAttribute()
     {
         return $this->entranced_at?->format('d/m/Y H:i');
@@ -240,7 +245,7 @@ class Visitor extends Model
             'person.social_name' => $this->person->social_name,
             'exited_at' => $this->exited_at?->format('d/m/Y H:i'),
             'entranced_at' => $this->entranced_at_br_formatted,
-            'entranced_at_original' => $this->getOriginal('entranced_at'),
+            'entranced_at_original' => $this->entranced_at_original,
             'document.number' => $this->document->number,
             'sector.name' => $this->sectors_name,
             'foo' => 'bar', //used to hack some queries
