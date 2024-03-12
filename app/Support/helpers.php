@@ -311,6 +311,18 @@ function mask_cpf($cpf)
     return preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})$/', '$1.$2.$3-$4', $cpf);
 }
 
+function mask_mobile($mobile)
+{
+    return preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $mobile);
+}
+
+function mask_phone($phone)
+{
+    return preg_replace('/^(\d{2})(\d{4})(\d{4})$/', '($1) $2-$3', $phone);
+}
+
+
+
 function login_as_system()
 {
     return app(\App\Data\Repositories\Users::class)->loginAsSystem();

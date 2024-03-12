@@ -29,6 +29,7 @@ class ModalForm extends BaseForm
     public $personRestriction;
     public $modalMode;
     public $readonly = false;
+    public $readonlyBuilding = false;
 
     public $rules = [
         'building_id' => 'required',
@@ -48,8 +49,9 @@ class ModalForm extends BaseForm
         'description' => 'Descrição',
     ];
 
-    public function createRestriction(Person $person)
+    public function createRestriction(Person $person, $building = null)
     {
+        $this->building_id = $building;
         $this->modalMode = 'create';
         $this->person = $person;
         $this->started_at = date('Y-m-d H:i');
@@ -137,7 +139,7 @@ class ModalForm extends BaseForm
     public function cleanModal()
     {
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'restriction-modal']);
-        $this->reset();
+        $this->resetExcept('readonlyBuilding');
         $this->resetErrorBag();
         $this->emit('refresh');
     }

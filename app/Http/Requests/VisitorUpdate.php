@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Data\Repositories\Visitors as VisitorsRepository;
+use App\Support\Constants;
+use Illuminate\Validation\Rule;
 
 class VisitorUpdate extends VisitorStore
 {
@@ -21,6 +23,11 @@ class VisitorUpdate extends VisitorStore
             'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
             'description' => 'required',
+            'contact_type_id' => 'required',
+            'contact' => [
+                'required',
+                Rule::when($this->contact_type_id == Constants::CONTACT_TYPE_EMAIL, 'email')
+            ],
         ];
     }
 }

@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Cards;
 
 use App\Data\Repositories\Cards as CardsRepository;
 use App\Http\Livewire\BaseIndex;
+use App\Http\Livewire\Traits\Checkoutable;
 use App\Http\Livewire\Traits\Swallable;
 use App\Models\Card;
 
 class Index extends BaseIndex
 {
-    use Swallable;
+    use Swallable, Checkoutable;
 
     protected $repository = CardsRepository::class;
 
@@ -27,6 +28,7 @@ class Index extends BaseIndex
         'disableAll',
         'enableAll',
         'refresh' => '$refresh',
+        'confirm-checkout-visitor' => 'confirmCheckout',
     ];
 
 
@@ -69,7 +71,7 @@ class Index extends BaseIndex
 
     public function createRestriction($person)
     {
-        $this->emit('createRestriction', $person);
+        $this->emit('createRestriction', $person, get_current_building()->id);
     }
 
     public function additionalFilterQuery($query)
@@ -80,6 +82,11 @@ class Index extends BaseIndex
             });
         }
         return $query;
+    }
+
+    public function hasRestriction($card)
+    {
+        return $card->visitors->first()?->person->restrictions->contains('building_id', get_current_building()->id);
     }
 
     public function render()

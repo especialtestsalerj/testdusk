@@ -242,6 +242,7 @@ class Visitor extends Model
             'entranced_at' => $this->entranced_at_br_formatted,
             'entranced_at_original' => $this->getOriginal('entranced_at'),
             'document.number' => $this->document->number,
+            'card.number' => $this->card?->number,
             'sector.name' => $this->sectors_name,
             'foo' => 'bar', //used to hack some queries
         ];

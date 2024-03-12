@@ -44,6 +44,7 @@ class People extends BaseForm
 
     public $visitor_id;
     public $visitor;
+    public $contact;
 
     protected $messages = [
         'required' => ':attribute: preencha o campo corretamente.',

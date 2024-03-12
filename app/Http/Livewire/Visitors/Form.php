@@ -6,6 +6,7 @@ use App\Data\Repositories\Cards;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Http\Livewire\Traits\WithWebcam;
 use App\Models\Card;
+use App\Models\Contact;
 use App\Models\Document;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
@@ -23,6 +24,7 @@ class Form extends BaseForm
     public Sector $sector;
     public Person $person;
     public Document $document;
+    public $contact;
     public $card_id;
     public $person_id;
     public $sector_id;
@@ -30,6 +32,7 @@ class Form extends BaseForm
     protected $listeners = [
         'personModified' => 'personModified',
         'cropChanged' => 'cropChanged',
+        'contactModified',
     ];
 
     protected $rules = [
@@ -48,12 +51,15 @@ class Form extends BaseForm
         'webcamFile' => '',
         'webcamDataUri' => '',
         'card_id' => '',
+        'contact.contact_type_id' => 'required',
+        'contact.contact' => 'required',
     ];
 
     public function hydrate()
     {
         $this->visitor->load('sectors');
     }
+
     public function updated($name, $value)
     {
         if ($name == 'sector_id') {
@@ -187,5 +193,11 @@ class Form extends BaseForm
         if ($oldValue = old('exited_at')) {
             $this->visitor->exited_at = $oldValue;
         }
+    }
+
+    public function contactModified($contact)
+    {
+        $this->contact = new Contact();
+        $this->contact->fill($contact);
     }
 }

@@ -71,14 +71,13 @@ window.addEventListener('swall-error', function (e) {
 window.addEventListener('swall-success', function (e) {
     const options = e.detail
     Swal.fire({
-        icon: 'success',
+        toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
-        width: 500,
-        timerProgressBar: true,
-        title: 'Salvo com sucesso',
-        text: options.text,
+        showCancelButton: false,
+        timer: 2000,
+        icon: 'success',
+        title: options.text,
     })
 })
 window.addEventListener('swal', function (e) {
