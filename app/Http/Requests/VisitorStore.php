@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\PersonOnVisit;
+use App\Rules\ValidCPF;
 use Illuminate\Validation\Rule;
 
 class VisitorStore extends Request
@@ -22,7 +23,7 @@ class VisitorStore extends Request
                         $this->document_type_id == config('app.document_type_rg');
                 }),
             ],
-            'document_number' => ['bail', 'required', new PersonOnVisit($this->get('person_id'))],
+            'document_number' => ['bail', 'required', new PersonOnVisit($this->get('person_id')), Rule::when($this->document_type_id == config('app.document_type_cpf'), [new ValidCPF()])],
             'full_name' => 'required',
             'country_id' => [
                 Rule::requiredIf(function () {
@@ -51,10 +52,15 @@ class VisitorStore extends Request
             'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
             'description' => 'required',
-            'contact_type_id' => 'required',
+            'contact_type_id' =>
+                Rule::requiredIf(function () {
+                    return $this->card_id != null;
+                }),
             'contact' => [
-                'required',
-                Rule::when($this->contact_type_id == 3, 'email')
+                Rule::when($this->contact_type_id == 3, 'email'),
+                Rule::requiredIf(function () {
+                    return $this->card_id != null;
+                }),
             ],
         ];
     }
