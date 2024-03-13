@@ -23,10 +23,15 @@ class VisitorUpdate extends VisitorStore
             'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
             'description' => 'required',
-            'contact_type_id' => 'required',
+            'contact_type_id' =>
+                Rule::requiredIf(function () {
+                    return (bool)$this->card_id || $this->contact;
+                }),
             'contact' => [
-                'required',
-                Rule::when($this->contact_type_id == Constants::CONTACT_TYPE_EMAIL, 'email')
+                Rule::when($this->contact_type_id == 3, 'email'),
+                Rule::requiredIf(function () {
+                    return (bool)$this->card_id || $this->contact_type_id;
+                }),
             ],
         ];
     }

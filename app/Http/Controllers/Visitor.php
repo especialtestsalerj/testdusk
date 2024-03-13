@@ -66,7 +66,9 @@ class Visitor extends Controller
             'state_id' => $request->get('state_document_id'),
         ]);
 
-        app(Contacts::class)->firstOrCreateContact($request);
+        if ($request->get('contact') && $request->get('contact_type_id')) {
+            app(Contacts::class)->firstOrCreateContact($request);
+        }
 
         $request->merge(['document_id' => $document->id]);
 
@@ -111,8 +113,9 @@ class Visitor extends Controller
 
         $visitor = app(VisitorsRepository::class)->update($id, $request->all());
 
-        app(Contacts::class)->firstOrCreateContact($request);
-
+        if ($request->get('contact') && $request->get('contact_type_id')) {
+            app(Contacts::class)->firstOrCreateContact($request);
+        }
         $visitor->sectors()->sync($request->get('sector_id'));
 
         return redirect()
