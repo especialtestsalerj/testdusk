@@ -154,6 +154,10 @@
             border-spacing: 0;
         }
 
+        .login-navbar {
+            display: none;
+        }
+
         /* reset.css */
 
         #badge {
