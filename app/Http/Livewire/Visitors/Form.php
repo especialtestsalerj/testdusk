@@ -117,6 +117,12 @@ class Form extends BaseForm
         return view('livewire.visitors.form')->with($this->getViewVariables());
     }
 
+
+    public function updatedCardId()
+    {
+        $this->emit('hasCard', $this->card_id);
+    }
+
     /**
      * @return void
      * @throws \Psr\Container\ContainerExceptionInterface

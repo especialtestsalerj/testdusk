@@ -54,12 +54,12 @@ class VisitorStore extends Request
             'description' => 'required',
             'contact_type_id' =>
                 Rule::requiredIf(function () {
-                    return $this->card_id != null;
+                    return (bool)$this->card_id || $this->contact;
                 }),
             'contact' => [
                 Rule::when($this->contact_type_id == 3, 'email'),
                 Rule::requiredIf(function () {
-                    return $this->card_id != null;
+                    return (bool)$this->card_id || $this->contact_type_id;
                 }),
             ],
         ];
