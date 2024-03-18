@@ -73,6 +73,9 @@
                             @can(make_ability_name_with_current_building('routines:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('routines.*', 'events.*', 'stuffs.*', 'cautions.*')) ? 'active' : '' }}" href="{{ route('routines.index') }}">Rotinas</a></li>
                             @endCan
+                            @can(make_ability_name_with_current_building('cards:show'))
+                                <li><a class="dropdown-item {{ (request()->routeIs('cards.*')) ? 'active' : '' }}" href="{{ route('cards.index') }}">Cartões</a></li>
+                            @endcan
                             @can(make_ability_name_with_current_building('sectors:show'))
                                 <li><a class="dropdown-item {{ (request()->routeIs('sectors.*')) ? 'active' : '' }}" href="{{ route('sectors.index') }}">Setores</a></li>
                             @endCan

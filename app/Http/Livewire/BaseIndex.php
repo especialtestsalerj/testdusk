@@ -12,6 +12,7 @@ abstract class BaseIndex extends Component
 
     protected $repository;
     protected $model;
+    protected $queryWith;
     protected $paginationTheme = 'bootstrap';
     public $searchString = '';
     public $pageSize = 12;
@@ -73,7 +74,6 @@ abstract class BaseIndex extends Component
             $sql->orderBy($field, $this->orderByDirection[$i] ?? 'asc');
             $i++;
         }
-
         return $sql;
     }
 
@@ -103,10 +103,13 @@ abstract class BaseIndex extends Component
             $repository->disablePagination();
         }
 
-        $query = $repository
-            ->newQuery()
+        $query = $repository->newQuery();
 
-            ->where(function ($query) {
+            if (!empty($this->queryWith)) {
+                $query->with($this->queryWith);
+            }
+
+            $query->where(function ($query) {
                 collect($this->searchFields)->each(function ($key, $field) use ($query) {
                     switch ($key) {
                         case 'text':

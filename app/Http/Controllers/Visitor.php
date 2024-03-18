@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Data\Repositories\Avatars as AvatarsRepository;
+use App\Data\Repositories\Contacts;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
@@ -65,6 +66,8 @@ class Visitor extends Controller
             'state_id' => $request->get('state_document_id'),
         ]);
 
+        app(Contacts::class)->firstOrCreateContact($request);
+
         $request->merge(['document_id' => $document->id]);
 
         $visitor = app(VisitorsRepository::class)->create($request->all());
@@ -107,6 +110,8 @@ class Visitor extends Controller
         $request = $this->storeAvatar($request);
 
         $visitor = app(VisitorsRepository::class)->update($id, $request->all());
+
+        app(Contacts::class)->firstOrCreateContact($request);
 
         $visitor->sectors()->sync($request->get('sector_id'));
 

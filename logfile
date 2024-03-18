@@ -42,3 +42,15 @@
 2023-08-25 13:17:17.044 -03 [1149] HINT:  Is another postmaster (PID 1146) running in data directory "/Users/breno/pgdata"?
 2023-10-23 14:10:22.691 -03 [2362] FATAL:  lock file "postmaster.pid" already exists
 2023-10-23 14:10:22.691 -03 [2362] HINT:  Is another postmaster (PID 1887) running in data directory "/Users/breno/pgdata"?
+2024-01-04 17:54:13.975 -03 [16243] FATAL:  lock file "postmaster.pid" already exists
+2024-01-04 17:54:13.975 -03 [16243] HINT:  Is another postmaster (PID 16272) running in data directory "/Users/breno/pgdata"?
+2024-02-07 13:34:44.568 -03 [1505] LOG:  starting PostgreSQL 14.7 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-02-07 13:34:44.572 -03 [1505] LOG:  listening on IPv6 address "::1", port 5432
+2024-02-07 13:34:44.572 -03 [1505] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-02-07 13:34:44.573 -03 [1505] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-02-07 13:34:44.614 -03 [1516] LOG:  database system was interrupted; last known up at 2024-02-07 13:24:49 -03
+2024-02-07 13:34:49.945 -03 [1516] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-02-07 13:34:49.975 -03 [1516] LOG:  redo starts at 2/10545800
+2024-02-07 13:34:49.980 -03 [1516] LOG:  invalid record length at 2/10549E20: wanted 24, got 0
+2024-02-07 13:34:49.980 -03 [1516] LOG:  redo done at 2/10549DE8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2024-02-07 13:34:50.174 -03 [1505] LOG:  database system is ready to accept connections

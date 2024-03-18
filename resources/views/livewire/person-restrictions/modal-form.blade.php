@@ -29,7 +29,7 @@
                             <label for="building_id">Unidade*</label>
                             <select class="form-select text-uppercase" name="building_id"
                                     id="building_id" wire:model="building_id"
-                                    x-ref="building_id" @disabled($readonly)>
+                                    x-ref="building_id" @disabled($readonlyBuilding) @disabled($readonly)>
                                 <option value="">selecione</option>
                                 @foreach ($buildings as $building)
                                     <option

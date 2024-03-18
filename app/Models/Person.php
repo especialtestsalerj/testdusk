@@ -136,4 +136,9 @@ class Person extends Model
     {
         return $this->HasMany(PersonRestriction::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

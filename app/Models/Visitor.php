@@ -44,7 +44,13 @@ class Visitor extends Model
 
     public static function findByUuid($uuid)
     {
-        return self::where('uuid', $uuid)->first();
+        if ($visitor = self::where('uuid', $uuid)->first()) {
+            return $visitor;
+        } elseif ($card = Card::findByUuid($uuid)) {
+            return $card->visitors->first();
+        } else {
+            return null;
+        }
     }
 
     public function person()
@@ -247,6 +253,7 @@ class Visitor extends Model
             'entranced_at' => $this->entranced_at_br_formatted,
             'entranced_at_original' => $this->entranced_at_original,
             'document.number' => $this->document->number,
+            'card.number' => $this->card?->number,
             'sector.name' => $this->sectors_name,
             'foo' => 'bar', //used to hack some queries
         ];
