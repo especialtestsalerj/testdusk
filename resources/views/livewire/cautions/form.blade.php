@@ -62,7 +62,9 @@
                         <div class="form-group">
                             <label for="visitor_id">Visitante* ({{\App\Models\Visitor::open()->count()}} em aberto)</label>
                             <select @disabled(!$routine->status || request()->query('disabled')) id="visitor_id" name="visitor_id" class="open-visitors-select2">
-                                @if($mode == 'show')
+                                @if($oldVisitor)
+                                    <option value="{{$oldVisitor->id}}" selected="selected">{{$oldVisitor}}</option>
+                                @elseif($mode == 'show')
                                     <option value="{{$selectedVisitor->id}}" selected="selected">{{$selectedVisitor}}</option>
                                 @endIf
                             </select>
@@ -113,7 +115,7 @@
                             <select class="select2 select2-tags form-control" name="certificate_type_id" id="certificate_type_id" wire:model.defer="certificate_type_id" @disabled(!$routine->status || request()->query('disabled')) @readonly($caution->hasPending())>
                                 <option value="">SELECIONE</option>
                                 @foreach ($certificateTypes as $key => $certificateType)
-                                    @if(((!is_null($caution_id)) && (!is_null($caution->certificate_type_id) && $caution->duty_user_id === $certificateType->id) || (!is_null(old('certificate_type_id'))) && old('certificate_type_id') == $certificateType->id))
+                                    @if(((!is_null($caution_id)) && (!is_null($caution->certificate_type_id) && $caution->certificate_type_id === $certificateType->id) || (!is_null(old('certificate_type_id'))) && old('certificate_type_id') == $certificateType->id))
                                         <option value="{{ $certificateType->id }}" selected="selected">{{ $certificateType->name }}</option>
                                     @else
                                         <option value="{{ $certificateType->id }}">{{ $certificateType->name }}</option>
