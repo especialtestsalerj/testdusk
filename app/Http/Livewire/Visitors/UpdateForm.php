@@ -16,5 +16,6 @@ class UpdateForm extends Form
         $this->card_id = $visitor->card_id;
         $this->contact = $this->person?->contacts?->first();
         $this->loadPhoto();
+        $this->fillByOld();
     }
 }

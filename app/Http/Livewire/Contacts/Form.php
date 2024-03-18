@@ -35,6 +35,15 @@ class Form extends BaseForm
             $contact = $this->contacts;
         } elseif ($this->isVisitorsForm) {
             $contact = app(Contacts::class)->getActiveContactByPerson($this->person_id);
+            if ($oldValue = old('contact_type_id')) {
+                $this->contact_type_id = $oldValue;
+            }
+            if ($oldValue = old('contact')) {
+                $this->contact = $oldValue;
+            }
+            if ($oldValue = old('contact')) {
+                $this->contact = $oldValue;
+            }
         }
 
         if (isset($contact)) {

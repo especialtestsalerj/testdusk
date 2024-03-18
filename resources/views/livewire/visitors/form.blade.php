@@ -1,6 +1,8 @@
 <div>
     <div class="py-4 px-4" wire:poll.keep-alive>
-        <form name="formulario" id="formulario" @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}" @else action="{{ route('visitors.store')}}" @endIf method="POST">
+        <form name="formulario" id="formulario"
+              @if($mode == 'show') action="{{ route('visitors.update', ['id' => $visitor->id]) }}"
+              @else action="{{ route('visitors.store')}}" @endIf method="POST">
             @csrf
             @if (isset($visitor->id))
                 <input type="hidden" name="visitor_id" value="{{ $visitor->id }}">
@@ -82,7 +84,9 @@
                             <div class="col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="entranced_at">Entrada*</label>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="entranced_at" id="entranced_at" wire:model.lazy="visitor.entranced_at"
+                                    <input type="datetime-local" max="3000-01-01T23:59"
+                                           class="form-control text-uppercase" name="entranced_at" id="entranced_at"
+                                           wire:model.lazy="visitor.entranced_at"
                                            @include('partials.disabled-by-query-string')
                                            @if($visitor->hasPending()) readonly @endif
                                     />
@@ -91,7 +95,8 @@
                             <div class="col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="exited_at">Saída</label>
-                                    <input type="datetime-local" max="3000-01-01T23:59" class="form-control text-uppercase" name="exited_at" id="exited_at"
+                                    <input type="datetime-local" max="3000-01-01T23:59"
+                                           class="form-control text-uppercase" name="exited_at" id="exited_at"
                                            value="{{$visitor->exited_at ?? ''}}"
                                            {{--
                                                 Comentei pq estava com um comportamento estranho. Quando apaga o campo, ele preenche com a data atual. Tentei migrar para o Livewire 3, mas não consegui pq o mesmo está na versão beta e aconteciam outros bugs. A melhor solução que encontrei foi essa.
@@ -112,7 +117,7 @@
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $key => $sector)
                                             @if(((!is_null($visitor->id)) && (!is_null($visitor->sectors) && $visitor->sectors->contains($sector->id) ) ||
-                                            (!is_null(old('sector_id'))) && old('sector_id') == $sector->id))
+                                            (!empty(old('sector_id'))) && in_array($sector->id, old('sector_id'))))
                                                 <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
                                             @else
                                                 <option value="{{ $sector->id }}">{{ $sector->name }}</option>
@@ -132,9 +137,15 @@
                                                 @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif>
                                             <option value="">SEM CARTÃO</option>
                                             @foreach ($cards as $card)
-                                                <option value="{{ $card->id }}">
-                                                    {{ convert_case($card->number, MB_CASE_UPPER) }}
-                                                </option>
+                                                @if(((!is_null($card->id)) || ((!is_null(old('card_id'))) && old('card_id') == $card->id)))
+                                                    <option value="{{ $card->id }}" selected="selected">
+                                                        {{ convert_case($card->number, MB_CASE_UPPER) }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $card->id }}">
+                                                        {{ convert_case($card->number, MB_CASE_UPPER) }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -143,7 +154,8 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">Motivo da Visita*</label>
-                                    <textarea class="form-control" name="description" id="description" wire:ignore placeholder="Informe detalhes da autorização"
+                                    <textarea class="form-control" name="description" id="description" wire:ignore
+                                              placeholder="Informe detalhes da autorização"
                                         @include('partials.disabled-by-query-string') >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                                 </div>
                             </div>
@@ -152,7 +164,7 @@
                 </div>
             </div>
             <div
-            x-init="Webcam.attach('#webcam')"
+                x-init="Webcam.attach('#webcam')"
             >
 
             </div>
