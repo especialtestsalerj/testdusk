@@ -8,6 +8,7 @@ use App\Data\Repositories\Users as UsersRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Http\Livewire\BaseForm;
 use App\Models\Caution;
+use App\Models\Visitor;
 use App\Models\Routine;
 use App\Data\Repositories\Cautions as CautionsRepository;
 
@@ -34,6 +35,7 @@ class CreateForm extends BaseForm
     public $duty_user_id;
     public $description;
 
+    public $oldVisitor;
     public $person_certificate;
 
     public $disabled;
@@ -208,12 +210,19 @@ class CreateForm extends BaseForm
 
     public function mount()
     {
+        if (!is_null(old('visitor_id'))) {
+            $this->oldVisitor = Visitor::withoutGlobalScopes()
+                ->find(old('visitor_id'))
+                ->load(['person', 'document'])
+                ->append(['photo', 'entranced_at_br_formatted']);
+            $this->oldVisitor->document->append('number_maskered');
+        }
+
         $this->routine = app(RoutinesRepository::class)->findById($this->routine_id);
 
         if ($this->mode == 'create') {
             $this->caution = new Caution();
         }
-
         $this->redirect = request()->query('redirect');
 
         $this->fillModel();
