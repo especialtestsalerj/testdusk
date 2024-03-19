@@ -45,6 +45,7 @@ Route::group(
         require __DIR__ . '/routines.php';
         require __DIR__ . '/visitors.php';
         require __DIR__ . '/cards.php';
+        require __DIR__ . '/bookings.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
             require __DIR__ . '/events.php';
@@ -58,3 +59,6 @@ Route::get('visitors/card/{uuid?}', VisitorsCard::class)->name('visitors.card');
 Route::get('cards/{uuid?}', VisitorsCard::class)
     ->name('cards.card')
     ->middleware(['can:use-app', 'canInCurrentBuilding:visitors:show']);
+
+
+Route::get('/agendamento', VisitorsCard::class)->name('agendamento.home');
