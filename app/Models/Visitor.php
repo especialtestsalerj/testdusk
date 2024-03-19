@@ -44,7 +44,13 @@ class Visitor extends Model
 
     public static function findByUuid($uuid)
     {
-        return self::where('uuid', $uuid)->first();
+        if ($visitor = self::where('uuid', $uuid)->first()) {
+            return $visitor;
+        } elseif ($card = Card::findByUuid($uuid)) {
+            return $card->visitors->first();
+        } else {
+            return null;
+        }
     }
 
     public function person()
