@@ -21,7 +21,7 @@
             });
         </script>
     @else
-        {{ get_current_building()->name }}
+        <span class="text-white username">{{ get_current_building()->name }}</span>
     @endIf
 </div>
 

@@ -67,14 +67,11 @@
                                                                         <div
                                                                             class="col-6 col-lg-3 text-center text-lg-start">
                                                                             <h4>
-                                                                                @can(make_ability_name_with_current_building('routines:show'))
-                                                                                    <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
-                                                                                        <i class="fa fa-clipboard-list"></i>
-                                                                                        Rotina {{ $routine->code }}
-                                                                                    </a>
-                                                                                @else
-                                                                                    Rotina {{ $routine?->code }}
-                                                                                @endcan
+                                                                                <a href="{{ route('routines.show', ['id' => $routine->id, 'redirect' => 'dashboard']) }}">
+                                                                                    <i class="fa fa-clipboard-list"></i>
+                                                                                    Rotina {{ $routine->code }}
+                                                                                </a>
+
                                                                             </h4>
                                                                         </div>
                                                                         <div
