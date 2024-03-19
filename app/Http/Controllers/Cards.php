@@ -104,6 +104,7 @@ class Cards extends Controller
             $fullPath = $filePath . $fileName;
 
             $this->createPdfFile($card, $fullPath);
+            $this->convertRGBToCMYK($fullPath);
 
             $filesCreated->push($fullPath);
 
@@ -187,6 +188,28 @@ class Cards extends Controller
         return redirect()
             ->route('cards.index')
             ->with('message', 'Cartão alterado com sucesso!');
+    }
+
+    private function convertRGBToCMYK(string $fullPath)
+    {
+
+        // Caminho do arquivo PDF de saída (CMYK)
+//        $outputFilePath = storage_path('app/public/output_cmyk.pdf');
+
+        // Comando para conversão usando Ghostscript
+        $command = "gs -o $fullPath.tmp -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK $fullPath";
+
+        // Executa o comando
+        exec($command, $output, $returnCode);
+
+        $command = "rm - rf $fullPath";
+
+        exec($command, $output, $returnCode);
+        //$command = "mv $fullPath.tmp $fullPath";
+
+        exec($command, $output, $returnCode);
+
+        return $returnCode;
     }
 
 }
