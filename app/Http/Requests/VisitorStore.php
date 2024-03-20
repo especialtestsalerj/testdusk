@@ -23,7 +23,14 @@ class VisitorStore extends Request
                         $this->document_type_id == config('app.document_type_rg');
                 }),
             ],
-            'document_number' => ['bail', 'required', new PersonOnVisit($this->get('person_id')), Rule::when($this->document_type_id == config('app.document_type_cpf'), [new ValidCPF()])],
+            'document_number' => [
+                'bail',
+                'required',
+                new PersonOnVisit($this->get('person_id')),
+                Rule::when($this->document_type_id == config('app.document_type_cpf'), [
+                    new ValidCPF(),
+                ]),
+            ],
             'full_name' => 'required',
             'country_id' => [
                 Rule::requiredIf(function () {
@@ -52,14 +59,13 @@ class VisitorStore extends Request
             'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
             'sector_id' => 'required',
             'description' => 'required',
-            'contact_type_id' =>
-                Rule::requiredIf(function () {
-                    return (bool)$this->card_id || $this->contact;
-                }),
+            'contact_type_id' => Rule::requiredIf(function () {
+                return (bool) $this->card_id || $this->contact;
+            }),
             'contact' => [
                 Rule::when($this->contact_type_id == 3, 'email'),
                 Rule::requiredIf(function () {
-                    return (bool)$this->card_id || $this->contact_type_id;
+                    return (bool) $this->card_id || $this->contact_type_id;
                 }),
             ],
         ];
@@ -81,7 +87,7 @@ class VisitorStore extends Request
             'exited_at.after_or_equal' => 'A Data de Saída deve ser posterior à entrada da visita.',
             'sector_id.required' => 'Destino: preencha o campo corretamente.',
             'description.required' => 'Motivo da Visita: preencha o campo corretamente.',
-            'contact_type_id.required' => 'Tipo de contato: preencha o campo corretamente.',
+            'contact_type_id.required' => 'Tipo de Contato: preencha o campo corretamente.',
             'contact.required' => 'Contato: preencha o campo corretamente.',
             'contact.email' => 'Contato: O campo não apresenta um endereço de email válido.',
         ];
