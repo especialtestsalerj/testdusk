@@ -241,7 +241,7 @@ class Visitor extends Model
 
     protected function makeAllSearchableUsing($query)
     {
-        return $query->with(['person', 'document.documentType', 'sectors']);
+        return $query->with(['person', 'document.documentType', 'sectors.name']);
     }
 
     public function toSearchableArray(): array
