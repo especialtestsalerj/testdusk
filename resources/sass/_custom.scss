@@ -878,6 +878,17 @@ select#session_building_id {
     font-weight: 700;
 }
 
+.img_building {
+    padding: 0.2em 0.5em 0.2em 1.0em;
+    background-image: url("/img/building-solid.svg");
+    background-repeat: no-repeat;
+    background-size: 0.7em auto;
+    background-position: 0.4em center;
+    color: #fff;
+    font-size: 90%;
+    font-weight: 700;
+}
+
 @media (min-width: 992px) {
 
     .navbar-expand-lg .navbar-nav .dropdown-menu {
