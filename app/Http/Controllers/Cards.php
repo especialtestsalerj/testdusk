@@ -105,6 +105,10 @@ class Cards extends Controller
 
             $this->createPdfFile($card, $fullPath);
 
+
+            if(config('app.cmyk_mode')) {
+                convert_pdf_rgb_to_cmyk($fullPath);
+            }
             $filesCreated->push($fullPath);
 
             $this->attachFileToZip($zip, $fullZipFilePath, $fullPath);

@@ -223,4 +223,6 @@ return [
     'document_type_rg' => env('APP_DOCUMENT_TYPE_RG', '2'),
 
     'certificate_type_particular' => env('APP_CERTIFICATE_TYPE_PARTICULAR', '1'),
+
+    'cmyk_mode'=> env('APP_CMYK_MODE',false),
 ];

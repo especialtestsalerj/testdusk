@@ -644,3 +644,23 @@ function allows_in_current_building($ability)
 {
     return allows(make_ability_name_with_current_building($ability));
 }
+
+function convert_pdf_rgb_to_cmyk(string $fullPath)
+{
+
+    // Comando para conversão usando Ghostscript
+    $command = "gs -o $fullPath.tmp -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK $fullPath";
+
+    // Executa o comando
+    exec($command, $output, $returnCode);
+
+    $command = "rm - rf $fullPath";
+
+    exec($command, $output, $returnCode);
+
+    $command = "mv $fullPath.tmp $fullPath";
+
+    exec($command, $output, $returnCode);
+
+    return $returnCode;
+}
