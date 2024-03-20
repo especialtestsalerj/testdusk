@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Bookings as Bookings;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Route;
@@ -61,4 +62,4 @@ Route::get('cards/{uuid?}', VisitorsCard::class)
     ->middleware(['can:use-app', 'canInCurrentBuilding:visitors:show']);
 
 
-Route::get('/agendamento', VisitorsCard::class)->name('agendamento.home');
+Route::get('/agendamento',  [Bookings::class, 'index'])->name('agendamento.home');

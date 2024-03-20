@@ -205,11 +205,18 @@ class Bookings extends Controller
         $command = "rm - rf $fullPath";
 
         exec($command, $output, $returnCode);
-        //$command = "mv $fullPath.tmp $fullPath";
+
+        $command = "mv $fullPath.tmp $fullPath";
 
         exec($command, $output, $returnCode);
 
         return $returnCode;
+    }
+
+
+    public function index()
+    {
+        return 'Agendamento';
     }
 
 }
