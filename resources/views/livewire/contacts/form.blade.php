@@ -26,7 +26,11 @@
             <select class="form-select text-uppercase" name="contact_type_id"
                     id="contact_type_id" wire:model="contact_type_id"
                     x-ref="contact_type_id" @include('partials.disabled-by-query-string')>
-                <option value="">selecione</option>
+                @if($isVisitorsForm)
+                    <option value="">{{$isRequired ? 'SELECIONE' : ''}}</option>
+                @else
+                    <option value="">SELECIONE</option>
+                @endif
                 @foreach ($contactTypes as $contactType)
                     <option
                         value="{{ $contactType->id }}"> {{ $contactType->name }}</option>
