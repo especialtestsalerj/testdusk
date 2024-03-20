@@ -39,7 +39,7 @@
                                         ROTINA ANTERIOR </span>
                                 @endif
                                 <span class="btn btn-link px-3 py-1"
-                                    wire:click="generateCautionReceipt({{ $caution->id }})" title="Imprimir Etiqueta">
+                                    wire:click="generateCautionReceipt({{ $caution->id }})" title="Gerar Comprovante">
                                     <i class="fa fa-lg fa-print"></i>
                                 </span>
                                 <a href="{{ route('cautions.show', ['routine_id' => $routine_id, 'caution' => $caution->id, 'redirect' => $redirect, 'disabled' => true]) }}"

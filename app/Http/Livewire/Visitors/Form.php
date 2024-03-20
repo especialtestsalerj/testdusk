@@ -57,6 +57,7 @@ class Form extends BaseForm
 
     public function hydrate()
     {
+        $this->updatedCardId();
         $this->visitor->load('sectors');
     }
 
@@ -115,6 +116,12 @@ class Form extends BaseForm
     {
         $this->visitor->person = $this->person;
         return view('livewire.visitors.form')->with($this->getViewVariables());
+    }
+
+
+    public function updatedCardId()
+    {
+        $this->emit('hasCard', $this->card_id);
     }
 
     /**
@@ -192,6 +199,10 @@ class Form extends BaseForm
         }
         if ($oldValue = old('exited_at')) {
             $this->visitor->exited_at = $oldValue;
+        }
+        if ($oldValue = old('card_id')) {
+            $this->visitor->card_id = $oldValue;
+            $this->card_id = $oldValue;
         }
     }
 

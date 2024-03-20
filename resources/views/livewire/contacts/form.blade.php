@@ -22,7 +22,7 @@
     class="row">
     <div class="{{$isVisitorsForm ? 'col-md-6' : 'col-12'}}">
         <div class="form-group">
-            <label for="contact_type_id">Tipo de Contato*</label>
+            <label for="contact_type_id">Tipo de Contato{{$isRequired ? '*' : ''}}</label>
             <select class="form-select text-uppercase" name="contact_type_id"
                     id="contact_type_id" wire:model="contact_type_id"
                     x-ref="contact_type_id" @include('partials.disabled-by-query-string')>
@@ -38,7 +38,7 @@
 
     <div class="col">
         <div class="form-group">
-            <label for="contact">Contato*</label>
+            <label for="contact">Contato{{$isRequired ? '*' : ''}}</label>
             <input class="form-control"
                    name="contact" id="contact"
                    wire:model="contact" x-ref="contact"
