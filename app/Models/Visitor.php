@@ -260,6 +260,7 @@ class Visitor extends Model
             'exited_at' => $this->exited_at?->format('d/m/Y H:i'),
             'entranced_at' => $this->entranced_at_br_formatted,
             'entranced_at_original' => $this->entranced_at_original,
+            'document.number.formatted' => $this->document->number_maskered,
             'document.number' => $this->document->number,
             'card.number' => $this->card?->number,
             'sector.name' => $this->full_sector_names,
