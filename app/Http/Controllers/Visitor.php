@@ -122,7 +122,9 @@ class Visitor extends Controller
         }
         $visitor->sectors()->sync($request->get('sector_id'));
 
-        $visitor->searchble();
+        $visitor = VisitorModel::find($visitor->id);
+
+        $visitor->save();
 
         return redirect()
             ->route('visitors.index')
