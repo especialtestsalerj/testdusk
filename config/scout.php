@@ -136,7 +136,18 @@ return [
             \App\Models\Visitor::class => [
                 'filterableAttributes' => ['exited_at', 'foo'],
                 'sortableAttributes' => ['entranced_at_original'],
-                'pagination' => ['maxTotalHits' => 9999999]
+                'searchableAttributes' => [
+                    'person.full_name',
+                    'person.social_name',
+                    'exited_at',
+                    'entranced_at',
+                    'entranced_at_original',
+                    'document.number.formatted',
+                    'document.number',
+                    'card.number',
+                    'sector.name',
+                ],
+                'pagination' => ['maxTotalHits' => 9999999],
             ],
         ],
     ],
