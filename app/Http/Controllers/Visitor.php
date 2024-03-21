@@ -76,6 +76,9 @@ class Visitor extends Controller
 
         $visitor->sectors()->attach($request->get('sector_id'));
 
+        $visitor = $visitor->fresh();
+        $visitor->searchable();
+
         return redirect()
             ->route('visitors.index')
             ->with('message', 'Visitante adicionado/a com sucesso!');
@@ -117,6 +120,9 @@ class Visitor extends Controller
             app(Contacts::class)->firstOrCreateContact($request);
         }
         $visitor->sectors()->sync($request->get('sector_id'));
+
+        $visitor = $visitor->fresh();
+        $visitor->searchable();
 
         return redirect()
             ->route('visitors.index')
