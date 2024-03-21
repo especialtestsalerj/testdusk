@@ -147,6 +147,7 @@ return [
                     'card.number',
                     'sector.name',
                 ],
+                'nonSeparatorTokens' => ['.'],
                 'pagination' => ['maxTotalHits' => 9999999],
             ],
         ],
