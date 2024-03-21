@@ -88,6 +88,14 @@ class Visitor extends Model
             $this->getOtherSectors();
     }
 
+    public function getFullSectorNamesAttribute()
+    {
+        $result = '';
+        return $this->sectors?->reduce(function ($result, $sector) {
+            return $result . ' -- ' . $sector->building->name . ' - ' . $sector->name;
+        });
+    }
+
     public function getEntrancedAtFormattedAttribute()
     {
         return $this->entranced_at?->format('Y-m-d H:i');
@@ -241,7 +249,7 @@ class Visitor extends Model
 
     protected function makeAllSearchableUsing($query)
     {
-        return $query->with(['person', 'document.documentType', 'sectors.name']);
+        return $query->with(['person', 'document.documentType', 'sectors']);
     }
 
     public function toSearchableArray(): array
@@ -254,7 +262,7 @@ class Visitor extends Model
             'entranced_at_original' => $this->entranced_at_original,
             'document.number' => $this->document->number,
             'card.number' => $this->card?->number,
-            'sector.name' => $this->sectors_name,
+            'sector.name' => $this->full_sector_names,
             'foo' => 'bar', //used to hack some queries
         ];
     }
