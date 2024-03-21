@@ -59,7 +59,11 @@ A ferramenta evoluiu para uma aplicação mais robusta, onde ocorrências, mater
 - Executar o comando `php artisan migrate` para criar/atualizar a estrutura de Banco de dados
 - Linkar a pasta storage, executando o comando `php artisan storage:link`
 - Criar uma chave para a aplicação, executando o comando `php artisan key:generate`
-
+- Para criação de cartões no formato CMYK, é necessário instalar o o programa Ghostscript.
+  - No Linux e no Mac executar os seguintes comandos: `sudo apt-get update` e `sudo apt-get install ghostscript`
+  - No Docker, já se encontra configurado no Dockerfile Raiz.
+  
+  
 ### Acesso ao Sistema
 
 Utilizar o [SGUS](http://intranet/sgus/) para definir os perfis e usuários.
