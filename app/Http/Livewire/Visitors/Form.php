@@ -121,7 +121,9 @@ class Form extends BaseForm
 
     public function updatedCardId()
     {
-        $this->emit('hasCard', $this->card_id);
+        if ($this->visitor->card_id != $this->card_id) {
+            $this->emit('hasCard', $this->card_id);
+        }
     }
 
     /**

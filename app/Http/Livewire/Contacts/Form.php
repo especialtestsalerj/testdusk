@@ -7,6 +7,7 @@ use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\Contact;
 use App\Models\ContactType;
+use App\Support\Constants;
 
 class Form extends BaseForm
 {
@@ -41,14 +42,21 @@ class Form extends BaseForm
             if ($oldValue = old('contact')) {
                 $this->contact = $oldValue;
             }
-            if ($oldValue = old('contact')) {
-                $this->contact = $oldValue;
-            }
         }
 
         if (isset($contact)) {
             $this->contact_type_id = $contact->contact_type_id;
-            $this->contact = $contact->contact;
+
+            switch ($this->contact_type_id) {
+                case Constants::CONTACT_TYPE_MOBILE:
+                    $this->contact = mask_mobile($contact->contact);
+                    break;
+                case Constants::CONTACT_TYPE_PHONE:
+                    $this->contact = mask_phone($contact->contact);
+                    break;
+                default:
+                    $this->contact = $contact->contact;
+            }
         }
     }
 

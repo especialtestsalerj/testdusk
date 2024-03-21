@@ -25,7 +25,8 @@
             <label for="contact_type_id">Tipo de Contato{{$isRequired ? '*' : ''}}</label>
             <select class="form-select text-uppercase" name="contact_type_id"
                     id="contact_type_id" wire:model="contact_type_id"
-                    x-ref="contact_type_id" @include('partials.disabled-by-query-string')>
+                    x-ref="contact_type_id" @include('partials.disabled-by-query-string')
+                    @if ($readonly) readonly @endif>
                 @if($isVisitorsForm)
                     <option value="">{{$isRequired ? 'SELECIONE' : ''}}</option>
                 @else
@@ -46,6 +47,7 @@
             <input class="form-control"
                    name="contact" id="contact"
                    wire:model="contact" x-ref="contact"
+                   @if ($readonly) readonly @endif
                    @include('partials.disabled-by-query-string') type="text"/>
         </div>
     </div>
