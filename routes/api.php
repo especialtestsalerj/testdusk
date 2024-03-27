@@ -22,6 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('visitors/open', [VisitorApi::class, 'openVisitors'])
     ->middleware([
         'auth:sanctum',
-        'canInCurrentBuilding:visitors:show,cautions:store,cautions:update',
+        'canInCurrentBuilding:visitors:search,cautions:store,cautions:update',
     ])
     ->name('visitors.open');
