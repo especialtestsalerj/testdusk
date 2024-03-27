@@ -103,3 +103,13 @@ Dar permissionamento de owner para a pasta e todos os arquivos internos (Exemplo
 
 php artisan up
 ```
+
+### Comando para converter arquivos em RGB para CMYK
+
+```
+for file in *.pdf; do
+    output_path="temp_$file"
+    gs -o "$output_path" -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -sColorConversionStrategyForImages=CMYK "$file"
+    mv "$output_path" "$file"
+done
+```
