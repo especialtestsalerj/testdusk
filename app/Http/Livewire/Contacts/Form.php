@@ -75,8 +75,9 @@ class Form extends BaseForm
         $this->resetExcept('person_id', 'isRequired');
     }
 
-    public function editContact(Contact $contact)
+    public function editContact(Contact $contact, $readonly = false)
     {
+        $this->readonly = $readonly;
         $this->contact_id = $contact->id;
         $this->fill($contact);
     }
