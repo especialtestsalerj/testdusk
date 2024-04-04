@@ -100,7 +100,10 @@ class People extends BaseForm
             if (!is_null($document)) {
                 $this->person = $document->person;
                 $this->person_id = $this->person->id;
-
+                $this->contact = $this->person?->contacts?->first();
+                if (!is_null($this->contact)) {
+                    $this->emit('editContact', $this->contact, true);
+                }
                 $this->fillModel();
                 $this->resetErrorBag();
                 $this->document_number = convert_case(
