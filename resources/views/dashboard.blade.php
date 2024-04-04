@@ -45,7 +45,7 @@
         @can('menu-seguranca:show')
             @if(!empty($routines))
                 <div
-                    class="tab-pane fade @cannot([make_ability_name_with_current_building('visitors:show'), 'people:show']) show active @endcannot"
+                    class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
                     id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
 
                     <div class="row">
