@@ -1,5 +1,6 @@
 @if(!isset($showSave) || $showSave)
     <button
+        wire:ignore
         class="btn btn-success text-white ml-1"
         id="submitButton"
         title="Salvar"
