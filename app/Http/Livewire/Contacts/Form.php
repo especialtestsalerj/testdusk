@@ -23,11 +23,13 @@ class Form extends BaseForm
     public $isVisitorsForm = false;
     public $isRequired = false;
     public $contact_id;
+    public $hasMask;
 
     protected $listeners = [
         'editContact',
         'cleanVariables',
         'hasCard',
+        'hasMask',
     ];
 
     public function mount()
@@ -104,8 +106,16 @@ class Form extends BaseForm
 
     public function render()
     {
-        $this->applyMasks();
+        if ($this->hasMask) {
+            $this->applyMasks();
+        }
         return view('livewire.contacts.form')->with($this->getViewVariables());
+    }
+
+    public function hasMask($value)
+    {
+        $this->hasMask = $value;
+        $this->reset('contact');
     }
 
 }
