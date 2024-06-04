@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Bookings as Bookings;
+use App\Http\Controllers\Reservations as Reservations;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
+use App\Http\Livewire\Reservation\Index as ReservationIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,15 @@ Route::get('/logout', [
     \Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class,
     'destroy',
 ])->name('logout-get');
+
+Route::group(['prefix' => 'agendamento'], function () {
+
+    Route::get('/', [Reservations::class,'create'])
+        ->name('reservation.form');
+
+    Route::post('/',[Reservations::class,'store'])
+        ->name('reservation.store');
+});
 
 Route::group(
     [
@@ -46,7 +56,7 @@ Route::group(
         require __DIR__ . '/routines.php';
         require __DIR__ . '/visitors.php';
         require __DIR__ . '/cards.php';
-        require __DIR__ . '/bookings.php';
+        require __DIR__ . '/reservations.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
             require __DIR__ . '/events.php';
@@ -60,6 +70,3 @@ Route::get('visitors/card/{uuid?}', VisitorsCard::class)->name('visitors.card');
 Route::get('cards/{uuid?}', VisitorsCard::class)
     ->name('cards.card')
     ->middleware(['can:use-app', 'canInCurrentBuilding:visitors:show']);
-
-
-Route::get('/agendamento',  [Bookings::class, 'index'])->name('agendamento.home');

@@ -61,6 +61,7 @@ trait Addressable
      */
     protected function detectIfCountryBrSelected(): bool
     {
+
         return !!($this->country_id == $this->countryBr->id);
     }
 

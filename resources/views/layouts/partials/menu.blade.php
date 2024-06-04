@@ -75,6 +75,8 @@
                                         <a class="dropdown-item {{ (request()->routeIs('person-restrictions.*')) ? 'active' : '' }}"
                                            href="{{ route('person-restrictions.index') }}">Restrições de Acesso</a></li>
                                 @endCan
+
+
                             </ul>
                         </li>
                     @endcan
@@ -123,6 +125,30 @@
                             </ul>
                         </li>
                     @endCan
+                    @can('menu-agendamento:show')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ (request()->routeIs(['reservation.*'])) ? 'active' : '' }}"
+                               href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Agendamentos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownPortaria">
+                                @can('people:show')
+                                    <li>
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                           href="{{ route('reservation.index') }}">Agenda</a></li>
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
+{{--                                           href="{{ route('reservation.index') }}">Preferências</a></li>--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
+{{--                                           href="{{ route('reservation.index') }}">Configurações</a></li>--}}
+
+                                @endcan
+                            </ul>
+                        </li>
+
+                    @endcan
                 @endguest
             </ul>
         </div>

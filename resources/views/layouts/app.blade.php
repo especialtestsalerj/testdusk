@@ -24,6 +24,7 @@
 
     @include('layouts.partials.environment')
     @livewireStyles
+
 </head>
 <body class="bg-light">
 <div id="app">
@@ -49,6 +50,7 @@
 @include('layouts.partials.livereload')
 @include('layouts.partials.google-analytics')
 @livewireScripts
+@livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
 </body>
 
