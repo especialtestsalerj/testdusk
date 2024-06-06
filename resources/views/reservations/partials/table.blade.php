@@ -9,7 +9,7 @@
                             <div class="col-12 col-lg-10">
                                 <div class="row d-flex align-items-center">
                                     <div class="col-4 col-lg-3 text-center text-lg-start">
-                                        <span class="fw-bold">Solicitante:</span> {{json_decode($reservation['person'])->full_name}}
+                                        <span class="fw-bold">Visitante:</span> {{json_decode($reservation['person'])->full_name}}
                                     </div>
                                     <div class="col-5 col-lg-3 text-center text-lg-start">
                                         <span class="fw-bold">Celular:</span> {{json_decode($reservation['person'])->mobile}}

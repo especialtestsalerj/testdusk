@@ -1,8 +1,9 @@
 <div>
-
+    @include('layouts.msg')
     <div class="row mt-4">
         <h2> Agendamentos</h2>
     </div>
+
     <form name="formulario" id="formulario"
            action="{{ route('reservation.store')}}" method="POST">
         @csrf
@@ -12,7 +13,7 @@
                 <div wire:ignore>
                     <select class="select2 form-control text-uppercase"
                             name="building_id" id="building_id"
-                            wire:model="building_id" x-ref="building_id" >
+                            wire:model="building_id" x-ref="building_id" wire:change="loadSectors" >
 
                         <option value="">SELECIONE</option>
                         @foreach ($buildings as $building)
@@ -32,8 +33,8 @@
 
                         <option value="">SELECIONE</option>
                         @foreach ($this->sectors as $sector)
-                            <option value="{{ $sector->id }}">
-                                {{ convert_case($sector->nickname, MB_CASE_UPPER) }}
+                            <option value="{{ $sector->id ?? $sector['id']}}">
+                                {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
                             </option>
                         @endforeach
                     </select>
@@ -213,16 +214,19 @@
         </div>
 
 
-        <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-            <button wire:ignore="" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
-                <i class="fa fa-save"></i> Solicitar
-            </button>
+
+        <div class="row">
+            <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
+                <button wire:ignore="" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
+                    <i class="fa fa-save"></i> Solicitar
+                </button>
 
 
 
-            <a href="https://www.alerj.rj.gov.br/" id="cancelButton" title="Cancelar" class="btn btn-danger text-white ml-1">
-                <i class="fas fa-ban"></i> Cancelar
-            </a>
+                <a href="https://www.alerj.rj.gov.br/" id="cancelButton" title="Cancelar" class="btn btn-danger text-white ml-1">
+                    <i class="fas fa-ban"></i> Cancelar
+                </a>
+            </div>
         </div>
     </form>
 </div>

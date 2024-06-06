@@ -20,7 +20,7 @@ class Form extends BaseForm
 
     use Addressable;
 
-    public $sectors;
+    public $sectors =[];
     public $documentTypes;
     public $document_type_id;
     public $sector_id;
@@ -39,10 +39,10 @@ class Form extends BaseForm
 
     public function render()
     {
-        Sector::disableGlobalScopes();
-        $this->sectors = Sector::whereNotNull('nickname')->where('status', true)->get();
+//        Sector::disableGlobalScopes();
+      //  $this->sectors = Sector::whereNotNull('nickname')->where('status', true)->get();
         $this->documentTypes = app(DocumentTypes::class)->allActive();
-        Sector::enableGlobalScopes();
+//        Sector::enableGlobalScopes();
 
         $this->loadCountryBr();
 
@@ -68,4 +68,44 @@ class Form extends BaseForm
             'country_br' => Country::where('id', '=', config('app.country_br'))->first(),
         ];
     }
+
+    public function loadSectors()
+    {
+        if(!empty($this->building_id)) {
+            Sector::disableGlobalScopes();
+            $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
+            Sector::enableGlobalScopes();
+        }else{
+            $this->sectors = [];
+        }
+    }
+
+    public function updatedBuildingId($newValue)
+    {
+        if (is_null($newValue)) {
+            return;
+
+        }
+        $this->loadSectors();
+
+        $this->sectors = collect($this->sectors);
+
+        $this->select2ReloadOptions(
+            $this->sectors
+                ->map(function ($sector) {
+                    return [
+                        'name' => convert_case($sector->nickname, MB_CASE_UPPER),
+                        'value' => $sector->id,
+                    ];
+                })
+                ->toArray(),
+            'sector_id'
+        );
+
+        if ($this->sector_id) {
+            $this->select2SelectOption('sector_id', $this->sector_id);
+        }
+    }
+
+
 }

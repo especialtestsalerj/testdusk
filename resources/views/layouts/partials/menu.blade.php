@@ -135,8 +135,12 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownPortaria">
                                 @can('people:show')
                                     <li>
-                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.index') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.index') }}">Agenda</a></li>
+
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                           href="{{ route('reservation.calendar') }}">Calendario</a></li>
+
 {{--                                    <li>--}}
 {{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
 {{--                                           href="{{ route('reservation.index') }}">Preferências</a></li>--}}

@@ -32,59 +32,28 @@ class AgendamentoStore extends Request
                     'email' =>              ['required'],
                     'confirm_email' =>      ['required'],
                     'mobile' =>             ['required'],
-//            'document_type_id' => 'required',
-//            'state_document_id' => [
-//                Rule::requiredIf(function () {
-//                    return $this->person_id == null &&
-//                        $this->document_type_id == config('app.document_type_rg');
-//                }),
-//            ],
-//            'document_number' => [
-//                'bail',
-//                'required',
-//                new PersonOnVisit($this->get('person_id')),
-//                Rule::when($this->document_type_id == config('app.document_type_cpf'), [
-//                    new ValidCPF(),
-//                ]),
-//            ],
-//            'full_name' => 'required',
-//            'country_id' => [
-//                Rule::requiredIf(function () {
-//                    return $this->person_id == null;
-//                }),
-//            ],
-//            'state_id' => [
-//                Rule::requiredIf(function () {
-//                    return $this->person_id == null &&
-//                        $this->country_id == config('app.country_br');
-//                }),
-//            ],
-//            'city_id' => [
-//                Rule::requiredIf(function () {
-//                    return $this->person_id == null &&
-//                        $this->country_id == config('app.country_br');
-//                }),
-//            ],
-//            'other_city' => [
-//                Rule::requiredIf(function () {
-//                    return $this->person_id == null &&
-//                        $this->country_id != config('app.country_br');
-//                }),
-//            ],
-//            'entranced_at' => ['bail', 'required'],
-//            'exited_at' => ['bail', 'nullable', 'after_or_equal:entranced_at'],
-//            'sector_id' => 'required',
-//            'description' => 'required',
-//            'contact_type_id' => Rule::requiredIf(function () {
-//                return (bool) $this->card_id || $this->contact;
-//            }),
-//            'contact' => [
-//                Rule::when($this->contact_type_id == 3, 'email'),
-//                Rule::requiredIf(function () {
-//                    return (bool) $this->card_id || $this->contact_type_id;
-//                }),
-//            ],
+
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'building_id'=>'Edifício',
+            'sector_id' =>          'Setor',
+            'reservation_date' =>       'Data da Visita',
+            'reservation_time' =>       'Hora da Vista',
+            'document_type_id' =>   'Tipo de Documento',
+            'document_number' =>    'Número do Documento',
+            'full_name' =>          'Nome Completo',
+            'country_id' =>         'País',
+            'state_id' =>           'Estado',
+            'city_id' =>            'Cidade',
+            'email' =>              'E-mail',
+            'confirm_email' =>      'Confirmação de E-mail',
+            'mobile' =>             'Celular',
+        ];
+
     }
 
     public function messages()

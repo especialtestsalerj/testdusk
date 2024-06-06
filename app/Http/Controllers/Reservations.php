@@ -48,8 +48,18 @@ class Reservations extends BaseController
         app(ReservationRepository::class)->create($data);
 
         return redirect()
-            ->route('reservation.form')
+            ->route('reservation.detail')
             ->with('message', 'Setor adicionado com sucesso!');
+    }
+
+    public function calendar()
+    {
+        return view('reservations.calendar');
+    }
+
+    public function detail()
+    {
+        return view('reservations.detail');
     }
 
 }
