@@ -900,3 +900,7 @@ select#session_building_id {
 
 
 
+.form-control:disabled {
+    pointer-events: auto;
+    resize: vertical;
+}
