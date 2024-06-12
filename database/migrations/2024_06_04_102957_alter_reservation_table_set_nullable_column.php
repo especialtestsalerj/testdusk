@@ -15,9 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->integer('group_id')->nullable()->change();
+          $table->integer('group_id')->nullable()->change();
             $table->json('person');
             $table->dropColumn('person_id');
+            $table->dropColumn('reservation_time');
 
             $table
                 ->bigInteger('building_id')
@@ -29,6 +30,15 @@ return new class extends Migration
                 ->foreign('building_id')
                 ->references('id')
                 ->on('buildings');
+
+            $table
+                ->bigInteger('capacity_id')
+                ->unsigned();
+
+            $table
+                ->foreign('capacity_id')
+                ->references('id')
+                ->on('capacities');
         });
     }
 
@@ -40,9 +50,12 @@ return new class extends Migration
     public function down()
     {
         Schema::table('reservations', function (Blueprint $table) {
-//            $table->integer('group_id')->nullable(false)->change();
+            $table->integer('group_id')->nullable(false)->change();
             $table->integer('person_id')->nullable();
+            $table->dropColumn('capacity_id')->nullable();
+            $table->time('reservation_time')->nullable();
             $table->dropColumn('person');
+            $table->dropColumn('building_id');
         });
     }
 };

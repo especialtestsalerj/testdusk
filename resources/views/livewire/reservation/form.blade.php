@@ -29,7 +29,7 @@
                 <div wire:ignore>
                     <select class="select2 form-control text-uppercase"
                             name="sector_id" id="sector_id"
-                            wire:model="sector_id" x-ref="sector_id" >
+                            wire:model="sector_id" x-ref="sector_id" wire:change="loadDates" >
 
                         <option value="">SELECIONE</option>
                         @foreach ($this->sectors as $sector)
@@ -44,12 +44,21 @@
         <div class="row">
             <div class="form-group col-3">
                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da Visita *</label>
-                <input type="date" class="form-control " id="reservation_date" name="reservation_date" value="">
-
+                <input type="text" class="form-control " id="reservation_date" name="reservation_date"  wire:model="reservation_date" x-ref="reservation_date">
             </div>
             <div class="form-group col-3">
                 <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da Visita *</label>
-                <input type="time" class="form-control " name="reservation_time" id="reservation_time">
+                <select class="select2 form-control text-uppercase"
+                        name="capacity_id" id="capacity_id"
+                        wire:model="capacity_id" x-ref="capacity_id" >
+
+                    <option value="">SELECIONE</option>
+                    @foreach ($this->capacities as $capacitiy)
+                        <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
+                            {{ $capacitiy->capacity ?? $capacitiy['capacity'] }}
+                        </option>
+                    @endforeach
+                </select>
 
             </div>
         </div>
@@ -102,6 +111,43 @@
                            name="social_name" id="social_name" wire:model="social_name" placeholder="Designação usada por travestis ou transexuais"
                        />
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="has_disability">Possui deficiência?</label>
+                        <select class="form-select text-uppercase" name="has_disability" id="has_disability"
+                                wire:model="has_disability"
+                                x-ref="has_disability" @disabled(request()->query('disabled'))>
+                            <option value="">
+                                SELECIONE
+                            </option>
+                            <option  value="true">SIM</option>
+                            <option value="false">NÃO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                @if($has_disability == 'true')
+                    <div class="form-group">
+                        <label for="disabilities">Tipo de Deficiência*</label>
+                        <br/>
+                        <ul class="disability-list list-unstyled">
+                            @foreach($disabilityTypes as $disabilityType)
+                                <li>
+                                    <label>
+                                        <input name="disabilities[]" wire:model="disabilities"
+                                               value="{{ $disabilityType->id }}" type="checkbox"/>
+                                        {{ $disabilityType->name }}
+                                    </label>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="row">
@@ -229,6 +275,31 @@
             </div>
         </div>
     </form>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script>
+        document.addEventListener('livewire:load', function() {
+            var blockedDates = @json($blockedDates);
+            var flatpickrInstance = flatpickr("#reservation_date", {
+                locale: "pt",
+                dateFormat: "d/m/Y",
+                minDate: "today",
+                maxDate: new Date().fp_incr(30), // 30 days from now
+                disable: blockedDates,
+                onChange: function(selectedDates, dateStr, instance) {
+                @this.set('reservation_date', dateStr);
+                }
+            });
+
+            Livewire.on('blockedDatesUpdated', function(newBlockedDates) {
+                flatpickrInstance.set('disable', newBlockedDates);
+            });
+        });
+
+
+    </script>
 </div>
 
 

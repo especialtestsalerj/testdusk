@@ -12,7 +12,7 @@ class Reservation extends Model
         'reservation_type_id',
         'code',
         'reservation_date',
-        'reservation_time',
+        'capacity_id',
         'sector_id',
         'person',
         'reservation_status_id',
@@ -52,6 +52,11 @@ class Reservation extends Model
     public function sector()
     {
         return $this->belongsTo(Sector::class);
+    }
+
+    public function capacity()
+    {
+        return $this->belongsTo(Capacity::class);
     }
 
 

@@ -15,12 +15,13 @@ class AgendamentoStore extends Request
 
     public function rules()
     {
+//        dd(request());
         return [
 
                     'building_id' =>        ['required'],
                     'sector_id' =>          ['required'],
                     'reservation_date' =>       ['required'],
-                    'reservation_time' =>       ['required'],
+                    'capacity_id' =>       ['required'],
                     'document_type_id' =>   ['required'],
                     'document_number' =>    ['required'],
                     'full_name' =>          ['required'],
@@ -42,7 +43,7 @@ class AgendamentoStore extends Request
             'building_id'=>'Edifício',
             'sector_id' =>          'Setor',
             'reservation_date' =>       'Data da Visita',
-            'reservation_time' =>       'Hora da Vista',
+            'capcity_id' =>       'Hora da Vista',
             'document_type_id' =>   'Tipo de Documento',
             'document_number' =>    'Número do Documento',
             'full_name' =>          'Nome Completo',

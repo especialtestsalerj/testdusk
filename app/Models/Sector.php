@@ -49,4 +49,12 @@ class Sector extends Model
     {
         InCurrentBuilding::enable();
     }
+
+    public function blockedDate()
+    {
+        return $this->hasMany(BlockedDate::class);
+    }
+    public function Capacities(){
+        return $this->hasMany(Capacity::class);
+    }
 }

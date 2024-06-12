@@ -11,8 +11,10 @@ use App\Data\Repositories\Sectors;
 use App\Data\Repositories\States as StatesRepository;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
+use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Sector;
+use App\Models\Capacity;
 use Livewire\Component;
 
 class Form extends BaseForm
@@ -35,6 +37,18 @@ class Form extends BaseForm
     public $confirm_email;
     public $mobile;
 
+    public $blockedDates;
+
+    public $reservation_date;
+
+    public $has_disability;
+
+    public $capacity_id;
+
+    public $capacities =[];
+
+
+
 
 
     public function render()
@@ -50,7 +64,9 @@ class Form extends BaseForm
     }
 
     public function mount(){
-        $this->select2SelectOption('sector_id', $this->sector_id);
+      //  $this->select2SelectOption('sector_id', $this->sector_id);
+
+        $this->blockedDates =[];
     }
 
     protected function getComponentVariables()
@@ -75,9 +91,62 @@ class Form extends BaseForm
             Sector::disableGlobalScopes();
             $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
             Sector::enableGlobalScopes();
+
         }else{
             $this->sectors = [];
         }
+    }
+
+    public function loadDates()
+    {
+        if(!empty($this->sector_id)){
+            $dates = BlockedDate::where('sector_id', $this->sector_id)->pluck('date');
+
+            $this->blockedDates = $dates->map(function ($date) {
+                return \Carbon\Carbon::parse($date)->format('d/m/Y');
+            });
+        }else{
+            $this->blockedDates =[];
+
+        }
+
+
+
+    }
+
+    public function updatedSectorId($newValue)
+    {
+        if (is_null($newValue)) {
+            return;
+
+        }
+
+        $this->loadDates();
+        $this->emit('blockedDatesUpdated', $this->blockedDates);
+    }
+
+    public function updatedReservationDate($newValue)
+    {
+        if (is_null($newValue)) {
+            return;
+
+        }
+        $this->loadHourCapacities();
+
+        $this->capacities = collect($this->capacities);
+
+        $this->select2ReloadOptions(
+            $this->capacities
+                ->map(function ($item) {
+                    return [
+                        'name' => $item->capacity,
+                        'value' => $item->id,
+                    ];
+                })
+                ->toArray(),
+            'capacity_id'
+        );
+
     }
 
     public function updatedBuildingId($newValue)
@@ -104,6 +173,27 @@ class Form extends BaseForm
 
         if ($this->sector_id) {
             $this->select2SelectOption('sector_id', $this->sector_id);
+        }
+    }
+
+    private function loadHourCapacities()
+    {
+
+
+        if(!empty($this->sector_id) && !empty($this->reservation_date)) {
+
+            $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
+            $this->capacities =  \DB::table('capacities as c')
+                ->select('c.id', \DB::raw("c.hour || ' (' || (c.capacity - (
+            select count(*) from reservations r
+            where r.sector_id = c.sector_id
+              and r.reservation_date = '$date'
+              and r.capacity_id = c.id)) || ' vagas)' as capacity"))
+                ->where('c.sector_id', $this->sector_id)
+                ->get();
+        }
+        else{
+            $this->capacities =[];
         }
     }
 
