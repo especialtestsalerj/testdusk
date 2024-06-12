@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Observações</label>
-                                    <textarea class="form-control" name="description" id="description" disabled>{{ $event->description }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" rows="10" disabled>{{ $event->description }}</textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">
