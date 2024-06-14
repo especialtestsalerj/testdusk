@@ -22,8 +22,13 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
     @include('layouts.partials.environment')
     @livewireStyles
+
 </head>
 <body class="bg-light">
 <div id="app">
@@ -49,6 +54,7 @@
 @include('layouts.partials.livereload')
 @include('layouts.partials.google-analytics')
 @livewireScripts
+@livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
 </body>
 

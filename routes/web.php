@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Reservations as Reservations;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Visitors\VisitorsCard as VisitorsCard;
+use App\Http\Livewire\Reservation\Index as ReservationIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,17 @@ Route::get('/logout', [
     \Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class,
     'destroy',
 ])->name('logout-get');
+
+Route::group(['prefix' => 'agendamento'], function () {
+
+    Route::get('/', [Reservations::class,'create'])
+        ->name('reservation.form');
+
+    Route::post('/',[Reservations::class,'store'])
+        ->name('reservation.store');
+    Route::get('/detalhes', [Reservations::class,'detail'])
+        ->name('reservation.detail');
+});
 
 Route::group(
     [
@@ -45,6 +58,7 @@ Route::group(
         require __DIR__ . '/routines.php';
         require __DIR__ . '/visitors.php';
         require __DIR__ . '/cards.php';
+        require __DIR__ . '/reservations.php';
 
         Route::group(['prefix' => '/routines/{routine_id}'], function () {
             require __DIR__ . '/events.php';

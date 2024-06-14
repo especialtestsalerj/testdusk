@@ -37,4 +37,12 @@ trait Swallable
             'event' => $event,
         ]);
     }
+
+    public function swalInput($title,$input)
+    {
+        $this->dispatchBrowserEvent('swal-input',[
+            'title' =>$title,
+            'input'=>$input
+        ]);
+    }
 }

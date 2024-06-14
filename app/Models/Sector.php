@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class Sector extends Model
 {
-    protected $fillable = ['name', 'status', 'building_id'];
+    protected $fillable = ['name', 'status', 'building_id', 'nickname', 'is_visitable'];
 
     protected $filterableColumns = ['name', 'status'];
 
@@ -33,5 +33,28 @@ class Sector extends Model
     public function visitors()
     {
         return $this->belongsToMany(Visitor::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public static function disableGlobalScopes()
+    {
+        InCurrentBuilding::disable();
+    }
+
+    public static function enableGlobalScopes()
+    {
+        InCurrentBuilding::enable();
+    }
+
+    public function blockedDate()
+    {
+        return $this->hasMany(BlockedDate::class);
+    }
+    public function Capacities(){
+        return $this->hasMany(Capacity::class);
     }
 }

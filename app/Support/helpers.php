@@ -251,6 +251,8 @@ function nin($needle, ...$haystack): bool
 
 function allows($ability)
 {
+
+//    dd($ability);
     if (!($can = \Illuminate\Support\Facades\Gate::allows($ability))) {
         //    if (!$can = auth()->user()->can($ability)) {
         info(
@@ -663,4 +665,26 @@ function convert_pdf_rgb_to_cmyk(string $fullPath)
     exec($command, $output, $returnCode);
 
     return $returnCode;
+}
+
+function generate_code($size = 4){
+    if($size <= 0) {
+        throw new InvalidArgumentException('O tamanho deve ser maior que zero.');
+    }
+
+    // Gera bytes aleatórios
+    $bytes = random_bytes($size);
+
+    // Converte bytes para hexadecimal
+    $hex = bin2hex($bytes);
+
+    // Converte hexadecimal para alfanumérico e corta para o tamanho desejado
+    $code = substr(preg_replace('/[^A-Z0-9]/', '', base64_encode($hex)), 0, $size);
+
+    // Caso o código gerado seja menor que o tamanho desejado, repete o processo
+    while(strlen($code) < $size) {
+        $code .= substr(preg_replace('/[^A-Z0-9]/', '', base64_encode(bin2hex(random_bytes(1)))), 0, 1);
+    }
+
+    return $code;
 }

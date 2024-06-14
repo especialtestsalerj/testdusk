@@ -44,6 +44,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="name">Nome Público*</label>
+
+                            <input class="form-control text-uppercase" id="nickname" name="nickname" value="{{$sector->nickname}}" />
+                        </div>
+
+                        <div class="form-group">
                             <label for="name">Unidade*</label>
 
                             <input class="form-control text-uppercase"
@@ -70,7 +76,14 @@
                                 <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="status" name="status" {{(is_null(old('status')) ? (formMode() == 'create' ? true : $sector->status) : old('status')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model' => $sector, 'permission' => make_ability_name_with_current_building('sectors:store')])>
                                 <label class="form-check-label" for="status">Ativo</label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-control" type="hidden" name="is_visitable" value="false">
+                                <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="is_visitable" name="is_visitable" {{(is_null(old('is_visitable')) ? (formMode() == 'create' ? true : $sector->is_visitable) : old('is_visitable')) ? 'checked="checked"' : ''}} @include('partials.disabled', ['model' => $sector, 'permission' => make_ability_name_with_current_building('sectors:store')])>
+                                <label class="form-check-label" for="is_visitable">Aceita Agendamento</label>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>

@@ -2,23 +2,14 @@
 
 namespace App\Data\Repositories;
 
-use App\Models\Building;
+use App\Models\Reservation;
 
-class Buildings extends Repository
+class Reservations extends Repository
 {
     /**
      * @var string
      */
-    protected $model = Building::class;
-
-    public function getMainBuilding()
-    {
-        //        return Building::where('slug', 'palacio-tiradentes')->first();
-        return Building::where('slug', 'lucio-costa')->first();
-        return \Cache::remember('main-building', 60, function () {
-            return Building::where('slug', 'lucio-costa')->first();
-        });
-    }
+    protected $model = Reservation::class;
 
     public function allActive($id = null)
     {
@@ -35,6 +26,4 @@ class Buildings extends Repository
             ->orderBy('name')
             ->get();
     }
-
-
 }
