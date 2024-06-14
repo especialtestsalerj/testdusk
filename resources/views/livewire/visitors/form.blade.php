@@ -151,7 +151,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">Motivo da Visita*</label>
-                                    <textarea class="form-control" name="description" id="description" wire:ignore
+                                    <textarea class="form-control" name="description" id="description" rows="5" wire:ignore
                                               placeholder="Informe detalhes da autorização"
                                         @include('partials.disabled-by-query-string') >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
                                 </div>

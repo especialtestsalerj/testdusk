@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Observações*</label>
-                            <textarea class="form-control" name="description" id="description" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('description')) ? $event->description: old('description') }}</textarea>
+                            <textarea class="form-control" name="description" id="description" rows="10" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('description')) ? $event->description: old('description') }}</textarea>
                         </div>
                     </div>
                 </div>

@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Observações</label>
-                                    <textarea class="form-control" name="description" id="description" disabled>{{ $caution->description }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" rows="5" disabled>{{ $caution->description }}</textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">

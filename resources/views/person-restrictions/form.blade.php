@@ -71,11 +71,11 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="message">Mensagem*</label>
-                        <textarea class="form-control" name="message" id="message" @disabled(request()->query('disabled'))>{{ is_null(old('message')) ? $personRestriction->message : old('message') }}</textarea>
+                        <textarea class="form-control" id="message" name="message" rows="5" @disabled(request()->query('disabled'))>{{ is_null(old('message')) ? $personRestriction->message : old('message') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="description">Descrição*</label>
-                        <textarea class="form-control" name="description" id="description" @disabled(request()->query('disabled'))>{{ is_null(old('description')) ? $personRestriction->description : old('description') }}</textarea>
+                        <textarea class="form-control" name="description" id="description" rows="10" @disabled(request()->query('disabled'))>{{ is_null(old('description')) ? $personRestriction->description : old('description') }}</textarea>
                     </div>
                 </div>
             </div>
