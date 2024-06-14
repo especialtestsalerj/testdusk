@@ -64,6 +64,16 @@
         </div>
 
         <div class="row">
+            <div class="form-group col-6">
+                <label for="reservation_date" style="margin-left: 10px;" class="form-label">Motivo da Visita*</label>
+                <textarea id="motive" name="motive" class="form-control" wire:model="motive">
+
+                </textarea>
+            </div>
+
+        </div>
+
+        <div class="row">
             <div class='col-2' >
                 <div class="form-group">
 

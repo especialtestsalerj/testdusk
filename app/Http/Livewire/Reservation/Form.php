@@ -102,6 +102,13 @@ class Form extends BaseForm
         if(!empty($this->sector_id)){
             $dates = BlockedDate::where('sector_id', $this->sector_id)->pluck('date');
 
+            //Array map, para sábados e domingos, holiday date (cadastrar
+            //No final do ano faltando X dias para virar o ano, faz o processamento da holiday do próximo ano.
+            //Array remove/reduce de exception date.
+            //Cadastrar uma tabela de exceções.
+
+
+
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });

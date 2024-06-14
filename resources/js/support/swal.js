@@ -139,8 +139,14 @@ window.addEventListener('swal-input',function (e ){
     const option = e.detail
 
      Swal.fire({
-        title: "select departure date",
-        input: "date",
+        title: option.title,
+         input: "date",
+        showConfirmButton: true,
+        cancelButtonColor: '#E3352E',
+        confirmButtonColor: '#38c172',
+        confirmButtonText: '<i class="fa fa-save"></i> Confirmar',
+        cancelButtonText: '<i class="fa fa-ban"></i> Cancelar',
+        showCancelButton: true,
         didOpen: () => {
             const today = (new Date()).toISOString();
             Swal.getInput().min = today.split("T")[0];

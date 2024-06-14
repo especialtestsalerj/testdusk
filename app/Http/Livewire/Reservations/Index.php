@@ -70,7 +70,7 @@ class Index extends BaseIndex
         $this->selectedReservation = Reservation::where('id',$reservation['id'])->first();
 
 
-        $this->swalInput('Teste','datetime');
+        $this->swalInput('Teste','text');
 
     }
 
