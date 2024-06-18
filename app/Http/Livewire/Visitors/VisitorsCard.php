@@ -31,12 +31,13 @@ class VisitorsCard extends Component
     }
     public function mount($uuid = null)
     {
+
         if ($uuid) {
             if (Uuid::isValid($uuid)) {
                 if ($this->visitorsRoute()) {
                     $visitor = VisitorModel::where('uuid', $uuid)->firstOrFail();
                 } else {
-                    $visitor = CardModel::where('uuid', $uuid)->firstOrFail()->visitor;
+                    $visitor = CardModel::where('uuid', $uuid)->firstOrFail()->visitors->first();
                     if (!$visitor) {
                         abort(400, 'Cartão não possui visita em aberto');
                     }
