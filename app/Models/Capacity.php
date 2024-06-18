@@ -8,7 +8,7 @@ class Capacity extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sector_id','hour','capacity'];
+    protected $fillable = ['sector_id','hour','maximum_capacity'];
 
     public function createdBy()
     {

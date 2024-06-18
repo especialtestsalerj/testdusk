@@ -9,7 +9,7 @@
 
         <div class="col-4 col-md-4 align-self-center d-flex justify-content-end gap-4">
             <a id="novo" href="{{route('reservation.form-from-user')}}" class="btn btn-primary text-white float-right"
-               title="Nova Visita">
+               title="Nova Reserva">
                 <i class="fa fa-plus"></i> Nova
             </a>
         </div>

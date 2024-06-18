@@ -22,6 +22,11 @@ class Reservations extends BaseController
         return view('reservations.index')->with('reservations',$reservations);
     }
 
+    public function configuration()
+    {
+        return view('reservations.configuration');
+    }
+
     public function store(AgendamentoStore $request)
     {
         $data = $request->all();

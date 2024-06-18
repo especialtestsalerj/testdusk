@@ -55,7 +55,7 @@
                     <option value="">SELECIONE</option>
                     @foreach ($this->capacities as $capacitiy)
                         <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
-                            {{ $capacitiy->capacity ?? $capacitiy['capacity'] }}
+                            {{ $capacitiy->maximum_capacity ?? $capacitiy['maximum_capacity'] }}
                         </option>
                     @endforeach
                 </select>
@@ -77,7 +77,7 @@
             <div class='col-2' >
                 <div class="form-group">
 
-{{--                    {{dd($this->documentTypes)}}--}}
+
                     <label for="document_type_id">Tipo de Documento*</label>
                     <select class="form-control text-uppercase"
                             name="document_type_id" id="document_type_id"

@@ -128,7 +128,7 @@
                     @can('menu-agendamento:show')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {{ (request()->routeIs(['reservation.*'])) ? 'active' : '' }}"
-                               href="#" id="navbarDropdownSeguranca" role="button" data-bs-toggle="dropdown"
+                               href="#" id="navbarDropdownAgendamento" role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
                                 Agendamentos
                             </a>
@@ -137,9 +137,15 @@
                                     <li>
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.index') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.index') }}">Agenda</a></li>
-
+                                <li>
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.calendar') }}">Calendario</a></li>
+                                    <li>
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.configuration') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                           href="{{ route('reservation.configuration') }}">Configurações</a></li>
+                                    <li>
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                           href="{{ route('reservation.calendar') }}">Associar Usuário à Agenda</a></li>
 
 {{--                                    <li>--}}
 {{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
