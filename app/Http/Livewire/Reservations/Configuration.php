@@ -24,6 +24,7 @@ class Configuration extends BaseForm
 
     protected $listeners =[
         'created-capacity' =>'loadCapacities',
+        'created-blocked-date' =>'loadBlockedDates',
         'confirm-delete-capacity' => 'deleteCapacity',
     ];
 
@@ -63,10 +64,10 @@ class Configuration extends BaseForm
 
     }
 
-    private function loadBlockedDates()
+    public function loadBlockedDates()
     {
         if(!empty($this->sector_id)) {
-            $this->blockedDates = BlockedDate::where('sector_id',$this->sector_id)->get();
+            $this->blockedDates = BlockedDate::where('sector_id',$this->sector_id)->orderBy('date')->get();
 
         }else{
             $this->blockedDates = [];
@@ -77,6 +78,11 @@ class Configuration extends BaseForm
     {
 
         $this->emit('createCapacity', $sector);
+    }
+
+    public function createBlockedDate($sector)
+    {
+        $this->emit('createBlockedDate',$sector);
     }
 
     public function editCapacity($capacity)

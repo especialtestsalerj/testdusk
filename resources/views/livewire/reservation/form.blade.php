@@ -44,7 +44,7 @@
         <div class="row">
             <div class="form-group col-3">
                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da Visita *</label>
-                <input type="text" class="form-control " id="reservation_date" name="reservation_date"  wire:model="reservation_date" x-ref="reservation_date">
+                <input type="text" class="form-control " id="reservation_date" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" x-ref="reservation_date">
             </div>
             <div class="form-group col-3">
                 <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da Visita *</label>

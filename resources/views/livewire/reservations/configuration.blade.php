@@ -9,7 +9,7 @@
 
         @csrf
         <div class="row mt-3">
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 <h4 for="sector_id" style="margin-left: 10px;" class="form-label">Setor:</h4>
                 <div wire:ignore>
                     <select class="select2 form-control text-uppercase"
@@ -27,6 +27,20 @@
             </div>
         </div>
         @if(!empty($this->sector_id))
+            <div class="row mt-3">
+                <div class="form-group col-6">
+                    <div class="col-12">
+                        <input class="form-check-input" dusk="checkboxCards"
+                               type="checkbox" id="status" name="status" value="true"
+                        > Exigir motivo
+                    </div>
+                    <div class="col-12">
+                    <input class="form-check-input" dusk="checkboxCards"
+                           type="checkbox" id="status" name="status" value="true"
+                    > Exibir vagas restantes
+                    </div>
+                </div>
+            </div>
             <div class="row mt-3">
                 <div class="col-md-4 mb-2">
                     <div class="row my-2">
@@ -82,9 +96,10 @@
                             </h3>
                         </div>
                         <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                                                                        <span class="btn btn-sm btn-primary text-white" wire:click="createDocument(7907)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Novo Documento">
-                                                <i class="fa fa-plus"></i>
-                                            </span>
+                            <span class="btn btn-sm btn-primary text-white" wire:click="createBlockedDate({{$this->sector_id}})"
+                                  data-bs-toggle="modal" data-bs-target="#blocked-date-modal" title="Nova Data Indisponível">
+                                <i class="fa fa-plus"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="row">
@@ -100,9 +115,6 @@
                                                 </div>
 
                                                 <div class="col-12 col-lg-3 text-center text-lg-end">
-                                                                                                                        <span class="btn btn-link" wire:click="editDocument(7908)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Alterar Documento">
-                                                                    <i class="fa fa-lg fa-pencil"></i>
-                                                                    </span>
                                                     <span class="btn btn-link" wire:click="prepareForDeleteDocument(7908)" title="Remover Documento">
                                                                     <i class="fa fa-lg fa-trash"></i>
                                                                     </span>
@@ -131,29 +143,29 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            @foreach($blockedDates as $blockeddate)
+{{--                            @foreach($blockedDates as $blockeddate)--}}
 
-                                <div class="cards-striped mx-lg-0 mt-lg-2">
-                                    <div class="card">
-                                        <div class="card-body py-1">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-12 col-lg-3 text-center text-lg-start">
-                                                    <span class="fw-bold">Data:</span> {{Carbon::parse($blockeddate->date)->format('d/m/Y')}}
-                                                </div>
+{{--                                <div class="cards-striped mx-lg-0 mt-lg-2">--}}
+{{--                                    <div class="card">--}}
+{{--                                        <div class="card-body py-1">--}}
+{{--                                            <div class="row d-flex align-items-center">--}}
+{{--                                                <div class="col-12 col-lg-3 text-center text-lg-start">--}}
+{{--                                                    <span class="fw-bold">Data:</span> {{Carbon::parse($blockeddate->date)->format('d/m/Y')}}--}}
+{{--                                                </div>--}}
 
-                                                <div class="col-12 col-lg-3 text-center text-lg-end">
-                                                                                                                        <span class="btn btn-link" wire:click="editDocument(7908)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Alterar Documento">
-                                                                    <i class="fa fa-lg fa-pencil"></i>
-                                                                    </span>
-                                                    <span class="btn btn-link" wire:click="prepareForDeleteDocument(7908)" title="Remover Documento">
-                                                                    <i class="fa fa-lg fa-trash"></i>
-                                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+{{--                                                <div class="col-12 col-lg-3 text-center text-lg-end">--}}
+{{--                                                                                                                        <span class="btn btn-link" wire:click="editDocument(7908)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Alterar Documento">--}}
+{{--                                                                    <i class="fa fa-lg fa-pencil"></i>--}}
+{{--                                                                    </span>--}}
+{{--                                                    <span class="btn btn-link" wire:click="prepareForDeleteDocument(7908)" title="Remover Documento">--}}
+{{--                                                                    <i class="fa fa-lg fa-trash"></i>--}}
+{{--                                                                    </span>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
                         </div>
                     </div>
                 </div>
@@ -165,4 +177,5 @@
     </form>
 
     @livewire('capacities.modal')
+    @livewire('blocked-dates.modal')
 </div>

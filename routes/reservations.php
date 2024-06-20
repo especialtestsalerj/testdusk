@@ -14,6 +14,9 @@ Route::group(['prefix' => '/reservations'], function () {
     Route::get('/create', [Reservations::class,'index'])
         ->name('reservation.form-from-user');
 
+    Route::get('/associate-user', [Reservations::class,'associateUser'])
+        ->name('reservation.associate-user');
+
 });
 
 

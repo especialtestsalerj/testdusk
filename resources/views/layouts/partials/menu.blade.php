@@ -144,8 +144,8 @@
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.configuration') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.configuration') }}">Configurações</a></li>
                                     <li>
-                                        <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
-                                           href="{{ route('reservation.calendar') }}">Associar Usuário à Agenda</a></li>
+                                        <a class="dropdown-item {{ (request()->routeIs('reservation.associate-user') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
+                                           href="{{ route('reservation.associate-user') }}">Associar Usuário à Agenda</a></li>
 
 {{--                                    <li>--}}
 {{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.*') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}

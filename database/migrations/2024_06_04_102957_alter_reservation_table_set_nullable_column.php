@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('person');
 //            $table->dropColumn('person_id');
             $table->dropColumn('reservation_time');
-
+            $table->longText('motive')->nullable();
             $table
                 ->bigInteger('building_id')
                 ->unsigned()
@@ -51,11 +51,11 @@ return new class extends Migration
     {
         Schema::table('reservations', function (Blueprint $table) {
 
-
             $table->dropColumn('capacity_id')->nullable();
             $table->time('reservation_time')->nullable();
             $table->dropColumn('person');
             $table->dropColumn('building_id');
+            $table->dropColumn('motive');
         });
     }
 };

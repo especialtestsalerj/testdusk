@@ -41,11 +41,15 @@ class Form extends BaseForm
 
     public $reservation_date;
 
+    public $motive;
+
     public $has_disability;
 
     public $capacity_id;
 
     public $capacities =[];
+
+    public  $disabilities =[];
 
 
 
@@ -53,12 +57,12 @@ class Form extends BaseForm
 
     public function render()
     {
-//        Sector::disableGlobalScopes();
-      //  $this->sectors = Sector::whereNotNull('nickname')->where('status', true)->get();
-        $this->documentTypes = app(DocumentTypes::class)->allActive();
-//        Sector::enableGlobalScopes();
 
+        $this->documentTypes = app(DocumentTypes::class)->allActive();
         $this->loadCountryBr();
+        $this->loadDefaultLocation();
+
+
 
         return view('livewire.reservation.form')->with($this->getViewVariables());
     }

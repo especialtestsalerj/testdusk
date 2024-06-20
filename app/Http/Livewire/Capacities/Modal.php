@@ -61,7 +61,7 @@ class Modal extends BaseForm
     private function storeNewCapacity()
     {
 
-        $this->sector->Capacities()->create([
+        $this->sector->capacities()->create([
             'hour'=>$this->hour,
             'maximum_capacity'=>$this->maximum_capacity,
         ]);
