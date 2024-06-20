@@ -1,5 +1,5 @@
 <div class="py-4 px-4">
-    <form name="formulario" id="formulario"
+    <form name="formulario" id="formulario" enctype="multipart/form-data"
           @if($formMode == 'show') action="{{ route('events.update', ['routine_id' => $routine_id, 'id' => $event->id]) }}"
           @else action="{{ route('events.store', ['routine_id' => $routine_id])}}" @endIf method="POST">
         @csrf
@@ -18,7 +18,7 @@
                             <a href="{{ route('routines.show', ['id' => $routine_id]) }}">Ocorrências</a>
                             > Nova
                         @else
-                            <a href="{{ route(request()->query('redirect'), ['routine_id' => $routine_id, 'id' => $event->id]) }}">Ocorrências</a>
+                            <a href="{{ route('routines.show', ['routine_id' => $routine_id, 'id' => $event->id]) }}">Ocorrências</a>
                             > {{ $event->id }} - {{ $event->occurred_at->format('d/m/Y \À\S H:i') }}
                         @endif
                     </h3>
@@ -63,6 +63,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <div class="form-group" wire:ignore>
                         <label for="sector_id">Setor</label>
@@ -94,12 +95,78 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Observações*</label>
-                        <textarea class="form-control" name="description" id="description" wire:model.defer="description"
+                        <textarea class="form-control" name="description" id="description"
+                                  wire:model.defer="description"
                                   rows="10" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('description')) ? $event->description: old('description') }}</textarea>
+                    </div>
+
+                    <div class="mb-2">
+                        <div
+                            x-data="{ isUploading: false, progress: 0 }"
+                            x-on:livewire-upload-start="isUploading = true"
+                            x-on:livewire-upload-finish="isUploading = false"
+                            x-on:livewire-upload-error="isUploading = false"
+                            x-on:livewire-upload-progress="progress = $event.detail.progress"
+                        >
+
+                            <div class="col-12 pb-2">
+                                <input type="file" wire:model="files" name="files[]" multiple>
+
+                                <div x-show="isUploading" class="progress">
+                                    <div class="progress-bar" role="progressbar"
+                                         x-bind:style="'width: ' + progress + '%'"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                        <span x-text="progress + '%'"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @error('files.*')
+                            <small class="text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </small>
+                            @endError
+
+                            @error('files')
+                            <small class="text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </small>
+                            @endError
+
+                            @if(!empty($files))
+                                <div class="col-12 pt-3">
+                                    <span>Documentos Carregados:</span>
+                                    <ul>
+                                        @foreach($files as $file)
+                                            <li>{{ $file->getClientOriginalName() }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="row mb-2 col-12">
+                            @foreach($event->attachedFiles as $attachedFile)
+                                <div class="col-6 pt-3">
+                                    <h5><a href="{{$attachedFile->file->url}}"
+                                           target="_blank">{{$attachedFile->original_name}}</a></h5>
+                                </div>
+                                <div class="col-6" wire:key="attached-file-{{$attachedFile->id}}">
+                                    <button title="Remover Documento"
+                                            class="btn btn-sm btn-micro btn-danger"
+                                            wire:click.prevent="preventRemoveDocument({{$attachedFile->id}})"><span
+                                            class="fa fa-trash"> </span></button>
+                                </div>
+
+                            @endforeach
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
     </form>
 </div>
 

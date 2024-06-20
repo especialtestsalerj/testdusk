@@ -27,6 +27,7 @@ class EventStore extends Request
             'event_type_id' => 'required',
             'duty_user_id' => 'required',
             'description' => 'required',
+            'files.*' => ['file']
         ];
     }
 }

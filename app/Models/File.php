@@ -6,6 +6,7 @@ use App\Exceptions\ModelNotFound;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Number;
 
 class File extends Model
@@ -33,7 +34,7 @@ class File extends Model
     }
     public function getUrlAttribute()
     {
-        return config("filesystems.disks.{$this->drive}.url_prefix") . $this->hash;
+        return Storage::disk($this->drive)->url($this->path);
     }
 
     public function attachedFile(): HasOne
@@ -69,7 +70,7 @@ class File extends Model
     public function sizeNormalized(): Attribute
     {
         return Attribute::make(
-            get: fn() => Number::fileSize($this->size)
+            get: fn() => format_file_size($this->size)
         );
     }
 }

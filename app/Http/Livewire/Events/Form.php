@@ -8,10 +8,15 @@ use App\Data\Repositories\Routines as RoutinesRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
 use App\Http\Livewire\BaseForm;
+use App\Http\Livewire\Traits\Swallable;
+use App\Models\AttachedFile;
 use App\Support\Constants;
+use Livewire\WithFileUploads;
 
 class Form extends BaseForm
 {
+    use WithFileUploads, Swallable;
+
     public $description;
     public $duty_user_id;
     public $sector_id;
@@ -21,6 +26,13 @@ class Form extends BaseForm
     public $routine;
     public $event;
     public $formMode;
+    public $files = [];
+    public $selectedAttachmentId;
+
+    protected $listeners = [
+        'confirm-remove' => 'confirmRemove',
+        'refreshForm' => '$refresh',
+    ];
 
     public function mount($routine_id, $id = null)
     {
@@ -49,6 +61,13 @@ class Form extends BaseForm
         $this->fillAttributes();
     }
 
+    public function preventRemoveDocument($attachedFileId)
+    {
+        $this->selectedAttachmentId = $attachedFileId;
+        $this->emitSwall('Deseja Realmente Remover o Documento da Ocorrência?',
+            'A ação não pode ser desfeita', 'confirm-remove', 'delete');
+    }
+
     protected function fillAttributes($event = null)
     {
         $this->fill([
@@ -56,8 +75,20 @@ class Form extends BaseForm
             'duty_user_id' => old('duty_user_id', $event->duty_user_id ?? null),
             'sector_id' => old('sector_id', $event->sector_id ?? null),
             'event_type_id' => old('event_type_id', $event->event_type_id ?? null),
-            'occurred_at' => old('occurred_at', $event->occurred_at->format('Y-m-d\TH:i') ?? null),
+            'occurred_at' => old('occurred_at', $event?->occurred_at->format('Y-m-d\TH:i') ?? null),
         ]);
+    }
+
+
+    public function confirmRemove()
+    {
+        if (!is_null($this->selectedAttachmentId)) {
+            $attachedFile = AttachedFile::find($this->selectedAttachmentId);
+            if ($attachedFile) {
+                $attachedFile->delete();
+            }
+            $this->emit('refreshForm');
+        }
     }
 
     public function render()
