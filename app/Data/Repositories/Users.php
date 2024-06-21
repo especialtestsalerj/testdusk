@@ -5,6 +5,7 @@ namespace App\Data\Repositories;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Silber\Bouncer\Database\Ability;
 
 class Users extends Repository
 {
@@ -123,5 +124,13 @@ class Users extends Repository
         if ($systemUser = $this->getSystemModel()) {
             auth()->login($systemUser);
         }
+    }
+
+    public function allWithAbility($abilityName)
+    {
+        $ability = Ability::where('name', $abilityName)->first();
+
+
+       return $ability->users;
     }
 }
