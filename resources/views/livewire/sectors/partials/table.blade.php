@@ -5,11 +5,29 @@
                 <div class="card">
                     <div class="card-body py-1">
                         <div class="row d-flex align-items-center">
-                            <div class="col-12 col-lg-8 text-center text-lg-start">
-                                <span class="fw-bold">Nome:</span> {{ $sector->name }}
+                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                                <span class="fw-bold">Nome:</span>
+                                {{ $sector->name }}
+                                @if(!empty($sector->nickname))
+                                    ({{convert_case($sector->nickname, MB_CASE_UPPER)}})
+                                @endif
                             </div>
-                            <div class="col-12 col-lg-8 text-center text-lg-start">
+
+                            <div class="col-12 col-lg-4 text-center text-lg-start">
+                                <span class="fw-bold">Nome Público:</span>
+                                {{convert_case($sector->nickname, MB_CASE_UPPER)}}
+                            </div>
+
+                            <div class="col-12 col-lg-6 text-center text-lg-start">
                                 <span class="fw-bold">Unidade:</span> {{ convert_case($sector->building->name, MB_CASE_UPPER) }}
+                            </div>
+                            <div class="col-12 col-lg-2 text-center text-lg-start">
+                                <span class="fw-bold">Aceita Agendamento:</span>
+                                @if ($sector->is_visitable)
+                                    <label class="badge bg-success"> SIM </label>
+                                @else
+                                    <label class="badge bg-danger"> NÃO </label>
+                                @endif
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Status:</span>

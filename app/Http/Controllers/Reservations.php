@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Http\Requests\AgendamentoStore;
 use App\Http\Requests\Request;
+use Carbon\Carbon;
 use Faker\Provider\Base;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -22,9 +23,19 @@ class Reservations extends BaseController
         return view('reservations.index')->with('reservations',$reservations);
     }
 
+    public function configuration()
+    {
+        return view('reservations.configuration');
+    }
+
     public function store(AgendamentoStore $request)
     {
         $data = $request->all();
+        $dataCarbon = Carbon::createFromFormat('d/m/Y', $data['reservation_date']);
+
+        $data['reservation_date'] = $dataCarbon->format('Y-m-d');
+
+//        dd($data);
 
         $person = [
             'full_name' => $request->get('full_name'),
@@ -37,9 +48,12 @@ class Reservations extends BaseController
             'other_city'=>$request->get('other_city'),
             'email'=>$request->get('email'),
             'mobile'=>$request->get('mobile'),
+            'has_disability'=>$request->get('has_disability'),
+            'disabilities'=>$request->get('disabilities')
+
         ];
 
-
+//        dd($person);
 
 
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>json_encode($person), ]);
@@ -60,6 +74,11 @@ class Reservations extends BaseController
     public function detail()
     {
         return view('reservations.detail');
+    }
+
+    public function associateUser()
+    {
+        return view('reservations.association');
     }
 
 }

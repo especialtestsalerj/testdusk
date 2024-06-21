@@ -50,7 +50,7 @@ class Sector extends Model
         InCurrentBuilding::enable();
     }
 
-    public function blockedDate()
+    public function blockedDates()
     {
         return $this->hasMany(BlockedDate::class);
     }

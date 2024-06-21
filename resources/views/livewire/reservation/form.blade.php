@@ -44,7 +44,7 @@
         <div class="row">
             <div class="form-group col-3">
                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da Visita *</label>
-                <input type="text" class="form-control " id="reservation_date" name="reservation_date"  wire:model="reservation_date" x-ref="reservation_date">
+                <input type="text" class="form-control " id="reservation_date" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" x-ref="reservation_date">
             </div>
             <div class="form-group col-3">
                 <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da Visita *</label>
@@ -55,7 +55,7 @@
                     <option value="">SELECIONE</option>
                     @foreach ($this->capacities as $capacitiy)
                         <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
-                            {{ $capacitiy->capacity ?? $capacitiy['capacity'] }}
+                            {{ $capacitiy->maximum_capacity ?? $capacitiy['maximum_capacity'] }}
                         </option>
                     @endforeach
                 </select>
@@ -77,7 +77,7 @@
             <div class='col-2' >
                 <div class="form-group">
 
-{{--                    {{dd($this->documentTypes)}}--}}
+
                     <label for="document_type_id">Tipo de Documento*</label>
                     <select class="form-control text-uppercase"
                             name="document_type_id" id="document_type_id"

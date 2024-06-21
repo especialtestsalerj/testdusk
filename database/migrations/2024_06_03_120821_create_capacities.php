@@ -21,7 +21,19 @@ return new class extends Migration
                 ->references('id')
                 ->on('sectors');
             $table->string('hour');
-            $table->integer('capacity');
+            $table->integer('maximum_capacity');
+
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
+
+
             $table->timestamps();
         });
     }

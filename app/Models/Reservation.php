@@ -11,6 +11,7 @@ class Reservation extends Model
         'group_id',
         'reservation_type_id',
         'code',
+        'motive',
         'reservation_date',
         'capacity_id',
         'sector_id',

@@ -41,11 +41,15 @@ class Form extends BaseForm
 
     public $reservation_date;
 
+    public $motive;
+
     public $has_disability;
 
     public $capacity_id;
 
     public $capacities =[];
+
+    public  $disabilities =[];
 
 
 
@@ -53,12 +57,12 @@ class Form extends BaseForm
 
     public function render()
     {
-//        Sector::disableGlobalScopes();
-      //  $this->sectors = Sector::whereNotNull('nickname')->where('status', true)->get();
-        $this->documentTypes = app(DocumentTypes::class)->allActive();
-//        Sector::enableGlobalScopes();
 
+        $this->documentTypes = app(DocumentTypes::class)->allActive();
         $this->loadCountryBr();
+        $this->loadDefaultLocation();
+
+
 
         return view('livewire.reservation.form')->with($this->getViewVariables());
     }
@@ -146,7 +150,7 @@ class Form extends BaseForm
             $this->capacities
                 ->map(function ($item) {
                     return [
-                        'name' => $item->capacity,
+                        'name' => $item->maximum_capacity,
                         'value' => $item->id,
                     ];
                 })
@@ -191,12 +195,13 @@ class Form extends BaseForm
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
             $this->capacities =  \DB::table('capacities as c')
-                ->select('c.id', \DB::raw("c.hour || ' (' || (c.capacity - (
+                ->select('c.id', \DB::raw("c.hour || ' (' || (c.maximum_capacity - (
             select count(*) from reservations r
             where r.sector_id = c.sector_id
               and r.reservation_date = '$date'
-              and r.capacity_id = c.id)) || ' vagas)' as capacity"))
+              and r.capacity_id = c.id)) || ' vagas)' as maximum_capacity"))
                 ->where('c.sector_id', $this->sector_id)
+                ->orderBy('c.hour')
                 ->get();
         }
         else{

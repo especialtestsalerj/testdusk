@@ -26,4 +26,22 @@ class Sectors extends Repository
             ->orderBy('name')
             ->get();
     }
+
+    public function allVisitable($id = null)
+    {
+        $tmpId = empty($id) ? null : $id;
+
+        return $this->model
+            ::where(function ($query) use ($tmpId) {
+                $query
+                    ->when(isset($tmpId), function ($query) use ($tmpId) {
+                        $query->orWhere('id', '=', $tmpId);
+                    })
+                    ->orWhere('is_visitable', true);
+            })
+            ->orderBy('name')
+            ->get();
+    }
+
+
 }

@@ -22,6 +22,15 @@ return new class extends Migration
                 ->on('sectors');
             $table->date('date');
             $table->timestamps();
+
+            $table
+                ->bigInteger('created_by_id')
+                ->unsigned()
+                ->nullable();
+            $table
+                ->bigInteger('updated_by_id')
+                ->unsigned()
+                ->nullable();
         });
     }
 
