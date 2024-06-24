@@ -57,4 +57,9 @@ class Sector extends Model
     public function Capacities(){
         return $this->hasMany(Capacity::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

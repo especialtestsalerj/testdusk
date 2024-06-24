@@ -153,4 +153,9 @@ class User extends Authenticatable
     {
         return $this->allowed_buildings->first() ?? null;
     }
+
+    public function sectors()
+    {
+        return $this->belongsToMany(Sector::class);
+    }
 }
