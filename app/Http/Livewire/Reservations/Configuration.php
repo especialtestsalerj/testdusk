@@ -7,6 +7,7 @@ use App\Http\Livewire\BaseForm;
 use App\Models\BlockedDate;
 use App\Models\Capacity;
 use App\Models\Sector;
+use App\Models\User;
 use Livewire\Component;
 
 class Configuration extends BaseForm
@@ -18,14 +19,21 @@ class Configuration extends BaseForm
 
     public $selectedCapacity_id;
 
+    public $selectedBlockedDate_id;
+
+    public $selecteduser_id;
+
     public $capacities =[];
 
     public $blockedDates=[];
 
     protected $listeners =[
         'created-capacity' =>'loadCapacities',
+        'associated-sector-user' =>'loadCapacities',
         'created-blocked-date' =>'loadBlockedDates',
         'confirm-delete-capacity' => 'deleteCapacity',
+        'confirm-delete-blocked-date' => 'deleteBlockedDate',
+        'confirm-desassociate-user' => 'desassociateUser',
     ];
 
 
@@ -85,6 +93,11 @@ class Configuration extends BaseForm
         $this->emit('createBlockedDate',$sector);
     }
 
+    public function associateUserInSector($sector)
+    {
+        $this->emit('associateUserInSector',$sector);
+    }
+
     public function editCapacity($capacity)
     {
 
@@ -103,10 +116,43 @@ class Configuration extends BaseForm
         );
     }
 
+    public function prepareForDeleteBlockedDate($blockedDate_id)
+    {
+        $this->selectedBlockedDate_id = $blockedDate_id;
+        $blockedDate = BlockedDate::find($blockedDate_id);
+        $this->emitSwall('Deseja realmente remover a Data?',
+        'A ação não poderá ser desfeita.',
+        'confirm-delete-blocked-date',
+        'delete');
+    }
+
     public function deleteCapacity()
     {
         $capacity = Capacity::find($this->selectedCapacity_id);
         $capacity->delete();
+        $this->loadCapacities();
+    }
+
+    public function deleteBlockedDate()
+    {
+        $blockedDate = BlockedDate::find($this->selectedBlockedDate_id);
+        $blockedDate->delete();
+        $this->loadBlockedDates();
+    }
+
+    public function prepareForDesassociateUser($user_id)
+    {
+        $this->selecteduser_id = $user_id;
+        $user = User::find($user_id);
+        $this->emitSwall('Deseja realmente Remover '. $user->name .' da agenda?',
+            'A ação não poderá ser desfeita.',
+            'confirm-desassociate-user',
+            'delete');
+    }
+
+    public function desassociateUser()
+    {
+        $this->sector->users()->detach([$this->selecteduser_id]);
         $this->loadCapacities();
     }
 }

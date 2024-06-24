@@ -13,12 +13,6 @@ class Associate extends Component
     {
         $users = app(Users::class)->allWithAbility(make_ability_name_with_current_building('reservation:show'));
 
-        foreach($users as $user){
-            dump('nome '. $user->name . $user->getAbilities());
-        }
-
-
-
         return view('livewire.reservations.associate')->with($this->getComponentVariables());
 
 
