@@ -110,7 +110,7 @@
                         >
 
                             <div class="col-12 pb-2">
-                                <input type="file" wire:model="files" name="files[]" multiple>
+                                <input type="file" wire:model="files" name="files[]" multiple @disabled(!$routine->status || request()->query('disabled'))>
 
                                 <div x-show="isUploading" class="progress">
                                     <div class="progress-bar" role="progressbar"
@@ -156,6 +156,7 @@
                                 </div>
                                 <div class="col-6" wire:key="attached-file-{{$attachedFile->id}}">
                                     <button title="Remover Documento"
+                                            @disabled(!$routine->status || request()->query('disabled'))
                                             class="btn btn-sm btn-micro btn-danger"
                                             wire:click.prevent="preventRemoveDocument({{$attachedFile->id}})"><span
                                             class="fa fa-trash"> </span></button>
