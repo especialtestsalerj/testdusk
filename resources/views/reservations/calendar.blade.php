@@ -1,14 +1,9 @@
 
 
 
-@extends('layouts.app')
+@extends('layouts.app-talwind')
 @section('content')
-
-                <script src="https://cdn.tailwindcss.com"></script>
-
-            <livewire:reservation.appointments-calendar />
-
-
+    <livewire:reservation.appointments-calendar />
 @endsection
 
 

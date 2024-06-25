@@ -54,3 +54,21 @@
 2024-02-07 13:34:49.980 -03 [1516] LOG:  invalid record length at 2/10549E20: wanted 24, got 0
 2024-02-07 13:34:49.980 -03 [1516] LOG:  redo done at 2/10549DE8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
 2024-02-07 13:34:50.174 -03 [1505] LOG:  database system is ready to accept connections
+2024-02-16 12:02:45.392 -03 [85891] ERROR:  column association_impact.link does not exist at character 216
+2024-02-16 12:02:45.392 -03 [85891] STATEMENT:  select "impact_measurement_report_tools"."id", "association_impact"."association_id" as "pivot_association_id", "association_impact"."impact_measurement_report_tool_id" as "pivot_impact_measurement_report_tool_id", "association_impact"."link" as "pivot_link", "association_impact"."year" as "pivot_year", "association_impact"."created_at" as "pivot_created_at", "association_impact"."updated_at" as "pivot_updated_at" from "impact_measurement_report_tools" inner join "association_impact" on "impact_measurement_report_tools"."id" = "association_impact"."impact_measurement_report_tool_id" where "association_impact"."association_id" is null
+2024-02-16 12:02:54.716 -03 [85910] ERROR:  column association_impact.link does not exist at character 216
+2024-02-16 12:02:54.716 -03 [85910] STATEMENT:  select "impact_measurement_report_tools"."id", "association_impact"."association_id" as "pivot_association_id", "association_impact"."impact_measurement_report_tool_id" as "pivot_impact_measurement_report_tool_id", "association_impact"."link" as "pivot_link", "association_impact"."year" as "pivot_year", "association_impact"."created_at" as "pivot_created_at", "association_impact"."updated_at" as "pivot_updated_at" from "impact_measurement_report_tools" inner join "association_impact" on "impact_measurement_report_tools"."id" = "association_impact"."impact_measurement_report_tool_id" where "association_impact"."association_id" is null
+2024-02-17 15:33:34.067 -03 [64161] ERROR:  invalid byte sequence for encoding "UTF8": 0xc3 0x25
+2024-02-17 15:33:34.067 -03 [64161] CONTEXT:  unnamed portal parameter $1
+2024-02-17 15:33:34.067 -03 [64161] STATEMENT:  select "acronym" from "associations" where "acronym"::text like $1 and "associations"."deleted_at" is null order by "acronym" asc
+2024-02-17 15:33:34.111 -03 [64161] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2024-02-17 15:33:34.111 -03 [64161] STATEMENT:  DEALLOCATE pdo_stmt_00000013
+2024-02-17 15:49:34.939 -03 [65168] ERROR:  column association_impact.link does not exist at character 216
+2024-02-17 15:49:34.939 -03 [65168] STATEMENT:  select "impact_measurement_report_tools"."id", "association_impact"."association_id" as "pivot_association_id", "association_impact"."impact_measurement_report_tool_id" as "pivot_impact_measurement_report_tool_id", "association_impact"."link" as "pivot_link", "association_impact"."year" as "pivot_year", "association_impact"."created_at" as "pivot_created_at", "association_impact"."updated_at" as "pivot_updated_at" from "impact_measurement_report_tools" inner join "association_impact" on "impact_measurement_report_tools"."id" = "association_impact"."impact_measurement_report_tool_id" where "association_impact"."association_id" is null
+2024-02-22 06:44:39.292 -03 [1559] LOG:  stats_timestamp 2024-02-22 06:44:39.400577-03 is later than collector's time 2024-02-22 06:44:39.22047-03 for database 0
+2024-02-22 16:23:12.565 -03 [1505] LOG:  received smart shutdown request
+2024-02-22 16:23:12.567 -03 [1505] LOG:  background worker "logical replication launcher" (PID 1560) exited with exit code 1
+2024-02-22 16:23:12.567 -03 [1555] LOG:  shutting down
+2024-02-22 16:23:12.584 -03 [1505] LOG:  database system is shut down
+2024-02-22 16:24:53.942 -03 [1791] FATAL:  lock file "postmaster.pid" already exists
+2024-02-22 16:24:53.942 -03 [1791] HINT:  Is another postmaster (PID 1345) running in data directory "/Users/breno/pgdata"?
