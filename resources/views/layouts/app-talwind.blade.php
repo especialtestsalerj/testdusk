@@ -25,6 +25,7 @@
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
 
     @include('layouts.partials.environment')
@@ -59,6 +60,7 @@
 @livewireScripts
 @livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
 
 
