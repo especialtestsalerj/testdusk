@@ -14,22 +14,10 @@
 // Tile
 @import 'tile';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import 'bootstrap/dist/css/bootstrap.css';
-
 // Select2
 @import '~select2/dist/css/select2.css';
 @import "~select2/src/scss/core";
-// If you need to import Bootstrap as well:
-@import "~select2-bootstrap-5-theme/src/select2-bootstrap-5-theme";
-// Or if you have already imported Bootstrap:
-@import "~select2-bootstrap-5-theme/src/include-all";
 
-
-
-// Custom
-@import "custom";
 
 // Select2
 @import "select2";
@@ -37,11 +25,15 @@
 // Custom2
 @import "navbar";
 
+////Swiper
+//// import Swiper and modules styles
+//@import '~swiper/css';
+//@import '~swiper/css/navigation';
+//
+//// Swiper Custom
+//@import "swiper";
 
-//Swiper
-// import Swiper and modules styles
-@import '~swiper/css';
-@import '~swiper/css/navigation';
 
-// Swiper Custom
-@import "swiper";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

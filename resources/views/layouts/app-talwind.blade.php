@@ -14,19 +14,18 @@
 
     <!-- Scripts -->
 
-   {{-- <script src="{{ mix('js/app.js') }}" defer></script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/tailwind/app-tailwind.css') }}" rel="stylesheet">
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 
     @include('layouts.partials.environment')
     @livewireStyles
@@ -60,7 +59,7 @@
 @livewireScripts
 @livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="{{ mix('/js/tailwind/app-tailwind.js') }}" defer></script>
 </body>
 
 
