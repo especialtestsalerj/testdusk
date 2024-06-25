@@ -7,6 +7,7 @@ use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\Contact;
 use App\Models\ContactType;
+use App\Models\Person;
 use App\Support\Constants;
 
 class Form extends BaseForm
@@ -34,6 +35,10 @@ class Form extends BaseForm
 
     public function mount()
     {
+        if ($this->person_id) {
+            $this->hasMask = Person::find($this->person_id)->isBrazilian();
+        }
+
         if ($this->contacts && !$this->isVisitorsForm) {
             $contact = $this->contacts;
         } elseif ($this->isVisitorsForm) {
@@ -47,18 +52,20 @@ class Form extends BaseForm
         }
 
         if (isset($contact)) {
-            $this->contact_type_id = $contact->contact_type_id;
+            $this->contact_type_id = $contact->contact_type_id ?? $this->contact_type_id;
+            $this->contact = $this->hasMask ? $this->applyMask($contact) : $contact->contact;
+        }
+    }
 
-            switch ($this->contact_type_id) {
-                case Constants::CONTACT_TYPE_MOBILE:
-                    $this->contact = mask_mobile($contact->contact);
-                    break;
-                case Constants::CONTACT_TYPE_PHONE:
-                    $this->contact = mask_phone($contact->contact);
-                    break;
-                default:
-                    $this->contact = $contact->contact;
-            }
+    public function applyMask($contact)
+    {
+        switch ($this->contact_type_id) {
+            case Constants::CONTACT_TYPE_MOBILE:
+                return mask_mobile($contact->contact);
+            case Constants::CONTACT_TYPE_PHONE:
+                return mask_phone($contact->contact);
+            default:
+                return $contact->contact;
         }
     }
 
@@ -74,7 +81,7 @@ class Form extends BaseForm
 
     public function cleanVariables()
     {
-        $this->resetExcept('person_id', 'isRequired');
+        $this->resetExcept('person_id', 'isRequired', 'hasMask');
     }
 
     public function editContact(Contact $contact, $readonly = false)

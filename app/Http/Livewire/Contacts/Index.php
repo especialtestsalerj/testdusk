@@ -44,7 +44,7 @@ class Index extends BaseForm
             'Deseja realmente remover o ' .
             $contact->contactType->name .
             ': ' .
-            $contact->getContactMaskeredAttribute() .
+            $contact->getContactMaskedAttribute() .
             '?',
             'A ação não poderá ser desfeita.',
             'confirm-delete-contact',
