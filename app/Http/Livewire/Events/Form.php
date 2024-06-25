@@ -64,7 +64,7 @@ class Form extends BaseForm
     public function preventRemoveDocument($attachedFileId)
     {
         $this->selectedAttachmentId = $attachedFileId;
-        $this->emitSwall('Deseja Realmente Remover o Documento da Ocorrência?',
+        $this->emitSwall('Deseja Realmente Remover o Anexo da Ocorrência?',
             'A ação não pode ser desfeita', 'confirm-remove', 'delete');
     }
 

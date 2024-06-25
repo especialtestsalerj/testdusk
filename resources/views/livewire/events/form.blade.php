@@ -100,6 +100,15 @@
                                   rows="10" @disabled(!$routine->status || request()->query('disabled'))>{{ is_null(old('description')) ? $event->description: old('description') }}</textarea>
                     </div>
 
+                    <div class="row my-4 mt-5">
+                        <div class="col-sm-8 align-self-center">
+                            <h3 class="mb-0">
+                                <i class="fas fa-file-alt"></i> Anexos
+                            </h3>
+                        </div>
+                    </div>
+
+
                     <div class="mb-2">
                         <div
                             x-data="{ isUploading: false, progress: 0 }"
@@ -110,7 +119,8 @@
                         >
 
                             <div class="col-12 pb-2">
-                                <input type="file" wire:model="files" name="files[]" multiple @disabled(!$routine->status || request()->query('disabled'))>
+                                <input type="file" wire:model="files" name="files[]"
+                                       multiple @disabled(!$routine->status || request()->query('disabled'))>
 
                                 <div x-show="isUploading" class="progress">
                                     <div class="progress-bar" role="progressbar"
@@ -148,26 +158,37 @@
                             @endif
                         </div>
 
-                        <div class="row mb-2 col-12">
+                        <div class="row">
                             @foreach($event->attachedFiles as $attachedFile)
-                                <div class="col-6 pt-3">
-                                    <h5><a href="{{$attachedFile->file->url}}"
-                                           target="_blank">{{$attachedFile->original_name}}</a></h5>
-                                </div>
-                                <div class="col-6" wire:key="attached-file-{{$attachedFile->id}}">
-                                    <button title="Remover Documento"
-                                            @disabled(!$routine->status || request()->query('disabled'))
-                                            class="btn btn-sm btn-micro btn-danger"
-                                            wire:click.prevent="preventRemoveDocument({{$attachedFile->id}})"><span
-                                            class="fa fa-trash"> </span></button>
-                                </div>
+                                <div class="cards-striped mx-lg-0 mt-lg-2 my-2 col-md-4 pb-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex ali]gn-items-baseline">
+                                                <div class="col-md-8 pt-3">
+                                                    <h5><a href="{{$attachedFile->file->url}}"
+                                                           target="_blank">{{$attachedFile->original_name}}</a></h5>
+                                                </div>
+                                                <div class="col-md-4 text-end"
+                                                     wire:key="attached-file-{{$attachedFile->id}}">
+                                                    <button type="button" title="Remover Documento"
+                                                            @disabled(!$routine->status || request()->query('disabled'))
+                                                            class="btn btn-link"
+                                                            wire:click.prevent="preventRemoveDocument({{$attachedFile->id}})">
+                                                        <i class="fa fa-trash"> </i></button>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             @endforeach
                         </div>
-
                     </div>
+
                 </div>
             </div>
+        </div>
     </form>
 </div>
 
