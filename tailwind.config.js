@@ -1,16 +1,25 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        "./resources/**/*.blade.php",
+        './resources/views/**/*.blade.php',
+        './storage/framework/views/*.php',
         "./resources/**/*.js",
         "./resources/**/*.vue",
         "./node_modules/flowbite/**/*.js"
+
     ],
     theme: {
         extend: {
+
+
             colors: {
                 'theme-color': '#164770',
                 'theme-color-2': '#4596DA',
+
                 brand: {
                     5: '#FDFEFF',
                     15: '#ECF6FF',
@@ -30,6 +39,12 @@ module.exports = {
                     975: '#05111B',
                 }
             },
+
+
+            fontFamily: {
+                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
+
             fontWeight: {
                 thin: '100',
                 hairline: '100',
@@ -90,13 +105,8 @@ module.exports = {
                 '296': '74rem',
                 '300': '75rem',
             },
-            fontFamily: {
-                poppins: ["Poppins", "sans-serif"],
-            },
         },
     },
-    plugins: [
-        require('flowbite/plugin')
-    ],
+    plugins: [forms, typography, require('flowbite/plugin')],
 }
 

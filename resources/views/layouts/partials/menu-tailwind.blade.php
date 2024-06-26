@@ -42,7 +42,7 @@
             </div>
         </div>
     </div>
-    <nav class="border-brand-200 px-4 lg:px-6 py-4 bg-brand-700">
+    <nav class="px-4 lg:px-6 py-4 bg-brand-700">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="https://flowbite.com" class="flex items-center">
                 <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
