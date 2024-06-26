@@ -131,13 +131,20 @@
 
 
                         <div class="flex space-x-4">
-                            <div class="w-1/2 ... ">
+
+                            <div class="w-1/4 ... ">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Edifício:*
                                 </label>
-                                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option>United States</option>
+                                    <option>Canada</option>
+                                    <option>France</option>
+                                    <option>Germany</option>
+                                </select>
                             </div>
-                            <div class="w-1/2 ... ">
+
+                            <div class="w-1/4 ... ">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Setor:
                                 </label>
@@ -148,15 +155,15 @@
                                     <option>Germany</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="flex space-x-4">
-                            <div class="w-1/2 ... ">
+
+                            <div class="w-1/4 ... ">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Data da Visita *
                                 </label>
                                 <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
                             </div>
-                            <div class="w-1/2 ... ">
+
+                            <div class="w-1/4 ... ">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Hora da Visita *
                                 </label>
@@ -168,6 +175,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="flex space-x-4">
                             <div class="w-full ... ">
 
@@ -181,40 +189,27 @@
                             </div>
                         </div>
 
-                        <div class="flex space-x-4">
-                            <div class="w-1/2 ... ">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Tipo de Documento*
-                                </label>
-                                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>France</option>
-                                    <option>Germany</option>
-                                </select>
 
-                            </div>
-                            <div class="w-1/2 ... ">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Número do Documento*
-                                </label>
-                                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
-                            </div>
-                        </div>
                         <div class="flex space-x-4">
                             <div class="w-4/5 ... ">
                                 <div class="flex space-x-4">
                                     <div class="w-1/2 ... ">
                                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Nome Completo*
+                                            Tipo de Documento*
                                         </label>
-                                        <input type="nome" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nome completo" required="">
+                                        <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option>United States</option>
+                                            <option>Canada</option>
+                                            <option>France</option>
+                                            <option>Germany</option>
+                                        </select>
+
                                     </div>
                                     <div class="w-1/2 ... ">
                                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Nome Social
+                                            Número do Documento*
                                         </label>
-                                        <input type="nome" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nome completo" required="">
+                                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required="">
                                     </div>
                                 </div>
                             </div>
@@ -231,12 +226,20 @@
                         </div>
 
                         <div class="flex space-x-4">
-
-
+                            <div class="w-1/2 ... ">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Nome Completo*
+                                </label>
+                                <input type="nome" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nome completo" required="">
+                            </div>
+                            <div class="w-1/2 ... ">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Nome Social
+                                </label>
+                                <input type="nome" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nome completo" required="">
+                            </div>
                         </div>
-
-
-
+                        
                         <div class="flex space-x-4">
                             <div class="w-1/3 ... ">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
