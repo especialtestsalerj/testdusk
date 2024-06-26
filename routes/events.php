@@ -2,17 +2,18 @@
 
 use App\Http\Controllers\Event;
 use App\Http\Livewire\Events\Index as EventsIndex;
+use App\Http\Livewire\Events\Form as EventsForm;
 
 Route::group(['prefix' => '/events'], function () {
     Route::get('', EventsIndex::class)
         ->name('events.index')
         ->middleware('canInCurrentBuilding:events:show');
 
-    Route::get('/create', [Event::class, 'create'])
+    Route::get('/create', EventsForm::class)
         ->name('events.create')
         ->middleware('canInCurrentBuilding:events:store');
 
-    Route::get('/{id}/show', [Event::class, 'show'])
+    Route::get('/{id}/show', EventsForm::class)
         ->name('events.show')
         ->middleware('canInCurrentBuilding:events:show');
 
