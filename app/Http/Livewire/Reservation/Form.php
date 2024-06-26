@@ -33,7 +33,7 @@ class Form extends BaseForm
     public $full_name;
     public $social_name;
 
-    public $email;
+    public $responsible_email;
     public $confirm_email;
     public $mobile;
 
@@ -195,12 +195,18 @@ class Form extends BaseForm
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
             $this->capacities =  \DB::table('capacities as c')
-                ->select('c.id', \DB::raw("c.hour || ' (' || (c.maximum_capacity - (
+                ->select('c.id', \DB::raw("c.hour, c.hour || ' (' || (c.maximum_capacity - (
             select count(*) from reservations r
             where r.sector_id = c.sector_id
               and r.reservation_date = '$date'
               and r.capacity_id = c.id)) || ' vagas)' as maximum_capacity"))
                 ->where('c.sector_id', $this->sector_id)
+                ->having(\DB::raw("(c.maximum_capacity - (
+        select count(*) from reservations r
+        where r.sector_id = c.sector_id
+          and r.reservation_date = '$date'
+          and r.capacity_id = c.id))"), '>', 0)
+                ->groupBy('c.id', 'c.hour', 'c.maximum_capacity')
                 ->orderBy('c.hour')
                 ->get();
         }

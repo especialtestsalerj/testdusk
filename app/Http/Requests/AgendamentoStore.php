@@ -30,7 +30,7 @@ class AgendamentoStore extends Request
                     'state_id' =>           ['required'],
                     'city_id' =>            ['required'],
 //                    'other_city' =>         ['required'],
-                    'email' =>              ['required'],
+                    'responsible_email' =>  ['required'],
                     'confirm_email' =>      ['required'],
                     'mobile' =>             ['required'],
 
