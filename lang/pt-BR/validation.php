@@ -134,6 +134,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'files.*' => [
+            'max' => ':attribute: o anexo não pode ser um arquivo com mais de 5 MB.',
+        ],
     ],
 
     /*
@@ -207,5 +210,6 @@ return [
         'duty_user_id' => 'Plantonista',
         'description' => 'Observações',
         'checkpoint_obs' => 'Carga',
+        "files.*" => "Arquivo",
     ],
 ];

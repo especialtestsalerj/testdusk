@@ -16,4 +16,5 @@ class Constants
     const ROLE_GESTOR = 'GESTOR';
     const ROLE_PLANTONISTA = 'PLANTONISTA';
     const LUCIO_COSTA_BUILDING_ID = 1;
+    const COUNTRY_BRAZIL_ID = 1;
 }

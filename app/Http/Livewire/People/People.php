@@ -79,6 +79,11 @@ class People extends BaseForm
         $this->resetErrorBag();
     }
 
+    public function updatedCountryId()
+    {
+        $this->emit('hasMask', $this->detectIfCountryBrSelected());
+    }
+
     public function updatedStateDocumentId()
     {
         $this->searchDocumentNumber();
@@ -182,7 +187,7 @@ class People extends BaseForm
         $this->fillAddress();
 
         if ($this->document_type_id == config('app.document_type_cpf') && $this->document_number) {
-           $this->document_number = mask_cpf($this->document_number);
+            $this->document_number = mask_cpf($this->document_number);
         }
 
         if ($this->showRestrictions) {

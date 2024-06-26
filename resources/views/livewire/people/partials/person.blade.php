@@ -160,7 +160,7 @@
 
 
             <div class="col-lg-12">
-                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" />
+                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" :has-mask="$this->detectIfCountryBrSelected()"/>
             </div>
 
             <div class="col-lg-6 col-xl-6">

@@ -59,4 +59,9 @@ class Event extends Model
     {
         return $this->belongsTo(Building::class);
     }
+
+    public function attachedFiles()
+    {
+        return $this->morphMany(AttachedFile::class, 'fileable');
+    }
 }
