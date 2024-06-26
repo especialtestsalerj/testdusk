@@ -286,6 +286,24 @@ function formMode($mode = null)
         : session(Constants::SESSION_FORM_MODE, Constants::FORM_MODE_SHOW);
 }
 
+function extract_extension_from_file_name($fileName){
+    $pattern = '/\.(.+)$/';
+    preg_match($pattern, $fileName, $matches);
+    return $matches[1];
+}
+
+function format_file_size($bytes, $decimals = 2)
+{
+    if ($bytes <= 0) {
+        return '0 B';
+    }
+
+    $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    $factor = floor((strlen($bytes) - 1) / 3);
+
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . $size[$factor];
+}
+
 function is_at_least_verbose($command)
 {
     return $command->getOutput()->getVerbosity() >=

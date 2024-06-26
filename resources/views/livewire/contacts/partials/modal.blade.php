@@ -29,7 +29,7 @@
                             @endif
                         </div>
 
-                        <livewire:contacts.form :is-required="true"/>
+                        <livewire:contacts.form :is-required="true" :person_id="$person_id"/>
 
                     </div>
                     <div class="modal-footer">

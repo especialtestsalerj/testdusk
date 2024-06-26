@@ -9,7 +9,7 @@
                                 <span class="fw-bold">Tipo:</span> {{$contact->contactType->name}}
                             </div>
                             <div class="col-12 col-lg-4 text-center text-lg-start">
-                                <span class="fw-bold">Contato:</span> {{$contact->contactMaskered}}
+                                <span class="fw-bold">Contato:</span> {{$contact->contact_masked}}
                             </div>
                             <div class="col-12 col-lg-2 text-center text-lg-start">
                                 <span class="fw-bold">Status:</span>
