@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Models\Scopes\InCurrentBuilding;
+use App\Notifications\ReservationNotification;
+use Illuminate\Notifications\Notifiable;
 
 class Reservation extends Model
 {
-//    protected $fillable = ['code', 'reservation_date', 'building_id', 'group_id'];
+    use Notifiable;
+
     protected $fillable = [
         'group_id',
         'reservation_type_id',
@@ -38,6 +41,11 @@ class Reservation extends Model
     {
         parent::boot();
         static::addGlobalScope(new InCurrentBuilding());
+
+        static::created(function ($reservation) {
+
+            $reservation->notify(new ReservationNotification($reservation));
+        });
     }
 
     public function building()
@@ -69,5 +77,11 @@ class Reservation extends Model
     public static function enableGlobalScopes()
     {
         InCurrentBuilding::enable();
+    }
+
+    public function routeNotificationForMail($notification)
+    {
+//        dd($this->responsible_email);
+        return $this->responsible_email;
     }
 }
