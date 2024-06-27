@@ -14,7 +14,9 @@ class AppointmentsCalendar extends LivewireCalendar
 
     public function events(): Collection
     {
-        return $this->transformReservations(Reservation::all());
+        return $this->transformReservations(Reservation::with('capacity')->join('capacities',
+            'reservations.capacity_id','=','capacities.id')
+            ->orderBy('reservation_date')->orderBy('capacities.hour')->get());
     }
 
     private function transformReservations($reservations)
@@ -25,8 +27,8 @@ class AppointmentsCalendar extends LivewireCalendar
 
                     [
                         'id' => $reservation->id,
-                        'title' => 'Reserva de ' . json_decode($reservation->person)->full_name,
-                        'description' => 'Setor: '. $reservation->sector->name,
+                        'title' => $reservation->hour . ': Reserva de ' . json_decode($reservation->person)->full_name,
+                        'description' => 'Setor: '. $reservation?->sector?->name,
                         'date' => $reservation->reservation_date,
                         ]
             );

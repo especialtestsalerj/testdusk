@@ -35,6 +35,8 @@ class Reservation extends Model
         'reservation_time',
     ];
 
+    protected $with=['capacity'];
+
 //    protected $filterableColumns = ['name', 'status'];
 
     public static function boot()

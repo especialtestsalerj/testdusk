@@ -19,7 +19,8 @@
                         <option value="">SELECIONE</option>
                         @foreach ($sectors as $sector)
                             <option value="{{ $sector->id ?? $sector['id']}}">
-                                {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
+                                {{ convert_case(is_null($sector->nickname ?? $sector['nickname']) ?
+$sector->name ?? $sector['name'] : $sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
                             </option>
                         @endforeach
                     </select>
