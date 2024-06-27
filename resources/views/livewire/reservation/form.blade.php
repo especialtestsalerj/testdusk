@@ -603,8 +603,8 @@
                 <div class="form-group">
                     <label for="full_name">Email*</label>
                     <input type="text" class="form-control text-uppercase"
-                           name="email" id="email"
-                           wire:model="email"
+                           name="responsible_email" id="responsible_email"
+                           wire:model="responsible_email"
                     />
                 </div>
             </div>
