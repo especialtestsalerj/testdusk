@@ -26,7 +26,7 @@ class AppointmentsCalendar extends LivewireCalendar
                     [
                         'id' => $reservation->id,
                         'title' => 'Reserva de ' . json_decode($reservation->person)->full_name,
-                        'description' => 'Setor: '. $reservation->sector->name,
+                        'description' => 'Setor: '. $reservation->sector?->name,
                         'date' => $reservation->reservation_date,
                         ]
             );
