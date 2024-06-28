@@ -9,7 +9,7 @@
 <ul>
     <li>ID da Reserva: {{ $reservation->code }}</li>
     <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
-    <li>Setor: {{$reservation->sector->nickname}}</li>
+    <li>Setor: {{$reservation->sector?->nickname}}</li>
 </ul>
 <p>Obrigado por usar nosso serviço!</p>
 </body>

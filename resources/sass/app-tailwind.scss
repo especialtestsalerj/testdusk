@@ -4,12 +4,13 @@
 @import '~@fortawesome/fontawesome-free/css/solid';
 @import '~@fortawesome/fontawesome-free/css/brands';
 
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 // Fonts
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;700;800;1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-
-// Variables
-@import 'variables';
 
 // Tile
 @import 'tile';
@@ -33,7 +34,3 @@
 //// Swiper Custom
 //@import "swiper";
 
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

@@ -45,7 +45,7 @@ class Configuration extends BaseForm
     protected function getComponentVariables()
     {
 
-        return ['sectors' =>app(Sectors::class)->allVisitable()];
+        return ['sectors' =>app(Sectors::class)->allForUser()];
     }
 
 

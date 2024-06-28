@@ -13,7 +13,7 @@ class Contact extends Model
 
     protected $fillable = ['contact', 'status', 'person_id', 'contact_type_id'];
 
-    public function people()
+    public function person()
     {
         return $this->belongsTo(Person::class);
     }
@@ -23,22 +23,24 @@ class Contact extends Model
         return $this->belongsTo(ContactType::class);
     }
 
-    public function getContactMaskeredAttribute()
+    public function getContactMaskedAttribute()
     {
+        $person = $this->person;
+
         $contactType = $this->contactType;
-        if (!$contactType) {
+
+        if (!$person || !$person->isBrazilian() || !$contactType) {
             return $this->contact;
         }
-        $contactTypeId = $contactType->id;
 
-        if ($contactTypeId == Constants::CONTACT_TYPE_MOBILE) {
-            return mask_mobile($this->contact);
+        switch ($contactType->id) {
+            case Constants::CONTACT_TYPE_MOBILE:
+                return mask_mobile($this->contact);
+            case Constants::CONTACT_TYPE_PHONE:
+                return mask_phone($this->contact);
+            default:
+                return $this->contact;
         }
-
-        if ($contactTypeId == Constants::CONTACT_TYPE_PHONE) {
-            return mask_phone($this->contact);
-        }
-        return $this->contact;
     }
 }
 

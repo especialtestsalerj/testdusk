@@ -5,7 +5,7 @@
     </div>
 
     <form name="formulario" id="formulario"
-           action="{{ route('reservation.store')}}" method="POST">
+          action="{{ route('reservation.store')}}" method="POST">
         @csrf
         <div class="row mt-3">
             <div class="form-group col-3">
@@ -100,7 +100,7 @@
                     <input class="form-control text-uppercase"
                            name="document_number" id="document_number"
                            wire:model="document_number" x-ref="document_number"
-                            type="text" />
+                           type="text" />
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                     <input type="text" class="form-control text-uppercase"
                            name="full_name" id="full_name"
                            wire:model="full_name"
-                            />
+                    />
                 </div>
             </div>
             <div class="col-3">
@@ -119,7 +119,7 @@
                     <label for="social_name">Nome Social</label>
                     <input type="text" class="form-control text-uppercase"
                            name="social_name" id="social_name" wire:model="social_name" placeholder="Designação usada por travestis ou transexuais"
-                       />
+                    />
                 </div>
             </div>
         </div>
@@ -168,7 +168,7 @@
                         <select class="select2 form-control text-uppercase"
                                 name="country_id" id="country_id"
                                 wire:model="country_id" x-ref="country_id"
-                               >
+                        >
                             <option value=""> SELECIONE </option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}">
@@ -186,7 +186,7 @@
                         <select class="select2 form-control text-uppercase"
                                 name="state_id" id="state_id"
                                 wire:model="state_id" x-ref="state_id" wire:change="loadCities"
-                               >
+                        >
                             <option value="">SELECIONE</option>
                             @foreach ($states as $state)
                                 <option value="{{ $state->id }}">
@@ -204,7 +204,7 @@
                         <select class="select2 form-control text-uppercase"
                                 name="city_id" id="city_id"
                                 wire:model="city_id" x-ref="city_id"
-                                >
+                        >
                             <option value="">SELECIONE</option>
                             @foreach ($cities as $city)
                                 <option value="{{ $city->id ?? $city['id'] }}">
@@ -256,16 +256,16 @@
             </div>
 
 
-{{--            <div class="col-lg-12">--}}
-{{--                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" />--}}
-{{--            </div>--}}
+            {{--            <div class="col-lg-12">--}}
+            {{--                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" />--}}
+            {{--            </div>--}}
 
             <div class="col-lg-6 col-xl-6">
-{{--                @foreach($this->alerts as $alert)--}}
-{{--                    <div class="col-12">--}}
-{{--                        <span class="text-danger"><i class="fa fa-ban cog-faint" aria-hidden="true"></i> {{$alert }}</span>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
+                {{--                @foreach($this->alerts as $alert)--}}
+                {{--                    <div class="col-12">--}}
+                {{--                        <span class="text-danger"><i class="fa fa-ban cog-faint" aria-hidden="true"></i> {{$alert }}</span>--}}
+                {{--                    </div>--}}
+                {{--                @endforeach--}}
             </div>
         </div>
 
@@ -299,7 +299,7 @@
                 maxDate: new Date().fp_incr(30), // 30 days from now
                 disable: blockedDates,
                 onChange: function(selectedDates, dateStr, instance) {
-                @this.set('reservation_date', dateStr);
+                    @this.set('reservation_date', dateStr);
                 }
             });
 
@@ -311,5 +311,4 @@
 
     </script>
 </div>
-
 

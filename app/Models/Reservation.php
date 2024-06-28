@@ -35,12 +35,14 @@ class Reservation extends Model
         'reservation_time',
     ];
 
+    protected $with=['capacity'];
+
 //    protected $filterableColumns = ['name', 'status'];
 
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope(new InCurrentBuilding());
+//        static::addGlobalScope(new InCurrentBuilding());
 
         static::created(function ($reservation) {
 

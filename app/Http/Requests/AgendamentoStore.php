@@ -18,7 +18,7 @@ class AgendamentoStore extends Request
 //        dd(request());
         return [
 
-                    'building_id' =>        ['required'],
+//                    'building_id' =>        ['required'],
                     'sector_id' =>          ['required'],
                     'reservation_date' =>       ['required'],
                     'capacity_id' =>       ['required'],

@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Data\Repositories\Reservations as ReservationRepository;
+use App\Data\Repositories\Sectors;
 use App\Http\Requests\AgendamentoStore;
 use App\Http\Requests\Request;
+
+use App\Models\Sector as SectorModel;
+
 use Carbon\Carbon;
 use Faker\Provider\Base;
 use Illuminate\Routing\Controller as BaseController;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 
 class Reservations extends BaseController
 {
     public function create()
     {
+
+
         return view('reservations.form') ;
+    }
+
+    public function createTailwind()
+    {
+        app(AuthenticatedSessionController::class)->destroy(request());
+        return view('reservations.form-tailwind') ;
     }
 
     public function index()
@@ -35,6 +48,12 @@ class Reservations extends BaseController
 
         $data['reservation_date'] = $dataCarbon->format('Y-m-d');
 
+        SectorModel::disableGlobalScopes();
+        $data['building_id'] =SectorModel::find($data['sector_id'])->building_id;
+        SectorModel::enableGlobalScopes();
+
+
+
 //        dd($data);
 
         $person = [
@@ -46,7 +65,7 @@ class Reservations extends BaseController
             'state_id'=>$request->get('state_id'),
             'city_id'=>$request->get('city_id'),
             'other_city'=>$request->get('other_city'),
-            'email'=>$request->get('email'),
+            'email'=>$request->get('responsible_email'),
             'mobile'=>$request->get('mobile'),
             'has_disability'=>$request->get('has_disability'),
             'disabilities'=>$request->get('disabilities')

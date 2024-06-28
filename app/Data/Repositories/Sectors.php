@@ -43,5 +43,14 @@ class Sectors extends Repository
             ->get();
     }
 
+    public function allForUser()
+    {
+        if(auth()->user()->isAn('Administrador')){
+            return $this->allActive();
+        }else{
+            return auth()->user()->sectors;
+        }
+    }
+
 
 }
