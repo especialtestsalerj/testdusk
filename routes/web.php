@@ -27,11 +27,6 @@ Route::group(['prefix' => 'agendamento-tailwind'], function () {
 
     Route::get('/', [Reservations::class,'createTailwind'])
         ->name('reservation.form-tailwind');
-
-    Route::post('/',[Reservations::class,'store'])
-        ->name('reservation.store');
-    Route::get('/detalhes', [Reservations::class,'detail'])
-        ->name('reservation.detail');
 });
 
 Route::group(['prefix' => 'agendamento'], function () {
