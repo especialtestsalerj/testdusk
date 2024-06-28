@@ -76,14 +76,11 @@ class Form extends BaseForm
     protected function getComponentVariables()
     {
 
-        Sector::disableGlobalScopes();
-//        $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
-        $this->sectors = app(Sectors::class)->allVisitable();
-        Sector::enableGlobalScopes();
+
 
 
         return [
-            'sector' => $this->sectors, 
+            'buildings' => app(Buildings::class)->allActive(),
             'genders' => app(GendersRepository::class)->allActive(),
             'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive(),
             'countries' => app(CountriesRepository::class)->allActive(),
