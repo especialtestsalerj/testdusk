@@ -20,22 +20,22 @@
 
                         <div class="flex space-x-4">
 
-                            <div wire:ignore class="w-1/4  ">
-                                <label for="building_id"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Edifício:*
-                                </label>
-                                <select name="building_id" id="building_id"
-                                        wire:model="building_id" x-ref="building_id" wire:change="loadSectors"
-                                        class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">SELECIONE</option>
-                                    @foreach ($buildings as $building)
-                                        <option value="{{ $building->id }}">
-                                            {{ convert_case($building->name, MB_CASE_UPPER) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+{{--                            <div wire:ignore class="w-1/4  ">--}}
+{{--                                <label for="building_id"--}}
+{{--                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">--}}
+{{--                                    Edifício:*--}}
+{{--                                </label>--}}
+{{--                                <select name="building_id" id="building_id"--}}
+{{--                                        wire:model="building_id" x-ref="building_id" wire:change="loadSectors"--}}
+{{--                                        class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">--}}
+{{--                                    <option value="">SELECIONE</option>--}}
+{{--                                    @foreach ($buildings as $building)--}}
+{{--                                        <option value="{{ $building->id }}">--}}
+{{--                                            {{ convert_case($building->name, MB_CASE_UPPER) }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
 
                             <div wire:ignore class="w-1/4  ">
                                 <label for="sector_id"
@@ -45,6 +45,7 @@
                                 <select name="sector_id" id="sector_id"
                                         wire:model="sector_id" x-ref="sector_id" wire:change="loadDates"
                                         class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value=""> Selecione um setor</option>
                                     @foreach ($this->sectors as $sector)
                                         <option value="{{ $sector->id ?? $sector['id']}}">
                                             {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
@@ -59,11 +60,13 @@
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Data da Visita *
                                 </label>
-                                <input id="reservation_date" name="reservation_date"
+                                <input id="reservation_date"  type="button"
                                        value="{{$this->reservation_date}}" wire:model="reservation_date"
                                        x-ref="reservation_date"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
+
+                            <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" />
 
                             <div class="w-1/4  ">
                                 <label for="reservation_time"
@@ -88,7 +91,7 @@
                         <div class="flex space-x-4">
                             <div class="w-full">
 
-                                <form class="max-w-sm mx-auto">
+{{--                                <form class="max-w-sm mx-auto">--}}
                                     <label for="motive"
                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                         Motivo da Visita*
@@ -97,7 +100,7 @@
                                               name="motive" wire:model="motive"
                                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                               placeholder="Leave a comment"></textarea>
-                                </form>
+{{--                                </form>--}}
 
                             </div>
                         </div>
@@ -263,7 +266,7 @@
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Confirmação de Email*
                                 </label>
-                                <input type="email" name="email" id="email"
+                                <input type="email" name="confirm_email" id="confirm_email"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="name@company.com" wire:model="confirm_email">
                             </div>
@@ -299,6 +302,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
         document.addEventListener('livewire:load', function () {
+            console.log(@json($blockedDates))
             var blockedDates = @json($blockedDates);
             var flatpickrInstance = flatpickr("#reservation_date", {
                 locale: "pt",

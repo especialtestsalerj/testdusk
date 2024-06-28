@@ -42,7 +42,7 @@ class Reservation extends Model
     public static function boot()
     {
         parent::boot();
-        static::addGlobalScope(new InCurrentBuilding());
+//        static::addGlobalScope(new InCurrentBuilding());
 
         static::created(function ($reservation) {
 
