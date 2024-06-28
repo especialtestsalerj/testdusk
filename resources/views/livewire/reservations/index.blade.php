@@ -148,19 +148,19 @@
                                            title="Gerenciar Rotina">
 
                                         </a>
-                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal"
                                                 data-bs-target="#finishModal93" title="Finalizar Rotina"
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForChangeDate({{$reservation->id}})">
                                             <i class="fa-solid fa-calendar-days"></i> Reagendar
                                         </button>
-                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal"
                                                 data-bs-target="#finishModal93" title="Finalizar Rotina"
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForConfirmReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-circle-check"></i> Confirmar
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
                                                 data-bs-target="#finishModal93" title="Finalizar Rotina"
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForCancelReservation({{$reservation->id}})">
