@@ -32,5 +32,12 @@ class FormTailwind extends Form
         return view('livewire.reservation.form-tailwind')->with($this->getViewVariables());
     }
 
+    public function loadDates()
+    {
+//        dump('datas');
+        parent::loadDates();
+//        $this->emit('load');
+    }
+
 
 }

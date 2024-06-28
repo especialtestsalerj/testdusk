@@ -8,7 +8,6 @@ use App\Http\Livewire\BaseIndex;
 use App\Models\Reservation;
 use App\Models\ReservationStatus;
 use Carbon\Carbon;
-use Laravel\Scout\Builder;
 
 class Index extends BaseIndex
 {
