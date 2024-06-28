@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Reservation;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Visitor;
+
 class CreateFullTextIndexes extends Command
 {
     /**
@@ -28,13 +30,29 @@ class CreateFullTextIndexes extends Command
      */
     public function handle()
     {
-        Visitor::disableGlobalScopes();
-        Artisan::call('scout:sync-index-settings');
-        Artisan::call('scout:import', [
-            'model' => 'App\\Models\\Visitor',
-        ]);
-        $this->info(Artisan::output());
-        Visitor::enableGlobalScopes();
+        $models = [
+            Visitor::class,
+            Reservation::class,
+
+        ];
+
+        foreach ($models as $model) {
+            $model::disableGlobalScopes();
+
+            Artisan::call('scout:delete-index', [
+                'name' => (new $model)->searchableAs(),
+            ]);
+            $this->info(Artisan::output());
+
+            Artisan::call('scout:sync-index-settings');
+
+            Artisan::call('scout:import', [
+                'model' => $model,
+            ]);
+            $this->info(Artisan::output());
+
+            $model::enableGlobalScopes();
+        }
 
         return Command::SUCCESS;
     }
