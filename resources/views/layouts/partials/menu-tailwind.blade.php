@@ -75,17 +75,25 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
                                 <li>
-                                    <a href="{{route('reservation.form')}}"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Formulario
-                                        agendamento</a>
-                                </li>
-                                <li>
                                     <a href="{{route('reservation.index')}}"
                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agenda</a>
                                 </li>
                                 <li>
+                                    <a href="{{route('reservation.calendar')}}"
+                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                       aria-current="page">Calendário</a>
+                                </li>
+                                <li>
                                     <a href="{{route('reservation.configuration')}}"
                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Configurações</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('reservation.form')}}"
+                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agendamento - Bootstrap</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('reservation.form-tailwind')}}"
+                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agendamento Tailwind</a>
                                 </li>
                             </ul>
 
