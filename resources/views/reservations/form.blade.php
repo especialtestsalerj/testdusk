@@ -1,6 +1,6 @@
 
 
-@extends('layouts.booking-talwind')
+@extends('layouts.app')
 
 @section('content')
     <livewire:reservation.form />

@@ -35,9 +35,6 @@
 <div id="app">
 
 
-{{--    @include('layouts.partials.menu-tailwind')--}}
-
-
     <main class="py-0" >
         <div class="container-fluid">
             <div class="row justify-content-center">

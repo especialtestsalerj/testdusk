@@ -17,6 +17,11 @@ class Reservations extends BaseController
         return view('reservations.form') ;
     }
 
+    public function createTailwind()
+    {
+        return view('reservations.form-tailwind') ;
+    }
+
     public function index()
     {
         $reservations = app(ReservationRepository::class)->all();
