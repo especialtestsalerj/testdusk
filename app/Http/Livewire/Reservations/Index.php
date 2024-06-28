@@ -43,7 +43,7 @@ class Index extends BaseIndex
     {
         return view('livewire.reservations.index')->with([
             'reservations' => $this->fullTextFilter(),
-            'sectors' => app(Sectors::class)->allVisitable(),
+            'sectors' => app(Sectors::class)->allForUser(),
             'statuses' => ReservationStatus::all(),
             'countReservations' => $this->countResults,
         ]);
