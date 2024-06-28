@@ -28,7 +28,7 @@
                         <option value="">SELECIONE</option>
                         @foreach ($sectors as $sector)
                             <option value="{{ $sector->id ?? $sector['id'] }}">
-                                {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
+                                {{ convert_case($sector->alias ?? $sector['alias'], MB_CASE_UPPER) }}
                             </option>
                         @endforeach
                     </select>
@@ -39,7 +39,7 @@
                 <h3 class="me-2"> Status: </h3>
                 <div class="flex-grow-1">
                     <select class="form-control text-uppercase" name="status_id" id="status_id" wire:model="status_id">
-                        <option value="">SELECIONE</option>
+                        <option value="">TODAS AS VISITAS</option>
                         @foreach ($statuses as $status)
                             <option value="{{ $status->id}}">
                                 {{$status->name}}
