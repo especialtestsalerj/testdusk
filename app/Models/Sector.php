@@ -8,14 +8,23 @@ use Illuminate\Support\Facades\Validator;
 
 class Sector extends Model
 {
-    protected $fillable = ['name', 'status', 'building_id', 'nickname', 'is_visitable'];
+    protected $fillable = ['name','nickname', 'status', 'building_id', 'nickname', 'is_visitable'];
 
     protected $filterableColumns = ['name', 'status'];
+
+    protected $appends = ['alias'];
+
 
     public static function boot()
     {
         parent::boot();
         static::addGlobalScope(new InCurrentBuilding());
+    }
+
+
+    public function getAliasAttribute()
+    {
+        return !is_null($this->nickname) ? $this->nickname : $this->name;
     }
 
     public function canDelete()
