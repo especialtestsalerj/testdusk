@@ -29,6 +29,12 @@ Route::group(['prefix' => 'agendamento-tailwind'], function () {
         ->name('reservation.form-tailwind');
 });
 
+Route::group(['prefix' => 'agendamento-grupo'], function () {
+
+    Route::get('/', [Reservations::class,'createGroup'])
+        ->name('reservation.form-tailwind');
+});
+
 Route::group(['prefix' => 'agendamento'], function () {
 
     Route::get('/', [Reservations::class,'create'])

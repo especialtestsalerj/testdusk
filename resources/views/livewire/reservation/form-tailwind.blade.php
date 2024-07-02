@@ -44,7 +44,7 @@
                                 </label>
                                 <select name="sector_id" id="sector_id"
                                         wire:model="sector_id" x-ref="sector_id" wire:change="loadDates"
-                                        class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value=""> Selecione um setor</option>
                                     @foreach ($this->sectors as $sector)
                                         <option value="{{ $sector->id ?? $sector['id']}}">
@@ -142,7 +142,7 @@
                             <div class="w-1/5">
                                 <label for="has_disability"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Possui deficiência?
+                                    Possui deficiência? = {{$has_disability}}
                                 </label>
                                 <select
                                     name="has_disability" id="has_disability"
@@ -157,6 +157,24 @@
                                 </select>
                             </div>
                         </div>
+
+                        @if($has_disability == 'true')
+                            <div class="flex space-x-4" >
+                                <label for="disabilities"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de Deficiência*</label>
+                                <br/>
+                                <ul class="disability-list list-unstyled">
+                                    @foreach($disabilityTypes as $disabilityType)
+                                        <li>
+                                            <label class="w-1/2" >
+                                                <input name="disabilities[]" wire:model="disabilities"
+                                                       value="{{ $disabilityType->id }}" type="checkbox"/>
+                                                {{ $disabilityType->name }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="flex space-x-4">
                             <div class="w-1/2">

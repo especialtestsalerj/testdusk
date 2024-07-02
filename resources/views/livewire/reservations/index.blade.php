@@ -12,10 +12,10 @@
         </div>
 
         <div class="col-4 col-md-8 align-self-center d-flex justify-content-end gap-4">
-            <a id="novo" href="{{route('reservation.form-from-user')}}" class="btn btn-primary text-white float-right"
-               title="Nova Reserva">
-                <i class="fa fa-plus"></i> Nova
-            </a>
+            <span class="btn btn-sm btn-primary text-white"
+                  data-bs-toggle="modal" data-bs-target="#reservation-modal" title="Novo Documento">
+                                <i class="fa fa-plus"></i> Novo
+            </span>
         </div>
 
         <div class="row align-items-center pt-3">
@@ -190,6 +190,8 @@
                 @endforelse
 
                 @endif
+
+            @livewire('reservations.modal')
     </div>
     </div>
 </div>

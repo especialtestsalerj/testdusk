@@ -113,8 +113,6 @@ class Form extends BaseForm
             //Array remove/reduce de exception date.
             //Cadastrar uma tabela de exceções.
 
-
-
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
@@ -122,9 +120,6 @@ class Form extends BaseForm
             $this->blockedDates =[];
 
         }
-
-
-
     }
 
     public function updatedSectorId($newValue)

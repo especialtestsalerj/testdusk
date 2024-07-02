@@ -30,6 +30,12 @@ class Reservations extends BaseController
         return view('reservations.form-tailwind') ;
     }
 
+    public function createGroup()
+    {
+        app(AuthenticatedSessionController::class)->destroy(request());
+        return view('reservations.form-group') ;
+    }
+
     public function index()
     {
         $reservations = app(ReservationRepository::class)->all();
