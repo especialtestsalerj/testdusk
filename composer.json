@@ -27,7 +27,8 @@
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
         "ramsey/uuid": "^4.7",
-        "silber/bouncer": "^1.0"
+        "silber/bouncer": "^1.0",
+        "snowfire/beautymail": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
