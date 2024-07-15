@@ -51,6 +51,8 @@ class Form extends BaseForm
 
     public  $disabilities =[];
 
+    public $quantity;
+
 
 
 
@@ -130,6 +132,7 @@ class Form extends BaseForm
         }
 
         $this->loadDates();
+        $this->loadHourCapacities();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
     }
 
@@ -184,7 +187,7 @@ class Form extends BaseForm
         }
     }
 
-    private function loadHourCapacities()
+    protected function loadHourCapacities()
     {
 
 

@@ -302,6 +302,13 @@
                             </div>
 
                         </div>
+                        <div class="flex space-x-4">
+                            <hr>
+
+                            <div class="w-/13">
+
+                            </div>
+                        </div>
 
 
                         <button wire:ignore=""

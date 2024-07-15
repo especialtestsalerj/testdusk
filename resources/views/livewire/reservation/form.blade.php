@@ -8,22 +8,7 @@
           action="{{ route('reservation.store')}}" method="POST">
         @csrf
         <div class="row mt-3">
-            <div class="form-group col-3">
-                <label for="building_id" style="margin-left: 10px;" class="form-label">Edifício:*</label>
-                <div wire:ignore>
-                    <select class="select2 form-control text-uppercase"
-                            name="building_id" id="building_id"
-                            wire:model="building_id" x-ref="building_id" wire:change="loadSectors" >
 
-                        <option value="">SELECIONE</option>
-                        @foreach ($buildings as $building)
-                            <option value="{{ $building->id }}">
-                                {{ convert_case($building->name, MB_CASE_UPPER) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
             <div class="form-group col-3">
                 <label for="country_id" style="margin-left: 10px;" class="form-label">Setor:</label>
                 <div wire:ignore>

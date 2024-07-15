@@ -20,6 +20,7 @@ class Reservation extends Model
         'capacity_id',
         'sector_id',
         'person',
+        'quantity',
         'reservation_status_id',
         'reservation_status',
         'responsible_person_type',
