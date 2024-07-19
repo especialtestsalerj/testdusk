@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Scopes\InCurrentBuilding;
+use App\Notifications\ReservationCanceledNotification;
+use App\Notifications\ReservationConfirmedNotification;
 use App\Notifications\ReservationNotification;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
@@ -49,6 +51,23 @@ class Reservation extends Model
         static::created(function ($reservation) {
 
             $reservation->notify(new ReservationNotification($reservation));
+        });
+
+        static::updated(function ($reservation) {
+
+
+            // Verifique se o status foi alterado para 'visita confirmada'
+            if ($reservation->isDirty('reservation_status_id')){
+
+                if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
+                // Envie o email de notificação
+                    $reservation->notify(new ReservationConfirmedNotification($reservation));
+                }
+
+                if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
+                    $reservation->notify(new ReservationCanceledNotification($reservation));
+                }
+            }
         });
     }
 

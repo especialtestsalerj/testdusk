@@ -29,7 +29,7 @@ class Modal extends BaseForm
     public $sectors =[];
     public $documentTypes;
     public $document_type_id;
-    public $sector_id;
+    public $sector_modal_id;
     public $building_id;
 
     public $document_number;
@@ -54,6 +54,9 @@ class Modal extends BaseForm
     public $capacities =[];
 
     public  $disabilities =[];
+
+    public $reservation;
+
     public function render()
     {
         $this->loadCountryBr();
@@ -61,13 +64,6 @@ class Modal extends BaseForm
 
         $this->users = app(Users::class)->allWithAbility(make_ability_name_with_current_building('reservation:show'));
         return view('livewire.reservations.modal')->with($this->getViewVariables());
-    }
-
-    public function associateUserInSector(Sector $sector)
-    {
-        $this->sector = $sector;
-        $this->users = $this->users->diff($this->sector->users);
-
     }
 
     public function cleanModal()
@@ -108,8 +104,9 @@ class Modal extends BaseForm
 
     public function loadDates()
     {
-        if(!empty($this->sector_id)){
-            $dates = BlockedDate::where('sector_id', $this->sector_id)->pluck('date');
+        dd($this->sector_modal_id);
+        if(!empty($this->sector_modal_id)){
+            $dates = BlockedDate::where('sector_id', $this->sector_modal_id)->pluck('date');
 
             //Array map, para sábados e domingos, holiday date (cadastrar
             //No final do ano faltando X dias para virar o ano, faz o processamento da holiday do próximo ano.
@@ -134,5 +131,58 @@ class Modal extends BaseForm
 
         $this->loadDates();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
+    }
+
+
+    public function updatedReservationDate($newValue)
+    {
+        if (is_null($newValue)) {
+            return;
+
+        }
+        $this->loadHourCapacities();
+
+        $this->capacities = collect($this->capacities);
+
+        $this->select2ReloadOptions(
+            $this->capacities
+                ->map(function ($item) {
+                    return [
+                        'name' => $item->maximum_capacity,
+                        'value' => $item->id,
+                    ];
+                })
+                ->toArray(),
+            'capacity_id'
+        );
+
+    }
+
+    protected function loadHourCapacities()
+    {
+
+
+        if(!empty($this->sector_modal_id) && !empty($this->reservation_date)) {
+
+            $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
+            $this->capacities =  \DB::table('capacities as c')
+                ->select('c.id', \DB::raw("c.hour, c.hour || ' (' || (c.maximum_capacity - (
+            select count(*) from reservations r
+            where r.sector_id = c.sector_id
+              and r.reservation_date = '$date'
+              and r.capacity_id = c.id)) || ' vagas)' as maximum_capacity"))
+                ->where('c.sector_id', $this->sector_modal_id)
+                ->having(\DB::raw("(c.maximum_capacity - (
+        select count(*) from reservations r
+        where r.sector_id = c.sector_id
+          and r.reservation_date = '$date'
+          and r.capacity_id = c.id))"), '>', 0)
+                ->groupBy('c.id', 'c.hour', 'c.maximum_capacity')
+                ->orderBy('c.hour')
+                ->get();
+        }
+        else{
+            $this->capacities =[];
+        }
     }
 }

@@ -1,11 +1,24 @@
 <div>
-    <div wire:ignore.self class="modal fade modal-lg" id="reservation-modal" tabindex="-1" role="dialog"
+
+    @include('layouts.msg')
+    <div wire:ignore.self class="modal fade modal-lg"
+         @if(!isset($reservation))
+            id="reservation-modal"
+         @else
+             id="reservation-modal_{{$reservation->id}}"
+         @endif
+         tabindex="-1" role="dialog"
          aria-labelledby="capacityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="fa fa-plus"></i> Novo Agendamento
+                        <i class="fa fa-plus"></i>
+                        @if(!isset($reservation))
+                            Novo Agendamento
+                        @else
+                            Agendamento de {{json_decode($reservation->person)->full_name}}
+                        @endif
                     </h5>
                     <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
@@ -31,7 +44,7 @@
                                 <div wire:ignore>
                                     <select class="select2 form-control text-uppercase"
                                             name="sector_modal_id" id="sector_modal_id"
-                                            wire:model="sector_id" x-ref="sector_id" wire:change="loadDates" >
+                                            wire:model="sector_modal_id" x-ref="sector_modal_id" wire:change="loadDates" >
 
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $sector)
@@ -40,14 +53,21 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    <input type="hidden" name="sector_id" value="{{$this->sector_modal_id}}" wire:model="sector_modal_id" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-4">
                                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da Visita *</label>
-                                <input type="text" class="form-control " id="reservation_date" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" x-ref="reservation_date">
+                                <input type="button" class="form-control "
+                                       id="reservation_date"
+                                       value="{{$this->reservation_date}}"
+                                       wire:model="reservation_date"
+                                       x-ref="reservation_date">
                             </div>
+                            <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" />
                             <div class="form-group col-4">
                                 <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da Visita *</label>
                                 <select class="form-control text-uppercase"
@@ -250,18 +270,7 @@
                                     />
                                 </div>
                             </div>
-
-
-                            {{--            <div class="col-lg-12">--}}
-                            {{--                <livewire:contacts.form :contacts="$this->contact" :person_id="$this->person_id" :modal="$this->modal" :readonly="$this->readonly" :is-visitors-form="true" />--}}
-                            {{--            </div>--}}
-
                             <div class="col-lg-6 col-xl-6">
-                                {{--                @foreach($this->alerts as $alert)--}}
-                                {{--                    <div class="col-12">--}}
-                                {{--                        <span class="text-danger"><i class="fa fa-ban cog-faint" aria-hidden="true"></i> {{$alert }}</span>--}}
-                                {{--                    </div>--}}
-                                {{--                @endforeach--}}
                             </div>
                         </div>
 
@@ -272,12 +281,10 @@
                                 <button wire:ignore="" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
                                     <i class="fa fa-save"></i> Solicitar
                                 </button>
-
-
-
-                                <a href="https://www.alerj.rj.gov.br/" id="cancelButton" title="Cancelar" class="btn btn-danger text-white ml-1">
+                                <button class="btn btn-danger text-white ml-1">
                                     <i class="fas fa-ban"></i> Cancelar
-                                </a>
+                                </button>
+
                             </div>
                         </div>
                     </form>
@@ -309,11 +316,19 @@
                                     @this.set('reservation_date', dateStr);
                                     }
                                 });
+
+                                // document.getElementById('reservation_date').removeAttribute('readonly');
                             }
 
+                            @if(!isset($reservation))
                             $('#reservation-modal').on('shown.bs.modal', function () {
                                 initializeFlatpickr();
                             });
+                            @else
+                            $('#reservation-modal_{{$reservation->id}}').on('shown.bs.modal', function () {
+                                initializeFlatpickr();
+                            });
+                            @endif
 
                             Livewire.on('blockedDatesUpdated', function(newBlockedDates) {
                                 blockedDates = newBlockedDates || [];

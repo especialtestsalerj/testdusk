@@ -70,9 +70,11 @@ abstract class BaseIndex extends Component
     {
         $sql = $query;
         $i = 0;
+
         foreach ($this->orderByField as $field) {
             $sql->orderBy($field, $this->orderByDirection[$i] ?? 'asc');
             $i++;
+
         }
         return $sql;
     }
@@ -92,6 +94,8 @@ abstract class BaseIndex extends Component
             $result = $query->get();
             $this->countResults = $result->count();
         }
+
+
 
         return $result;
     }

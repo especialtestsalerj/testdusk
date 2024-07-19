@@ -83,7 +83,8 @@
 
     <div>
         @if($this->sector_id)
-            <div class="row">
+            <div class="row" wire:poll>
+
                 @forelse ($reservations as $reservation)
 
                     <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
@@ -130,7 +131,7 @@
                                         <div class="row d-flex align-items-center">
                                             <div class="col-6 col-lg-6 text-center text-lg-start">
 
-                                                <span class="fw-bold"> Setor:</span> {{$reservation->sector->name}}
+                                                <span class="fw-bold"> Setor:</span> {{$reservation->sector?->name}}
                                             </div>
 
                                         </div>
@@ -149,19 +150,31 @@
 
                                         </a>
                                         <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+{{--                                                data-bs-target="#reservation-modal_{{$reservation->id}}" --}}
+                                                title="Alterar Visita"
+                                                @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO' )
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
-                                                wire:click="prepareForChangeDate({{$reservation->id}})">
-                                            <i class="fa-solid fa-calendar-days"></i> Reagendar
+                                                >
+                                            <i class="fa-solid fa-calendar-days"></i> Alterar
                                         </button>
+{{--                                        <livewire:reservations.modal :wire:key="'reservation-form-'.$reservation->id" :reservation="$reservation" />--}}
                                         <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+                                                title="Confirmar reserva"
+                                                @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO')
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForConfirmReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-circle-check"></i> Confirmar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+                                                title="Cancelar Rotina"
+                                                @if(!($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO' ||
+                                                    $reservation->reservationStatus->name == 'VISITA AGENDADA'))
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForCancelReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-ban"></i> Cancelar
@@ -188,7 +201,8 @@
                         </div>
                     </div>
                 @endforelse
-
+                    <div class="d-flex justify-content-center mt-4">{{ $reservations->links() }}
+                    </div>
                 @endif
 
             @livewire('reservations.modal')

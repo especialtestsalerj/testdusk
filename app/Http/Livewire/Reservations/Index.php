@@ -16,7 +16,7 @@ class Index extends BaseIndex
     protected $model = Reservation::class;
 
     public $orderByField = ['reservation_date'];
-    public $orderByDirection = ['desc'];
+    public $orderByDirection = ['asc'];
     public $paginationEnabled = true;
     public $countResults;
     public Reservation $selectedReservation;

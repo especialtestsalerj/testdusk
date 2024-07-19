@@ -49,6 +49,8 @@ class Reservations extends BaseController
 
     public function store(AgendamentoStore $request)
     {
+
+
         $data = $request->all();
         $dataCarbon = Carbon::createFromFormat('d/m/Y', $data['reservation_date']);
 
