@@ -1,12 +1,7 @@
 <div>
 
     @include('layouts.msg')
-    <div wire:ignore.self class="modal fade modal-lg"
-         @if(!isset($reservation))
-            id="reservation-modal"
-         @else
-             id="reservation-modal_{{$reservation->id}}"
-         @endif
+    <div wire:ignore.self class="modal fade modal-lg" id="reservation-modal"
          tabindex="-1" role="dialog"
          aria-labelledby="capacityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -29,23 +24,24 @@
                             <span class="badge bg-info text-black required-msg"><i class="fa fa-circle-info"></i> * Campos obrigatórios</span>
                         </div>
                     </div>
-                    <form name="formulario" id="formulario"
-{{--                          action="{{ route('reservation.store')}}" method="POST"--}}
-                    >
+                    <form name="formulario" id="formulario" wire:submit.prevent="store">
                         @csrf
-                        <!-- Estilo Customizado para Flatpickr -->
                         <style>
                             .flatpickr-calendar {
                                 z-index: 1051; /* Ajuste o valor conforme necessário */
                             }
                         </style>
+
                         <div class="row mt-3">
-                            <div class="form-group col-6">
-                                <label for="country_id" style="margin-left: 10px;" class="form-label">Setor:</label>
+                            <div class="form-group col-md-6">
+                                <label for="sector_modal_id" style="margin-left: 10px;"
+                                       class="form-label">Setor:</label>
                                 <div wire:ignore>
                                     <select class="select2 form-control text-uppercase"
+                                            @error('sector_modal_id') is-invalid @endError
                                             name="sector_modal_id" id="sector_modal_id"
-                                            wire:model="sector_modal_id" x-ref="sector_modal_id" wire:change="loadDates" >
+                                            wire:model="sector_modal_id" x-ref="sector_modal_id"
+                                            wire:change="loadDates">
 
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $sector)
@@ -55,25 +51,37 @@
                                         @endforeach
                                     </select>
 
-                                    <input type="hidden" name="sector_id" value="{{$this->sector_modal_id}}" wire:model="sector_modal_id" />
+                                    <input type="hidden" name="sector_id" value="{{$this->sector_modal_id}}"
+                                           wire:model="sector_modal_id"/>
+                                </div>
+                                <div>
+                                    @error('sector_modal_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-4">
-                                <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da Visita *</label>
+
+
+                            <div class="form-group col-md-3">
+                                <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da
+                                    Visita *</label>
                                 <input type="button" class="form-control "
                                        id="reservation_date"
                                        value="{{$this->reservation_date}}"
                                        wire:model="reservation_date"
                                        x-ref="reservation_date">
                             </div>
-                            <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" />
-                            <div class="form-group col-4">
-                                <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da Visita *</label>
+                            <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}"
+                                   wire:model="reservation_date"/>
+                            <div class="form-group col-md-3">
+                                <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da
+                                    Visita *</label>
                                 <select class="form-control text-uppercase"
                                         name="capacity_id" id="capacity_id"
-                                        wire:model="capacity_id" x-ref="capacity_id" >
+                                        wire:model="capacity_id" x-ref="capacity_id">
 
                                     <option value="">SELECIONE</option>
                                     @foreach ($this->capacities as $capacitiy)
@@ -84,20 +92,18 @@
                                 </select>
 
                             </div>
-                        </div>
 
-                        <div class="row">
+
                             <div class="form-group col-12">
-                                <label for="motive" style="margin-left: 10px;" class="form-label">Motivo da Visita*</label>
+                                <label for="motive" style="margin-left: 10px;" class="form-label">Motivo da
+                                    Visita*</label>
                                 <textarea id="motive" name="motive" class="form-control" wire:model="motive">
 
                                     </textarea>
                             </div>
 
-                        </div>
 
-                        <div class="row">
-                            <div class='col-3' >
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="document_type_id">Tipo de Documento*</label>
                                     <select class="form-control text-uppercase"
@@ -110,19 +116,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
 
                                     <label for="document_number">Número do Documento*</label>
                                     <input class="form-control text-uppercase"
                                            name="document_number" id="document_number"
                                            wire:model="document_number" x-ref="document_number"
-                                           type="text" />
+                                           type="text"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
+
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="full_name">Nome Completo*</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -131,27 +137,29 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="social_name">Nome Social</label>
                                     <input type="text" class="form-control text-uppercase"
-                                           name="social_name" id="social_name" wire:model="social_name" placeholder="Designação usada por travestis ou transexuais"
+                                           name="social_name" id="social_name" wire:model="social_name"
+                                           placeholder="Designação usada por travestis ou transexuais"
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+
+
                             <div class="col-md-4">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="has_disability">Possui deficiência?</label>
-                                        <select class="form-select text-uppercase" name="has_disability" id="has_disability"
+                                        <select class="form-select text-uppercase" name="has_disability"
+                                                id="has_disability"
                                                 wire:model="has_disability"
                                                 x-ref="has_disability" @disabled(request()->query('disabled'))>
                                             <option value="">
                                                 SELECIONE
                                             </option>
-                                            <option  value="true">SIM</option>
+                                            <option value="true">SIM</option>
                                             <option value="false">NÃO</option>
                                         </select>
                                     </div>
@@ -176,9 +184,9 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
+
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="country_id"> País* </label>
                                     <div wire:ignore>
@@ -186,7 +194,7 @@
                                                 name="country_id" id="country_id"
                                                 wire:model="country_id" x-ref="country_id"
                                         >
-                                            <option value=""> SELECIONE </option>
+                                            <option value=""> SELECIONE</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->id }}">
                                                     {{ convert_case($country->name, MB_CASE_UPPER) }}
@@ -196,7 +204,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-xl-3 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" id="div-state_id">
+                            <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
+                                 id="div-state_id">
                                 <div class="form-group">
                                     <label for="state_id">Estado*</label>
                                     <div wire:ignore>
@@ -214,7 +223,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-xl-3 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}" id="div-city_id">
+                            <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
+                                 id="div-city_id">
                                 <div class="form-group">
                                     <label for="city_id">Cidade*</label>
                                     <div wire:ignore>
@@ -232,7 +242,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-xl-3 {{ !$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
+                            <div class="col-md-8 {{ !$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
                                 <div class="form-group">
                                     <label for="other_city">Cidade*</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -240,9 +250,9 @@
                                         {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
+
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Email*</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -252,7 +262,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Confirmação de Email*</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -262,7 +272,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Telefone (DD) + Número</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -273,16 +283,16 @@
                             </div>
                             <div class="col-lg-6 col-xl-6">
                             </div>
-                        </div>
 
 
+                            <div class="col-12 align-self-center d-flex justify-content-end gap-4">
 
-                        <div class="row">
-                            <div class="col-sm-4 align-self-center d-flex justify-content-end gap-4">
-                                <button wire:ignore="" class="btn btn-success text-white ml-1" id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
+                                <button type="submit" class="btn btn-success text-white ml-1" id="submitButton"
+                                        title="Salvar">
                                     <i class="fa fa-save"></i> Solicitar
                                 </button>
-                                <button class="btn btn-danger text-white ml-1">
+
+                                <button type="button" wire:click="cleanModal" class="btn btn-danger text-white ml-1">
                                     <i class="fas fa-ban"></i> Cancelar
                                 </button>
 
@@ -294,8 +304,9 @@
                     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
                     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
                     <script>
-                        document.addEventListener('livewire:load', function() {
-                            var blockedDates = @json($blockedDates) || [];
+                        document.addEventListener('livewire:load', function () {
+                            var blockedDates = @json($blockedDates) ||
+                            [];
 
                             function initializeFlatpickr() {
                                 flatpickr("#reservation_date", {
@@ -306,15 +317,16 @@
                                         from: date,
                                         to: date
                                     })) : [],
-                                    onDayCreate: function(dObj, dStr, fp, dayElem) {
+                                    onDayCreate: function (dObj, dStr, fp, dayElem) {
                                         const date = dayElem.dateObj.toISOString().split('T')[0];
                                         if (blockedDates.includes(date)) {
                                             dayElem.style.color = "red";
                                             dayElem.style.textDecoration = "line-through";
                                         }
                                     },
-                                    onChange: function(selectedDates, dateStr, instance) {
-                                    @this.set('reservation_date', dateStr);
+                                    onChange: function (selectedDates, dateStr, instance) {
+                                        @this.
+                                        set('reservation_date', dateStr);
                                     }
                                 });
 
@@ -331,7 +343,7 @@
                             });
                             @endif
 
-                            Livewire.on('blockedDatesUpdated', function(newBlockedDates) {
+                            Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
                                 blockedDates = newBlockedDates || [];
                                 initializeFlatpickr();
                             });

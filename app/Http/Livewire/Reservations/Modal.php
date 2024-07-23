@@ -21,41 +21,45 @@ class Modal extends BaseForm
 
     protected $listeners = ['associateUserInSector'];
     public $users;
-
     public $sector;
-
     public $user_id;
-
-    public $sectors =[];
+    public $sectors = [];
     public $documentTypes;
     public $document_type_id;
     public $sector_modal_id;
     public $building_id;
-
     public $document_number;
-
     public $full_name;
     public $social_name;
-
     public $responsible_email;
     public $confirm_email;
     public $mobile;
-
     public $blockedDates;
-
     public $reservation_date;
-
     public $motive;
-
     public $has_disability;
-
     public $capacity_id;
-
-    public $capacities =[];
-
-    public  $disabilities =[];
-
+    public $capacities = [];
+    public $disabilities = [];
     public $reservation;
+
+    public $rules = [
+        'user_id' => 'required|exists:users,id',
+        'sector' => 'required|string|max:255',
+        'document_type_id' => 'required|exists:document_types,id',
+        'sector_modal_id' => 'required|exists:sectors,id',
+        'building_id' => 'required|exists:buildings,id',
+        'document_number' => 'required|string|max:255',
+        'full_name' => 'required|string|max:255',
+        'social_name' => 'nullable|string|max:255',
+        'responsible_email' => 'required|email|max:255',
+        'confirm_email' => 'required|email|same:responsible_email',
+        'mobile' => 'required|string|max:20',
+        'reservation_date' => 'required|date|after_or_equal:today',
+        'motive' => 'nullable|string|max:500',
+        'has_disability' => 'required|boolean',
+        'capacity_id' => 'required|exists:capacities,id',
+    ];
 
     public function render()
     {
@@ -70,10 +74,18 @@ class Modal extends BaseForm
     {
         $this->reset();
         $this->resetErrorBag();
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
+        $this->select2SetReadOnly('city_id', false);
+        $this->select2SetReadOnly('sector_modal_id', false);
+        $this->select2SetReadOnly('state_id', false);
+        $this->select2SetReadOnly('country_id', false);
+        $this->select2SetReadOnly('state_document_id', false);
+        $this->loadDefault();
     }
 
     public function store()
     {
+        $this->validate();
         $this->sector->users()->attach([$this->user_id]);
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
         $this->cleanModal();
@@ -83,10 +95,6 @@ class Modal extends BaseForm
 
     protected function getComponentVariables()
     {
-
-
-
-
         return [
 //            'buildings' => app(Buildings::class)->allActive(),
             'genders' => app(GendersRepository::class)->allActive(),
@@ -98,14 +106,14 @@ class Modal extends BaseForm
         ];
     }
 
-    public function mount(){
+    public function mount()
+    {
         $this->sectors = app(Sectors::class)->allForUser();
     }
 
     public function loadDates()
     {
-        dd($this->sector_modal_id);
-        if(!empty($this->sector_modal_id)){
+        if (!empty($this->sector_modal_id)) {
             $dates = BlockedDate::where('sector_id', $this->sector_modal_id)->pluck('date');
 
             //Array map, para sábados e domingos, holiday date (cadastrar
@@ -116,8 +124,8 @@ class Modal extends BaseForm
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
-        }else{
-            $this->blockedDates =[];
+        } else {
+            $this->blockedDates = [];
 
         }
     }
@@ -128,7 +136,6 @@ class Modal extends BaseForm
             return;
 
         }
-
         $this->loadDates();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
     }
@@ -160,12 +167,10 @@ class Modal extends BaseForm
 
     protected function loadHourCapacities()
     {
-
-
-        if(!empty($this->sector_modal_id) && !empty($this->reservation_date)) {
+        if (!empty($this->sector_modal_id) && !empty($this->reservation_date)) {
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
-            $this->capacities =  \DB::table('capacities as c')
+            $this->capacities = \DB::table('capacities as c')
                 ->select('c.id', \DB::raw("c.hour, c.hour || ' (' || (c.maximum_capacity - (
             select count(*) from reservations r
             where r.sector_id = c.sector_id
@@ -180,9 +185,19 @@ class Modal extends BaseForm
                 ->groupBy('c.id', 'c.hour', 'c.maximum_capacity')
                 ->orderBy('c.hour')
                 ->get();
+        } else {
+            $this->capacities = [];
         }
-        else{
-            $this->capacities =[];
+    }
+
+
+    public function loadDefault()
+    {
+        if (is_null($this->document_type_id)) {
+            $this->document_type_id = config('app.document_type_cpf');
         }
+
+        $this->loadDefaultLocation();
+
     }
 }
