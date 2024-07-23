@@ -87,12 +87,12 @@
                                     <a href="{{route('reservation.configuration')}}"
                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Configurações</a>
                                 </li>
+{{--                                <li>--}}
+{{--                                    <a href="{{route('reservations.form')}}"--}}
+{{--                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agendamento - Bootstrap</a>--}}
+{{--                                </li>--}}
                                 <li>
-                                    <a href="{{route('reservation.form')}}"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agendamento - Bootstrap</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('reservation.form-tailwind')}}"
+                                    <a href="{{route('agendamento.form-tailwind')}}"
                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agendamento Tailwind</a>
                                 </li>
                             </ul>

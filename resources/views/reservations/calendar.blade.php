@@ -3,7 +3,7 @@
 
 @extends('layouts.app-talwind')
 @section('content')
-    <livewire:reservation.appointments-calendar />
+    <livewire:reservations.appointments-calendar />
 @endsection
 
 
