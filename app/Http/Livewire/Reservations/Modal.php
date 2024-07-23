@@ -13,8 +13,11 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\BlockedDate;
 use App\Models\Country;
-use App\Models\Sector;
-use Livewire\Component;
+use App\Rules\ValidCPF;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
+use App\Models\Sector as SectorModel;
+use App\Data\Repositories\Reservations as ReservationRepository;
 
 class Modal extends BaseForm
 {
@@ -44,26 +47,53 @@ class Modal extends BaseForm
     public $disabilities = [];
     public $reservation;
 
-    public $rules = [
-        'user_id' => 'required|exists:users,id',
-        'sector' => 'required|string|max:255',
-        'document_type_id' => 'required|exists:document_types,id',
-        'sector_modal_id' => 'required|exists:sectors,id',
-        'country_id' => 'required|exists:countries,id',
-        'state_id' => 'required|exists:states,id',
-        'building_id' => 'required|exists:buildings,id',
-        'document_number' => 'required|string|max:255',
-        'full_name' => 'required|string|max:255',
-        'social_name' => 'nullable|string|max:255',
-        'responsible_email' => 'required|email|max:255',
-        'confirm_email' => 'required|email|same:responsible_email',
-        'mobile' => 'required|string|max:20',
-        'reservation_date' => 'required',
-        'motive' => 'required|string|max:500',
-        'has_disability' => 'required|boolean',
-        'disabilities' => 'required_if:has_disability,true|array',
-        'capacity_id' => 'required|exists:capacities,id',
+    protected $validationAttributes = [
+        'user_id' => 'Usuário',
+        'sector' => 'Setor',
+        'document_type_id' => 'Tipo de Documento',
+        'state_document_id' => 'Estado do Documento',
+        'sector_modal_id' => 'Setor',
+        'country_id' => 'País',
+        'state_id' => 'Estado',
+        'building_id' => 'Prédio',
+        'document_number' => 'Número do Documento',
+        'full_name' => 'Nome Completo',
+        'social_name' => 'Nome Social',
+        'responsible_email' => 'Email',
+        'confirm_email' => 'Confirmação de Email',
+        'mobile' => 'Telefone (DD) + Número',
+        'reservation_date' => 'Data da Visita',
+        'motive' => 'Motivo da Visita',
+        'has_disability' => 'Possui deficiência',
+        'disabilities' => 'Tipo de Deficiência',
+        'capacity_id' => 'Hora da Visita',
+        'city_id' => 'Cidade',
+        'other_city' => 'Outra Cidade',
     ];
+
+
+    public function rules()
+    {
+        return [
+            'document_type_id' => 'required|exists:document_types,id',
+            'sector_modal_id' => 'required|exists:sectors,id',
+            'country_id' => 'required|exists:countries,id',
+            'document_number' => ['bail', 'required', Rule::when($this->document_type_id == config('app.document_type_cpf'), [new ValidCPF()])],
+            'full_name' => 'required|string|max:255',
+            'social_name' => 'nullable|string|max:255',
+            'responsible_email' => 'required|email|max:255',
+            'confirm_email' => 'required|email', //|same:responsible_email
+            'mobile' => 'required|string|max:20',
+            'reservation_date' => 'required',
+            'motive' => 'required|string|max:500',
+            'has_disability' => 'required|boolean',
+            'disabilities' => 'required_if:has_disability,true',
+            'capacity_id' => 'required|exists:capacities,id',
+            'state_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:states,id',
+            'city_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:cities,id',
+            'other_city' => 'required_unless:country_id,' . config('app.country_br'),
+        ];
+    }
 
     public function render()
     {
@@ -77,6 +107,7 @@ class Modal extends BaseForm
 
     public function cleanModal()
     {
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
         $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities');
         $this->resetErrorBag();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
@@ -91,11 +122,60 @@ class Modal extends BaseForm
     public function store()
     {
         $this->validate();
-        $this->sector->users()->attach([$this->user_id]);
+
+        $data = [
+            'user_id' => $this->user_id,
+            'sector_id' => $this->sector_modal_id,
+            'reservation_date' => Carbon::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d'),
+            'full_name' => $this->full_name,
+            'social_name' => $this->social_name,
+            'document_type_id' => $this->document_type_id,
+            'document_number' => $this->document_number,
+            'country_id' => $this->country_id,
+            'state_id' => $this->state_id,
+            'city_id' => $this->city_id,
+            'other_city' => $this->other_city,
+            'responsible_email' => $this->responsible_email,
+            'mobile' => $this->mobile,
+            'motive' => $this->motive,
+            'has_disability' => $this->has_disability,
+            'disabilities' => $this->disabilities,
+            'capacity_id' => $this->capacity_id,
+            'created_by_id' => $this->user_id,
+        ];
+
+        // Disable global scopes to find the building_id
+        SectorModel::disableGlobalScopes();
+        $data['building_id'] = SectorModel::find($this->sector_modal_id)->building_id;
+        SectorModel::enableGlobalScopes();
+
+        $person = [
+            'full_name' => $this->full_name,
+            'social_name' => $this->social_name,
+            'document_type_id' => $this->document_type_id,
+            'document_number' => $this->document_number,
+            'country_id' => $this->country_id,
+            'state_id' => $this->state_id,
+            'city_id' => $this->city_id,
+            'other_city' => $this->other_city,
+            'email' => $this->responsible_email,
+            'mobile' => $this->mobile,
+            'has_disability' => $this->has_disability,
+            'disabilities' => $this->disabilities
+        ];
+
+        $data = array_merge($data, [
+            'reservation_type_id'=> '1',
+            'code' => generate_code(),
+            'reservation_status_id'=> '1',
+            'person' => json_encode($person),
+        ]);
+
+        app(ReservationRepository::class)->create($data);
+
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
-        $this->cleanModal();
-        $this->emit('associated-sector-user', $this->sector);
-        $this->swallSuccess('Novo Usuário Adicionado com Sucesso.');
+        $this->emit('associated-sector-user', $this->sector_modal_id);
+        $this->swallSuccess('Novo Agendamento Adicionado com Sucesso.');
     }
 
     protected function getComponentVariables()

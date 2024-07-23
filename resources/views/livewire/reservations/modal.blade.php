@@ -55,7 +55,7 @@
                         <div class="row mt-3">
                             <div class="form-group col-md-6">
                                 <label for="sector_modal_id" style="margin-left: 10px;"
-                                       class="form-label">Setor:</label>
+                                       class="form-label">Setor*</label>
                                 <div>
                                     <select
                                         class="form-control text-uppercase @error('sector_modal_id') is-invalid @endError"
@@ -341,7 +341,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div>
+                                    @error('country_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
+
                             <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
                                  id="div-city_id">
                                 <div class="form-group">
@@ -361,12 +370,23 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-8 {{ !$this->detectIfCountryBrSelected() ? '' : 'd-none' }}">
                                 <div class="form-group">
                                     <label for="other_city">Cidade*</label>
-                                    <input type="text" class="form-control text-uppercase"
+                                    <input type="text"
+                                           class="form-control text-uppercase @error('other_city') is-invalid @endError"
                                            name="other_city" id="other_city" wire:model="other_city"
                                         {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
+                                </div>
+
+                                <div>
+                                    @error('other_city')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
 
@@ -374,30 +394,60 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Email*</label>
-                                    <input type="text" class="form-control text-uppercase"
+                                    <input type="text"
+                                           class="form-control text-uppercase @error('responsible_email') is-invalid @endError"
                                            name="responsible_email" id="responsible_email"
                                            wire:model="responsible_email"
                                     />
+                                </div>
+
+                                <div>
+                                    @error('responsible_email')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Confirmação de Email*</label>
-                                    <input type="text" class="form-control text-uppercase"
+                                    <input type="text"
+                                           class="form-control text-uppercase @error('confirm_email') is-invalid @endError"
                                            name="confirm_email" id="confirm_email"
                                            wire:model="confirm_email"
                                     />
+                                </div>
+
+                                <div>
+                                    @error('confirm_email')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Telefone (DD) + Número</label>
-                                    <input  type="text" class="form-control text-uppercase"
+                                    <input type="text"
+                                           class="form-control text-uppercase @error('mobile') is-invalid @endError"
                                            name="mobile" id="mobile"
                                            wire:model="mobile"
                                     />
+                                </div>
+
+                                <div>
+                                    @error('mobile')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
                             <div class="col-lg-6 col-xl-6">
