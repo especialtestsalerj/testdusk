@@ -58,7 +58,7 @@ class Modal extends BaseForm
         'responsible_email' => 'required|email|max:255',
         'confirm_email' => 'required|email|same:responsible_email',
         'mobile' => 'required|string|max:20',
-        'reservation_date' => 'required|date|after_or_equal:today',
+        'reservation_date' => 'required',
         'motive' => 'required|string|max:500',
         'has_disability' => 'required|boolean',
         'disabilities' => 'required_if:has_disability,true|array',
