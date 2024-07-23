@@ -48,6 +48,8 @@ class Modal extends BaseForm
         'sector' => 'required|string|max:255',
         'document_type_id' => 'required|exists:document_types,id',
         'sector_modal_id' => 'required|exists:sectors,id',
+        'country_id' => 'required|exists:countries,id',
+        'state_id' => 'required|exists:states,id',
         'building_id' => 'required|exists:buildings,id',
         'document_number' => 'required|string|max:255',
         'full_name' => 'required|string|max:255',
@@ -56,8 +58,9 @@ class Modal extends BaseForm
         'confirm_email' => 'required|email|same:responsible_email',
         'mobile' => 'required|string|max:20',
         'reservation_date' => 'required|date|after_or_equal:today',
-        'motive' => 'nullable|string|max:500',
+        'motive' => 'required|string|max:500',
         'has_disability' => 'required|boolean',
+        'disabilities' => 'required_if:has_disability,true|array',
         'capacity_id' => 'required|exists:capacities,id',
     ];
 
@@ -72,7 +75,7 @@ class Modal extends BaseForm
 
     public function cleanModal()
     {
-        $this->reset();
+        $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities');
         $this->resetErrorBag();
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->select2SetReadOnly('city_id', false);
@@ -130,16 +133,11 @@ class Modal extends BaseForm
         }
     }
 
-    public function updatedSectorId($newValue)
+    public function updatedSectorModalId()
     {
-        if (is_null($newValue)) {
-            return;
+        $this->reset('reservation_date', 'capacity_id', 'capacities');
 
-        }
-        $this->loadDates();
-        $this->emit('blockedDatesUpdated', $this->blockedDates);
     }
-
 
     public function updatedReservationDate($newValue)
     {

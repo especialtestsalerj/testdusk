@@ -36,12 +36,12 @@
                             <div class="form-group col-md-6">
                                 <label for="sector_modal_id" style="margin-left: 10px;"
                                        class="form-label">Setor:</label>
-                                <div wire:ignore>
-                                    <select class="select2 form-control text-uppercase"
-                                            @error('sector_modal_id') is-invalid @endError
-                                            name="sector_modal_id" id="sector_modal_id"
-                                            wire:model="sector_modal_id" x-ref="sector_modal_id"
-                                            wire:change="loadDates">
+                                <div>
+                                    <select
+                                        class="form-control text-uppercase @error('sector_modal_id') is-invalid @endError"
+                                        name="sector_modal_id" id="sector_modal_id"
+                                        wire:model="sector_modal_id" x-ref="sector_modal_id"
+                                        wire:change="loadDates">
 
                                         <option value="">SELECIONE</option>
                                         @foreach ($sectors as $sector)
@@ -54,6 +54,7 @@
                                     <input type="hidden" name="sector_id" value="{{$this->sector_modal_id}}"
                                            wire:model="sector_modal_id"/>
                                 </div>
+
                                 <div>
                                     @error('sector_modal_id')
                                     <small class="text-danger">
@@ -68,20 +69,37 @@
                             <div class="form-group col-md-3">
                                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da
                                     Visita *</label>
-                                <input type="button" class="form-control "
+
+                                <input type="button"
+                                       class="form-control  @error('reservation_date') is-invalid @endError"
                                        id="reservation_date"
                                        value="{{$this->reservation_date}}"
                                        wire:model="reservation_date"
+                                       @if(!$sector_modal_id) disabled @endif
                                        x-ref="reservation_date">
+
+                                <div>
+                                    @error('reservation_date')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
+
                             <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}"
                                    wire:model="reservation_date"/>
+
                             <div class="form-group col-md-3">
-                                <label for="reservation_time" style="margin-left: 10px;" class="form-label">Hora da
+                                <label for="capacity_id" style="margin-left: 10px;" class="form-label">Hora da
                                     Visita *</label>
-                                <select class="form-control text-uppercase"
+
+                                <select class="form-control text-uppercase @error('capacity_id') is-invalid @endError"
                                         name="capacity_id" id="capacity_id"
-                                        wire:model="capacity_id" x-ref="capacity_id">
+                                        wire:model="capacity_id" x-ref="capacity_id"
+                                        @if(!$reservation_date) disabled @endif
+                                >
 
                                     <option value="">SELECIONE</option>
                                     @foreach ($this->capacities as $capacitiy)
@@ -91,28 +109,57 @@
                                     @endforeach
                                 </select>
 
+                                <div>
+                                    @error('capacity_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
+
                             </div>
 
 
                             <div class="form-group col-12">
                                 <label for="motive" style="margin-left: 10px;" class="form-label">Motivo da
                                     Visita*</label>
-                                <textarea id="motive" name="motive" class="form-control" wire:model="motive">
-
+                                <textarea id="motive" name="motive"
+                                          class="form-control @error('motive') is-invalid @endError"
+                                          wire:model="motive">
                                     </textarea>
+
+                                <div>
+                                    @error('motive')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="document_type_id">Tipo de Documento*</label>
-                                    <select class="form-control text-uppercase"
-                                            name="document_type_id" id="document_type_id"
-                                            wire:model.lazy="document_type_id" x-ref="document_type_id">
+                                    <select
+                                        class="form-control text-uppercase @error('document_type_id') is-invalid @endError"
+                                        name="document_type_id" id="document_type_id"
+                                        wire:model.lazy="document_type_id" x-ref="document_type_id">
                                         <option value="">SELECIONE</option>
                                         <option value="1">CPF</option>
                                         <option value="2">Passaporte</option>
                                     </select>
+                                </div>
+
+                                <div>
+                                    @error('document_type_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
 
@@ -120,10 +167,20 @@
                                 <div class="form-group">
 
                                     <label for="document_number">Número do Documento*</label>
-                                    <input class="form-control text-uppercase"
-                                           name="document_number" id="document_number"
-                                           wire:model="document_number" x-ref="document_number"
-                                           type="text"/>
+                                    <input
+                                        class="form-control text-uppercase @error('document_number') is-invalid @endError"
+                                        name="document_number" id="document_number"
+                                        wire:model="document_number" x-ref="document_number"
+                                        type="text"/>
+                                </div>
+
+                                <div>
+                                    @error('document_number')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
                                 </div>
                             </div>
 
@@ -131,12 +188,23 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="full_name">Nome Completo*</label>
-                                    <input type="text" class="form-control text-uppercase"
+                                    <input type="text"
+                                           class="form-control text-uppercase @error('full_name') is-invalid @endError"
                                            name="full_name" id="full_name"
                                            wire:model="full_name"
                                     />
                                 </div>
+
+                                <div>
+                                    @error('full_name')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="social_name">Nome Social</label>
@@ -148,25 +216,38 @@
                             </div>
 
 
-                            <div class="col-md-4">
-                                <div class="col-md-12">
+                            <div class="col-12 row">
+                                <div class="col-md-4">
+
                                     <div class="form-group">
                                         <label for="has_disability">Possui deficiência?</label>
-                                        <select class="form-select text-uppercase" name="has_disability"
-                                                id="has_disability"
-                                                wire:model="has_disability"
-                                                x-ref="has_disability" @disabled(request()->query('disabled'))>
+                                        <select
+                                            class="form-select text-uppercase @error('has_disability') is-invalid @endError"
+                                            name="has_disability"
+                                            id="has_disability"
+                                            wire:model="has_disability"
+                                            x-ref="has_disability" @disabled(request()->query('disabled'))>
                                             <option value="">
                                                 SELECIONE
                                             </option>
-                                            <option value="true">SIM</option>
-                                            <option value="false">NÃO</option>
+                                            <option value="1">SIM</option>
+                                            <option value="0">NÃO</option>
                                         </select>
                                     </div>
+
+                                    <div>
+                                        @error('has_disability')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                @if($has_disability == 'true')
+
+                                <div class="col-md-8 {{toBoolean($has_disability) ? '' : 'd-none'}}">
+
                                     <div class="form-group">
                                         <label for="disabilities">Tipo de Deficiência*</label>
                                         <br/>
@@ -182,7 +263,16 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                @endif
+
+                                    <div>
+                                        @error('disabilities')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -203,7 +293,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div>
+                                    @error('country_id')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
+
                             <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
                                  id="div-state_id">
                                 <div class="form-group">
@@ -333,15 +432,9 @@
                                 // document.getElementById('reservation_date').removeAttribute('readonly');
                             }
 
-                            @if(!isset($reservation))
                             $('#reservation-modal').on('shown.bs.modal', function () {
                                 initializeFlatpickr();
                             });
-                            @else
-                            $('#reservation-modal_{{$reservation->id}}').on('shown.bs.modal', function () {
-                                initializeFlatpickr();
-                            });
-                            @endif
 
                             Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
                                 blockedDates = newBlockedDates || [];
