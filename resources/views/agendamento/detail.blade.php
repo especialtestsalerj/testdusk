@@ -1,7 +1,7 @@
 
 
 
-@extends('layouts.app')
+@extends('layouts.booking-talwind')
 @section('content')
 
 Sua reserva foi solicitada com sucesso:

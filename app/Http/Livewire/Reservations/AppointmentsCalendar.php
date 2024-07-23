@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Reservation;
+namespace App\Http\Livewire\Reservations;
 
 use App\Models\Reservation;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
-use Carbon\Carbon;
 use Illuminate\Support\Collection as Collection;
-use Livewire\Component;
 
 class AppointmentsCalendar extends LivewireCalendar
 {

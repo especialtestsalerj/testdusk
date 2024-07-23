@@ -5,7 +5,7 @@
     </div>
 
     <form name="formulario" id="formulario"
-          action="{{ route('reservation.store')}}" method="POST">
+          action="{{ route('reservations.store')}}" method="POST">
         @csrf
         <div class="row mt-3">
 

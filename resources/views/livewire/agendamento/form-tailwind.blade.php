@@ -14,7 +14,7 @@
 
 
                     <form name="formulario" id="formulario"
-                          action="{{ route('reservation.store')}}" method="POST">
+                          action="{{ route('agendamento.store')}}" method="POST">
 
                         @csrf
 
@@ -142,7 +142,7 @@
                             <div class="w-1/5">
                                 <label for="has_disability"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Possui deficiência? = {{$has_disability}}
+                                    Possui deficiência?
                                 </label>
                                 <select
                                     name="has_disability" id="has_disability"

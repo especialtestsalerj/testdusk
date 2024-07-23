@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Reservations;
+namespace App\Http\Livewire\Agendamento;
 
-use App\Http\Livewire\Reservation\Form;
-use Livewire\Component;
+use App\Http\Livewire\Reservations\Form;
 
 class FormGroup extends Form
 {
@@ -14,7 +13,7 @@ class FormGroup extends Form
         $this->loadCountryBr();
         $this->loadDefaultLocation();
 
-        return view('livewire.reservations.form-group')->with($this->getViewVariables());
+        return view('livewire.agendamento.form-group')->with($this->getViewVariables());
     }
 
     public function addInput()

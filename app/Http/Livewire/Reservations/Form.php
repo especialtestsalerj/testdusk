@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Reservation;
+namespace App\Http\Livewire\Reservations;
 
-use App\Data\Repositories\Buildings;
 use App\Data\Repositories\Countries as CountriesRepository;
 use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
 use App\Data\Repositories\DocumentTypes;
@@ -14,8 +13,6 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Sector;
-use App\Models\Capacity;
-use Livewire\Component;
 
 class Form extends BaseForm
 {

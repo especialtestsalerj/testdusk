@@ -30,7 +30,8 @@
                         </div>
                     </div>
                     <form name="formulario" id="formulario"
-                          action="{{ route('reservation.store')}}" method="POST">
+{{--                          action="{{ route('reservation.store')}}" method="POST"--}}
+                    >
                         @csrf
                         <!-- Estilo Customizado para Flatpickr -->
                         <style>

@@ -14,7 +14,7 @@
 
 
                     <form name="formulario" id="formulario"
-                          action="{{ route('reservation.store')}}" method="POST">
+                          action="{{ route('agendamento.store')}}" method="POST">
 
                         @csrf
 
@@ -142,7 +142,7 @@
                             <div class="w-1/5">
                                 <label for="has_disability"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Possui deficiência? = {{$has_disability}}
+                                    Possui deficiência?
                                 </label>
                                 <select
                                     name="has_disability" id="has_disability"
@@ -326,17 +326,17 @@
                                     @foreach($inputs as $index => $input)
                                         <tr>
                                             <td>
-                                                <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs.{{ $index }}.name">
+                                                <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs[{{ $index }}][name]">
                                             </td>
                                             <td>
-                                                <select wire:model="inputs.{{ $index }}.documentType" name="inputs.{{ $index }}.documentType">
+                                                <select wire:model="inputs.{{ $index }}.documentType" name="inputs[{{ $index }}][documentType]">
                                                     <option value="">Tipo de documento</option>
                                                     <option value="1">CPF</option>
                                                     <option value="2">Passaporte</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.cpf" name="inputs.{{ $index }}.cpf">
+                                                <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.document" name="inputs[{{ $index }}][document]">
                                             </td>
                                             <td>
 
