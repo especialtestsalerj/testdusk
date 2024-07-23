@@ -10,6 +10,7 @@ use App\Data\Repositories\States as StatesRepository;
 use App\Data\Repositories\Users;
 use App\Http\Livewire\BaseForm;
 use App\Http\Livewire\Traits\Addressable;
+use App\Http\Livewire\Traits\Maskable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Sector;
@@ -17,7 +18,7 @@ use Livewire\Component;
 
 class Modal extends BaseForm
 {
-    use Addressable;
+    use Addressable, Maskable;
 
     protected $listeners = ['associateUserInSector'];
     public $users;
@@ -66,6 +67,7 @@ class Modal extends BaseForm
 
     public function render()
     {
+        $this->applyMasks();
         $this->loadCountryBr();
         $this->loadDefaultLocation();
 

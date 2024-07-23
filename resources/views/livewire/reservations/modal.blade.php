@@ -1,6 +1,26 @@
-<div>
+<div
+    x-init=""
+    x-data=""
+    @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
+    @change-mask.window="
+     setTimeout(() => {
+        // console.log($event); console.log($refs[$event.detail.ref]);
+        if($refs[$event.detail.ref]) {
+            if($event.detail.mask){
+                //console.log('changed mask of '+$refs[$event.detail.ref]+' to '+$event.detail.mask)
+                VMasker($refs[$event.detail.ref]).maskPattern($event.detail.mask);
+            }else{
+                var fieldValue = $refs[$event.detail.ref].value;
+                VMasker($refs[$event.detail.ref]).unMask();
 
-    @include('layouts.msg')
+                // Set the stored value back into the input field
+                $refs[$event.detail.ref].value = fieldValue;
+            }
+         }
+
+        }, 500);
+     "
+>
     <div wire:ignore.self class="modal fade modal-lg" id="reservation-modal"
          tabindex="-1" role="dialog"
          aria-labelledby="capacityModalLabel" aria-hidden="true">
@@ -374,7 +394,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="full_name">Telefone (DD) + Número</label>
-                                    <input type="text" class="form-control text-uppercase"
+                                    <input  type="text" class="form-control text-uppercase"
                                            name="mobile" id="mobile"
                                            wire:model="mobile"
                                     />
