@@ -78,6 +78,13 @@ class Agendamento extends BaseController
 
         ];
 
+        $data['guests'] = json_encode($request->input('inputs', []));
+
+
+
+            // Faça algo com os dados, como salvar no banco de dados
+
+
 
 //        dd($person);
 
@@ -85,10 +92,17 @@ class Agendamento extends BaseController
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>json_encode($person), ]);
 
 
-        app(ReservationRepository::class)->create($data);
 
-        return redirect()
-            ->route('agendamento.detail')
-            ->with('message', 'Setor adicionado com sucesso!');
+        $reservation = app(ReservationRepository::class)->create($data);
+
+        return view('agendamento.detail')
+            ->with(['message'=> 'Setor adicionado com sucesso!',
+                    'reservation' =>$reservation]);
+    }
+
+
+    public function detail()
+    {
+        return view('agendamento.detail');
     }
 }
