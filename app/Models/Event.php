@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Scopes\InCurrentBuilding;
+use App\Notifications\EventNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'routine_id',
@@ -33,6 +35,10 @@ class Event extends Model
     {
         parent::boot();
         static::addGlobalScope(new InCurrentBuilding());
+
+        static::created(function ($event) {
+            $event->notify(new EventNotification($event));
+        });
     }
 
     public function eventType()
@@ -63,5 +69,10 @@ class Event extends Model
     public function attachedFiles()
     {
         return $this->morphMany(AttachedFile::class, 'fileable');
+    }
+
+    public function routeNotificationForMail($notification)
+    {
+        return 'sigvisitas.ocorrencias@alerj.rj.gov.br';
     }
 }
