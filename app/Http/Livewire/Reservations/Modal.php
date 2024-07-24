@@ -47,6 +47,7 @@ class Modal extends BaseForm
     public $capacities = [];
     public $disabilities = [];
     public $reservation;
+    public $reservationId;
 
     protected $validationAttributes = [
         'user_id' => 'Usuário',
@@ -165,19 +166,36 @@ class Modal extends BaseForm
             'disabilities' => $this->disabilities
         ];
 
-        $data = array_merge($data, [
-            'reservation_type_id' => '1',
-            'code' => generate_code(),
-            'reservation_status_id' => '1',
-            'person' => json_encode($person),
-        ]);
+        $data['person'] = json_encode($person);
 
-        app(ReservationRepository::class)->create($data);
+        if (!$this->reservationId) {
+            $data['reservation_type_id'] = '1';
+            $data['code'] = generate_code();
+            $data['reservation_status_id'] = '1';
+
+            app(ReservationRepository::class)->create($data);
+            $this->swallSuccess('Novo Agendamento Adicionado com Sucesso.');
+
+        } else {
+            $reservation = Reservation::find($this->reservationId);
+            if ($reservation) {
+                $reservation->update($data);
+                $this->swallSuccess('Agendamento Atualizado com Sucesso.');
+            } else {
+                $this->swallError('Agendamento não encontrado.');
+            }
+        }
 
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->emit('associated-sector-user', $this->sector_modal_id);
         $this->cleanModal();
-        $this->swallSuccess('Novo Agendamento Adicionado com Sucesso.');
+    }
+
+    public function updatedHasDisability()
+    {
+        if (boolval($this->has_disability)) {
+            $this->reset('disabilities');
+        }
     }
 
     protected function getComponentVariables()
@@ -226,6 +244,7 @@ class Modal extends BaseForm
 
     public function fill($reservationId)
     {
+        $this->reservationId = $reservationId;
         $reservation = Reservation::find($reservationId);
         if ($reservation) {
             $person = json_decode($reservation->person, true);
