@@ -24,33 +24,29 @@
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+    {{--    <script src="https://cdn.tailwindcss.com"></script>--}}
     @include('layouts.partials.environment')
     @livewireStyles
 
 </head>
-<body class="bg-light">
+<body>
 <div id="app">
 
-
-    <main class="py-0" >
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col">
+    <main class="py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center">
+                <div class="w-full">
                     @yield('content')
                     @if(isset($slot))
                         {{ $slot }}
-                    @endIf
+                    @endif
                 </div>
             </div>
         </div>
     </main>
 
-
-   {{-- @include('layouts.partials.footer')--}}
-
+    {{-- @include('layouts.partials.footer')--}}
 
 </div>
 
