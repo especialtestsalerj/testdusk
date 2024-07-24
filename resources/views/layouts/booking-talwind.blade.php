@@ -26,11 +26,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
     {{--    <script src="https://cdn.tailwindcss.com"></script>--}}
-    @include('layouts.partials.environment')
     @livewireStyles
-
 </head>
+
+
 <body>
+
+<script>
+    window.laravel = @json($environment)
+</script>
+
+<script>
+    window.laravel = @json($environment)
+</script>
+
+@if (!app()->environment('production') || config('app.debug'))
+    <div class="bg-red-600 text-white text-center py-2">
+        {{ app()->environment() }}
+
+        @if (config('app.debug'))
+            - debug mode
+        @endif
+    </div>
+@endif
+
 <div id="app">
 
     <main class="py-4">
@@ -46,7 +65,6 @@
         </div>
     </main>
 
-    {{-- @include('layouts.partials.footer')--}}
 
 </div>
 
