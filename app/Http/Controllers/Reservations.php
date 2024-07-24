@@ -98,11 +98,6 @@ class Reservations extends BaseController
         return view('reservations.calendar');
     }
 
-    public function detail()
-    {
-        return view('reservations.detail');
-    }
-
     public function associateUser()
     {
         return view('reservations.association');

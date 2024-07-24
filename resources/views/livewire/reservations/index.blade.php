@@ -94,14 +94,19 @@
                                     <div class="col-12 col-lg-9">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-6 col-lg-5 text-center text-lg-start">
-                                                <span
-                                                    class="fw-bold">Visitante:</span> {{json_decode($reservation['person'])->full_name}}
-                                                @if($reservation->quantity >1)
-                                                <span class="badge bg-danger rounded-circle more-destinys" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>8º ANDAR - 801 - GAB. PRESIDÊNCIA</div><div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>4º ANDAR - 401 - GAB. DEP. RODRIGO BACELLAR</div>">
-                                                            +{{$reservation->quantity-1}}
-                                                        </span>
+                                                <span class="fw-bold">Visitante:</span> {{ json_decode($reservation['person'])->full_name }}
+                                                @if($reservation->quantity > 1)
+                                                    <span class="badge bg-danger rounded-circle more-destinys"
+                                                          data-bs-toggle="tooltip"
+                                                          data-bs-placement="top"
+                                                          data-bs-custom-class="custom-tooltip"
+                                                          data-bs-html="true"
+                                                          data-bs-title="<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>teste</div>">
+            +{{ $reservation->quantity - 1 }}
+        </span>
+
                                                     <label class="badge bg-info">Grupo</label>
-                                                    @endif
+                                                @endif
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span

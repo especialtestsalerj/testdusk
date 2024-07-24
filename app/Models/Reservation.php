@@ -22,6 +22,7 @@ class Reservation extends Model
         'capacity_id',
         'sector_id',
         'person',
+        'guests',
         'quantity',
         'reservation_status_id',
         'reservation_status',
@@ -32,6 +33,7 @@ class Reservation extends Model
 
     protected $casts = [
         'person' => 'array',
+        'guests' => 'array',
     ];
 
     protected $dates = [
@@ -128,7 +130,6 @@ class Reservation extends Model
 
     public function routeNotificationForMail($notification)
     {
-//        dd($this->responsible_email);
         return $this->responsible_email;
     }
 }

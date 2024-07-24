@@ -10,7 +10,7 @@ Route::group(['prefix' => 'agendamento'], function () {
     Route::post('/',[Agendamento::class,'store'])
         ->name('agendamento.store');
     Route::get('/detalhes', [Agendamento::class,'detail'])
-        ->name('reservations.detail');
+        ->name('agendamento.detail');
 
     Route::group(['prefix' => 'agendamento-individual'], function () {
 
