@@ -83,7 +83,7 @@ class Modal extends BaseForm
             'full_name' => 'required|string|max:255',
             'social_name' => 'nullable|string|max:255',
             'responsible_email' => 'required|email|max:255',
-            'confirm_email' => 'required|email', //|same:responsible_email
+            'confirm_email' => 'required|email|same:responsible_email',
             'mobile' => 'required|string|max:20',
             'reservation_date' => 'required',
             'motive' => 'required|string|max:500',
