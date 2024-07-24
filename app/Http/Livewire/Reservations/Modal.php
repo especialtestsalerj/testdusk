@@ -175,6 +175,7 @@ class Modal extends BaseForm
 
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
         $this->emit('associated-sector-user', $this->sector_modal_id);
+        $this->cleanModal();
         $this->swallSuccess('Novo Agendamento Adicionado com Sucesso.');
     }
 
