@@ -395,7 +395,7 @@
                                 <div class="form-group">
                                     <label for="full_name">Email*</label>
                                     <input type="text"
-                                           class="form-control text-uppercase @error('responsible_email') is-invalid @endError"
+                                           class="form-control @error('responsible_email') is-invalid @endError"
                                            name="responsible_email" id="responsible_email"
                                            wire:model="responsible_email"
                                     />
@@ -415,7 +415,7 @@
                                 <div class="form-group">
                                     <label for="full_name">Confirmação de Email*</label>
                                     <input type="text"
-                                           class="form-control text-uppercase @error('confirm_email') is-invalid @endError"
+                                           class="form-control @error('confirm_email') is-invalid @endError"
                                            name="confirm_email" id="confirm_email"
                                            wire:model="confirm_email"
                                     />

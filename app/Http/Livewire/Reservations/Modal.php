@@ -13,6 +13,7 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Http\Livewire\Traits\Maskable;
 use App\Models\BlockedDate;
 use App\Models\Country;
+use App\Models\Reservation;
 use App\Rules\ValidCPF;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -23,7 +24,7 @@ class Modal extends BaseForm
 {
     use Addressable, Maskable;
 
-    protected $listeners = ['associateUserInSector'];
+    protected $listeners = ['associateUserInSector', 'editReservation'];
     public $users;
     public $sector;
     public $user_id;
@@ -82,7 +83,7 @@ class Modal extends BaseForm
             'full_name' => 'required|string|max:255',
             'social_name' => 'nullable|string|max:255',
             'responsible_email' => 'required|email|max:255',
-            'confirm_email' => 'required|email', //|same:responsible_email
+            'confirm_email' => 'required|email|same:responsible_email',
             'mobile' => 'required|string|max:20',
             'reservation_date' => 'required',
             'motive' => 'required|string|max:500',
@@ -165,15 +166,15 @@ class Modal extends BaseForm
         ];
 
         $data = array_merge($data, [
-            'reservation_type_id'=> '1',
+            'reservation_type_id' => '1',
             'code' => generate_code(),
-            'reservation_status_id'=> '1',
+            'reservation_status_id' => '1',
             'person' => json_encode($person),
         ]);
 
         app(ReservationRepository::class)->create($data);
 
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->emit('associated-sector-user', $this->sector_modal_id);
         $this->cleanModal();
         $this->swallSuccess('Novo Agendamento Adicionado com Sucesso.');
@@ -213,6 +214,40 @@ class Modal extends BaseForm
         } else {
             $this->blockedDates = [];
 
+        }
+    }
+
+    public function editReservation($reservationId)
+    {
+        $this->cleanModal();
+        $this->fill($reservationId);
+        $this->dispatchBrowserEvent('show-modal', ['target' => 'reservation-modal']);
+    }
+
+    public function fill($reservationId)
+    {
+        $reservation = Reservation::find($reservationId);
+        if ($reservation) {
+            $person = json_decode($reservation->person, true);
+            $this->user_id = $reservation->user_id;
+            $this->sector_modal_id = $reservation->sector_id;
+            $this->motive = $reservation->motive;
+            $this->reservation_date = Carbon::parse($reservation->reservation_date)->format('d/m/Y');
+            $this->updatedReservationDate($this->reservation_date);
+            $this->full_name = $person['full_name'] ?? $this->full_name;;
+            $this->social_name = $person['social_name'] ?? $this->social_name;
+            $this->document_type_id = $person['document_type_id'] ?? $this->document_type_id;
+            $this->document_number = $person['document_number'] ?? $this->document_number;
+            $this->country_id = $person['country_id'] ?? $this->country_id;
+            $this->state_id = $person['state_id'] ?? $this->state_id;
+            $this->city_id = $person['city_id'] ?? $this->city_id;
+            $this->other_city = $person['other_city'] ?? $this->other_city;
+            $this->responsible_email = $person['email'] ?? $this->responsible_email;
+            $this->confirm_email = $person['email'] ?? $this->responsible_email;
+            $this->mobile = $person['mobile'] ?? $this->mobile;
+            $this->has_disability = $person['has_disability'] ?? $this->has_disability;
+            $this->disabilities = $person['disabilities'] ?? $this->disabilities;
+            $this->capacity_id = $reservation->capacity_id;
         }
     }
 

@@ -131,4 +131,9 @@ class Index extends BaseIndex
         $this->selectedReservation->save();
     }
 
+    public function editReservation($reservationId)
+    {
+        $this->emit('editReservation', $reservationId);
+    }
+
 }
