@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::table('reservations', function (Blueprint $table) {
             $table->integer('group_id')->nullable()->change();
             $table->json('person');
-//            $table->dropColumn('person_id');
             $table->dropColumn('reservation_time');
             $table->longText('motive')->nullable();
             $table
