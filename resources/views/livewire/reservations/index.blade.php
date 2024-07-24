@@ -156,16 +156,16 @@
 
                                         </a>
                                         <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal"
-{{--                                                data-bs-target="#reservation-modal_{{$reservation->id}}" --}}
                                                 title="Alterar Visita"
                                                 @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO' )
                                                     disabled="disabled"
                                                 @endif
                                                 dusk="finishRoutine"
+                                                wire:click="editReservation({{$reservation->id}})"
                                                 >
                                             <i class="fa-solid fa-calendar-days"></i> Alterar
                                         </button>
-{{--                                        <livewire:reservations.modal :wire:key="'reservation-form-'.$reservation->id" :reservation="$reservation" />--}}
+
                                         <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal"
                                                 title="Confirmar reserva"
                                                 @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO')
@@ -175,6 +175,7 @@
                                                 wire:click="prepareForConfirmReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-circle-check"></i> Confirmar
                                         </button>
+
                                         <button type="button" class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
                                                 title="Cancelar Rotina"
                                                 @if(!($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO' ||
