@@ -12,10 +12,10 @@
         </div>
 
         <div class="col-4 col-md-8 align-self-center d-flex justify-content-end gap-4">
-            <a id="novo" href="{{route('reservation.form-from-user')}}" class="btn btn-primary text-white float-right"
-               title="Nova Reserva">
-                <i class="fa fa-plus"></i> Nova
-            </a>
+            <span class="btn btn-sm btn-primary text-white"
+                  data-bs-toggle="modal" data-bs-target="#reservation-modal" title="Novo Documento">
+                                <i class="fa fa-plus"></i> Novo
+            </span>
         </div>
 
         <div class="row align-items-center pt-3">
@@ -28,7 +28,7 @@
                         <option value="">SELECIONE</option>
                         @foreach ($sectors as $sector)
                             <option value="{{ $sector->id ?? $sector['id'] }}">
-                                {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
+                                {{ convert_case($sector->alias ?? $sector['alias'], MB_CASE_UPPER) }}
                             </option>
                         @endforeach
                     </select>
@@ -39,7 +39,7 @@
                 <h3 class="me-2"> Status: </h3>
                 <div class="flex-grow-1">
                     <select class="form-control text-uppercase" name="status_id" id="status_id" wire:model="status_id">
-                        <option value="">SELECIONE</option>
+                        <option value="">TODAS AS VISITAS</option>
                         @foreach ($statuses as $status)
                             <option value="{{ $status->id}}">
                                 {{$status->name}}
@@ -83,7 +83,8 @@
 
     <div>
         @if($this->sector_id)
-            <div class="row">
+            <div class="row" wire:poll>
+
                 @forelse ($reservations as $reservation)
 
                     <div class="cards-striped mx-lg-0 mt-lg-2 my-2">
@@ -92,9 +93,20 @@
                                 <div class="row d-flex align-items-center">
                                     <div class="col-12 col-lg-9">
                                         <div class="row d-flex align-items-center">
-                                            <div class="col-4 col-lg-3 text-center text-lg-start">
-                                                <span
-                                                    class="fw-bold">Visitante:</span> {{json_decode($reservation['person'])->full_name}}
+                                            <div class="col-6 col-lg-5 text-center text-lg-start">
+                                                <span class="fw-bold">Visitante:</span> {{ json_decode($reservation['person'])->full_name }}
+                                                @if($reservation->quantity > 1)
+                                                    <span class="badge bg-danger rounded-circle more-destinys"
+                                                          data-bs-toggle="tooltip"
+                                                          data-bs-placement="top"
+                                                          data-bs-custom-class="custom-tooltip"
+                                                          data-bs-html="true"
+                                                          data-bs-title="<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>teste</div>">
+            +{{ $reservation->quantity - 1 }}
+        </span>
+
+                                                    <label class="badge bg-info">Grupo</label>
+                                                @endif
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span
@@ -130,7 +142,7 @@
                                         <div class="row d-flex align-items-center">
                                             <div class="col-6 col-lg-6 text-center text-lg-start">
 
-                                                <span class="fw-bold"> Setor:</span> {{$reservation->sector->name}}
+                                                <span class="fw-bold"> Setor:</span> {{$reservation->sector?->name}}
                                             </div>
 
                                         </div>
@@ -148,20 +160,33 @@
                                            title="Gerenciar Rotina">
 
                                         </a>
-                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+                                        <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal"
+                                                title="Alterar Visita"
+                                                @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO' )
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
-                                                wire:click="prepareForChangeDate({{$reservation->id}})">
-                                            <i class="fa-solid fa-calendar-days"></i> Reagendar
+                                                wire:click="editReservation({{$reservation->id}})"
+                                                >
+                                            <i class="fa-solid fa-calendar-days"></i> Alterar
                                         </button>
-                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+
+                                        <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal"
+                                                title="Confirmar reserva"
+                                                @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO')
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForConfirmReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-circle-check"></i> Confirmar
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#finishModal93" title="Finalizar Rotina"
+
+                                        <button type="button" class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
+                                                title="Cancelar Rotina"
+                                                @if(!($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO' ||
+                                                    $reservation->reservationStatus->name == 'VISITA AGENDADA'))
+                                                    disabled="disabled"
+                                                @endif
                                                 dusk="finishRoutine"
                                                 wire:click="prepareForCancelReservation({{$reservation->id}})">
                                             <i class="fa-solid fa-ban"></i> Cancelar
@@ -188,8 +213,11 @@
                         </div>
                     </div>
                 @endforelse
-
+                    <div class="d-flex justify-content-center mt-4">{{ $reservations->links() }}
+                    </div>
                 @endif
+
+            @livewire('reservations.modal')
     </div>
     </div>
 </div>

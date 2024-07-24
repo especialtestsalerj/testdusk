@@ -15,8 +15,8 @@ class Index extends BaseIndex
     protected $repository = ReservationRepository::class;
     protected $model = Reservation::class;
 
-    public $orderByField = ['reservation_date', 'created_at'];
-    public $orderByDirection = ['asc'];
+    public $orderByField = ['reservation_date'];
+    public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
     public $countResults;
     public Reservation $selectedReservation;
@@ -51,8 +51,7 @@ class Index extends BaseIndex
 
     public function mount()
     {
-
-
+        $this->startDate = now()->format('Y-m-d');
     }
 
     public function additionalFilterQuery($query)
@@ -66,11 +65,12 @@ class Index extends BaseIndex
 
     public function filterDates($query)
     {
-        if ($this->startDate) {
+        if ($this->startDate != null) {
             $query->query(function ($query) {
                 $query->where('reservation_date', '>=', $this->startDate);
             });
         }
+
         if ($this->endDate) {
             $query->query(function ($query) {
                 $query->where('reservation_date', '<=', $this->endDate);
@@ -129,6 +129,11 @@ class Index extends BaseIndex
     {
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA CANCELADA')->first()->id;
         $this->selectedReservation->save();
+    }
+
+    public function editReservation($reservationId)
+    {
+        $this->emit('editReservation', $reservationId);
     }
 
 }

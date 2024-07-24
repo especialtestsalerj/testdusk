@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\NoAuth;
 
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 
-class Reservations extends BaseController
+class Agendamento extends BaseController
 {
     public function create()
     {
@@ -42,11 +42,6 @@ class Reservations extends BaseController
         return view('reservations.index')->with('reservations',$reservations);
     }
 
-    public function configuration()
-    {
-        return view('reservations.configuration');
-    }
-
     public function store(AgendamentoStore $request)
     {
 
@@ -62,7 +57,10 @@ class Reservations extends BaseController
 
 
 
-//        dd($data);
+        $group = $request->input('inputs', []);
+
+        $data['quantity'] = count($group) +1;
+
 
         $person = [
             'full_name' => $request->get('full_name'),
@@ -80,27 +78,31 @@ class Reservations extends BaseController
 
         ];
 
+        $data['guests'] = json_encode($request->input('inputs', []));
+
+
+
+            // Faça algo com os dados, como salvar no banco de dados
+
+
+
 //        dd($person);
 
 
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>json_encode($person), ]);
 
 
-        app(ReservationRepository::class)->create($data);
 
-        return redirect()
-            ->route('agendamento.detail')
-            ->with('message', 'Setor adicionado com sucesso!');
+        $reservation = app(ReservationRepository::class)->create($data);
+
+        return view('agendamento.detail')
+            ->with(['message'=> 'Setor adicionado com sucesso!',
+                    'reservation' =>$reservation]);
     }
 
-    public function calendar()
+
+    public function detail()
     {
-        return view('reservations.calendar');
+        return view('agendamento.detail');
     }
-
-    public function associateUser()
-    {
-        return view('reservations.association');
-    }
-
 }

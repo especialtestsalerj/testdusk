@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Reservation;
+namespace App\Http\Livewire\Reservations;
 
-use App\Data\Repositories\Buildings;
 use App\Data\Repositories\Countries as CountriesRepository;
 use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
 use App\Data\Repositories\DocumentTypes;
@@ -14,8 +13,6 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Sector;
-use App\Models\Capacity;
-use Livewire\Component;
 
 class Form extends BaseForm
 {
@@ -50,6 +47,8 @@ class Form extends BaseForm
     public $capacities =[];
 
     public  $disabilities =[];
+
+    public $quantity;
 
 
 
@@ -113,8 +112,6 @@ class Form extends BaseForm
             //Array remove/reduce de exception date.
             //Cadastrar uma tabela de exceções.
 
-
-
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
@@ -122,9 +119,6 @@ class Form extends BaseForm
             $this->blockedDates =[];
 
         }
-
-
-
     }
 
     public function updatedSectorId($newValue)
@@ -135,6 +129,7 @@ class Form extends BaseForm
         }
 
         $this->loadDates();
+        $this->loadHourCapacities();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
     }
 
@@ -189,7 +184,7 @@ class Form extends BaseForm
         }
     }
 
-    private function loadHourCapacities()
+    protected function loadHourCapacities()
     {
 
 

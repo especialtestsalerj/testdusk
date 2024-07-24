@@ -5,13 +5,15 @@
 </head>
 <body>
 <h1>Olá {{json_decode($reservation->person)->full_name}}</h1>
-<p>Sua reserva foi criada com os seguintes detalhes:</p>
+<p>Sua reserva confirmadacom os seguintes detalhes:</p>
 <ul>
     <li>ID da Reserva: {{ $reservation->code }}</li>
     <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
     <li>Setor: {{$reservation->sector?->nickname}}</li>
 </ul>
-<p>Obrigado por usar nosso serviço!</p>
+
+<p><strong>Não se esqueça de levar o ID da Reserva e a sua identidade.</strong></p>
+
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 @extends('layouts.booking-talwind')
 
 @section('content')
-    <livewire:reservation.form-tailwind/>
+    <livewire:agendamento.form-tailwind/>
 @endsection

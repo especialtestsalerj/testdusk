@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reserva Criada</title>
+    <title>Reserva Cancelada</title>
 </head>
 <body>
 <h1>Olá {{json_decode($reservation->person)->full_name}}</h1>
-<p>Sua reserva foi criada com os seguintes detalhes:</p>
-<ul>
-    <li>ID da Reserva: {{ $reservation->code }}</li>
-    <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
-    <li>Setor: {{$reservation->sector?->nickname}}</li>
-</ul>
-<p>Obrigado por usar nosso serviço!</p>
+<p>Infelizmente sua reserva para o dia  {{ date_format($reservation->reservation_date,"d/m/Y") }} foi cancelada para maiores informações, entre em contato com o setor:
+    {{$reservation->sector?->nickname}}</p>
 </body>
 </html>
 
