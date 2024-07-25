@@ -109,10 +109,9 @@ class Modal extends BaseForm
 
     public function cleanModal()
     {
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities');
         $this->resetErrorBag();
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->select2SetReadOnly('city_id', false);
         $this->select2SetReadOnly('sector_modal_id', false);
         $this->select2SetReadOnly('state_id', false);
@@ -186,7 +185,6 @@ class Modal extends BaseForm
             }
         }
 
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->emit('associated-sector-user', $this->sector_modal_id);
         $this->cleanModal();
     }
