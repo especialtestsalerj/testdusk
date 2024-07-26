@@ -28,7 +28,12 @@ class Reservation extends Model
         'reservation_status',
         'responsible_person_type',
         'responsible_name',
-        'responsible_email'
+        'responsible_email',
+        'person_id',
+        'confirmed_by_id',
+        'confimed_at',
+        'canceled_by_id',
+        'canceled_at',
     ];
 
     protected $casts = [
@@ -39,6 +44,8 @@ class Reservation extends Model
     protected $dates = [
         'reservation_date',
         'reservation_time',
+        'confirmed_at',
+        'canceled_at',
     ];
 
     protected $with=['capacity'];
@@ -131,5 +138,27 @@ class Reservation extends Model
     public function routeNotificationForMail($notification)
     {
         return $this->responsible_email;
+    }
+
+    public function personConfirmed(){
+        return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by_id');
+    }
+
+    public function confirmedBy(){
+        return $this->belongsTo(User::class, 'confirmed_by_id');
+    }
+
+    public function canceledBy(){
+        return $this->belongsTo(User::class, 'canceled_by_id');
     }
 }

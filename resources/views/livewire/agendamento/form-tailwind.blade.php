@@ -327,7 +327,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
         document.addEventListener('livewire:load', function () {
-            console.log(@json($blockedDates))
+
             var blockedDates = @json($blockedDates);
             var flatpickrInstance = flatpickr("#reservation_date", {
                 locale: "pt",

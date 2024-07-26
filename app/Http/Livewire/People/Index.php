@@ -5,10 +5,13 @@ namespace App\Http\Livewire\People;
 use App\Data\Repositories\DocumentTypes;
 use App\Data\Repositories\People as PeopleRepository;
 
+use App\Data\Repositories\Reservations;
 use App\Http\Livewire\BaseIndex;
 use App\Http\Livewire\Traits\Badgeable;
 use App\Http\Livewire\Traits\ChangeViewType;
 use App\Http\Livewire\Traits\Checkoutable;
+use App\Models\Reservation;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Index extends BaseIndex
@@ -30,6 +33,8 @@ class Index extends BaseIndex
     protected $listeners = [
         'confirm-checkout-visitor' => 'confirmCheckout',
     ];
+
+    public $reservations;
 
     public function getSearchStringIsCpfProperty()
     {
@@ -61,12 +66,14 @@ class Index extends BaseIndex
 
         $this->countResults =  $query->count();
 
+        $this->loadReservations();
+
         return $query;
     }
 
     public function render()
     {
-        return view('livewire.people.index')->with(['people' => $this->filter(), 'countPeople' => $this->countResults]);
+        return view('livewire.people.index')->with(['people' => $this->filter(),'reservations'=>$this->reservations, 'countPeople' => $this->countResults]);
     }
 
     public function redirectToVisitorsForm()
@@ -80,5 +87,16 @@ class Index extends BaseIndex
                     : ['full_name'=>$this->searchString]
             )
         );
+    }
+
+    private function loadReservations()
+    {
+        $today = Carbon::today()->toDateString();
+
+        // Busca reservas cuja data corresponde a hoje
+        $this->reservations = Reservation::where('reservation_status_id', 2)->whereDate('reservation_date', $today)->get();
+
+
+
     }
 }

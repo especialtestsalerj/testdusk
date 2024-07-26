@@ -227,10 +227,15 @@ class Modal extends BaseForm
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
+
+
         } else {
             $this->blockedDates = [];
 
         }
+        $this->emit('blockedDatesUpdated', $this->blockedDates);
+
+
     }
 
     public function editReservation($reservationId)
