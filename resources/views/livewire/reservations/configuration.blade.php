@@ -19,7 +19,7 @@
                         <option value="">SELECIONE</option>
                         @foreach ($sectors as $sector)
                             <option value="{{ $sector->id ?? $sector['id']}}">
-                                {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
+                                {{ convert_case($sector->alias ?? $sector['alias'], MB_CASE_UPPER) }}
                             </option>
                         @endforeach
                     </select>
@@ -213,7 +213,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            @forelse($sector->users as $user)
+                            @forelse($this->sector->users as $user)
 
                                 <div class="cards-striped mx-lg-0 mt-lg-2">
                                     <div class="card">

@@ -145,6 +145,12 @@
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.configuration') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.configuration') }}">Configurações</a></li>
                                 @endcan
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.form') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
+{{--                                           href="{{ route('reservation.form') }}">Agendamento Bootstrap</a></li>--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.form-tailwind') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
+{{--                                           href="{{ route('reservation.form-tailwind') }}">Agendamento Tailwind</a></li>--}}
                                 @endcan
                             </ul>
                         </li>

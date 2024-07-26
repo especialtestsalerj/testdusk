@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Reservation;
+namespace App\Http\Livewire\Reservations;
 
-use App\Data\Repositories\Buildings;
 use App\Data\Repositories\Countries as CountriesRepository;
 use App\Data\Repositories\DisabilityTypes as DisabilityTypesRepository;
 use App\Data\Repositories\DocumentTypes;
@@ -14,8 +13,6 @@ use App\Http\Livewire\Traits\Addressable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Sector;
-use App\Models\Capacity;
-use Livewire\Component;
 
 class Form extends BaseForm
 {
@@ -33,7 +30,7 @@ class Form extends BaseForm
     public $full_name;
     public $social_name;
 
-    public $email;
+    public $responsible_email;
     public $confirm_email;
     public $mobile;
 
@@ -50,6 +47,8 @@ class Form extends BaseForm
     public $capacities =[];
 
     public  $disabilities =[];
+
+    public $quantity;
 
 
 
@@ -69,18 +68,20 @@ class Form extends BaseForm
 
     public function mount(){
       //  $this->select2SelectOption('sector_id', $this->sector_id);
-
+        Sector::disableGlobalScopes();
+        $this->sectors = app(Sectors::class)->allVisitable();
+        Sector::enableGlobalScopes();
         $this->blockedDates =[];
     }
 
     protected function getComponentVariables()
     {
-//        $disabilityIds = $this->person->disabilities->pluck('id')->toArray();
+
 
 
 
         return [
-            'buildings' => app(Buildings::class)->allActive(),
+//            'buildings' => app(Buildings::class)->allActive(),
             'genders' => app(GendersRepository::class)->allActive(),
             'disabilityTypes' => app(DisabilityTypesRepository::class)->allActive(),
             'countries' => app(CountriesRepository::class)->allActive(),
@@ -89,17 +90,17 @@ class Form extends BaseForm
         ];
     }
 
-    public function loadSectors()
-    {
-        if(!empty($this->building_id)) {
-            Sector::disableGlobalScopes();
-            $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
-            Sector::enableGlobalScopes();
-
-        }else{
-            $this->sectors = [];
-        }
-    }
+//    public function loadSectors()
+//    {
+//        if(!empty($this->building_id)) {
+//            Sector::disableGlobalScopes();
+//            $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
+//            Sector::enableGlobalScopes();
+//
+//        }else{
+//            $this->sectors = [];
+//        }
+//    }
 
     public function loadDates()
     {
@@ -111,8 +112,6 @@ class Form extends BaseForm
             //Array remove/reduce de exception date.
             //Cadastrar uma tabela de exceções.
 
-
-
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
@@ -120,9 +119,6 @@ class Form extends BaseForm
             $this->blockedDates =[];
 
         }
-
-
-
     }
 
     public function updatedSectorId($newValue)
@@ -133,6 +129,7 @@ class Form extends BaseForm
         }
 
         $this->loadDates();
+        $this->loadHourCapacities();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
     }
 
@@ -187,7 +184,7 @@ class Form extends BaseForm
         }
     }
 
-    private function loadHourCapacities()
+    protected function loadHourCapacities()
     {
 
 
@@ -195,12 +192,18 @@ class Form extends BaseForm
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
             $this->capacities =  \DB::table('capacities as c')
-                ->select('c.id', \DB::raw("c.hour || ' (' || (c.maximum_capacity - (
+                ->select('c.id', \DB::raw("c.hour, c.hour || ' (' || (c.maximum_capacity - (
             select count(*) from reservations r
             where r.sector_id = c.sector_id
               and r.reservation_date = '$date'
               and r.capacity_id = c.id)) || ' vagas)' as maximum_capacity"))
                 ->where('c.sector_id', $this->sector_id)
+                ->having(\DB::raw("(c.maximum_capacity - (
+        select count(*) from reservations r
+        where r.sector_id = c.sector_id
+          and r.reservation_date = '$date'
+          and r.capacity_id = c.id))"), '>', 0)
+                ->groupBy('c.id', 'c.hour', 'c.maximum_capacity')
                 ->orderBy('c.hour')
                 ->get();
         }

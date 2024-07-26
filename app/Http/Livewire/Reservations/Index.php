@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Reservations;
 
+use App\Data\Repositories\People;
+use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Livewire\BaseIndex;
+use App\Models\Document;
 use App\Models\Reservation;
 use App\Models\ReservationStatus;
 use Carbon\Carbon;
@@ -13,17 +16,20 @@ class Index extends BaseIndex
 {
 
     protected $repository = ReservationRepository::class;
+    protected $model = Reservation::class;
 
-    public $orderByField = ['reservation_date', 'created_at'];
-    public $orderByDirection = ['asc'];
+    public $orderByField = ['reservation_date'];
+    public $orderByDirection = ['desc'];
     public $paginationEnabled = true;
     public $countResults;
-
     public Reservation $selectedReservation;
+    public $startDate;
+    public $endDate;
+    public $status_id;
 
-    public $searchFields = [
-        'people.full_name' => 'text',
-        'people.social_name' => 'text',
+    protected $queryString = [
+        'searchString' => ['except' => ''],
+        'page' => ['except' => 1],
     ];
 
     protected $listeners = [
@@ -36,52 +42,82 @@ class Index extends BaseIndex
 
     protected $reservations;
 
-
     public function render()
     {
-        return view('livewire.reservations.index')->with($this->getComponentVariables());
+        return view('livewire.reservations.index')->with([
+            'reservations' => $this->fullTextFilter(),
+            'sectors' => app(Sectors::class)->allForUser(),
+            'statuses' => ReservationStatus::all(),
+            'countReservations' => $this->countResults,
+        ]);
     }
 
     public function mount()
     {
+        $this->startDate = now()->format('Y-m-d');
+    }
+
+    public function additionalFilterQuery($query)
+    {
+        $query = $this->filterDates($query);
+        $query = $this->filterStatus($query);
+
+        return $query->where('sector.id', $this->sector_id);
+    }
 
 
+    public function filterDates($query)
+    {
+        if ($this->startDate != null) {
+            $query->query(function ($query) {
+                $query->where('reservation_date', '>=', $this->startDate);
+            });
+        }
+
+        if ($this->endDate) {
+            $query->query(function ($query) {
+                $query->where('reservation_date', '<=', $this->endDate);
+            });
+        }
+
+        return $query;
+    }
+
+    public function filterStatus($query)
+    {
+        if ($this->status_id) {
+            $query->where('status.id', $this->status_id);
+        }
+
+        return $query;
     }
 
     public function prepareForConfirmReservation($id)
     {
 
-        $this->selectedReservation = Reservation::where('id',$id)->first();
+        $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Confirmar a reserva?','Deseja Realmente confirmar a solicitação de '.json_decode($this->selectedReservation['person'])->full_name .
-         '  para '. $reservationDate . ' às '. $this->selectedReservation->capacity->hour
-              ,'confirm-reservation', 'save');
-
-        $this->loadReservations();
-
+        $this->emitSwall('Confirmar a reserva?', 'Deseja Realmente confirmar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+            '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour
+            , 'confirm-reservation', 'save');
     }
 
     public function prepareForCancelReservation($id)
     {
-        $this->selectedReservation = Reservation::where('id',$id)->first();
+        $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Deseja Realmente cancelar a solicitação de '.json_decode($this->selectedReservation['person'])->full_name .
-            '  para '. $reservationDate . ' às '. $this->selectedReservation->capacity->hour,
-            'Esta ação não poderá ser cancelada.','cancel-reservation', 'save');
-
-        $this->loadReservations();
+        $this->emitSwall('Deseja Realmente cancelar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+            '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour,
+            'Esta ação não poderá ser cancelada.', 'cancel-reservation', 'save');
 
     }
 
     public function prepareForChangeDate($id)
     {
-        $this->selectedReservation = Reservation::where('id',$id)->first();
-
-
-        $this->swalInput('Teste','text');
-        $this->loadReservations();
+        $this->selectedReservation = Reservation::where('id', $id)->first();
+        $this->swalInput('Teste', 'text');
 
     }
 
@@ -89,42 +125,43 @@ class Index extends BaseIndex
     {
 
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA AGENDADA')->first()->id;
+
+        $personArray = json_decode($this->selectedReservation->person,true);
+        $document = Document::where('number', remove_punctuation($personArray['document_number']) )->first();
+
+        if(is_null($document?->person_id)){
+
+
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
+        $document = Document::firstOrCreate([
+            'number' => convert_case(
+                remove_punctuation($personArray['document_number']),
+                MB_CASE_UPPER)],
+            [
+            'person_id' => $person->id,
+            'document_type_id' =>$personArray['document_type_id'],
+            ]);
+        $this->selectedReservation->person_id = $person->id;
+
+        }else{
+            $this->selectedReservation->person_id = $document->person_id;
+        }
+        $this->selectedReservation->confirmed_at = Carbon::now();
+        $this->selectedReservation->confirmed_by_id = auth()->user()->id;
         $this->selectedReservation->save();
-        $this->loadReservations();
     }
 
     public function cancelReservation()
     {
-
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA CANCELADA')->first()->id;
+        $this->selectedReservation->canceled_at = Carbon::now();
+        $this->selectedReservation->canceled_by_id = auth()->user()->id;
         $this->selectedReservation->save();
-        $this->loadReservations();
     }
 
-    protected function getComponentVariables()
+    public function editReservation($reservationId)
     {
-
-        return ['sectors' =>app(Sectors::class)->allVisitable()];
+        $this->emit('editReservation', $reservationId);
     }
 
-
-    public function updatedSectorId()
-    {
-
-        $this->loadReservations();
-    }
-
-    public function loadReservations()
-    {
-
-        if(!empty($this->sector_id)){
-            $this->reservations = $this->filter();
-        }
-    }
-
-    public function additionalFilterQuery($query){
-
-        return $query->where('sector_id', $this->sector_id);
-
-    }
 }

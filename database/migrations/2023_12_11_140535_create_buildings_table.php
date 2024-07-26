@@ -37,14 +37,14 @@ return new class extends Migration {
                 ->unsigned()
                 ->nullable();
 
-            $table
-                ->foreign('created_by_id')
-                ->references('id')
-                ->on('users');
-            $table
-                ->foreign('updated_by_id')
-                ->references('id')
-                ->on('users');
+//            $table
+//                ->foreign('created_by_id')
+//                ->references('id')
+//                ->on('users');
+//            $table
+//                ->foreign('updated_by_id')
+//                ->references('id')
+//                ->on('users');
 
             $table->boolean('status')->default(true);
 

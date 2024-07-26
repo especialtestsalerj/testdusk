@@ -24,22 +24,13 @@ return new class extends Migration
 
 
             $table
-                ->unsignedBigInteger('created_by_id')
+                ->bigInteger('created_by_id')
                 ->unsigned()
                 ->nullable();
             $table
-                ->foreign('created_by_id')
-                ->references('id')
-                ->on('users');
-
-            $table
-                ->unsignedBigInteger('updated_by_id')
+                ->bigInteger('updated_by_id')
                 ->unsigned()
                 ->nullable();
-            $table
-                ->foreign('updated_by_id')
-                ->references('id')
-                ->on('users');
 
             $table->timestamps();
         });

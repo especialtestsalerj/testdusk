@@ -45,15 +45,19 @@ class Configuration extends BaseForm
     protected function getComponentVariables()
     {
 
-        return ['sectors' =>app(Sectors::class)->allVisitable()];
+        return ['sectors' =>app(Sectors::class)->allForUser()];
     }
 
 
     public function loadCapacities()
     {
+
+
         if(!empty($this->sector_id)) {
             $this->capacities = Capacity::where('sector_id',$this->sector_id)->get();
             $this->sector = Sector::where('id',$this->sector_id)->first();
+
+
         }else{
             $this->capacities = [];
         }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Reservations as Reservations;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Session;
 use Illuminate\Support\Facades\Route;
@@ -23,16 +22,8 @@ Route::get('/logout', [
     'destroy',
 ])->name('logout-get');
 
-Route::group(['prefix' => 'agendamento'], function () {
 
-    Route::get('/', [Reservations::class,'create'])
-        ->name('reservation.form');
-
-    Route::post('/',[Reservations::class,'store'])
-        ->name('reservation.store');
-    Route::get('/detalhes', [Reservations::class,'detail'])
-        ->name('reservation.detail');
-});
+require __DIR__ . '/no-auth/agendamento.php';
 
 Route::group(
     [
