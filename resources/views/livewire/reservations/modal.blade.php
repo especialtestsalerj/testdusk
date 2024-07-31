@@ -169,7 +169,7 @@
                                         wire:model.lazy="document_type_id" x-ref="document_type_id">
                                         <option value="">SELECIONE</option>
                                         <option value="1">CPF</option>
-                                        <option value="2">Passaporte</option>
+                                        <option value="4">Passaporte</option>
                                     </select>
                                 </div>
 
