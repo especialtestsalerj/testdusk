@@ -136,7 +136,7 @@ class Person extends Model
 
     public function restrictions()
     {
-        return $this->HasMany(PersonRestriction::class);
+        return $this->hasMany(PersonRestriction::class);
     }
 
     public function contacts()
@@ -147,5 +147,15 @@ class Person extends Model
     public function isBrazilian()
     {
         return $this->country && $this->country->id === Constants::COUNTRY_BRAZIL_ID;
+    }
+
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class, 'person_id');
+    }
+
+    public function reservationsGuest(): BelongsToMany
+    {
+        return $this->belongsToMany(Reservation::class, 'reservation_person', 'person_id', 'reservation_id');
     }
 }

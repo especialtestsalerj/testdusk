@@ -140,8 +140,14 @@ class Reservation extends Model
         return $this->responsible_email;
     }
 
-    public function personConfirmed(){
+    public function responsible()
+    {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function guests()
+    {
+        return $this->belongsToMany(Person::class, 'reservation_person', 'reservation_id', 'person_id');
     }
 
     public function createdBy()

@@ -132,7 +132,7 @@ class Index extends BaseIndex
         if(is_null($document?->person_id)){
 
 
-        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray['name']);
         $document = Document::firstOrCreate([
             'number' => convert_case(
                 remove_punctuation($personArray['document_number']),
@@ -145,6 +145,35 @@ class Index extends BaseIndex
 
         }else{
             $this->selectedReservation->person_id = $document->person_id;
+        }
+
+
+        if($this->selectedReservation->quantity > 1){
+            $guests = json_decode($this->selectedReservation->guests,true);
+
+            foreach($guests as $guest){
+                $document = Document::where('number', remove_punctuation($guest['document']) )->first();
+                if(is_null($document?->person_id)){
+
+
+                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name'=>$guest['name']]);
+                    $document = Document::firstOrCreate([
+                        'number' => convert_case(
+                            remove_punctuation($guest['document']),
+                            MB_CASE_UPPER)],
+                        [
+                            'person_id' => $person->id,
+                            'document_type_id' =>$guest['documentType'],
+                        ]);
+                    $this->selectedReservation->guests()->attach($person->id);
+
+                }else{
+                    $this->selectedReservation->guests()->attach($document->person_id);
+                }
+            }
+
+
+
         }
         $this->selectedReservation->confirmed_at = Carbon::now();
         $this->selectedReservation->confirmed_by_id = auth()->user()->id;

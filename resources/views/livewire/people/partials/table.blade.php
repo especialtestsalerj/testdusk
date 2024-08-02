@@ -10,14 +10,14 @@
                                 <div class="row d-flex align-items-center pe-0">
                                     <div class="col-9 fw-bolder d-inline-block d-inline-block text-truncate">
                                         <div data-label="Visitante">
-                                            {{ $reservation->personConfirmed->name   }}
+                                            {{ $reservation->responsible->name   }}
                                         </div>
                                     </div>
                                     <div class="col-3 d-flex justify-content-end">
-                                        @if ($reservation->personConfirmed->hasPendingVisitors())
+                                        @if ($reservation->responsible->hasPendingVisitors())
                                             @can(make_ability_name_with_current_building('visitors:checkout'))
                                                 <span class="btn btn-success px-0 py-0 btn-visit-action"
-                                                      wire:click="prepareForCheckout({{ $reservation->personConfirmed->pendingVisit->id }})"
+                                                      wire:click="prepareForCheckout({{ $reservation->responsible->pendingVisit->id }})"
                                                       title="Registrar Saída">
                                                 <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
                                             </span>
@@ -30,7 +30,7 @@
                                 <div class="row">
                                     <div class="col-5 d-flex pe-0" data-label="Foto">
                                         <div class="photo-bg align-items-stretch">
-                                            <img class="w-100 photo-card" src="{{ $reservation->personConfirmed->photoTable }}">
+                                            <img class="w-100 photo-card" src="{{ $reservation->responsible->photoTable }}">
                                         </div>
                                     </div>
                                     <div class="col-7 d-flex flex-column pt-2 visitor-data">
@@ -47,11 +47,11 @@
 
                                         <div class="row">
                                             <div data-label="Documento" class="card-document-list">
-                                                @foreach ($reservation->personConfirmed->documents as $document)
+                                                @foreach ($reservation->responsible->documents as $document)
                                                     <div class="row bg-line-details mb-1">
                                                         <div class="col-10"><span>{{ $document->documentType->name }}</span>:<span class="fw-bold ms-2">{{ $document->numberMaskered }}</span></div>
                                                         <div class="col-2">
-                                                            @if (!$reservation->personConfirmed->hasPendingVisitors())
+                                                            @if (!$reservation->responsible->hasPendingVisitors())
                                                                 @can(make_ability_name_with_current_building('visitors:store'))
                                                                     <a href="{{ route('visitors.create', ['document_id' => $document->id,'reservation_id'=>$reservation->id]) }}"
                                                                        class="btn btn-link px-0 py-0" title="Registrar Entrada">
@@ -66,23 +66,23 @@
                                         </div>
                                         <div class="row card-buttons mt-auto d-flex">
                                             <div class="d-flex justify-content-center">
-                                                @if ($reservation->personConfirmed->hasPendingVisitors())
+                                                @if ($reservation->responsible->hasPendingVisitors())
                                                     <div class="col-3 d-flex justify-content-end">
-                                                    <span class="btn btn-link px-2 py-1" wire:click="generateBadge({{ $reservation->personConfirmed->pendingVisit->id }})" title="Imprimir Etiqueta">
+                                                    <span class="btn btn-link px-2 py-1" wire:click="generateBadge({{ $reservation->responsible->pendingVisit->id }})" title="Imprimir Etiqueta">
                                                         <i class="fa fa-lg fa-print"></i>
                                                     </span>
                                                     </div>
                                                 @endif
                                                 @can('people:show')
                                                     <div class="col-3 d-flex justify-content-end">
-                                                        <a href="{{ route('people.form', ['id' => $reservation->personConfirmed->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link px-2 py-1" title="Detalhar">
+                                                        <a href="{{ route('people.form', ['id' => $reservation->responsible->id, 'redirect' => $redirect, 'disabled' => true]) }}" class="btn btn-link px-2 py-1" title="Detalhar">
                                                             <i class="fa fa-lg fa-search"></i>
                                                         </a>
                                                     </div>
                                                 @endCan
                                                 @can('people:update')
                                                     <div class="col-3 d-flex justify-content-end">
-                                                        <a href="{{ route('people.form', ['id' => $reservation->personConfirmed->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-2 py-1" title="Alterar">
+                                                        <a href="{{ route('people.form', ['id' => $reservation->responsible->id, 'redirect' => $redirect, 'disabled' => false]) }}" class="btn btn-link px-2 py-1" title="Alterar">
                                                             <i class="fa fa-lg fa-pencil"></i>
                                                         </a>
                                                     </div>
