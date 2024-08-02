@@ -22,6 +22,16 @@
                     </h4>
                 </button>
             @endcan
+            @can('menu-agendamento:show')
+                    <button class="nav-link @cannot('menu-portaria:show') active @endcannot px-5" id="nav-security-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-reservation"
+                            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                        <h4>
+                            Agendamento
+                        </h4>
+                    </button>
+            @endcan
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -125,6 +135,15 @@
                 </div>
             @endif
         @endCan
+
+        @can('menu-agendamento:show')
+                <div
+                    class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
+                    id="nav-reservation" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+
+                    
+                </div>
+        @endcan
     </div>
 
 
