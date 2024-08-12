@@ -98,7 +98,7 @@ class Index extends BaseIndex
         $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Confirmar a reserva?', 'Deseja Realmente confirmar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+        $this->emitSwall('Confirmar a reserva?', 'Deseja Realmente confirmar a solicitação de ' . $this->selectedReservation['person']['full_name'] .
             '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour
             , 'confirm-reservation', 'save');
     }
@@ -108,7 +108,7 @@ class Index extends BaseIndex
         $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Deseja Realmente cancelar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+        $this->emitSwall('Deseja Realmente cancelar a solicitação de ' . $this->selectedReservation['person']['full_name'] .
             '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour,
             'Esta ação não poderá ser cancelada.', 'cancel-reservation', 'save');
 
@@ -126,13 +126,12 @@ class Index extends BaseIndex
 
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA AGENDADA')->first()->id;
 
-        $personArray = json_decode($this->selectedReservation->person,true);
+        $personArray = $this->selectedReservation->person;
         $document = Document::where('number', remove_punctuation($personArray['document_number']) )->first();
 
         if(is_null($document?->person_id)){
 
-
-        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray['name']);
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
         $document = Document::firstOrCreate([
             'number' => convert_case(
                 remove_punctuation($personArray['document_number']),

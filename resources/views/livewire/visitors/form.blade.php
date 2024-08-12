@@ -68,7 +68,7 @@
                         <div class="col-12">
                             <h4>
                                 Dados do/a Visitante
-                                @if($this->reservation)
+                                @if(!empty($this->reservation))
                                     <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
                                 @endif
                             </h4>
@@ -82,7 +82,7 @@
                             <div class="col-12">
                                 <h4>
                                     Dados da Visita
-                                    @if($this->reservation)
+                                    @if(!empty($this->reservation))
                                         <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
                                         <input type="hidden" name="reservation_id" value="{{$this->reservation->id}}"
                                     @endif
@@ -117,7 +117,7 @@
                             <div class="col-lg-12 col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="sector_id">Destino*</label>
-                                    @if($this->reservation)
+                                    @if(!empty($this->reservation))
                                        <input type="text" class="form-control" value="{{$this->reservation->sector->name}}" disabled/>
                                         <input type="hidden" name="sector_id[]" value="{{$this->reservation->sector->id}}" >
                                     @else
@@ -166,7 +166,7 @@
                                     <label for="description">Motivo da Visita*</label>
                                     <textarea class="form-control" name="description" id="description" rows="5" wire:ignore
                                               placeholder="Informe detalhes da autorização"
-                                        @include('partials.disabled-by-query-string') >@if($this->reservation)Agemdamento código:{{
+                                        @include('partials.disabled-by-query-string') >@if(!empty($this->reservation))Agemdamento código:{{
                                             $this->reservation->code }} solicitado dia {{
                                             $this->reservation->reservation_date->format('d/m/Y')}} e autorizado por {{
                                             $this->reservation->confirmedBy->name}} em {{

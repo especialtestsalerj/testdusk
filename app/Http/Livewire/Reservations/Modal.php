@@ -250,7 +250,7 @@ class Modal extends BaseForm
         $this->reservationId = $reservationId;
         $reservation = Reservation::find($reservationId);
         if ($reservation) {
-            $person = json_decode($reservation->person, true);
+            $person = $reservation->person;
             $this->user_id = $reservation->user_id;
             $this->sector_modal_id = $reservation->sector_id;
             $this->motive = $reservation->motive;

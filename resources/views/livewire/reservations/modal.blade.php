@@ -32,7 +32,7 @@
                         @if(!isset($reservation))
                             Novo Agendamento
                         @else
-                            Agendamento de {{json_decode($reservation->person)->full_name}}
+                            Agendamento de {{$reservation->person['full_name']}}
                         @endif
                     </h5>
                     <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal"

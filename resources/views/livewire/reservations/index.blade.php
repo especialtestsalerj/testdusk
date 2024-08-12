@@ -95,7 +95,7 @@
                                         <div class="row d-flex align-items-center">
                                             <div class="col-6 col-lg-5 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">Visitante:</span> {{ json_decode($reservation['person'])->full_name }}
+                                                    class="fw-bold">Visitante:</span> {{ $reservation['person']['full_name'] }}
                                                 @if($reservation->quantity > 1)
                                                     <span class="badge bg-danger rounded-circle more-destinys"
                                                           data-bs-toggle="tooltip"
@@ -119,11 +119,11 @@
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">Celular:</span> {{json_decode($reservation['person'])->mobile}}
+                                                    class="fw-bold">Celular:</span> {{$reservation['person']['mobile']}}
                                             </div>
                                             <div class="col-3 col-lg-4 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">E-mail:</span> {{json_decode($reservation['person'])->email}}
+                                                    class="fw-bold">E-mail:</span> {{$reservation['person']['email']}}
 
                                             </div>
                                         </div>

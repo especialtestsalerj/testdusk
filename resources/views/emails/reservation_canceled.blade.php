@@ -4,7 +4,7 @@
     <title>Reserva Cancelada</title>
 </head>
 <body>
-<h1>Olá {{json_decode($reservation->person)->full_name}}</h1>
+<h1>Olá {{$reservation->person['full_name']}}</h1>
 <p>Infelizmente sua reserva para o dia  {{ date_format($reservation->reservation_date,"d/m/Y") }} foi cancelada para maiores informações, entre em contato com o setor:
     {{$reservation->sector?->nickname}}</p>
 </body>

@@ -26,4 +26,11 @@ class Reservations extends Repository
             ->orderBy('name')
             ->get();
     }
+
+
+    public function recoveryFromDocumentAndEmail($documentNUmber,$email){
+        return $this->model::where('reservation_status_id', '!=', 5)
+            ->where('person->document_number', $documentNUmber)
+            ->where('responsible_email',$email)->get();
+    }
 }

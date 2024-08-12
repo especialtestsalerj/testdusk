@@ -8,7 +8,7 @@
             </div>
 
             <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-                <strong class="font-bold">Olá, {{ json_decode($reservation->person)->full_name }}!</strong>
+                <strong class="font-bold">Olá, {{ $reservation->person['full_name'] }}!</strong>
                 <span class="block sm:inline">Sua reserva foi criada com os seguintes detalhes:</span>
             </div>
 

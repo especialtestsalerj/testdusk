@@ -4,7 +4,7 @@
     <title>Reserva Criada</title>
 </head>
 <body>
-<h1>Olá {{json_decode($reservation->person)->full_name}}</h1>
+<h1>Olá {{$reservation->person['full_name']}}</h1>
 <p>Sua reserva confirmadacom os seguintes detalhes:</p>
 <ul>
     <li>ID da Reserva: {{ $reservation->code }}</li>

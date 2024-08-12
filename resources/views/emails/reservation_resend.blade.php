@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reserva Criada</title>
+    <title>Recuperação de Reservas</title>
 </head>
 <body>
-<h1>Olá {{$reservation->person['full_name']}}</h1>
+<h1>Olá,</h1>
 
 
-<p>Sua reserva foi criada com os seguintes detalhes:</p>
-<ul>
-    <li>ID da Reserva: {{ $reservation->code }}</li>
-    <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
-    <li>Setor: {{$reservation->sector?->nickname}}</li>
-</ul>
+<p>Segue as reservas solicitadas:</p>
+@foreach($reservations as $reservation)
+    <ul>
+        <li>Reservado por: {{$reservation->person['full_name']}}</li>
+        <li>ID da Reserva: {{ $reservation->code }}</li>
+        <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
+        <li>Setor: {{$reservation->sector?->nickname}}</li>
+        <li>Status: {{$reservation->reservationStatus?->name}}</li>
+    </ul>
+@endforeach
+
 <p>Obrigado por usar nosso serviço!</p>
 </body>
 </html>
