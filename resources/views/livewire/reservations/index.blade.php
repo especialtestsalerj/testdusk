@@ -94,27 +94,36 @@
                                     <div class="col-12 col-lg-9">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-6 col-lg-5 text-center text-lg-start">
-                                                <span class="fw-bold">Visitante:</span> {{ json_decode($reservation['person'])->full_name }}
+                                                <span
+                                                    class="fw-bold">Visitante:</span> {{ $reservation['person']['full_name'] }}
                                                 @if($reservation->quantity > 1)
                                                     <span class="badge bg-danger rounded-circle more-destinys"
                                                           data-bs-toggle="tooltip"
                                                           data-bs-placement="top"
                                                           data-bs-custom-class="custom-tooltip"
                                                           data-bs-html="true"
-                                                          data-bs-title="<div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>teste</div>">
-            +{{ $reservation->quantity - 1 }}
-        </span>
+                                                          data-bs-title="
+                                                          <div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>
+                                                          @if($reservation['guests'])
+                                                                @foreach(json_decode($reservation['guests']) as $guest)
+                                                                    <p>{{ $guest->name ?? ''}}</p>
+                                                                @endforeach
+                                                           @endif
+                                                           </div>"
+                                                    >
+                                                        +{{ $reservation->quantity - 1 }}
+                                                    </span>
 
                                                     <label class="badge bg-info">Grupo</label>
                                                 @endif
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">Celular:</span> {{json_decode($reservation['person'])->mobile}}
+                                                    class="fw-bold">Celular:</span> {{$reservation['person']['mobile']}}
                                             </div>
                                             <div class="col-3 col-lg-4 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">E-mail:</span> {{json_decode($reservation['person'])->email}}
+                                                    class="fw-bold">E-mail:</span> {{$reservation['person']['email']}}
 
                                             </div>
                                         </div>
@@ -160,18 +169,20 @@
                                            title="Gerenciar Rotina">
 
                                         </a>
-                                        <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-secondary btn-sm text-white"
+                                                data-bs-toggle="modal"
                                                 title="Alterar Visita"
                                                 @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO' )
                                                     disabled="disabled"
                                                 @endif
                                                 dusk="finishRoutine"
                                                 wire:click="editReservation({{$reservation->id}})"
-                                                >
+                                        >
                                             <i class="fa-solid fa-calendar-days"></i> Alterar
                                         </button>
 
-                                        <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-success btn-sm text-white"
+                                                data-bs-toggle="modal"
                                                 title="Confirmar reserva"
                                                 @if($reservation->reservationStatus->name != 'AGUARDANDO CONFIRMAÇÃO')
                                                     disabled="disabled"
@@ -181,7 +192,8 @@
                                             <i class="fa-solid fa-circle-check"></i> Confirmar
                                         </button>
 
-                                        <button type="button" class="btn btn-danger btn-sm text-white" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-danger btn-sm text-white"
+                                                data-bs-toggle="modal"
                                                 title="Cancelar Rotina"
                                                 @if(!($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO' ||
                                                     $reservation->reservationStatus->name == 'VISITA AGENDADA'))
@@ -213,11 +225,11 @@
                         </div>
                     </div>
                 @endforelse
-                    <div class="d-flex justify-content-center mt-4">{{ $reservations->links() }}
-                    </div>
+                <div class="d-flex justify-content-center mt-4">{{ $reservations->links() }}
+                </div>
                 @endif
 
-            @livewire('reservations.modal')
-    </div>
+                @livewire('reservations.modal')
+            </div>
     </div>
 </div>

@@ -28,7 +28,12 @@ class Reservation extends Model
         'reservation_status',
         'responsible_person_type',
         'responsible_name',
-        'responsible_email'
+        'responsible_email',
+        'person_id',
+        'confirmed_by_id',
+        'confimed_at',
+        'canceled_by_id',
+        'canceled_at',
     ];
 
     protected $casts = [
@@ -39,6 +44,8 @@ class Reservation extends Model
     protected $dates = [
         'reservation_date',
         'reservation_time',
+        'confirmed_at',
+        'canceled_at',
     ];
 
     protected $with=['capacity'];
@@ -95,7 +102,7 @@ class Reservation extends Model
 
     public function toSearchableArray(): array
     {
-        $person = json_decode($this->person, true);
+
 
         return [
             'code' => $this->code,
@@ -107,11 +114,11 @@ class Reservation extends Model
             'sector.id' => $this->sector_id,
             'status.name' => $this->reservationStatus?->name,
             'status.id' => $this->reservationStatus?->id,
-            'person.full_name' => $person['full_name'] ?? null,
-            'person.social_name' => $person['social_name'] ?? null,
-            'person.document_number' => $personn['document_number'] ?? null,
-            'person.email' => $person['email'] ?? null,
-            'person.mobile' => $person['mobile'] ?? null,
+            'person.full_name' => $this->person['full_name'] ?? null,
+            'person.social_name' => $this->person['social_name'] ?? null,
+            'person.document_number' => $this->personn['document_number'] ?? null,
+            'person.email' => $this->person['email'] ?? null,
+            'person.mobile' => $this->person['mobile'] ?? null,
             'motive' => $this->motive,
             'foo' => 'bar', //used to hack some queries
         ];
@@ -131,5 +138,33 @@ class Reservation extends Model
     public function routeNotificationForMail($notification)
     {
         return $this->responsible_email;
+    }
+
+    public function responsible()
+    {
+        return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function guestsConfirmed()
+    {
+        return $this->belongsToMany(Person::class, 'reservation_person', 'reservation_id', 'person_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by_id');
+    }
+
+    public function confirmedBy(){
+        return $this->belongsTo(User::class, 'confirmed_by_id');
+    }
+
+    public function canceledBy(){
+        return $this->belongsTo(User::class, 'canceled_by_id');
     }
 }

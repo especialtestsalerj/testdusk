@@ -109,10 +109,9 @@ class Modal extends BaseForm
 
     public function cleanModal()
     {
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'sector-user-modal']);
+        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities');
         $this->resetErrorBag();
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->select2SetReadOnly('city_id', false);
         $this->select2SetReadOnly('sector_modal_id', false);
         $this->select2SetReadOnly('state_id', false);
@@ -186,7 +185,6 @@ class Modal extends BaseForm
             }
         }
 
-        $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
         $this->emit('associated-sector-user', $this->sector_modal_id);
         $this->cleanModal();
     }
@@ -229,10 +227,15 @@ class Modal extends BaseForm
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
+
+
         } else {
             $this->blockedDates = [];
 
         }
+        $this->emit('blockedDatesUpdated', $this->blockedDates);
+
+
     }
 
     public function editReservation($reservationId)
@@ -247,7 +250,7 @@ class Modal extends BaseForm
         $this->reservationId = $reservationId;
         $reservation = Reservation::find($reservationId);
         if ($reservation) {
-            $person = json_decode($reservation->person, true);
+            $person = $reservation->person;
             $this->user_id = $reservation->user_id;
             $this->sector_modal_id = $reservation->sector_id;
             $this->motive = $reservation->motive;

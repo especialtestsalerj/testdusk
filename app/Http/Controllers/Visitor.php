@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Data\Repositories\Avatars as AvatarsRepository;
 use App\Data\Repositories\Contacts;
+use App\Data\Repositories\Reservations as ReservationsRepository;
 use App\Data\Repositories\Visitors as VisitorsRepository;
 use App\Data\Repositories\Sectors as SectorsRepository;
 use App\Data\Repositories\Users as UsersRepository;
@@ -11,6 +12,8 @@ use App\Http\Requests\VisitorCheckoutAll;
 use App\Http\Requests\VisitorStore;
 use App\Http\Requests\VisitorUpdate;
 use App\Models\Document;
+use App\Models\Reservation;
+use App\Models\ReservationStatus;
 use App\Models\Visitor as VisitorModel;
 use App\Support\Constants;
 use Ramsey\Uuid\Uuid;
@@ -65,6 +68,13 @@ class Visitor extends Controller
             'document_type_id' => $request->get('document_type_id'),
             'state_id' => $request->get('state_document_id'),
         ]);
+
+        if($request->get('reservation_id')){
+            $reservation = app(ReservationsRepository::class)->findById($request->get('reservation_id'));
+
+            $reservation->reservation_status_id = ReservationStatus::where('name', 'VISITA REALIZADA')->first()->id;
+            $reservation->save();
+        }
 
         if ($request->get('contact') && $request->get('contact_type_id')) {
             app(Contacts::class)->firstOrCreateContact($request);

@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Reservations;
 
+use App\Data\Repositories\People;
+use App\Data\Repositories\People as PeopleRepository;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Livewire\BaseIndex;
+use App\Models\Document;
 use App\Models\Reservation;
 use App\Models\ReservationStatus;
 use Carbon\Carbon;
@@ -95,7 +98,7 @@ class Index extends BaseIndex
         $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Confirmar a reserva?', 'Deseja Realmente confirmar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+        $this->emitSwall('Confirmar a reserva?', 'Deseja Realmente confirmar a solicitação de ' . $this->selectedReservation['person']['full_name'] .
             '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour
             , 'confirm-reservation', 'save');
     }
@@ -105,7 +108,7 @@ class Index extends BaseIndex
         $this->selectedReservation = Reservation::where('id', $id)->first();
 
         $reservationDate = Carbon::parse($this->selectedReservation['reservation_date'])->format('d/m/Y');
-        $this->emitSwall('Deseja Realmente cancelar a solicitação de ' . json_decode($this->selectedReservation['person'])->full_name .
+        $this->emitSwall('Deseja Realmente cancelar a solicitação de ' . $this->selectedReservation['person']['full_name'] .
             '  para ' . $reservationDate . ' às ' . $this->selectedReservation->capacity->hour,
             'Esta ação não poderá ser cancelada.', 'cancel-reservation', 'save');
 
@@ -122,12 +125,65 @@ class Index extends BaseIndex
     {
 
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA AGENDADA')->first()->id;
+
+        $personArray = $this->selectedReservation->person;
+        $document = Document::where('number', remove_punctuation($personArray['document_number']) )->first();
+
+        if(is_null($document?->person_id)){
+
+        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
+        $document = Document::firstOrCreate([
+            'number' => convert_case(
+                remove_punctuation($personArray['document_number']),
+                MB_CASE_UPPER)],
+            [
+            'person_id' => $person->id,
+            'document_type_id' =>$personArray['document_type_id'],
+            ]);
+        $this->selectedReservation->person_id = $person->id;
+
+        }else{
+            $this->selectedReservation->person_id = $document->person_id;
+        }
+
+
+        if($this->selectedReservation->quantity > 1){
+            $guests = json_decode($this->selectedReservation->guests,true);
+
+            foreach($guests as $guest){
+                $document = Document::where('number', remove_punctuation($guest['document']) )->first();
+                if(is_null($document?->person_id)){
+
+
+                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name'=>$guest['name']]);
+                    $document = Document::firstOrCreate([
+                        'number' => convert_case(
+                            remove_punctuation($guest['document']),
+                            MB_CASE_UPPER)],
+                        [
+                            'person_id' => $person->id,
+                            'document_type_id' =>$guest['documentType'],
+                        ]);
+                    $this->selectedReservation->guests()->attach($person->id);
+
+                }else{
+                    $this->selectedReservation->guests()->attach($document->person_id);
+                }
+            }
+
+
+
+        }
+        $this->selectedReservation->confirmed_at = Carbon::now();
+        $this->selectedReservation->confirmed_by_id = auth()->user()->id;
         $this->selectedReservation->save();
     }
 
     public function cancelReservation()
     {
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA CANCELADA')->first()->id;
+        $this->selectedReservation->canceled_at = Carbon::now();
+        $this->selectedReservation->canceled_by_id = auth()->user()->id;
         $this->selectedReservation->save();
     }
 

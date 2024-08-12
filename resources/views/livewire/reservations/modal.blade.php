@@ -32,7 +32,7 @@
                         @if(!isset($reservation))
                             Novo Agendamento
                         @else
-                            Agendamento de {{json_decode($reservation->person)->full_name}}
+                            Agendamento de {{$reservation->person['full_name']}}
                         @endif
                     </h5>
                     <button wire:click.prevent="cleanModal" type="button" class="btn-close" data-bs-dismiss="modal"
@@ -169,7 +169,7 @@
                                         wire:model.lazy="document_type_id" x-ref="document_type_id">
                                         <option value="">SELECIONE</option>
                                         <option value="1">CPF</option>
-                                        <option value="2">Passaporte</option>
+                                        <option value="4">Passaporte</option>
                                     </select>
                                 </div>
 
@@ -474,41 +474,33 @@
                     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
                     <script>
                         document.addEventListener('livewire:load', function () {
-                            var blockedDates = @json($blockedDates) ||
-                            [];
+                            var blockedDates = @json($blockedDates) || [];
 
-                            function initializeFlatpickr() {
-                                flatpickr("#reservation_date", {
-                                    locale: "pt",
-                                    dateFormat: "d/m/Y",
-                                    minDate: "today",
-                                    disable: blockedDates.length ? blockedDates.map(date => ({
-                                        from: date,
-                                        to: date
-                                    })) : [],
-                                    onDayCreate: function (dObj, dStr, fp, dayElem) {
-                                        const date = dayElem.dateObj.toISOString().split('T')[0];
-                                        if (blockedDates.includes(date)) {
-                                            dayElem.style.color = "red";
-                                            dayElem.style.textDecoration = "line-through";
-                                        }
-                                    },
-                                    onChange: function (selectedDates, dateStr, instance) {
-                                        @this.
-                                        set('reservation_date', dateStr);
+                            var flatpickrInstance = flatpickr("#reservation_date", {
+                                locale: "pt",
+                                dateFormat: "d/m/Y",
+                                minDate: "today",
+                                maxDate: new Date().fp_incr(30), // 30 days from now
+                                disable: blockedDates,
+                                onChange: function (selectedDates, dateStr, instance) {
+                                @this.set('reservation_date', dateStr);
+                                },
+                                onDayCreate: function(dObj, dStr, fp, dayElem) {
+                                    const date = dayElem.dateObj.toISOString().split('T')[0];
+                                    if (blockedDates.includes(date)) {
+                                        dayElem.style.color = "red";
+                                        dayElem.style.textDecoration = "line-through";
                                     }
-                                });
-
-                                // document.getElementById('reservation_date').removeAttribute('readonly');
-                            }
+                                }
+                            });
 
                             $('#reservation-modal').on('shown.bs.modal', function () {
-                                initializeFlatpickr();
+                                flatpickrInstance.redraw();
                             });
 
                             Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
-                                blockedDates = newBlockedDates || [];
-                                initializeFlatpickr();
+                                flatpickrInstance.set('disable', newBlockedDates);
+                                flatpickrInstance.redraw();
                             });
                         });
                     </script>

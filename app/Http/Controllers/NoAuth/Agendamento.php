@@ -5,12 +5,14 @@ namespace App\Http\Controllers\NoAuth;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Requests\AgendamentoStore;
-use App\Http\Requests\Request;
 
 use App\Models\Sector as SectorModel;
 
+use App\Notifications\ReservationResendNotification;
 use Carbon\Carbon;
 use Faker\Provider\Base;
+use Illuminate\Http\Request as Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Routing\Controller as BaseController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -40,6 +42,23 @@ class Agendamento extends BaseController
     {
         $reservations = app(ReservationRepository::class)->all();
         return view('reservations.index')->with('reservations',$reservations);
+    }
+
+    public function recover(Request $request)
+    {
+
+        $documentNumber = remove_punctuation($request->get('documentNumber'));
+        $email = $request->get('email');
+       $reservations = app(ReservationRepository::class)->recoveryFromDocumentAndEmail($documentNumber,$email);
+
+
+
+        Notification::route('mail', $reservations[0]->responsible_email)
+            ->notify(new ReservationResendNotification($reservations));
+
+        return redirect()
+            ->route('agendamento.index')
+            ->with('message', 'Reservas enviadas, caso os dados estejam corretos!');
     }
 
     public function store(AgendamentoStore $request)
@@ -89,7 +108,7 @@ class Agendamento extends BaseController
 //        dd($person);
 
 
-       $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>json_encode($person), ]);
+       $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>$person, ]);
 
 
 

@@ -13,58 +13,38 @@
     <title>{{ config('app.name') }} - {{ config('app.owner') }}</title>
 
     <!-- Scripts -->
-
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ mix('/css/tailwind/app-tailwind.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
-    {{--    <script src="https://cdn.tailwindcss.com"></script>--}}
+
+
+    @include('layouts.partials.environment')
     @livewireStyles
+
 </head>
-
-
-<body>
-
-<script>
-    window.laravel = @json($environment)
-</script>
-
-<script>
-    window.laravel = @json($environment)
-</script>
-
-@if (!app()->environment('production') || config('app.debug'))
-    <div class="bg-red-600 text-white text-center py-2">
-        {{ app()->environment() }}
-
-        @if (config('app.debug'))
-            - debug mode
-        @endif
-    </div>
-@endif
-
+<body class="bg-light">
 <div id="app">
 
-    <main class="py-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center">
-                <div class="w-full">
+    <main class="py-0" >
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col">
                     @yield('content')
                     @if(isset($slot))
                         {{ $slot }}
-                    @endif
+                    @endIf
                 </div>
             </div>
         </div>
     </main>
-
 
 </div>
 
@@ -73,7 +53,6 @@
 @livewireScripts
 @livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
-<script src="{{ mix('/js/tailwind/app-tailwind.js') }}" defer></script>
 </body>
 
 

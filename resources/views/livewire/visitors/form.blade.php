@@ -68,6 +68,9 @@
                         <div class="col-12">
                             <h4>
                                 Dados do/a Visitante
+                                @if(!empty($this->reservation))
+                                    <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
+                                @endif
                             </h4>
                         </div>
                         @livewire('people.people', ['person_id'=>empty(request()->get('person_id')) ? $visitor->person_id  : request()->get('person_id'),
@@ -79,6 +82,10 @@
                             <div class="col-12">
                                 <h4>
                                     Dados da Visita
+                                    @if(!empty($this->reservation))
+                                        <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
+                                        <input type="hidden" name="reservation_id" value="{{$this->reservation->id}}"
+                                    @endif
                                 </h4>
                             </div>
                             <div class="col-xl-6" wire:ignore>
@@ -110,17 +117,23 @@
                             <div class="col-lg-12 col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="sector_id">Destino*</label>
-                                    <select class="select2 form-control" name="sector_id[]" id="sector_id" multiple
-                                            @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif data-placeholder="SELECIONE">
-                                        @foreach ($sectors as $key => $sector)
-                                            @if(((!is_null($visitor->id)) && (!is_null($visitor->sectors) && $visitor->sectors->contains($sector->id) ) ||
-                                            (!empty(old('sector_id'))) && in_array($sector->id, old('sector_id'))))
-                                                <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
-                                            @else
-                                                <option value="{{ $sector->id }}">{{ $sector->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                    @if(!empty($this->reservation))
+                                       <input type="text" class="form-control" value="{{$this->reservation->sector->name}}" disabled/>
+                                        <input type="hidden" name="sector_id[]" value="{{$this->reservation->sector->id}}" >
+                                    @else
+                                        <select class="select2 form-control" name="sector_id[]" id="sector_id" multiple
+                                                @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif data-placeholder="SELECIONE">
+                                            @foreach ($sectors as $key => $sector)
+                                                @if(((!is_null($visitor->id)) && (!is_null($visitor->sectors) && $visitor->sectors->contains($sector->id) ) ||
+                                                (!empty(old('sector_id'))) && in_array($sector->id, old('sector_id'))))
+                                                    <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
+                                                @else
+                                                    <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    @endif
+
                                 </div>
                             </div>
 
@@ -153,7 +166,11 @@
                                     <label for="description">Motivo da Visita*</label>
                                     <textarea class="form-control" name="description" id="description" rows="5" wire:ignore
                                               placeholder="Informe detalhes da autorização"
-                                        @include('partials.disabled-by-query-string') >{{ is_null(old('description')) ? $visitor->description: old('description') }}</textarea>
+                                        @include('partials.disabled-by-query-string') >@if(!empty($this->reservation))Agemdamento código:{{
+                                            $this->reservation->code }} solicitado dia {{
+                                            $this->reservation->reservation_date->format('d/m/Y')}} e autorizado por {{
+                                            $this->reservation->confirmedBy->name}} em {{
+                                            $this->reservation->confirmed_at->format('d/m/Y')}}@else{{ is_null(old('description')) ? $visitor->description: old('description') }}@endif</textarea>
                                 </div>
                             </div>
                         </div>

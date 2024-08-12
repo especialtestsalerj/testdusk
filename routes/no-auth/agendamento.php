@@ -9,6 +9,9 @@ Route::group(['prefix' => 'agendamento'], function () {
 
     Route::post('/',[Agendamento::class,'store'])
         ->name('agendamento.store');
+
+    Route::post('/recover',[Agendamento::class,'recover'])
+        ->name('agendamento.recover');
     Route::get('/detalhes', [Agendamento::class,'detail'])
         ->name('agendamento.detail');
 

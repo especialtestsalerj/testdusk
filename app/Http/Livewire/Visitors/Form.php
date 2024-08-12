@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Document;
 use App\Models\Person;
 use App\Http\Livewire\BaseForm;
+use App\Models\Reservation;
 use App\Models\Sector;
 use App\Models\Visitor;
 use Livewire\WithFileUploads;
@@ -24,6 +25,7 @@ class Form extends BaseForm
     public Sector $sector;
     public Person $person;
     public Document $document;
+    public Reservation $reservation;
     public $contact;
     public $card_id;
     public $person_id;
@@ -159,6 +161,11 @@ class Form extends BaseForm
             $this->person_id = $this->document->person_id;
 
             $this->personModified(Person::findOrFail($this->person_id));
+        }
+
+        $reservationId = request()->get('reservation_id') ?? old('reservation_id');
+        if ($reservationId) {
+            $this->reservation = Reservation::findOrFail($reservationId);
         }
     }
 
