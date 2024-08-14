@@ -102,7 +102,7 @@ class Reservation extends Model
 
     public function toSearchableArray(): array
     {
-        $person = json_decode($this->person, true);
+
 
         return [
             'code' => $this->code,
@@ -114,11 +114,11 @@ class Reservation extends Model
             'sector.id' => $this->sector_id,
             'status.name' => $this->reservationStatus?->name,
             'status.id' => $this->reservationStatus?->id,
-            'person.full_name' => $person['full_name'] ?? null,
-            'person.social_name' => $person['social_name'] ?? null,
-            'person.document_number' => $personn['document_number'] ?? null,
-            'person.email' => $person['email'] ?? null,
-            'person.mobile' => $person['mobile'] ?? null,
+            'person.full_name' => $this->person['full_name'] ?? null,
+            'person.social_name' => $this->person['social_name'] ?? null,
+            'person.document_number' => $this->personn['document_number'] ?? null,
+            'person.email' => $this->person['email'] ?? null,
+            'person.mobile' => $this->person['mobile'] ?? null,
             'motive' => $this->motive,
             'foo' => 'bar', //used to hack some queries
         ];
@@ -140,8 +140,14 @@ class Reservation extends Model
         return $this->responsible_email;
     }
 
-    public function personConfirmed(){
+    public function responsible()
+    {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function guestsConfirmed()
+    {
+        return $this->belongsToMany(Person::class, 'reservation_person', 'reservation_id', 'person_id');
     }
 
     public function createdBy()

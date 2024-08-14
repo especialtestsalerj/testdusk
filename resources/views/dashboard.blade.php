@@ -43,6 +43,7 @@
                         <div class="row g-0 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
                             @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
                             @include('partials.dashboard-button', ['url' => route('visitors.index'), 'permission' => make_ability_name_with_current_building('visitors:show'), 'title' => 'Visitas', 'ico' => 'fa-people-roof', 'count' => $pendingVisitors->count()])
+{{--                            @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => make_ability_name_with_current_building('visitors:show'), 'title' => 'Agendados', 'ico' => 'fa-calendar-days', ])--}}
                             @include('partials.dashboard-button', ['url' => route('visitors.checkout'), 'permission' => make_ability_name_with_current_building('visitors:show'), 'title' => 'checkout', 'ico' => 'fa-arrow-up-right-from-square'])
                         </div>
                     </div>
@@ -137,9 +138,9 @@
         @endCan
 
         @can('menu-agendamento:show')
-                <div class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot" id="nav-reservation" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
-
-
+                <div
+                    class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
+                    id="nav-reservation" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
 
 
                 </div>
