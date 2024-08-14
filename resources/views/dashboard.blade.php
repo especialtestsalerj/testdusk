@@ -137,11 +137,11 @@
         @endCan
 
         @can('menu-agendamento:show')
-                <div
-                    class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
-                    id="nav-reservation" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+                <div class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot" id="nav-reservation" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
 
-                    
+
+
+
                 </div>
         @endcan
     </div>

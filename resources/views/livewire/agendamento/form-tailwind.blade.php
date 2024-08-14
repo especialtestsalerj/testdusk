@@ -88,7 +88,7 @@
 
                         </div>
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-5">
                             <div class="w-full">
 
 {{--                                <form class="max-w-sm mx-auto">--}}
@@ -106,7 +106,7 @@
                         </div>
 
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-5">
                             <div class="w-4/5">
                                 <div class="flex space-x-4">
                                     <div class="w-1/2">
@@ -176,7 +176,7 @@
                             </div>
                         @endif
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4  mt-5">
                             <div class="w-1/2">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Nome Completo*
@@ -197,7 +197,7 @@
                             </div>
                         </div>
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-5">
                             <div wire:ignore class="w-1/3">
                                 <label for="country_id"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -268,7 +268,7 @@
                         </div>
 
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4  mt-5">
                             <div class="w-1/3">
                                 <label for="responsible_email"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -312,7 +312,7 @@
 
 
                         <button wire:ignore=""
-                                class="w-full text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                class="w-full text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-6"
                                 id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
                             <i class="fa fa-save"></i> Solicitar
                         </button>
