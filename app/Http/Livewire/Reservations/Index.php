@@ -148,7 +148,7 @@ class Index extends BaseIndex
 
 
         if($this->selectedReservation->quantity > 1){
-            $guests = json_decode($this->selectedReservation->guests,true);
+            $guests = $this->selectedReservation->guests;
 
             foreach($guests as $guest){
                 $document = Document::where('number', remove_punctuation($guest['document']) )->first();
@@ -164,10 +164,10 @@ class Index extends BaseIndex
                             'person_id' => $person->id,
                             'document_type_id' =>$guest['documentType'],
                         ]);
-                    $this->selectedReservation->guests()->attach($person->id);
+                    $this->selectedReservation->guestsConfirmed()->attach($person->id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
 
                 }else{
-                    $this->selectedReservation->guests()->attach($document->person_id);
+                    $this->selectedReservation->guestsConfirmed()->attach($document->person_id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
                 }
             }
 

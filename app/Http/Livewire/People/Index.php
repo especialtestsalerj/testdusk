@@ -35,6 +35,7 @@ class Index extends BaseIndex
     ];
 
     public $reservations;
+    public $reservationGroup;
 
     public function getSearchStringIsCpfProperty()
     {
@@ -96,6 +97,10 @@ class Index extends BaseIndex
         // Busca reservas cuja data corresponde a hoje
         $this->reservations = Reservation::where('reservation_status_id', 2)->whereDate('reservation_date', $today)->get();
 
+        //Buscar reservas com a data de hj onde os convidados ainda não chegaram
+
+        $this->reservationGroup = Reservation::join('reservation_person', 'reservations.id', '=', 'reservation_person.reservation_id')->whereDate('reservation_date', $today)->
+            where('reservation_person.reservation_status_id',2)->get();
 
 
     }

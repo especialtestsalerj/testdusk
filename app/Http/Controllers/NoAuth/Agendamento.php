@@ -52,9 +52,11 @@ class Agendamento extends BaseController
        $reservations = app(ReservationRepository::class)->recoveryFromDocumentAndEmail($documentNumber,$email);
 
 
+        if(count($reservations) > 0) {
 
-        Notification::route('mail', $reservations[0]->responsible_email)
-            ->notify(new ReservationResendNotification($reservations));
+            Notification::route('mail', $reservations[0]->responsible_email)
+                ->notify(new ReservationResendNotification($reservations));
+        }
 
         return redirect()
             ->route('agendamento.index')
@@ -99,18 +101,7 @@ class Agendamento extends BaseController
 
         $data['guests'] = json_encode($request->input('inputs', []));
 
-
-
-            // Faça algo com os dados, como salvar no banco de dados
-
-
-
-//        dd($person);
-
-
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>$person, ]);
-
-
 
         $reservation = app(ReservationRepository::class)->create($data);
 

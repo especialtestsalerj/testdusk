@@ -105,8 +105,9 @@
                                                           data-bs-title="
                                                           <div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>
                                                           @if($reservation['guests'])
-                                                                @foreach(json_decode($reservation['guests']) as $guest)
-                                                                    <p>{{ $guest->name ?? ''}}</p>
+
+                                                                @foreach($reservation['guests'] as $guest)
+                                                                    <p>{{ $guest['name'] ?? ''}}</p>
                                                                 @endforeach
                                                            @endif
                                                            </div>"
@@ -115,7 +116,7 @@
                                                     </span>
 
                                                     <label class="badge bg-info">Grupo</label>
-                                                @endif
+                                                @endif]
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span

@@ -48,6 +48,7 @@ class Modal extends BaseForm
     public $disabilities = [];
     public $reservation;
     public $reservationId;
+    public $inputs = [];
 
     protected $validationAttributes = [
         'user_id' => 'Usuário',
@@ -124,6 +125,8 @@ class Modal extends BaseForm
     {
         $this->validate();
 
+
+
         $data = [
             'user_id' => $this->user_id,
             'sector_id' => $this->sector_modal_id,
@@ -165,7 +168,11 @@ class Modal extends BaseForm
             'disabilities' => $this->disabilities
         ];
 
-        $data['person'] = json_encode($person);
+        $data['person'] = $person;
+
+        $data['guests'] = $this->inputs;
+
+        $data['quantity'] = 1 + count($this->inputs);
 
         if (!$this->reservationId) {
             $data['reservation_type_id'] = '1';
@@ -337,5 +344,19 @@ class Modal extends BaseForm
 
         $this->loadDefaultLocation();
 
+    }
+
+    public function addInput()
+    {
+        $this->inputs[] = ['document' => '', 'name' => '','documentType'=>''];
+
+
+    }
+
+    public function removeInput($index)
+    {
+        unset($this->inputs[$index]);
+
+        $this->inputs = array_values($this->inputs); // Reindexa o array
     }
 }

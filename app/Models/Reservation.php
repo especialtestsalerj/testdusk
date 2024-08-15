@@ -147,7 +147,8 @@ class Reservation extends Model
 
     public function guestsConfirmed()
     {
-        return $this->belongsToMany(Person::class, 'reservation_person', 'reservation_id', 'person_id');
+        return $this->belongsToMany(Person::class, 'reservation_person', 'reservation_id', 'person_id')
+            ->withPivot('reservation_status_id');
     }
 
     public function createdBy()
