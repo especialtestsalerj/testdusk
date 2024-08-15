@@ -94,7 +94,7 @@
         <div class="error-container">
             <div class="error">
                 <div class="logo">
-                    <img src="{{ asset('img/logo-alerj-grande-branco-90.png') }}">
+                    <a href="/"><img src="{{ asset('img/logo-alerj-grande-branco-90.png') }}"></a>
                 </div>
                 <div class="row">
                     <div class="column-1">
