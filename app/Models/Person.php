@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Data\Repositories\DocumentTypes;
+use App\Support\Constants;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Person extends Model
 {
     protected $fillable = [
@@ -140,5 +142,10 @@ class Person extends Model
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function isBrazilian()
+    {
+        return $this->country && $this->country->id === Constants::COUNTRY_BRAZIL_ID;
     }
 }
