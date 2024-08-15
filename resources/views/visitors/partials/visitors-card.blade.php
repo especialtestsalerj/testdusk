@@ -9,6 +9,13 @@
 
             <div class="col-md-12 mb-3">
 
+                <label for="name">Cartão</label>
+                <input value="{{ $card }}" disabled name="card" class="form-control" id="card"
+                       aria-describedby="nameHelp">
+            </div>
+
+            <div class="col-md-12 mb-3">
+
                 <label for="name">Nome</label>
                 <input value="{{ $name }}" disabled type="name" class="form-control" id="name"
                        aria-describedby="nameHelp">
@@ -24,9 +31,9 @@
 
             <div class="col-md-12 mb-3">
                 <label for="sector">Destino</label>
-                <select name="sector" id="sector" class="form-select" multiple disabled>
+                <select name="sector" id="sector" class="select2 form-control" multiple disabled>
                     @foreach($sectors as $sector)
-                        <option  value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
+                        <option selected value="{{ $sector->id ?? '' }}">{{ $sector->name ?? '' }}</option>
                     @endforeach
                 </select>
             </div>
@@ -53,7 +60,7 @@
 
             @if ($showSaveButton)
                 <div class="text-center">
-                    <button type="submit" class="btn btn-success text-white ml-1" title="Finalizar Visita">
+                    <button type="submit" class="btn btn-success text-white ml-1 mb-2" title="Finalizar Visita">
                         <i class="fa fa-save"></i> Finalizar Visita
                     </button>
                 </div>
