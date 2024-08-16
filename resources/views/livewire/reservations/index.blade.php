@@ -1,3 +1,4 @@
+@php use App\Models\ReservationStatus; @endphp
 <div class="py-4 px-4 conteudo">
 
     <div class="row mb-4 d-flex align-items-center">
@@ -97,6 +98,7 @@
                                                 <span
                                                     class="fw-bold">Visitante:</span> {{ $reservation['person']['full_name'] }}
                                                 @if($reservation->quantity > 1)
+
                                                     <span class="badge bg-danger rounded-circle more-destinys"
                                                           data-bs-toggle="tooltip"
                                                           data-bs-placement="top"
@@ -104,19 +106,25 @@
                                                           data-bs-html="true"
                                                           data-bs-title="
                                                           <div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>
-                                                          @if($reservation['guests'])
+                                                          @if($reservation->reservation_status_id == 2 || $reservation->reservation_status_id == 4)
+                                                              @foreach($reservation->guestsConfirmed as $guest)
+                                                              <p>{{$guest->name}} : {{ReservationStatus::where('id',$guest->pivot->reservation_status_id)->first()->name }}</p>
+                                                               @endforeach
+                                                           @else
+                                                               @if($reservation['guests'])
 
-                                                                @foreach($reservation['guests'] as $guest)
-                                                                    <p>{{ $guest['name'] ?? ''}}</p>
-                                                                @endforeach
+                                                                    @foreach($reservation['guests'] as $guest)
+                                                                        <p>{{ $guest['name'] ?? ''}} </p>
+                                                                    @endforeach
+                                                               @endif
                                                            @endif
-                                                           </div>"
+                                                               </div>"
                                                     >
                                                         +{{ $reservation->quantity - 1 }}
                                                     </span>
 
                                                     <label class="badge bg-info">Grupo</label>
-                                                @endif]
+                                                @endif
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span
