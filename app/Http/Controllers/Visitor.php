@@ -72,8 +72,12 @@ class Visitor extends Controller
         if($request->get('reservation_id')){
             $reservation = app(ReservationsRepository::class)->findById($request->get('reservation_id'));
 
-            $reservation->reservation_status_id = ReservationStatus::where('name', 'VISITA REALIZADA')->first()->id;
+            $newStatusId = ReservationStatus::where('name', 'VISITA REALIZADA')->first()->id;
+            $reservation->reservation_status_id = $newStatusId;
             $reservation->save();
+
+            //Verifica se é um convidado do Grupo
+            $reservation->guestsConfirmed()->updateExistingPivot($person->id, ['reservation_status_id' => $newStatusId]);
         }
 
         if ($request->get('contact') && $request->get('contact_type_id')) {

@@ -99,8 +99,14 @@ class Index extends BaseIndex
 
         //Buscar reservas com a data de hj onde os convidados ainda não chegaram
 
-        $this->reservationGroup = Reservation::join('reservation_person', 'reservations.id', '=', 'reservation_person.reservation_id')->whereDate('reservation_date', $today)->
-            where('reservation_person.reservation_status_id',2)->get();
+        $this->reservationGroup = Reservation::with('guestsConfirmed')
+            ->whereDate('reservation_date', $today)
+            ->whereHas('guestsConfirmed', function ($query) {
+                $query->where('reservation_person.reservation_status_id', 2);
+            })
+            ->get();
+
+
 
 
     }

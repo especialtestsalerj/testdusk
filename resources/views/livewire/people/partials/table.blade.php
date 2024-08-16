@@ -97,7 +97,11 @@
                         </div>
                         @endif
                 @endforeach
-                    @foreach($reservationGroup-> as $guest)
+
+
+
+                    @foreach($reservationGroup as $reservation)
+                        @foreach($reservation->guestsConfirmed as $guest)
                         <div class="col-md-6 col-lg-4 col-xxl-3 mb-2">
                             <div class="card people-min-height bg-white">
                                 <div class="card-header bg-success text-white">
@@ -189,6 +193,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                     @endforeach
             @endif
             @forelse ($people as $person)
