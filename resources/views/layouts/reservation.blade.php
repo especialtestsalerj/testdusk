@@ -13,25 +13,18 @@
     <title>{{ config('app.name') }} - {{ config('app.owner') }}</title>
 
     <!-- Scripts -->
-
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ mix('/css/tailwind/app-tailwind.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
-
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 
     @include('layouts.partials.environment')
     @livewireStyles
@@ -40,6 +33,9 @@
 <body class="bg-light">
 <div id="app">
 
+
+  {{--  @include('layouts.partials.menu')
+--}}
 
     <main class="py-0" >
         <div class="container-fluid">
@@ -54,9 +50,9 @@
         </div>
     </main>
 
-
-   {{-- @include('layouts.partials.footer')--}}
-
+{{--
+    @include('layouts.partials.footer')
+--}}
 
 </div>
 
@@ -65,7 +61,6 @@
 @livewireScripts
 @livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
-<script src="{{ mix('/js/tailwind/app-tailwind.js') }}" defer></script>
 </body>
 
 
