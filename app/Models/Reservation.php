@@ -6,7 +6,9 @@ use App\Models\Scopes\InCurrentBuilding;
 use App\Notifications\ReservationCanceledNotification;
 use App\Notifications\ReservationConfirmedNotification;
 use App\Notifications\ReservationNotification;
+use App\Notifications\ReservationRealizedNotification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 class Reservation extends Model
@@ -34,6 +36,7 @@ class Reservation extends Model
         'confimed_at',
         'canceled_by_id',
         'canceled_at',
+        'uuid',
     ];
 
     protected $casts = [
@@ -59,6 +62,12 @@ class Reservation extends Model
 
         static::created(function ($reservation) {
 
+
+            if (empty($reservation->uuid)) {
+                $reservation->uuid = Str::uuid()->toString();
+                $reservation->save();
+            }
+
             $reservation->notify(new ReservationNotification($reservation));
         });
 
@@ -75,6 +84,11 @@ class Reservation extends Model
 
                 if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
                     $reservation->notify(new ReservationCanceledNotification($reservation));
+                }
+
+                if($reservation->reservationStatus->name == 'VISITA REALIZADA'){
+                    // Envie o email de notificação
+                    $reservation->notify(new ReservationRealizedNotification($reservation));
                 }
             }
         });

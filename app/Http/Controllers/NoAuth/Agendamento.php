@@ -6,6 +6,7 @@ use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Requests\AgendamentoStore;
 
+use App\Models\Reservation;
 use App\Models\Sector as SectorModel;
 
 use App\Notifications\ReservationResendNotification;
@@ -114,5 +115,16 @@ class Agendamento extends BaseController
     public function detail()
     {
         return view('agendamento.detail');
+    }
+
+    public function cancel($uuid)
+    {
+        $reservation = Reservation::where('uuid', $uuid)->firstOrFail();
+
+        // Lógica para cancelar a reserva
+        $reservation->reservation_status_id = 5; // Status "cancelado"
+        $reservation->save();
+
+        return redirect()->route('agendamento.index')->with('status', 'Reservation canceled successfully.');
     }
 }

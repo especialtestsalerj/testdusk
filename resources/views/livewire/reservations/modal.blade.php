@@ -489,7 +489,7 @@
                                                     </td>
                                                     <td>
 
-                                                        <input type="button" class="bg-red-500 text-white p-2 rounded" wire:click="removeInput({{ $index }})" value="Remover"/>
+                                                        <input type="button" class="btn btn-danger" wire:click="removeInput({{ $index }})" value="Remover"/>
                                                     </td>
                                                 </tr>
 
@@ -500,7 +500,7 @@
                                 <div class="flex space-x-4 space-y-2">
 
                                     <div class="w-/13">
-                                        <input type="button" class="mt-4 bg-blue-500 text-white p-2 rounded" wire:click="addInput" value="Adicionar Pessoa">
+                                        <input type="button" class="mt-4 btn btn-primary" wire:click="addInput" value="Adicionar Pessoa">
                                     </div>
                                 </div>
                             </div>

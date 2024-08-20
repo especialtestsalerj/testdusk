@@ -166,11 +166,11 @@
                                     <label for="description">Motivo da Visita*</label>
                                     <textarea class="form-control" name="description" id="description" rows="5" wire:ignore
                                               placeholder="Informe detalhes da autorização"
-                                        @include('partials.disabled-by-query-string') >@if(!empty($this->reservation))Agemdamento código:{{
+                                        @include('partials.disabled-by-query-string') >@if(!empty($this->reservation))Agemdamento código: {{
                                             $this->reservation->code }} solicitado dia {{
-                                            $this->reservation->reservation_date->format('d/m/Y')}} e autorizado por {{
+                                            $this->reservation->created_at->format('d/m/Y \À\S H:i')}} e autorizado por {{
                                             $this->reservation->confirmedBy->name}} em {{
-                                            $this->reservation->confirmed_at->format('d/m/Y')}}@else{{ is_null(old('description')) ? $visitor->description: old('description') }}@endif</textarea>
+                                            $this->reservation->confirmed_at->format('d/m/Y \À\S H:i')}}@else{{ is_null(old('description')) ? $visitor->description: old('description') }}@endif</textarea>
                                 </div>
                             </div>
                         </div>

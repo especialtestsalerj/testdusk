@@ -133,6 +133,12 @@
                                             <div class="col-3 col-lg-4 text-center text-lg-start">
                                                 <span
                                                     class="fw-bold">E-mail:</span> {{$reservation['person']['email']}}
+                                                <button type="button" class="btn btn-dark text-white"
+                                                        data-bs-toggle="modal"
+                                                        title="Alterar Visita"
+                                                        wire:click="resendEmail({{$reservation->id}})"
+                                                >
+                                                    <i class="fa-regular fa-envelope"></i> Reenviar e-mail</button>
 
                                             </div>
                                         </div>
@@ -145,12 +151,17 @@
                                             <div class="col-2 col-lg-2 text-center text-lg-start">
                                                 <span class="fw-bold">Horário:</span> {{$reservation->capacity->hour}}
                                             </div>
+                                            <div class="col-2 col-lg-2 text-center text-lg-start">
+                                                <span class="fw-bold">Código da Reserva:</span> {{$reservation->code}}
+                                            </div>
                                             <div class="col-3 col-lg-3 text-center text-lg-start">
                                                 <span class="fw-bold">Status:</span> <label class="badge
                                         @if($reservation->reservation_status_id == 1)
                                             bg-dark2
-                                            @elseif($reservation->reservation_status_id == 2 || $reservation->reservation_status_id == 4)
+                                            @elseif($reservation->reservation_status_id == 2)
                                             bg-success
+                                            @elseif($reservation->reservation_status_id == 4)
+                                            btn btn-info
                                             @else
                                             bg-danger
                                             @endif
