@@ -1,38 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reserva Criada</title>
-    <head>
-        <meta charset="utf-8">
-        <style>
-            .button {
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                color: #ffffff;
-                background-color: #3490dc;
-                border-radius: 5px;
-                text-decoration: none;
-            }
-        </style>
-    </head>
+    <title>Reserva Cancelada</title>
 </head>
 <body>
 <h1>Olá {{$reservation->person['full_name']}}</h1>
-<p>Sua reserva confirmadacom os seguintes detalhes:</p>
-<ul>
-    <li>ID da Reserva: {{ $reservation->code }}</li>
-    <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
-    <li>Setor: {{$reservation->sector?->nickname}}</li>
-</ul>
-
-<p> Caso deseje cancelar clique no botão abaixo:</p>
-<a href="{{ route('reservation.cancel', ['uuid' => $reservation->uuid]) }}" class="button">
-    Cancel Reservation
-</a>
-
-<p><strong>Não se esqueça de levar o ID da Reserva e a sua identidade.</strong></p>
-
+<p>Obrigado pela visita e esperamos reve-los em uma próxima visita.</p>
+<p>
+   <a href="https://docs.google.com/forms/d/e/1FAIpQLSdT0wxJ0J8NpTg900C301Reob5WMm9019GLgJtUj9g22HGNVg/viewform">Formulário de Satisfação</a>
+</p>
 </body>
 </html>
 

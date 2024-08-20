@@ -13,6 +13,12 @@
     <li>Data: {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
     <li>Setor: {{$reservation->sector?->nickname}}</li>
 </ul>
+
+
+<p> Caso deseje cancelar clique no botão abaixo:</p>
+<a href="{{ route('reservation.cancel', ['uuid' => $reservation->uuid]) }}" class="button">
+    Cancel Reservation
+</a>
 <p>Obrigado por usar nosso serviço!</p>
 </body>
 </html>

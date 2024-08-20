@@ -451,6 +451,58 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 col-xl-6">
+                                <div class="flex space-x-4">
+                                    <div class="space-y-4">
+                                        <table>
+                                            <tr>
+                                                <th colspan="2">
+                                                    Membros do Grupo
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Nome
+                                                </th>
+                                                <th>
+                                                    Tipo de Documento
+                                                </th>
+                                                <th>
+                                                    Documento
+                                                </th>
+                                                <th> Ação</th>
+                                            </tr>
+
+                                            @foreach($inputs as $index => $input)
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs[{{ $index }}][name]">
+                                                    </td>
+                                                    <td>
+                                                        <select wire:model="inputs.{{ $index }}.documentType" name="inputs[{{ $index }}][documentType]">
+                                                            <option value="">Tipo de documento</option>
+                                                            <option value="1">CPF</option>
+                                                            <option value="4">Passaporte</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.document" name="inputs[{{ $index }}][document]">
+                                                    </td>
+                                                    <td>
+
+                                                        <input type="button" class="btn btn-danger" wire:click="removeInput({{ $index }})" value="Remover"/>
+                                                    </td>
+                                                </tr>
+
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-4 space-y-2">
+
+                                    <div class="w-/13">
+                                        <input type="button" class="mt-4 btn btn-primary" wire:click="addInput" value="Adicionar Pessoa">
+                                    </div>
+                                </div>
                             </div>
 
 

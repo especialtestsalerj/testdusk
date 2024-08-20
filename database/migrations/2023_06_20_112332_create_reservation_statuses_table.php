@@ -31,7 +31,7 @@ return new class extends Migration {
         Schema::enableForeignKeyConstraints();
 
         DB::table('reservation_statuses')->insert([
-            ['name' => 'AGUARDANDO CONFIRMAÇÃO', 'status' => true],
+            ['name' => 'AGUARDANDO CONFIRMAÇÃO DO SETOR', 'status' => true],
             ['name' => 'VISITA AGENDADA', 'status' => true],
             ['name' => 'VISITA EM ANDAMENTO', 'status' => true],
             ['name' => 'VISITA REALIZADA', 'status' => true],

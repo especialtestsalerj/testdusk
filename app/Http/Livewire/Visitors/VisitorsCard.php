@@ -13,6 +13,7 @@ use App\Data\Repositories\Visitors as VisitorsRepository;
 class VisitorsCard extends Component
 {
     public $name;
+    public $card;
     public $document;
     public $sectors;
     public $reason;
@@ -55,6 +56,7 @@ class VisitorsCard extends Component
             }
         }
 
+        $this->card = $visitor->card?->number ?? '';
         $this->visitorId = $visitor->id ?? '';
         $this->name = $visitor->person->name ?? '';
         $this->document = $visitor->document ?? '';

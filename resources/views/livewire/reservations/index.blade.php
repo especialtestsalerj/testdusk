@@ -1,3 +1,4 @@
+@php use App\Models\ReservationStatus; @endphp
 <div class="py-4 px-4 conteudo">
 
     <div class="row mb-4 d-flex align-items-center">
@@ -97,6 +98,7 @@
                                                 <span
                                                     class="fw-bold">Visitante:</span> {{ $reservation['person']['full_name'] }}
                                                 @if($reservation->quantity > 1)
+
                                                     <span class="badge bg-danger rounded-circle more-destinys"
                                                           data-bs-toggle="tooltip"
                                                           data-bs-placement="top"
@@ -104,12 +106,19 @@
                                                           data-bs-html="true"
                                                           data-bs-title="
                                                           <div class='fw-bold mt-1 pt-0 pb-0 multiple-destiny text-truncate'>
-                                                          @if($reservation['guests'])
-                                                                @foreach(json_decode($reservation['guests']) as $guest)
-                                                                    <p>{{ $guest->name ?? ''}}</p>
-                                                                @endforeach
+                                                          @if($reservation->reservation_status_id == 2 || $reservation->reservation_status_id == 4)
+                                                              @foreach($reservation->guestsConfirmed as $guest)
+                                                              <p>{{$guest->name}} : {{ReservationStatus::where('id',$guest->pivot->reservation_status_id)->first()->name }}</p>
+                                                               @endforeach
+                                                           @else
+                                                               @if($reservation['guests'])
+
+                                                                    @foreach($reservation['guests'] as $guest)
+                                                                        <p>{{ $guest['name'] ?? ''}} </p>
+                                                                    @endforeach
+                                                               @endif
                                                            @endif
-                                                           </div>"
+                                                               </div>"
                                                     >
                                                         +{{ $reservation->quantity - 1 }}
                                                     </span>
@@ -124,6 +133,12 @@
                                             <div class="col-3 col-lg-4 text-center text-lg-start">
                                                 <span
                                                     class="fw-bold">E-mail:</span> {{$reservation['person']['email']}}
+                                                <button type="button" class="btn btn-dark text-white"
+                                                        data-bs-toggle="modal"
+                                                        title="Alterar Visita"
+                                                        wire:click="resendEmail({{$reservation->id}})"
+                                                >
+                                                    <i class="fa-regular fa-envelope"></i> Reenviar e-mail</button>
 
                                             </div>
                                         </div>
@@ -136,12 +151,17 @@
                                             <div class="col-2 col-lg-2 text-center text-lg-start">
                                                 <span class="fw-bold">Horário:</span> {{$reservation->capacity->hour}}
                                             </div>
+                                            <div class="col-2 col-lg-2 text-center text-lg-start">
+                                                <span class="fw-bold">Código da Reserva:</span> {{$reservation->code}}
+                                            </div>
                                             <div class="col-3 col-lg-3 text-center text-lg-start">
                                                 <span class="fw-bold">Status:</span> <label class="badge
                                         @if($reservation->reservation_status_id == 1)
                                             bg-dark2
-                                            @elseif($reservation->reservation_status_id == 2 || $reservation->reservation_status_id == 4)
+                                            @elseif($reservation->reservation_status_id == 2)
                                             bg-success
+                                            @elseif($reservation->reservation_status_id == 4)
+                                            btn btn-info
                                             @else
                                             bg-danger
                                             @endif

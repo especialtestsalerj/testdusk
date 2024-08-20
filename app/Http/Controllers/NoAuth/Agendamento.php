@@ -6,6 +6,7 @@ use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Requests\AgendamentoStore;
 
+use App\Models\Reservation;
 use App\Models\Sector as SectorModel;
 
 use App\Notifications\ReservationResendNotification;
@@ -52,9 +53,11 @@ class Agendamento extends BaseController
        $reservations = app(ReservationRepository::class)->recoveryFromDocumentAndEmail($documentNumber,$email);
 
 
+        if(count($reservations) > 0) {
 
-        Notification::route('mail', $reservations[0]->responsible_email)
-            ->notify(new ReservationResendNotification($reservations));
+            Notification::route('mail', $reservations[0]->responsible_email)
+                ->notify(new ReservationResendNotification($reservations));
+        }
 
         return redirect()
             ->route('agendamento.index')
@@ -99,18 +102,7 @@ class Agendamento extends BaseController
 
         $data['guests'] = json_encode($request->input('inputs', []));
 
-
-
-            // Faça algo com os dados, como salvar no banco de dados
-
-
-
-//        dd($person);
-
-
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>$person, ]);
-
-
 
         $reservation = app(ReservationRepository::class)->create($data);
 
@@ -123,5 +115,16 @@ class Agendamento extends BaseController
     public function detail()
     {
         return view('agendamento.detail');
+    }
+
+    public function cancel($uuid)
+    {
+        $reservation = Reservation::where('uuid', $uuid)->firstOrFail();
+
+        // Lógica para cancelar a reserva
+        $reservation->reservation_status_id = 5; // Status "cancelado"
+        $reservation->save();
+
+        return redirect()->route('agendamento.index')->with('status', 'Reservation canceled successfully.');
     }
 }

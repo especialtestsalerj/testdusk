@@ -21,6 +21,8 @@ Route::group(['prefix' => 'agendamento'], function () {
             ->name('agendamento.form-tailwind');
     });
 
+    Route::get('/cancel/{uuid}', [Agendamento::class, 'cancel'])->name('reservation.cancel');
+
     Route::group(['prefix' => 'agendamento-grupo'], function () {
 
         Route::get('/', [Agendamento::class,'createGroup'])

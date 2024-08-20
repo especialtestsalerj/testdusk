@@ -156,6 +156,7 @@ class Person extends Model
 
     public function reservationsGuest(): BelongsToMany
     {
-        return $this->belongsToMany(Reservation::class, 'reservation_person', 'person_id', 'reservation_id');
+        return $this->belongsToMany(Reservation::class, 'reservation_person', 'person_id', 'reservation_id')
+            ->withPivot('reservation_status_id');
     }
 }
