@@ -20,7 +20,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.12",
+        "livewire/livewire": "^2.10",
         "meilisearch/meilisearch-php": "^1.6",
         "owen-it/laravel-auditing": "^13.0",
         "predis/predis": "^2.2",

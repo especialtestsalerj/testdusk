@@ -38,6 +38,7 @@ class Form extends BaseForm
         if ($this->person_id) {
             $this->hasMask = Person::find($this->person_id)->isBrazilian();
         }
+
         if ($this->contacts && !$this->isVisitorsForm) {
             $contact = $this->contacts;
         } elseif ($this->isVisitorsForm) {
@@ -121,6 +122,7 @@ class Form extends BaseForm
     public function hasMask($value)
     {
         $this->hasMask = $value;
+        $this->reset('contact');
     }
 
 }
