@@ -77,22 +77,34 @@ class Reservation extends Model
             // Verifique se o status foi alterado para 'visita confirmada'
             if ($reservation->isDirty('reservation_status_id')){
 
-                if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
-                // Envie o email de notificação
-                    $reservation->notify(new ReservationConfirmedNotification($reservation));
-                }
-
-                if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
-                    $reservation->notify(new ReservationCanceledNotification($reservation));
-                }
-
-                if($reservation->reservationStatus->name == 'VISITA REALIZADA'){
-                    // Envie o email de notificação
-                    $reservation->notify(new ReservationRealizedNotification($reservation));
-                }
+               $this->sendEmail($reservation);
             }
         });
     }
+
+    public function sendEmail($reservation)
+    {
+
+        if($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO'){
+            $reservation->notify(new ReservationNotification($reservation));
+        }
+        
+        if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
+            // Envie o email de notificação
+            $reservation->notify(new ReservationConfirmedNotification($reservation));
+        }
+
+        if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
+            $reservation->notify(new ReservationCanceledNotification($reservation));
+        }
+
+        if($reservation->reservationStatus->name == 'VISITA REALIZADA'){
+            // Envie o email de notificação
+            $reservation->notify(new ReservationRealizedNotification($reservation));
+        }
+    }
+
+
 
     public function building()
     {
