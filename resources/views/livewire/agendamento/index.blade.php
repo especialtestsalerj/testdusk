@@ -16,39 +16,33 @@
 
 
  <section class="">
-     <div class="absolute z-1 w-full">
 
-         <div class="w-full  flex justify-center">
+
+     <div class="hidden md:block absolute z-20 w-full">
+         <div class="w-full flex justify-center">
              <img src="img/logo-alerj-grande.png" class="w-1/5">
          </div>
 
-
-
          <div class="w-full text-center mt-3">
-             <h1 class="text-4xl">
+             <h1 class="text-2xl lg:text-4xl font-bold text-brand-900">
                  Agendamentos de visitas
              </h1>
-
-             <div class="flex justify-center mt-5">
-
-                 <div class="w-2/5">
-                     Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam fermentum a erat sed laoreet. Pellentesque in diam convallis, blandit ante in, accumsan sem. Integer nulla lectus, ullamcorper vitae dui in, dictum tempor nulla. Quisque porttitor purus eu metus sollicitudin, eu varius tellus consectetur.
+             <div class=" flex justify-center mt-3">
+                 <div class="w-4/6 lg:w-3/5 2xl:w-1/2 text-sm lg:text-base">
+                     Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam fermentum a erat sed laoreet. Pellentesque in diam convallis, blandit ante in, accumsan sem. Integer nulla lectus.
                  </div>
-
-
              </div>
          </div>
-
      </div>
 
 
+
      <div class="flex items-center justify-center h-screen relative z-10">
-         <div class="w-10/12 sm:w-2/5 mx-auto sm:mx-auto my-4 sm:my-0 ">
-             <div class="flex flex-col sm:flex-row gap-x-4">
+         <div class="w-10/12 2xl:w-3/4 mx-auto sm:mx-auto my-4 sm:my-0 ">
+             <div class="flex flex-col sm:flex-row gap-x-8">
 
-                 <div class="w-full sm:w-1/2 p-2">
-                     <div class="relative p-5 bg-white rounded-lg shadow mt-4">
-
+                 <div class="w-full lg:w-1/2 p-2">
+                     <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
                              <div class="w-10/12">
                                  <h3 class="font-medium text-2xl text-gray-800">
@@ -60,21 +54,20 @@
                                  </div>
 
                                  <div class="mt-6 md:mt-8">
-                                     <button class="w-full md:w-auto text-sm bg-gray-500 px-4 py-2 text-white rounded-3xl font-medium">
+                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
                                          Agende sua visita agora
                                      </button>
                                  </div>
                              </div>
                          </div>
-
-                         <div class="hidden sm:block absolute z-0 bottom-0 right-0">
+                         <div class="block absolute z-0 bottom-0 right-0">
                              <img src="/img/booking.svg" class="h-64">
                          </div>
                      </div>
                  </div>
 
-                 <div class="w-full sm:w-1/2 p-2 h-80">
-                     <div class="relative p-5 bg-white rounded-lg shadow mt-4">
+                 <div class="w-full lg:w-1/2">
+                     <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
                              <div class="w-full">
                                  <h3 class="font-medium text-2xl text-gray-800">
@@ -84,14 +77,14 @@
                                      <input type="text" id="name" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="name" placeholder="Seu nome">
                                  </div>
                                  <div class="mt-6 md:mt-8">
-                                     <button class="w-full md:w-auto text-sm bg-gray-500 px-4 py-2 text-white rounded-3xl font-medium">
+                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
                                          Consultar Agendamento
                                      </button>
                                  </div>
                              </div>
                          </div>
 
-                         <div class="hidden sm:block absolute z-0 bottom-0 right-0">
+                         <div class="block absolute z-0 bottom-0 right-0">
                              <img src="img/conference2.svg" class="h-64">
                          </div>
                      </div>
