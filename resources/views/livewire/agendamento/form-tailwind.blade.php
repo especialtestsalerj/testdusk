@@ -338,27 +338,24 @@
                 minDate: "today",
                 maxDate: new Date().fp_incr(30), // 30 days from now
                 disable: [
-
                     function(date) {
-                        // Verifica se o dia é sábado (6) ou domingo (0)
-                        console.log(date)
-                        if (date.getDay() === 6 || date.getDay() === 0) {
-                            return true;
-                        }
-
-                        // Verifica se a data está dentro das datas bloqueadas
-                        var formattedDate = flatpickr.formatDate(date, "Y-m-d");
-                        return blockedDates.includes(formattedDate);
+                        // Desativa sábados (6) e domingos (0)
+                        return (date.getDay() === 6 || date.getDay() === 0);
                     }
-                ],
+                ].concat(blockedDates),
                 onChange: function (selectedDates, dateStr, instance) {
                     @this.
                     set('reservation_date', dateStr);
                 }
             });
-            flatpickrInstance.get('disabled');
+
             Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
-                flatpickrInstance.set('disable', newBlockedDates);
+                flatpickrInstance.set('disable', [
+                    function(date) {
+                        // Desativa sábados (6) e domingos (0)
+                        return (date.getDay() === 6 || date.getDay() === 0);
+                    }
+                ].concat(newBlockedDates));
             });
         });
 

@@ -88,7 +88,7 @@ class Reservation extends Model
         if($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO'){
             $reservation->notify(new ReservationNotification($reservation));
         }
-        
+
         if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
             // Envie o email de notificação
             $reservation->notify(new ReservationConfirmedNotification($reservation));
