@@ -27,6 +27,12 @@ class Configuration extends BaseForm
 
     public $blockedDates=[];
 
+    public $max_date;
+    public $is_visitable;
+    public $nickname;
+    public $required_motivation;
+    public $display_remaining_vacancies;
+
     protected $listeners =[
         'created-capacity' =>'loadCapacities',
         'associated-sector-user' =>'loadCapacities',
@@ -73,6 +79,7 @@ class Configuration extends BaseForm
 
         $this->loadCapacities();
         $this->loadBlockedDates();
+        $this->fillForm();
 
     }
 
@@ -159,4 +166,32 @@ class Configuration extends BaseForm
         $this->sector->users()->detach([$this->selecteduser_id]);
         $this->loadCapacities();
     }
+
+    private function fillForm()
+    {
+        $this->max_date = $this->sector->max_date;
+        $this->is_visitable = $this->sector->is_visitable;
+        $this->nickname = $this->sector->nickname;
+        $this->required_motivation = $this->sector->required_motivation;
+        $this->display_remaining_vacancies = $this->sector->display_remaining_vacancies;
+
+
+    }
+
+    public function save()
+    {
+
+
+
+         $this->sector->max_date = $this->max_date;
+         $this->sector->is_visitable = $this->is_visitable;
+         $this->sector->nickname = $this->nickname;
+         $this->sector->required_motivation = $this->required_motivation;
+         $this->sector->display_remaining_vacancies = $this->display_remaining_vacancies;
+         $this->sector->save();
+
+        return redirect(request()->header('Referer'))->with(['message'=>'Configurações atualizadas com sucesso']);
+    }
+
+
 }

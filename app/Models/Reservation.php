@@ -37,6 +37,7 @@ class Reservation extends Model
         'canceled_by_id',
         'canceled_at',
         'uuid',
+        'institution'
     ];
 
     protected $casts = [
@@ -78,7 +79,7 @@ class Reservation extends Model
             if ($reservation->isDirty('reservation_status_id')){
 
                 if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
-                // Envie o email de notificação
+                    // Envie o email de notificação
                     $reservation->notify(new ReservationConfirmedNotification($reservation));
                 }
 
@@ -93,6 +94,30 @@ class Reservation extends Model
             }
         });
     }
+
+    function sendEmail($reservation)
+    {
+
+        if($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO'){
+            $reservation->notify(new ReservationNotification($reservation));
+        }
+
+        if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
+            // Envie o email de notificação
+            $reservation->notify(new ReservationConfirmedNotification($reservation));
+        }
+
+        if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
+            $reservation->notify(new ReservationCanceledNotification($reservation));
+        }
+
+        if($reservation->reservationStatus->name == 'VISITA REALIZADA'){
+            // Envie o email de notificação
+            $reservation->notify(new ReservationRealizedNotification($reservation));
+        }
+    }
+
+
 
     public function building()
     {

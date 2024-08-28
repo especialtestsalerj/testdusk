@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Reservations;
 
 use App\Data\Repositories\People;
 use App\Data\Repositories\People as PeopleRepository;
+use App\Data\Repositories\Reservations;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Livewire\BaseIndex;
@@ -190,6 +191,15 @@ class Index extends BaseIndex
     public function editReservation($reservationId)
     {
         $this->emit('editReservation', $reservationId);
+    }
+
+
+    public function resendEmail($reservation_id)
+    {
+        $reservation = app(Reservations::class)->findById($reservation_id);
+        $reservation->sendEmail($reservation);
+        $this->swallSuccess("E-mail reenviado com sucesso.");
+
     }
 
 }

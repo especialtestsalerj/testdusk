@@ -8,7 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class Sector extends Model
 {
-    protected $fillable = ['name','nickname', 'status', 'building_id', 'nickname', 'is_visitable'];
+    protected $fillable = [
+        'name',
+        'nickname',
+        'status',
+        'building_id',
+        'nickname',
+        'is_visitable',
+        'display_remaining_vacancies',
+        'max_date',
+        'required_motivation'
+    ];
 
     protected $filterableColumns = ['name', 'status'];
 

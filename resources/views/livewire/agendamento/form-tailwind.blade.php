@@ -328,13 +328,21 @@
     <script>
         document.addEventListener('livewire:load', function () {
 
+            var dates = new Date().fp_incr(30);
+            console.log(dates.getDay());
             var blockedDates = @json($blockedDates);
+
             var flatpickrInstance = flatpickr("#reservation_date", {
                 locale: "pt",
                 dateFormat: "d/m/Y",
                 minDate: "today",
                 maxDate: new Date().fp_incr(30), // 30 days from now
-                disable: blockedDates,
+                disable: [
+                    function(date) {
+                        // Desativa sábados (6) e domingos (0)
+                        return (date.getDay() === 6 || date.getDay() === 0);
+                    }
+                ].concat(blockedDates),
                 onChange: function (selectedDates, dateStr, instance) {
                     @this.
                     set('reservation_date', dateStr);
@@ -342,7 +350,12 @@
             });
 
             Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
-                flatpickrInstance.set('disable', newBlockedDates);
+                flatpickrInstance.set('disable', [
+                    function(date) {
+                        // Desativa sábados (6) e domingos (0)
+                        return (date.getDay() === 6 || date.getDay() === 0);
+                    }
+                ].concat(newBlockedDates));
             });
         });
 
