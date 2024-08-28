@@ -96,11 +96,12 @@ class Agendamento extends BaseController
             'email'=>$request->get('responsible_email'),
             'mobile'=>$request->get('mobile'),
             'has_disability'=>$request->get('has_disability'),
-            'disabilities'=>$request->get('disabilities')
+            'disabilities'=>$request->get('disabilities'),
+            'birthdate'=>$request->get('birthdate'),
 
         ];
 
-        $data['guests'] = json_encode($request->input('inputs', []));
+        $data['guests'] = $request->input('inputs', []);
 
        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>$person, ]);
 

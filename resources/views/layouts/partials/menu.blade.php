@@ -137,9 +137,9 @@
                                     <li>
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.index') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
                                            href="{{ route('reservation.index') }}">Agenda</a></li>
-                                <li>
-                                        <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"
-                                           href="{{ route('reservation.calendar') }}">Calendario</a></li>
+{{--                                <li>--}}
+{{--                                        <a class="dropdown-item {{ (request()->routeIs('reservation.calendar') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"--}}
+{{--                                           href="{{ route('reservation.calendar') }}">Calendario</a></li>--}}
                                 @can(make_ability_name_with_current_building('reservations:associate-users'))
                                     <li>
                                         <a class="dropdown-item {{ (request()->routeIs('reservation.configuration') && !request()->routeIs('visitors.checkout')) ? 'active' : '' }}"

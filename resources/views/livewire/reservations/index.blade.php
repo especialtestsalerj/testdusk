@@ -128,17 +128,23 @@
                                             </div>
                                             <div class="col-5 col-lg-3 text-center text-lg-start">
                                                 <span
+                                                    class="fw-bold">Instituição:</span> {{$reservation['institution']}}
+                                            </div>
+                                        </div>
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-5 col-lg-3 text-center text-lg-start">
+                                                <span
                                                     class="fw-bold">Celular:</span> {{$reservation['person']['mobile']}}
                                             </div>
                                             <div class="col-3 col-lg-4 text-center text-lg-start">
                                                 <span
                                                     class="fw-bold">E-mail:</span> {{$reservation['person']['email']}}
-                                                <button type="button" class="btn btn-dark text-white"
+                                                <label class="badge btn btn-dark text-white"
                                                         data-bs-toggle="modal"
                                                         title="Alterar Visita"
                                                         wire:click="resendEmail({{$reservation->id}})"
                                                 >
-                                                    <i class="fa-regular fa-envelope"></i> Reenviar e-mail</button>
+                                                    <i class="fa-regular fa-envelope"></i> Reenviar e-mail</label>
 
                                             </div>
                                         </div>

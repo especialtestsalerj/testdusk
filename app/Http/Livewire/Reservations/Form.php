@@ -25,8 +25,11 @@ class Form extends BaseForm
     public $sector_id;
     public $building_id;
 
+    public $sector;
+
     public $document_number;
 
+    public $institution;
     public $full_name;
     public $social_name;
 
@@ -35,6 +38,8 @@ class Form extends BaseForm
     public $mobile;
 
     public $blockedDates;
+
+    public $maxDate;
 
     public $reservation_date;
 
@@ -49,6 +54,10 @@ class Form extends BaseForm
     public  $disabilities =[];
 
     public $quantity;
+
+    public $birthdate;
+
+
 
 
 
@@ -72,6 +81,7 @@ class Form extends BaseForm
         $this->sectors = app(Sectors::class)->allVisitable();
         Sector::enableGlobalScopes();
         $this->blockedDates =[];
+        $this->maxDate = 0;
     }
 
     protected function getComponentVariables()
@@ -115,6 +125,7 @@ class Form extends BaseForm
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
             });
+
         }else{
             $this->blockedDates =[];
 
@@ -123,19 +134,26 @@ class Form extends BaseForm
 
     public function updatedSectorId($newValue)
     {
-        if (is_null($newValue)) {
+        if (empty($newValue)) {
             return;
 
         }
 
+
+
+        $this->sector = Sector::where('id',$this->sector_id )->first();
+
+//        dd($this->sector);
+
         $this->loadDates();
         $this->loadHourCapacities();
         $this->emit('blockedDatesUpdated', $this->blockedDates);
+        $this->emit('maxDateUpdated', $this->sector->max_date);
     }
 
     public function updatedReservationDate($newValue)
     {
-        if (is_null($newValue)) {
+        if (empty($newValue)) {
             return;
 
         }
@@ -147,7 +165,7 @@ class Form extends BaseForm
             $this->capacities
                 ->map(function ($item) {
                     return [
-                        'name' => $item->maximum_capacity,
+                        'name' => $item->hour,
                         'value' => $item->id,
                     ];
                 })
@@ -184,30 +202,45 @@ class Form extends BaseForm
         }
     }
 
-    protected function loadHourCapacities()
+    public function loadHourCapacities()
     {
 
 
-        if(!empty($this->sector_id) && !empty($this->reservation_date)) {
+        if (!empty($this->sector_id) && !empty($this->reservation_date)) {
+
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
-            $this->capacities =  \DB::table('capacities as c')
-                ->select('c.id', \DB::raw("c.hour, c.hour || ' (' || (c.maximum_capacity - (
+
+            if ($this->sector->display_remaining_vacancies){
+                $this->capacities = \DB::table('capacities as c')
+                    ->select('c.id', \DB::raw("c.hour || ' (' || (c.maximum_capacity - (
+                select count(*) from reservations r
+                where r.sector_id = c.sector_id
+                  and r.reservation_date = '$date'
+                  and r.capacity_id = c.id)) || ' vagas)' as hour"))
+                    ->where('c.sector_id', $this->sector_id)
+                    ->having(\DB::raw("(c.maximum_capacity - (
             select count(*) from reservations r
             where r.sector_id = c.sector_id
               and r.reservation_date = '$date'
-              and r.capacity_id = c.id)) || ' vagas)' as maximum_capacity"))
-                ->where('c.sector_id', $this->sector_id)
-                ->having(\DB::raw("(c.maximum_capacity - (
-        select count(*) from reservations r
-        where r.sector_id = c.sector_id
-          and r.reservation_date = '$date'
-          and r.capacity_id = c.id))"), '>', 0)
-                ->groupBy('c.id', 'c.hour', 'c.maximum_capacity')
-                ->orderBy('c.hour')
-                ->get();
-        }
-        else{
+              and r.capacity_id = c.id))"), '>', 0)
+                    ->groupBy('c.id', 'c.hour')
+                    ->orderBy('c.hour')
+                    ->get();
+            } else {
+                $this->capacities = \DB::table('capacities as c')
+                    ->select('c.id', 'c.hour')
+                    ->where('c.sector_id', $this->sector_id)
+                    ->having(\DB::raw("(c.maximum_capacity - (
+            select count(*) from reservations r
+            where r.sector_id = c.sector_id
+              and r.reservation_date = '$date'
+              and r.capacity_id = c.id))"), '>', 0)
+                    ->groupBy('c.id', 'c.hour')
+                    ->orderBy('c.hour')
+                    ->get();
+            }
+    }else{
             $this->capacities =[];
         }
     }

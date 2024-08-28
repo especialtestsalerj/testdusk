@@ -198,6 +198,7 @@ class Index extends BaseIndex
     {
         $reservation = app(Reservations::class)->findById($reservation_id);
         $reservation->sendEmail($reservation);
+        $this->swallSuccess("E-mail reenviado com sucesso.");
 
     }
 

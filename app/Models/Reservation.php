@@ -37,6 +37,7 @@ class Reservation extends Model
         'canceled_by_id',
         'canceled_at',
         'uuid',
+        'institution'
     ];
 
     protected $casts = [
@@ -77,12 +78,24 @@ class Reservation extends Model
             // Verifique se o status foi alterado para 'visita confirmada'
             if ($reservation->isDirty('reservation_status_id')){
 
-               $this->sendEmail($reservation);
+                if($reservation->reservationStatus->name == 'VISITA AGENDADA'){
+                    // Envie o email de notificação
+                    $reservation->notify(new ReservationConfirmedNotification($reservation));
+                }
+
+                if($reservation->reservationStatus->name == 'VISITA CANCELADA'){
+                    $reservation->notify(new ReservationCanceledNotification($reservation));
+                }
+
+                if($reservation->reservationStatus->name == 'VISITA REALIZADA'){
+                    // Envie o email de notificação
+                    $reservation->notify(new ReservationRealizedNotification($reservation));
+                }
             }
         });
     }
 
-    public function sendEmail($reservation)
+    function sendEmail($reservation)
     {
 
         if($reservation->reservationStatus->name == 'AGUARDANDO CONFIRMAÇÃO'){

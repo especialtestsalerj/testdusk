@@ -73,40 +73,81 @@
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Hora da Visita *
                                 </label>
-                                <select
-                                    name="capacity_id" id="capacity_id"
-                                    wire:model="capacity_id" x-ref="capacity_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">SELECIONE</option>
-                                    @foreach ($this->capacities as $capacitiy)
-                                        <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
-                                            {{ $capacitiy->maximum_capacity ?? $capacitiy['maximum_capacity'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
+
+
+                                @if((!empty($this->reservation_date)) && (!empty($this->sector_id)) && (count($this->capacities) == 0))
+
+                                    <input type="text" class="bg-red-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            value="ESGOTADO" disabled="disabled">
+
+                                @else
+                                    <select
+                                        name="capacity_id" id="capacity_id"
+                                        wire:model="capacity_id" x-ref="capacity_id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">SELECIONE</option>
+                                        @foreach ($this->capacities as $capacitiy)
+                                            <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
+                                                {{ $capacitiy->hour ?? $capacitiy['hour'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
 
                         </div>
+                        @if($this->sector?->required_motivation)
+                            <div class="flex space-x-4 mt-2">
+                                <div class="w-full">
 
-                        <div class="flex space-x-4">
-                            <div class="w-full">
+                                    <label for="motive"
+                                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Motivo da Visita*
+                                    </label>
+                                    <textarea id="motive" rows="4"
+                                              name="motive" wire:model="motive"
+                                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                              placeholder="Leave a comment"></textarea>
+                                    {{--                                </form>--}}
 
-                                {{--                                <form class="max-w-sm mx-auto">--}}
-                                <label for="motive"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Motivo da Visita*
+                                </div>
+                            </div>
+                        @endif
+                        <div class="flex space-x-4 mt-2">
+                            <div class="w-1/2">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Instituição/Empresa*
                                 </label>
-                                <textarea id="motive" rows="4"
-                                          name="motive" wire:model="motive"
-                                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                          placeholder="Leave a comment"></textarea>
-                                {{--                                </form>--}}
+                                <input name="institution" id="institution"
+                                       wire:model="institution"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       >
+                            </div>
+                        </div>
 
+                        <div class="flex space-x-4 mt-2">
+                            <div class="w-1/2">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Nome Completo*
+                                </label>
+                                <input name="full_name" id="full_name"
+                                       wire:model="full_name"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       placeholder="nome completo">
+                            </div>
+                            <div class="w-1/2">
+                                <label for="social_name"
+                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Nome Social
+                                </label>
+                                <input name="social_name" id="social_name" wire:model="social_name"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       placeholder="nome social">
                             </div>
                         </div>
 
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-2">
                             <div class="w-4/5">
                                 <div class="flex space-x-4">
                                     <div class="w-1/2">
@@ -138,7 +179,19 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="flex space-x-4 mt-2">
+                            <div class="w-1/5">
+                                <label for="document_number"
+                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Data de Nascimento*
+                                </label>
 
+                                <input type="date" name="birthdate" id="birthdate"
+                                       wire:model="birthdate" x-ref="birthdate"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                            </div>
                             <div class="w-1/5">
                                 <label for="has_disability"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -159,7 +212,7 @@
                         </div>
 
                         @if($has_disability == 'true')
-                            <div class="flex space-x-4" >
+                            <div class="flex space-x-4 mt-2" >
                                 <label for="disabilities"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de Deficiência*</label>
                                 <br/>
                                 <ul class="disability-list list-unstyled">
@@ -176,28 +229,9 @@
                             </div>
                         @endif
 
-                        <div class="flex space-x-4">
-                            <div class="w-1/2">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Nome Completo*
-                                </label>
-                                <input name="full_name" id="full_name"
-                                       wire:model="full_name"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="nome completo">
-                            </div>
-                            <div class="w-1/2">
-                                <label for="social_name"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Nome Social
-                                </label>
-                                <input name="social_name" id="social_name" wire:model="social_name"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="nome social">
-                            </div>
-                        </div>
 
-                        <div class="flex space-x-4">
+
+                        <div class="flex space-x-4 mt-2">
                             <div wire:ignore class="w-1/3">
                                 <label for="country_id"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -268,7 +302,7 @@
                         </div>
 
 
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-2">
                             <div class="w-1/3">
                                 <label for="responsible_email"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -302,7 +336,7 @@
                             </div>
 
                         </div>
-                        <div class="flex space-x-4">
+                        <div class="flex space-x-4 mt-2">
                                 <div class="space-y-4">
                                     <table>
                                         <tr>
@@ -348,13 +382,13 @@
                                     </table>
                                 </div>
                         </div>
-                        <div class="flex space-x-4 space-y-2">
+                        <div class="flex space-x-4 space-y-2 mt-2">
 
                                 <div class="w-/13">
                                     <input type="button" class="mt-4 bg-blue-500 text-white p-2 rounded" wire:click="addInput" value="Adicionar Pessoa">
                                 </div>
                         </div>
-                        <div class="flex space-x-4 space-y-2">
+                        <div class="flex space-x-4 space-y-2 mt-2">
 
 
 
@@ -376,15 +410,16 @@
     <script>
         document.addEventListener('livewire:load', function () {
 
-            var dates = new Date().fp_incr(30);
-            console.log(dates.getDay());
+
             var blockedDates = @json($blockedDates);
+
+
 
             var flatpickrInstance = flatpickr("#reservation_date", {
                 locale: "pt",
                 dateFormat: "d/m/Y",
                 minDate: "today",
-                maxDate: new Date().fp_incr(30), // 30 days from now
+                maxDate: new Date().fp_incr({{$maxDate}}), // 30 days from now
                 disable: [
                     function(date) {
                         // Desativa sábados (6) e domingos (0)
@@ -404,6 +439,13 @@
                         return (date.getDay() === 6 || date.getDay() === 0);
                     }
                 ].concat(newBlockedDates));
+
+                flatpickrInstance.set('maxDate', new Date().fp_incr({{$maxDate}}));
+            });
+
+            Livewire.on('maxDateUpdated', function (newMaxDate) {
+                flatpickrInstance.set('maxDate', new Date().fp_incr(newMaxDate));
+
             });
         });
 

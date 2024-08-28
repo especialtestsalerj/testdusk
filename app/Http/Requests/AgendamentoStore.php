@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Sector;
 use App\Rules\PersonOnVisit;
 use App\Rules\ValidCPF;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,12 @@ class AgendamentoStore extends Request
 
     public function rules()
     {
-//        dd(request());
+
+        $sectorId = $this->get('sector_id');
+
+        // Verifique se o setor requer o motivo da visita
+        $sector = Sector::find($sectorId);
+        $requiresMotivation = $sector ? $sector->required_motivation : false;
         return [
 
 //                    'building_id' =>        ['required'],
@@ -33,6 +39,7 @@ class AgendamentoStore extends Request
                     'responsible_email' =>  ['required'],
                     'confirm_email' =>      ['required'],
                     'mobile' =>             ['required'],
+                    'motive' => [Rule::requiredIf($requiresMotivation),],
 
         ];
     }
@@ -53,6 +60,7 @@ class AgendamentoStore extends Request
             'email' =>              'E-mail',
             'confirm_email' =>      'Confirmação de E-mail',
             'mobile' =>             'Celular',
+            'motive'=>'Motivo'
         ];
 
     }
@@ -60,6 +68,7 @@ class AgendamentoStore extends Request
     public function messages()
     {
         return [
+            'motive.required' => 'O campo Motivo da Visita é obrigatório para o setor selecionado.',
 //            'document_type_id.required' => 'Tipo de Documento: preencha o campo corretamente.',
 //            'state_document_id.required_if' =>
 //                'Estado do Documento: preencha o campo corretamente.',

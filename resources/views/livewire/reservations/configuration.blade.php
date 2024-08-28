@@ -5,10 +5,8 @@
         use Carbon\Carbon;
     @endphp
 
-    <form>
 
-        @csrf
-        <div class="row mt-3">
+        <div class="row">
             <div class="form-group col-4">
                 <h4 for="sector_id" style="margin-left: 10px;" class="form-label">Setor:</h4>
                 <div wire:ignore>
@@ -27,20 +25,64 @@
             </div>
         </div>
         @if(!empty($this->sector_id))
+            <form wire:submit.prevent="save">
+
+            @csrf
             <div class="row mt-3">
-                <div class="form-group col-6">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="name">Nome Público*</label>
+
+                        <input class="form-control text-uppercase" id="nickname" name="nickname" wire:model="nickname"
+                               x-ref="nickname"/>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="name">Dias máximo de Antecedência*</label>
+
+                        <input type="number" class="form-control text-uppercase" id="maxDate" name="maxDate"
+                                wire:model="max_date"  x-ref="max_date" />
+                    </div>
+                </div>
+                <div class="form-group col-2 mt-3">
                     <div class="col-12">
-                        <input class="form-check-input" dusk="checkboxCards"
-                               type="checkbox" id="status" name="status" value="true"
-                        > Exigir motivo
+                        <input class="form-check-input" dusk="checkboxSectors" type="checkbox" id="is_visitable" name="is_visitable"
+                               wire:model="is_visitable" x-ref="is_visitable"
+                            {{(is_null(old('is_visitable')) ? (formMode() == 'create' ? true : $is_visitable) : old('is_visitable')) ? 'checked="checked"' : ''}}
+                            >
+                        <label class="form-check-label" for="is_visitable">Aceita Agendamento</label>
                     </div>
                     <div class="col-12">
-                    <input class="form-check-input" dusk="checkboxCards"
-                           type="checkbox" id="status" name="status" value="true"
-                    > Exibir vagas restantes
+                        <input class="form-check-input" dusk="checkboxCards"
+                               wire:model="display_remaining_vacancies" x-ref="display_remaining_vacancies"
+                               type="checkbox" id="status" name="display_remaining_vacancies"
+                        > Exibir vagas restantes
+                    </div>
+                </div>
+                <div class="form-group col-3 mt-3">
+                    <div class="col-12">
+                        <input class="form-check-input" dusk="checkboxCards"
+                               wire:model="required_motivation" x-ref="required_motivation"
+                               type="checkbox" id="required_motivation" name="required_motivation"
+                        > Exigir motivo
                     </div>
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-sm-4 align-self-center d-flex justify-content-start gap-4">
+                    <button class="btn btn-success text-white ml-1" id="submitButton" title="Salvar"  type="submit">
+                        <i class="fa fa-save"></i> Salvar
+                    </button>
+
+
+
+                    <a href="{{route('reservation.index')}}" id="cancelButton" title="Cancelar" class="btn btn-danger text-white ml-1">
+                        <i class="fas fa-ban"></i> Cancelar
+                    </a>
+                </div>
+            </div>
+            </form>
             <div class="row mt-3">
                 <div class="col-md-4 mb-2">
                     <div class="row my-2">
@@ -152,21 +194,21 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 mb-2">
-                    <div class="row my-2">
-                        <div class="col-sm-8 align-self-center">
-                            <h3 class="mb-0"><i class="fa-solid fa-star"></i>
-                                Datas & Horários Especiais:
-                            </h3>
-                        </div>
-                        <div class="col-sm-4 align-self-center d-flex justify-content-end">
-                                                                        <span class="btn btn-sm btn-primary text-white" wire:click="createDocument(7907)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Novo Documento">
-                                                <i class="fa fa-plus"></i>
-                                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+{{--                <div class="col-md-4 mb-2">--}}
+{{--                    <div class="row my-2">--}}
+{{--                        <div class="col-sm-8 align-self-center">--}}
+{{--                            <h3 class="mb-0"><i class="fa-solid fa-star"></i>--}}
+{{--                                Datas & Horários Especiais:--}}
+{{--                            </h3>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-sm-4 align-self-center d-flex justify-content-end">--}}
+{{--                                                                        <span class="btn btn-sm btn-primary text-white" wire:click="createDocument(7907)" data-bs-toggle="modal" data-bs-target="#document-modal" title="Novo Documento">--}}
+{{--                                                <i class="fa fa-plus"></i>--}}
+{{--                                            </span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-12">--}}
 {{--                            @foreach($blockedDates as $blockeddate)--}}
 
 {{--                                <div class="cards-striped mx-lg-0 mt-lg-2">--}}
@@ -190,9 +232,9 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 {{--                            @endforeach--}}
-                        </div>
-                    </div>
-                </div>
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
 
             </div>
@@ -252,7 +294,7 @@
             </div>
             @endif
 
-    </form>
+
 
     @livewire('capacities.modal')
     @livewire('blocked-dates.modal')
