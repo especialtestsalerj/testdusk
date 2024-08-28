@@ -19,7 +19,7 @@
          }
         }, 500);
      ">
-
+        
         <div class="row">
             <div class="{{ $document_type_id == config('app.document_type_rg') ? 'col-4' : 'col-6' }}">
                 <div class="form-group">

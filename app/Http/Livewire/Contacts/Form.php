@@ -122,7 +122,6 @@ class Form extends BaseForm
     public function hasMask($value)
     {
         $this->hasMask = $value;
-        $this->reset('contact');
     }
 
 }
