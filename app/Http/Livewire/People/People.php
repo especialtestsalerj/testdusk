@@ -140,6 +140,7 @@ class People extends BaseForm
         if (!is_null($this->person_id)) {
             $this->person = Person::find($this->person_id);
             $this->readonly = true;
+            $this->full_name = $this->person->full_name;
         } else {
             if (!$this->isPreFilled('document_number')) {
                 //Fill CPF
