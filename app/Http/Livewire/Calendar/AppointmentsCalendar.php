@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reservations;
+namespace App\Http\Livewire\Calendar;
 
 use App\Models\Reservation;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
@@ -9,6 +9,7 @@ use Illuminate\Support\Collection as Collection;
 class AppointmentsCalendar extends LivewireCalendar
 {
 
+    protected $listeners = ['nextMonth', 'previousMonth'];
 
     public function events(): Collection
     {
@@ -32,6 +33,16 @@ class AppointmentsCalendar extends LivewireCalendar
             );
         }
         return $collection;
+    }
+
+    public function nextMonth()
+    {
+        $this->goToNextMonth();
+    }
+
+    public function previousMonth()
+    {
+        $this->goToPreviousMonth();
     }
 }
 
