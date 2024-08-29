@@ -56,6 +56,10 @@ class Index extends BaseIndex
     public function mount()
     {
         $this->startDate = now()->format('Y-m-d');
+
+        if (!auth()->user()->isAn('Administrador') && auth()->user()->sectors->count() === 1) {
+            $this->sector_id = auth()->user()->sectors->first()->id;
+        }
     }
 
     public function additionalFilterQuery($query)
@@ -128,50 +132,49 @@ class Index extends BaseIndex
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA AGENDADA')->first()->id;
 
         $personArray = $this->selectedReservation->person;
-        $document = Document::where('number', remove_punctuation($personArray['document_number']) )->first();
+        $document = Document::where('number', remove_punctuation($personArray['document_number']))->first();
 
-        if(is_null($document?->person_id)){
+        if (is_null($document?->person_id)) {
 
-        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
-        $document = Document::firstOrCreate([
-            'number' => convert_case(
-                remove_punctuation($personArray['document_number']),
-                MB_CASE_UPPER)],
-            [
-            'person_id' => $person->id,
-            'document_type_id' =>$personArray['document_type_id'],
-            ]);
-        $this->selectedReservation->person_id = $person->id;
+            $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
+            $document = Document::firstOrCreate([
+                'number' => convert_case(
+                    remove_punctuation($personArray['document_number']),
+                    MB_CASE_UPPER)],
+                [
+                    'person_id' => $person->id,
+                    'document_type_id' => $personArray['document_type_id'],
+                ]);
+            $this->selectedReservation->person_id = $person->id;
 
-        }else{
+        } else {
             $this->selectedReservation->person_id = $document->person_id;
         }
 
 
-        if($this->selectedReservation->quantity > 1){
+        if ($this->selectedReservation->quantity > 1) {
             $guests = $this->selectedReservation->guests;
 
-            foreach($guests as $guest){
-                $document = Document::where('number', remove_punctuation($guest['document']) )->first();
-                if(is_null($document?->person_id)){
+            foreach ($guests as $guest) {
+                $document = Document::where('number', remove_punctuation($guest['document']))->first();
+                if (is_null($document?->person_id)) {
 
 
-                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name'=>$guest['name']]);
+                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name' => $guest['name']]);
                     $document = Document::firstOrCreate([
                         'number' => convert_case(
                             remove_punctuation($guest['document']),
                             MB_CASE_UPPER)],
                         [
                             'person_id' => $person->id,
-                            'document_type_id' =>$guest['documentType'],
+                            'document_type_id' => $guest['documentType'],
                         ]);
-                    $this->selectedReservation->guestsConfirmed()->attach($person->id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
+                    $this->selectedReservation->guestsConfirmed()->attach($person->id, ['reservation_status_id' => $this->selectedReservation->reservation_status_id]);
 
-                }else{
-                    $this->selectedReservation->guestsConfirmed()->attach($document->person_id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
+                } else {
+                    $this->selectedReservation->guestsConfirmed()->attach($document->person_id, ['reservation_status_id' => $this->selectedReservation->reservation_status_id]);
                 }
             }
-
 
 
         }
