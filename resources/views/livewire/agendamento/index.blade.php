@@ -92,7 +92,11 @@
                                      <input type="text" id="documentNumber" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="documentNumber" placeholder="Documento">
                                  </div>
                                  <div class="mt-6 md:mt-8">
-                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
+                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium g-recaptcha"
+
+                                             data-sitekey="6Lc3azEqAAAAAJ6TYJzsQI20EY6uC4_zpbcuTd-s"
+                                             data-callback='onSubmit'
+                                             data-action='submit'>
                                          Consultar Agendamento
                                      </button>
                                  </div>
@@ -244,7 +248,12 @@
     </div>
     --}}
 
+<script>
+    function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+    }
 
+</script>
 
 
 
