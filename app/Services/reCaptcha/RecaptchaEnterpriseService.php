@@ -17,7 +17,7 @@ class RecaptchaEnterpriseService
     {
         $this->recaptchaKey = config('services.recaptcha.key');
         $this->projectId = config('services.recaptcha.project_id');
-        $this->client = new RecaptchaEnterpriseServiceClient();
+      //  $this->client = new RecaptchaEnterpriseServiceClient();
     }
 
     public function createAssessment(string $token, string $action): array
