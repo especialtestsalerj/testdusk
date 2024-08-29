@@ -74,7 +74,7 @@
             <div class="col-4 col-md-1 mt-2 mt-lg-0">
                 <h3 class="me-2"> Até: </h3>
                 <input wire:model.debounce.200ms="endDate" type="date" max="3000-01-01"
-                       title="Filtrar por Saída" class="form-control text-uppercase"/>
+                       min="{{$startDate}}" title="Filtrar por Saída" class="form-control text-uppercase"/>
             </div>
 
         </div>

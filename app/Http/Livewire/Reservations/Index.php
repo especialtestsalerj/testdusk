@@ -19,9 +19,7 @@ class Index extends BaseIndex
     protected $repository = ReservationRepository::class;
     protected $model = Reservation::class;
 
-    public $orderByField = ['reservation_date'];
-    public $orderByDirection = ['desc'];
-    public $paginationEnabled = true;
+    public $orderByField = ['reservation_date', 'reservation_hour'];
     public $countResults;
     public Reservation $selectedReservation;
     public $startDate;
@@ -70,16 +68,36 @@ class Index extends BaseIndex
         return $query->where('sector.id', $this->sector_id);
     }
 
+    public function updatedStartDate()
+    {
+        if ($this->startDate > $this->endDate)
+        {
+            $this->reset('endDate');
+        }
+    }
+
 
     public function filterDates($query)
     {
-        if ($this->startDate != null) {
+        if ($this->startDate && $this->endDate) {
+            if ($this->startDate === $this->endDate) {
+                // Filtra exatamente esse dia
+                $query->query(function ($query) {
+                    $query->where('reservation_date', '=', $this->startDate);
+                });
+            } else {
+                // Verifica se há uma data inicial e final diferente
+                $query->query(function ($query) {
+                    $query->whereBetween('reservation_date', [$this->startDate, $this->endDate]);
+                });
+            }
+        } elseif ($this->startDate) {
+            // Apenas data inicial está presente
             $query->query(function ($query) {
                 $query->where('reservation_date', '>=', $this->startDate);
             });
-        }
-
-        if ($this->endDate) {
+        } elseif ($this->endDate) {
+            // Apenas data final está presente
             $query->query(function ($query) {
                 $query->where('reservation_date', '<=', $this->endDate);
             });
