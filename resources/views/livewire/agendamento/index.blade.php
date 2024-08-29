@@ -69,12 +69,27 @@
                  <div class="w-full lg:w-1/2">
                      <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
+                             <form method="post" action="{{ route('agendamento.recover')}}">
                              <div class="w-full">
+
+                                     @csrf
+{{--                                     <div class="mt-6">--}}
+
+
+                                         {{--                                         Documento: <input type="text" name="documentNumber" />--}}
+
+                                         {{--                                         E-mail: <input type="email" name="email" />--}}
+
+                                         {{--                                         <input type="submit" value="consultar">--}}
+
+
+{{--                                     </div>--}}
+
                                  <h3 class="font-medium text-2xl text-gray-800">
                                      Consulte seu agendamento.
                                  </h3>
                                  <div class="mt-6">
-                                     <input type="text" id="name" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="name" placeholder="Seu nome">
+                                     <input type="text" id="documentNumber" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="documentNumber" placeholder="Documento">
                                  </div>
                                  <div class="mt-6 md:mt-8">
                                      <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
@@ -82,6 +97,7 @@
                                      </button>
                                  </div>
                              </div>
+                             </form>
                          </div>
 
                          <div class="block absolute z-0 bottom-0 right-0">

@@ -3,6 +3,7 @@
 namespace App\Data\Repositories;
 
 use App\Models\Reservation;
+use Carbon\Carbon;
 
 class Reservations extends Repository
 {
@@ -28,9 +29,10 @@ class Reservations extends Repository
     }
 
 
-    public function recoveryFromDocumentAndEmail($documentNUmber,$email){
+    public function recoveryFromDocument($documentNUmber){
         return $this->model::where('reservation_status_id', '!=', 5)
             ->where('person->document_number', $documentNUmber)
-            ->where('responsible_email',$email)->get();
+            ->whereDate('reservation_date', '>=', Carbon::today())
+            ->get();
     }
 }

@@ -49,8 +49,10 @@ class Agendamento extends BaseController
     {
 
         $documentNumber = remove_punctuation($request->get('documentNumber'));
-        $email = $request->get('email');
-       $reservations = app(ReservationRepository::class)->recoveryFromDocumentAndEmail($documentNumber,$email);
+
+
+
+       $reservations = app(ReservationRepository::class)->recoveryFromDocument($documentNumber);
 
 
         if(count($reservations) > 0) {
