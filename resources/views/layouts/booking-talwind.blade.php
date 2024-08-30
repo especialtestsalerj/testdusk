@@ -63,7 +63,6 @@
 @include('layouts.partials.livereload')
 @include('layouts.partials.google-analytics')
 @livewireScripts
-@livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
 <script src="{{ mix('/js/tailwind/app-tailwind.js') }}" defer></script>
 </body>
