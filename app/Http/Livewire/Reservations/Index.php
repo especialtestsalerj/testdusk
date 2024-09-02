@@ -19,9 +19,7 @@ class Index extends BaseIndex
     protected $repository = ReservationRepository::class;
     protected $model = Reservation::class;
 
-    public $orderByField = ['reservation_date'];
-    public $orderByDirection = ['desc'];
-    public $paginationEnabled = true;
+    public $orderByField = ['reservation_date', 'reservation_hour'];
     public $countResults;
     public Reservation $selectedReservation;
     public $startDate;
@@ -56,6 +54,10 @@ class Index extends BaseIndex
     public function mount()
     {
         $this->startDate = now()->format('Y-m-d');
+
+        if (!auth()->user()->isAn('Administrador') && auth()->user()->sectors->count() === 1) {
+            $this->sector_id = auth()->user()->sectors->first()->id;
+        }
     }
 
     public function additionalFilterQuery($query)
@@ -66,16 +68,36 @@ class Index extends BaseIndex
         return $query->where('sector.id', $this->sector_id);
     }
 
+    public function updatedStartDate()
+    {
+        if ($this->startDate > $this->endDate)
+        {
+            $this->reset('endDate');
+        }
+    }
+
 
     public function filterDates($query)
     {
-        if ($this->startDate != null) {
+        if ($this->startDate && $this->endDate) {
+            if ($this->startDate === $this->endDate) {
+                // Filtra exatamente esse dia
+                $query->query(function ($query) {
+                    $query->where('reservation_date', '=', $this->startDate);
+                });
+            } else {
+                // Verifica se há uma data inicial e final diferente
+                $query->query(function ($query) {
+                    $query->whereBetween('reservation_date', [$this->startDate, $this->endDate]);
+                });
+            }
+        } elseif ($this->startDate) {
+            // Apenas data inicial está presente
             $query->query(function ($query) {
                 $query->where('reservation_date', '>=', $this->startDate);
             });
-        }
-
-        if ($this->endDate) {
+        } elseif ($this->endDate) {
+            // Apenas data final está presente
             $query->query(function ($query) {
                 $query->where('reservation_date', '<=', $this->endDate);
             });
@@ -128,50 +150,49 @@ class Index extends BaseIndex
         $this->selectedReservation->reservation_status_id = ReservationStatus::where('name', 'VISITA AGENDADA')->first()->id;
 
         $personArray = $this->selectedReservation->person;
-        $document = Document::where('number', remove_punctuation($personArray['document_number']) )->first();
+        $document = Document::where('number', remove_punctuation($personArray['document_number']))->first();
 
-        if(is_null($document?->person_id)){
+        if (is_null($document?->person_id)) {
 
-        $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
-        $document = Document::firstOrCreate([
-            'number' => convert_case(
-                remove_punctuation($personArray['document_number']),
-                MB_CASE_UPPER)],
-            [
-            'person_id' => $person->id,
-            'document_type_id' =>$personArray['document_type_id'],
-            ]);
-        $this->selectedReservation->person_id = $person->id;
+            $person = app(PeopleRepository::class)->createOrUpdateFromRequest($personArray);
+            $document = Document::firstOrCreate([
+                'number' => convert_case(
+                    remove_punctuation($personArray['document_number']),
+                    MB_CASE_UPPER)],
+                [
+                    'person_id' => $person->id,
+                    'document_type_id' => $personArray['document_type_id'],
+                ]);
+            $this->selectedReservation->person_id = $person->id;
 
-        }else{
+        } else {
             $this->selectedReservation->person_id = $document->person_id;
         }
 
 
-        if($this->selectedReservation->quantity > 1){
+        if ($this->selectedReservation->quantity > 1) {
             $guests = $this->selectedReservation->guests;
 
-            foreach($guests as $guest){
-                $document = Document::where('number', remove_punctuation($guest['document']) )->first();
-                if(is_null($document?->person_id)){
+            foreach ($guests as $guest) {
+                $document = Document::where('number', remove_punctuation($guest['document']))->first();
+                if (is_null($document?->person_id)) {
 
 
-                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name'=>$guest['name']]);
+                    $person = app(PeopleRepository::class)->createOrUpdateFromRequest(['full_name' => $guest['name']]);
                     $document = Document::firstOrCreate([
                         'number' => convert_case(
                             remove_punctuation($guest['document']),
                             MB_CASE_UPPER)],
                         [
                             'person_id' => $person->id,
-                            'document_type_id' =>$guest['documentType'],
+                            'document_type_id' => $guest['documentType'],
                         ]);
-                    $this->selectedReservation->guestsConfirmed()->attach($person->id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
+                    $this->selectedReservation->guestsConfirmed()->attach($person->id, ['reservation_status_id' => $this->selectedReservation->reservation_status_id]);
 
-                }else{
-                    $this->selectedReservation->guestsConfirmed()->attach($document->person_id,['reservation_status_id'=>  $this->selectedReservation->reservation_status_id]);
+                } else {
+                    $this->selectedReservation->guestsConfirmed()->attach($document->person_id, ['reservation_status_id' => $this->selectedReservation->reservation_status_id]);
                 }
             }
-
 
 
         }

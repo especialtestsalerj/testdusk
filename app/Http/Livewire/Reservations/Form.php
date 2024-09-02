@@ -76,10 +76,8 @@ class Form extends BaseForm
     }
 
     public function mount(){
-      //  $this->select2SelectOption('sector_id', $this->sector_id);
-        Sector::disableGlobalScopes();
-        $this->sectors = app(Sectors::class)->allVisitable();
-        Sector::enableGlobalScopes();
+
+        $this->loadSectors();
         $this->blockedDates =[];
         $this->maxDate = 0;
     }
@@ -100,17 +98,17 @@ class Form extends BaseForm
         ];
     }
 
-//    public function loadSectors()
-//    {
-//        if(!empty($this->building_id)) {
-//            Sector::disableGlobalScopes();
-//            $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
-//            Sector::enableGlobalScopes();
-//
-//        }else{
-//            $this->sectors = [];
-//        }
-//    }
+    public function loadSectors()
+    {
+        if(!empty($this->building_id)) {
+
+            $this->sectors = Sector::where('building_id', $this->building_id)->where('is_visitable', 'true')->get();
+
+
+        }else{
+            $this->sectors = [];
+        }
+    }
 
     public function loadDates()
     {

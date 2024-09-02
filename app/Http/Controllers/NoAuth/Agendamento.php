@@ -4,12 +4,14 @@ namespace App\Http\Controllers\NoAuth;
 
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
+use App\Http\Requests\AgendamentoIndex;
 use App\Http\Requests\AgendamentoStore;
 
 use App\Models\Reservation;
 use App\Models\Sector as SectorModel;
 
 use App\Notifications\ReservationResendNotification;
+use App\Services\reCaptcha\RecaptchaEnterpriseService;
 use Carbon\Carbon;
 use Faker\Provider\Base;
 use Illuminate\Http\Request as Request;
@@ -20,6 +22,12 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 class Agendamento extends BaseController
 {
+    protected $recaptchaService;
+
+    public function __construct(RecaptchaEnterpriseService $recaptchaService)
+    {
+        $this->recaptchaService = $recaptchaService;
+    }
     public function create()
     {
 
@@ -33,10 +41,11 @@ class Agendamento extends BaseController
         return view('agendamento.form-tailwind') ;
     }
 
-    public function createGroup()
+    public function createForm(AgendamentoIndex $request)
     {
+        $building_id = $request->get('building_id');
         app(AuthenticatedSessionController::class)->destroy(request());
-        return view('agendamento.form-group') ;
+        return view('agendamento.form')->with('building_id', $building_id) ;
     }
 
     public function index()
@@ -47,10 +56,20 @@ class Agendamento extends BaseController
 
     public function recover(Request $request)
     {
+//        $token = $request->input('g-recaptcha-response');
+//        $action = 'reservation_check'; // Substitua pela ação que você espera
+//
+//        $result = $this->recaptchaService->createAssessment($token, $action);
+//
+//        if (!$result['success']) {
+//            return back()->withErrors(['recaptcha' => 'Falha na verificação reCAPTCHA: ' . $result['reason']]);
+//        }
 
         $documentNumber = remove_punctuation($request->get('documentNumber'));
-        $email = $request->get('email');
-       $reservations = app(ReservationRepository::class)->recoveryFromDocumentAndEmail($documentNumber,$email);
+
+
+
+       $reservations = app(ReservationRepository::class)->recoveryFromDocument($documentNumber);
 
 
         if(count($reservations) > 0) {

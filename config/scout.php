@@ -152,7 +152,7 @@ return [
             ],
             \App\Models\Reservation::class => [
                 'filterableAttributes' => ['foo', 'status', 'sector.id', 'reservation_date', 'reservation_hour', 'status.id'],
-                'sortableAttributes' => ['reservation_date', 'created_at'],
+                'sortableAttributes' => ['reservation_date', 'created_at', 'reservation_hour'],
                 'searchableAttributes' => [
                     'code',
                     'reservation_date_formatted',

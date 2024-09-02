@@ -2,18 +2,20 @@
 
 namespace App\Http\Livewire\Agendamento;
 
-use App\Http\Livewire\Reservations\Form;
+use App\Http\Livewire\Reservations\Form as FormBase;
 
-class FormGroup extends Form
+class Form extends FormBase
 {
 
     public $inputs = [];
     public function render()
     {
+
+
         $this->loadCountryBr();
         $this->loadDefaultLocation();
 
-        return view('livewire.agendamento.form-group')->with($this->getViewVariables());
+        return view('livewire.agendamento.form')->with($this->getViewVariables());
     }
 
     public function addInput()
