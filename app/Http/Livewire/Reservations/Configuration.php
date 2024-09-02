@@ -43,6 +43,18 @@ class Configuration extends BaseForm
     ];
 
 
+    public function mount()
+    {
+        if (!auth()->user()->isAn('Administrador') && auth()->user()->sectors->count() === 1) {
+
+            $this->sector_id = auth()->user()->sectors->first()->id;
+            $this->sector = auth()->user()->sectors->first();
+            $this->loadCapacities();
+            $this->loadBlockedDates();
+            $this->fillForm();
+        }
+   }
+
     public function render()
     {
         return view('livewire.reservations.configuration')->with($this->getViewVariables());

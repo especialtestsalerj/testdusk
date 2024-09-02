@@ -4,6 +4,7 @@ namespace App\Http\Controllers\NoAuth;
 
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
+use App\Http\Requests\AgendamentoIndex;
 use App\Http\Requests\AgendamentoStore;
 
 use App\Models\Reservation;
@@ -40,10 +41,11 @@ class Agendamento extends BaseController
         return view('agendamento.form-tailwind') ;
     }
 
-    public function createGroup()
+    public function createForm(AgendamentoIndex $request)
     {
+        $building_id = $request->get('building_id');
         app(AuthenticatedSessionController::class)->destroy(request());
-        return view('agendamento.form-group') ;
+        return view('agendamento.form')->with('building_id', $building_id) ;
     }
 
     public function index()

@@ -23,9 +23,11 @@ Route::group(['prefix' => 'agendamento'], function () {
 
     Route::get('/cancel/{uuid}', [Agendamento::class, 'cancel'])->name('reservation.cancel');
 
-    Route::group(['prefix' => 'agendamento-grupo'], function () {
+    Route::group(['prefix' => 'formulario'], function () {
 
-        Route::get('/', [Agendamento::class,'createGroup'])
-            ->name('agendamento.form-group');
+
+
+        Route::post('/', [Agendamento::class,'createForm'])
+            ->name('agendamento.form');
     });
 });
