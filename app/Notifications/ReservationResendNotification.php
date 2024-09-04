@@ -41,7 +41,7 @@ class ReservationResendNotification extends Notification
         {
 
             return (new MailMessage)
-            ->subject('Sua reserva foi criada')
+            ->subject('Resumo das reservas futuras')
                 ->view(
                     'emails.reservation_resend',
                     [
