@@ -149,7 +149,7 @@ class Person extends Model
         return $this->country && $this->country->id === Constants::COUNTRY_BRAZIL_ID;
     }
 
-    public function reservations(): HasMany
+    public function reservations()
     {
         return $this->hasMany(Reservation::class, 'person_id');
     }
@@ -158,5 +158,17 @@ class Person extends Model
     {
         return $this->belongsToMany(Reservation::class, 'reservation_person', 'person_id', 'reservation_id')
             ->withPivot('reservation_status_id');
+    }
+
+    public function reservationsAsResponsible()
+    {
+        return $this->hasMany(Reservation::class, 'person_id');
+    }
+
+    public function reservationsByDateAndStatus($date, $status)
+    {
+        return $this->reservationsAsResponsible()->whereDate('reservation_date', $date)
+            ->where('reservation_status_id', $status)
+            ->where('building_id', get_current_building()->id);
     }
 }

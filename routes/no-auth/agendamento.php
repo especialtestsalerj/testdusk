@@ -12,7 +12,7 @@ Route::group(['prefix' => 'agendamento'], function () {
 
     Route::post('/recover',[Agendamento::class,'recover'])
         ->name('agendamento.recover');
-    Route::get('/detalhes', [Agendamento::class,'detail'])
+    Route::get('/detalhes/{uuid}', [Agendamento::class,'detail'])
         ->name('agendamento.detail');
 
     Route::group(['prefix' => 'agendamento-individual'], function () {
@@ -27,7 +27,9 @@ Route::group(['prefix' => 'agendamento'], function () {
 
 
 
-        Route::post('/', [Agendamento::class,'createForm'])
+        Route::get('/', [Agendamento::class,'createForm'])
             ->name('agendamento.form');
+
+        //Route::get('/', [Agendamento::class,'createForm']);
     });
 });

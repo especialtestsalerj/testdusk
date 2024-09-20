@@ -127,14 +127,20 @@ class Agendamento extends BaseController
         $reservation = app(ReservationRepository::class)->create($data);
 
         return view('agendamento.detail')
-            ->with(['message'=> 'Setor adicionado com sucesso!',
-                    'reservation' =>$reservation]);
+            ->with([
+                'message' => 'Reserva adicionado com sucesso!',
+                'reservation' => $reservation
+            ]);
     }
 
 
-    public function detail()
+    public function detail($uuid)
     {
-        return view('agendamento.detail');
+        $reservation = Reservation::where('uuid', $uuid)->firstOrFail();
+
+        return view('agendamento.detail')->with([
+            'reservation' => $reservation
+        ]);
     }
 
     public function cancel($uuid)
