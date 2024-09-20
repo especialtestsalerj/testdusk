@@ -1,43 +1,25 @@
 <div>
-    @include('layouts.msg')
+{{--    @include('layouts.msg')--}}
 
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
 
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="w-60" src="/img/logo-alerj-grande.png" alt="logo">
+                <img class="w-60" src="{{asset('/img/logo-alerj-grande.png')}}" alt="logo">
             </a>
 
             <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-4xl xl:p-0 mb-10">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
 
 
-                    <form name="formulario" id="formulario"
-                          action="{{ route('agendamento.store')}}" method="POST">
+{{--                    <form name="formulario" id="formulario"--}}
+{{--                          action="{{ route('agendamento.store')}}" method="POST">--}}
 
                         @csrf
 
                         <div class="flex space-x-4">
-
-                            {{--                            <div wire:ignore class="w-1/4  ">--}}
-                            {{--                                <label for="building_id"--}}
-                            {{--                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">--}}
-                            {{--                                    Edifício:*--}}
-                            {{--                                </label>--}}
-                            {{--                                <select name="building_id" id="building_id"--}}
-                            {{--                                        wire:model="building_id" x-ref="building_id" wire:change="loadSectors"--}}
-                            {{--                                        class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">--}}
-                            {{--                                    <option value="">SELECIONE</option>--}}
-                            {{--                                    @foreach ($buildings as $building)--}}
-                            {{--                                        <option value="{{ $building->id }}">--}}
-                            {{--                                            {{ convert_case($building->name, MB_CASE_UPPER) }}--}}
-                            {{--                                        </option>--}}
-                            {{--                                    @endforeach--}}
-                            {{--                                </select>--}}
-                            {{--                            </div>--}}
-
-                            <div wire:ignore class="w-1/4  ">
+                            <div wire:ignore class="w-1/3  ">
                                 <label for="sector_id"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Setor:
@@ -47,15 +29,24 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value=""> Selecione um setor</option>
                                     @foreach ($this->sectors as $sector)
-                                        <option value="{{ $sector->id ?? $sector['id']}}">
+                                        <option value="{{ $sector->id ?? $sector['id']}}"
+                                            {{ $sector_id == ($sector->id ?? $sector['id']) ? 'selected' : '' }}>
                                             {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
                                         </option>
                                     @endforeach
                                 </select>
+                                <div>
+                                    @error('sector_id')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
 
-                            <div class="w-1/4  ">
+                            <div class="w-1/3  ">
                                 <label for="reservation_date"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Data da Visita *
@@ -64,11 +55,18 @@
                                        value="{{$this->reservation_date}}" wire:model="reservation_date"
                                        x-ref="reservation_date"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <div>
+                                    @error('reservation_date')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
-
                             <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}" wire:model="reservation_date" />
 
-                            <div class="w-1/4  ">
+                            <div class="w-1/3  ">
                                 <label for="reservation_time"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Hora da Visita *
@@ -93,6 +91,14 @@
                                         @endforeach
                                     </select>
                                 @endif
+                                <div>
+                                    @error('capacity_id')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
                         </div>
@@ -109,21 +115,18 @@
                                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                               placeholder="Leave a comment"></textarea>
                                     {{--                                </form>--}}
-
+                                    <div>
+                                        @error('motive')
+                                        <small class="text-danger text-red-700">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
                                 </div>
+
                             </div>
                         @endif
-                        <div class="flex space-x-4 mt-2">
-                            <div class="w-1/2">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Instituição/Empresa*
-                                </label>
-                                <input name="institution" id="institution"
-                                       wire:model="institution"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       >
-                            </div>
-                        </div>
 
                         <div class="flex space-x-4 mt-2">
                             <div class="w-1/2">
@@ -134,6 +137,14 @@
                                        wire:model="full_name"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="nome completo">
+                                <div>
+                                    @error('full_name')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
                             <div class="w-1/2">
                                 <label for="social_name"
@@ -163,6 +174,14 @@
                                             <option value="1">CPF</option>
                                             <option value="4">Passaporte</option>
                                         </select>
+                                        <div>
+                                            @error('document_type_id')
+                                            <small class="text-danger text-red-700">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                {{ $message }}
+                                            </small>
+                                            @endError
+                                        </div>
 
                                     </div>
 
@@ -176,6 +195,14 @@
                                                wire:model="document_number" x-ref="document_number"
                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
+                                        <div>
+                                            @error('document_number')
+                                            <small class="text-danger text-red-700">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                {{ $message }}
+                                            </small>
+                                            @endError
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -191,6 +218,14 @@
                                        wire:model="birthdate" x-ref="birthdate"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 >
+                                <div>
+                                    @error('birthdate')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
                             <div class="w-1/5">
                                 <label for="has_disability"
@@ -208,25 +243,31 @@
                                     <option value="true">SIM</option>
                                     <option value="false">NÃO</option>
                                 </select>
+                                <div>
+                                    @error('has_disability')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
                         </div>
 
                         @if($has_disability == 'true')
-                            <div class="flex space-x-4 mt-2" >
-                                <label for="disabilities"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de Deficiência*</label>
-                                <br/>
-                                <ul class="disability-list list-unstyled">
-                                    @foreach($disabilityTypes as $disabilityType)
-                                        <li>
-                                            <label class="w-1/2" >
-                                                <input name="disabilities[]" wire:model="disabilities"
-                                                       value="{{ $disabilityType->id }}" type="checkbox"/>
-                                                {{ $disabilityType->name }}
-                                            </label>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                            <div class="flex flex-wrap mt-2">
+                                <label for="disabilities" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full">
+                                    Tipo de Deficiência*
+                                </label>
+                                @foreach($disabilityTypes as $disabilityType)
+                                    <label class="w-1/2 mb-2 flex items-center space-x-2">
+                                        <input name="disabilities[]" wire:model="disabilities"
+                                               value="{{ $disabilityType->id }}" type="checkbox" />
+                                        <span>{{ $disabilityType->name }}</span>
+                                    </label>
+                                @endforeach
                             </div>
+
                         @endif
 
 
@@ -239,7 +280,7 @@
                                 </label>
                                 <select name="country_id" id="country_id"
                                         wire:model="country_id" x-ref="country_id"
-                                        class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value=""> SELECIONE</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">
@@ -247,6 +288,14 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <div>
+                                    @error('country_id')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
                             <div class="w-1/3 {{ $this->detectIfCountryBrSelected() ? '': 'hidden' }}">
@@ -258,7 +307,7 @@
                                     <select id="state_id"
                                             name="state_id"
                                             wire:model="state_id" x-ref="state_id" wire:change="loadCities"
-                                            class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="">SELECIONE</option>
                                         @foreach ($states as $state)
                                             <option value="{{ $state->id }}">
@@ -266,6 +315,14 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <div>
+                                        @error('state_id')
+                                        <small class="text-danger text-red-700">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
                                 </div>
                             </div>
 
@@ -277,7 +334,7 @@
                                     </label>
                                     <select name="city_id" id="city_id"
                                             wire:model="city_id" x-ref="city_id"
-                                            class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="">SELECIONE</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id ?? $city['id'] }}">
@@ -285,6 +342,14 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <div>
+                                        @error('city_id')
+                                        <small class="text-danger text-red-700">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
                                 </div>
                             </div>
 
@@ -297,6 +362,15 @@
                                            name="other_city" id="other_city" wire:model="other_city"
                                         {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
                                 </div>
+                                <div>
+                                    @error('other_city')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
+
                             </div>
 
                         </div>
@@ -312,6 +386,14 @@
                                        wire:model="responsible_email"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="name@company.com">
+                                <div>
+                                    @error('responsible_email')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
                             <div class="w-1/3">
@@ -321,6 +403,14 @@
                                 <input type="email" name="confirm_email" id="confirm_email"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="name@company.com" wire:model="confirm_email">
+                                <div>
+                                    @error('confirm_email')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
                             </div>
 
 
@@ -332,10 +422,67 @@
                                 <input name="mobile" id="mobile" wire:model="mobile"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="(xx)xxxxx-xxxx">
+                                <div>
+                                    @error('mobile')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
 
                             </div>
 
                         </div>
+                        <div class="flex space-x-4 mt-2">
+                            <div class="w-1/5">
+                                <label for="has_group"
+                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Visita em Grupo?
+                                </label>
+                                <select
+                                    name="has_group" id="has_group"
+                                    wire:model="has_group"
+                                    x-ref="has_group" @disabled(request()->query('disabled'))
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="">
+                                        SELECIONE
+                                    </option>
+                                    <option value="true">SIM</option>
+                                    <option value="false">NÃO</option>
+                                </select>
+                                <div>
+                                    @error('has_group')
+                                    <small class="text-danger text-red-700">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @endError
+                                </div>
+                            </div>
+                        </div>
+                        @if($has_group=='true')
+
+                            <div class="flex space-x-4 mt-2">
+                                <div class="w-1/2">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Instituição/Empresa
+                                    </label>
+                                    <input name="institution" id="institution"
+                                           wire:model="institution"
+                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                    <div>
+                                        @error('institution')
+                                        <small class="text-danger text-red-700">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+                                </div>
+                            </div>
+
                         <div class="flex space-x-4 mt-2">
                                 <div class="space-y-4">
                                     <table>
@@ -374,7 +521,8 @@
                                             </td>
                                             <td>
 
-                                            <input type="button" class="bg-red-500 text-white p-2 rounded" wire:click="removeInput({{ $index }})" value="Remover"/>
+                                            <input type="button" class="w-full md:w-auto text-sm bg-red-700 px-4 py-2 text-white rounded-3xl font-medium" wire:click="removeInput({{ $index }})" value="Remover"/>
+
                                             </td>
                                         </tr>
 
@@ -385,21 +533,40 @@
                         <div class="flex space-x-4 space-y-2 mt-2">
 
                                 <div class="w-/13">
-                                    <input type="button" class="mt-4 bg-blue-500 text-white p-2 rounded" wire:click="addInput" value="Adicionar Pessoa">
+{{--                                    <input type="button" class="mt-4 bg-blue-500 text-white p-2 rounded" wire:click="addInput" value="Adicionar Pessoa">--}}
+                                    <input type="button" wire:click="addInput" style="background-color: rgb(14, 44, 69);" class="w-full md:w-auto text-sm bg-brand-800 px-4 py-2 text-white rounded-3xl font-medium" value="Adicionar Pessoa">
+
+
+
+
                                 </div>
                         </div>
+                        @endif
                         <div class="flex space-x-4 space-y-2 mt-2">
-
-
-
-                            <button wire:ignore=""
-                                    class="w-full text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                    id="submitButton" title="Salvar" onclick="this.disabled=true; this.form.submit();">
-                                <i class="fa fa-save"></i> Solicitar
-                            </button>
+                            <div class="w-1/5">
+                                <div class="mt-5">
+                                    <button wire:click="save"
+                                            wire:loading.attr="disabled"
+                                            wire:target="save"
+                                            style="background-color: rgb(14, 44, 69);"
+                                            class="w-1/3 w-full md:w-auto text-sm bg-brand-800 px-4 py-2 text-white rounded-3xl font-medium"
+                                            id="submitButton" title="Salvar">
+                                        <i class="fa fa-save"></i> Solicitar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-1/5">
+                                <div class="mt-5">
+                                    <a href="{{route('agendamento.index')}}"
+                                        class="w-1/3 w-full md:w-auto text-sm bg-red-700 px-4 py-2 text-white rounded-3xl font-medium"
+                                    >
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
-                    </form>
+{{--                    </form>--}}
                 </div>
             </div>
         </div>

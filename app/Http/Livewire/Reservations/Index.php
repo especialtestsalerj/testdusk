@@ -20,6 +20,7 @@ class Index extends BaseIndex
     protected $model = Reservation::class;
 
     public $orderByField = ['reservation_date', 'reservation_hour'];
+//    protected $orderByDirection = ['asc'];
     public $countResults;
     public Reservation $selectedReservation;
     public $startDate;

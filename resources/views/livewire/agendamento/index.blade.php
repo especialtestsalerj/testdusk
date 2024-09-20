@@ -20,7 +20,7 @@
 
      <div class="hidden md:block absolute z-20 w-full">
          <div class="w-full flex justify-center">
-             <img src="img/logo-alerj-grande.png" class="w-1/5">
+             <img src="{{asset('img/logo-alerj-grande.png')}}" class="w-1/5">
          </div>
 
          <div class="w-full text-center mt-3">
@@ -46,7 +46,7 @@
                      <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
                              <div class="w-10/12">
-                                 <form method="post" action="{{route('agendamento.form')}}">
+                                 <form method="get" action="{{route('agendamento.form')}}">
                                      @csrf
                                  <h3 class="font-medium text-2xl text-gray-800">
                                      Agende sua visita.
@@ -77,7 +77,7 @@
                              </div>
                          </div>
                          <div class="block absolute z-0 bottom-0 right-0">
-                             <img src="/img/booking.svg" class="h-64">
+                             <img src="{{asset('/img/booking.svg')}}" class="h-64">
                          </div>
                      </div>
                  </div>
@@ -121,7 +121,7 @@
                          </div>
 
                          <div class="block absolute z-0 bottom-0 right-0">
-                             <img src="img/conference2.svg" class="h-64">
+                             <img src="{{asset('/img/conference2.svg')}}" class="h-64">
                          </div>
                      </div>
                  </div>
@@ -131,7 +131,7 @@
      </div>
 
      <div class="hidden md:block absolute z-0 bottom-0 right-5">
-         <img src="img/fundo_alerj.jpg" class="w-full h-full object-cover opacity-35">
+         <img src="{{asset('img/fundo_alerj.jpg')}}" class="w-full h-full object-cover opacity-35">
      </div>
 
 

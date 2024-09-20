@@ -26,7 +26,8 @@ class AgendamentoStore extends Request
 
 //                    'building_id' =>        ['required'],
                     'sector_id' =>          ['required'],
-                    'reservation_date' =>       ['required'],
+                    'birthdate'=>           ['required'],
+                    'reservation_date' => ['required', 'date', 'after_or_equal:today'],
                     'capacity_id' =>       ['required'],
                     'document_type_id' =>   ['required'],
                     'document_number' =>    ['required'],
@@ -36,10 +37,13 @@ class AgendamentoStore extends Request
                     'state_id' =>           ['required'],
                     'city_id' =>            ['required'],
 //                    'other_city' =>         ['required'],
-                    'responsible_email' =>  ['required'],
-                    'confirm_email' =>      ['required'],
+                    'responsible_email' => ['required', 'email'],
+                    'confirm_email' => ['required', 'same:responsible_email'],
                     'mobile' =>             ['required'],
                     'motive' => [Rule::requiredIf($requiresMotivation),],
+                    'has_disability' =>['required'],
+                    'has_group' => ['required'],
+                    'institution' => ['required_if:has_group,true'],
 
         ];
     }
@@ -50,7 +54,7 @@ class AgendamentoStore extends Request
             'building_id'=>'Edifício',
             'sector_id' =>          'Setor',
             'reservation_date' =>       'Data da Visita',
-            'capcity_id' =>       'Hora da Vista',
+            'capacity_id' =>       'Hora da Vista',
             'document_type_id' =>   'Tipo de Documento',
             'document_number' =>    'Número do Documento',
             'full_name' =>          'Nome Completo',
@@ -60,7 +64,11 @@ class AgendamentoStore extends Request
             'email' =>              'E-mail',
             'confirm_email' =>      'Confirmação de E-mail',
             'mobile' =>             'Celular',
-            'motive'=>'Motivo'
+            'motive'=>'Motivo',
+            'birthdate'=>'Nascimento',
+            'has_disability'=>'Deficiência',
+            'has_group'=>'Visita em Grupo',
+
         ];
 
     }
@@ -69,6 +77,7 @@ class AgendamentoStore extends Request
     {
         return [
             'motive.required' => 'O campo Motivo da Visita é obrigatório para o setor selecionado.',
+            'institution.required_if' => 'Para visita em Grupo é obrigatório a Instituição/Empresa.',
 //            'document_type_id.required' => 'Tipo de Documento: preencha o campo corretamente.',
 //            'state_document_id.required_if' =>
 //                'Estado do Documento: preencha o campo corretamente.',
@@ -85,6 +94,7 @@ class AgendamentoStore extends Request
 //            'contact_type_id.required' => 'Tipo de Contato: preencha o campo corretamente.',
 //            'contact.required' => 'Contato: preencha o campo corretamente.',
 //            'contact.email' => 'Contato: O campo não apresenta um endereço de email válido.',
+
         ];
     }
 
