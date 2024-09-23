@@ -14,6 +14,7 @@ use App\Http\Livewire\Traits\Maskable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Reservation;
+use App\Models\Sector;
 use App\Rules\ValidCPF;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,7 @@ class Modal extends BaseForm
     protected $listeners = ['associateUserInSector', 'editReservation'];
     public $users;
     public $sector;
+    public $sectorModal;
     public $user_id;
     public $sectors = [];
     public $documentTypes;
@@ -43,6 +45,7 @@ class Modal extends BaseForm
     public $reservation_date;
     public $motive;
     public $has_disability;
+    public $has_group;
     public $capacity_id;
     public $capacities = [];
     public $disabilities = [];
@@ -203,6 +206,7 @@ class Modal extends BaseForm
         }
     }
 
+
     protected function getComponentVariables()
     {
         return [
@@ -282,7 +286,14 @@ class Modal extends BaseForm
 
     public function updatedSectorModalId()
     {
+        if(!empty($this->sector_modal_id)){
+            $this->sectorModal = Sector::find($this->sector_modal_id);
+        }else{
+            $this->sectorModal = null;
+        }
+
         $this->reset('reservation_date', 'capacity_id', 'capacities');
+
 
     }
 
@@ -313,6 +324,8 @@ class Modal extends BaseForm
     protected function loadHourCapacities()
     {
         if (!empty($this->sector_modal_id) && !empty($this->reservation_date)) {
+
+//            dd('a');
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
             $this->capacities = \DB::table('capacities as c')
