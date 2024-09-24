@@ -137,4 +137,9 @@ class Index extends BaseIndex
 //        dd($personsWithReservations);
 
     }
+
+    public function openReservationModal($personId)
+    {
+        $this->emit('loadPersonReservations', $personId);
+    }
 }
