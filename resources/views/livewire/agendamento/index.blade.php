@@ -20,16 +20,17 @@
 
      <div class="hidden md:block absolute z-20 w-full">
          <div class="w-full flex justify-center">
-             <img src="img/logo-alerj-grande.png" class="w-1/5">
+             <img src="{{asset('img/logo-alerj-grande.png')}}" class="w-1/5">
          </div>
 
          <div class="w-full text-center mt-3">
              <h1 class="text-2xl lg:text-4xl font-bold text-brand-900">
                  Agendamentos de visitas
              </h1>
-             <div class=" flex justify-center mt-3">
+             <div class="flex justify-center mt-3">
                  <div class="w-4/6 lg:w-3/5 2xl:w-1/2 text-sm lg:text-base">
-                     Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam fermentum a erat sed laoreet. Pellentesque in diam convallis, blandit ante in, accumsan sem. Integer nulla lectus.
+                     Bem-vindo ao Sistema de Agendamento da Assembleia Legislativa do Estado do Rio de Janeiro.
+                     <br /> Por favor, escolha uma das opções abaixo para continuar.
                  </div>
              </div>
          </div>
@@ -45,12 +46,26 @@
                      <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
                              <div class="w-10/12">
+                                 <form method="get" action="{{route('agendamento.form')}}">
+                                     @csrf
                                  <h3 class="font-medium text-2xl text-gray-800">
                                      Agende sua visita.
                                  </h3>
 
                                  <div class="mt-6">
-                                     <input type="text" id="name" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="name" placeholder="Seu nome">
+
+                                     <select name="building_id" id="building_id" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="name" placeholder="Seu nome">
+                                         <option value="">Selecione o Edifício.</option>
+                                         @foreach($this->buildings as $building)
+                                             <option value="{{$building->id}}">{{$building->name}}</option>
+                                         @endforeach
+                                     </select>
+                                     @error('building_id')
+                                     <small class="text-danger text-red-800">
+                                         <i class="fas fa-exclamation-triangle"></i>
+                                         {{ $message }}
+                                     </small>
+                                     @endError
                                  </div>
 
                                  <div class="mt-6 md:mt-8">
@@ -58,10 +73,11 @@
                                          Agende sua visita agora
                                      </button>
                                  </div>
+                                 </form>
                              </div>
                          </div>
                          <div class="block absolute z-0 bottom-0 right-0">
-                             <img src="/img/booking.svg" class="h-64">
+                             <img src="{{asset('/img/booking.svg')}}" class="h-64">
                          </div>
                      </div>
                  </div>
@@ -69,23 +85,43 @@
                  <div class="w-full lg:w-1/2">
                      <div class="relative p-5 bg-white rounded-lg shadow mt-4 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:shadow-xl duration-300">
                          <div class="relative z-10">
+                             <form method="post" action="{{ route('agendamento.recover')}}">
                              <div class="w-full">
+
+                                     @csrf
+{{--                                     <div class="mt-6">--}}
+
+
+                                         {{--                                         Documento: <input type="text" name="documentNumber" />--}}
+
+                                         {{--                                         E-mail: <input type="email" name="email" />--}}
+
+                                         {{--                                         <input type="submit" value="consultar">--}}
+
+
+{{--                                     </div>--}}
+
                                  <h3 class="font-medium text-2xl text-gray-800">
                                      Consulte seu agendamento.
                                  </h3>
                                  <div class="mt-6">
-                                     <input type="text" id="name" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="name" placeholder="Seu nome">
+                                     <input type="text" id="documentNumber" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80" name="documentNumber" placeholder="Documento">
                                  </div>
                                  <div class="mt-6 md:mt-8">
-                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
+                                     <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium g-recaptcha"
+
+                                             data-sitekey="6Lc3azEqAAAAAJ6TYJzsQI20EY6uC4_zpbcuTd-s"
+                                             data-callback='onSubmit'
+                                             data-action='submit'>
                                          Consultar Agendamento
                                      </button>
                                  </div>
                              </div>
+                             </form>
                          </div>
 
                          <div class="block absolute z-0 bottom-0 right-0">
-                             <img src="img/conference2.svg" class="h-64">
+                             <img src="{{asset('/img/conference2.svg')}}" class="h-64">
                          </div>
                      </div>
                  </div>
@@ -95,7 +131,7 @@
      </div>
 
      <div class="hidden md:block absolute z-0 bottom-0 right-5">
-         <img src="img/fundo_alerj.jpg" class="w-full h-full object-cover opacity-35">
+         <img src="{{asset('img/fundo_alerj.jpg')}}" class="w-full h-full object-cover opacity-35">
      </div>
 
 
@@ -228,7 +264,12 @@
     </div>
     --}}
 
+<script>
+    function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+    }
 
+</script>
 
 
 
