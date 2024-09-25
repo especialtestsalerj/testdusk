@@ -80,6 +80,8 @@ class Modal extends BaseForm
 
     public function rules()
     {
+        $sector = Sector::find($this->sector_modal_id);
+        $requiresMotivation = $sector ? $sector->required_motivation : false;
         return [
             'document_type_id' => 'required|exists:document_types,id',
             'sector_modal_id' => 'required|exists:sectors,id',
@@ -91,13 +93,14 @@ class Modal extends BaseForm
             'confirm_email' => 'required|email|same:responsible_email',
             'mobile' => 'required|string|max:20',
             'reservation_date' => 'required',
-            'motive' => 'required|string|max:500',
+            'motive' => [Rule::requiredIf($requiresMotivation)],
             'has_disability' => 'required|boolean',
             'disabilities' => 'required_if:has_disability,true',
             'capacity_id' => 'required|exists:capacities,id',
             'state_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:states,id',
             'city_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:cities,id',
             'other_city' => 'required_unless:country_id,' . config('app.country_br'),
+            'has_group'=>'required',
         ];
     }
 

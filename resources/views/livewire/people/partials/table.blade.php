@@ -15,7 +15,8 @@
                                         </div>
                                     </div>
                                     <div class="col-3 d-flex justify-content-end">
-                                        @if ($person->reservations()->count() > 1)
+
+                                        @if (count($person->reservationsAsResponsible) > 1)
                                             @can(make_ability_name_with_current_building('visitors:checkout'))
                                                 <span class="btn px-0 py-0 btn-visit-action"
                                                       wire:click="openReservationModal({{$person->id}})"
@@ -46,8 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="col-7 d-flex flex-column pt-2 visitor-data">
-                                        {{--                                            {{dd(\Carbon\Carbon::today()->toDateString())}}--}}
-                                        {{--                                            {{dd($person->reservationsByDate()->toSql())}}--}}
+
                                         <div class="row">
                                             @foreach($person->reservationsAsResponsible as $reservation)
                                                 <div class="col-3">
@@ -67,9 +67,10 @@
                                                                 class="fw-bold ms-2">{{ $document->numberMaskered }}</span>
                                                         </div>
                                                         <div class="col-2">
-                                                            @if (!$person->hasPendingVisitors())
+                                                            @if (!$person->hasPendingVisitors() && count($person->reservationsAsResponsible) == 1)
                                                                 @can(make_ability_name_with_current_building('visitors:store'))
-                                                                    <a href="{{ route('visitors.create', ['document_id' => $document->id]) }}"
+                                                                    <a href="{{ route('visitors.create', ['document_id' => $document->id,
+                                                                                                           'reservation_id'=>$person->reservationsAsResponsible[0]->id]) }}"
                                                                        class="btn btn-link px-0 py-0"
                                                                        title="Registrar Entrada">
                                                                         <i class="fa fa-lg fa-check"></i>
