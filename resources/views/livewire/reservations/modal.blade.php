@@ -113,51 +113,57 @@
 
                             <div class="form-group col-md-3">
                                 <label for="capacity_id" style="margin-left: 10px;" class="form-label">Hora da
-                                    Visita *</label>
+                                    Visita * </label>
+                                @if((!empty($this->reservation_date)) && (!empty($this->sector_modal_id)) && (count($this->capacities) == 0))
 
-                                <select class="form-control text-uppercase @error('capacity_id') is-invalid @endError"
-                                        name="capacity_id" id="capacity_id"
-                                        wire:model="capacity_id" x-ref="capacity_id"
-                                        @if(!$reservation_date) disabled @endif
-                                >
+                                    <input type="text" class="form-control text-uppercase is-invalid"
+                                           value="ESGOTADO" disabled="disabled">
 
-                                    <option value="">SELECIONE</option>
-                                    @foreach ($this->capacities as $capacitiy)
-                                        <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
-                                            {{ $capacitiy->maximum_capacity ?? $capacitiy['maximum_capacity'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @else
+                                    <select class="form-control text-uppercase @error('capacity_id') is-invalid @endError"
+                                            name="capacity_id" id="capacity_id"
+                                            wire:model="capacity_id" x-ref="capacity_id"
+                                            @if(!$reservation_date) disabled @endif
+                                    >
 
-                                <div>
-                                    @error('capacity_id')
-                                    <small class="text-danger">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
-                                </div>
+                                        <option value="">SELECIONE</option>
+                                        @foreach ($this->capacities as $capacitiy)
+                                            <option value="{{ $capacitiy->id ?? $capacitiy['id']}}">
+                                                {{ $capacitiy->maximum_capacity ?? $capacitiy['maximum_capacity'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    <div>
+                                        @error('capacity_id')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
+                                @endif
 
                             </div>
+                            @if($this->sectorModal?->required_motivation)
+                                <div class="form-group col-12">
+                                    <label for="motive" style="margin-left: 10px;" class="form-label">Motivo da
+                                        Visita*</label>
+                                    <textarea id="motive" name="motive"
+                                              class="form-control @error('motive') is-invalid @endError"
+                                              wire:model="motive">
+                                        </textarea>
 
-
-                            <div class="form-group col-12">
-                                <label for="motive" style="margin-left: 10px;" class="form-label">Motivo da
-                                    Visita*</label>
-                                <textarea id="motive" name="motive"
-                                          class="form-control @error('motive') is-invalid @endError"
-                                          wire:model="motive">
-                                    </textarea>
-
-                                <div>
-                                    @error('motive')
-                                    <small class="text-danger">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
+                                    <div>
+                                        @error('motive')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
 
                             <div class="col-md-4">
@@ -450,60 +456,122 @@
                                     @endError
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-xl-6">
-                                <div class="flex space-x-4">
-                                    <div class="space-y-4">
-                                        <table>
-                                            <tr>
-                                                <th colspan="2">
-                                                    Membros do Grupo
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Nome
-                                                </th>
-                                                <th>
-                                                    Tipo de Documento
-                                                </th>
-                                                <th>
-                                                    Documento
-                                                </th>
-                                                <th> Ação</th>
-                                            </tr>
 
-                                            @foreach($inputs as $index => $input)
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs[{{ $index }}][name]">
-                                                    </td>
-                                                    <td>
-                                                        <select wire:model="inputs.{{ $index }}.documentType" name="inputs[{{ $index }}][documentType]">
-                                                            <option value="">Tipo de documento</option>
-                                                            <option value="1">CPF</option>
-                                                            <option value="4">Passaporte</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.document" name="inputs[{{ $index }}][document]">
-                                                    </td>
-                                                    <td>
 
-                                                        <input type="button" class="btn btn-danger" wire:click="removeInput({{ $index }})" value="Remover"/>
-                                                    </td>
-                                                </tr>
 
-                                            @endforeach
-                                        </table>
+
+                            <div class="col-12 row">
+                                <div class="col-md-4">
+
+                                    <div class="form-group">
+                                        <label for="has_group"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Visita em Grupo?
+                                        </label>
+                                        <select
+                                            name="has_group" id="has_group"
+                                            wire:model="has_group"
+                                            x-ref="has_group" @disabled(request()->query('disabled'))
+                                            class="form-select text-uppercase @error('has_disability') is-invalid @endError" >
+                                            <option value="">
+                                                SELECIONE
+                                            </option>
+                                            <option value="true">SIM</option>
+                                            <option value="false">NÃO</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="flex space-x-4 space-y-2">
 
-                                    <div class="w-/13">
-                                        <input type="button" class="mt-4 btn btn-primary" wire:click="addInput" value="Adicionar Pessoa">
+                                    <div>
+                                        @error('has_group')
+                                        <small class="text-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            {{ $message }}
+                                        </small>
+                                        @endError
                                     </div>
+
                                 </div>
                             </div>
+
+                            @if($has_group=='true')
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Instituição/Empresa
+                                        </label>
+                                        <input name="institution" id="institution"
+                                               wire:model="institution"
+                                               class="form-control text-uppercase "
+                                        >
+                                        <div>
+                                            @error('institution')
+                                            <small class="text-danger text-red-700">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                {{ $message }}
+                                            </small>
+                                            @endError
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="flex space-x-4">
+                                            <div class="space-y-4">
+                                                <table>
+                                                    <tr>
+                                                        <th colspan="2">
+                                                            Membros do Grupo
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>
+                                                            Nome
+                                                        </th>
+                                                        <th>
+                                                            Tipo de Documento
+                                                        </th>
+                                                        <th>
+                                                            Documento
+                                                        </th>
+                                                        <th> Ação</th>
+                                                    </tr>
+
+                                                    @foreach($inputs as $index => $input)
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs[{{ $index }}][name]">
+                                                            </td>
+                                                            <td>
+                                                                <select wire:model="inputs.{{ $index }}.documentType" name="inputs[{{ $index }}][documentType]"
+                                                                        class="form-control text-uppercase">
+                                                                    <option value="">Tipo de documento</option>
+                                                                    <option value="1">CPF</option>
+                                                                    <option value="4">Passaporte</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.document" name="inputs[{{ $index }}][document]">
+                                                            </td>
+                                                            <td>
+
+                                                                <input type="button" class="btn btn-danger" wire:click="removeInput({{ $index }})" value="Remover"/>
+                                                            </td>
+                                                        </tr>
+
+                                                    @endforeach
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-4 space-y-2">
+
+                                            <div class="w-/13">
+                                                <input type="button" class="mt-4 btn btn-primary" wire:click="addInput" value="Adicionar Pessoa">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
 
 
                             <div class="col-12 align-self-center d-flex justify-content-end gap-4">

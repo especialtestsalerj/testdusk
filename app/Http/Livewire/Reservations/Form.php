@@ -47,6 +47,8 @@ class Form extends BaseForm
 
     public $has_disability;
 
+    public $has_group;
+
     public $capacity_id;
 
     public $capacities =[];
@@ -80,6 +82,9 @@ class Form extends BaseForm
         $this->loadSectors();
         $this->blockedDates =[];
         $this->maxDate = 0;
+
+        $this->fillOld();
+
     }
 
     protected function getComponentVariables()
@@ -241,6 +246,11 @@ class Form extends BaseForm
     }else{
             $this->capacities =[];
         }
+    }
+
+    protected function fillOld()
+    {
+        $this->sector_id = old('sector_id', $this->sector_id);
     }
 
 

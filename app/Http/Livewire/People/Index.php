@@ -10,8 +10,10 @@ use App\Http\Livewire\BaseIndex;
 use App\Http\Livewire\Traits\Badgeable;
 use App\Http\Livewire\Traits\ChangeViewType;
 use App\Http\Livewire\Traits\Checkoutable;
+use App\Models\Person as PersonModel;
 use App\Models\Reservation;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Index extends BaseIndex
@@ -34,6 +36,7 @@ class Index extends BaseIndex
         'confirm-checkout-visitor' => 'confirmCheckout',
     ];
 
+    public $peopleWithReservation;
     public $reservations;
     public $reservationGroup;
 
@@ -74,7 +77,7 @@ class Index extends BaseIndex
 
     public function render()
     {
-        return view('livewire.people.index')->with(['people' => $this->filter(),'reservations'=>$this->reservations, 'countPeople' => $this->countResults]);
+        return view('livewire.people.index')->with(['people' => $this->filter(),'peopleWithReservation'=>$this->peopleWithReservation, 'countPeople' => $this->countResults]);
     }
 
     public function redirectToVisitorsForm()
@@ -94,6 +97,17 @@ class Index extends BaseIndex
     {
         $today = Carbon::today()->toDateString();
 
+        $this->peopleWithReservation = PersonModel::join('reservations', 'reservations.person_id', '=', 'people.id')
+            ->whereDate('reservations.reservation_date', $today)
+            ->where('reservation_status_id', 2)
+            ->where('building_id', get_current_building()->id)
+            ->distinct('people.*')
+            ->get();
+
+
+
+
+
         // Busca reservas cuja data corresponde a hoje
         $this->reservations = Reservation::where('reservation_status_id', 2)->whereDate('reservation_date', $today)->get();
 
@@ -104,10 +118,28 @@ class Index extends BaseIndex
             ->whereHas('guestsConfirmed', function ($query) {
                 $query->where('reservation_person.reservation_status_id', 2);
             })
+            ->where('building_id', get_current_building()->id)
+
             ->get();
 
 
+        $today = now()->toDateString();
+        $this->peopleWithReservation  = PersonModel::whereHas('reservationsAsResponsible', function($query) use ($today) {
+            $query->whereDate('reservation_date', $today)->where('reservation_status_id', 2)
+                ->where('building_id', get_current_building()->id);
 
+        })->with(['reservationsAsResponsible' => function ($query) use ($today) {
+            $query->whereDate('reservation_date', $today)
+            ->where('building_id', get_current_building()->id);
+        }])
+            ->get();
 
+//        dd($personsWithReservations);
+
+    }
+
+    public function openReservationModal($personId)
+    {
+        $this->emit('loadPersonReservations', $personId);
     }
 }

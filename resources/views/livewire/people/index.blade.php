@@ -104,4 +104,11 @@
             @livewire('people.modal',['person_id' => null])
         </div>
     @endcan
+
+
+    @can('people:store')
+        <div>
+            @livewire('people.reservation-modal')
+        </div>
+    @endcan
 </div>

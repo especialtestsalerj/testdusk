@@ -14,6 +14,7 @@ use App\Http\Livewire\Traits\Maskable;
 use App\Models\BlockedDate;
 use App\Models\Country;
 use App\Models\Reservation;
+use App\Models\Sector;
 use App\Rules\ValidCPF;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,7 @@ class Modal extends BaseForm
     protected $listeners = ['associateUserInSector', 'editReservation'];
     public $users;
     public $sector;
+    public $sectorModal;
     public $user_id;
     public $sectors = [];
     public $documentTypes;
@@ -43,6 +45,7 @@ class Modal extends BaseForm
     public $reservation_date;
     public $motive;
     public $has_disability;
+    public $has_group;
     public $capacity_id;
     public $capacities = [];
     public $disabilities = [];
@@ -77,6 +80,8 @@ class Modal extends BaseForm
 
     public function rules()
     {
+        $sector = Sector::find($this->sector_modal_id);
+        $requiresMotivation = $sector ? $sector->required_motivation : false;
         return [
             'document_type_id' => 'required|exists:document_types,id',
             'sector_modal_id' => 'required|exists:sectors,id',
@@ -88,13 +93,14 @@ class Modal extends BaseForm
             'confirm_email' => 'required|email|same:responsible_email',
             'mobile' => 'required|string|max:20',
             'reservation_date' => 'required',
-            'motive' => 'required|string|max:500',
+            'motive' => [Rule::requiredIf($requiresMotivation)],
             'has_disability' => 'required|boolean',
             'disabilities' => 'required_if:has_disability,true',
             'capacity_id' => 'required|exists:capacities,id',
             'state_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:states,id',
             'city_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:cities,id',
             'other_city' => 'required_unless:country_id,' . config('app.country_br'),
+            'has_group'=>'required',
         ];
     }
 
@@ -203,6 +209,7 @@ class Modal extends BaseForm
         }
     }
 
+
     protected function getComponentVariables()
     {
         return [
@@ -282,7 +289,14 @@ class Modal extends BaseForm
 
     public function updatedSectorModalId()
     {
+        if(!empty($this->sector_modal_id)){
+            $this->sectorModal = Sector::find($this->sector_modal_id);
+        }else{
+            $this->sectorModal = null;
+        }
+
         $this->reset('reservation_date', 'capacity_id', 'capacities');
+
 
     }
 
@@ -313,6 +327,8 @@ class Modal extends BaseForm
     protected function loadHourCapacities()
     {
         if (!empty($this->sector_modal_id) && !empty($this->reservation_date)) {
+
+//            dd('a');
 
             $date = \DateTime::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d');
             $this->capacities = \DB::table('capacities as c')

@@ -16,6 +16,7 @@ class Reservation extends Model
     use Searchable, Notifiable;
 
     protected $fillable = [
+        'building_id',
         'group_id',
         'reservation_type_id',
         'code',
@@ -60,6 +61,8 @@ class Reservation extends Model
     {
         parent::boot();
 //        static::addGlobalScope(new InCurrentBuilding());
+
+
 
         static::created(function ($reservation) {
 

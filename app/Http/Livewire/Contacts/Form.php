@@ -122,6 +122,8 @@ class Form extends BaseForm
     public function hasMask($value)
     {
         $this->hasMask = $value;
+
+        $this->contact = $this->hasMask ? substr($this->contact, 0, 11) : remove_punctuation($this->contact);
     }
 
 }

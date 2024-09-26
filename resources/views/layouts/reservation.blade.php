@@ -59,7 +59,6 @@
 @include('layouts.partials.livereload')
 @include('layouts.partials.google-analytics')
 @livewireScripts
-@livewireCalendarScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
 </body>
 
