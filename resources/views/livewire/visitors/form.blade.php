@@ -82,9 +82,13 @@
                             <div class="col-12">
                                 <h4>
                                     Dados da Visita
-                                    @if(!empty($this->reservation))
-                                        <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
-                                        <input type="hidden" name="reservation_id" value="{{$this->reservation->id}}"
+                                    @if(!empty($this->reservations))
+                                        <span class="badge bg-danger text-white">Agendamento(s):
+                                            @foreach($reservations as $reservation)
+                                                {{$reservation->code ?? $reservation['code']}}
+                                            @endforeach
+                                        </span>
+{{--                                        <input type="hidden" name="reservation_id" value="{{$this->reservation->id}}">--}}
                                     @endif
                                 </h4>
                             </div>
