@@ -13,53 +13,33 @@
                     @csrf
 
                     <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                        <div wire:ignore class="w-full">
-                            <label for="sector_id"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Setor:
-                            </label>
-                            <select name="sector_id" id="sector_id"
-                                    wire:model="sector_id" x-ref="sector_id" wire:change="loadDates"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value=""> Selecione um setor</option>
-                                @foreach ($this->sectors as $sector)
-                                    <option value="{{ $sector->id ?? $sector['id']}}"
-                                        {{ $sector_id == ($sector->id ?? $sector['id']) ? 'selected' : '' }}>
-                                        {{ convert_case($sector->nickname ?? $sector['nickname'], MB_CASE_UPPER) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div>
-                                @error('sector_id')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
-                        </div>
 
+                        <x-select
+                            name="sector_id"
+                            id="sector_id"
+                            label="Setor:"
+                            :options="$sectors"
+                            placeholder="Selecione um setor"
+                            :selected="$sector_id"
+                            wireModel="sector_id"
+                            wireChange="loadDates"
+                            xRef="sector_id"
+                            required="true"
+                        />
 
-                        <div class="w-full">
-                            <label for="reservation_date"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Data da Visita *
-                            </label>
-                            <input id="reservation_date" type="button"
-                                   value="{{$this->reservation_date}}" wire:model="reservation_date"
-                                   x-ref="reservation_date"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <div>
-                                @error('reservation_date')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
-                        </div>
-                        <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}"
-                               wire:model="reservation_date"/>
+                        <x-datepicker
+                            id="reservation_date"
+                            name="reservation_date"
+                            label="Data da Visita"
+                            :value="$reservation_date"
+                            required="true"
+                            wireModel="reservation_date"
+                            xRef="reservation_date"
+                            :blockedDates="$blockedDates"
+                            :maxDate="$maxDate"
+                            dateFormat="d/m/Y"
+                        />
+
 
                         <div class="w-full">
                             <label for="reservation_time"
@@ -102,152 +82,112 @@
                     @if($this->sector?->required_motivation)
                         <div class="flex space-x-4 mt-2">
                             <div class="w-full">
-
-                                <label for="motive"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Motivo da Visita*
-                                </label>
-                                <textarea id="motive" rows="4"
-                                          name="motive" wire:model="motive"
-                                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                          placeholder="Leave a comment"></textarea>
-                                {{--                                </form>--}}
-                                <div>
-                                    @error('motive')
-                                    <small class="text-danger text-red-700">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
-                                </div>
+                                <x-textarea
+                                    id="motive"
+                                    name="motive"
+                                    label="Motivo da Visita"
+                                    rows="4"
+                                    wireModel="motive"
+                                    xRef="motive"
+                                    placeholder="Descreva o motivo da sua visita..."
+                                    required="true"
+                                    class="mb-4"
+                                />
                             </div>
-
                         </div>
+
                     @endif
 
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div class="w-full">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Nome Completo*
-                            </label>
-                            <input name="full_name" id="full_name"
-                                   wire:model="full_name"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="nome completo">
-                            <div>
-                                @error('full_name')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
-                        </div>
-                        <div class="w-full">
-                            <label for="social_name"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Nome Social
-                            </label>
-                            <input name="social_name" id="social_name" wire:model="social_name"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="nome social">
-                        </div>
-
-
-                        <div class="w-full">
-                            <label for="email"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Tipo de Documento*
-                            </label>
-                            <select name="document_type_id" id="document_type_id"
-                                    x-ref="document_type_id"
-                                    wire:model.lazy="document_type_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">SELECIONE</option>
-                                <option value="1">CPF</option>
-                                <option value="4">Passaporte</option>
-                            </select>
-                            <div>
-                                @error('document_type_id')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
-
+                            <x-input
+                                id="full_name"
+                                name="full_name"
+                                label="Nome Completo"
+                                type="text"
+                                wireModel="full_name"
+                                placeholder="Nome completo"
+                                required="true"
+                            />
                         </div>
 
                         <div class="w-full">
-                            <label for="document_number"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Número do Documento*
-                            </label>
-
-                            <input name="document_number" id="document_number"
-                                   wire:model="document_number" x-ref="document_number"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            >
-                            <div>
-                                @error('document_number')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
+                            <x-input
+                                id="social_name"
+                                name="social_name"
+                                label="Nome Social"
+                                type="text"
+                                wireModel="social_name"
+                                placeholder="Nome social"
+                                required="false"
+                            />
                         </div>
+
+                        @php
+                            $documentTypes = [
+                                ['value' => '1', 'text' => 'CPF'],
+                                ['value' => '4', 'text' => 'Passaporte'],
+                            ];
+                        @endphp
+
+                        <div class="w-full">
+                            <x-select
+                                id="document_type_id"
+                                name="document_type_id"
+                                label="Tipo de Documento"
+                                :options="$documentTypes"
+                                placeholder="SELECIONE"
+                                :selected="$document_type_id"
+                                wireModel="document_type_id"
+                                xRef="document_type_id"
+                                required="true"
+                                class="mb-4"
+                            />
+                        </div>
+
+
+                        <div class="w-full">
+                            <x-input
+                                id="document_number"
+                                name="document_number"
+                                label="Número do Documento"
+                                type="text"
+                                wireModel="document_number"
+                                placeholder="Número do documento"
+                                required="true"
+                                xRef="document_number"
+                                class="mb-4"
+                            />
+                        </div>
+
+
+
                     </div>
 
 
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div class="w-full">
-                            <label for="document_number"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Data de Nascimento*
-                            </label>
-
-                            <input type="date" name="birthdate" id="birthdate"
-                                   wire:model="birthdate" x-ref="birthdate"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            >
-                            <div>
-                                @error('birthdate')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
+                            <x-input
+                                id="birthdate"
+                                name="birthdate"
+                                label="Data de Nascimento"
+                                type="date"
+                                wireModel="birthdate"
+                                placeholder=""
+                                required="true"
+                            />
                         </div>
 
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Possui deficiência?
-                            </label>
-                            <label class="inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    class="sr-only peer"
-                                    wire:model="has_disability"
-                                    id="has_disability"
-                                    name="has_disability"
-                                >
-                                <div
-                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                <span> {{$has_disability ? 'Sim' : 'Não'}}</span>
-                             </span>
-                            </label>
-                            <div>
-                                @error('has_disability')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
 
+                        <div class="w-full">
+                            <x-switch
+                                id="has_disability"
+                                name="has_disability"
+                                label="Possui deficiência?"
+                                wireModel="has_disability"
+                                checked="{{ $has_disability }}"
+                                required="false"
+                            />
                         </div>
 
 
@@ -275,190 +215,129 @@
 
                     <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                         <div class="w-full">
-                            <div wire:ignore>
-                                <label for="country_id"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    País*
-                                </label>
-                                <select name="country_id" id="country_id"
-                                        wire:model="country_id" x-ref="country_id"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value=""> SELECIONE</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">
-                                            {{ convert_case($country->name, MB_CASE_UPPER) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div>
-                                    @error('country_id')
-                                    <small class="text-danger text-red-700">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
-                                </div>
+                            <div>
+                                <x-select
+{{--                                    wire:ignore--}}
+                                    id="country_id"
+                                    name="country_id"
+                                    label="País"
+                                    :options="$countries->map(function($country) {
+                                            return ['value' => $country->id, 'text' => mb_strtoupper($country->name)];
+                                        })"
+                                    placeholder="SELECIONE"
+                                    :selected="$country_id"
+                                    wireModel="country_id"
+                                    xRef="country_id"
+                                    required="true"
+                                />
                             </div>
                         </div>
 
                         <div class="w-full {{ $this->detectIfCountryBrSelected() ? '': 'hidden' }}">
-                            <div wire:ignore>
-                                <label for="state_id"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Estado*
-                                </label>
-                                <select id="state_id"
-                                        name="state_id"
-                                        wire:model="state_id" x-ref="state_id" wire:change="loadCities"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">SELECIONE</option>
-                                    @foreach ($states as $state)
-                                        <option value="{{ $state->id }}">
-                                            {{ convert_case($state->name, MB_CASE_UPPER) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div>
-                                    @error('state_id')
-                                    <small class="text-danger text-red-700">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
-                                </div>
+                            <div>
+                                <x-select
+{{--                                    wire:ignore--}}
+                                    id="state_id"
+                                    name="state_id"
+                                    label="Estado"
+                                    :options="$states->map(function($state) {
+                                            return ['value' => $state->id, 'text' => mb_strtoupper($state->name)];
+                                        })"
+                                    placeholder="SELECIONE"
+                                    :selected="$state_id"
+                                    wireModel="state_id"
+                                    wireChange="loadCities"
+{{--                                    xRef="state_id"--}}
+                                    required="true"
+                                />
                             </div>
                         </div>
 
                         <div class="w-full {{ $this->detectIfCountryBrSelected() ? '' : 'hidden' }}">
-                            <div wire:ignore>
-                                <label for="city_id"
-                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Cidade*
-                                </label>
-                                <select name="city_id" id="city_id"
-                                        wire:model="city_id" x-ref="city_id"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">SELECIONE</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id ?? $city['id'] }}">
-                                            {{ mb_strtoupper($city->name ?? $city['name']) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div>
-                                    @error('city_id')
-                                    <small class="text-danger text-red-700">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
-                                </div>
+                            <div>
+                                <x-select
+{{--                                    wire:ignore--}}
+                                    id="city_id"
+                                    name="city_id"
+                                    label="Cidade"
+                                    :options="$cities->map(function($city) {
+                                            return ['value' => $city->id, 'text' => mb_strtoupper($city->name)];
+                                        })"
+                                    placeholder="SELECIONE"
+                                    :selected="$city_id"
+                                    wireModel="city_id"
+{{--                                    xRef="city_id"--}}
+                                    required="true"
+                                />
                             </div>
                         </div>
 
                         <div class="{{ !$this->detectIfCountryBrSelected() ? '' : 'hidden' }} w-full">
-                            <div class="form-group">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                       for="other_city">Cidade*</label>
-                                <input type="text"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       name="other_city" id="other_city" wire:model="other_city"
-                                    {{ !$this->detectIfCountryBrSelected() ? '' : 'disabled'  }} />
-                            </div>
-                            <div>
-                                @error('other_city')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
+                            <x-input
+                                id="other_city"
+                                name="other_city"
+                                label="Cidade"
+                                type="text"
+                                wireModel="other_city"
+                                placeholder="Digite a cidade"
+                                required="true"
+                                :disabled="$this->detectIfCountryBrSelected()"
+                                class="mb-4"
+                            />
                         </div>
 
                         <div class="w-full">
-                            <label for="responsible_email"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Email*
-                            </label>
-                            <input type="email" name="responsible_email" id="responsible_email"
-                                   wire:model="responsible_email"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="name@company.com">
-                            <div>
-                                @error('responsible_email')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
+                            <x-input
+                                id="responsible_email"
+                                name="responsible_email"
+                                label="Email"
+                                type="email"
+                                wireModel="responsible_email"
+                                placeholder="name@company.com"
+                                required="true"
+                                class="mb-4"
+                            />
                         </div>
 
                         <div class="w-full">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Confirmação de Email*
-                            </label>
-                            <input type="email" name="confirm_email" id="confirm_email"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="name@company.com" wire:model="confirm_email">
-                            <div>
-                                @error('confirm_email')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
+                            <x-input
+                                id="confirm_email"
+                                name="confirm_email"
+                                label="Confirmação de Email"
+                                type="email"
+                                wireModel="confirm_email"
+                                placeholder="name@company.com"
+                                required="true"
+                                class="mb-4"
+                            />
                         </div>
 
 
                         <div class="w-full">
-                            <label for="mobile"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Telefone (DD) + Número
-                            </label>
-                            <input name="mobile" id="mobile" wire:model="mobile"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="(xx)xxxxx-xxxx">
-                            <div>
-                                @error('mobile')
-                                <small class="text-danger text-red-700">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    {{ $message }}
-                                </small>
-                                @endError
-                            </div>
-
+                            <x-input
+                                id="mobile"
+                                name="mobile"
+                                label="Telefone (DD) + Número"
+                                type="text"
+                                wireModel="mobile"
+                                placeholder="(xx) xxxxx-xxxx"
+                                required="false"
+                                class="mb-4"
+                            />
                         </div>
+
 
                     </div>
 
                     <div class="w-full mt-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Visita em Grupo?
-                        </label>
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                class="sr-only peer"
-                                wire:model="has_group"
-                                @disabled(request()->query('disabled'))
-                            >
-                            <div
-                                class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                <span> {{$has_group ? 'Sim' : 'Não'}}</span>
-                             </span>
-                        </label>
-                        <div>
-                            @error('has_group')
-                            <small class="text-danger text-red-700">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                {{ $message }}
-                            </small>
-                            @endError
-                        </div>
-
+                        <x-switch
+                            id="has_group"
+                            name="has_group"
+                            label="Visita em Grupo?"
+                            wireModel="has_group"
+                            :checked="$has_group"
+                            :disabled="request()->query('disabled')"
+                        />
                     </div>
 
 
@@ -466,178 +345,146 @@
 
                         <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
                             <div class="w-full">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Instituição/Empresa
-                                </label>
-                                <input name="institution" id="institution"
-                                       wire:model="institution"
-                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                >
-                                <div>
-                                    @error('institution')
-                                    <small class="text-danger text-red-700">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        {{ $message }}
-                                    </small>
-                                    @endError
+                                <x-input
+                                    id="institution"
+                                    name="institution"
+                                    label="Instituição/Empresa"
+                                    type="text"
+                                    wireModel="institution"
+                                    placeholder="Digite a instituição ou empresa"
+                                    required="true"
+                                    class="mb-4"
+                                />
+                            </div>
+                        </div>
+
+
+                        <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
+                            <div class="sm:col-span-1">
+                                <h1 class="text-center font-bold pb-3 text-xl">
+                                    Membros do Grupo
+                                </h1>
+
+                                <!-- Container dos Cards -->
+                                <div class="space-y-4">
+                                    @foreach($inputs as $index => $input)
+                                        <div
+                                            class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4"
+                                            wire:key="input-{{ $index }}">
+                                            <!-- Campo de Nome -->
+                                            <div>
+                                                <x-input
+                                                    id="inputs_{{ $index }}_name"
+                                                    name="inputs[{{ $index }}][name]"
+                                                    label="Nome"
+                                                    type="text"
+                                                    wireModel="inputs.{{ $index }}.name"
+                                                    placeholder="Nome"
+                                                    required="true"
+                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                />
+                                            </div>
+
+                                            <!-- Campo de Tipo de Documento -->
+                                            <div>
+                                                <x-select
+                                                    id="inputs_{{ $index }}_documentType"
+                                                    name="inputs[{{ $index }}][documentType]"
+                                                    label="Tipo de Documento"
+                                                    :options="[
+                                                        ['value' => '', 'text' => 'Tipo de documento'],
+                                                        ['value' => '1', 'text' => 'CPF'],
+                                                        ['value' => '4', 'text' => 'Passaporte'],
+                                                    ]"
+                                                    placeholder="Tipo de documento"
+                                                    :selected="$input['documentType'] ?? null"
+                                                    wireModel="inputs.{{ $index }}.documentType"
+                                                    required="true"
+                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                />
+                                            </div>
+
+                                            <!-- Campo de Documento -->
+                                            <div>
+                                                <x-input
+                                                    id="inputs_{{ $index }}_document"
+                                                    name="inputs[{{ $index }}][document]"
+                                                    label="Documento"
+                                                    type="text"
+                                                    wireModel="inputs.{{ $index }}.document"
+                                                    placeholder="Documento"
+                                                    required="true"
+                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                />
+                                            </div>
+
+                                            <!-- Botão de Remover -->
+                                            <div class="flex justify-end">
+                                                <button type="button"
+                                                        class="flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300"
+                                                        wire:click="removeInput({{ $index }})">
+                                                    <!-- Ícone de Remover -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                    Remover
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Botão para Adicionar Nova Linha -->
+                                <div class="flex justify-center mt-6">
+                                    <button type="button"
+                                            style="background-color: rgb(14, 44, 69);"
+                                            wire:click="addInput"
+                                            class="flex items-center px-6 py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition duration-300">
+                                        <!-- Ícone de Adicionar -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                             fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                        Adicionar Pessoa
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    @endif
+                    <div class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                        <div class="w-full sm:w-1/2">
+                            <div class="flex justify-center mt-6">
+                                <div class="w-full sm:w-1/3">
+                                    <button wire:click="save"
+                                            wire:loading.attr="disabled"
+                                            wire:target="save"
+                                            style="background-color: rgb(14, 44, 69);"
+                                            class="w-1/3 w-full md:w-auto text-sm bg-brand-800 px-6 py-3 text-white rounded-3xl font-medium"
+                                            id="submitButton" title="Salvar">
+                                        <i class="fa fa-save mr-2"></i> Solicitar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        {{--                        <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">--}}
-                        {{--                            <div class="w-full">--}}
-                        {{--                                <table>--}}
-                        {{--                                    <tr>--}}
-                        {{--                                        <th colspan="2">--}}
-                        {{--                                            Membros do Grupo--}}
-                        {{--                                        </th>--}}
-                        {{--                                    </tr>--}}
-                        {{--                                    <tr>--}}
-                        {{--                                        <th>--}}
-                        {{--                                            Nome--}}
-                        {{--                                        </th>--}}
-                        {{--                                        <th>--}}
-                        {{--                                            Tipo de Documento--}}
-                        {{--                                        </th>--}}
-                        {{--                                        <th>--}}
-                        {{--                                            Documento--}}
-                        {{--                                        </th>--}}
-                        {{--                                        <th> Ação</th>--}}
-                        {{--                                    </tr>--}}
-
-                        {{--                                    @foreach($inputs as $index => $input)--}}
-                        {{--                                        <tr>--}}
-                        {{--                                            <td>--}}
-                        {{--                                                <input type="text" placeholder="Nome" class="border p-2 rounded w-full"--}}
-                        {{--                                                       wire:model="inputs.{{ $index }}.name"--}}
-                        {{--                                                       name="inputs[{{ $index }}][name]">--}}
-                        {{--                                            </td>--}}
-                        {{--                                            <td>--}}
-                        {{--                                                <select wire:model="inputs.{{ $index }}.documentType"--}}
-                        {{--                                                        name="inputs[{{ $index }}][documentType]">--}}
-                        {{--                                                    <option value="">Tipo de documento</option>--}}
-                        {{--                                                    <option value="1">CPF</option>--}}
-                        {{--                                                    <option value="4">Passaporte</option>--}}
-                        {{--                                                </select>--}}
-                        {{--                                            </td>--}}
-                        {{--                                            <td>--}}
-                        {{--                                                <input type="text" placeholder="Documento"--}}
-                        {{--                                                       class="border p-2 rounded w-full"--}}
-                        {{--                                                       wire:model="inputs.{{ $index }}.document"--}}
-                        {{--                                                       name="inputs[{{ $index }}][document]">--}}
-                        {{--                                            </td>--}}
-                        {{--                                            <td>--}}
-
-                        {{--                                                <input type="button"--}}
-                        {{--                                                       class="w-full md:w-auto text-sm bg-red-700 px-4 py-2 text-white rounded-3xl font-medium"--}}
-                        {{--                                                       wire:click="removeInput({{ $index }})" value="Remover"/>--}}
-
-                        {{--                                            </td>--}}
-                        {{--                                        </tr>--}}
-
-                        {{--                                    @endforeach--}}
-                        {{--                                </table>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
-
-                        <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                            <div class="sm:col-span-3">
-                                <h1 scope="col" class="text-center font-bold pb-3">
-                                    Membros do Grupo
-                                </h1>
-                                <table class="w-full border-collapse table-auto">
-                                    <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-
-                                        <th scope="col" class="px-6 py-3">
-                                            Nome
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Tipo de Documento
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Documento
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">Ação</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($inputs as $index => $input)
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <td class="px-6 py-4">
-                                                <label class="sm:hidden block font-semibold mb-1">Nome</label>
-                                                <input type="text" placeholder="Nome"
-                                                       class="border border-gray-300 p-2 rounded w-full focus:ring focus:ring-blue-500 focus:border-blue-500"
-                                                       wire:model="inputs.{{ $index }}.name"
-                                                       name="inputs[{{ $index }}][name]">
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <label class="sm:hidden block font-semibold mb-1">Tipo de
-                                                    Documento</label>
-                                                <select wire:model="inputs.{{ $index }}.documentType"
-                                                        name="inputs[{{ $index }}][documentType]"
-                                                        class="border border-gray-300 p-2 rounded w-full focus:ring focus:ring-blue-500 focus:border-blue-500">
-                                                    <option value="">Tipo de documento</option>
-                                                    <option value="1">CPF</option>
-                                                    <option value="4">Passaporte</option>
-                                                </select>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <label class="sm:hidden block font-semibold mb-1">Documento</label>
-                                                <input type="text" placeholder="Documento"
-                                                       class="border border-gray-300 p-2 rounded w-full focus:ring focus:ring-blue-500 focus:border-blue-500"
-                                                       wire:model="inputs.{{ $index }}.document"
-                                                       name="inputs[{{ $index }}][document]">
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <button type="button"
-                                                        class="w-full sm:w-auto text-sm bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg focus:ring focus:ring-red-500 focus:outline-none"
-                                                        wire:click="removeInput({{ $index }})">
-                                                    Remover
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                        <div class="w-full sm:w-1/2">
+                            <div class="flex justify-center mt-6">
+                                <div class="w-full sm:w-1/3">
+                                    <button
+                                        onclick="window.location='{{ route('agendamento.index') }}'"
+                                        class="bg-red-700 px-6 py-3 text-white w-1/3 w-full md:w-auto text-sm px-4 py-2 text-white rounded-3xl font-medium"
+                                        title="Cancelar">
+                                        <i class="fa fa-times mr-2"></i>
+                                        Cancelar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-
-                        <div class="flex space-x-4 space-y-2 mt-2">
-
-                            <div class="w-/13">
-                                {{--                                    <input type="button" class="mt-4 bg-blue-500 text-white p-2 rounded" wire:click="addInput" value="Adicionar Pessoa">--}}
-                                <input type="button" wire:click="addInput" style="background-color: rgb(14, 44, 69);"
-                                       class="w-full md:w-auto text-sm bg-brand-800 px-4 py-2 text-white rounded-3xl font-medium"
-                                       value="Adicionar Pessoa">
-
-
-                            </div>
-                        </div>
-                    @endif
-                    <div class="flex space-x-4 space-y-2 mt-2">
-                        <div class="w-1/5">
-                            <div class="mt-5">
-                                <button wire:click="save"
-                                        wire:loading.attr="disabled"
-                                        wire:target="save"
-                                        style="background-color: rgb(14, 44, 69);"
-                                        class="w-1/3 w-full md:w-auto text-sm bg-brand-800 px-4 py-2 text-white rounded-3xl font-medium"
-                                        id="submitButton" title="Salvar">
-                                    <i class="fa fa-save"></i> Solicitar
-                                </button>
-                            </div>
-                        </div>
-                        <div class="w-1/5">
-                            <div class="mt-5">
-                                <a href="{{route('agendamento.index')}}"
-                                   class="w-1/3 w-full md:w-auto text-sm bg-red-700 px-4 py-2 text-white rounded-3xl font-medium"
-                                >
-                                    Cancelar
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
