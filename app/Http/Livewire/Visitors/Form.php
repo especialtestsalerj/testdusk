@@ -165,6 +165,11 @@ class Form extends BaseForm
 
         $reservationId = request()->get('reservation_id') ?? old('reservation_id');
         if ($reservationId) {
+            if(is_array($reservationId)){
+
+            }else{
+
+            }
             $this->reservation = Reservation::findOrFail($reservationId);
         }
     }
