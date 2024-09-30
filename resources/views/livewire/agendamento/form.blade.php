@@ -19,6 +19,9 @@
                             id="sector_id"
                             label="Setor:"
                             :options="$sectors"
+                            :options="$sectors->map(function($sector) {
+                                            return ['value' => $sector->id, 'text' => mb_strtoupper($sector->nickname)];
+                                        })"
                             placeholder="Selecione um setor"
                             :selected="$sector_id"
                             wireModel="sector_id"
@@ -231,21 +234,24 @@
 
                         </div>
 
-                        <div class="w-full" id="div-state_id" wire:ignore>
-                            <x-select2
-                                id="state_id"
-                                name="state_id"
-                                label="Estado"
-                                :options="$states->map(function($state) {
+                        <div class="w-full" id="div-state_id">
+
+                            <div class="w-full" wire:ignore>
+                                <x-select2
+                                    id="state_id"
+                                    name="state_id"
+                                    label="Estado"
+                                    :options="$states->map(function($state) {
                                             return ['value' => $state->id, 'text' => mb_strtoupper($state->name)];
                                         })"
-                                placeholder="SELECIONE"
-                                :selected="$state_id"
-                                wireModel="state_id"
-                                wireChange="loadCities"
-                                xRef="state_id"
-                                required="true"
-                            />
+                                    placeholder="SELECIONE"
+                                    :selected="$state_id"
+                                    wireModel="state_id"
+                                    wireChange="loadCities"
+                                    xRef="state_id"
+                                    required="true"
+                                />
+                            </div>
                         </div>
 
                         <div class="w-full" id="div-city_id" wire:ignore>
