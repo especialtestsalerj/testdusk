@@ -16,6 +16,14 @@ class Form extends FormBase
 
     public $inputs = [];
 
+    protected $validationAttributes = [
+        'contact' => 'Telefone (DD) + Número',
+    ];
+
+    protected $messages = [
+        'required_if' => 'O campo: :attribute é obrigatório.',
+    ];
+
     public function rules()
     {
         return [
@@ -39,7 +47,7 @@ class Form extends FormBase
             'disabilities' => 'nullable',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
-            'inputs.*.cpf' => ['required_if:has_group,true', new ValidCPF()],
+            'inputs.*.document' => ['required_if:has_group,true'],
             'inputs.*.name' => 'required_if:has_group,true|string|max:255',
             'inputs.*.documentType' => 'required_if:has_group,true',
         ];

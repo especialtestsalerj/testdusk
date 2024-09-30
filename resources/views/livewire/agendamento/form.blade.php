@@ -407,6 +407,15 @@
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+
+                                                <div>
+                                                    @error("inputs.$index.name")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Campo de Tipo de Documento -->
@@ -425,6 +434,14 @@
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+                                                <div>
+                                                    @error("inputs.$index.documentType")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Campo de Documento -->
@@ -439,6 +456,14 @@
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+                                                <div>
+                                                    @error("inputs.$index.document")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Botão de Remover -->

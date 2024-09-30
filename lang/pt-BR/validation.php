@@ -229,8 +229,9 @@ return [
         'confirm_email' => 'Confirmação de Email',
         'has_group' => 'Visita em Grupo',
         'institution' => 'Instituição/Empresa',
-        'inputs.*.cpf' => 'CPF do Convidado',
-        'inputs.*.name' => 'Nome do Convidado',
-        'inputs.*.documentType' => 'Tipo de Documento do Convidado'
+        'inputs.*.cpf' => 'CPF',
+        'inputs.*.document' => 'Documento',
+        'inputs.*.name' => 'Nome',
+        'inputs.*.documentType' => 'Tipo de Documento'
     ],
 ];
