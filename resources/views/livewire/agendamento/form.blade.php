@@ -211,63 +211,60 @@
                     </div>
 
 
-                    <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                        <div class="w-full">
-                            <div wire:ignore>
-                                <x-select2
-                                    id="country_id"
-                                    name="country_id"
-                                    label="País"
-                                    :options="$countries->map(function($country) {
+                    <div class="grid gap-4 md:grid-cols-3 sm:gap-6">
+                        <div class="w-full" id="div-country_id" wire:ignore>
+                            <x-select2
+                                id="country_id"
+                                name="country_id"
+                                label="País"
+                                :options="$countries->map(function($country) {
                                         return ['value' => $country->id, 'text' => mb_strtoupper($country->name)];
                                     })"
-                                    placeholder="SELECIONE"
-                                    :selected="$country_id"
-                                    wire:model="country_id"
-                                    x-ref="country_id"
-                                    :required="true"
-                                    class="mt-1"
-                                />
-                                @error('country_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                                placeholder="SELECIONE"
+                                :selected="$country_id"
+                                wire:model="country_id"
+                                x-ref="country_id"
+                                :required="true"
+                                class="mt-1"
+                            />
+                            @error('country_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
                         </div>
 
-                        <div class="w-full {{ $this->detectIfCountryBrSelected() ? '': 'hidden' }}">
-                            <div wire:ignore>
-                                <x-select2
-                                    id="state_id"
-                                    name="state_id"
-                                    label="Estado"
-                                    :options="$states->map(function($state) {
+                        <div class="w-full" id="div-state_id" wire:ignore>
+                            <x-select2
+                                id="state_id"
+                                name="state_id"
+                                label="Estado"
+                                :options="$states->map(function($state) {
                                             return ['value' => $state->id, 'text' => mb_strtoupper($state->name)];
                                         })"
-                                    placeholder="SELECIONE"
-                                    :selected="$state_id"
-                                    wireModel="state_id"
-                                    wireChange="loadCities"
-                                    xRef="state_id"
-                                    required="true"
-                                />
-                            </div>
+                                placeholder="SELECIONE"
+                                :selected="$state_id"
+                                wireModel="state_id"
+                                wireChange="loadCities"
+                                xRef="state_id"
+                                required="true"
+                            />
                         </div>
 
-                        <div class="w-full {{ $this->detectIfCountryBrSelected() ? '' : 'hidden' }}">
-                            <div wire:ignore>
-                                <x-select2
-                                    id="city_id"
-                                    name="city_id"
-                                    label="Cidade"
-                                    :options="$cities->map(function($city) {
-                                            return ['value' => $city->id, 'text' => mb_strtoupper($city->name)];
-                                        })"
-                                    placeholder="SELECIONE"
-                                    :selected="$city_id"
-                                    wireModel="city_id"
-                                    xRef="city_id"
-                                    required="true"
-                                />
-                            </div>
+                        <div class="w-full" id="div-city_id" wire:ignore>
+                            <x-select2
+                                id="city_id"
+                                name="city_id"
+                                label="Cidade"
+                                :options="$cities->map(function($city) {
+                                        return [
+                                            'value' => is_object($city) ? $city->id : $city['id'],
+                                            'text' => mb_strtoupper(is_object($city) ? $city->name : $city['name']),
+                                        ];
+                                    })"
+                                placeholder="SELECIONE"
+                                :selected="$city_id"
+                                wireModel="city_id"
+                                xRef="city_id"
+                                required="true"
+                            />
                         </div>
 
                         <div class="{{ !$this->detectIfCountryBrSelected() ? '' : 'hidden' }} w-full">
@@ -283,7 +280,9 @@
                                 class="mb-4"
                             />
                         </div>
+                    </div>
 
+                    <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                         <div class="w-full">
                             <x-input
                                 id="responsible_email"

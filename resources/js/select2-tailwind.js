@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     document.addEventListener('select2Reload', function (event) {
         // console.log('select2Reload'+ event.detail.name)
-        $('#div-' + event.detail.name)[0].classList.remove('d-none')
+        $('#div-' + event.detail.name)[0].classList.remove('hidden')
 
         const selector = $('#' + event.detail.name)
         const options = window.getSelect2OptionsForElement(selector[0])
@@ -96,9 +96,9 @@ $(document).ready(function () {
     })
 
     document.addEventListener('select2Destroy', function (event) {
-        // console.log('select2Destroy'+ event.detail.name)
+        // console.log($('#div-' + event.detail.name)[0])
         $('#' + event.detail.name).select2('destroy')
-        $('#div-' + event.detail.name)[0].classList.add('d-none')
+        $('#div-' + event.detail.name)[0].classList.add('hidden')
     })
 
     document.addEventListener('select2Disable', function (event) {

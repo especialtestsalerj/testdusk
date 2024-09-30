@@ -45,9 +45,9 @@ class Form extends BaseForm
 
     public $motive;
 
-    public $has_disability;
+    public $has_disability = false;
 
-    public $has_group;
+    public $has_group = false;
 
     public $capacity_id;
 

@@ -9,6 +9,7 @@
     'class' => '',
     'label' => null,
     'required' => false,
+    'wireChange' => null,
 ])
 
 <div class="relative">
@@ -21,6 +22,8 @@
         name="{{ $name }}"
         id="{{ $id }}"
         {{ $multiple ? 'multiple' : '' }}
+        x-ref={{ $name }}
+        @if($wireChange) wire:change="{{$wireChange}}" @endif
         {{ $attributes->merge(['class' => "select2 form-select block w-full mt-1 rounded-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 $class"]) }}
     >
         @if (!$multiple)
