@@ -33,7 +33,7 @@ class Form extends FormBase
         'disabilities' => 'nullable',
         'has_group' => 'required|boolean',
         'institution' => 'required_if:has_group,true',
-        'inputs.*.cpf' => 'required|cpf',
+        'inputs.*.cpf' => 'required',
         'inputs.*.name' => 'required|string|max:255',
         'inputs.*.documentType' => 'required|string|max:50',
     ];
