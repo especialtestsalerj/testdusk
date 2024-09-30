@@ -18,6 +18,8 @@ Route::group(['prefix' => '/reservations'], function () {
     Route::get('/associate-user', [Reservations::class,'associateUser'])
         ->name('reservation.associate-user');
 
+    Route::get('/list',[Reservations::class,'list'])->name('reservations.list');
+
 });
 
 
