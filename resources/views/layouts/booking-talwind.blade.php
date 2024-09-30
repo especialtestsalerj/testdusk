@@ -24,14 +24,14 @@
 
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
+    {{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 
     @include('layouts.partials.environment')
     @livewireStyles
@@ -41,7 +41,7 @@
 <div id="app">
 
 
-    <main class="py-0" >
+    <main class="py-0">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col">
@@ -55,7 +55,7 @@
     </main>
 
 
-   {{-- @include('layouts.partials.footer')--}}
+    {{-- @include('layouts.partials.footer')--}}
 
 
 </div>
@@ -65,6 +65,8 @@
 @livewireScripts
 <script src="{{ mix('js/alpine.js') }}" defer></script>
 <script src="{{ mix('/js/tailwind/app-tailwind.js') }}" defer></script>
+
+@stack('scripts')
 </body>
 
 

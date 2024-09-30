@@ -161,7 +161,6 @@
                         </div>
 
 
-
                     </div>
 
 
@@ -193,8 +192,9 @@
 
                     </div>
 
-                    @if($has_disability == 'true')
-                        <div class="w-full">
+
+                    <div class="{{ $has_disability == 'true' ? '': 'hidden' }}">
+                        <div class="w-full ">
                             <label for="disabilities"
                                    class="sm:col-span-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Tipo de Deficiência*
@@ -209,34 +209,34 @@
                                 </label>
                             @endforeach
                         </div>
-
-                    @endif
+                    </div>
 
 
                     <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                         <div class="w-full">
-                            <div>
-                                <x-select
-{{--                                    wire:ignore--}}
+                            <div wire:ignore>
+                                <x-select2
                                     id="country_id"
                                     name="country_id"
                                     label="País"
                                     :options="$countries->map(function($country) {
-                                            return ['value' => $country->id, 'text' => mb_strtoupper($country->name)];
-                                        })"
+                                        return ['value' => $country->id, 'text' => mb_strtoupper($country->name)];
+                                    })"
                                     placeholder="SELECIONE"
                                     :selected="$country_id"
-                                    wireModel="country_id"
-                                    xRef="country_id"
+                                    wire:model="country_id"
+                                    x-ref="country_id"
                                     required="true"
+                                    class="mt-1"
                                 />
+                                @error('country_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
+
                         </div>
 
                         <div class="w-full {{ $this->detectIfCountryBrSelected() ? '': 'hidden' }}">
-                            <div>
-                                <x-select
-{{--                                    wire:ignore--}}
+                            <div wire:ignore>
+                                <x-select2
                                     id="state_id"
                                     name="state_id"
                                     label="Estado"
@@ -247,16 +247,15 @@
                                     :selected="$state_id"
                                     wireModel="state_id"
                                     wireChange="loadCities"
-{{--                                    xRef="state_id"--}}
+                                    xRef="state_id"
                                     required="true"
                                 />
                             </div>
                         </div>
 
                         <div class="w-full {{ $this->detectIfCountryBrSelected() ? '' : 'hidden' }}">
-                            <div>
-                                <x-select
-{{--                                    wire:ignore--}}
+                            <div wire:ignore>
+                                <x-select2
                                     id="city_id"
                                     name="city_id"
                                     label="Cidade"
@@ -266,7 +265,7 @@
                                     placeholder="SELECIONE"
                                     :selected="$city_id"
                                     wireModel="city_id"
-{{--                                    xRef="city_id"--}}
+                                    xRef="city_id"
                                     required="true"
                                 />
                             </div>
@@ -457,7 +456,8 @@
                         </div>
 
                     @endif
-                    <div class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                    <div
+                        class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
                         <div class="w-full sm:w-1/2">
                             <div class="flex justify-center mt-6">
                                 <div class="w-full sm:w-1/3">
