@@ -119,7 +119,6 @@
                                 type="text"
                                 wireModel="social_name"
                                 placeholder="Nome social"
-                                required="false"
                             />
                         </div>
 
@@ -226,7 +225,7 @@
                                     :selected="$country_id"
                                     wire:model="country_id"
                                     x-ref="country_id"
-                                    required="true"
+                                    :required="true"
                                     class="mt-1"
                                 />
                                 @error('country_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror

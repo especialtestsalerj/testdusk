@@ -7,13 +7,14 @@
     'placeholder' => 'Selecione',
     'multiple' => false,
     'class' => '',
-    'label' => null, // Adicionando 'label' aos props
+    'label' => null,
+    'required' => false,
 ])
 
 <div class="relative">
     @if($label)
         <label for="{{ $id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
-            {{ $label }}
+            {{ $label }} @if($required) * @endif
         </label>
     @endif
     <select

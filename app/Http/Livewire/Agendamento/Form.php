@@ -6,16 +6,40 @@ use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Http\Livewire\Reservations\Form as FormBase;
 use App\Models\Sector as SectorModel;
 use Carbon\Carbon;
-use Illuminate\Validation\Rule;
 
 class Form extends FormBase
 {
 
     public $inputs = [];
+
+    protected $rules = [
+        'sector_id' => 'required|exists:sectors,id',
+        'birthdate' => 'required',
+        'reservation_date' => 'required|date_format:d/m/Y|after_or_equal:today',
+        'capacity_id' => 'required|exists:capacities,id',
+        'document_type_id' => 'required|exists:document_types,id',
+        'document_number' => 'required|string|max:20',
+        'full_name' => 'required|string|max:255',
+        'social_name' => 'nullable|string|max:255',
+        'country_id' => 'required|exists:countries,id',
+        'state_id' => 'required|exists:states,id',
+        'city_id' => 'required|exists:cities,id',
+        'other_city' => 'nullable|string|max:255',
+        'responsible_email' => 'required|email|max:255',
+        'confirm_email' => 'required|same:responsible_email',
+        'mobile' => 'required|string|max:20',
+        'motive' => 'required_if:sector.required_motivation,true',
+        'has_disability' => 'required|boolean',
+        'disabilities' => 'nullable',
+        'has_group' => 'required|boolean',
+        'institution' => 'required_if:has_group,true',
+        'inputs.*.cpf' => 'required|cpf',
+        'inputs.*.name' => 'required|string|max:255',
+        'inputs.*.documentType' => 'required|string|max:50',
+    ];
+
     public function render()
     {
-
-
         $this->loadCountryBr();
         $this->loadDefaultLocation();
 
@@ -24,9 +48,7 @@ class Form extends FormBase
 
     public function addInput()
     {
-        $this->inputs[] = ['cpf' => '', 'name' => '','documentType'=>''];
-
-
+        $this->inputs[] = ['cpf' => '', 'name' => '', 'documentType' => ''];
     }
 
     public function removeInput($index)
@@ -37,52 +59,38 @@ class Form extends FormBase
     }
 
 
-
-    public function loadDates()
-    {
-//        dump('datas');
-        parent::loadDates();
-//        $this->emit('load');
-    }
-
-
     public function save()
     {
-        $requiresMotivation = $this->sector ? $this->sector->required_motivation : false;
-        // Validações e lógica de salvamento aqui
-        $this->validate([
+        $this->validate();
 
-//                    'building_id' =>        ['required'],
-            'sector_id' =>          ['required'],
-            'birthdate'=>           ['required'],
-            'reservation_date' => ['required'],
-            'capacity_id' =>       ['required'],
-            'document_type_id' =>   ['required'],
-            'document_number' =>    ['required'],
-            'full_name' =>          ['required'],
-//                    'social_name' =>        ['required'],
-            'country_id' =>         ['required'],
-            'state_id' =>           ['required'],
-            'city_id' =>            ['required'],
-//                    'other_city' =>         ['required'],
-            'responsible_email' => ['required', 'email'],
-            'confirm_email' => ['required', 'same:responsible_email'],
-            'mobile' =>             ['required'],
-            'motive' => [Rule::requiredIf($requiresMotivation),],
-            'has_disability' =>['required'],
-            'has_group' => ['required'],
-            'institution' => ['required_if:has_group,true'],
+        $data = $this->prepareReservationData();
 
-        ]);
+        $reservation = app(ReservationRepository::class)->create($data);
 
+        return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
+    }
 
+    private function prepareReservationData()
+    {
+        return array_merge(
+            $this->getBasicReservationData(),
+            [
+                'building_id' => $this->getBuildingId(),
+                'quantity' => $this->calculateQuantity(),
+                'guests' => $this->inputs,
+                'person' => $this->getPersonData(),
+                'reservation_type_id' => 1,
+                'code' => generate_code(),
+                'reservation_status_id' => 1,
+            ]
+        );
+    }
 
-//            dd($this->reservation_date);
-        $dataCarbon = Carbon::createFromFormat('d/m/Y', $this->reservation_date);
-
-        $data = [
+    private function getBasicReservationData()
+    {
+        return [
             'sector_id' => $this->sector_id,
-            'reservation_date' => Carbon::createFromFormat('d/m/Y', $this->reservation_date)->format('Y-m-d'),
+            'reservation_date' => $this->formatDate($this->reservation_date),
             'full_name' => $this->full_name,
             'social_name' => $this->social_name,
             'document_type_id' => $this->document_type_id,
@@ -98,50 +106,40 @@ class Form extends FormBase
             'disabilities' => $this->disabilities,
             'capacity_id' => $this->capacity_id,
         ];
-
-
-        SectorModel::disableGlobalScopes();
-        $data['building_id'] =SectorModel::find($this->sector_id)->building_id;
-        SectorModel::enableGlobalScopes();
-
-
-
-        $group = $this->inputs;
-
-        $data['quantity'] = count($group) +1;
-
-
-        $person = [
-            'full_name' => $this->full_name,
-            'social_name'=>$this->social_name,
-            'document_type_id'=>$this->document_type_id,
-            'document_number'=>$this->document_number,
-            'country_id'=>$this->country_id,
-            'state_id'=>$this->state_id,
-            'city_id'=>$this->city_id,
-            'other_city'=>$this->other_city,
-            'email'=>$this->responsible_email,
-            'mobile'=>$this->mobile,
-            'has_disability'=>$this->has_disability,
-            'disabilities'=>$this->disabilities,
-            'birthdate'=>$this->birthdate,
-
-        ];
-
-
-
-        $data['guests'] = $this->inputs;
-
-        $data = array_merge($data, ['reservation_type_id'=> '1', 'code'=>generate_code(), 'reservation_status_id'=> '1', 'person'=>$person, ]);
-
-//        dd($data);
-
-        $reservation = app(ReservationRepository::class)->create($data);
-
-        // Lógica de salvamento
-        // Exemplo:
-        // Reservation::create([...]);
-
-          return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
     }
+
+    private function formatDate(string $date): string
+    {
+        return Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+    }
+
+    private function getBuildingId(): int
+    {
+        return SectorModel::withoutGlobalScopes()->findOrFail($this->sector_id)->building_id;
+    }
+
+    private function calculateQuantity(): int
+    {
+        return count($this->inputs) + 1;
+    }
+
+    private function getPersonData(): array
+    {
+        return [
+            'full_name' => $this->full_name,
+            'social_name' => $this->social_name,
+            'document_type_id' => $this->document_type_id,
+            'document_number' => $this->document_number,
+            'country_id' => $this->country_id,
+            'state_id' => $this->state_id,
+            'city_id' => $this->city_id,
+            'other_city' => $this->other_city,
+            'email' => $this->responsible_email,
+            'mobile' => $this->mobile,
+            'has_disability' => $this->has_disability,
+            'disabilities' => $this->disabilities,
+            'birthdate' => $this->birthdate,
+        ];
+    }
+
 }
