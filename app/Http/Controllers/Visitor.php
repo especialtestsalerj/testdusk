@@ -69,16 +69,7 @@ class Visitor extends Controller
             'state_id' => $request->get('state_document_id'),
         ]);
 
-        if($request->get('reservation_id')){
-            $reservation = app(ReservationsRepository::class)->findById($request->get('reservation_id'));
 
-            $newStatusId = ReservationStatus::where('name', 'VISITA REALIZADA')->first()->id;
-            $reservation->reservation_status_id = $newStatusId;
-            $reservation->save();
-
-            //Verifica se é um convidado do Grupo
-            $reservation->guestsConfirmed()->updateExistingPivot($person->id, ['reservation_status_id' => $newStatusId]);
-        }
 
         if ($request->get('contact') && $request->get('contact_type_id')) {
             app(Contacts::class)->firstOrCreateContact($request);
@@ -92,6 +83,21 @@ class Visitor extends Controller
 
         $visitor = $visitor->fresh();
         $visitor->searchable();
+
+        if($request->get('reservation_id')){
+            foreach(explode(',',$request->get('reservation_id')[0]) as $reservation_id) {
+
+                $reservation = app(ReservationsRepository::class)->findById($reservation_id);
+
+                $newStatusId = ReservationStatus::where('name', 'VISITA REALIZADA')->first()->id;
+                $reservation->reservation_status_id = $newStatusId;
+                $reservation->visitor_id = $visitor->id;
+                $reservation->save();
+
+                //Verifica se é um convidado do Grupo
+                $reservation->guestsConfirmed()->updateExistingPivot($person->id, ['reservation_status_id' => $newStatusId]);
+            }
+        }
 
         return redirect()
             ->route('visitors.index')
