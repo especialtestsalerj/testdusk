@@ -56,6 +56,6 @@ class ReservationModal extends Component
 
     public function confirmSelectedEntries()
     {
-        return redirect()->route('visitors.create', ['document_id' =>'','reservation_id'=>[$this->selectedReservations]]);
+        return redirect()->route('visitors.create', ['document_id' =>$this->document_id,'reservation_id'=>[$this->selectedReservations]]);
     }
 }

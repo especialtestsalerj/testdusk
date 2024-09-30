@@ -31,6 +31,10 @@ class Form extends BaseForm
     public $person_id;
     public $sector_id;
 
+    public array $reservations_id;
+
+    public array $reservationsSectors_id;
+
     protected $listeners = [
         'personModified' => 'personModified',
         'cropChanged' => 'cropChanged',
@@ -61,6 +65,8 @@ class Form extends BaseForm
     {
         parent::__construct($id);
         $this->reservations = [];
+        $this->reservationsSectors_id =[];
+        $this->reservations_id =[];
     }
 
     public function hydrate()
@@ -169,14 +175,16 @@ class Form extends BaseForm
             $this->personModified(Person::findOrFail($this->person_id));
         }
 
-        $reservationsId = request()->get('reservation_id') ?? old('reservation_id');
+        $this->reservations_id = request()->get('reservation_id') ?? old('reservation_id');
 
-        if ($reservationsId) {
-            $reservations = Reservation::findMany($reservationsId); // Retorna uma coleção de reservas
+        if ($this->reservations_id) {
+            $reservations = Reservation::findMany($this->reservations_id); // Retorna uma coleção de reservas
             foreach ($reservations as $reservation) {
+                $this->reservationsSectors_id[] = $reservation->sector->id;
                 $this->addReservation($reservation);
             }
         }
+
 
     }
 
