@@ -21,7 +21,7 @@ class Form extends FormBase
     ];
 
     protected $messages = [
-        'required_if' => 'O campo: :attribute é obrigatório.',
+        'required_if' => ':attribute: preencha o campo corretamente',
     ];
 
     public function rules()
