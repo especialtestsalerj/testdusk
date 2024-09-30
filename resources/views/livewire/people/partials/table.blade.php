@@ -19,7 +19,7 @@
                                         @if (count($person->reservationsAsResponsible) > 1)
                                             @can(make_ability_name_with_current_building('visitors:checkout'))
                                                 <span class="btn px-0 py-0 btn-visit-action"
-                                                      wire:click="openReservationModal({{$person->id}})"
+                                                      wire:click="openReservationModal({{$person->id}},{{$person->documents[0]->id}})"
                                                       title="Selecionar Visita">
                                                     <i class="fa fa-lg fa-list"></i>
                                                 </span>
