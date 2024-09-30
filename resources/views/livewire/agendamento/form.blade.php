@@ -1,5 +1,25 @@
-<div>
-
+<div
+    x-data="{
+        handleMaskChange(event) {
+            setTimeout(() => {
+                const ref = this.$refs[event.detail.ref];
+                if (ref) {
+                    if (event.detail.mask) {
+                        VMasker(ref).maskPattern(event.detail.mask);
+                    } else {
+                        const fieldValue = ref.value;
+                        VMasker(ref).unMask();
+                        ref.value = fieldValue; // Retorna o valor original após remover a máscara
+                    }
+                }
+            }, 500);
+        }
+    }"
+    x-init=""
+    @focus-field.window="if ($refs[$event.detail.field]) { $refs[$event.detail.field].focus(); }"
+    @change-mask.window="handleMaskChange($event)"
+    @change-contact-mask.window="handleMaskChange($event)"
+>
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
@@ -318,13 +338,14 @@
 
                         <div class="w-full">
                             <x-input
-                                id="mobile"
-                                name="mobile"
+                                id="contact"
+                                name="contact"
                                 label="Telefone (DD) + Número"
                                 type="text"
-                                wireModel="mobile"
+                                wireModel="contact"
+                                xRef="contact"
                                 placeholder="(xx) xxxxx-xxxx"
-                                required="false"
+                                required="true"
                                 class="mb-4"
                             />
                         </div>
@@ -395,7 +416,6 @@
                                                     name="inputs[{{ $index }}][documentType]"
                                                     label="Tipo de Documento"
                                                     :options="[
-                                                        ['value' => '', 'text' => 'Tipo de documento'],
                                                         ['value' => '1', 'text' => 'CPF'],
                                                         ['value' => '4', 'text' => 'Passaporte'],
                                                     ]"

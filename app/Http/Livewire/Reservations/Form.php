@@ -35,7 +35,8 @@ class Form extends BaseForm
 
     public $responsible_email;
     public $confirm_email;
-    public $mobile;
+    public $contact;
+    public $contact_type_id; // contact-mask hack
 
     public $blockedDates;
 
@@ -77,13 +78,15 @@ class Form extends BaseForm
         return view('livewire.reservation.form')->with($this->getViewVariables());
     }
 
-    public function mount(){
+    public function mount()
+    {
 
         $this->loadSectors();
         $this->blockedDates =[];
         $this->maxDate = 0;
 
         $this->fillOld();
+        $this->contact_type_id = 1; // contact-mask hack
 
     }
 
