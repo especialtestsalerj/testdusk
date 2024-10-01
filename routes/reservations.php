@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Reservations as Reservations;
+use App\Http\Livewire\Dashboard\Reservation as ReservationDashboard;
+
 use App\Http\Livewire\Calendar\Index as CalendarIndex;
 
 Route::group(['prefix' => '/reservations'], function () {
@@ -18,7 +19,7 @@ Route::group(['prefix' => '/reservations'], function () {
     Route::get('/associate-user', [Reservations::class,'associateUser'])
         ->name('reservation.associate-user');
 
-    Route::get('/list',[Reservations::class,'list'])->name('reservations.list');
+    Route::get('/dashboard',ReservationDashboard::class)->name('reservations.dashboard');
 
 });
 

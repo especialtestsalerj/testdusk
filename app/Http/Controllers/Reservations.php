@@ -103,9 +103,5 @@ class Reservations extends BaseController
         return view('reservations.association');
     }
 
-    public function list()
-    {
-        return view('reservations.list');
-    }
 
 }
