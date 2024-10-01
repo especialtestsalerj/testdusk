@@ -130,6 +130,7 @@ class Index extends BaseIndex
 
         })->with(['reservationsAsResponsible' => function ($query) use ($today) {
             $query->whereDate('reservation_date', $today)
+                ->where('reservation_status_id', 2)
             ->where('building_id', get_current_building()->id);
         }])
             ->get();
