@@ -60,6 +60,7 @@
                             xRef="reservation_date"
                             :blockedDates="$blockedDates"
                             :maxDate="$maxDate"
+                            :disabled="empty($sector_id)"
                             dateFormat="d/m/Y"
                         />
 

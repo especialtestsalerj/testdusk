@@ -140,16 +140,13 @@ class Form extends BaseForm
 
     public function updatedSectorId($newValue)
     {
+        $this->reset('reservation_date', 'capacity_id');
+
         if (empty($newValue)) {
             return;
-
         }
-
-
-
         $this->sector = Sector::where('id',$this->sector_id )->first();
 
-//        dd($this->sector);
 
         $this->loadDates();
         $this->loadHourCapacities();
