@@ -44,7 +44,7 @@ class Form extends FormBase
             'contact' => 'required|string|max:20',
             'motive' => 'required_if:sector.required_motivation,true',
             'has_disability' => 'required|boolean',
-            'disabilities' => 'required_if:has_disability,true|array|min:1',
+            'disabilities' => 'required_if:has_disability,true|array',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
             'inputs.*.document' => [
@@ -98,7 +98,7 @@ class Form extends FormBase
 
     public function addInput()
     {
-        $this->inputs[] = ['cpf' => '', 'name' => '', 'documentType' => ''];
+        $this->inputs[] = ['document' => '', 'name' => '', 'documentType' => ''];
     }
 
     public function removeInput($index)
@@ -190,6 +190,29 @@ class Form extends FormBase
             'disabilities' => $this->disabilities,
             'birthdate' => $this->birthdate,
         ];
+    }
+
+    public function updated($propertyName)
+    {
+        if (str_contains($propertyName, 'inputs.') && str_contains($propertyName, '.documentType')) {
+            // Extrai o índice da propriedade
+            preg_match('/inputs\.(\d+)\.documentType/', $propertyName, $matches);
+            $index = $matches[1];
+
+            // Obtém o documentType atual
+            $documentType = $this->inputs[$index]['documentType'];
+
+            $mask = '';
+            if ($documentType == '1') {
+                $mask = '999.999.999-99'; // Máscara para CPF
+            }
+
+            // Dispara um evento para o navegador
+            $this->dispatchBrowserEvent('change-mask', [
+                'ref' => 'document_' . $index,
+                'mask' => $mask,
+            ]);
+        }
     }
 
 }

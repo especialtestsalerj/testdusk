@@ -471,6 +471,7 @@
                                                     type="text"
                                                     wireModel="inputs.{{ $index }}.document"
                                                     placeholder="Documento"
+                                                    xRef="document_{{ $index }}"
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
