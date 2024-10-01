@@ -44,13 +44,29 @@ class Form extends FormBase
             'contact' => 'required|string|max:20',
             'motive' => 'required_if:sector.required_motivation,true',
             'has_disability' => 'required|boolean',
-            'disabilities' => 'nullable',
+            'disabilities' => 'required_if:has_disability,true',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
             'inputs.*.document' => ['required_if:has_group,true'],
             'inputs.*.name' => 'required_if:has_group,true|string|max:255',
             'inputs.*.documentType' => 'required_if:has_group,true',
         ];
+    }
+
+    public function updatedHasDisability()
+    {
+        $this->reset('disabilities');
+        $this->resetErrorBag(['disabilities']);
+    }
+
+    public function updatedHasGroup()
+    {
+        $this->reset('inputs', 'institution');
+        $this->resetErrorBag(['inputs.*.document', 'inputs.*.name', 'inputs.*.documentType', 'institution']);
+
+        if ($this->has_group == true) {
+            $this->addInput();
+        }
     }
 
     public function render()

@@ -215,21 +215,36 @@
                     </div>
 
 
-                    <div class="{{ $has_disability == 'true' ? '': 'hidden' }}">
-                        <div class="w-full ">
+                    <div class="{{ $has_disability == 'true' ? '' : 'hidden' }} bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4">
+                        <div class="w-full mb-4">
                             <label for="disabilities"
-                                   class="sm:col-span-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                   class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Tipo de Deficiência*
                             </label>
                         </div>
+
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             @foreach($disabilityTypes as $disabilityType)
-                                <label class="max-w-full">
-                                    <input name="disabilities[]" wire:model="disabilities"
-                                           value="{{ $disabilityType->id }}" type="checkbox"/>
-                                    <span>{{ $disabilityType->name }}</span>
-                                </label>
+                                <div class="flex items-center space-x-2">
+                                    <input name="disabilities[]"
+                                           wire:model="disabilities"
+                                           value="{{ $disabilityType->id }}"
+                                           type="checkbox"
+                                           class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-500 dark:ring-offset-gray-800"/>
+                                    <label class="text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ $disabilityType->name }}
+                                    </label>
+                                </div>
                             @endforeach
+                        </div>
+
+                        <div class="mt-2">
+                            @error('disabilities')
+                            <small class="text-sm text-red-600 flex items-center space-x-1">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>{{ $message }}</span>
+                            </small>
+                            @enderror
                         </div>
                     </div>
 
@@ -316,7 +331,7 @@
                                 label="Email"
                                 type="email"
                                 wireModel="responsible_email"
-                                placeholder="name@company.com"
+                                placeholder="usuario@email.com"
                                 required="true"
                                 class="mb-4"
                             />
@@ -329,7 +344,7 @@
                                 label="Confirmação de Email"
                                 type="email"
                                 wireModel="confirm_email"
-                                placeholder="name@company.com"
+                                placeholder="usuario@email.com"
                                 required="true"
                                 class="mb-4"
                             />
