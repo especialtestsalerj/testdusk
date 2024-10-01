@@ -47,7 +47,25 @@ class Form extends FormBase
             'disabilities' => 'required_if:has_disability,true|array|min:1',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
-            'inputs.*.document' => ['required_if:has_group,true'],
+            'inputs.*.document' => [
+                'required_if:has_group,true',
+                function ($attribute, $value, $fail) {
+                    // Acessando o documentType relacionado ao campo document específico
+                    $inputs = request()->input('serverMemo.data.inputs');
+
+                    // Extraindo o índice do campo atual
+                    preg_match('/inputs\.(\d+)\.document/', $attribute, $matches);
+                    $index = $matches[1]; // O índice correspondente ao document atual
+
+                    // Verificando o documentType desse item específico
+                    $documentType = $inputs[$index]['documentType'] ?? null;
+
+                    // Valida o CPF apenas se o documentType for igual a CPF (configurado)
+                    if ($documentType == config('app.document_type_cpf') && !validate_cpf($value)) {
+                        $fail('O CPF informado é inválido.');
+                    }
+                },
+            ],
             'inputs.*.name' => 'required_if:has_group,true|string|max:255',
             'inputs.*.documentType' => 'required_if:has_group,true',
         ];
