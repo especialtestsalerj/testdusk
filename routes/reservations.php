@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Reservations;
 use App\Http\Livewire\Dashboard\Reservation as ReservationDashboard;
 
 use App\Http\Livewire\Calendar\Index as CalendarIndex;

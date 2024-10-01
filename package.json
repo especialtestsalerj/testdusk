@@ -32,6 +32,7 @@
     },
     "dependencies": {
         "@alpinejs/intersect": "^3.12.3",
+        "apexcharts": "^3.54.0",
         "cropperjs": "^1.5.13",
         "jquery": "^3.6.1",
         "laravel-echo": "^1.15.1",
