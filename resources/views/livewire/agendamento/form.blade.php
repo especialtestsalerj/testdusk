@@ -216,7 +216,8 @@
                     </div>
 
 
-                    <div class="{{ $has_disability == 'true' ? '' : 'hidden' }} bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4">
+                    <div
+                        class="{{ $has_disability == 'true' ? '' : 'hidden' }} bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4">
                         <div class="w-full mb-4">
                             <label for="disabilities"
                                    class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -270,24 +271,24 @@
 
                         </div>
 
-                        <div class="w-full" id="div-state_id">
+                        <div class="w-full" id="div-state_id" wire:ignore>
 
-                            <div class="w-full" wire:ignore>
-                                <x-select2
-                                    id="state_id"
-                                    name="state_id"
-                                    label="Estado"
-                                    :options="$states->map(function($state) {
+
+                            <x-select2
+                                id="state_id"
+                                name="state_id"
+                                label="Estado"
+                                :options="$states->map(function($state) {
                                             return ['value' => $state->id, 'text' => mb_strtoupper($state->name)];
                                         })"
-                                    placeholder="SELECIONE"
-                                    :selected="$state_id"
-                                    wireModel="state_id"
-                                    wireChange="loadCities"
-                                    xRef="state_id"
-                                    required="true"
-                                />
-                            </div>
+                                placeholder="SELECIONE"
+                                :selected="$state_id"
+                                wireModel="state_id"
+                                wireChange="loadCities"
+                                xRef="state_id"
+                                required="true"
+                            />
+
                         </div>
 
                         <div class="w-full" id="div-city_id" wire:ignore>
