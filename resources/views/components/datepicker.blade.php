@@ -10,22 +10,27 @@
     'dateFormat' => 'd/m/Y',
     'options' => [],
     'required' => false,
+    'disabled' => false,
 ])
 
 <div {{ $attributes->merge(['class' => 'w-full']) }}>
     <label for="{{ $id }}"
            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        {{ $label }} @if($required) * @endif
+        {{ $label }} @if($required)
+            *
+        @endif
     </label>
     <input id="{{ $id }}" type="button"
            value="{{ $value }}"
            name="{{ $name }}"
            wire:model="{{ $wireModel }}"
            x-ref="{{ $xRef }}"
+           @if($disabled) disabled @endif
            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+                  {{ $disabled ? 'opacity-50 cursor-not-allowed bg-gray-200 dark:bg-gray-800' : '' }}">
     <div>
         @error($name)
         <small class="text-danger text-red-700">
@@ -37,7 +42,7 @@
 </div>
 <input type="hidden" name="{{ $name }}"
        value="{{ $value }}"
-       wire:model="{{ $wireModel }}" />
+       wire:model="{{ $wireModel }}"/>
 
 @push('scripts')
     <!-- Include Flatpickr scripts -->
@@ -62,7 +67,8 @@
                     }
                 ].concat(blockedDates),
                 onChange: function (selectedDates, dateStr, instance) {
-                    @this.set(wireModel, dateStr);
+                    @this.
+                    set(wireModel, dateStr);
                 },
                 ...@json($options),
             });

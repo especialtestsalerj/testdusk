@@ -1,9 +1,29 @@
-<div>
-
+<div
+    x-data="{
+        handleMaskChange(event) {
+            setTimeout(() => {
+                const ref = this.$refs[event.detail.ref];
+                if (ref) {
+                    if (event.detail.mask) {
+                        VMasker(ref).maskPattern(event.detail.mask);
+                    } else {
+                        const fieldValue = ref.value;
+                        VMasker(ref).unMask();
+                        ref.value = fieldValue; // Retorna o valor original após remover a máscara
+                    }
+                }
+            }, 500);
+        }
+    }"
+    x-init=""
+    @focus-field.window="if ($refs[$event.detail.field]) { $refs[$event.detail.field].focus(); }"
+    @change-mask.window="handleMaskChange($event)"
+    @change-contact-mask.window="handleMaskChange($event)"
+>
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
-            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <a href="{{ route('agendamento.index')}}" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 <img class="w-60" src="{{asset('/img/logo-alerj-grande.png')}}" alt="logo">
             </a>
 
@@ -40,6 +60,7 @@
                             xRef="reservation_date"
                             :blockedDates="$blockedDates"
                             :maxDate="$maxDate"
+                            :disabled="empty($sector_id)"
                             dateFormat="d/m/Y"
                         />
 
@@ -61,6 +82,7 @@
                                 <select
                                     name="capacity_id" id="capacity_id"
                                     wire:model="capacity_id" x-ref="capacity_id"
+                                    @if(empty($reservation_date)) disabled @endif
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value="">SELECIONE</option>
                                     @foreach ($this->capacities as $capacitiy)
@@ -195,21 +217,37 @@
                     </div>
 
 
-                    <div class="{{ $has_disability == 'true' ? '': 'hidden' }}">
-                        <div class="w-full ">
+                    <div
+                        class="{{ $has_disability == 'true' ? '' : 'hidden' }} bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4">
+                        <div class="w-full mb-4">
                             <label for="disabilities"
-                                   class="sm:col-span-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                   class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Tipo de Deficiência*
                             </label>
                         </div>
+
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             @foreach($disabilityTypes as $disabilityType)
-                                <label class="max-w-full">
-                                    <input name="disabilities[]" wire:model="disabilities"
-                                           value="{{ $disabilityType->id }}" type="checkbox"/>
-                                    <span>{{ $disabilityType->name }}</span>
-                                </label>
+                                <div class="flex items-center space-x-2">
+                                    <input name="disabilities[]"
+                                           wire:model="disabilities"
+                                           value="{{ $disabilityType->id }}"
+                                           type="checkbox"
+                                           class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-500 dark:ring-offset-gray-800"/>
+                                    <label class="text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ $disabilityType->name }}
+                                    </label>
+                                </div>
                             @endforeach
+                        </div>
+
+                        <div class="mt-2">
+                            @error('disabilities')
+                            <small class="text-sm text-red-600 flex items-center space-x-1">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>{{ $message }}</span>
+                            </small>
+                            @enderror
                         </div>
                     </div>
 
@@ -234,24 +272,24 @@
 
                         </div>
 
-                        <div class="w-full" id="div-state_id">
+                        <div class="w-full" id="div-state_id" wire:ignore>
 
-                            <div class="w-full" wire:ignore>
-                                <x-select2
-                                    id="state_id"
-                                    name="state_id"
-                                    label="Estado"
-                                    :options="$states->map(function($state) {
+
+                            <x-select2
+                                id="state_id"
+                                name="state_id"
+                                label="Estado"
+                                :options="$states->map(function($state) {
                                             return ['value' => $state->id, 'text' => mb_strtoupper($state->name)];
                                         })"
-                                    placeholder="SELECIONE"
-                                    :selected="$state_id"
-                                    wireModel="state_id"
-                                    wireChange="loadCities"
-                                    xRef="state_id"
-                                    required="true"
-                                />
-                            </div>
+                                placeholder="SELECIONE"
+                                :selected="$state_id"
+                                wireModel="state_id"
+                                wireChange="loadCities"
+                                xRef="state_id"
+                                required="true"
+                            />
+
                         </div>
 
                         <div class="w-full" id="div-city_id" wire:ignore>
@@ -296,7 +334,7 @@
                                 label="Email"
                                 type="email"
                                 wireModel="responsible_email"
-                                placeholder="name@company.com"
+                                placeholder="usuario@email.com"
                                 required="true"
                                 class="mb-4"
                             />
@@ -309,7 +347,7 @@
                                 label="Confirmação de Email"
                                 type="email"
                                 wireModel="confirm_email"
-                                placeholder="name@company.com"
+                                placeholder="usuario@email.com"
                                 required="true"
                                 class="mb-4"
                             />
@@ -318,13 +356,14 @@
 
                         <div class="w-full">
                             <x-input
-                                id="mobile"
-                                name="mobile"
+                                id="contact"
+                                name="contact"
                                 label="Telefone (DD) + Número"
                                 type="text"
-                                wireModel="mobile"
+                                wireModel="contact"
+                                xRef="contact"
                                 placeholder="(xx) xxxxx-xxxx"
-                                required="false"
+                                required="true"
                                 class="mb-4"
                             />
                         </div>
@@ -386,6 +425,15 @@
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+
+                                                <div>
+                                                    @error("inputs.$index.name")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Campo de Tipo de Documento -->
@@ -395,7 +443,6 @@
                                                     name="inputs[{{ $index }}][documentType]"
                                                     label="Tipo de Documento"
                                                     :options="[
-                                                        ['value' => '', 'text' => 'Tipo de documento'],
                                                         ['value' => '1', 'text' => 'CPF'],
                                                         ['value' => '4', 'text' => 'Passaporte'],
                                                     ]"
@@ -405,6 +452,14 @@
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+                                                <div>
+                                                    @error("inputs.$index.documentType")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Campo de Documento -->
@@ -416,9 +471,18 @@
                                                     type="text"
                                                     wireModel="inputs.{{ $index }}.document"
                                                     placeholder="Documento"
+                                                    xRef="document_{{ $index }}"
                                                     required="true"
                                                     class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                 />
+                                                <div>
+                                                    @error("inputs.$index.document")
+                                                    <small class="text-danger text-red-700">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ $message }}
+                                                    </small>
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Botão de Remover -->
