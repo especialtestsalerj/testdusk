@@ -38,7 +38,8 @@ class Reservation extends Model
         'canceled_by_id',
         'canceled_at',
         'uuid',
-        'institution'
+        'institution',
+        'visitor_id'
     ];
 
     protected $casts = [
@@ -53,7 +54,7 @@ class Reservation extends Model
         'canceled_at',
     ];
 
-    protected $with=['capacity'];
+    protected $with=['capacity','confirmedBy'];
 
 //    protected $filterableColumns = ['name', 'status'];
 

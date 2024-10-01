@@ -68,8 +68,13 @@
                         <div class="col-12">
                             <h4>
                                 Dados do/a Visitante
-                                @if(!empty($this->reservation))
-                                    <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
+                                @if(!empty($this->reservations))
+                                    <span class="badge bg-danger text-white">Agendamento(s):
+                                            @foreach($reservations as $reservation)
+                                            {{$reservation->code ?? $reservation['code']}}
+                                        @endforeach
+                                        </span>
+
                                 @endif
                             </h4>
                         </div>
@@ -82,9 +87,14 @@
                             <div class="col-12">
                                 <h4>
                                     Dados da Visita
-                                    @if(!empty($this->reservation))
-                                        <span class="badge bg-danger text-white">Agendamento {{$reservation->code}}</span>
-                                        <input type="hidden" name="reservation_id" value="{{$this->reservation->id}}"
+                                    @if(!empty($this->reservations))
+                                        <span class="badge bg-danger text-white">Agendamento(s):
+                                            @foreach($reservations as $reservation)
+                                                {{$reservation->code ?? $reservation['code']}}
+                                            @endforeach
+                                        </span>
+                                        <input type="hidden" name="reservation_id[]" wire:model="reservations_id" >
+
                                     @endif
                                 </h4>
                             </div>
@@ -117,23 +127,19 @@
                             <div class="col-lg-12 col-xl-6" wire:ignore>
                                 <div class="form-group">
                                     <label for="sector_id">Destino*</label>
-                                    @if(!empty($this->reservation))
-                                       <input type="text" class="form-control" value="{{$this->reservation->sector->name}}" disabled/>
-                                        <input type="hidden" name="sector_id[]" value="{{$this->reservation->sector->id}}" >
-                                    @else
                                         <select class="select2 form-control" name="sector_id[]" id="sector_id" multiple
                                                 @include('partials.disabled-by-query-string') @if($visitor->hasPending()) readonly @endif data-placeholder="SELECIONE">
                                             @foreach ($sectors as $key => $sector)
                                                 @if(((!is_null($visitor->id)) && (!is_null($visitor->sectors) && $visitor->sectors->contains($sector->id) ) ||
-                                                (!empty(old('sector_id'))) && in_array($sector->id, old('sector_id'))))
+                                                (!empty(old('sector_id'))) && in_array($sector->id, old('sector_id'))) ||
+                                                (is_array($this->reservationsSectors_id) && in_array($sector->id, $this->reservationsSectors_id)))
+                                                )
                                                     <option value="{{ $sector->id }}" selected="selected">{{ $sector->name }}</option>
                                                 @else
                                                     <option value="{{ $sector->id }}">{{ $sector->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                                    @endif
-
                                 </div>
                             </div>
 
@@ -167,11 +173,11 @@
                                     <label for="description">Motivo da Visita*</label>
                                     <textarea class="form-control" name="description" id="description" rows="5" wire:ignore
                                               placeholder="Informe detalhes da autorização"
-                                        @include('partials.disabled-by-query-string') >@if(!empty($this->reservation))Agemdamento código: {{
-                                            $this->reservation->code }} solicitado dia {{
-                                            $this->reservation->created_at->format('d/m/Y \À\S H:i')}} e autorizado por {{
-                                            $this->reservation->confirmedBy->name}} em {{
-                                            $this->reservation->confirmed_at->format('d/m/Y \À\S H:i')}}@else{{ is_null(old('description')) ? $visitor->description: old('description') }}@endif</textarea>
+          @include('partials.disabled-by-query-string')>@if(!empty($this->reservations))@foreach($reservations as $reservation)@if(is_object($reservation)){{ trim("Agendamento código: {$reservation->code} solicitado dia " . $reservation->created_at->format('d/m/Y \À\S H:i') . " e autorizado por {$reservation->confirmedBy->name} em " . $reservation->confirmed_at->format('d/m/Y \À\S H:i'))."
+" }}@else{{ trim("Agendamento código: {$reservation['code']} solicitado dia " . \Carbon\Carbon::parse($reservation['created_at'])->format('d/m/Y \À\S H:i') . " e autorizado por {$reservation['confirmed_by']['name']} em " . \Carbon\Carbon::parse($reservation['confirmed_at'])->format('d/m/Y \À\S H:i'))
+}}@endif @endforeach @else{{ trim(is_null(old('description')) ? $visitor->description : old('description')) }}@endif
+</textarea>
+
                                 </div>
                             </div>
                         </div>

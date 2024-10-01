@@ -138,8 +138,8 @@ class Index extends BaseIndex
 
     }
 
-    public function openReservationModal($personId)
+    public function openReservationModal($personId, $document_id)
     {
-        $this->emit('loadPersonReservations', $personId);
+        $this->emit('loadPersonReservations', $personId,$document_id);
     }
 }

@@ -25,11 +25,15 @@ class Form extends BaseForm
     public Sector $sector;
     public Person $person;
     public Document $document;
-    public Reservation $reservation;
+    public array $reservations;
     public $contact;
     public $card_id;
     public $person_id;
     public $sector_id;
+
+    public array $reservations_id;
+
+    public array $reservationsSectors_id;
 
     protected $listeners = [
         'personModified' => 'personModified',
@@ -56,6 +60,14 @@ class Form extends BaseForm
         'contact.contact_type_id' => 'required',
         'contact.contact' => 'required',
     ];
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+        $this->reservations = [];
+        $this->reservationsSectors_id =[];
+        $this->reservations_id =[];
+    }
 
     public function hydrate()
     {
@@ -163,15 +175,22 @@ class Form extends BaseForm
             $this->personModified(Person::findOrFail($this->person_id));
         }
 
-        $reservationId = request()->get('reservation_id') ?? old('reservation_id');
-        if ($reservationId) {
-            if(is_array($reservationId)){
+        $this->reservations_id = request()->get('reservation_id') ?? old('reservation_id');
 
-            }else{
-
+        if ($this->reservations_id) {
+            $reservations = Reservation::findMany($this->reservations_id); // Retorna uma coleção de reservas
+            foreach ($reservations as $reservation) {
+                $this->reservationsSectors_id[] = $reservation->sector->id;
+                $this->addReservation($reservation);
             }
-            $this->reservation = Reservation::findOrFail($reservationId);
         }
+
+
+    }
+
+    public function addReservation(Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
     }
 
     /**

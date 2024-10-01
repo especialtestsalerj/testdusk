@@ -16,10 +16,12 @@ class ReservationModal extends Component
     public $selectedReservations = [];
     public $personName;
     public $person;
+    public $document_id;
 
-    public function loadPersonReservations($personId)
+    public function loadPersonReservations($personId, $document_id)
     {
         $this->personId = $personId;
+        $this->document_id = $document_id;
         $today = now()->toDateString();
         $this->person = PersonModel::where('people.id', $personId)->whereHas('reservationsAsResponsible', function($query) use ($today) {
             $query->whereDate('reservation_date', $today)->where('reservation_status_id', 2)
@@ -54,6 +56,6 @@ class ReservationModal extends Component
 
     public function confirmSelectedEntries()
     {
-        return redirect()->route('visitors.create', ['reservation_id'=>[$this->selectedReservations]]);
+        return redirect()->route('visitors.create', ['document_id' =>$this->document_id,'reservation_id'=>[$this->selectedReservations]]);
     }
 }
