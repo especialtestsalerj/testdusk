@@ -36,7 +36,7 @@ class Reservation extends Component
         // Filtrar setores para usuários não administradores
         if (!$user->isAn('Administrador')) {
             $userSectorIds = $user->sectors->pluck('id')->toArray();
-            $query->whereIn('sector_id', $userSectorIds);
+            $query->whereIn('reservations.sector_id', $userSectorIds);
         }
 
         // Aplicar filtro de setor selecionado

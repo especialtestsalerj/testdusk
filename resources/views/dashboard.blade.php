@@ -4,41 +4,35 @@
     <nav class="row mt-0 mb-3 bg-dark2 text-white">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             @can('menu-portaria:show')
-                <button class="nav-link active px-5" id="nav-home-tab" data-bs-toggle="tab"
+                <button class="nav-link {{ request()->has('portaria') ? 'active' : '' }} px-5" id="nav-home-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-home"
-                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                    <h4>
-                        Portaria
-                    </h4>
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="{{ request()->has('portaria') ? 'true' : 'false' }}">
+                    <h4>Portaria</h4>
                 </button>
             @endcan
             @can('menu-seguranca:show')
-                <button class="nav-link @cannot('menu-portaria:show') active @endcannot px-5" id="nav-security-tab"
+                <button class="nav-link {{ !request()->has('portaria') && request()->has('seguranca') ? 'active' : '' }} px-5" id="nav-security-tab"
                         data-bs-toggle="tab"
                         data-bs-target="#nav-profile"
-                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                    <h4>
-                        Segurança
-                    </h4>
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="{{ request()->has('seguranca') ? 'true' : 'false' }}">
+                    <h4>Segurança</h4>
                 </button>
             @endcan
             @can('menu-agendamento:show')
-                <button class="nav-link @cannot('menu-portaria:show') active @endcannot px-5" id="nav-reservation-tab"
+                <button class="nav-link {{ !request()->has('portaria') && !request()->has('seguranca') && request()->has('agendamento') ? 'active' : '' }} px-5" id="nav-reservation-tab"
                         data-bs-toggle="tab"
                         data-bs-target="#nav-reservation"
-                        type="button" role="tab" aria-controls="nav-reservation" aria-selected="false">
-                    <h4>
-                        Agendamento
-                    </h4>
+                        type="button" role="tab" aria-controls="nav-reservation" aria-selected="{{ request()->has('agendamento') ? 'true' : 'false' }}">
+                    <h4>Agendamento</h4>
                 </button>
             @endcan
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
         @can('menu-portaria:show')
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
-                 tabindex="0">
-                <div class="row d-flex justify-content-center mb-5">
+            <div class="tab-pane fade {{ request()->has('portaria') ? 'show active' : '' }}" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+
+            <div class="row d-flex justify-content-center mb-5">
                     <div class="col-12 col-lg-8">
                         <div class="row g-0 g-lg-3 text-uppercase mt-3 d-flex justify-content-center">
                             @include('partials.dashboard-button', ['url' => route('people.index'), 'permission' => 'people:show', 'title' => 'Pessoas', 'ico' => 'fa-users'])
@@ -51,12 +45,11 @@
             </div>
         @endcan
 
-        @can('menu-seguranca:show')
-            @if(!empty($routines))
-                <div
-                    class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
-                    id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+            @can('menu-seguranca:show')
 
+            @if(!empty($routines))
+                    <div class="tab-pane fade {{ request()->has('seguranca') && !request()->has('portaria') ? 'show active' : '' }}" id="nav-profile" role="tabpanel" aria-labelledby="nav-security-tab" tabindex="0">
+                        <!-- Conteúdo de Segurança -->
                     <div class="row">
                         <div class="col-12">
                             <div class="container">
@@ -138,10 +131,8 @@
         @endCan
 
         @can('menu-agendamento:show')
-            <div
-                class="tab-pane fade @cannot('menu-portaria:show') show active @endcannot"
-                id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservation-tab" tabindex="0">
-
+            <div class="tab-pane fade {{ request()->has('agendamento') && !request()->has('portaria') && !request()->has('seguranca') ? 'show active' : '' }}"
+                 id="nav-reservation" role="tabpanel" aria-labelledby="nav-reservation-tab" tabindex="0">
                 <livewire:dashboard.reservation/>
 
             </div>
