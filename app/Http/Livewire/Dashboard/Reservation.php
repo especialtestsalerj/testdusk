@@ -19,6 +19,7 @@ class Reservation extends Component
 
     protected ?ColumnChartModel $columnChartModel = null;
     protected ?AreaChartModel $areaChartModel = null;
+    public $todaySchedules;
 
     public function mount(): void
     {
@@ -40,17 +41,34 @@ class Reservation extends Component
 
         // Aplicar filtro de setor selecionado
         if ($this->setorSelecionado !== 'todos') {
-            $query->where('sector_id', $this->setorSelecionado);
+            $query->where('reservations.sector_id', $this->setorSelecionado);
         }
 
         // Contagens de agendamentos
         $this->getReservationCount = $query->count();
         $this->todayReservationCount = (clone $query)->whereDate('reservation_date', $today)->count();
         $this->futureReservationCount = (clone $query)->whereDate('reservation_date', '>', $today)->count();
+        $this->buscarHorariosAgendadosHoje(clone $query);
 
         // Atualizar gráficos
         $this->atualizarGraficos(clone $query);
     }
+
+
+    public function buscarHorariosAgendadosHoje($query)
+    {
+        $today = Carbon::today();
+
+        $this->todaySchedules = $query
+            ->join('capacities', 'reservations.capacity_id', '=', 'capacities.id')
+            ->join('sectors', 'reservations.sector_id', '=', 'sectors.id')
+            ->whereDate('reservation_date', $today)
+            ->selectRaw('capacities.hour as reservation_time, sectors.name as sector_name, COUNT(reservations.id) as total_reservations')
+            ->groupBy('capacities.hour', 'sectors.name')
+            ->orderBy('capacities.hour')
+            ->get();
+    }
+
 
     private function atualizarGraficos(Builder $query): void
     {
@@ -133,12 +151,13 @@ class Reservation extends Component
             : $user->sectors;
 
         return view('livewire.dashboard.reservation', [
-            'columnChartModel'       => $this->columnChartModel,
-            'areaChartModel'         => $this->areaChartModel,
-            'getReservationCount'    => $this->getReservationCount,
-            'todayReservationCount'  => $this->todayReservationCount,
+            'columnChartModel' => $this->columnChartModel,
+            'areaChartModel' => $this->areaChartModel,
+            'getReservationCount' => $this->getReservationCount,
+            'todayReservationCount' => $this->todayReservationCount,
             'futureReservationCount' => $this->futureReservationCount,
-            'sectors'                => $sectors,
+            'sectors' => $sectors,
+            'todaySchedules' => $this->todaySchedules,
         ]);
     }
 }
