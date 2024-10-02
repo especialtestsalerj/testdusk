@@ -93,17 +93,21 @@
 
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header text-white bg-dark2">Setores</div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        <div class="mb-3">
-                            <input type="text" id="buscar-setor" class="form-control" placeholder="Buscar setor...">
+                    <div class="mb-3">
+                        <div class="card-header text-white bg-dark2">Setores</div>
+
+                        <div class="card-body">
+
+                            <label for="setorSelect" class="form-label">Selecione o Setor</label>
+                            <select id="setorSelect" class="form-select" wire:model="setorSelecionado">
+                                @if(auth()->user()->isAn('Administrador') || auth()->user()->sectors->count() > 1)
+                                    <option value="todos">Todos os Setores</option>
+                                @endif
+                                @foreach($sectors as $sector)
+                                    <option value="{{ $sector->id }}">{{ $sector->nickname ?? $sector->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <ul class="list-group" id="lista-setores">
-                            <li class="list-group-item active" data-setor="todos">Todos os Setores</li>
-                            <li class="list-group-item" data-setor="setor1">Setor 1</li>
-                            <li class="list-group-item" data-setor="setor2">Setor 2</li>
-                            <li class="list-group-item" data-setor="setor3">Setor 3</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -134,7 +138,7 @@
                     <div class="card  mb-3">
                         <div class="card-header text-white bg-dark2">Total de Agendamentos</div>
                         <div class="card-body">
-                            <h5 class="card-title">30</h5>
+                            <h5 class="card-title">{{ $getReservationCount }}</h5>
                         </div>
                     </div>
                 </div>
@@ -143,7 +147,7 @@
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark2">Agendamentos para Hoje</div>
                         <div class="card-body">
-                            <h5 class="card-title">20</h5>
+                            <h5 class="card-title">{{$todayReservationCount}}</h5>
                         </div>
                     </div>
                 </div>
@@ -152,7 +156,7 @@
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark2">Agendamentos Futuros</div>
                         <div class="card-body">
-                            <h5 class="card-title">10</h5>
+                            <h5 class="card-title">{{$futureReservationCount}}</h5>
                         </div>
                     </div>
                 </div>
