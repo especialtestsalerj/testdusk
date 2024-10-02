@@ -70,6 +70,14 @@
                 </div>
             </div>
             <div class="row mt-3">
+                <div class="col-4">
+                    <label for="name">Link Formulário de Agradecimento*</label>
+
+                    <input class="form-control" id="survey_link" name="survey_link" wire:model="survey_link"
+                           x-ref="survey_link"/>
+                </div>
+            </div>
+            <div class="row mt-3">
                 <div class="col-sm-4 align-self-center d-flex justify-content-start gap-4">
                     <button class="btn btn-success text-white ml-1" id="submitButton" title="Salvar"  type="submit">
                         <i class="fa fa-save"></i> Salvar

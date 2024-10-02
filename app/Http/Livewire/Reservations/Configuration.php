@@ -33,6 +33,8 @@ class Configuration extends BaseForm
     public $required_motivation;
     public $display_remaining_vacancies;
 
+    public $survey_link;
+
     protected $listeners =[
         'created-capacity' =>'loadCapacities',
         'associated-sector-user' =>'loadCapacities',
@@ -186,6 +188,7 @@ class Configuration extends BaseForm
         $this->nickname = $this->sector->nickname;
         $this->required_motivation = $this->sector->required_motivation;
         $this->display_remaining_vacancies = $this->sector->display_remaining_vacancies;
+        $this->survey_link = $this->sector->survey_link;
 
 
     }
@@ -200,6 +203,7 @@ class Configuration extends BaseForm
          $this->sector->nickname = $this->nickname;
          $this->sector->required_motivation = $this->required_motivation;
          $this->sector->display_remaining_vacancies = $this->display_remaining_vacancies;
+         $this->sector->survey_link = $this->survey_link;
          $this->sector->save();
 
         return redirect(request()->header('Referer'))->with(['message'=>'Configurações atualizadas com sucesso']);

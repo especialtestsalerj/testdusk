@@ -17,7 +17,8 @@ class Sector extends Model
         'is_visitable',
         'display_remaining_vacancies',
         'max_date',
-        'required_motivation'
+        'required_motivation',
+        'survey_link',
     ];
 
     protected $filterableColumns = ['name', 'status'];
