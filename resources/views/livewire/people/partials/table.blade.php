@@ -70,7 +70,7 @@
                                                             @if (!$person->hasPendingVisitors() && count($person->reservationsAsResponsible) == 1)
                                                                 @can(make_ability_name_with_current_building('visitors:store'))
                                                                     <a href="{{ route('visitors.create', ['document_id' => $document->id,
-                                                                                                           'reservation_id'=>$person->reservationsAsResponsible[0]->id]) }}"
+                                                                                                           'reservation_id'=>[$person->reservationsAsResponsible[0]->id]]) }}"
                                                                        class="btn btn-link px-0 py-0"
                                                                        title="Registrar Entrada">
                                                                         <i class="fa fa-lg fa-check"></i>
@@ -178,7 +178,7 @@
                                                             <div class="col-2">
                                                                 @if (!$guest->hasPendingVisitors())
                                                                     @can(make_ability_name_with_current_building('visitors:store'))
-                                                                        <a href="{{ route('visitors.create', ['document_id' => $document->id,'reservation_id'=>$reservation->id]) }}"
+                                                                        <a href="{{ route('visitors.create', ['document_id' => $document->id,'reservation_id'=>[$reservation->id]]) }}"
                                                                            class="btn btn-link px-0 py-0"
                                                                            title="Registrar Entrada">
                                                                             <i class="fa fa-lg fa-check"></i>
