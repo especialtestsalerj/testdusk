@@ -35,6 +35,11 @@ class Reservation extends Component
 
         $this->columnChartModel = (new ColumnChartModel())
             ->setTitle('Agendamentos por Dia')
+            ->setAnimated(true)
+            ->setOpacity(0.9)
+            ->setColumnWidth(70) // Ajusta a largura das colunas
+            ->withoutLegend() // Oculta a legenda
+            ->setDataLabelsEnabled(true) // Exibe os valores nas colunas
             ->addColumn('Segunda', 10, '#f6ad55')
             ->addColumn('Terça', 15, '#fc8181')
             ->addColumn('Quarta', 12, '#90cdf4')
@@ -42,6 +47,8 @@ class Reservation extends Component
             ->addColumn('Sexta', 20, '#fc8181')
             ->addColumn('Sábado', 5, '#f6ad55')
             ->addColumn('Domingo', 2, '#90cdf4');
+
+
 
         $this->areaChartModel = (new AreaChartModel())
             ->setTitle('Crescimento de Vendas')

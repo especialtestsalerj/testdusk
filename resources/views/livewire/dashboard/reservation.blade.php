@@ -1,87 +1,194 @@
-<div class="container mt-5">
+{{--<div class="container-fluid mt-5">--}}
+{{--    <div class="row">--}}
+{{--        <!-- Sidebar Esquerdo -->--}}
+{{--        <div class="col-md-3">--}}
+{{--            <!-- Horários Agendados para Hoje -->--}}
+{{--            <div class="card mb-4">--}}
+{{--                <div class="card-header text-white bg-dark2">Horários Agendados para Hoje</div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <ul class="list-group list-group-flush">--}}
+
+{{--                            <li class="list-group-item">10:00</li>--}}
+{{--                            <li class="list-group-item">10:00</li>--}}
+{{--                            <li class="list-group-item">10:00</li>--}}
+{{--                            <li class="list-group-item">10:00</li>--}}
+{{--                            <li class="list-group-item">10:00</li>--}}
+{{--                            <li class="list-group-item">10:00</li>--}}
+
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--        <!-- Conteúdo Principal -->--}}
+{{--        <div class="col-md-9">--}}
+{{--            <!-- Cartões de Resumo -->--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-4">--}}
+{{--                    <div class="card  mb-3">--}}
+{{--                        <div class="card-header text-white bg-dark2">Total de Agendamentos</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="card-title">10</h5>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <div class="col-md-4">--}}
+{{--                    <div class="card mb-3">--}}
+{{--                        <div class="card-header text-white bg-dark2">Agendamentos para Hoje</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="card-title">40</h5>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <div class="col-md-4">--}}
+{{--                    <div class="card mb-3">--}}
+{{--                        <div class="card-header text-white bg-dark2">Agendamentos Futuros</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="card-title">60</h5>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <!-- Gráficos -->--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-6">--}}
+{{--                    <div class="card mb-4 ">--}}
+{{--                        <div class="card-header text-white bg-dark2">Agendamentos por Dia</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div style="height: 32rem;">--}}
+{{--                                <livewire:livewire-column-chart--}}
+{{--                                    key="{{ $columnChartModel->reactiveKey() }}"--}}
+{{--                                    :column-chart-model="$columnChartModel"--}}
+{{--                                />--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <div class="col-md-6">--}}
+{{--                    <div class="card mb-4">--}}
+{{--                        <div class="card-header text-white bg-dark2">Agendamentos por Dia</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div style="height: 32rem;">--}}
+{{--                                <livewire:livewire-area-chart--}}
+{{--                                    :area-chart-model="$areaChartModel"--}}
+{{--                                />--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--    </div>--}}
+{{--</div>--}}
+
+<div class="container-fluid mt-5">
     <div class="row">
-        <!-- Cartões de Resumo -->
+        <!-- Sidebar Esquerdo -->
         <div class="col-md-3">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">Total de Agendamentos</div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ $totalAgendamentos }}</h5>
+
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header text-white bg-dark2">Setores</div>
+                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                        <div class="mb-3">
+                            <input type="text" id="buscar-setor" class="form-control" placeholder="Buscar setor...">
+                        </div>
+                        <ul class="list-group" id="lista-setores">
+                            <li class="list-group-item active" data-setor="todos">Todos os Setores</li>
+                            <li class="list-group-item" data-setor="setor1">Setor 1</li>
+                            <li class="list-group-item" data-setor="setor2">Setor 2</li>
+                            <li class="list-group-item" data-setor="setor3">Setor 3</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header text-white bg-dark2">Horários Agendados para Hoje</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">10:00</li>
+                            <li class="list-group-item">10:00</li>
+                            <li class="list-group-item">10:00</li>
+                            <li class="list-group-item">10:00</li>
+                            <li class="list-group-item">10:00</li>
+                            <li class="list-group-item">10:00</li>
+
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Repita para outros cartões -->
+
+        <div class="col-md-9">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card  mb-3">
+                        <div class="card-header text-white bg-dark2">Total de Agendamentos</div>
+                        <div class="card-body">
+                            <h5 class="card-title">30</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark2">Agendamentos para Hoje</div>
+                        <div class="card-body">
+                            <h5 class="card-title">20</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark2">Agendamentos Futuros</div>
+                        <div class="card-body">
+                            <h5 class="card-title">10</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4 ">
+                        <div class="card-header text-white bg-dark2">Agendamentos por Dia</div>
+                        <div class="card-body">
+                            <div style="height: 32rem;">
+                                <livewire:livewire-column-chart
+                                    key="{{ $columnChartModel->reactiveKey() }}"
+                                    :column-chart-model="$columnChartModel"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header text-white bg-dark2">Agendamentos por Dia</div>
+                        <div class="card-body">
+                            <div style="height: 32rem;">
+                                <livewire:livewire-area-chart
+                                    :area-chart-model="$areaChartModel"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="row">
-        <!-- Gráfico de Agendamentos -->
-        <div class="col-md-6" >
-            <div class="card mb-4">
-                <div class="card-header">Agendamentos por Dia</div>
-
-                <div style="height: 32rem;">
-                    <livewire:livewire-column-chart
-                        key="{{ $columnChartModel->reactiveKey() }}"
-                        :column-chart-model="$this->columnChartModel"
-
-                    />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6" >
-            <div class="card mb-4">
-                <div class="card-header">Agendamentos por Dia</div>
-
-                <div style="height: 32rem;">
-                    <livewire:livewire-pie-chart
-                        key="{{ $pieChartModel->reactiveKey() }}"
-                        :pie-chart-model="$pieChartModel"
-                    />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6" >
-            <div class="card mb-4">
-                <div class="card-header">Agendamentos por Dia</div>
-
-                <div style="height: 32rem;">
-                    <livewire:livewire-area-chart
-                        :area-chart-model="$areaChartModel"
-                    />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6" >
-            <div class="card mb-4">
-                <div class="card-header">Agendamentos por Dia</div>
-
-                <div style="height: 32rem;">
-                    <livewire:livewire-radar-chart
-                        :radar-chart-model="$radarChartModel"
-                    />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6" >
-            <div class="card mb-4">
-                <div class="card-header">Agendamentos por Dia</div>
-
-                <div style="height: 32rem;">
-                    <livewire:livewire-tree-map-chart
-                        :tree-map-chart-model="$treeMapChartModel"
-                    />
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
 </div>
+
