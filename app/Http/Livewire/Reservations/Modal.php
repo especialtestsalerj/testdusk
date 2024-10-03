@@ -52,6 +52,7 @@ class Modal extends BaseForm
     public $reservation;
     public $reservationId;
     public $inputs = [];
+    public $institution;
 
     protected $validationAttributes = [
         'user_id' => 'Usuário',

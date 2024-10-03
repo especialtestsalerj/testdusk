@@ -26,9 +26,9 @@
 
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header text-white bg-dark2">Horários Agendados para Hoje</div>
+                    <div class="card-header text-white bg-dark2">Agendamentos confirmados para hoje</div>
                     <div class="card-body">
-                        @if($todaySchedules->isEmpty())
+                        @if(empty($todaySchedules))
                             <p class="text-center">Nenhum agendamento para hoje.</p>
                         @else
                             <table class="table table-striped">
@@ -40,11 +40,55 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($todaySchedules as $schedule)
+                                @foreach($todaySchedules as $index => $schedule)
                                     <tr>
-                                        <td>{{ $schedule->sector_name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($schedule->reservation_time)->format('H:i') }}</td>
-                                        <td class="text-center">{{ $schedule->total_reservations }}</td>
+                                        <td>{{ $schedule['sector_name'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($schedule['reservation_time'])->format('H:i') }}</td>
+                                        <td class="text-center">
+                                            <!-- Botão para abrir o modal -->
+                                            <a href="#" data-bs-toggle="modal"
+                                               data-bs-target="#peopleModal{{ $index }}">
+                                                {{ $schedule['total_reservations'] }}
+                                            </a>
+
+                                            <!-- Modal para exibir os detalhes das pessoas -->
+                                            <div class="modal fade" id="peopleModal{{ $index }}" tabindex="-1"
+                                                 role="dialog" aria-labelledby="peopleModalLabel{{ $index }}"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="peopleModalLabel{{ $index }}">
+                                                                Detalhes das Pessoas</h5>
+
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Fechar">
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Nome</th>
+                                                                    <th>Tipo de Documento</th>
+                                                                    <th>Documento</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($schedule['people'] as $person)
+                                                                    <tr>
+                                                                        <td>{{ $person['name'] }}</td>
+                                                                        <td>{{ $person['document_type'] }}</td>
+                                                                        <td>{{ $person['document'] }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

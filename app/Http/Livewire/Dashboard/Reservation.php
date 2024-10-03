@@ -68,10 +68,6 @@ class Reservation extends Component
             ->pluck('total', 'reservation_status_id')
             ->all();
 
-        // Armazenar as quantidades em variáveis ou array
-        $this->statusCounts = $statusCounts;
-
-
         $this->aguardandoConfirmacaoCount = $statusCounts[1] ?? 0;
         $this->visitaAgendadaCount = $statusCounts[2] ?? 0;
         $this->visitaEmAndamentoCount = $statusCounts[3] ?? 0;
@@ -83,22 +79,81 @@ class Reservation extends Component
     {
         $today = Carbon::today();
 
-        $this->todaySchedules = $query
+        $documentTypes = [
+            1 => 'CPF',
+            4 => 'Passaporte',
+        ];
+
+        $reservations = $query
+            ->whereIn('reservation_status_id', [2, 3, 4])
             ->join('capacities', 'reservations.capacity_id', '=', 'capacities.id')
             ->join('sectors', 'reservations.sector_id', '=', 'sectors.id')
             ->whereDate('reservation_date', $today)
-            ->selectRaw('capacities.hour as reservation_time, sectors.name as sector_name, COUNT(reservations.id) as total_reservations')
-            ->groupBy('capacities.hour', 'sectors.name')
+            ->select('reservations.*', 'capacities.hour as reservation_time', 'sectors.name as sector_name')
             ->orderBy('capacities.hour')
             ->get();
+
+        // Agrupa as reservas por horário e setor
+        $groupedReservations = $reservations->groupBy(function($item) {
+            return $item->reservation_time . '|' . $item->sector_name;
+        });
+
+        $this->todaySchedules = [];
+
+        foreach ($groupedReservations as $key => $group) {
+            $total_reservations = $group->sum('quantity');
+
+            // Coleta todas as pessoas deste grupo
+            $people = [];
+
+            foreach ($group as $reservation) {
+                // Analisa o JSON da coluna 'person'
+                $personData = $reservation->person;
+                if ($personData) {
+                    $documentTypeId = $personData['document_type_id'];
+                    $documentTypeName = isset($documentTypes[$documentTypeId]) ? $documentTypes[$documentTypeId] : 'Desconhecido';
+
+                    $people[] = [
+                        'name' => $personData['full_name'],
+                        'document' => $personData['document_number'],
+                        'document_type' => $documentTypeName
+                    ];
+                }
+
+                // Analisa o JSON da coluna 'guests'
+                $guestsData = $reservation->guests;
+                if ($guestsData) {
+                    foreach ($guestsData as $guest) {
+                        $documentTypeId = $guest['documentType'];
+                        $documentTypeName = isset($documentTypes[$documentTypeId]) ? $documentTypes[$documentTypeId] : 'Desconhecido';
+
+                        $people[] = [
+                            'name' => $guest['name'],
+                            'document' => $guest['document'],
+                            'document_type' => $documentTypeName
+                        ];
+                    }
+                }
+            }
+
+            // Extrai horário e nome do setor da chave
+            list($reservation_time, $sector_name) = explode('|', $key);
+
+            $this->todaySchedules[] = [
+                'reservation_time' => $reservation_time,
+                'sector_name' => $sector_name,
+                'total_reservations' => $total_reservations,
+                'people' => $people
+            ];
+        }
     }
+
 
 
     private function atualizarGraficos(Builder $query): void
     {
         $this->areaChartModel = $this->gerarGraficoPorMes($query);
         $this->columnChartModel = $this->gerarGraficoPorDia($query);
-
     }
 
     private function gerarGraficoPorDia(Builder $query): ColumnChartModel
