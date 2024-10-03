@@ -65,6 +65,8 @@ class Agendamento extends BaseController
 //            return back()->withErrors(['recaptcha' => 'Falha na verificação reCAPTCHA: ' . $result['reason']]);
 //        }
 
+
+
         $documentNumber = remove_punctuation($request->get('documentNumber'));
 
 

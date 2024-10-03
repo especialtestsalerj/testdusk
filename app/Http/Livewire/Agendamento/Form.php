@@ -179,7 +179,7 @@ class Form extends FormBase
             'full_name' => $this->full_name,
             'social_name' => $this->social_name,
             'document_type_id' => $this->document_type_id,
-            'document_number' => $this->document_number,
+            'document_number' => remove_punctuation($this->document_number),
             'country_id' => $this->country_id,
             'state_id' => $this->state_id,
             'city_id' => $this->city_id,
