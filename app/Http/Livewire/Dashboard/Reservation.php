@@ -7,7 +7,10 @@ use App\Models\Reservation as ReservationModel;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Carbon\Carbon;
+use DateInterval;
+use DatePeriod;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Reservation extends Component
@@ -20,6 +23,13 @@ class Reservation extends Component
     protected ?ColumnChartModel $columnChartModel = null;
     protected ?AreaChartModel $areaChartModel = null;
     public $todaySchedules;
+
+    public $aguardandoConfirmacaoCount;
+    public $visitaAgendadaCount;
+    public $visitaEmAndamentoCount;
+    public $visitaRealizadaCount;
+    public $visitaCanceladaCount;
+    public $aguardandoConfirmacaoVisitanteCount;
 
     public function mount(): void
     {
@@ -44,14 +54,28 @@ class Reservation extends Component
             $query->where('reservations.sector_id', $this->setorSelecionado);
         }
 
-        // Contagens de agendamentos
-        $this->getReservationCount = $query->count();
-        $this->todayReservationCount = (clone $query)->whereDate('reservation_date', $today)->count();
-        $this->futureReservationCount = (clone $query)->whereDate('reservation_date', '>', $today)->count();
+        $this->atualizarGraficos(clone $query);
         $this->buscarHorariosAgendadosHoje(clone $query);
 
-        // Atualizar gráficos
-        $this->atualizarGraficos(clone $query);
+        $this->todayReservationCount = (clone $query)->whereDate('reservation_date', $today)->count();
+        $this->futureReservationCount = (clone $query)->whereDate('reservation_date', '>', $today)->count();
+        $this->getReservationCount = $query->count();
+
+        // Obter a quantidade de reservas por status
+        $statusCounts = (clone $query)
+            ->select('reservation_status_id', DB::raw('COUNT(*) as total'))
+            ->groupBy('reservation_status_id')
+            ->pluck('total', 'reservation_status_id')
+            ->all();
+
+        // Armazenar as quantidades em variáveis ou array
+        $this->statusCounts = $statusCounts;
+
+
+        $this->aguardandoConfirmacaoCount = $statusCounts[1] ?? 0;
+        $this->visitaAgendadaCount = $statusCounts[2] ?? 0;
+        $this->visitaEmAndamentoCount = $statusCounts[3] ?? 0;
+        $this->visitaRealizadaCount = $statusCounts[4] ?? 0;
     }
 
 
@@ -72,44 +96,74 @@ class Reservation extends Component
 
     private function atualizarGraficos(Builder $query): void
     {
-        $this->columnChartModel = $this->gerarGraficoPorDia($query);
         $this->areaChartModel = $this->gerarGraficoPorMes($query);
+        $this->columnChartModel = $this->gerarGraficoPorDia($query);
+
     }
 
     private function gerarGraficoPorDia(Builder $query): ColumnChartModel
     {
+        $startDate = Carbon::today();
+        $endDate = Carbon::today()->addDays(6);
+
+        // Gerar uma lista de datas de hoje até os próximos 6 dias
+        $period = new DatePeriod(
+            $startDate,
+            new DateInterval('P1D'),
+            $endDate->addDay() // Adiciona um dia para incluir o endDate
+        );
+
         $diasSemana = [
-            0 => 'Domingo',
-            1 => 'Segunda',
-            2 => 'Terça',
-            3 => 'Quarta',
-            4 => 'Quinta',
-            5 => 'Sexta',
-            6 => 'Sábado',
+            'Sunday' => 'Domingo',
+            'Monday' => 'Segunda',
+            'Tuesday' => 'Terça',
+            'Wednesday' => 'Quarta',
+            'Thursday' => 'Quinta',
+            'Friday' => 'Sexta',
+            'Saturday' => 'Sábado',
         ];
 
-        $agendamentosPorDia = $query->selectRaw('EXTRACT(DOW FROM reservation_date) as dia_semana, COUNT(*) as total')
-            ->groupBy('dia_semana')
-            ->orderBy('dia_semana')
-            ->pluck('total', 'dia_semana')
+        $datas = [];
+        foreach ($period as $date) {
+            $englishDayName = $date->format('l');
+            $diaNome = $diasSemana[$englishDayName];
+            $formattedDate = $date->format('d/m');
+            $label = $diaNome . ' (' . $formattedDate . ')';
+            $datas[$date->format('Y-m-d')] = [
+                'label' => $label,
+                'diaNome' => $diaNome, // Usaremos isso para gerar a cor
+            ];
+        }
+
+        // Obter o total de agendamentos por data
+        $agendamentosPorData = $query
+            ->whereBetween('reservation_date', [$startDate, $endDate])
+            ->selectRaw('DATE(reservation_date) as data_reserva, COUNT(*) as total')
+            ->groupBy('data_reserva')
+            ->orderBy('data_reserva')
+            ->pluck('total', 'data_reserva')
             ->all();
 
         $columnChartModel = (new ColumnChartModel())
-            ->setTitle('Agendamentos por Dia')
+            ->setTitle('Quantidade de agendamentos')
             ->setAnimated(true)
             ->setOpacity(0.9)
             ->setColumnWidth(70)
             ->withoutLegend()
             ->setDataLabelsEnabled(true);
 
-        foreach ($diasSemana as $diaNumero => $diaNome) {
-            $total = $agendamentosPorDia[$diaNumero] ?? 0;
-            $color = '#' . substr(md5($diaNome), 0, 6);
-            $columnChartModel->addColumn($diaNome, $total, $color);
+        // Construir o gráfico com os dados ordenados a partir de hoje
+        foreach ($datas as $data => $info) {
+            $label = $info['label'];
+            $diaNome = $info['diaNome'];
+            $total = $agendamentosPorData[$data] ?? 0;
+            $color = '#' . substr(md5($diaNome), 0, 6); // Gera a cor baseada no nome do dia da semana
+            $columnChartModel->addColumn($label, $total, $color);
         }
 
         return $columnChartModel;
     }
+
 
     private function gerarGraficoPorMes(Builder $query): AreaChartModel
     {
