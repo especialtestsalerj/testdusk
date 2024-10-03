@@ -41,7 +41,7 @@ class Reservation extends Component
         $today = Carbon::today();
         $user = auth()->user();
 
-        $query = ReservationModel::query();
+        $query = ReservationModel::where('reservations.building_id', get_current_building()->id);
 
         // Filtrar setores para usuários não administradores
         if (!$user->isAn('Administrador')) {
