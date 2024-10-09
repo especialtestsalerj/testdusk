@@ -8,13 +8,17 @@ use App\Http\Livewire\Traits\Maskable;
 use App\Models\Sector as SectorModel;
 use App\Rules\ValidCPF;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
+
+use Illuminate\Validation\ValidationException;
 
 class Form extends FormBase
 {
     use Maskable;
 
     public $inputs = [];
+    public $recaptchaToken;
 
     protected $validationAttributes = [
         'contact' => 'Telefone (DD) + Número',
@@ -45,6 +49,7 @@ class Form extends FormBase
             'motive' => 'required_if:sector.required_motivation,true',
             'has_disability' => 'required|boolean',
             'disabilities' => 'required_if:has_disability,true|array',
+            'recaptchaToken' => 'required',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
             'inputs.*.document' => [
@@ -99,6 +104,8 @@ class Form extends FormBase
     public function addInput()
     {
         $this->inputs[] = ['document' => '', 'name' => '', 'documentType' => ''];
+
+        $this->emit('inputAdded');
     }
 
     public function removeInput($index)
@@ -111,13 +118,35 @@ class Form extends FormBase
 
     public function save()
     {
+
+
         $this->validate();
 
-        $data = $this->prepareReservationData();
 
-        $reservation = app(ReservationRepository::class)->create($data);
 
-        return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
+        // Envie a requisição para o Google para verificar o token do reCAPTCHA
+        $response = $this->validateRecaptcha($this->recaptchaToken);
+        if ($response['success']) {
+
+            $data = $this->prepareReservationData();
+
+            $reservation = app(ReservationRepository::class)->create($data);
+
+            return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
+        } else {
+            throw ValidationException::withMessages(['recaptchaToken' => 'Erro ao validar o reCAPTCHA.']);
+        }
+    }
+
+    private function validateRecaptcha($token)
+    {
+
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $token,
+        ]);
+
+        return $response->json();
     }
 
     private function prepareReservationData()

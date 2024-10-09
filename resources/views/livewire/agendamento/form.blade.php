@@ -524,8 +524,16 @@
                         </div>
 
                     @endif
-                    <div
-                        class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                    <div class="flex flex-col sm:flex-row justify-left sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                        <div class="mt-6 md:mt-8">
+                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}" data-callback="onRecaptchaSuccess"  wire:ignore></div>
+                            @error('recaptchaToken')
+                            <small class="text-danger text-red-800">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
                         <div class="w-full sm:w-1/2">
                             <div class="flex justify-center mt-6">
                                 <div class="w-full sm:w-1/3">
@@ -559,7 +567,12 @@
             </div>
         </div>
     </section>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function onRecaptchaSuccess(token) {
+            @this.set('recaptchaToken', token); // Definir o token no componente Livewire
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
@@ -600,6 +613,18 @@
             Livewire.on('maxDateUpdated', function (newMaxDate) {
                 flatpickrInstance.set('maxDate', new Date().fp_incr(newMaxDate));
 
+            });
+        });
+
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('inputAdded', function () {
+
+                // Recarrega o reCAPTCHA após adicionar novo membro ao grupo
+                grecaptcha.render('recaptcha-container', {
+                    'sitekey': '{{ config('services.recaptcha.site_key') }}',
+                    'callback': onRecaptchaSuccess
+                });
+                console.log('render')
             });
         });
 

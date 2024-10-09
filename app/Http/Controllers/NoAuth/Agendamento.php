@@ -5,6 +5,7 @@ namespace App\Http\Controllers\NoAuth;
 use App\Data\Repositories\Reservations as ReservationRepository;
 use App\Data\Repositories\Sectors;
 use App\Http\Requests\AgendamentoIndex;
+use App\Http\Requests\AgendamentoRecover;
 use App\Http\Requests\AgendamentoStore;
 
 use App\Models\Reservation;
@@ -18,6 +19,9 @@ use Illuminate\Http\Request as Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Routing\Controller as BaseController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
+use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\ValidationException;
 
 
 class Agendamento extends BaseController
@@ -54,35 +58,46 @@ class Agendamento extends BaseController
         return view('reservations.index')->with('reservations',$reservations);
     }
 
-    public function recover(Request $request)
+    private function validateRecaptcha($token)
     {
-//        $token = $request->input('g-recaptcha-response');
-//        $action = 'reservation_check'; // Substitua pela ação que você espera
-//
-//        $result = $this->recaptchaService->createAssessment($token, $action);
-//
-//        if (!$result['success']) {
-//            return back()->withErrors(['recaptcha' => 'Falha na verificação reCAPTCHA: ' . $result['reason']]);
-//        }
 
 
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $token,
+        ]);
 
-        $documentNumber = remove_punctuation($request->get('documentNumber'));
+        return $response->json();
+    }
+
+    public function recover(AgendamentoRecover $request)
+    {
+//        dd($request);
 
 
+        // Valide o reCAPTCHA
+        $response = $this->validateRecaptcha($request->input('g-recaptcha-response'));
 
-       $reservations = app(ReservationRepository::class)->recoveryFromDocument($documentNumber);
+        if ($response['success']) {
+            $documentNumber = remove_punctuation($request->get('documentNumber'));
 
 
-        if(count($reservations) > 0) {
+            $reservations = app(ReservationRepository::class)->recoveryFromDocument($documentNumber);
 
-            Notification::route('mail', $reservations[0]->responsible_email)
-                ->notify(new ReservationResendNotification($reservations));
+
+            if (count($reservations) > 0) {
+
+                Notification::route('mail', $reservations[0]->responsible_email)
+                    ->notify(new ReservationResendNotification($reservations));
+            }
+
+            return redirect()
+                ->route('agendamento.index')
+                ->with('message', 'Seus agendamentos foram enviados para o e-mail cadastrado. Caso possua agendamento(s).');
+        }else{
+        // Caso contrário, retorne um erro
+           return back()->withErrors(['recaptcha' => 'Erro ao validar o reCAPTCHA. Tente novamente.']);
         }
-
-        return redirect()
-            ->route('agendamento.index')
-            ->with('message', 'Reservas enviadas, caso os dados estejam corretos!');
     }
 
     public function store(AgendamentoStore $request)

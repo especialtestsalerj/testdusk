@@ -14,7 +14,7 @@
 
             <div class="mt-6">
                 <ul class="list-disc list-inside text-gray-700">
-                    <li><span class="font-semibold">ID da Reserva:</span> {{ $reservation->code }}</li>
+                    <li><span class="font-semibold">Código da Reserva:</span> {{ $reservation->code }}</li>
                     <li><span class="font-semibold">Data:</span> {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
                     <li><span class="font-semibold">Setor:</span> {{ $reservation->sector?->nickname }}</li>
                 </ul>

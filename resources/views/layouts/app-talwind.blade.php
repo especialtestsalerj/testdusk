@@ -29,7 +29,7 @@
 
     @include('layouts.partials.environment')
     @livewireStyles
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lc3azEqAAAAAJ6TYJzsQI20EY6uC4_zpbcuTd-s"></script>
+
 </head>
 <body class="bg-light">
 <div id="app">

@@ -15,8 +15,8 @@ class RecaptchaEnterpriseService
 
     public function __construct()
     {
-        $this->recaptchaKey = config('services.recaptcha.key');
-        $this->projectId = config('services.recaptcha.project_id');
+        $this->recaptchaKey = '6Lc3azEqAAAAAJ6TYJzsQI20EY6uC4_zpbcuTd-s'; //config('services.recaptcha.key');
+        $this->projectId = 'agendamento-434014';//config('services.recaptcha.project_id');
 //        $this->client = new RecaptchaEnterpriseServiceClient();
     }
 

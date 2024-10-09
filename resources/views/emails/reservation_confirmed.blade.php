@@ -131,7 +131,7 @@
         Cancelar Agendamento
     </a>
 
-    <p class="text"><strong>Não se esqueça de levar o ID da Reserva e sua identidade.</strong></p>
+    <p class="text"><strong>Não se esqueça de levar o seu Código da Reserva e sua identidade.</strong></p>
 
 
     <div class="footer">
