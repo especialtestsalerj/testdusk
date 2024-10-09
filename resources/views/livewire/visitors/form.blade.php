@@ -175,7 +175,7 @@
                                               placeholder="Informe detalhes da autorização"
           @include('partials.disabled-by-query-string')>@if(!empty($this->reservations))@foreach($reservations as $reservation)@if(is_object($reservation)){{ trim("Agendamento código: {$reservation->code} solicitado dia " . $reservation->created_at->format('d/m/Y \À\S H:i') . " e autorizado por {$reservation->confirmedBy->name} em " . $reservation->confirmed_at->format('d/m/Y \À\S H:i'))."
 " }}@else{{ trim("Agendamento código: {$reservation['code']} solicitado dia " . \Carbon\Carbon::parse($reservation['created_at'])->format('d/m/Y \À\S H:i') . " e autorizado por {$reservation['confirmed_by']['name']} em " . \Carbon\Carbon::parse($reservation['confirmed_at'])->format('d/m/Y \À\S H:i'))
-}}@endif @endforeach @else{{ trim(is_null(old('description')) ? $visitor->description : old('description')) }}@endif
+}}@endif{{''}}@endforeach @else{{ trim(is_null(old('description')) ? $visitor->description : old('description')) }}@endif
 </textarea>
 
                                 </div>
