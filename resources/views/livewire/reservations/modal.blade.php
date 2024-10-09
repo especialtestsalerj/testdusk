@@ -21,7 +21,7 @@
         }, 500);
      "
 >
-    <div wire:ignore.self class="modal fade modal-lg" id="reservation-modal"
+    <div wire:ignore.self class="modal fade modal-xl" id="reservation-modal"
          tabindex="-1" role="dialog"
          aria-labelledby="capacityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -53,7 +53,7 @@
                         </style>
 
                         <div class="row mt-3">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-lg-6">
                                 <label for="sector_modal_id" style="margin-left: 10px;"
                                        class="form-label">Setor*</label>
                                 <div>
@@ -86,7 +86,7 @@
                             </div>
 
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6 col-lg-3">
                                 <label for="reservation_date" style="margin-left: 10px;" class="form-label">Data da
                                     Visita *</label>
 
@@ -111,7 +111,7 @@
                             <input type="hidden" name="reservation_date" value="{{$this->reservation_date}}"
                                    wire:model="reservation_date"/>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6 col-lg-3">
                                 <label for="capacity_id" style="margin-left: 10px;" class="form-label">Hora da
                                     Visita * </label>
                                 @if((!empty($this->reservation_date)) && (!empty($this->sector_modal_id)) && (count($this->capacities) == 0))
@@ -166,7 +166,7 @@
                             @endif
 
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-lg-3">
                                 <div class="form-group">
                                     <label for="document_type_id">Tipo de Documento*</label>
                                     <select
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-8 col-lg-9">
                                 <div class="form-group">
 
                                     <label for="document_number">Número do Documento*</label>
@@ -211,7 +211,7 @@
                             </div>
 
 
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="full_name">Nome Completo*</label>
                                     <input type="text"
@@ -231,7 +231,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="social_name">Nome Social</label>
                                     <input type="text" class="form-control text-uppercase"
@@ -243,7 +243,7 @@
 
 
                             <div class="col-12 row">
-                                <div class="col-md-4">
+                                <div class="col-lg-4">
 
                                     <div class="form-group">
                                         <label for="has_disability">Possui deficiência?</label>
@@ -272,7 +272,7 @@
 
                                 </div>
 
-                                <div class="col-md-8 {{toBoolean($has_disability) ? '' : 'd-none'}}">
+                                <div class="col-lg-8 {{toBoolean($has_disability) ? '' : 'd-none'}}">
 
                                     <div class="form-group">
                                         <label for="disabilities">Tipo de Deficiência*</label>
@@ -302,7 +302,7 @@
                             </div>
 
 
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="country_id"> País* </label>
                                     <div wire:ignore>
@@ -329,7 +329,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
+                            <div class="col-lg-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
                                  id="div-state_id">
                                 <div class="form-group">
                                     <label for="state_id">Estado*</label>
@@ -357,7 +357,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
+                            <div class="col-lg-4 {{ $this->detectIfCountryBrSelected() ? '':'d-none' }}"
                                  id="div-city_id">
                                 <div class="form-group">
                                     <label for="city_id">Cidade*</label>
@@ -397,7 +397,7 @@
                             </div>
 
 
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="full_name">Email*</label>
                                     <input type="text"
@@ -417,7 +417,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="full_name">Confirmação de Email*</label>
                                     <input type="text"
@@ -437,7 +437,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="full_name">Telefone (DD) + Número</label>
                                     <input type="text"
@@ -460,19 +460,18 @@
 
 
 
-                            <div class="col-12 row">
-                                <div class="col-md-4">
-
+                            <!-- Seção: Visita em Grupo -->
+                            <div class="col-12">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="has_group"
-                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        <label for="has_group" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Visita em Grupo?
                                         </label>
                                         <select
                                             name="has_group" id="has_group"
                                             wire:model="has_group"
                                             x-ref="has_group" @disabled(request()->query('disabled'))
-                                            class="form-select text-uppercase @error('has_disability') is-invalid @endError" >
+                                            class="form-select text-uppercase @error('has_disability') is-invalid @enderror">
                                             <option value="">
                                                 SELECIONE
                                             </option>
@@ -480,101 +479,95 @@
                                             <option value="false">NÃO</option>
                                         </select>
                                     </div>
-
-                                    <div>
-                                        @error('has_group')
-                                        <small class="text-danger">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            {{ $message }}
-                                        </small>
-                                        @endError
-                                    </div>
-
+                                    @error('has_group')
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $message }}
+                                    </small>
+                                    @enderror
                                 </div>
                             </div>
 
-                            @if($has_group=='true')
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            Instituição/Empresa
-                                        </label>
-                                        <input name="institution" id="institution"
-                                               wire:model="institution"
-                                               class="form-control text-uppercase "
-                                        >
-                                        <div>
-                                            @error('institution')
-                                            <small class="text-danger text-red-700">
-                                                <i class="fas fa-exclamation-triangle"></i>
-                                                {{ $message }}
-                                            </small>
-                                            @endError
+                            @if($has_group == 'true')
+
+                                <!-- Seção: Membros do Grupo -->
+                                <div class="mt-4">
+                                    <div class="col-12">
+                                        <h5 class="mb-3">Membros do Grupo</h5>
+
+                                        <!-- Seção: Instituição/Empresa -->
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <label for="institution" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Instituição/Empresa
+                                                </label>
+                                                <input name="institution" id="institution"
+                                                       wire:model="institution"
+                                                       class="form-control text-uppercase">
+                                                @error('institution')
+                                                <small class="text-danger text-red-700">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                    {{ $message }}
+                                                </small>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-lg-6 col-xl-6">
-                                        <div class="flex space-x-4">
-                                            <div class="space-y-4">
-                                                <table>
-                                                    <tr>
-                                                        <th colspan="2">
-                                                            Membros do Grupo
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            Nome
-                                                        </th>
-                                                        <th>
-                                                            Tipo de Documento
-                                                        </th>
-                                                        <th>
-                                                            Documento
-                                                        </th>
-                                                        <th> Ação</th>
-                                                    </tr>
-
-                                                    @foreach($inputs as $index => $input)
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" placeholder="Nome" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.name" name="inputs[{{ $index }}][name]">
-                                                            </td>
-                                                            <td>
-                                                                <select wire:model="inputs.{{ $index }}.documentType" name="inputs[{{ $index }}][documentType]"
+                                        <div class="row">
+                                            @foreach($inputs as $index => $input)
+                                                <div class="col-lg-6">
+                                                    <div class="card mb-3">
+                                                        <div class="card-body">
+                                                            <!-- Campo: Nome -->
+                                                            <div class="form-group">
+                                                                <label for="inputs[{{ $index }}][name]">Nome</label>
+                                                                <input type="text" placeholder="Nome" class="form-control"
+                                                                       wire:model="inputs.{{ $index }}.name"
+                                                                       name="inputs[{{ $index }}][name]">
+                                                            </div>
+                                                            <!-- Campo: Tipo de Documento -->
+                                                            <div class="form-group mt-2">
+                                                                <label for="inputs[{{ $index }}][documentType]">Tipo de Documento</label>
+                                                                <select wire:model="inputs.{{ $index }}.documentType"
+                                                                        name="inputs[{{ $index }}][documentType]"
                                                                         class="form-control text-uppercase">
                                                                     <option value="">Tipo de documento</option>
                                                                     <option value="1">CPF</option>
                                                                     <option value="4">Passaporte</option>
                                                                 </select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" placeholder="Documento" class="border p-2 rounded w-full" wire:model="inputs.{{ $index }}.document" name="inputs[{{ $index }}][document]">
-                                                            </td>
-                                                            <td>
-
-                                                                <input type="button" class="btn btn-danger" wire:click="removeInput({{ $index }})" value="Remover"/>
-                                                            </td>
-                                                        </tr>
-
-                                                    @endforeach
-                                                </table>
-                                            </div>
+                                                            </div>
+                                                            <!-- Campo: Documento -->
+                                                            <div class="form-group mt-2">
+                                                                <label for="inputs[{{ $index }}][document]">Documento</label>
+                                                                <input type="text" placeholder="Documento" class="form-control"
+                                                                       wire:model="inputs.{{ $index }}.document"
+                                                                       name="inputs[{{ $index }}][document]">
+                                                            </div>
+                                                            <!-- Botão Remover -->
+                                                            <div class="text-end mt-3">
+                                                                <button type="button" class="btn btn-danger btn-sm"
+                                                                        wire:click="removeInput({{ $index }})">
+                                                                    Remover
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <div class="flex space-x-4 space-y-2">
-
-                                            <div class="w-/13">
-                                                <input type="button" class="mt-4 btn btn-primary" wire:click="addInput" value="Adicionar Pessoa">
-                                            </div>
+                                        <!-- Botão Adicionar Pessoa -->
+                                        <div class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-primary mt-2" wire:click="addInput">
+                                                Adicionar Pessoa
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             @endif
 
 
-                            <div class="col-12 align-self-center d-flex justify-content-end gap-4">
+
+                            <div class="col-12 align-self-center d-flex justify-content-end gap-4 pt-3">
 
                                 <button type="submit" class="btn btn-success text-white ml-1" id="submitButton"
                                         title="Salvar">
