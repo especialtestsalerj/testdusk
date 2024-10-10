@@ -103,7 +103,7 @@
         <div class="col-md-9">
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card  mb-3">
                         <div class="card-header text-white bg-dark2">Total de Agendamentos</div>
                         <div class="card-body">
@@ -112,26 +112,17 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
-                    <div class="card mb-3">
-                        <div class="card-header text-white bg-dark2">Agendamentos para Hoje</div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{$todayReservationCount}}</h5>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Card: Visita em Andamento -->
-                <div class="col-md-2">
-                    <div class="card mb-3">
-                        <div class="card-header text-white bg-dark2">Visitas em Andamento</div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $visitaEmAndamentoCount }}</h5>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="col-md-2">--}}
+{{--                    <div class="card mb-3">--}}
+{{--                        <div class="card-header text-white bg-dark2">Visitas em Andamento</div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="card-title">{{ $visitaEmAndamentoCount }}</h5>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark2">Agendamentos Futuros</div>
                         <div class="card-body">
@@ -140,7 +131,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark2">Aguardando Confirmação</div>
                         <div class="card-body">
@@ -149,7 +140,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark2">Total de visitas realizadas</div>
                         <div class="card-body">
