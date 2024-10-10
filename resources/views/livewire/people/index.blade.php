@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="p-0">
+            <div class="p-0">
             @include('layouts.msg')
 
             @include('livewire.people.partials.table', ['redirect' => 'people.index'])

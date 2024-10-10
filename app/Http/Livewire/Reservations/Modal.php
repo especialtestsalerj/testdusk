@@ -202,7 +202,11 @@ class Modal extends BaseForm
 
         $data['guests'] = $this->inputs;
 
-        $data['quantity'] = 1 + count($this->inputs);
+        if($this->has_group == 'true') {
+            $data['quantity'] = 1 + count($this->inputs);
+        }else {
+            $data['quantity'] = 1;
+        }
 
         if (!$this->reservationId) {
             $data['reservation_type_id'] = '1';
