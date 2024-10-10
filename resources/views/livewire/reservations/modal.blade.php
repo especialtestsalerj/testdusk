@@ -1,28 +1,28 @@
 <div
+    x-data="{
+        handleMaskChange(event) {
+            setTimeout(() => {
+                const ref = this.$refs[event.detail.ref];
+                if (ref) {
+                    if (event.detail.mask) {
+                        VMasker(ref).maskPattern(event.detail.mask);
+                    } else {
+                        const fieldValue = ref.value;
+                        VMasker(ref).unMask();
+                        ref.value = fieldValue; // Retorna o valor original após remover a máscara
+                    }
+                }
+            }, 500);
+        }
+    }"
     x-init=""
-    x-data=""
-    @focus-field.window="if($refs[$event.detail.field]) {$refs[$event.detail.field].focus()}"
-    @change-mask.window="
-     setTimeout(() => {
-        // console.log($event); console.log($refs[$event.detail.ref]);
-        if($refs[$event.detail.ref]) {
-            if($event.detail.mask){
-                //console.log('changed mask of '+$refs[$event.detail.ref]+' to '+$event.detail.mask)
-                VMasker($refs[$event.detail.ref]).maskPattern($event.detail.mask);
-            }else{
-                var fieldValue = $refs[$event.detail.ref].value;
-                VMasker($refs[$event.detail.ref]).unMask();
-
-                // Set the stored value back into the input field
-                $refs[$event.detail.ref].value = fieldValue;
-            }
-         }
-
-        }, 500);
-     "
+    @focus-field.window="if ($refs[$event.detail.field]) { $refs[$event.detail.field].focus(); }"
+    @change-mask.window="handleMaskChange($event)"
+    @change-contact-mask.window="handleMaskChange($event)"
 >
     <div wire:ignore.self class="modal fade modal-xl" id="reservation-modal"
          tabindex="-1" role="dialog"
+         data-bs-backdrop="static"
          aria-labelledby="capacityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -120,10 +120,11 @@
                                            value="ESGOTADO" disabled="disabled">
 
                                 @else
-                                    <select class="form-control text-uppercase @error('capacity_id') is-invalid @endError"
-                                            name="capacity_id" id="capacity_id"
-                                            wire:model="capacity_id" x-ref="capacity_id"
-                                            @if(!$reservation_date) disabled @endif
+                                    <select
+                                        class="form-control text-uppercase @error('capacity_id') is-invalid @endError"
+                                        name="capacity_id" id="capacity_id"
+                                        wire:model="capacity_id" x-ref="capacity_id"
+                                        @if(!$reservation_date) disabled @endif
                                     >
 
                                         <option value="">SELECIONE</option>
@@ -441,14 +442,15 @@
                                 <div class="form-group">
                                     <label for="full_name">Telefone (DD) + Número</label>
                                     <input type="text"
-                                           class="form-control text-uppercase @error('mobile') is-invalid @endError"
-                                           name="mobile" id="mobile"
-                                           wire:model="mobile"
+                                           class="form-control text-uppercase @error('contact') is-invalid @endError"
+                                           name="contact" id="contact"
+                                           x-ref="contact"
+                                           wire:model="contact"
                                     />
                                 </div>
 
                                 <div>
-                                    @error('mobile')
+                                    @error('contact')
                                     <small class="text-danger">
                                         <i class="fas fa-exclamation-triangle"></i>
                                         {{ $message }}
@@ -458,13 +460,12 @@
                             </div>
 
 
-
-
                             <!-- Seção: Visita em Grupo -->
                             <div class="col-12">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="has_group" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        <label for="has_group"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Visita em Grupo?
                                         </label>
                                         <select
@@ -498,7 +499,8 @@
                                         <!-- Seção: Instituição/Empresa -->
                                         <div class="row mb-3">
                                             <div class="col-12">
-                                                <label for="institution" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                <label for="institution"
+                                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                     Instituição/Empresa
                                                 </label>
                                                 <input name="institution" id="institution"
@@ -521,13 +523,23 @@
                                                             <!-- Campo: Nome -->
                                                             <div class="form-group">
                                                                 <label for="inputs[{{ $index }}][name]">Nome</label>
-                                                                <input type="text" placeholder="Nome" class="form-control"
+                                                                <input type="text" placeholder="Nome"
+                                                                       class="form-control"
                                                                        wire:model="inputs.{{ $index }}.name"
                                                                        name="inputs[{{ $index }}][name]">
+
+                                                                @error("inputs.$index.name")
+                                                                <small class="text-danger text-red-700">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                    {{ $message }}
+                                                                </small>
+                                                                @enderror
                                                             </div>
+
                                                             <!-- Campo: Tipo de Documento -->
                                                             <div class="form-group mt-2">
-                                                                <label for="inputs[{{ $index }}][documentType]">Tipo de Documento</label>
+                                                                <label for="inputs[{{ $index }}][documentType]">Tipo de
+                                                                    Documento</label>
                                                                 <select wire:model="inputs.{{ $index }}.documentType"
                                                                         name="inputs[{{ $index }}][documentType]"
                                                                         class="form-control text-uppercase">
@@ -535,13 +547,28 @@
                                                                     <option value="1">CPF</option>
                                                                     <option value="4">Passaporte</option>
                                                                 </select>
+                                                                @error("inputs.$index.documentType")
+                                                                <small class="text-danger text-red-700">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                    {{ $message }}
+                                                                </small>
+                                                                @enderror
                                                             </div>
                                                             <!-- Campo: Documento -->
                                                             <div class="form-group mt-2">
-                                                                <label for="inputs[{{ $index }}][document]">Documento</label>
-                                                                <input type="text" placeholder="Documento" class="form-control"
+                                                                <label
+                                                                    for="inputs[{{ $index }}][document]">Documento</label>
+                                                                <input type="text" placeholder="Documento"
+                                                                       class="form-control"
+                                                                       x-ref="document_{{ $index }}"
                                                                        wire:model="inputs.{{ $index }}.document"
                                                                        name="inputs[{{ $index }}][document]">
+                                                                @error("inputs.$index.document")
+                                                                <small class="text-danger text-red-700">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                    {{ $message }}
+                                                                </small>
+                                                                @enderror
                                                             </div>
                                                             <!-- Botão Remover -->
                                                             <div class="text-end mt-3">
@@ -556,7 +583,7 @@
                                             @endforeach
                                         </div>
                                         <!-- Botão Adicionar Pessoa -->
-                                        <div class="d-flex justify-content-end">
+                                        <div class="d-flex justify-content-start">
                                             <button type="button" class="btn btn-primary mt-2" wire:click="addInput">
                                                 Adicionar Pessoa
                                             </button>
@@ -564,7 +591,6 @@
                                     </div>
                                 </div>
                             @endif
-
 
 
                             <div class="col-12 align-self-center d-flex justify-content-end gap-4 pt-3">
@@ -587,7 +613,8 @@
                     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
                     <script>
                         document.addEventListener('livewire:load', function () {
-                            var blockedDates = @json($blockedDates) || [];
+                            var blockedDates = @json($blockedDates) ||
+                            [];
 
                             var flatpickrInstance = flatpickr("#reservation_date", {
                                 locale: "pt",
@@ -596,9 +623,10 @@
                                 maxDate: new Date().fp_incr(30), // 30 days from now
                                 disable: blockedDates,
                                 onChange: function (selectedDates, dateStr, instance) {
-                                @this.set('reservation_date', dateStr);
+                                    @this.
+                                    set('reservation_date', dateStr);
                                 },
-                                onDayCreate: function(dObj, dStr, fp, dayElem) {
+                                onDayCreate: function (dObj, dStr, fp, dayElem) {
                                     const date = dayElem.dateObj.toISOString().split('T')[0];
                                     if (blockedDates.includes(date)) {
                                         dayElem.style.color = "red";

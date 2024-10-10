@@ -40,7 +40,7 @@ class Modal extends BaseForm
     public $social_name;
     public $responsible_email;
     public $confirm_email;
-    public $mobile;
+    public $contact;
     public $blockedDates;
     public $reservation_date;
     public $motive;
@@ -53,6 +53,7 @@ class Modal extends BaseForm
     public $reservationId;
     public $inputs = [];
     public $institution;
+    public $contact_type_id; // contact-mask hack
 
     protected $validationAttributes = [
         'user_id' => 'Usuário',
@@ -68,7 +69,7 @@ class Modal extends BaseForm
         'social_name' => 'Nome Social',
         'responsible_email' => 'Email',
         'confirm_email' => 'Confirmação de Email',
-        'mobile' => 'Telefone (DD) + Número',
+        'contact' => 'Telefone (DD) + Número',
         'reservation_date' => 'Data da Visita',
         'motive' => 'Motivo da Visita',
         'has_disability' => 'Possui deficiência',
@@ -92,7 +93,7 @@ class Modal extends BaseForm
             'social_name' => 'nullable|string|max:255',
             'responsible_email' => 'required|email|max:255',
             'confirm_email' => 'required|email|same:responsible_email',
-            'mobile' => 'required|string|max:20',
+            'contact' => 'required|string|max:20',
             'reservation_date' => 'required',
             'motive' => [Rule::requiredIf($requiresMotivation)],
             'has_disability' => 'required|boolean',
@@ -102,23 +103,45 @@ class Modal extends BaseForm
             'city_id' => 'required_if:country_id,' . config('app.country_br') . '|exists:cities,id',
             'other_city' => 'required_unless:country_id,' . config('app.country_br'),
             'has_group'=>'required',
+            'institution' => 'required_if:has_group,true',
+            'inputs.*.document' => [
+                'required_if:has_group,true',
+                function ($attribute, $value, $fail) {
+                    // Acessando o documentType relacionado ao campo document específico
+                    $inputs = request()->input('serverMemo.data.inputs');
+
+                    // Extraindo o índice do campo atual
+                    preg_match('/inputs\.(\d+)\.document/', $attribute, $matches);
+                    $index = $matches[1]; // O índice correspondente ao document atual
+
+                    // Verificando o documentType desse item específico
+                    $documentType = $inputs[$index]['documentType'] ?? null;
+
+                    // Valida o CPF apenas se o documentType for igual a CPF (configurado)
+                    if ($documentType == config('app.document_type_cpf') && !validate_cpf($value)) {
+                        $fail('O CPF informado é inválido.');
+                    }
+                },
+            ],
+            'inputs.*.name' => 'required_if:has_group,true|string|max:255',
+            'inputs.*.documentType' => 'required_if:has_group,true',
         ];
     }
 
     public function render()
     {
-        $this->applyMasks();
         $this->loadCountryBr();
         $this->loadDefaultLocation();
 
         $this->users = app(Users::class)->allWithAbility(make_ability_name_with_current_building('reservation:show'));
+        $this->applyMasks();
         return view('livewire.reservations.modal')->with($this->getViewVariables());
     }
 
     public function cleanModal()
     {
         $this->dispatchBrowserEvent('hide-modal', ['target' => 'reservation-modal']);
-        $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities');
+        $this->resetExcept('capacities', 'sectors', 'documentTypes', 'disabilities', 'contact_type_id');
         $this->resetErrorBag();
         $this->select2SetReadOnly('city_id', false);
         $this->select2SetReadOnly('sector_modal_id', false);
@@ -147,7 +170,7 @@ class Modal extends BaseForm
             'city_id' => $this->city_id,
             'other_city' => $this->other_city,
             'responsible_email' => $this->responsible_email,
-            'mobile' => $this->mobile,
+            'mobile' => $this->contact,
             'motive' => $this->motive,
             'has_disability' => $this->has_disability,
             'disabilities' => $this->disabilities,
@@ -170,7 +193,7 @@ class Modal extends BaseForm
             'city_id' => $this->city_id,
             'other_city' => $this->other_city,
             'email' => $this->responsible_email,
-            'mobile' => $this->mobile,
+            'mobile' => $this->contact,
             'has_disability' => $this->has_disability,
             'disabilities' => $this->disabilities
         ];
@@ -205,8 +228,17 @@ class Modal extends BaseForm
 
     public function updatedHasDisability()
     {
-        if (boolval($this->has_disability)) {
-            $this->reset('disabilities');
+        $this->reset('disabilities');
+        $this->resetErrorBag(['disabilities']);
+    }
+
+    public function updatedHasGroup()
+    {
+        $this->reset('inputs', 'institution');
+        $this->resetErrorBag(['inputs.*.document', 'inputs.*.name', 'inputs.*.documentType', 'institution']);
+
+        if ($this->has_group == true) {
+            $this->addInput();
         }
     }
 
@@ -227,6 +259,7 @@ class Modal extends BaseForm
     public function mount()
     {
         $this->sectors = app(Sectors::class)->allForUser();
+        $this->contact_type_id = 1; // contact-mask hack
     }
 
     public function loadDates()
@@ -281,7 +314,7 @@ class Modal extends BaseForm
             $this->other_city = $person['other_city'] ?? $this->other_city;
             $this->responsible_email = $person['email'] ?? $this->responsible_email;
             $this->confirm_email = $person['email'] ?? $this->responsible_email;
-            $this->mobile = $person['mobile'] ?? $this->mobile;
+            $this->contact = $person['mobile'] ?? $this->contact;
             $this->has_disability = $person['has_disability'] ?? $this->has_disability;
             $this->disabilities = $person['disabilities'] ?? $this->disabilities;
             $this->capacity_id = $reservation->capacity_id;
@@ -375,5 +408,28 @@ class Modal extends BaseForm
         unset($this->inputs[$index]);
 
         $this->inputs = array_values($this->inputs); // Reindexa o array
+    }
+
+    public function updated($propertyName)
+    {
+        if (str_contains($propertyName, 'inputs.') && str_contains($propertyName, '.documentType')) {
+            // Extrai o índice da propriedade
+            preg_match('/inputs\.(\d+)\.documentType/', $propertyName, $matches);
+            $index = $matches[1];
+
+            // Obtém o documentType atual
+            $documentType = $this->inputs[$index]['documentType'];
+
+            $mask = '';
+            if ($documentType == '1') {
+                $mask = '999.999.999-99'; // Máscara para CPF
+            }
+
+            // Dispara um evento para o navegador
+            $this->dispatchBrowserEvent('change-mask', [
+                'ref' => 'document_' . $index,
+                'mask' => $mask,
+            ]);
+        }
     }
 }
