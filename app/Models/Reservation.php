@@ -7,6 +7,7 @@ use App\Notifications\ReservationCanceledNotification;
 use App\Notifications\ReservationConfirmedNotification;
 use App\Notifications\ReservationNotification;
 use App\Notifications\ReservationRealizedNotification;
+use App\Services\QrCode\Service;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -210,5 +211,14 @@ class Reservation extends Model
 
     public function canceledBy(){
         return $this->belongsTo(User::class, 'canceled_by_id');
+    }
+
+    public function qrCodeUri($size, $margin)
+    {
+        return app(Service::class)->generate(
+            route('agendamento.detail', ['uuid' => $this->uuid]),
+            $size,
+            $margin
+        );
     }
 }

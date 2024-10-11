@@ -4,7 +4,7 @@
     <div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full bg-white shadow-md rounded-lg p-6">
             <div class="mb-6 text-center">
-                <h1 class="text-3xl font-bold text-gray-900">Reserva Solicitada com Sucesso!</h1>
+                <h1 class="text-3xl font-bold text-gray-900">Resumo da Reserva!</h1>
             </div>
 
             <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
@@ -17,6 +17,7 @@
                     <li><span class="font-semibold">Código da Reserva:</span> {{ $reservation->code }}</li>
                     <li><span class="font-semibold">Data:</span> {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
                     <li><span class="font-semibold">Setor:</span> {{ $reservation->sector?->nickname }}</li>
+                    <li><span class="font-semibold">Status:</span> {{ $reservation->reservationStatus?->name }}</li>
                 </ul>
             </div>
 

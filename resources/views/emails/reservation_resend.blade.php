@@ -123,10 +123,17 @@
             <li><strong>Código:</strong> {{ $reservation->code }}</li>
             <li><strong>Data/Hora:</strong> {{ date_format($reservation->reservation_date,"d/m/Y") }}</li>
             <li><strong>Status:</strong>{{$reservation->reservationStatus->name}}</li>
+
+        </ul>
+            <p style="text-align: center;">
+                <img style="width: 6cm; height: 6cm;" src="{{$reservation->qrCodeUri(151.87,-3) ?? ''}}" class="qr" />
+            </p>
+
+        <p>
             <a href="{{ route('reservation.cancel', ['uuid' => $reservation->uuid]) }}" class="button">
                 Cancelar Agendamento
             </a>
-        </ul>
+        </p>
             <hr />
         @endforeach
 
