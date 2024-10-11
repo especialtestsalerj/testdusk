@@ -152,7 +152,7 @@
 
                                             <div class="col-1 col-lg-2 text-center text-lg-start">
                                                 <span
-                                                    class="fw-bold">Data:</span> {{date_format($reservation->reservation_date,"d/m/Y")}}
+                                                    class="fw-bold">Data:</span> {{$reservation->reservation_date->format("d/m/Y")}}
                                             </div>
                                             <div class="col-2 col-lg-2 text-center text-lg-start">
                                                 <span class="fw-bold">Horário:</span> {{$reservation->capacity->hour}}

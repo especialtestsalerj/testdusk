@@ -46,14 +46,12 @@ class Reservation extends Model
     protected $casts = [
         'person' => 'array',
         'guests' => 'array',
+        'reservation_date' => 'datetime',
+        'reservation_time' => 'datetime',
+        'confirmed_at' => 'datetime',
+        'canceled_at' => 'datetime',
     ];
 
-    protected $dates = [
-        'reservation_date',
-        'reservation_time',
-        'confirmed_at',
-        'canceled_at',
-    ];
 
     protected $with=['capacity','confirmedBy'];
 

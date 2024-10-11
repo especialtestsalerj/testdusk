@@ -10,7 +10,9 @@ class AttachedFile extends Model
 
     protected $with = ['file'];
 
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
 
     public static function boot()
     {

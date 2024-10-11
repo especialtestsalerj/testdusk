@@ -94,7 +94,7 @@
                                         <div class="row bg-line-details mb-1">
                                             <div class="col-12">
                                                 <span>Data e Hora:</span>:<span
-                                                    class="fw-bold ms-2">{{date_format($reservation->reservation_date,"d/m/Y")}} às  {{$reservation->capacity->hour}}</span>
+                                                    class="fw-bold ms-2">{{$reservation->reservation_date->format("d/m/Y")}} às  {{$reservation->capacity->hour}}</span>
                                             </div>
                                         </div>
                                     </div>

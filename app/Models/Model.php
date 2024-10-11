@@ -16,7 +16,10 @@ abstract class Model extends Eloquent implements AuditableContract
 {
     use Auditable, Selectable, Joinable, Orderable, Filterable, Eventable, HasFactory;
 
-    protected $dates = ['created_at', 'updated_at'];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     protected $controlCreatedBy = true;
 
