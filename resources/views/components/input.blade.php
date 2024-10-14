@@ -15,6 +15,7 @@
     'minlength' => null,
     'pattern' => null,
     'step' => null,
+    'dusk' => null,
 ])
 
 <div {{ $attributes->merge(['class' => 'w-full']) }}>
@@ -27,6 +28,7 @@
     <input id="{{ $id }}"
            type="{{ $type }}"
            name="{{ $name }}"
+           dusk="{{$id}}"
            @if($wireModel) wire:model="{{ $wireModel }}" @endif
            @if($xRef) x-ref="{{ $xRef }}" @endif
            @if($placeholder) placeholder="{{ $placeholder }}" @endif

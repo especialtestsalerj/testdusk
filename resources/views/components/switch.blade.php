@@ -7,6 +7,7 @@
     'checked' => false,
     'required' => false,
     'disabled' => false,
+    'dusk' => null,
 ])
 
 <div {{ $attributes->merge(['class' => 'w-full']) }}>
@@ -18,6 +19,7 @@
             type="checkbox"
             id="{{ $id }}"
             name="{{ $name }}"
+            dusk="{{$id}}"
             class="sr-only peer"
             @if($wireModel) wire:model="{{ $wireModel }}" @endif
             @if($xRef) x-ref="{{ $xRef }}" @endif

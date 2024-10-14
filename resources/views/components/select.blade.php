@@ -10,6 +10,7 @@
     'xRef' => null,
     'required' => false,
     'disabled' => false,
+    'dusk' => null,
 ])
 
 <div {{ $attributes->merge(['class' => 'w-full']) }}>
@@ -22,7 +23,7 @@
         </label>
     @endif
 
-    <select name="{{ $name }}" id="{{ $id }}"
+    <select name="{{ $name }}" id="{{ $id }}" dusk="{{$id}}"
             @if($wireModel) wire:model="{{ $wireModel }}" @endif
             @if($wireChange) wire:change="{{ $wireChange }}" @endif
             @if($xRef) x-ref="{{ $xRef }}" @endif

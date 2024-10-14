@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BouncerSeeder::class);
 
         $this->call(RoutinesTableSeeder::class);
+
+        $this->call(CapacitiesTableSeeder::class);
     }
 }

@@ -8,6 +8,7 @@
     'placeholder' => 'Digite seu texto aqui...', // Placeholder padrão
     'value' => '', // Valor inicial padrão
     'required' => false, // Campo obrigatório padrão
+    'dusk' => null,
 ])
 
 
@@ -16,7 +17,7 @@
            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         {{ $label }} @if($required) * @endif
     </label>
-    <textarea id="{{ $id }}" rows="{{ $rows }}"
+    <textarea id="{{ $id }}" rows="{{ $rows }}" dusk="{{$id}}"
               name="{{ $name }}"
               @if($wireModel) wire:model="{{ $wireModel }}" @endif
               @if($xRef) x-ref="{{ $xRef }}" @endif

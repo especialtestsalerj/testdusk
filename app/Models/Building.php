@@ -14,10 +14,6 @@ class Building extends Model
         static::addGlobalScope(new Active());
     }
 
-    public function building()
-    {
-        return $this->belongsTo(Building::class);
-    }
     public function visitors()
     {
         return $this->belongsToMany(Visitor::class);
@@ -35,6 +31,6 @@ class Building extends Model
 
     public function sectors()
     {
-        return $this->belongsToMany(Sector::class);
+        return $this->hasMany(Sector::class);
     }
 }

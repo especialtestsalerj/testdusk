@@ -10,6 +10,7 @@
     'label' => null,
     'required' => false,
     'wireChange' => null,
+    'dusk' => null,
 ])
 
 <div class="relative">
@@ -20,6 +21,7 @@
     @endif
     <select
         name="{{ $name }}"
+        dusk="{{$id}}"
         id="{{ $id }}"
         {{ $multiple ? 'multiple' : '' }}
         x-ref={{ $name }}

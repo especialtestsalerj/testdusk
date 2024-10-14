@@ -19,6 +19,7 @@
     @focus-field.window="if ($refs[$event.detail.field]) { $refs[$event.detail.field].focus(); }"
     @change-mask.window="handleMaskChange($event)"
     @change-contact-mask.window="handleMaskChange($event)"
+    dusk="scheduling-form"
 >
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -81,6 +82,7 @@
                             @else
                                 <select
                                     name="capacity_id" id="capacity_id"
+                                    dusk="capacity_id"
                                     wire:model="capacity_id" x-ref="capacity_id"
                                     @if(empty($reservation_date)) disabled @endif
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -230,6 +232,7 @@
                             @foreach($disabilityTypes as $disabilityType)
                                 <div class="flex items-center space-x-2">
                                     <input name="disabilities[]"
+                                           dusk="disabilities"
                                            wire:model="disabilities"
                                            value="{{ $disabilityType->id }}"
                                            type="checkbox"
@@ -507,6 +510,7 @@
                                 <div class="flex justify-center mt-6">
                                     <button type="button"
                                             style="background-color: rgb(14, 44, 69);"
+                                            dusk="submitButton"
                                             wire:click="addInput"
                                             class="flex items-center px-6 py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition duration-300">
                                         <!-- Ícone de Adicionar -->

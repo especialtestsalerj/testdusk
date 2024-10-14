@@ -1,4 +1,13 @@
 services:
+    selenium:
+        image: 'selenium/standalone-chrome'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        volumes:
+            - '/dev/shm:/dev/shm'
+        networks:
+            - sail
+
     sigvisitas.test:
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
@@ -11,7 +20,7 @@ services:
         ports:
             - '${APP_PORT:-80}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
-            - '${LIVE_RELOAD_PORT:-35729}:${LIVE_RELOAD_PORT:-35729}'
+            - '${LIVE_RELOAD_PORT:-35734}:${LIVE_RELOAD_PORT:-35734}'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -20,10 +29,13 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - base_sail
+            - sail
+            - takeout
+        depends_on:
+            - selenium
 networks:
-    base_sail:
+    sail:
+        driver: bridge
+    takeout:
+        name: takeout
         external: true
-volumes:
-    sail-pgsql:
-        driver: local

@@ -51,6 +51,7 @@ class RoutineFactory extends Factory
             'status' => false,
             'created_by_id' => $user_id,
             'created_at' => $date,
+            'building_id' =>  rand(1, 2),
         ];
     }
 

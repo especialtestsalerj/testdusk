@@ -11,6 +11,7 @@
     'options' => [],
     'required' => false,
     'disabled' => false,
+    'dusk' => null,
 ])
 
 <div {{ $attributes->merge(['class' => 'w-full']) }}>
@@ -23,6 +24,7 @@
     <input id="{{ $id }}" type="button"
            value="{{ $value }}"
            name="{{ $name }}"
+           dusk="{{$id}}"
            wire:model="{{ $wireModel }}"
            x-ref="{{ $xRef }}"
            @if($disabled) disabled @endif

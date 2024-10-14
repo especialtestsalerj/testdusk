@@ -74,7 +74,8 @@ class Sector extends Model
     {
         return $this->hasMany(BlockedDate::class);
     }
-    public function Capacities(){
+    public function capacities()
+    {
         return $this->hasMany(Capacity::class);
     }
 

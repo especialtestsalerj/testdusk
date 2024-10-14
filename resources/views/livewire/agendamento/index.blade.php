@@ -25,7 +25,7 @@
                                         @csrf
                                         <h3 class="font-medium text-2xl text-gray-800">Agende sua visita.</h3>
                                         <div class="mt-6">
-                                            <select name="building_id" id="building_id" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80">
+                                            <select dusk="building_id" name="building_id" id="building_id" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm opacity-80">
                                                 <option value="">Selecione o Edifício.</option>
                                                 @foreach($this->buildings as $building)
                                                     <option value="{{$building->id}}">{{$building->name}}</option>
@@ -39,7 +39,7 @@
                                             @enderror
                                         </div>
                                         <div class="mt-6 md:mt-8">
-                                            <button class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
+                                            <button dusk="schedule-button" class="w-full md:w-auto text-sm bg-brand-800 hover:bg-brand-950 px-4 py-2 text-white rounded-3xl font-medium">
                                                 Agende sua visita agora
                                             </button>
                                         </div>
