@@ -615,12 +615,16 @@
                         document.addEventListener('livewire:load', function () {
                             var blockedDates = @json($blockedDates) ||
                             [];
+                            var maxDate = @json($maxDate);
+
+                            console.log('livewire:load')
+                            console.log(maxDate)
 
                             var flatpickrInstance = flatpickr("#reservation_date", {
                                 locale: "pt",
                                 dateFormat: "d/m/Y",
                                 minDate: "today",
-                                maxDate: new Date().fp_incr(30), // 30 days from now
+                                maxDate: new Date().fp_incr(maxDate), // 30 days from now
                                 disable: blockedDates,
                                 onChange: function (selectedDates, dateStr, instance) {
                                     @this.
@@ -640,7 +644,20 @@
                             });
 
                             Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
-                                flatpickrInstance.set('disable', newBlockedDates);
+                                flatpickrInstance.set('disable', [
+                                    function (date) {
+                                        return (date.getDay() === 6 || date.getDay() === 0);
+                                    }
+                                ].concat(newBlockedDates));
+                                if (maxDate) {
+                                    flatpickrInstance.set('maxDate', new Date().fp_incr(maxDate));
+                                }
+                                flatpickrInstance.redraw();
+                            });
+
+                            Livewire.on('maxDateUpdated', function (newMaxDate) {
+                                maxDate = newMaxDate;
+                                flatpickrInstance.set('maxDate', new Date().fp_incr(newMaxDate));
                                 flatpickrInstance.redraw();
                             });
                         });

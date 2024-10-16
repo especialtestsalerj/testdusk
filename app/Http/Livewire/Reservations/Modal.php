@@ -42,6 +42,7 @@ class Modal extends BaseForm
     public $confirm_email;
     public $contact;
     public $blockedDates;
+    public $maxDate;
     public $reservation_date;
     public $motive;
     public $has_disability;
@@ -278,14 +279,16 @@ class Modal extends BaseForm
 
             $this->blockedDates = $dates->map(function ($date) {
                 return \Carbon\Carbon::parse($date)->format('d/m/Y');
-            });
 
+            });
+            $this->maxDate = $this->sectorModal->maxDate;
 
         } else {
             $this->blockedDates = [];
 
         }
         $this->emit('blockedDatesUpdated', $this->blockedDates);
+        $this->emit('maxDateUpdated', $this->sectorModal->max_date);
 
 
     }
