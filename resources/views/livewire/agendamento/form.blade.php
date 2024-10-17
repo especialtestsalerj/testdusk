@@ -41,7 +41,7 @@
                             label="Setor:"
                             :options="$sectors"
                             :options="$sectors->map(function($sector) {
-                                            return ['value' => $sector->id, 'text' => mb_strtoupper($sector->nickname)];
+                                            return ['value' => $sector->id, 'text' => mb_strtoupper($sector->nickname ?? $sector->name)];
                                         })"
                             placeholder="Selecione um setor"
                             :selected="$sector_id"

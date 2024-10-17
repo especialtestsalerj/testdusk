@@ -27,15 +27,16 @@ class CapacitiesTableSeeder extends Seeder
         $sectors->each(function ($sector) {
             // Decide aleatoriamente se o setor receberá capacities
             if (rand(0, 1)) { // 50% de chance
-                // Define quantas capacities criar (entre 2 e 5)
                 $capacityCount = rand(2, 5);
-
                 // Cria capacities associadas ao setor atual
                 Capacity::factory()
                     ->count($capacityCount)
                     ->create([
                         'sector_id' => $sector->id,
                     ]);
+                if (rand(0, 1)) {
+                    $sector->update(['is_visitable' => true]);
+                }
             }
         });
     }
