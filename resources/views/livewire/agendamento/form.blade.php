@@ -60,7 +60,7 @@
                             wireModel="reservation_date"
                             xRef="reservation_date"
                             :blockedDates="$blockedDates"
-                            :maxDate="$maxDate"
+                            :maxDate="$this->maxDate"
                             :disabled="empty($sector_id)"
                             dateFormat="d/m/Y"
                         />
@@ -577,64 +577,6 @@
             @this.set('recaptchaToken', token); // Definir o token no componente Livewire
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
-    <script>
-        document.addEventListener('livewire:load', function () {
-
-
-            var blockedDates = @json($blockedDates);
-
-
-            var flatpickrInstance = flatpickr("#reservation_date", {
-                locale: "pt",
-                dateFormat: "d/m/Y",
-                minDate: "today",
-                maxDate: new Date().fp_incr({{$maxDate}}), // 30 days from now
-                disable: [
-                    function (date) {
-                        // Desativa sábados (6) e domingos (0)
-                        return (date.getDay() === 6 || date.getDay() === 0);
-                    }
-                ].concat(blockedDates),
-                onChange: function (selectedDates, dateStr, instance) {
-                    @this.
-                    set('reservation_date', dateStr);
-                }
-            });
-
-            Livewire.on('blockedDatesUpdated', function (newBlockedDates) {
-                flatpickrInstance.set('disable', [
-                    function (date) {
-                        // Desativa sábados (6) e domingos (0)
-                        return (date.getDay() === 6 || date.getDay() === 0);
-                    }
-                ].concat(newBlockedDates));
-
-                flatpickrInstance.set('maxDate', new Date().fp_incr({{$maxDate}}));
-            });
-
-            Livewire.on('maxDateUpdated', function (newMaxDate) {
-                flatpickrInstance.set('maxDate', new Date().fp_incr(newMaxDate));
-
-            });
-        });
-
-        document.addEventListener('livewire:load', function () {
-            Livewire.on('inputAdded', function () {
-
-                // Recarrega o reCAPTCHA após adicionar novo membro ao grupo
-                grecaptcha.render('recaptcha-container', {
-                    'sitekey': '{{ config('services.recaptcha.site_key') }}',
-                    'callback': onRecaptchaSuccess
-                });
-                console.log('render')
-            });
-        });
-
-
-    </script>
-
 </div>
 
 
