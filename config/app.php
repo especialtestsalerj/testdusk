@@ -225,4 +225,6 @@ return [
     'certificate_type_particular' => env('APP_CERTIFICATE_TYPE_PARTICULAR', '1'),
 
     'cmyk_mode'=> env('APP_CMYK_MODE',false),
+
+    'recaptcha_enabled' => env('RECAPTCHA_SITE_ENABLED', 'false'),
 ];

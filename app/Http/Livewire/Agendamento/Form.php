@@ -49,7 +49,7 @@ class Form extends FormBase
             'motive' => 'required_if:sector.required_motivation,true',
             'has_disability' => 'required|boolean',
             'disabilities' => 'required_if:has_disability,true|array',
-            'recaptchaToken' => 'required',
+            'recaptchaToken' => config('app.recaptcha_enabled') ? 'required' : 'nullable',
             'has_group' => 'required|boolean',
             'institution' => 'required_if:has_group,true',
             'inputs.*.document' => [
@@ -118,24 +118,29 @@ class Form extends FormBase
 
     public function save()
     {
-
-
         $this->validate();
 
+        if (config('app.document_type_cpf')) {
+            $this->createReservation();
+        }
 
-
-        // Envie a requisição para o Google para verificar o token do reCAPTCHA
         $response = $this->validateRecaptcha($this->recaptchaToken);
         if ($response['success']) {
 
-            $data = $this->prepareReservationData();
+            $this->createReservation();
 
-            $reservation = app(ReservationRepository::class)->create($data);
-
-            return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
         } else {
             throw ValidationException::withMessages(['recaptchaToken' => 'Erro ao validar o reCAPTCHA.']);
         }
+    }
+
+    public function createReservation()
+    {
+        $data = $this->prepareReservationData();
+
+        $reservation = app(ReservationRepository::class)->create($data);
+
+        return redirect()->route('agendamento.detail', ['uuid' => $reservation->uuid]);
     }
 
     private function validateRecaptcha($token)

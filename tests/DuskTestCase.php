@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
 
 abstract class DuskTestCase extends BaseTestCase
@@ -60,5 +61,16 @@ abstract class DuskTestCase extends BaseTestCase
     protected function shouldStartMaximized(): bool
     {
         return true;
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        Browser::macro('setFlatpickrDate', function ($selector, $date) {
+            $this->script("document.querySelector('[dusk=\"{$selector}\"]')._flatpickr.setDate('{$date}', true);");
+            $this->pause(500);
+            return $this;
+        });
     }
 }

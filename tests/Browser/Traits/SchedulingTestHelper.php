@@ -4,6 +4,7 @@ namespace Tests\Browser\Traits;
 
 use App\Models\Building;
 use App\Models\Capacity;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Faker\Factory as Faker;
@@ -20,42 +21,34 @@ trait SchedulingTestHelper
     {
         $faker = Faker::create('pt_BR');
 
-        $randomBuilding = Building::whereHas('sectors.capacities')
+        $randomBuilding = Building::whereHas('sectors', function($query) {
+            $query->where('is_visitable', true)
+                ->whereHas('capacities');
+        })
             ->with(['sectors.capacities'])
             ->inRandomOrder()
             ->first();
 
-        if (!$randomBuilding) {
-            throw new \Exception('Nenhum edifício com setores e capacities encontrados.');
-        }
 
         $sectorsWithCapacities = $randomBuilding->sectors->filter(function ($sector) {
-            return $sector->capacities->isNotEmpty();
+            return $sector->is_visitable && $sector->capacities->isNotEmpty();
         });
-
-        if ($sectorsWithCapacities->isEmpty()) {
-            throw new \Exception('Nenhum setor com capacities encontrado para o edifício selecionado.');
-        }
 
         $randomSector = $sectorsWithCapacities->random();
 
         $randomCapacity = $randomSector->capacities->random();
 
-        if (!$randomCapacity) {
-            throw new \Exception('Nenhuma capacity encontrada para o setor selecionado.');
-        }
-
         $documentTypes = ['1', '4']; // CPF e Passaporte
         $documentType = $faker->randomElement($documentTypes);
-        $documentNumber = $documentType === '1' ? $faker->numerify('###########') : $faker->randomNumber(8, true);;
-        $birthdate = $faker->date('Y-m-d', '-18 years'); // Garante que a idade seja mínima de 18 anos
+        $documentNumber = $documentType === '1' ? $faker->cpf(false) : $faker->randomNumber(8, true);;
+        $birthdate = $faker->date('dmY', '-18 years');
         $contact = $faker->phoneNumber;
-        $email = $faker->unique()->safeEmail;
-        $confirmEmail = $email;
+        $email = $faker->freeEmail;
         $hasDisability = $faker->boolean;
         $motive = $faker->sentence;
         $hasGroup = $faker->boolean;
         $institution = $hasGroup ? $faker->company : null;
+        $reservationDate = Carbon::now()->format('d/m/Y');
 
 
         $country = config('app.country_br');
@@ -72,15 +65,15 @@ trait SchedulingTestHelper
             'documentNumber' => $documentNumber,
             'birthdate' => $birthdate,
             'contact' => $contact,
-            'country' => $country,
-            'state' => $state,
-            'city' => $city,
+            'country_id' => $country,
+            'state_id' => $state,
+            'city_id' => $city,
             'email' => $email,
-            'confirmEmail' => $confirmEmail,
             'hasDisability' => $hasDisability,
             'motive' => $motive,
             'hasGroup' => $hasGroup,
             'institution' => $institution,
+            'reservationDate' => $reservationDate,
         ];
     }
 

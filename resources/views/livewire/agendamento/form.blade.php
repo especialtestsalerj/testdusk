@@ -24,7 +24,8 @@
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
 
-            <a href="{{ route('agendamento.index')}}" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <a href="{{ route('agendamento.index')}}"
+               class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 <img class="w-60" src="{{asset('/img/logo-alerj-grande.png')}}" alt="logo">
             </a>
 
@@ -492,7 +493,8 @@
                                             <div class="flex justify-end">
                                                 <button type="button"
                                                         class="flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300"
-                                                        wire:click="removeInput({{ $index }})">
+                                                        wire:click="removeInput({{ $index }})"
+                                                        dusk="removeInput({{ $index }})">
                                                     <!-- Ícone de Remover -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
                                                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -510,7 +512,7 @@
                                 <div class="flex justify-center mt-6">
                                     <button type="button"
                                             style="background-color: rgb(14, 44, 69);"
-                                            dusk="submitButton"
+                                            dusk="addInput"
                                             wire:click="addInput"
                                             class="flex items-center px-6 py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition duration-300">
                                         <!-- Ícone de Adicionar -->
@@ -528,16 +530,22 @@
                         </div>
 
                     @endif
-                    <div class="flex flex-col sm:flex-row justify-left sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
-                        <div class="mt-6 md:mt-8">
-                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}" data-callback="onRecaptchaSuccess"  wire:ignore></div>
-                            @error('recaptchaToken')
-                            <small class="text-danger text-red-800">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                    @if(config('app.recaptcha_enabled'))
+                        <div
+                            class="flex flex-col sm:flex-row justify-left sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
+                            <div class="mt-6 md:mt-8">
+                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"
+                                     data-callback="onRecaptchaSuccess" wire:ignore></div>
+                                @error('recaptchaToken')
+                                <small class="text-danger text-red-800">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    @endif
+
+                    <div
+                        class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-2 sm:space-y-0 mt-6 text-center">
                         <div class="w-full sm:w-1/2">
                             <div class="flex justify-center mt-6">
                                 <div class="w-full sm:w-1/3">
@@ -546,7 +554,7 @@
                                             wire:target="save"
                                             style="background-color: rgb(14, 44, 69);"
                                             class="w-1/3 w-full md:w-auto text-sm bg-brand-800 px-6 py-3 text-white rounded-3xl font-medium"
-                                            id="submitButton" title="Salvar">
+                                            id="submitButton" title="Salvar" dusk="submitButton">
                                         <i class="fa fa-save mr-2"></i> Solicitar
                                     </button>
                                 </div>
@@ -574,7 +582,8 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         function onRecaptchaSuccess(token) {
-            @this.set('recaptchaToken', token); // Definir o token no componente Livewire
+            @this.
+            set('recaptchaToken', token); // Definir o token no componente Livewire
         }
     </script>
 </div>
