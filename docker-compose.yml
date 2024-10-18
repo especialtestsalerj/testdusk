@@ -29,13 +29,11 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - sail
-            - takeout
-        depends_on:
-            - selenium
+            - base_sail
 networks:
-    sail:
-        driver: bridge
-    takeout:
-        name: takeout
+    base_sail:
         external: true
+volumes:
+    sail-pgsql:
+        driver: local
+
