@@ -1,13 +1,4 @@
 services:
-    selenium:
-        image: 'selenium/standalone-chrome'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        volumes:
-            - '/dev/shm:/dev/shm'
-        networks:
-            - sail
-
     sigvisitas.test:
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
