@@ -19,14 +19,13 @@
             type="checkbox"
             id="{{ $id }}"
             name="{{ $name }}"
-            dusk="{{$id}}"
             class="sr-only peer"
             @if($wireModel) wire:model="{{ $wireModel }}" @endif
             @if($xRef) x-ref="{{ $xRef }}" @endif
             @if($checked) checked @endif
             @if($disabled) disabled @endif
         >
-        <div
+        <div dusk="{{$id}}"
             class="relative w-11 h-6 bg-gray-200 rounded-full peer
                    peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800
                    dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full

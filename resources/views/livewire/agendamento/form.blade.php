@@ -389,143 +389,146 @@
 
                     @if($has_group=='true')
 
-                        <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
-                            <div class="w-full">
-                                <x-input
-                                    id="institution"
-                                    name="institution"
-                                    label="Instituição/Empresa"
-                                    type="text"
-                                    wireModel="institution"
-                                    placeholder="Digite a instituição ou empresa"
-                                    required="true"
-                                    class="mb-4"
-                                />
+                        <div dusk="group-form">
+                            <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
+                                <div class="w-full">
+                                    <x-input
+                                        id="institution"
+                                        name="institution"
+                                        label="Instituição/Empresa"
+                                        type="text"
+                                        wireModel="institution"
+                                        placeholder="Digite a instituição ou empresa"
+                                        required="true"
+                                        class="mb-4"
+                                    />
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
-                            <div class="sm:col-span-1">
-                                <h1 class="text-center font-bold pb-3 text-xl">
-                                    Membros do Grupo
-                                </h1>
+                            <div class="grid gap-4 sm:grid-cols-1 sm:gap-6">
+                                <div class="sm:col-span-1">
+                                    <h1 class="text-center font-bold pb-3 text-xl">
+                                        Membros do Grupo
+                                    </h1>
 
-                                <!-- Container dos Cards -->
-                                <div class="space-y-4">
-                                    @foreach($inputs as $index => $input)
-                                        <div
-                                            class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4"
-                                            wire:key="input-{{ $index }}">
-                                            <!-- Campo de Nome -->
-                                            <div>
-                                                <x-input
-                                                    id="inputs_{{ $index }}_name"
-                                                    name="inputs[{{ $index }}][name]"
-                                                    label="Nome"
-                                                    type="text"
-                                                    wireModel="inputs.{{ $index }}.name"
-                                                    placeholder="Nome"
-                                                    required="true"
-                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                                />
-
+                                    <!-- Container dos Cards -->
+                                    <div class="space-y-4">
+                                        @foreach($inputs as $index => $input)
+                                            <div dusk="member-{{ $index }}"
+                                                class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col space-y-4"
+                                                wire:key="input-{{ $index }}">
+                                                <!-- Campo de Nome -->
                                                 <div>
-                                                    @error("inputs.$index.name")
-                                                    <small class="text-danger text-red-700">
-                                                        <i class="fas fa-exclamation-triangle"></i>
-                                                        {{ $message }}
-                                                    </small>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                                    <x-input
+                                                        id="inputs_{{ $index }}_name"
+                                                        name="inputs[{{ $index }}][name]"
+                                                        label="Nome"
+                                                        type="text"
+                                                        wireModel="inputs.{{ $index }}.name"
+                                                        placeholder="Nome"
+                                                        required="true"
+                                                        class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                    />
 
-                                            <!-- Campo de Tipo de Documento -->
-                                            <div>
-                                                <x-select
-                                                    id="inputs_{{ $index }}_documentType"
-                                                    name="inputs[{{ $index }}][documentType]"
-                                                    label="Tipo de Documento"
-                                                    :options="[
+                                                    <div>
+                                                        @error("inputs.$index.name")
+                                                        <small class="text-danger text-red-700">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ $message }}
+                                                        </small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <!-- Campo de Tipo de Documento -->
+                                                <div>
+                                                    <x-select
+                                                        id="inputs_{{ $index }}_documentType"
+                                                        name="inputs[{{ $index }}][documentType]"
+                                                        label="Tipo de Documento"
+                                                        :options="[
                                                         ['value' => '1', 'text' => 'CPF'],
                                                         ['value' => '4', 'text' => 'Passaporte'],
                                                     ]"
-                                                    placeholder="Tipo de documento"
-                                                    :selected="$input['documentType'] ?? null"
-                                                    wireModel="inputs.{{ $index }}.documentType"
-                                                    required="true"
-                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                                />
+                                                        placeholder="Tipo de documento"
+                                                        :selected="$input['documentType'] ?? null"
+                                                        wireModel="inputs.{{ $index }}.documentType"
+                                                        required="true"
+                                                        class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                    />
+                                                    <div>
+                                                        @error("inputs.$index.documentType")
+                                                        <small class="text-danger text-red-700">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ $message }}
+                                                        </small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <!-- Campo de Documento -->
                                                 <div>
-                                                    @error("inputs.$index.documentType")
-                                                    <small class="text-danger text-red-700">
-                                                        <i class="fas fa-exclamation-triangle"></i>
-                                                        {{ $message }}
-                                                    </small>
-                                                    @enderror
+                                                    <x-input
+                                                        id="inputs_{{ $index }}_document"
+                                                        name="inputs[{{ $index }}][document]"
+                                                        label="Documento"
+                                                        type="text"
+                                                        wireModel="inputs.{{ $index }}.document"
+                                                        placeholder="Documento"
+                                                        xRef="document_{{ $index }}"
+                                                        required="true"
+                                                        class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                    />
+                                                    <div>
+                                                        @error("inputs.$index.document")
+                                                        <small class="text-danger text-red-700">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            {{ $message }}
+                                                        </small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <!-- Botão de Remover -->
+                                                <div class="flex justify-end">
+                                                    <button type="button"
+                                                            class="flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300"
+                                                            wire:click="removeInput({{ $index }})"
+                                                            dusk="removeInput({{ $index }})">
+                                                        <!-- Ícone de Remover -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                        </svg>
+                                                        Remover
+                                                    </button>
                                                 </div>
                                             </div>
+                                        @endforeach
+                                    </div>
 
-                                            <!-- Campo de Documento -->
-                                            <div>
-                                                <x-input
-                                                    id="inputs_{{ $index }}_document"
-                                                    name="inputs[{{ $index }}][document]"
-                                                    label="Documento"
-                                                    type="text"
-                                                    wireModel="inputs.{{ $index }}.document"
-                                                    placeholder="Documento"
-                                                    xRef="document_{{ $index }}"
-                                                    required="true"
-                                                    class="border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                                <div>
-                                                    @error("inputs.$index.document")
-                                                    <small class="text-danger text-red-700">
-                                                        <i class="fas fa-exclamation-triangle"></i>
-                                                        {{ $message }}
-                                                    </small>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                    <!-- Botão para Adicionar Nova Linha -->
+                                    <div class="flex justify-center mt-6">
+                                        <button type="button"
+                                                style="background-color: rgb(14, 44, 69);"
+                                                dusk="addInput"
+                                                wire:click="addInput"
+                                                class="flex items-center px-6 py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition duration-300">
+                                            <!-- Ícone de Adicionar -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                            Adicionar Pessoa
+                                        </button>
+                                    </div>
 
-                                            <!-- Botão de Remover -->
-                                            <div class="flex justify-end">
-                                                <button type="button"
-                                                        class="flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300"
-                                                        wire:click="removeInput({{ $index }})"
-                                                        dusk="removeInput({{ $index }})">
-                                                    <!-- Ícone de Remover -->
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
-                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                                    </svg>
-                                                    Remover
-                                                </button>
-                                            </div>
-                                        </div>
-                                    @endforeach
                                 </div>
-
-                                <!-- Botão para Adicionar Nova Linha -->
-                                <div class="flex justify-center mt-6">
-                                    <button type="button"
-                                            style="background-color: rgb(14, 44, 69);"
-                                            dusk="addInput"
-                                            wire:click="addInput"
-                                            class="flex items-center px-6 py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition duration-300">
-                                        <!-- Ícone de Adicionar -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                                             fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                        Adicionar Pessoa
-                                    </button>
-                                </div>
-
                             </div>
                         </div>
 

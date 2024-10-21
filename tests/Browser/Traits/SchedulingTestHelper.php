@@ -17,7 +17,7 @@ trait SchedulingTestHelper
      * @return array
      * @throws \Exception
      */
-    protected function getRandomSchedulingData()
+    protected function getRandomSchedulingData($hasGroup = false)
     {
         $faker = Faker::create('pt_BR');
 
@@ -46,7 +46,6 @@ trait SchedulingTestHelper
         $email = $faker->freeEmail;
         $hasDisability = $faker->boolean;
         $motive = $faker->sentence;
-        $hasGroup = $faker->boolean;
         $institution = $hasGroup ? $faker->company : null;
         $reservationDate = Carbon::now()->format('d/m/Y');
 
@@ -54,6 +53,25 @@ trait SchedulingTestHelper
         $country = config('app.country_br');
         $state = config('app.state_rj');
         $city = config('app.city_rio');
+
+        // Inicializa o array de membros do grupo
+        $groupMembers = [];
+
+        if ($hasGroup) {
+            // Gera um número aleatório de membros (por exemplo, entre 2 e 5)
+            $numberOfMembers = $faker->numberBetween(2, 5);
+
+            for ($i = 0; $i < $numberOfMembers; $i++) {
+                $memberDocumentType = $faker->randomElement($documentTypes);
+                $memberDocumentNumber = $memberDocumentType === '1' ? $faker->cpf(false) : $faker->randomNumber(8, true);
+
+                $groupMembers[] = [
+                    'name' => $faker->name,
+                    'documentType' => $memberDocumentType,
+                    'documentNumber' => $memberDocumentNumber,
+                ];
+            }
+        }
 
         return [
             'building' => $randomBuilding,
@@ -73,6 +91,7 @@ trait SchedulingTestHelper
             'motive' => $motive,
             'hasGroup' => $hasGroup,
             'institution' => $institution,
+            'groupMembers' => $groupMembers,
             'reservationDate' => $reservationDate,
         ];
     }
