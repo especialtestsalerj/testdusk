@@ -20,7 +20,7 @@ services:
         ports:
             - '${APP_PORT:-80}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
-            - '${LIVE_RELOAD_PORT:-35734}:${LIVE_RELOAD_PORT:-35734}'
+            - '${LIVE_RELOAD_PORT:-35732}:${LIVE_RELOAD_PORT:-35732}'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -29,11 +29,12 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - base_sail
+            - sail
+            - takeout
 networks:
-    base_sail:
+    sail:
+        driver: bridge
+    takeout:
+        name: takeout
         external: true
-volumes:
-    sail-pgsql:
-        driver: local
 
