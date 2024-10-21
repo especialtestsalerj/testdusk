@@ -17,3 +17,4 @@ docker-compose.yml
 /data.ms
 /.phpunit.cache
 .phpunit.dusk.xml
+logfile
