@@ -27,7 +27,9 @@ class OutsideSchedulingTest extends DuskTestCase
             ->type('@social_name', $data['socialName'])
             ->select('@document_type_id', $data['documentType'])
             ->typeSlowly('@document_number', $data['documentNumber'])
-            ->keys('@birthdate', $data['birthdate'])
+            ->keys('@birthdate', $data['birthdate']->format('d'))
+            ->keys('@birthdate', $data['birthdate']->format('m'))
+            ->keys('@birthdate', $data['birthdate']->format('Y'))
             ->select('@country_id', $data['country_id'])
             ->select('@state_id', $data['state_id'])
             ->select('@city_id', $data['city_id'])
@@ -36,7 +38,7 @@ class OutsideSchedulingTest extends DuskTestCase
             ->typeSlowly('@contact', $data['contact']);
 
         if ($data['sector']->required_motivation) {
-            $browser->waitFor('@motive')
+            $browser->waitUntilEnabled('@motive')
                 ->type('@motive', $data['motive']);
         }
     }
@@ -109,9 +111,9 @@ class OutsideSchedulingTest extends DuskTestCase
                 }
                 $browser->waitUntilEnabled("@member-$index")
                     ->scrollIntoView("@inputs_{$index}_name")
-                    ->type("#inputs_{$index}_name", $member['name'])
                     ->select("@inputs_{$index}_documentType", $member['documentType'])
-                    ->type("@inputs_{$index}_document", $member['documentNumber']);
+                    ->type("@inputs_{$index}_document", $member['documentNumber'])
+                    ->type("@inputs_{$index}_name", $member['name']);
             }
 
             $browser->click('@submitButton')

@@ -41,7 +41,7 @@ trait SchedulingTestHelper
         $documentTypes = ['1', '4']; // CPF e Passaporte
         $documentType = $faker->randomElement($documentTypes);
         $documentNumber = $documentType === '1' ? $faker->cpf(false) : $faker->randomNumber(8, true);;
-        $birthdate = $faker->date('dmY', '-18 years');
+        $birthdate = $faker->dateTime();
         $contact = $faker->phoneNumber;
         $email = $faker->freeEmail;
         $hasDisability = $faker->boolean;
