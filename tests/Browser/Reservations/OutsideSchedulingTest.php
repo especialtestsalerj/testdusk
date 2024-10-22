@@ -22,8 +22,12 @@ class OutsideSchedulingTest extends DuskTestCase
             ->setFlatpickrDate('reservation_date', $data['reservationDate'])
             ->assertInputValue('@reservation_date', $data['reservationDate'])
             ->waitUntilEnabled('@capacity_id')
-            ->select('@capacity_id', $data['capacity']->id)
-            ->type('@full_name', $data['fullName'])
+            ->select('@capacity_id', $data['capacity']->id);
+        if ($data['sector']->required_motivation) {
+            $browser->waitFor('@motive')
+                ->type('@motive', $data['motive']);
+        }
+        $browser->type('@full_name', $data['fullName'])
             ->type('@social_name', $data['socialName'])
             ->select('@document_type_id', $data['documentType'])
             ->typeSlowly('@document_number', $data['documentNumber'])
@@ -36,11 +40,6 @@ class OutsideSchedulingTest extends DuskTestCase
             ->type('@responsible_email', $data['email'])
             ->typeSlowly('@confirm_email', $data['email'])
             ->typeSlowly('@contact', $data['contact']);
-
-        if ($data['sector']->required_motivation) {
-            $browser->waitUntilEnabled('@motive')
-                ->type('@motive', $data['motive']);
-        }
     }
 
     public function testRandomBuildingScheduling()
