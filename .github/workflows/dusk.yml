@@ -1,0 +1,116 @@
+name: Dusk
+
+on: [push]
+
+jobs:
+  dusk:
+    runs-on: ubuntu-latest
+    env:
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_DRIVER: redis
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      DB_DATABASE: sigvisitas
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: codecourse_testing
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Update .env for PostgreSQL
+        run: |
+          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=pgsql/' .env
+          sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/^DB_PORT=.*/DB_PORT=5432/' .env
+          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=sigvisitas/' .env
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=postgres/' .env
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=postgres/' .env
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Install PostgreSQL Client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Wait for PostgreSQL to be ready
+        env:
+          PGPASSWORD: postgres
+        run: |
+          until psql -h 127.0.0.1 -U postgres -c '\q'; do
+            echo "Waiting for PostgreSQL..."
+            sleep 1
+          done
+
+      - name: Run Migrations
+        env:
+          DB_PASSWORD: postgres
+        run: php artisan migrate --force
+
+      - name: Install Chrome binaries
+        run: php artisan dusk:chrome-driver --detect
+
+      - name: Start Chrome Driver
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
+
+      - name: Build assets
+        run: npm install && npm run production
+
+      - name: Run Laravel Server
+        run: php artisan serve --no-reload &
+
+      - name: Execute tests
+        env:
+          DB_PASSWORD: postgres
+        run: php artisan dusk
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
+
+      - name: Upload Console Logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: console
+          path: tests/Browser/console
