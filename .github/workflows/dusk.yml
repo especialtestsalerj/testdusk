@@ -14,7 +14,7 @@ jobs:
       DB_HOST: 127.0.0.1
       DB_PASSWORD: postgres
       DB_USERNAME: postgres
-      DB_DATABASE: sigvisitas
+      DB_DATABASE: sigvisitas #a
 
     services:
       postgres:
